@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>帖子发布</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+		.aui-border-t:before, .aui-border-b:after {
+		    width: 100%;
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    z-index: 2;
+		    left: 0;
+		    right: auto;
+		    -webkit-transform-origin: 100% 50%;
+		    transform-origin: 100% 50%;
+		    pointer-events: none;
+		}
+		.aui-bar-nav {
+		    top: 0;
+		    line-height: 2.25rem;
+		    background-color: #FFF;
+		    color: #000;
+		    border-bottom: solid 0.5px #FFF;
+		}
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+            <img src="../../icon/common/icon_header_return.png">
+        </a>
+        <div class="aui-title" id="simulator_appointment_title">
+        	想说点什么？
+        </div>
+        <a class="aui-pull-right aui-btn" tapmode onclick="option_submit()">
+            	发布
+        </a>
+    </header>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var headerPos;
+	apiready = function(){
+		api.parseTapmode();
+		var header = $api.byId('aui-header');
+		$api.fixStatusBar(header);
+		headerPos = $api.offset(header);
+		init();
+	}
+	function init(){
+		openFrameCommon('community_publish_frm',null,headerPos.h,api.winHeight - headerPos.h,false);
+	}
+	//发布社区帖子
+	function option_submit(){
+		// log("","点击了发布")
+		if(islogin()){
+			esc_function('','community_publish_frm','option_submit()');
+		}else{
+			alert_msg("尚未登录，请登录")
+		}
+		
+	}
+	function closeWin(){
+		
+		api.closeWin({
+        });
+	}
+</script>
+</html>

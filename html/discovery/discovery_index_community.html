@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>社区列表</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html,body{
+    		background:#FFF;
+    	}
+    	ul{
+    		padding: 0.5rem;
+    	}
+    	.community-head{
+    		height:2.5rem;
+    	}
+    	.community-head-icon{
+    		width:20%;
+    		float:left;
+    		display:flex;
+    		height:2rem;
+    	}
+    	.community-head-icon img{
+		    width: 1.5rem;
+		    border-radius: 100%;
+		    margin: auto;
+		    height: 1.5rem;
+		    object-fit: cover;
+    	}
+    	.community-head-info{
+    		width:80%;
+    		float:left;
+    		height:2.5rem;
+    	}
+    	.community-head-info-name{
+    		height:1.5rem;
+    		width:50%;
+    		line-height: 1.5rem;
+			margin-top: 0.5rem;
+    	}
+    	.community-head-label{
+    		height:1.7rem;
+    		width:30%;
+    		float:left;
+    	}
+    	.community-head-info-time{
+    		height:1.5rem;
+    		line-height: 1.5rem;
+			margin-top: -1.5rem;
+    		width:50%;
+    		font-size: 0.6rem;
+    		color:#939393;
+			text-align: right;
+    	}
+    	.community-title{
+    		width:80%;
+    		height: 2rem;
+		    line-height: 2rem;
+		    float: right;
+    	}
+    	.community-content{
+    		width:80%;
+		    float: right;
+		    font-size: 0.7rem;
+			margin-top: 0rem;
+			color: #666666;
+    	}
+    	.community-pic-list{
+    		width:80%;
+    		float:right;
+    		margin-bottom: 0.5rem;
+    		margin-top: 1rem;
+    	}
+
+    	.community-icon{
+    		width:80%;
+    		float: right;
+    		font-size: 0.6rem;
+    		text-align: right;
+		    position:relative;
+	        height: 1.5rem;
+    	}
+    	.community-icon:after{
+    		content: '';
+		    background: #DDDDDD;
+		    width: 100%;
+		    background-color: #dddddd;
+		    display: block;
+	        margin-top: 0.5rem;
+		    -webkit-transform: scaleY(0.5);
+		    transform: scaleY(0.5);
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+	        position: absolute;
+    		bottom: 0rem;
+    	}
+		.commentCount{
+			float: right;
+			margin-right: 0.8rem;
+		}
+    	.community-icon img{
+    		height:0.8rem;
+    		margin: 0rem 0.1rem -0.1rem 0.8rem;
+    	}
+    	li{
+    		overflow: hidden;
+    		padding-top:0.5rem;
+    	}
+    	/*li:active{
+    		background:#FAFAFA;
+    	}*/
+    	.publish-button{
+    		position: fixed;
+		    bottom: 3rem;
+		    right: 1rem;
+    	}
+    	.publish-button img{
+		    width: 2.5rem;
+    	}
+		.msg{
+			background: #FFFFFF;
+			height: 20rem;
+			text-align: center;
+			font-size:0.7rem;
+		}
+		.msg img{
+			width:8rem;
+			margin-top: 9rem;
+		}
+		.jiazai{
+			font-size: 0.7rem;
+			background: #FFFFFF;
+			color: #666565;
+			padding-bottom: 0.3rem;
+			text-align: center;
+			padding-top: 0.3rem;
+		}
+		.jiazai img{
+			width: 1.5rem;
+		}
+		#delete{
+			display: none;
+		}
+		.community-icon span{
+			color:#757575;
+		}
+		 .top{
+			width:7rem;
+			height:1.7rem;
+			background-color:#393939; 	
+			margin: 0 auto;
+			margin-top:0.8rem;
+			margin-bottom:0.8rem;
+			text-align:center;
+		}
+		.img1{
+			font-size:0.5rem;
+			color: #FFFFFF;
+			font-weight: bold;
+			top: -1.89rem;
+			left:2.5rem;
+		}
+		.new_message{
+			font-size: 0.65rem;
+			color: #FFFFFF;
+			margin-top:0.37rem;
+		}
+		.community-pic-list-one{
+			background-color: #F4F7F7;
+			width: 2.5rem;
+			text-align: center;
+			border-radius: 0.5rem;
+			line-height: 1rem;
+		}
+		.community-pic-list-one-font{
+			font-size: 0.5rem;
+			color: #61636D;
+		}
+		.aui-list-item-time{
+			color: #BDBDBD;
+			font-size: 0.5rem;
+		}
+		.head{
+			border-top:1px solid #F5F5F5;
+		}
+		.head-first{
+			height: 2rem;
+			line-height: 1rem;
+		}
+		.aui-list-item-input{
+			margin-left: 0.5rem;
+		}
+		.head-tip{
+			position: fixed;
+			margin-top: 0.2rem;
+		}
+		.head-font-size{
+			font-size: 0.6rem;
+			color: #0A2463;
+		}
+		.head-img-with{
+			width: 0.8rem;
+		}
+		.head-img-with-one{
+			width: 0.7rem;
+			height: 0.7rem;
+		}
+		.head-with{
+			border-top:1px solid #F5F5F5;
+			margin-left: 1.5rem;
+			margin-right: 1.5rem;
+		}
+		.head-first-spand-one{
+			margin-left: 1rem;
+			width: 6rem;
+			float:left;
+		}
+		.head-first-spand-two{
+			margin-left: 1rem;
+			width: 9rem;
+			float:right;
+		}
+		#communityList{
+			background-color: #F5F5F5;
+			padding:0 0 0 0;
+		}
+		.li-head{
+			background-color: #fff;
+			padding-left: 0.5rem;
+			padding-right: 0.5rem;
+		}
+    </style>
+</head>
+<body>
+	<section id="top_new">
+	
+	</section>
+	<script type="text/template" charset="utf-8" id='topNews'>
+		<div class="top" id="tips-1" tapmode onclick="newReply()">
+			<span class="new_message">{{=it.count}}条新消息<div class="aui-iconfont aui-icon-comment"style="top: -0.95rem;left:-2.6rem; "></div></span>
+			<div class="aui-iconfont aui-icon-right img1"></div>
+		</div>
+	</script>
+	<div style="display: none;">
+		<div class="head"></div>
+		<div class="head-first">
+			<div class="aui-content aui-margin-b-15">
+                <div class="aui-list-item-input">
+                	<div style="margin-left: 1rem;">
+                		<div class="head-tip">
+                			<img src="../../icon/article/icon_tip.png" class="head-img-with"/>
+                		</div>
+                		<div class="head-first-spand-one">
+                			<span class="head-font-size">说一说你的驾考趣事</span>
+                			<img src="../../icon/article/icon_hot.png" class="head-img-with" style="position: fixed;"/>
+                		</div>
+                		<div class="head-first-spand-two" >
+                			<div style="margin-top: 0.2rem;position: fixed;">
+                				<img src="../../icon/article/icon_tip.png" class="head-img-with"/>
+                			</div>
+                			<div style="margin-left: 1rem;">
+                				<span class="head-font-size">提出你在练车中的疑惑</span>
+                			</div>
+                		</div>
+                	</div>
+                </div>
+	   		</div>
+		</div>
+		<div class="head-with"></div>
+		<div class="head-first">
+			<div class="aui-content aui-margin-b-15">
+                <div class="aui-list-item-input">
+                	<div style="margin-left: 1rem;">
+                		<div style="position: fixed;margin-top: 0.1rem;">
+                			<img src="../../icon/article/icon_talk.png" class="head-img-with-one" />
+                		</div>
+                		<div class="head-first-spand-one">
+                			<span class="head-font-size">更多话题</span>
+                		</div>
+                		<div class="head-first-spand-two">
+                			<div style="margin-top: 0.1rem;position: fixed;">
+                				<img src="../../icon/article/icon_hotright.png" style="width: 0.8rem;"/>
+                			</div>
+                			<div style="margin-left: 1rem;">
+                				<span class="head-font-size">热门话题排行</span>
+                			</div>
+                		</div>
+                	</div>
+                </div>
+	   		</div>
+		</div>
+	</div>
+	<ul id="communityList">
+		<div style="padding-top: 0.5rem;">
+		 <li class="li-head">
+			<div class='community-head' tapmode onclick="openCommunityDetail('{{=it.forumList[i].id}}','{{=it.forumList[i].title}}')">
+				<div class='community-head-icon'>
+					<img src="{{=file_load_url +it.forumList[i].headimgurl}}" alt="" onerror="javascript:this.src='../../icon/mine/icon_mine_head_hui.png'" />
+				</div>
+				<div class="aui-list-item-inner">
+                        <div class="aui-list-item-text" style="padding-top: 0.2rem;">
+                            <div class="aui-list-item-title aui-font-size-14" id="name{{=it.forumList[i].id}}">用户123</div>
+                            <div class="aui-list-item-right aui-list-item-time" >1个月前&nbsp;&nbsp;&nbsp;&nbsp;来自&nbsp;江干区</div>
+                        </div>
+                    </div>
+			</div>
+			<div class="community-acticle" tapmode onclick="openCommunityDetail('{{=it.forumList[i].id}}','{{=it.forumList[i].title}}')">
+				<div class='community-content aui-ellipsis-3' >123</div>
+			</div>
+			<div class='community-pic-list' id="{{=it.forumList[i].id}}">
+				<div class="community-pic-list-one"><span class="community-pic-list-one-font">科目一</span></div>
+			</div>
+			<div class='community-icon'>
+				<div class="aui-pull-left" id="delete{{=it.forumList[i].id}}">
+				</div>
+				<div class="commentCount" tapmode onclick="openOriginal('{{=it.forumList[i].id}}')">
+					<img src="../../icon/article/icon_comment_new.png" alt="" style="margin-bottom:-0.2rem;"/>
+					<span>&nbsp;&nbsp;&nbsp;0</span>
+				</div>
+				<div class="commentCount" id="thumbsUp{{=it.forumList[i].id}}" onclick="giveTheThumbsUp('{{=it.forumList[i].id}}')">
+					<img src="../../icon/article/icon_yizan_new.png" alt="" />
+					<span style="color: #1E8DD8;">&nbsp;&nbsp;&nbsp;0</span>
+				</div>
+			</div>
+		</li> 
+		</div>
+	</ul>
+	<div class='publish-button' tapmode onclick="publish()">
+		<img src="../../icon/common/icon_publish.png" alt="" />
+	</div>
+	<script type="text/template" charset="utf-8" id='commentity_src'>
+		{{ for(var i=0;i<it.forumList.length;i++){ }}
+				<div style="padding-bottom: 0.5rem;">
+			<li class="li-head">
+				<div class='community-head' tapmode onclick="openCommunityDetail('{{=it.forumList[i].id}}','{{=it.forumList[i].title}}')">
+					<div class='community-head-icon'>
+						<img src="{{=file_load_url +it.forumList[i].headimgurl}}" alt="" onerror="javascript:this.src='../../icon/mine/icon_mine_head_hui.png'" />
+					</div>
+					<div class="aui-list-item-inner">
+                        <div class="aui-list-item-text" style="padding-top: 0.2rem;">
+                            <div class="aui-list-item-title aui-font-size-14" id="name{{=it.forumList[i].id}}">
+                            	{{ if(it.forumList[i].name == "" || it.forumList[i].name == null || it.forumList[i].name == undefined){ }}
+									匿名用户
+								{{ }else{ }}
+									{{=it.forumList[i].name}}
+								{{ } }}
+                            </div>
+                            <div class="aui-list-item-right aui-list-item-time" >{{=calcuTime(it.forumList[i].insertDt)}}</div>
+                        </div>
+                    </div>
+					<div class='community-head-label'></div>
+				</div>
+				<div class="community-acticle"  tapmode onclick="openCommunityDetail('{{=it.forumList[i].id}}','{{=it.forumList[i].title}}')">
+					<!--<div class='community-title aui-ellipsis-1'></div>--> 
+					<div class='community-content aui-ellipsis-3' style="margin-top: -1rem;">{{=it.forumList[i].description}}</div>
+				</div>
+				<div class='community-pic-list'  >
+					{{ for(var j=0;j < spliceImg(it.forumList[i].image).length;j++){ }}
+						{{ if(spliceImg(it.forumList[i].image).length == 1){ }}
+							{{ if(spliceImg(it.forumList[i].image)[j] != ""){ }}
+							<div class="b_pic">
+								<img src="../../icon/default/icon_default_big_pic.png" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url + spliceImg(it.forumList[i].image)[j]}}" alt="" tapmode onclick="openPic('{{=file_load_url + spliceImg(it.forumList[i].image)[j] + '&style=image/resize,m_lfit,h_800,w_800'}}')"/>
+							</div>
+							{{ } }}
+						{{ }else if(spliceImg(it.forumList[i].image).length > 1 && spliceImg(it.forumList[i].image).length < 5){ }}
+							<div class="m_pic">
+								<img src="../../icon/default/icon_default_big_pic.png" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url + spliceImg(it.forumList[i].image)[j]}}" alt="" tapmode onclick="openPic('{{=file_load_url + spliceImg(it.forumList[i].image)[j] + '&style=image/resize,m_lfit,h_800,w_800'}}')"/>
+							</div>
+						{{ }else if(spliceImg(it.forumList[i].image).length >5){ }}
+							<div class="s_pic">
+								<img src="../../icon/default/icon_default_big_pic.png" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url + spliceImg(it.forumList[i].image)[j]}}" alt="" tapmode onclick="openPic('{{=file_load_url + spliceImg(it.forumList[i].image)[j] + '&style=image/resize,m_lfit,h_800,w_800'}}')"/>
+							</div>
+						{{ } }}
+					{{ } }}
+				</div>
+				<div class='community-icon'>
+					<div class="aui-pull-left" id="delete{{=it.forumList[i].id}}">
+						<!-- 如果是自己发的贴，可以删除 -->
+						{{ if(it.loginId == it.forumList[i].learnerId){ }}
+							<span tapmode onclick="communityDelete('{{=it.forumList[i].id}}')">删除</span>
+						{{ } }}
+					</div>
+					<div class="commentCount" tapmode onclick="openOriginal('{{=it.forumList[i].id}}','{{=it.forumList[i].title}}')">
+						<img src="../../icon/article/icon_comment_new.png" alt="" style="margin-bottom:-0.2rem;"/>
+						<span>&nbsp;&nbsp;&nbsp;{{=it.forumList[i].commentCount}}</span>
+					</div>
+					<div class="commentCount" id="thumbsUp{{=it.forumList[i].id}}" onclick="giveTheThumbsUp('{{=it.forumList[i].id}}',this)">
+						{{ if(it.forumList[i].isFlag == 1){ }}
+						<img src="../../icon/article/icon_yizan_new.png" alt="" />
+						&nbsp;&nbsp;&nbsp;<span style="color: #1E8DD8;">{{=it.forumList[i].likeCount}}</span>
+						{{ }else{ }}
+						<img src="../../icon/article/icon_zan_new.png" alt="" />
+						&nbsp;&nbsp;&nbsp;<span>{{=it.forumList[i].likeCount}}</span>
+						{{ } }}
+					</div>
+				</div>
+			</li>
+			</div>
+		{{ } }}
+	</script>
+	<div id='load_div'>
+	</div>
+	<script type="text/template" charset="utf-8" id='load_src'>
+		<div class="load">
+		<img src="../../icon/common/loadding.gif" alt="" /><br>
+		<span>加载中...</span>
+	</div>
+	</script>
+		<script type="text/template" charset="utf-8" id='msg_src'>
+			<div class="msg">
+			<img src="../../icon/common/empty.png" alt="" /><br>
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+		<script type="text/template" charset="utf-8" id='more_src'>
+			<div class="jiazai">
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script src="../../script/echo.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var pageNo=1;
+	var	pageSize=5;
+	var load_src = $('#load_src').html(); //加载src
+	var msg_src = $('#msg_src').html(); //消息提示src
+	var more_src = $('#more_src').html(); //更多src
+	var refresh = true; //标记是否是刷新操作
+	var imgs; //存放图片
+	var learnerId;//用户ID
+	var type;
+	apiready = function(){
+		// refreshList();
+		api.addEventListener({
+			name: 'refreshList'
+		}, function(ret, err) {
+			location.reload();
+		});
+		goRefrash(40, '#FFFFFF', null, null, function() {
+			refreshList();
+		});
+		goLoad(function(ret, err) {
+			loadList();
+		});
+		setTimeout(function() {
+			api.refreshHeaderLoading();
+		}, 100);
+		// init();
+		if(islogin()){
+			learnerId = getUserId();
+		}else{
+			learnerId = "";
+		}
+		
+		//监听退出action：执行消除红点操作
+		api.addEventListener({
+		    name: 'exit_action'
+		}, function(ret, err) {
+			$("#tips-1").addClass('aui-hide');
+		});
+	};
+
+	//列表刷新
+	function refreshList() {
+		pageNo = 1;
+		refresh = true;
+		setLoad();
+		init();
+		message();
+		sendEvent('refresh');
+	}
+	//列表上拉
+	function loadList() {
+		pageNo++;
+		refresh = false;
+		setLoad();
+		init();
+		message();
+	}
+
+	function init(){
+		url="api/forum/list-forum";
+		params = {
+			learnerId:learnerId,
+			page: pageNo,
+			limit: pageSize
+		}
+		ajax_Request(url, 'get', 'json', params, function(ret, err) {
+			log('社区列表：',ret);
+			if(ret){
+				if(ret.code == 0 && ret.forumList.length > 0){
+					var commentity_src = $('#commentity_src').html();
+					//将登入标识放入数据体中
+					ret.loginId = islogin()?$api.getStorage('cache_by_account').cache_account.id:'';
+					if(pageNo == 1){
+						$("#communityList").html(doT.template(commentity_src)(ret));
+					}else{
+						$("#communityList").append(doT.template(commentity_src)(ret));
+					}
+					echoInit();
+					api.parseTapmode();
+				}else{
+					setMsg(refresh ? '暂无社区信息' : '暂无更多');
+				}
+			}else{
+				setMsg("服务器繁忙，请稍后重试")
+			}
+
+		})
+		setTimeout(function() {
+			api.refreshHeaderLoadDone();
+		}, 500);
+	}
+
+	//设置页面加载的画面
+	function setLoad() {
+		if (refresh || $('#communityList').find('li').length == 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+			$('#load_div').html('');
+		} else {
+			setTimeout(function() {
+				$('#load_div').html(doT.template(more_src)({
+					'msg': '加载更多中...',
+					'img': '../../icon/common/jiazai.gif'
+				}));
+			}, 500);
+		}
+	}
+
+	//设置页面提示信息
+	function setMsg(msg) {
+		if (refresh || $('#communityList').find('li').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+			setTimeout(function() {
+				$("#communityList").html(doT.template(msg_src)({
+					'msg': msg
+				}));
+			}, 500);
+		} else { //原先已经有数据的情况下
+			setTimeout(function() {
+				$('#load_div').html(doT.template(more_src)({
+					'msg': msg,
+					'img': ''
+				}));
+			}, 500);
+		}
+	}
+
+	//标签加载
+	function getLabelList(tags) {
+		var menu = "";
+		if (tags != '' && tags != undefined && tags != null) {
+			var tagList = tags.split(',');
+			for (var i = 0; i < (tagList.length > 3 ? 3 : tagList.length); i++) {
+				menu += "<li><span>" + getLabelName(tagList[i]) + "</span></li>";
+			}
+		}
+		return menu;
+	}
+
+	//分割图片地址
+	function spliceImg(imgs){
+		return imgs.split(',');
+	}
+
+	//打开社区详情
+	function openCommunityDetail(id,title) {
+		var title = title;
+		params = {
+			name: title,
+			id:id,
+			flag: 'community'
+		}
+		api.openWin({
+			name: 'community_detail_win',
+			url: './community_detail_win.html',
+			slidBackEnabled: 'false',
+			vScrollBarEnabled: 'false',
+			hScrollBarEnabled: 'false',
+			reload: true,
+			pageParam: {
+				data: params
+			}
+		});
+	}
+	//打开最新评论
+	function openOriginal(id,title) {
+		var title = title;
+		params = {
+			name: title,
+			id:id,
+			flag: 'community'
+		}
+		api.openWin({
+			name: 'community_detail_win',
+			url: './community_detail_win.html',
+			slidBackEnabled: 'false',
+			vScrollBarEnabled: 'false',
+			hScrollBarEnabled: 'false',
+			reload: true,
+			pageParam: {
+				data: params
+			}
+		});
+	}
+	//点赞
+	function giveTheThumbsUp(id,e){
+		// log(id);
+		if(islogin()){
+			var learnerId = getUserId();
+			url="api/forum/insert-news-comment-by-article-id-or-forum-id-like";
+			params = {
+				forumId: id,
+				learnerId: learnerId
+			}
+			ajax_Request(url, 'post', 'json', params, function(ret, err) {
+				log('点赞返回', ret);
+				if(ret){
+					if(ret.code == 0){
+						var likeCounts = $(e).find('span').html() - 0 + 1;
+						$("#thumbsUp"+id).html('<img src="../../icon/article/icon_yizan_new.png" alt="" />&nbsp;&nbsp;&nbsp;<span style="color: #1E8DD8;">'+likeCounts+'</span>');
+					}else if(ret.code == "200052"){
+						// alert_msg("请不要重复点赞!");
+					}else{
+						alert_msg(ret.msg);
+					}
+				}else{
+					alert_msg("服务器繁忙，请稍后重试");
+				}
+			})
+		}else{
+			alert_msg('尚未登录,请登录')
+		}
+
+	}
+
+	//点击我要发布
+	function publish(){
+		commonOpenWin('community_publish_win',null);
+	}
+
+	//删除帖子
+	function communityDelete(id){
+		api.confirm({
+			title: '消息',
+			msg: '确认删除？',
+			buttons: ['确定', '取消']
+		}, function(ret, err) {
+			if(ret){
+				if(ret.buttonIndex == '1'){
+					url="api/forum/update-deleteFlag";
+					params={
+						id:id
+					}
+					ajax_Request(url,"get","json",params,function(ret,err){
+						if(ret.code == 0){
+							refreshList()
+						}
+					})
+				}
+			}
+		});
+	}
+	
+	//登录情况下请求消息通知
+		function message(){
+			if(islogin()){
+				url = 'api/information/getCount';		
+					params = {
+						learnerId:getUserId(),
+						type:'063003'				
+					}
+				ajax_Request(url, 'get', 'json', params, function(ret, err) {
+					if (ret.code == 0) {
+							if(ret.count == 0){
+								$(".top").addClass('aui-hide');
+							}else{
+								var topNews = $('#topNews').html();
+								$("#top_new").html(doT.template(topNews)(ret));
+							}					
+					}
+				})
+			}
+		}
+	
+	
+	
+	//取到所有回复的id，点击新消息后把新消息提示框删除
+	function newReply(){
+		api.addEventListener({
+				    name: 'Id'
+		}, function(ret, err) {
+			url="api/information/updateIsRead";
+			params = {
+				type: '063003',
+				id:ret.value
+			}
+			ajax_Request(url, 'post', 'json', params, function(ret, err) {
+				if(ret){
+					if(ret.code == 0){
+						 $("#tips-1").remove();
+						 sendEvent('inits_second');
+					}
+				}
+			})
+		});
+		params = {
+			type: '063003'
+		}
+		api.openWin({
+			name: 'comment_reply_win',
+			url: './comment_reply_win.html',
+			slidBackEnabled: 'false',
+			vScrollBarEnabled: 'false',
+			hScrollBarEnabled: 'false',
+			reload: true,
+			pageParam: {
+				data: params
+			}
+		});
+	}
+
+</script>
+</html>

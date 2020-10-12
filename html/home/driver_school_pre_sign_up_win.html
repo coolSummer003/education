@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>驾校报名</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #DC251F;
+		}
+		header img {
+		    width: 20px;
+		}
+		#driver_s_title{
+		    font-weight: normal;
+		}
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+            <img src="../../icon/common/icon_header_return.png">
+        </a>
+        <div class="aui-title" id="driver_s_title">
+        	<span>驾校报名</span>
+        </div>
+    </header>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var headerPos;
+	var cache;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam.data;
+		var header = $api.byId('aui-header');
+		$api.fixStatusBar(header);
+		headerPos = $api.offset(header);
+		init();
+	}
+	function init(){
+		api.openFrame({
+            name: 'driver_school_pre_sign_up_frm',
+            url: './driver_school_pre_sign_up_frm.html',
+            bgColor:'#efeff4',
+            rect: {
+                x: 0,
+                y: headerPos.h,
+                w: 'auto',
+                h: api.winHeight - headerPos.h
+            },
+            bounces: false,
+            pageParam:cache,
+            reload:true,
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+        //监听提交报名按钮，value值为driverschool_sign
+        toEventListener('driverschool_sign',function(ret,err){
+        	finishSignUp(ret.value);
+        });
+        
+        //监听驾校报名支付成功
+        toEventListener('register_pay_sucesss',function(ret){
+        	esc_function('driver_school_detail_win','','loadFinish('+true+',"报名审核中","005001","'+ret.value.orderId+'")');
+        	closeWin();
+        })
+	}
+	
+	//显示报名结果
+	function finishSignUp(sign_data){
+    	console.log('监听驾校报名结果'+JSON.stringify(sign_data));
+    	defaultload('提交驾校报名中..');
+    	params = {
+			address:sign_data.addressDetail,//详细地址
+			districtCd:sign_data.addressViewCode,//区域code
+			postalCode:sign_data.postalCode,//邮政编号
+			learnerId:sign_data.id,//学员ID
+			zanzhuzhengNo:sign_data.zanzhuzhengNo,//暂住证编号
+			licenseType:sign_data.licenseType,//学习车型
+			learnPlan:sign_data.learnPlan,//学习套餐
+			schoolId:sign_data.schoolId,//驾校id
+			picture:sign_data.picture,//驾校报名自拍照
+			applyWay:sign_data.applyWay,//申请方式，暂定默认是本人申请
+			businessLevel1Cd:sign_data.businessLevel1Cd,//一级业务种类
+			coachId:sign_data.coach_id//报名表的教练id
+    	}
+    	
+    	if(sign_data.businessLevel1Cd == '028001'){
+    		params.businessLevel2Cd = '028001001'//二级业务种类，默认驾校培训
+    	}else{
+    		params.businessLevel2Cd = '028002001'//二级业务种类，默认驾校培训
+    	}
+    	
+    	//体检结果图片
+    	if(sign_data.examinationResult != ''){
+    		params.examinationResult = sign_data.examinationResult;
+    	}
+    	
+    	console.log('驾校报名传参'+JSON.stringify(params));
+    	url = 'api/driving-school-registration/insert-user-registration-info';
+    	ajax_Request(url, 'post', 'json', params, function(ret,err){
+    		console.log('提交返回'+JSON.stringify(ret));
+    		if(ret){
+    			if(ret.code == 0){
+    				//esc_function('driver_school_detail_win','','loadFinish('+true+',"去支付","005001","'+ret.driverSchoolRegistration.id+'")');//渲染驾校详情中的报名状态
+    				//esc_function('index','mine','func_init(1)');//渲染我的-》线上报名的报名状态
+    				sendEvent('school_refresh',{});//驾校详情刷新
+					$('#driver_s_title').html('报名结果');
+					sign_data.orderId = ret.driverSchoolRegistration.id;
+					setTimeout(function(){
+						to_pay(sign_data);
+					},500);
+					// to_pay(sign_data)
+					// openFrameCommon('driver_school_pre_sign_up_notice_frm',sign_data,headerPos.h,api.winHeight - headerPos.h,false);
+    			}else if(ret.code == 699998){
+					openMessage('警告',ret.msg,'确定','','','',null)
+				}else{
+	    			alert_msg(ret.msg);
+    			}
+    		}else{
+    			alert_msg('提交驾校报名失败');
+    		}
+    		api.hideProgress();
+    	});
+	}
+	function openCoach(){
+	//打开筛选框
+		api.openDrawerPane({
+			name:'driving_coach',
+		    type: 'right'
+		});
+	}
+	function closeWin(){
+		api.closeWin({
+        });
+	}
+	
+	
+	function to_pay(sign_data){
+		params = {
+			orderId:sign_data.orderId,
+			type:'driving_pay'
+		}
+		api.openWin({
+			 name: 'mine_common_win',
+			 url: '../mine/mine_common_win.html',
+			 slidBackEnabled:'false',
+			 vScrollBarEnabled:'false',
+			 hScrollBarEnabled:'false',
+			 reload:true,
+			 useWKWebView:false,
+			 pageParam: {
+				 data:params
+			 }
+		});
+	}
+	
+	
+</script>
+</html>

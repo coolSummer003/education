@@ -1,0 +1,490 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>wifi_frm</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style media="screen">
+        html,
+        body {
+            background: #06091C;
+        }
+
+        header {
+            position: relative;
+            width: 100%;
+            background-color: #06091C;
+        }
+
+        .header .left {
+            position: absolute;
+            left: 0px;
+            bottom: 0px;
+            width: 2rem;
+            height: 2rem;
+            background: url(../../icon/scnner/back.png);
+            background-position: center center;
+            background-size: 2rem 2rem;
+            background-repeat: no-repeat;
+        }
+
+        .header .title {
+            text-align: center;
+            line-height: 1.7rem;
+          
+            color: #fff;
+            padding-right: 2rem;
+            padding-left: 2rem;
+        }
+
+        .header .right {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 2rem;
+            height: 2rem;
+            background: url(../../icon/scnner/lamp.png);
+            background-position: center center;
+            background-size: 2rem 2rem;
+            background-repeat: no-repeat;
+        }
+		.hidden{
+			visibility:hidden;
+		}
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header id="headers">
+        <div class="header">
+            <div class="left" tapmode onclick="back()"></div>
+            <div class="title hidden" ><i  class="aui-iconfont aui-icon-image" style="font-size:1rem;" ></i></div>
+            <div class="right" tapmode onclick="fnOpenLamp()"></div>
+        </div>
+    </header>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script>
+    var FNScanner, eHeader, headerH;
+	var cache_account;
+    apiready = function() {
+        //应用全局FNScanner模块
+        FNScanner = api.require('FNScanner');
+        //定义根据id获取dom
+        eHeader = $api.byId('headers');
+        //设置头部沉浸式
+        $api.fixStatusBar(eHeader);
+        //获取头部高度
+        headerH = $api.offset(eHeader).h;
+		cache_account = $api.getStorage('cache_by_account').cache_account;
+		log("缓存",cache_account);
+        //监听应用回到前台
+        api.addEventListener({
+            name: 'resume'
+        }, function(ret, err) {
+            FNScanner.onResume();
+        });
+
+        //监听应用回到后台
+        api.addEventListener({
+            name: 'pause'
+        }, function(ret, err) {
+            FNScanner.onPause();
+        });
+        // 打开后置摄像头扫码
+        fnOpenFNScanner();
+        
+        api.addEventListener({
+            name: 'getUrl'
+        }, function(ret, err) {
+            if(ret && ret.value){
+                var value = ret.value;
+                api.alert({msg: value.location.search});
+            }            
+        });
+    }
+
+    function fnOpenFNScanner() {
+        // 打开指定自定义模块
+        opWithPermission('camera',function(){
+	        FNScanner.openView({
+	            //autorotation: true,
+	            fixedOn: api.frameName,
+	            rect: {
+	                x: 0,
+	                y: headerH,
+	                w: api.winWidth,
+	                h: api.winHeight
+	            }
+	        }, function(ret, err) {
+	            if (ret) {
+	                if (ret.eventType == 'success' && ret.content != '') {
+	                    // 扫码成功执行函数操作传值
+	                    fnOpenCouple(ret.content);
+	                    return;
+	                }
+	                if (ret.eventType == 'fail') {
+	                    alert_msg('扫码失败,请重新扫码');
+	                    setTimeout(function() {
+	                        back();
+	                    }, 300);
+	                    return;
+	                }
+	            } else {
+	                alert_msg('扫码错误请稍后再试');
+	                setTimeout(function() {
+	                    back();
+	                }, 300);
+	            }
+	        });
+	        setTimeout(function() {
+	            // 打开扫码动画frm页面
+	            api.openFrame({
+	                name: 'add_frm',
+	                url: './add_frm.html',
+	                rect: {
+	                    marginTop: headerH,
+	                    marginLeft: 0,
+	                    marginRight: 0,
+	                    marginBottom: 0
+	                },
+	                bgColor: 'rgba(0,0,0,0)',
+	            });
+	        }, 300);
+        });
+    }
+
+    //返回
+    function back() {
+        // 关闭扫码模块
+        FNScanner.closeView();
+        // 关闭win页面
+        api.closeWin();
+    }
+	function isJSON(str) {
+	    if (typeof str == 'string') {
+	        try {
+	            JSON.parse(str);
+	            return true;
+	        } catch(e) {
+	            console.log(e);
+	            return false;
+	        }
+	    }
+	}
+    /**
+     * 扫码得到的内容需要封装成一块共通方法
+     * 如果是url一律直接跳转
+     * 如果是json那么根据定义规范进行相应的操作（json数据中不要带有content字段）
+     * json:含有https://w.url.cn/s/的content代表模拟器
+     * businessType:10001(驾校扫码)
+     */
+    function fnOpenCouple(content) {
+       	// back(); //建议打开下一页我这块只是为了方便直接调用返回按钮   扫码成功之后必须关闭扫码模块  不然会出现多次扫码情况
+       	console.log('扫码得到的内容'+content);
+    /*  	if(checkUrl(content)){
+       		//如果是url，那么直接跳转
+       		params = {
+       			name:'扫码结果',
+       			url:content
+       		}
+       		api.openWin({
+		       	name: 'common_href_win',
+		       	url: '../common/common_href_win.html',
+		       	slidBackEnabled:'false',
+		       	vScrollBarEnabled:'false',
+		       	hScrollBarEnabled:'false',
+		       	reload:true,
+		       	useWKWebView:false,
+		       	pageParam: params
+		   	});
+       		return;
+       	} */
+		var params;
+		var baseParams;  //加密的传参
+		if (checkUrl(content)) {
+			//url截取其中的网址
+				url = content.split("?")[0];
+				if (url.indexOf('mohan-tech') == -1) {
+					log("网址信息", '非驾所通网址');
+					params = {
+						name: '扫码结果',
+						url: content
+					}
+					api.openWin({
+						name: 'common_href_win',
+						url: '../common/common_href_win.html',
+						slidBackEnabled: 'false',
+						vScrollBarEnabled: 'false',
+						hScrollBarEnabled: 'false',
+						reload: true,
+						useWKWebView: false,
+						pageParam: params
+					});
+					return;
+				}else{
+					baseParams = content.split("?")[1].slice(7);
+					console.log('截取的base64加密码' + baseParams);
+					content = Base64.decode(baseParams);
+					log("--------------地址", url);
+				}
+			}
+       	if(isJSON(content)){
+       		//如果是json数据
+			log("json格式","数据格式是json")
+       		var content_json = JSON.parse(content);
+         	if(content_json.content != undefined&&content_json.content.indexOf('https://w.url.cn/s/') != -1){
+         		//模拟器的二维码
+		        content = content_json.content;
+		        //启动模拟器
+		        startSimulator(content.substr(1).split("&")[1].split("=")[1]);
+		        return;
+	       	}
+	       	//开始驾所通内部扫码业务逻辑
+	       	switch(content_json.businessType){
+	       		case '10001':
+	       			//验证是否为该驾校报名学员
+	       			/* alert(content_json.businessType); */
+					cache_account = $api.getStorage('cache_by_account').cache_account;
+					if(isauth()){
+						if(cache_account.coachId){
+							sign(content_json);							
+						}else{
+							api.openFrame({
+								name: 'common_alert',
+								url: '../common/common_alert.html',
+								bgColor: 'rgba(0,0,0,0.4)',
+								rect: {
+									x: 0,
+									y: 0,
+									w: 'auto',
+									h: api.winHeight
+								},
+								bounces: false,
+								pageParam: {
+									title: '提示',
+									content: '您还没有绑定教练，是否先去绑定教练？',
+									sureButton: '去绑定教练',
+									sureFunc: 'toMine()',
+									cancelButton: '取消',
+									cancelFunc: '',
+									winName: api.winName,
+									frameName: api.frameName,
+									/* params:params */
+								},
+								softInputBarEnabled: true,
+								softInputMode: 'resize'
+							});
+							
+						}
+					}else{
+						
+						api.openFrame({
+							name: 'common_alert',
+							url: '../common/common_alert.html',
+							bgColor: 'rgba(0,0,0,0.4)',
+							rect: {
+								x: 0,
+								y: 0,
+								w: 'auto',
+								h: api.winHeight
+							},
+							bounces: false,
+							pageParam: {
+								title: '提示',
+								content: '您还没有实名认证，是否先去实名认证？',
+								sureButton: '实名认证',
+								sureFunc: 'toRenzhen()',
+								cancelButton: '取消',
+								cancelFunc: '',
+								winName: api.winName,
+								frameName: api.frameName,
+								/* params:params */
+							},
+							softInputBarEnabled: true,
+							softInputMode: 'resize'
+						});
+						break;
+					}
+	       			break;
+	       		default:
+	       			alert_msg(content);
+	       	}
+	       	return;
+       	}else{
+       		alert(content);
+       	}
+    }
+    
+	//实名认证
+	function isauth(){
+		//log('用户信息',$api.getStorage('cache_by_account').cache_account);
+		if($api.getStorage('cache_by_account').cache_account.identification == 2||$api.getStorage('cache_by_account').cache_account.identification == 1){//0未认证1认证中2认证通过
+			return true;
+		}else{
+			return false;
+		}
+	}
+	function toMine(){
+		setTimeout(function(){
+			api.closeWin({
+            });
+		},1000)
+	 	 api.openDrawerLayout({
+	 	    name: 'coach_select_under_school_win',
+	 	    url: '../common/select_coach/coach_select_under_school_win.html',
+	 	    slidBackEnabled: 'true',
+	 	    vScrollBarEnabled: 'false',
+	 	    hScrollBarEnabled: 'false',
+	 	    reload: true,
+	 	    slidToOpenPane:false,
+	 		slidToClosePane:false,
+	 	    pageParam: {
+	 	        data: params
+	 	    },
+	 	    animation: {
+	 	        type: 'push',
+	 	        subType: "from_right",
+	 	        duration: 300
+	 	    },
+	 	    rightPane: {
+	 	        name: 'driving_coach_win',
+	 	        url: '../common/select_coach/driving_coach_win.html',
+	 	        vScrollBarEnabled: false,
+	 	        hScrollBarEnabled: false,
+	 	        bounces: false,
+	 	        pageParam: {
+	 	            data: params
+	 	        }
+	 	    }
+	 	});
+	 	/* api.execScript({
+	 		name: 'index',
+	 		script: "setViewFrame(3)"
+	 	}); */
+	 	/* api.execScript({
+	 		name: 'mine_index',
+	 		script: "openAddCoachPage()"
+	 	}); */
+	}
+	function toRenzhen(){
+		setTimeout(function(){
+			api.closeWin({
+            });
+		},1000)
+	    api.openWin({
+	        name: "mine_account_auth_win",
+	        url: '../mine/mine_account_auth_win.html',
+	        slidBackEnabled:'false',
+	        vScrollBarEnabled:'false',
+	        hScrollBarEnabled:'false',
+	        reload:true,
+	        useWKWebView:false,
+	    });
+	}
+    /**
+     * 启动模拟器 
+     */
+    function startSimulator(DiskID){
+    	url = 'simulator/start/simulator'
+	    params={
+	        kemu:'036002',
+	        deviceNo:DiskID,
+	        learnerId:getUserId()
+	    };
+	    log('params',params)
+	    ajax_Request(url, 'post', 'json', params, function(ret, err) {
+	        if (ret) {
+	          	if (ret.code == 0 ) {
+	         	 	alert_msg('扫码成功，开始练习吧~');
+	          	} else{
+          			alert_msg(ret.msg);
+	          	}
+	        } else {
+	          	alert_msg('服务器繁忙,请稍后再试！');
+	          
+	        }
+      	});
+    }
+    	
+    function checkUrl(url) {
+        if(url!=""){
+		var reg=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
+			if(!reg.test(url)){
+				return false
+			 }else{
+				return true
+			 }      
+		}
+    }
+    
+	function fnOpenPic(){
+	FNScanner.decodeImg({
+	  }, function(ret, err) {  
+	   if (ret.status) {
+				var newContent=ret.content;
+				
+				
+				log("-----new",newContent);
+			   fnOpenCouple(JSON.stringify(newContent));
+		 
+	    } else {
+	    
+	    }
+	});
+	
+	
+	
+	}
+	
+    var isSOff = true;
+    // 打开闪光灯
+    function fnOpenLamp() {
+        if (isSOff) {
+            FNScanner.switchLight({
+                status: 'on'
+            });
+            isSOff = false;
+        } else {
+            FNScanner.switchLight({
+                status:'off'
+            });
+            isSOff = true;
+        }
+    }
+	function sign(content_json){
+		params={
+			schoolPlaceId: content_json.commonSchoolId,
+			id:content_json.id
+		}
+		log("content_json.schoolPlaceId",content_json.commonSchoolId);
+		var cache_account = $api.getStorage('cache_by_account').cache_account;
+		 
+		api.openWin({
+		   	name: 'student_infor_win',
+		   	url: './student_infor/student_infor_win.html',
+		   	slidBackEnabled:'false',
+		   	vScrollBarEnabled:'false',
+		   	hScrollBarEnabled:'false',
+		   	reload:true,
+		   	useWKWebView:false,
+		   	pageParam: params
+		});
+		setTimeout(function() {
+		    closeWin();
+		}, 1000);
+	}
+	function closeWin() {
+		api.closeWin({});
+	}
+</script>
+
+</html>

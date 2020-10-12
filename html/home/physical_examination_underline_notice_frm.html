@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>线下医院预约支付通知</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.payIcon{
+			font-size: 1rem;
+		    background: #FFFFFF;
+		    text-align: center;
+		}
+		.success_pay{
+	        padding: 1rem 0rem;
+	        color:#7DCF15;
+		}
+		.aui-list .aui-list-item {
+		    list-style: none;
+		    margin: 0;
+		    color: #7E7E7E;
+		    background-color: #ffffff;
+		    position: relative;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		    padding: 0.5rem 1.5rem;
+		    text-align:left;
+		    font-size: 0.7rem;
+		}
+		.marTop{
+		    margin-top: 1rem;
+		}
+		.pd_left{
+			padding-left:0.75rem !important;
+		}
+		.aui-btn-block {
+		    display: block;
+		    width: 86%;
+		    padding: 0.4rem 0;
+		    font-size: 0.9rem;
+		    float: left;
+		    margin-left: 7%;
+		}
+		.aui-btn-info {
+		    color: #ffffff !important;
+		    margin-top: 1rem;
+		}
+		.aui-btn-info.aui-active, .aui-btn-info:active {
+		    color: #fff !important;
+		    background-color: #DE5A58 !important;
+		}
+		.payIcon img{
+    		height: 4rem;
+		    margin-top: 5rem;
+		}
+		.border-none:before{ 
+			background-color: #FFFFFF !important;
+		}
+		.border-none:after{
+			background-color: #FFFFFF !important;
+		}
+		.aui-btn-outlined:active{
+		    color: #E85A5F !important;
+			border: 1px solid #E85A5F !important;
+		}
+		.aui-list-item font{
+			font-weight:bold;
+			font-size:1rem;
+		}
+    </style>
+</head>
+<body>
+	<div class="payIcon">
+	    <div><img src="../../icon/payfor/icon_success.png" alt="" /></div>
+	    <div class="success_pay"><span>支付成功</span></div>
+	</div>
+	<div class="aui-content aui-margin-b-15">
+	    <ul class="aui-list aui-form-list border-none">
+	    	<li class="aui-list-item">
+	    		&emsp;&emsp;您已成功预约体检，请到指定地点进行体检：<br>
+	    		<!-- <br>&emsp;&emsp;医院：<span id='hospital-name'></span>
+	    		<br>&emsp;&emsp;地址：<span id='hospital-address'></span> -->
+	    		<!-- <br>&emsp;&emsp;科室：门诊楼3楼301<br> -->
+	    		<!-- <br>&emsp;&emsp;预约号：<font>354458615</font> -->
+	    	</li>
+		    <div class="aui-btn aui-btn-block aui-btn-info marTop" tapmode onclick="sure()">地图导航</div>
+	    </ul>
+	 </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		log('传参6666',cache);
+		init();
+	}
+	function init(){
+		esc_function('physical_examination_underline_sign_up_win');
+	}
+	
+	//确认
+	function sure(){
+		esc_function('physical_examination_underline_sign_up_win','','openHosiptalMap()');
+	}
+</script>
+</html>

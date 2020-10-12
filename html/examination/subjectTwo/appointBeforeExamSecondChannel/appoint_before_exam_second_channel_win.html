@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>第二通道预约win</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+    	.order li{
+            float: left;
+		    font-size: 0.7rem;
+		    margin-left: 2.2rem;
+	    }
+	    .order{
+		    height: 2rem;
+		    line-height: 2rem;
+		    position: relative;
+	        background: #FFFFFF;
+		}
+	    .order img{
+		    width: 0.4rem;
+   			margin-bottom: 1px;
+   			-webkit-transition: 0.3s ease;
+		}
+		.screen{
+		    float: right !important;
+   			margin-right: 0.8rem;
+		}
+		.screen img{
+			width: 0.8rem;
+    		margin-bottom: -0.05rem;
+		}
+		.active{
+	    	color: #DC251F !important;
+    		/* border-bottom: solid 2px; */
+	    }
+	    .notice-container {
+		  align-items: center;
+		  color: #DC251F;
+		  background: #F5D3D3;
+		  opacity: 0.8;
+		  font-size:0.8rem;
+		  margin: 0 auto;
+		  display: flex;
+		  padding-right:0.5rem;
+		  padding-left:0.5rem;
+		  flex-direction: row;
+		  flex: 1;
+		}
+		.notice-container .header-notice-marquee {
+		  position: relative;
+		  width: 100%;
+		  overflow: hidden;
+		  height: 2rem;
+		  line-height: 2rem;
+		  animation: marquee 10s linear infinite;
+		}
+		.notice-container .header-notice-marquee:hover {
+		  animation-play-state: paused;
+		}
+		.notice-container .header-notice-marquee .header-marquee-item {
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  white-space: nowrap;
+		}
+		/* Make it move */
+		@keyframes marquee {
+		  0% {
+			text-indent: 25em;
+		  }
+		  100% {
+			text-indent: -25em;
+		  }
+		}
+    </style>
+</head>
+<body>
+    <section id="section6">
+		<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin()">
+	            <img src="../../../../icon/common/icon_header_return.png">
+	        </a>
+	        <div class="aui-title" id="appoint_before_exam_title">
+	        	科目二考前预约-第二通道
+	        </div>
+	        <a class="aui-pull-right aui-btn" tapmode onclick='openAppointSecondChannelOrder()'>
+	           	预约信息
+	        </a>
+	    </header>
+	    <div class="aui-bar aui-bar-btn aui-bar-btn-full">
+			<div class="notice-container">
+				<div class="header-notice-marquee" id="notice-marquee">
+					<span class="header-marquee-item">订单生成后由考场工作人员随机安排线路和班次，未必能安排到您满意的区域和线路，请知悉</span>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+<script type="text/javascript" src="../../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var section6Pos;
+	apiready = function(){
+		api.parseTapmode();
+		var section6 = $api.byId('section6');
+		$api.fixStatusBar(section6);
+		section6Pos = $api.offset(section6);
+		cache = api.pageParam;
+		init();
+	}
+	
+	var oper_status = 0;//0代表初始1代表进入支付页面2代表支付完成
+	function init(){
+		api.openFrame({
+            name: 'appoint_before_exam_second_channel_frm',
+            url: './appoint_before_exam_second_channel_frm.html',
+            bgColor:'#efeff4',
+            rect: {
+                x: 0,
+                y: section6Pos.h,
+                w: 'auto',
+                h: api.winHeight - section6Pos.h
+            },
+            bounces: false,
+            pageParam:cache,
+            reload:true,
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+        
+        //监听物理返回键
+        api.addEventListener({
+	    	name: 'keyback'
+		}, function(ret, err) {
+		    closeWin();
+		});
+        //订单填写信息提交
+        toEventListener('submit_second_order_info',function(ret,err){
+        	oper_status = 1;
+        	submitCoachInput(ret.value);
+        });
+        //支付成功
+        toEventListener('appoint_second_pay_finish',function(ret,err){
+        	oper_status = 2;
+        	appointPayFinish(ret.value);
+        });
+	}
+	
+	function closeWin(){
+		if(oper_status == 1){
+			oper_status = 0;//操作状态退回到初始状态
+			api.closeFrame({name:'appoint_before_exam_second_channel_pay_for_frm'});
+		}else{
+			api.closeWin({
+	        });
+		}
+	}
+	
+	//修改头部名
+	function changeMenuTitle(name,jsfun){
+		$('#appoint_before_exam_title').html(name);
+		api.parseTapmode();
+	}
+	
+	/**
+	 * 打开教练填写信息页面 
+	 */
+	function openCoachInput(data){
+		//frameRightOut('appoint_before_exam_detail_frm');
+		openFrameFromRight('appoint_exam_role_coach_frm',data,headerPos.h,api.winHeight - headerPos.h);
+	}
+	
+	/**
+	 *  提交教练填写信息
+	 */
+	function submitCoachInput(data){
+		
+		url = 'api/appointment-second-channel/insertAppointmentOrder';
+		
+		defaultload('提交订单信息中');
+		data.learnerId = getUserId();
+		
+		params = {
+			testCenterId:data.testCenterId,
+			learnerId:getUserId(),
+			testDate:data.testDate,
+			schoolId:data.schoolId,
+			carType:data.carTypeId,
+			coachName:data.coachName,
+			coachPhone:data.coachPhone,
+			carNum:data.carId,
+			peopleNum:data.appointmentOrderList.length,
+			appointmentOrderList:data.appointmentOrderList
+		}
+		log('最后提交的数据',params);
+		
+		ajax_Request(url, 'post', 'json', params, function(ret,err){
+			api.hideProgress();
+			log('教练插入数据',ret);
+			if(ret){
+				if(ret.code == 0){
+					api.hideProgress();
+					data.trainingScheduleNId = ret.trainingScheduleNId;//生成的排班id
+					//frameSlideOut('appoint_before_exam_second_channel_frm');//淡滑出
+					openFrameFromRight('appoint_before_exam_second_channel_pay_for_frm',data,section6Pos.h,api.winHeight - section6Pos.h);
+				}else{
+					alert_msg(ret.msg);
+					api.hideProgress();
+				}
+			}else{
+				alert_msg('服务器繁忙，请稍后再试');
+				api.hideProgress();
+			}
+		});
+	}
+	
+	//支付成功
+	function appointPayFinish(data){
+		changeMenuTitle('课程预约结果');
+		openFrameCommon('appoint_before_exam_second_channel_notice_frm',data,section6Pos.h,api.winHeight - section6Pos.h,false);
+	}
+	
+	//frame淡滑出
+	function frameSlideOut(frmName){
+		setTimeout(function(){
+			api.closeFrame({
+				name:frmName,
+				animation:{
+					type:"fade",                //动画类型（详见动画类型常量）
+				    duration:300 
+				}
+	        });
+		},300);
+	}
+	
+	/**
+	 * 打开第二通道的订单列表 
+	 */
+	function openAppointSecondChannelOrder(){
+		api.openWin({
+	       name: 'recode_appoint_second_channel_order_win',
+	       url: '../../../mine/appointBeforeExamSecondChannel/recode_appoint_second_channel_order_win.html',
+	       slidBackEnabled:'true',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       pageParam: {
+	       		index:0
+	       }
+	    });
+	}
+</script>
+</html>

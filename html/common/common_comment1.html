@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>评论通用页面</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/comment.css" />
+    <style>
+    	html{
+    		background: transparent;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background:transparent;
+    	}
+    	.comment-title {
+		    font-size: 0.9rem;
+		    height: 3rem;
+		    line-height: 3rem;
+		    position: relative;
+		    margin-bottom: 0.5rem;
+		    text-align: center;
+		}
+		.comment{
+		    background: #FFF;
+	        border-radius: 1rem 1rem 0 0;
+            min-height: 100%;
+		}
+		.jiazai{
+			font-size: 0.7rem;
+			background: #FFFFFF;
+			color: #666565;
+			padding-bottom: 0.3rem;
+			text-align: center;
+			padding-top: 0.3rem;
+		}
+		.jiazai img{
+			width: 1.5rem;
+		}
+		.train_man_line{
+			background: rgba(63,134,255,1);
+			font-size: 0.3rem;
+			padding: 0rem 0.1rem;
+			border-radius: 2px;
+			color: #FFF !important;
+			height: 0.5rem;
+			line-height: 0.5rem;
+			margin-left: 0.1rem;
+			vertical-align: text-top;
+			margin-top: 0.1rem;
+		}
+		.auth_img{
+			width: 1.6rem;
+			vertical-align: text-top;
+			margin-top: 0.1rem;
+		}
+    </style>
+</head>
+<body>
+	<div class='comment'>
+		<div class='comment-title'><span class="titleName">对的评论</span></div>
+		
+	</div>
+	<script type="text/template" charset="UTF-8" id="commentComment">
+	<ul>
+		{{ for(var i=0;i< it.informationMessageDtoList.length;i++){ }}
+		<li>
+			{{if(it.informationMessageDtoList[i].coachAuthId != "" && it.informationMessageDtoList[i].coachAuthId != null && it.informationMessageDtoList[i].coachAuthId != undefined){}}
+			<div class='head-img' onclick="openMyCoachInfoPage('{{=it.informationMessageDtoList[i].coachAuthId}}')">
+				<img src="{{=file_load_url + it.informationMessageDtoList[i].headimgurl}}" alt="" onerror="javascript:this.src='../../icon/mine/icon_mine_head_hui.png'"/>
+			</div>
+			{{}else{}}
+			<div class='head-img' >
+				<img src="{{=file_load_url + it.informationMessageDtoList[i].headimgurl}}" alt="" onerror="javascript:this.src='../../icon/mine/icon_mine_head_hui.png'"/>
+			</div>
+			{{}}}
+			
+			<div class='comment-main'>
+				<div class='commnent-nickname'>
+					<div class='nickname-left' id="name{{=it.informationMessageDtoList[i].id}}">{{=it.informationMessageDtoList[i].name}}{{=it.informationMessageDtoList[i].isCoach==0?'':"<span class='train_man_line'>教练</span>"}} {{=it.informationMessageDtoList[i].isAuth==1?"<img class='auth_img' src='../../icon/mine/icon_auth_img.png'/>":""}}</div>
+					<div class='nickname-right'>
+						<!-- <img src="../../icon/article/icon_zan.png" alt="" style="margin-right:0.2rem;"/>
+						<span>1</span> -->
+					</div>
+				</div>
+				<div class='commnent-comment'>{{=it.informationMessageDtoList[i].message}}</div>
+				<div class='comment-time'>
+					<span>{{=it.informationMessageDtoList[i].insertDt}}</span>
+				</div>
+			</div>
+		</li>
+		{{ } }}
+	</ul>
+	</script>
+	<div id='load_div'>
+	</div>
+	<script type="text/template" charset="utf-8" id='more_src'>
+		<div class="jiazai"><!--上拉加载-->
+		<span>{{=it.msg}}</span> 
+	</div>
+	</script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script src="../../script/doT_min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var path;
+	var commentData;
+	var fatherMessageId;
+	var fatherName;
+	var pageNo=1;
+	var pageSize=5;
+	var more_src = $('#more_src').html(); //更多src
+	var refresh = true; //标记是否是刷新操作
+	apiready = function(){
+		api.parseTapmode();
+		commentData = api.pageParam;
+		fatherMessageId = commentData.fatherMessageId;
+		fatherName = commentData.fatherName
+		// log("评论id------------",fatherMessageId)
+		type = commentData.type;
+		// log(type);
+		// console.log(JSON.stringify(commentData));
+		loaderComments()
+		//上拉加载
+		goLoad(function(ret, err) {
+			loadList();
+		});
+	}
+	//加载子评论
+	function loaderComments(){
+		if(type == "all" || type == "video" || type == "drivingSkill"){
+			//科目二,三，驾考技巧打开子评论
+			url = 'api/knowledge/getKnowledgeChilderMsg';
+			params = {
+				id:fatherMessageId,
+				pageNo:pageNo,
+				pageSize:pageSize
+			}
+			comment(url,params)
+		}else if(type == "news"){
+			//资讯打开子评论
+			url = 'api/comment/list-news-sub-comment-by-id';
+			params = {
+				id:fatherMessageId,
+				pageNo:pageNo,
+				pageSize:pageSize
+			}
+			comment(url,params)
+		}else{
+			//社区打开子评论
+			url = 'api/comment//list-forum-sub-comment-by-id';
+			params = {
+				id:fatherMessageId,
+				pageNo:pageNo,
+				pageSize:pageSize
+			}
+			comment(url,params)
+		}
+		
+	}
+	
+	//请求子评论列表
+	function comment(url,params){
+		ajax_Request(url, 'get', 'json', params, function(ret, err) {
+			log('评论子列表', ret);
+			if(ret){
+				if(ret.code == 0 && ret.informationMessageDtoList.length > 0){
+					var commentComment = $("#commentComment").html();
+					$(".titleName").html('对'+fatherName+'的评论');
+					$(".comment").append(doT.template(commentComment)(ret));
+					// $(".comment-titleNum").html('最新评论（共'+ret.total+'条）');
+//					for(var j=0;j<ret.informationMessageDtoList.length;j++){
+//						if(ret.informationMessageDtoList[j].name == "" || ret.informationMessageDtoList[j].name == null || ret.informationMessageDtoList[j].name == undefined){
+//							// var sonPhone = ret.informationMessageDtoList[j].phoneNumber.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+//							$("#name"+ret.informationMessageDtoList[j].id).html("匿名用户")
+//						}else{
+//							$("#name"+ret.informationMessageDtoList[j].id).html(ret.informationMessageDtoList[j].name)
+//						}
+//					}
+				}else{
+					setMsg(refresh ? '暂无资讯' : '暂无更多');
+				}
+			}else{
+				setMsg("服务器繁忙，请稍后再试")
+			}
+		})
+	}
+	//列表上拉
+	function loadList() {
+		pageNo++;
+		refresh = false;
+		setLoad();
+		loaderComments()
+	}
+	//设置页面加载的画面
+	function setLoad() {
+		if (refresh || $('ul').find('li').length == 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+			$('#load_div').html('');
+		} else {
+			setTimeout(function() {
+				$('#load_div').html(doT.template(more_src)({
+					'msg': '加载更多中...',
+					'img': '../../icon/common/jiazai.gif'
+				}));
+			}, 500);
+		}
+	}
+
+	//设置页面提示信息
+	function setMsg(msg) {
+		if (refresh || $('ul').find('li').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+			setTimeout(function() {
+				$("section").html(doT.template(msg_src)({
+					'msg': msg
+				}));
+			}, 500);
+		} else { //原先已经有数据的情况下
+			setTimeout(function() {
+				$('#load_div').html(doT.template(more_src)({
+					'msg': msg,
+					'img': ''
+				}));
+			}, 500);
+		}
+	}
+	
+	// 打开我的教练信息页面
+    function openMyCoachInfoPage(id) {
+        // commonOpenWin('../home/driving_coach/coach_detail_new_win',{id: accountInfo.coachId});
+		log('----------------------',id)
+		api.openWin({
+			name: 'coach_detail_new_win',
+			url: '../home/driving_coach/coach_detail_new_win.html',
+			slidBackEnabled:'false',
+			vScrollBarEnabled:'false',
+			hScrollBarEnabled:'false',
+			reload:true,
+			useWKWebView:false,
+			pageParam: {
+				data:{
+					id: id
+				}
+			}
+		})
+    }
+</script>
+</html>

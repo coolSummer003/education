@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>考试成绩frm</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html{
+    		background: transparent;
+    		height:100%;
+    		display:flex;
+    	}
+    	body{
+    		width: 90%;
+    		margin:auto;
+    		/* background: #000; */
+    		background: transparent;
+    	}
+    	.exam-result{
+    		background: #FFF;
+		    position: relative;
+		    border-radius: 5px 5px 0px 0px;
+    	}
+    	.exam-result-percent{
+    		height: 4.5rem;
+    		text-align: center;
+    	}
+    	.exam-result-percent font{
+		    font-size: 3rem;
+    	}
+    	.result-label{
+    		width: 30%;
+		    margin: 0 auto;
+		    height: 1.2rem;
+		    line-height: 1.2rem;
+		    text-align: center;
+		    border: solid 1px #DC251F;
+		    color: #DC251F;
+		    font-size: 0.6rem;
+    	}
+    	.daoh{
+    		width:1.8rem;
+    		margin: 0 auto;
+    	}
+    	.w_red{
+    		border:solid 1px #F58B81 !important;
+    		background:#FDE8E6 !important;
+    		color: #F58B81 !important;
+    	}
+    	.result-button{
+		    height: 2rem;
+		    line-height: 2rem;
+		    text-align: center;
+		    border-radius: 3px;
+	        width: 90%;
+    		margin: auto;
+    	}
+    	footer{
+		    height: 4rem;
+		    background: #FFF;
+		    display: flex;
+	        border-radius: 0px 0px 5px 5px;
+    	}
+    	.result{
+    	}
+    	.trans {
+            /*transition*/
+            -webkit-transition: 0.3s ease;
+            -moz-transition: 0.3s ease;
+            -ms-transition: 0.3s ease;
+            -o-transition: 0.3s ease;
+            transition: 0.3s ease;
+            -webkit-transform: scale(0);
+			transform:scale(0);
+			opacity: 0;
+        }
+        .show{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+        }
+        .in{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+		}
+		.aui-grid [class*=aui-col-] {
+		    display: table-cell;
+		    position: relative;
+		    text-align: center;
+		    vertical-align: middle;
+		    padding-bottom: 1rem;
+		}
+		#isPass{
+			color:#F58B81;
+		}
+    </style>
+</head>
+<body>
+	<div class='trans'>
+		<div class='exam-result'>
+			<div id="examResult-circle" style="margin: 0 auto;min-height:16.45rem;">
+		</div>
+		<section class="aui-grid">
+	        <div class="aui-row">
+	            <div class="aui-col-xs-3 ">
+	                <img src="../../../icon/mine/icon_num.png" class="daoh"/>
+	                <div class="aui-grid-label mt">
+	                	<span>考试做题</span><br>
+	                	<span id="num"></span>
+	                </div>
+	            </div>
+	            <div class="aui-col-xs-3">
+	                <img src="../../../icon/mine/icon_clock.png" class="daoh cache"/>
+	                <div class="aui-grid-label mt">
+	                	<span>考试用时</span><br>
+	                	<span id="wasteTime"></span>
+	            	</div>
+	            </div>
+	            <div class="aui-col-xs-3">
+	            	<img src="../../../icon/mine/icon_history.png" class="daoh"/>
+	            	<div class="aui-grid-label mt">
+	            		<span>历史最高</span><br>
+	                	<span id='maxScore'>0分</span>
+	            	</div>
+	            </div>
+	            <div class="aui-col-xs-3">
+	                <img src="../../../icon/mine/icon_exam.png" class="daoh"/>
+	                <div class="aui-grid-label mt">
+	                	<span>测试结果</span><br>
+	                	<span id='isPass'></span>
+	        		</div>
+	            </div>
+	        </div>
+	    </section>
+	    <footer>
+		    <div class='result-button w_red' id="iKnow">朕知道了</div>
+	    </footer>
+	</div>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript" src="../../../script/circliful/jquery.circliful.js"></script>
+<script type="text/javascript">
+	var cache;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		$('#num').html(cache.finishNum + '题');//做的题目
+		$('#wasteTime').html(calCuTime(cache.time));//花费时间
+		$('#isPass').html(cache.percent >= 90?'通过':'未通过');
+		$('.trans').addClass('in');
+		init();
+		setTimeout(function(){
+			loadCircle(cache.percent);
+		},300);
+	}
+	
+	function init(){
+		if(islogin()){
+			url = 'api/mock-exam-and-study/list-mock-exam-max';
+			params = {
+				learnerId:getUserId(),
+				kemu:'036001',
+				bankType:getBankType('036001')
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret,err){
+				log('最高分',ret);
+				if(ret.code == 0){
+					if(ret.list.length > 0){
+						$('#maxScore').html(ret.list[0].score+'分');
+					}else{
+						$('#maxScore').html(cache.percent+'分');
+					}
+				}else{
+					$('#maxScore').html(cache.percent+'分');
+				}
+			});
+		}else{
+			$('#maxScore').html(cache.percent+'分');
+		}
+	}
+	
+	function loadCircle(percent){
+		$("#examResult-circle").circliful({
+			foregroundBorderWidth:16,//进度条粗细
+			backgroundBorderWidth:13,//内圈进度条粗细
+			fontColor: '#F58B81',//圈内字体颜色
+			percent: percent,//数据
+			foregroundColor: "#F7A7A2",//进度条颜色
+			backgroundColor: "#FDE8E6",//背景进度条颜色
+			percentageY:115,//圈内百分比Y轴
+			percentageTextSize:40,//圈内字体大小
+			noPercentageSign:true,
+			text:'分',//说明性文字
+			textColor:'#F58B81',
+			textX:133,
+			textY:113,
+			animationStep:10,
+			progressColor:{
+				0:"#F58B81",
+				100:"#F58B81"
+			}
+	    });
+	    document.getElementById('iKnow').onclick = function(){
+	    	closeWin();
+	    }
+	    api.parseTapmode();
+	}
+	function closeWin(){
+		esc_function('exam_simulation_win','','closeWinTimer()');
+		setTimeout(function(){
+			api.closeFrame({
+				name:'exam_simulation_result_frm'
+            });
+		},300);
+		$('.trans').removeClass('in');
+	}
+	
+	function calCuTime(seconds){
+		return 	Math.floor(seconds/60) + '分' + seconds%60 + '秒';
+	}
+</script>
+</html>

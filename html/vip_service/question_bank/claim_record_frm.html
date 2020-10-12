@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>理赔记录</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html,body{
+    		background-color: #ffffff;
+    	}
+		.information{
+			width: 90%;
+			position: relative;
+			height: 4.5rem;
+			margin-top: 0.8rem;
+			left: 5%;
+			box-shadow:0px 2px 10px 1px #D7D7D7;
+			border-radius: 0.5rem;
+		}
+		.sobject{
+			position: absolute;
+			top: 0.6rem;
+			left: 4%;
+			font-size: 0.9rem;
+			font-weight: 650;
+		}
+		.state{
+			position: absolute;
+			top: 0.6rem;
+			right: 4%;
+			color: #FF7D7B;
+		}
+		.stateComplates{
+			color: #3F86FF;
+		}
+		.stateComplate{
+			color: #9D9EA7;
+		}
+		.time{
+			position: absolute;
+			top: 2.5rem;
+			left: 4%;
+			color: #323E55;
+			font-size: 0.7rem;
+		}
+		.msg {
+            background: #FFFFFF;
+            height: 20rem;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        .msg img {
+            width: 8rem;
+            margin-top: 9rem;
+        }
+
+        .loading {
+            font-size: 0.7rem;
+            background: #FFFFFF;
+            color: #7D7D7D;
+            padding-bottom: 0.3rem;
+            text-align: center;
+            padding-top: 0.3rem;
+        }
+
+        .load {
+            color: #7D7D7D;
+        }
+
+        .load img {
+            width: 1.6rem;
+            height: 1.6rem;
+        }
+		.empty {
+			width: 100%;
+			padding: 3rem 0rem;
+			text-align: center;
+			font-size: 0.6rem;
+		}
+		
+		.empty img {
+			width: 7rem;
+			margin-top: 5rem;
+		}
+    </style>
+	</head>
+	<body>
+		<div>
+			<ul id="information_lists">
+
+			</ul>
+		</div>
+		<div id='load_div'>
+		</div>
+
+
+		<script type="text/template" charset="utf-8" id='information_list'>
+			{{ for(var i=0;i<it.length;i++ ){ }}
+				<li class="information" tapmode onclick="toDetail('{{=it[i].id}}');">
+					<div class="sobject">{{=it[i].kemu == 1?'科目一':'科目四'}}补考</div>
+					<div class="time">理赔发起时间：{{=it[i].startCompensateDt}}</div>
+					{{ if(it[i].status == 0){ }}
+					<div class="state">审核中</div>
+					{{ }else if(it[i].status == 1){ }}
+					<div class="state">初审中</div>
+					{{ }else if(it[i].status == 2){ }}
+					<div class="state">复审中</div>
+					{{ }else if(it[i].status == 3){ }}
+					<div class="state stateComplates">已完成</div>
+					{{ }else if(it[i].status == 9){ }}
+					<div class="state stateComplate">审核失败</div>
+					{{ } }}
+				</li>
+		{{ } }}
+	</script>
+
+		<script type="text/template" charset="utf-8" id='load_src'>
+			<div class="load">
+        <img src="../../../icon/common/icon_loadding.gif" alt=""/><br>
+        <span>加载中...</span>
+    </div>
+</script>
+		<script type="text/template" charset="utf-8" id='msg_src'>
+			<div class="msg">
+        <img src="../../../icon/common/empty.png" alt=""/><br>
+        <span>{{=it.msg}}</span>
+    </div>
+</script>
+		<script type="text/template" charset="utf-8" id='more_src'>
+			<div class="loading">
+        <span>{{=it.msg}}</span>
+    </div>
+</script>
+		<script type="text/template" charset="utf-8" id="error_src">
+			<div class='empty'>
+				<img src="../../../icon/common/empty.png" alt="" /><br>
+				<span>{{=it.msg}}</span>
+			</div>
+		</script>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript" src="../../../script/echo.min.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		var infor;
+		var refresh = true;
+		var page = 1;
+		var limit = 10;
+		var load_src = $('#load_src').html(); //加载src
+		var msg_src = $('#msg_src').html(); //消息提示src
+		var more_src = $('#more_src').html(); //更多src
+		apiready = function() {
+			api.parseTapmode();
+			goRefrash(40, '#FFFFFF', null, null, function() {
+				refreshList();
+			});
+			defaultload();
+			init();
+			goLoad(function(ret, err) {
+				loadList();
+			});
+			toEventListener('refreshLPList',function(ret,err){
+				refreshList()
+			})
+			//api.refreshHeaderLoading();
+		}
+		//列表刷新
+		function refreshList() {
+			page = 1;
+			refresh = true;
+			setLoad();
+			init();
+		}
+
+		//列表上拉
+		function loadList() {
+			page++;
+			refresh = false;
+			setLoad();
+			init();
+		}
+
+		function init() {
+			url = 'api/questionviporder/get-question-vip-service-compensate-info-list';
+			params = {
+				learnerId: getUserId(),
+				page:page,
+				limit:limit
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('理赔列表', ret)
+				if (ret) {
+					closedefaultload();
+					if (ret.code == 0 && ret.qList.length>0) {
+						var local = ret.qList;
+						log('本地数据', local)
+						for (var i = 0; i < local.length; i++) {
+							local[i].insertDtNumber = (new Date(local[i].insertDtNumber)).Format('yyyy-MM-dd hh:mm')
+						}
+						var information_list = $("#information_list").html();
+						if(page == 1){
+							$("#information_lists").html(doT.template(information_list)(local))
+						}else{
+							$("#information_lists").append(doT.template(information_list)(local))
+						}
+					} else {
+						setMsg(refresh ? '暂无理赔信息' : '暂无更多')
+						if(page > 1){
+							page--;	
+						}
+					}
+				} else {
+					alert_msg('服务器繁忙，请稍后重试')
+				}
+			})
+			setTimeout(function() {
+				api.refreshHeaderLoadDone();
+			}, 500);
+		}
+
+		function setLoad() {
+			if (refresh || $('#information_lists').find('.information').length == 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+				$('#load_div').html('');
+				// $("#information_lists").html(doT.template( load_src )( null ));
+			} else {
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': '加载更多中...',
+						'img': '../../icon/common/jiazai.gif'
+					}));
+				}, 500);
+			}
+		}
+		//设置页面提示信息
+		function setMsg(msg) {
+			if (refresh || $('#information_lists').find('.information').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+				setTimeout(function() {
+					$("#information_lists").html(doT.template(msg_src)({
+						'msg': msg
+					}));
+				}, 500);
+			} else { //原先已经有数据的情况下
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': msg,
+						'img': ''
+					}));
+				}, 500);
+			}
+		}
+		//设置出错页面;
+		function setError(msg) {
+			var error_src = $('#error_src').html();
+			$('#information_lists').html(doT.template(error_src)({
+				'msg': msg
+			}));
+		}
+		/**
+		 * @param {Object} id 
+		 * 去理赔详情
+		 */
+		function toDetail(id){
+			commonOpenWin('details_of_claim_settlement_win',{id,id})
+		}
+	</script>
+</html>

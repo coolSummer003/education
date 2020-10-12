@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>体检结果</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+		#common_title{
+    		font-weight:normal;
+    		color:#2E2E2E;
+    	}
+    	
+    	.aui-bar-nav {
+		    top: 0;
+		    line-height: 2.25rem;
+		    background-color: #FFF;
+		    color: #000;
+		    border-bottom: solid 1px #FFFFFF;
+		}
+		
+    </style>
+	</head>
+	<body>
+		<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+				<img src="../../../icon/common/icon_header_return.png">
+			</a>
+			<div class="aui-title" id="common_title">
+				体检结果
+			</div>
+			<a class="aui-pull-right aui-btn">
+
+			</a>
+		</header>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var headerPos;
+		apiready = function() {
+			api.parseTapmode();
+			var header = $api.byId('aui-header');
+			$api.fixStatusBar(header);
+			headerPos = $api.offset(header);
+			cache = api.pageParam.data;
+			log('result_win.html',cache)
+			// if (cache.winName == 'waiting' ) {
+			// 	openFrame('result_waiting_frm','./result_waiting_frm.html');
+			// } else{
+				openFrame('result_frm','./result_frm.html');
+			// }
+			setTimeout(function(){
+				esc_function('my_student_physical_new_win', '', 'search()');
+			},300)
+			toEventListener('closeResultWin', function(ret) {
+				closeWin()
+			})
+		}
+
+		function openFrame(name,url) {
+			api.openFrame({
+				name: name,
+				url: url,
+				bgColor: '#efeff4',
+				rect: {
+					x: 0,
+					y: headerPos.h,
+					w: 'auto',
+					h: api.winHeight - headerPos.h
+				},
+				animation: {
+					type: 'none', //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300
+				},
+				bounces: false,
+				pageParam: cache,
+				reload: true,
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+
+		function closeWin() {
+			esc_function('my_student_physical_new_win', '', 'search()');
+			api.closeWin({});
+		}
+	</script>
+</html>

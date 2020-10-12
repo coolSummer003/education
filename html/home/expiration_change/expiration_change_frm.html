@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css"/>
+    <style>
+    	body,html{
+    		background-color: #FFF;
+    	}
+		.text-one{
+			background: #FFFFFF;
+			box-shadow: 0 1px 8px 0 rgba(64,134,254,0.10);
+			border-radius: 10px;
+			border-radius: 10px;
+		}
+		.one{
+			width: 1.2rem;
+			height: 1.2rem;
+			border-radius: 25px;
+			background: #3F86FF;
+			text-align: center;
+			line-height: 1.2rem;
+			font-size: 0.8rem;
+			color: #FFF;
+		}
+		.oneLeft{
+			width: 60%;
+			display: inline-block;
+		}
+		.oneRight{
+			width: 35%;
+			display: inline-block;
+		}
+		.text{
+			font-size: 0.8rem;
+			color: #000000;
+			margin-left: 0.5rem;
+		}
+		.main_text{
+			font-size: 1rem;
+			color: #000000;
+			font-weight: 600;
+			margin-top: 0.5rem;
+		}
+		.button_text{
+			font-size: 0.8rem;
+			color: #FFF;
+			background: #3F86FF;
+			width: 65%;
+			padding: 0.25rem ;
+			border-radius: 25px;
+			text-align: center;
+			margin-top: 0.5rem;
+		}
+		.foot_text{
+			font-size: 0.65rem;
+			padding: 0.6rem;
+			color: #999999;
+		}
+		.foot_text span{
+			color: #3F86FF;
+			font-weight: 600;
+		}
+		.aui-card-list{
+			padding: 0.5rem 0;
+		}
+    </style>
+</head>
+<body>
+	<section class="aui-content-padded text-one">
+		<div class="aui-card-list">
+			<div class="aui-card-list-content-padded">
+				<div class="oneLeft">
+					<p>
+						<span class="one">
+							1
+						</span>
+						<span class="text">第一步</span>
+					</p>
+					<p class="main_text">期满换证体检</p>
+					<p class="button_text" onclick="openWin(1)">体检信息采集</p>
+				</div>
+				<div class="oneRight">
+					<img src="../../../image/background/exam_change.png" >
+				</div>
+				
+			</div>
+			
+			<div class="foot_text">
+				在线体检信息采集目前仅适用于<span>绍兴市上虞区</span>身份证的申请者，
+				<span>绍兴市上虞区以外</span>的请到医院进行线下体检
+			</div>
+		</div>
+	</section>
+	
+	<section class="aui-content-padded text-one">
+		<div class="aui-card-list">
+			<div class="aui-card-list-content-padded">
+				<div class="oneLeft">
+					<p>
+						<span class="one">
+							2
+						</span>
+						<span class="text">第二步</span>
+					</p>
+					<p class="main_text">交管12123操作指南</p>
+					<p class="button_text" onclick="lookMsg()">查看说明</p>
+				</div>
+				<div class="oneRight">
+					<img src="../../../image/background/other_app_change.png" >
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+		
+		
+	};
+	
+	function openWin(index) {
+	    var action;
+	    switch (index) {
+	        case 0 :
+	            logAppBuryingPoint({},'驾校报名','首页');
+	            action = 'sign-up-action';
+	            break;
+	        case 1 :
+	            logAppBuryingPoint({},'在线体检','首页');
+	            action = 'phyical-exam-action';
+	            break;
+	        case 2 :
+	            onEvent('home2', '优质教练');
+	            action = '';
+	            break;
+	    }
+	    params = {
+	        index: index,
+	        action: action
+	    };
+	    api.openDrawerLayout({
+	        name: 'home_sign_win',
+	        url: '../home_sign_win.html',
+	        slidBackEnabled: 'true',
+	        vScrollBarEnabled: 'false',
+	        hScrollBarEnabled: 'false',
+	        reload: true,
+	        pageParam: {
+	            data: params
+	        },
+	        animation: {
+	            type: 'push',
+	            subType: "from_right",
+	            duration: 300
+	        },
+	        rightPane: {
+	            name: 'search_detail',
+	            url: './search_detail.html',
+	            vScrollBarEnabled: false,
+	            hScrollBarEnabled: false,
+	            bounces: false,
+	            pageParam: {
+	                data: params
+	            }
+	        }
+	    });
+	}
+	
+	function lookMsg(){
+		api.openDrawerLayout({
+		    name: 'other_app_msg_win',
+		    url: './other_app_msg_win.html',
+		    slidBackEnabled: 'true',
+		    vScrollBarEnabled: 'false',
+		    hScrollBarEnabled: 'false',
+		    reload: true,
+		    pageParam: {
+		        data: params
+		    },
+		    animation: {
+		        type: 'push',
+		        subType: "from_right",
+		        duration: 300
+		    }
+		});
+	}
+</script>
+</html>

@@ -1,0 +1,560 @@
+  <!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>考前训练预约-第二通道订单list</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_list_swipe.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	body,html{
+    		background:#FFF;
+    	}
+    	.aui-list:before {
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    right: auto;
+		    bottom: auto;
+		    width: 100%;
+		    z-index: 2;
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		    pointer-events: none;
+		}
+		.room_list{
+	    	overflow: hidden;
+	    	zoom: 1;
+		}
+		.room_list_div{
+			overflow-x:hidden;
+			width:100%;
+		}
+		.list_div{
+		    min-height: 2.2rem;
+    		padding: 0 0.3rem;
+			background: #FFF;
+			transition: all 0.5s;
+			-webkit-transition: all 0.5s;
+		    position: relative;
+		}
+		.list_div:after{
+			content: '';
+		    height: 1px;
+		    background: #DDDDDD;
+		    width: 100%;
+		    background-color: #dddddd;
+		    display: block;
+		    -webkit-transform: scaleY(0.5);
+		    transform: scaleY(0.5);
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		}
+		.swipeleft{
+			min-height:2.2rem;
+			padding: 0 0.3rem;
+			background: #FFF;
+			transition: all 0.5s;
+			-webkit-transition: all 0.5s;
+			transform:translateX(-50%);
+			-webkit-transform:translateX(-50%);
+		    position: relative;
+		}
+		.swipeleft:after{
+			content: '';
+		    height: 1px;
+		    background: #DDDDDD;
+		    width: 100%;
+		    background-color: #dddddd;
+		    display: block;
+		    -webkit-transform: scaleY(0.5);
+		    transform: scaleY(0.5);
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		}
+		.recode-title{
+			height:1.5rem;
+			font-size:0.7rem;
+			line-height:1.5rem;
+		    padding-top: 0.3rem;
+		}
+		.recode-title img{
+		    height: 1rem;
+		    width: 1rem;
+		    margin-bottom: -0.2rem;
+		    border-radius: 100%;
+		    object-fit: cover;
+		    margin-right: 0.2rem;
+		}
+		.recode-title font{
+			color:#7D7D7D;
+			font-size: 0.6rem;
+		}
+		.recode-content{
+			width:100%;
+			overflow:hidden;
+			margin-top: 0.5rem;
+			position: relative;
+		}
+		.recode-img{
+			width:20%;
+			float:left;
+		}
+		.recode-img_div{
+			width:3.5rem;
+			height:3.5rem;
+		    margin: auto;
+		}
+		.recode-img_div img{
+			width:100%;
+			height:100%;
+			object-fit:cover;
+		}
+		.recode-txt{
+		    padding: 0 0.5rem;
+	        position: relative;
+		}
+		.txt-title{
+			font-size: 0.7rem;
+		    position: relative;
+		    overflow: hidden;
+		    margin-top: 0.1rem;
+		}
+		.txt-start{
+			font-size:0.7rem;
+			color:#7D7D7D;
+		}
+		.txt-submit-time{
+			font-size:0.7rem;
+			color:#7D7D7D;
+		}
+		.txt-price{
+			font-size: 0.6rem;
+		    text-align: right;
+	        height: 1.5rem;
+    		line-height: 1.5rem;
+		}
+		.txt-price span{
+			font-size:0.8rem;
+		    color: #FF9641;
+		}
+		.recode-status{
+	        font-size: 0.6rem;
+		    position: absolute;
+		    right: 0.5rem;
+		    background: #1E8DD8;
+		    color: #FFF;
+		    padding: 1px 0.2rem;
+		    z-index: 1;
+		}
+		.w-orange{
+			color:#FF9641;
+		}
+		.txt-title span{
+			color:#7D7D7D;
+		}
+		.recode-title span{
+			color:#4D92E3;
+		}
+		.label{
+		    font-size: 0.5rem;
+		    background: #FDF2E6;
+		    color: #EE9A70;
+		    border:solid 1px #FDF2E6;
+		    float: left;
+		    padding: 0rem 0.1rem;
+		    margin-top: 0.1rem;
+		    margin-right:0.5rem;
+		}
+		.label-status{
+		    font-size: 0.5rem;
+		    border:solid 1px #EE9A70;
+		    color: #EE9A70;
+		    float: left;
+		    padding: 0rem 0.2rem;
+		    margin-top: 0.1rem;
+		    margin-right:0.5rem;
+		}
+		.msg{
+			background: #FFFFFF;
+		    height: 20rem;
+		    text-align: center;
+		    font-size:0.7rem;
+		}
+		.msg img{
+			width:8rem;
+			margin-top: 9rem;
+		}
+		.jiazai{
+    	    font-size: 0.7rem;
+		    background: #FFFFFF;
+		    color: #666565;
+		    padding-bottom: 0.3rem;
+		    text-align: center;
+		    padding-top: 0.3rem;
+	    }
+	    .jiazai img{
+	    	width: 1.5rem;
+	    }
+	    .order-button{
+    		overflow: hidden;
+		    padding: 0.5rem 0rem;
+	    }
+	    .op-button{
+	    	color: #535860;
+		    font-size: 0.7rem;
+		    text-align: center;
+		    border-radius: 1rem;
+		    float: right;
+		    margin-left: 0.5rem;
+		    background: #F1F2F4;
+	        padding: 0.1rem 0.6rem;
+	    }
+	    .unabled{
+	    	color:#909090;
+	    }
+	    .unabled-cash{
+	    	color:#EE9A70;
+	    	background:#FDF2E6;
+	    }
+	    .order-button-detail{
+	    	color:#03A9F4;
+	    	background:#E8F7FA;
+	    }
+    </style>
+</head>
+<body>
+	<div class="room_list">
+		<div class="room_list_div">
+			<!-- <div class="list_div">
+				<div class='recode-title'>
+					<img src="../../image/demo/school/2.jpg" alt="" />
+					<span>上虞海滨考场<font>&ensp;500米</font></span>
+				</div>
+				<div class='recode-content'>
+					<div class='recode-txt'>
+						<div class='txt-title'><span>训练时间：</span>2019-4-26</div>
+						<div class='txt-title'><span>区域：</span>A区&emsp;<span>线路：</span>线路1&emsp;<span>班次：</span>白班</div>
+						<div class='txt-price'>共3个学员&emsp;实际支付
+							<font style='color: #FF9641;'>￥</font>
+							<span>150.0</span>
+							<font style='color: #FF9641;'>（优惠300）</font>
+						</div>
+						<div class='order-button'>
+							<span class="op-button">
+					    					地图导航
+			    			</span>
+							<span class="op-button unabled">
+					    					已支付
+			    			</span>
+						</div>
+					</div>
+				</div>
+			</div> -->
+		</div>
+	</div>
+	<div id='load_div'>
+    </div>
+    <script type="text/template" charset="utf-8" id='load_src'>
+    	<div class="load">
+			<img src="../../../icon/common/loadding.gif" alt="" /><br>
+        	<span>加载中...</span>
+		</div>
+    </script>
+    <script type="text/template" charset="utf-8" id='msg_src'>
+    	<div class="msg">
+			<img src="../../../icon/common/empty.png" alt="" /><br>
+        	<span>{{=it.msg}}</span>
+		</div>
+    </script>
+    <script type="text/template" charset="utf-8" id='more_src'>
+    	<div class="jiazai">
+	    	<span>{{=it.msg}}</span>
+	    </div>
+    </script>
+	<script type="text/template" charset="utf-8" id='recode_practice_src'>
+		{{ for(var i=0;i<it.length;i++){ }}
+			<div class="list_div">
+				<div class='recode-title'>
+					<img src="{{=file_load_url + it[i].examinationRoom.logo}}" alt="" onerror="javascript:this.src='../../../icon/default/icon_default.png'"/>
+					<span>{{=it[i].examinationRoom.name}}<font>&ensp;{{=calcuDistance(it[i].distance)}}</font></span>
+				</div>
+				<div class='recode-content'>
+					<div class='recode-txt'>
+						<div class='txt-title'>
+							<span>考试日期：</span>{{=(it[i].testDate).substring(0,10)}}
+						</div>
+						<div class='txt-title'>
+							<span>车型：</span>{{=it[i].carType.name}}
+						</div>
+						<div class='txt-price'>共{{=it[i].apponintScheduleOrderNotVipList.length}}个学员&emsp;实际支付
+							<font style='color: #FF9641;'>￥</font>
+							<span>{{=cashFormatO(calCuPayFee(it[i].apponintScheduleOrderNotVipList))}}</span>
+							
+							{{ if(calCuCouponFee(it[i].apponintScheduleOrderNotVipList) > 0){ }}
+								<font style='color: #FF9641;'>（优惠{{=calCuCouponFee(it[i].apponintScheduleOrderNotVipList)}}）</font>
+							{{ } }}
+						</div>
+						<div class='order-button'>
+							<span class="op-button" tapmode onclick="openMap('{{=it[i].examinationRoom.name}}','{{=it[i].examinationRoom.latitude}}','{{=it[i].examinationRoom.longitude}}')">
+		    					地图导航
+			    			</span>
+							<span class="op-button unabled">
+		    					{{ if(it[i].paymentStatus == 1){ }}
+									已支付
+								{{ }else if(it[i].paymentStatus == 0){ }}
+									未支付
+								{{ }else{ }}
+									支付失败
+								{{ } }}
+			    			</span>
+			    			<span class='op-button order-button-detail' tapmode onclick='openDetail("{{=it[i].trainingScheduleNId}}")'>详情</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		{{ } }}
+	</script>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var page = 1,limit = 10;
+	var load_src = $('#load_src').html();//加载src
+	var msg_src = $('#msg_src').html();//消息提示src
+	var more_src = $('#more_src').html();//更多src
+	var bMap;
+	var refresh = true;//标记是否是刷新操作
+	var b_index;
+	var params;
+	apiready = function(){
+		cache = api.pageParam;
+		bMap = api.require('bMap');
+		b_index = cache.index;
+		goRefrash(40,'#FFFFFF',null,null,function(){
+			page = 1;refresh = true;
+			setLoad();
+			init(b_index);
+		});
+		
+		goLoad(function(ret,err){
+			page++;refresh = false;
+			setLoad();
+			init(b_index);
+		});
+		init(b_index);
+	};
+	function openReceipt(orderId){
+		api.openWin({
+			name: 'common_receipt_status',
+			url: '../common/common_receipt_status.html',
+			slidBackEnabled: 'false',
+			vScrollBarEnabled: 'false',
+			hScrollBarEnabled: 'false',
+			reload: true,
+			pageParam: {
+				organizationType:'0',
+				orderId:orderId
+			}
+		});
+	}
+	
+	/**
+	 * 计算总支付金额 
+	 */
+	function calCuPayFee(apponintScheduleOrderNotVipList){
+		var totleFee = 0;
+		for(var i=0;i<apponintScheduleOrderNotVipList.length;i++){
+			totleFee = totleFee + apponintScheduleOrderNotVipList[i].paymentOrderFee;
+		}
+		return totleFee;
+	}
+	
+	/**
+	 * 计算总优惠金额 
+	 */
+	function calCuCouponFee(apponintScheduleOrderNotVipList){
+		var totleCouponFee = 0;
+		for(var i=0;i<apponintScheduleOrderNotVipList.length;i++){
+			if(apponintScheduleOrderNotVipList[i].couponsList != undefined&&apponintScheduleOrderNotVipList[i].couponsList.length > 0){
+				totleCouponFee = totleCouponFee + apponintScheduleOrderNotVipList[i].couponsList[0].trainingFee;
+			}
+		}
+		return totleCouponFee;
+	}
+	
+	//isEscFun代表是否点击menu
+	function init(index,isEscFun){
+		b_index = index;
+		if(isEscFun != undefined){
+			page = 1;refresh = true;
+			setLoad();
+		}
+		params = {
+			learnerId:getUserId(),
+			page:page,
+			limit:limit
+		}
+		if(b_index == 1){
+			//科目三
+			url = 'api/appointmentKemuThree-second-channel/getAppointmentScheduleListByLearnerId';
+		}else{
+			//科目二
+			url = 'api/appointment-second-channel/getAppointmentScheduleListByLearnerId';
+		}
+		log('传参',params);
+		mylocation(function(location_result){//获取当前定位
+			if(location_result.status){//有定位权限
+		        params.lng = location_result.lon;
+		        params.lat = location_result.lat;
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret,err){
+				log('考前预约信息',ret);
+				if(ret){
+					var data;
+					if(b_index == 0){
+						data = ret.appointmentScheduleNotVipOrderList;
+					}else{
+						data = ret.appointmentScheduleKemuThreeNotVipResponseList;
+					}
+				
+	        		if(ret.code == 0&&data.length > 0){
+						var recode_practice_src = $('#recode_practice_src').html();
+						if(refresh||$('.room_list_div').find('.list_div').length == 0){
+							$('.room_list_div').html(doT.template( recode_practice_src )( data ));
+						}else{
+							$('.room_list_div').append(doT.template( recode_practice_src )( data ));
+						}
+	        		}else{
+	        			setMsg(refresh?'暂无预约数据':'暂无更多');
+	        		}
+	        	}else{
+	        		setMsg('服务器繁忙，请稍后再试');
+	        	}
+	        	setTimeout(function(){
+			        api.refreshHeaderLoadDone();
+	        	},300);
+			});
+		});
+	}
+	
+	//设置页面加载的画面
+	function setLoad(){
+		if(refresh||$('.room_list_div').find('.list_div').length == 0){//如果是刷新或者之前无数据的下拉刷新，全屏提示
+			$('#load_div').html('');
+			$(".room_list_div").html(doT.template( load_src )( null ));
+		}else{
+			setTimeout(function(){
+				$('#load_div').html(doT.template( more_src )( {'msg':'加载更多中...','img':'../../../icon/common/jiazai.gif'} ));
+			},300);
+		}
+	}
+	
+	//设置页面提示信息
+	function setMsg(msg){
+		if(refresh||$('.room_list_div').find('.list_div').length == 0){//如果是刷新或者之前无数据的上拉加载，全屏提示
+			setTimeout(function(){
+				$(".room_list_div").html(doT.template( msg_src )( {'msg':msg} ));
+			},300);
+		}else{//原先已经有数据的情况下
+			setTimeout(function(){
+			    $('#load_div').html(doT.template( more_src )( {'msg':msg,'img':''} ));
+			},300);
+		}
+	}
+	
+	//打开地图
+	function openMap(name,latitude,longitude){
+		mylocation(function(location_result){//获取当前定位
+			if(location_result.status){//有定位权限
+				params = {
+					to_lon:longitude,
+					to_lat:latitude,
+					to_name:name
+				}
+				api.openWin({
+			       name: 'common_map_loaction_win',
+			       url: '../../../common/common_map_loaction_win.html',
+			       slidBackEnabled:'true',
+			       vScrollBarEnabled:'false',
+			       hScrollBarEnabled:'false',
+			       reload:true,
+			       pageParam: {
+			           data:params
+			       }
+			   });
+			}else{
+				alert_msg('未能获取您的定位');
+			}
+		});
+	}
+	
+	/**
+	 * 打开排班详情 
+	 */
+	function openDetail(trainingScheduleNId){
+		params = {
+			orderId:trainingScheduleNId,
+			flag:b_index
+		}
+		log('传参',params);
+		commonOpenWin('recode_appoint_second_channel_order_detail_win',params);
+	}
+	
+	//加载左滑动
+	function swiftLeft(){
+		var expansion = null; //是否存在展开的list
+		var container = document.querySelectorAll('.room_list .room_list_div .list_div');
+		for(var i = 0; i < container.length; i++){
+		    var x, y, X, Y, swipeX, swipeY;
+		    container[i].addEventListener('touchstart', function(event) {
+		        x = event.changedTouches[0].pageX;
+		        y = event.changedTouches[0].pageY;
+		        swipeX = true;
+		        swipeY = true;
+		    });
+		    container[i].addEventListener('click', function(event) {
+		        event.preventDefault();
+                this.className = "list_div";    //点击收起
+		    });
+		    container[i].addEventListener('touchmove', function(event){
+		        
+		        X = event.changedTouches[0].pageX;
+		        Y = event.changedTouches[0].pageY;
+		        if(expansion){  //判断是否展开，如果展开则收起
+		            expansion.className = "list_div";
+		        }
+		        // 左右滑动
+		        if(swipeX && Math.abs(X - x) - Math.abs(Y - y) > 0){
+		            // 阻止事件冒泡
+		            event.stopPropagation();
+		            if(X - x > 10){   //右滑
+		                event.preventDefault();
+		                this.className = "list_div";    //右滑收起
+		            }
+		            if(x - X > 10){   //左滑
+		                event.preventDefault();
+		                this.className = "swipeleft";   //左滑展开
+		                expansion = this;
+		            }
+		            swipeY = false;
+		        }
+		        // 上下滑动
+		        if(swipeY && Math.abs(X - x) - Math.abs(Y - y) < 0) {
+		            swipeX = false;
+		        }        
+		    });
+		}
+    }
+</script>
+</html>

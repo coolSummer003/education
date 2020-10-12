@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>发票抬头管理win</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	body{
+
+    	}
+    	header img {
+		    width: 20px;
+		}
+    	#menu{
+			font-size:0.8rem;
+		}
+		#menuPackage{
+			position: relative;
+		}
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header" style="border-bottom: none;">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+            <img src="../../../icon/common/icon_header_return.png">
+        </a>
+        <div class="aui-title">
+        	 发票抬头管理
+        </div>
+    </header>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var headerHeight;
+	apiready = function(){
+		cache = api.pageParam;
+		$api.fixStatusBar($api.dom('header'));
+		headerHeight = $api.dom('header').offsetHeight;
+		init();
+	};
+
+	function init(){
+		openFrameCommon('common_invoice_list_frm',cache,headerHeight,api.winHeight - headerHeight,false);
+	}
+
+    function closeWin(){
+    	api.closeWin({
+        });
+    }
+</script>
+</html>

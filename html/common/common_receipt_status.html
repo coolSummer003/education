@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>发票详情</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/comment.css" />
+		<style>
+			html,body{
+    		background-color:#F4F5F7;
+			height:100%;
+			
+    	}
+ 
+			header img {
+		    width: 20px;
+			 }
+   
+		.aui-list [class*=aui-list-item]:active {
+		    background-color: #FFFFFF;
+		}
+		
+		.mian-content{
+			position: absolute;
+		    top: 0;
+		    right: 0rem;
+		    left: 0rem;
+		   
+		 
+		    overflow: scroll;
+		    -webkit-overflow-scrolling: touch;
+            
+		}
+
+		#aui-header1{
+		    opacity: 1;
+		    z-index:12;
+		    background-color:#FFFFFF;
+		    width: 100%;
+		}
+		#aui-header2{
+		    opacity: 0;
+		    background:#FFFFFF !important;
+		    z-index:12;
+		    background-color:#F4F5F7;
+		    width: 100%;
+		}
+		.aui-list-item-text{
+			
+			font-size: 0.3rem;
+			height: 1rem;
+			font-weight: 600;
+		}
+		#icon{
+			border:1px solid #888888;
+			padding:0rem 0.2rem  0rem 0.2rem;
+			border-radius:0.2rem;
+			position: absolute;
+		}
+
+    </style>
+	</head>
+	<body>
+		<header class="aui-bar aui-bar-nav none-bottom-style" id="aui-header1" style="">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+				<img src="../../icon/common/icon_header_return.png">
+			</a>
+			<div class="aui-title">
+				发票详情
+			</div>
+			
+		</header>
+		<header class="aui-bar aui-bar-nav" id="aui-header2" style="">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+				<img src="../../icon/common/icon_header_return.png">
+			</a>
+			<div class="aui-title" id="author_title">
+				发票详情
+			</div>
+			
+		</header>
+
+
+		<!-- 评论 -->
+
+
+		<div class='mian-content'>
+		<script type="text/template" charset="UTF-8" id="mian-content">
+		 <div class="aui-card-list-content">
+            <ul class="aui-list aui-media-list">
+            <li class="aui-list-item aui-list-item-middle">
+                    <div class="aui-media-list-item-inner">
+                        
+                        <div class="aui-list-item-inner ">
+                            <div class="aui-list-item-text" style="font-size: 0.6rem;">
+                            
+                                	发票状态：
+                                {{ if(it.status == 0){ }}
+										未开票
+								{{ }else if(it.status == 1){ }}
+									开票中
+								{{ }else{ }}
+									已开票
+								{{ } }}
+                                	
+                            </div>
+                           
+                        </div>
+                    </div>
+                </li>
+                <li class="aui-list-item aui-list-item-middle">
+                    <div class="aui-media-list-item-inner">
+                        
+                        <div class="aui-list-item-inner ">
+                            <div class="aui-list-item-text"  style="font-size: 0.6rem;">
+                                		订单编号：{{=it.orderId}}
+                              
+                            </div>
+                            <div class="aui-list-item-text"  style="font-size: 0.6rem;">
+                            
+                                		下单时间：{{=it.insertDt}}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                
+                
+                {{if(it.status == 1 || it.status == 2){ }}
+                 <li class="aui-list-item aui-list-item-middle">
+                    <div class="aui-media-list-item-inner">
+                        
+                        <div class="aui-list-item-inner">
+                            <div class="aui-list-item-text" style="font-size: 0.6rem;">
+                                		发票类型：电子普通发票
+                                		{{ if(it.status == 2){ }}
+										<div  id='icon' style="right:7rem;color:#666666" tapmode onclick="lookReceipt('{{=file_load_url+it.image}}')">查看发票</div>
+										{{ } }}
+                                		
+                                		<!--<div id='icon' style="right:3rem"><i class="aui-iconfont  aui-icon-paper" style="font-size:0.5rem;" ></i>发送邮箱</div>-->
+                              
+                            </div>
+                            <div class="aui-list-item-text"  style="font-size: 0.6rem;">
+                                		发票抬头：
+                                		{{if(it.isPersonal=='0'){}}
+											{{=it.name}}
+										{{ }else{ }}
+											{{=it.entityName}}
+										{{ } }}
+                            </div>
+                            {{if(it.isPersonal=='1'){}}
+                            <div class="aui-list-item-text"  style="font-size: 0.6rem;">
+                                		发票税号：{{=it.ein}}
+                            </div>
+                            {{ } }}
+                        </div>
+                    </div>
+                </li>
+                {{ } }}
+            </ul>
+        </div>
+		</script>
+
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		
+		var oDomNode =$api.offset( $api.dom('header')).h
+	
+		var refresh = true; //标记是否是刷新操作
+		var bigComment=document.getElementById('bigComment');
+		var systemType; //系统类型
+		var touchStyle;
+		var headerPos;
+		var threshold; //定义的阈值
+		var articleId;
+		var orderId;
+		var organizationType;
+		apiready = function() {
+			
+			$api.fixStatusBar($api.byId('aui-header1'));
+			$api.fixStatusBar($api.byId('aui-header2'));
+			headerPos = $api.offset($api.byId('aui-header1'));
+			threshold = headerPos.h;
+			systemType = api.systemType;
+			touchStyle = systemType == "ios" ? 'touchmove' : 'scroll';
+			scroll();
+			orderId = api.pageParam.orderId;
+			organizationType = api.pageParam.organizationType;
+			$('.mian-content').css({
+				'margin-top': threshold
+			});
+			init();
+		}
+		//监听页面滑动控制头部menu样式
+		var scrollPos; //监听上下滚动顶部的距离
+		var percent = 0; //白底header的隐藏属性值
+		var hidepercent = 0; //非白底header的隐藏属性值
+		function scroll() {
+			$('.mian-content').on(touchStyle, function(event) {
+				scrollPos = $('.mian-content').scrollTop();
+				//安卓做限制滚动
+				if (((scrollPos / threshold).toFixed(2) <= 1) && systemType == 'android') {
+					percent = (scrollPos / threshold).toFixed(2);
+					$('#aui-header2').css("opacity", percent);
+					hidepercent = 1 - percent;
+					$('#aui-header1').css("opacity", hidepercent);
+				} else {
+					percent = (scrollPos / threshold).toFixed(2) > 1 ? 1 : (scrollPos / threshold).toFixed(2);
+					$('#aui-header2').css("opacity", percent);
+					hidepercent = (1 - percent) < 0 ? 0 : (1 - percent);
+					$('#aui-header1').css("opacity", hidepercent);
+				}
+			});
+			
+			
+		}
+
+		function init() {
+			if (organizationType == '0') { //考场
+				params = {
+					organizationType:organizationType,
+					orderId:orderId
+				}
+			}else if(organizationType=='1'){//医院
+				params = {
+					organizationType:organizationType,
+					orderId:orderId
+				}
+			
+			}else{//驾校
+				params = {
+					organizationType:organizationType,
+					orderId:orderId
+				}
+			}
+
+			log('retret：：：：misomsimiso', organizationType);
+			url = '/api/invoices/getInvoiceOneByOrderId';
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('ret::::::::::::', ret);
+				if (ret) {
+				if(ret.code=='0'){
+					if (ret.invoiceOneByOrderId != undefined) {
+						var miancontent = $('#mian-content').html();
+						$('.mian-content').html(doT.template(miancontent)(ret.invoiceOneByOrderId));
+						} else {
+							alert_msg('未开票');
+						}
+					}else{
+					
+					}
+				} else {
+					alert_msg('服务器繁忙，请稍后重试');
+				}
+			});
+		}
+
+
+		function closeWin() {
+			api.closeWin({});
+		}
+
+
+		function lookReceipt(imgaeUrl) {
+
+			api.openApp({
+				androidPkg: 'android.intent.action.VIEW',
+				mimeType: 'text/html',
+				uri: imgaeUrl
+			}, function(ret, err) {
+			});
+		}
+	</script>
+</html>

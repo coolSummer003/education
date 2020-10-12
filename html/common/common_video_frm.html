@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>视频通用播放页面</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<style>
+			html,
+			body {}
+			
+			.aui-bar-nav,
+			.aui-bar-tab {
+				background-color: #ffffff;
+			}
+			
+			.aui-bar-nav {
+				color: #FFF;
+				background: #000;
+			}
+			
+			a.aui-pull-left,
+			a.aui-pull-right {
+				color: #FFF;
+			}
+			
+			header img {
+				width: 20px;
+			}
+			
+			.aui-bar-nav:after {
+				height: 1px;
+				content: '';
+				-webkit-transform: scaleY(0.5);
+				transform: scaleY(0.5);
+				background-color: #000;
+				-webkit-transform-origin: 100% 50%;
+				transform-origin: 100% 50%;
+				position: absolute;
+				z-index: 2;
+				left: 0;
+				right: auto;
+				width: 100%;
+				bottom: 0;
+				top: auto;
+				pointer-events: none;
+			}
+			
+			#common_title {
+				font-weight: normal;
+				color: #FFF;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+			<!--<a class="aui-pull-left aui-btn">
+           
+        </a>
+        <div class="aui-title" id="common_title">
+        	线上体检示例
+        </div>
+        <a class="aui-pull-right aui-btn" tapmode onclick="goback()">
+            	关闭
+        </a>-->
+		</header>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var moviePlayer;
+		var fs;
+		var cache;
+		var videoPlayer;
+		var systemType;
+		var dkplayer;
+		var headerPos;
+		var speedPlayer;
+		var noticeView;
+		apiready = function() {
+			var header = $api.byId('aui-header');
+			$api.fixStatusBar(header);
+			headerPos = $api.offset(header);
+			cache = api.pageParam;
+			systemType = api.systemType;
+
+			if(systemType == 'ios') {
+				//初始化ios播放
+				speedPlayer = api.require('speedPlayer');
+				ios_init();
+			} else {
+				//初始化安卓播放
+				dkplayer = api.require('dkplayer');
+				noticeView = api.require('noticeView');
+				api.addEventListener({
+					name: 'keyback'
+				}, function(ret, err) {
+					goback();
+				});
+				api.addEventListener({
+					name: 'pause'
+				}, function(ret, err) {
+					dkplayer.pause();
+				});
+				api.addEventListener({
+					name: 'resume'
+				}, function(ret, err) {
+					dkplayer.resume();
+				});
+				api.addEventListener({
+					name: 'viewdisappear'
+				}, function(ret, err) {
+					dkplayer.pause();
+				});
+
+				android_init();
+
+				//监听播放
+				dkplayer.addOnVideoViewStateChangeListener(function(ret, err) {
+					if(ret.playState == "STATE_PLAYBACK_COMPLETED") {
+						if(cache.flag == 'exam_video'){
+							//播放完成（并且是观看体检视频）那么直接关闭视频播放
+							sendEvent("playState", true);
+							closeWin();
+						}else{
+							isSure('温馨提示','视频已播放完成','重新播放','关闭',function(){
+								dkplayer.replay();
+							},function(){
+								closeWin();
+							})
+						}
+					}
+				});
+			}
+		}
+
+		/**
+		 * ios视频播放初始化 
+		 */
+		function ios_init() {
+			speedPlayer.open({
+				url: cache.url,
+				title: cache.name,
+				pos: 1,
+				frame: {
+					x: 0,
+					y: 0,
+					w: 400,
+					h: 200
+				},
+			}, function(ret, err) {
+				if(ret.back == 'true') {
+					speedPlayer.close();
+					closeWin();
+				}
+				if(ret.cmd == 'playing') {
+					console.log(JSON.stringify(ret.time));
+					if(ret.time == 150&&cache.flag == 'exam_video') {
+						//监听视频已播放完成，并且是
+						sendEvent("playState", true);
+					}
+				} else if(ret.cmd == 'playerStatus') {
+					switch(ret.status) {
+						case 'statusReady':
+							duration = ret.duration; //单位，秒。
+							console.log('视频准备好了')
+							break;
+						case 'statusUnknown':
+							console.log('未知错误')
+							break;
+						case 'statusFailed':
+							console.log('视频播放失败')
+							break;
+					}
+				}
+			});
+			speedPlayer.fullscreen();
+		}
+
+		/**
+		 * 安卓视频播放初始化 
+		 */
+		function android_init() {
+			dkplayer.open({
+				rect: {
+					x: 0,
+					y: headerPos.h,
+					w: 0,
+					h: api.frameHeight - headerPos.h
+				},
+				url: cache.url,
+				coverImg: '',
+				animation: false,
+				title: cache.name,
+				isLive: false,
+				enableFull: false, //是否全屏
+				autoPlay: true, //自动播放
+				fixedOn: api.frameName,
+				fixed: true
+			}, function(ret, err) {
+				//alert(JSON.stringify(ret));
+
+			});
+		}
+
+		/**
+		 * 安卓-退出监听 
+		 */
+		function goback() {
+			console.log('66667');
+			if(dkplayer.isFullScreen()) {
+				if(dkplayer.isLock()) {
+					api.toast({
+						msg: '请先解锁屏幕！',
+						global: true
+					});
+				} else {
+					api.setScreenOrientation({
+						orientation: 'portrait_up'
+					});
+					dkplayer.stopFullScreen();
+				}
+			} else {
+				console.log('6666');
+				dkplayer.removeOnVideoViewStateChangeListener();
+				dkplayer.release();
+				closeWin();
+			}
+		}
+
+		/**
+		 * 关闭窗口 
+		 */
+		function closeWin() {
+			api.closeWin({
+				name: "common_video_frm"
+			});
+
+		}
+	</script>
+
+</html>

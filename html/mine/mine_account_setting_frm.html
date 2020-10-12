@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>账户设置</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<style>
+			body{
+
+    	}
+    	.aui-list:before {
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    right: auto;
+		    bottom: auto;
+		    width: 100%;
+		    z-index: 2;
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		    pointer-events: none;
+		}
+    	.aui-list .aui-list-item-inner {
+		    position: relative;
+		    min-height: 2.6rem;
+		    padding-right: 0.75rem;
+		    width: 100%;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-flex: 1;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		    -webkit-box-align: center;
+		    -webkit-align-items: center;
+		    align-items: center;
+		}
+		.aui-list .aui-list-item-right, .aui-list-item-title-row em {
+		    max-width: 50%;
+		    position: relative;
+		    font-size: 0.7rem;
+		    color: #757575;
+		    margin-left: 0.25rem;
+		}
+		.headImg{
+			width:1.5rem;
+			height:1.5rem;
+			border-radius:100%;
+			object-fit: cover;
+		}
+		.aui-list-item-right input{
+			color: #757575;
+    		font-size: 0.7rem;
+		    text-align: right;
+		}
+		#copy{
+		    overflow-y: auto;
+		    white-space: nowrap;
+		    height: 1rem;
+		    line-height: 2.2rem;
+		    text-align:right;
+		    font-size: 0.7rem;
+		    color:#757575;
+		    margin:0 0;
+		}
+    </style>
+	</head>
+	<body>
+
+		<ul class="aui-list aui-list-in fen">
+			<li class="aui-list-item aui-list-item-middle" tapmode onclick="setHeadImg()">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-title">头像</div>
+					<div class="aui-list-item-right" id="head_img">
+						<input type="hidden" id="picture" />
+						<img src="../../icon/mine/icon_mine_head_hui.png" alt="" class='headImg' />
+					</div>
+				</div>
+			</li>
+		</ul>
+		<ul class="aui-list aui-list-in aui-margin-b-10 aui-margin-t-10">
+			<li class="aui-list-item aui-list-item-middle">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-title">昵称</div>
+					<div class="aui-list-item-right">
+						<input type="text" value='' placeholder='设置' id="nickname" style="text-align: right;" />
+					</div>
+				</div>
+			</li>
+			<li class="aui-list-item aui-list-item-middle">
+				<div class="aui-list-item-inner aui-list-item-arrow" tapmode onclick="openAuthentication()">
+					<div class="aui-list-item-title">实名认证</div>
+					<div class="aui-list-item-right" id="isAuth" style='margin-right: 0.5rem;'>未认证</div>
+				</div>
+			</li>
+			<li class="aui-list-item aui-list-item-middle">
+				<div class="aui-list-item-inner aui-list-item-arrow">
+					<div class="aui-list-item-title">手机号码</div>
+					<div class="aui-list-item-right" style='margin-right: 0.5rem;'>
+						<input type="text" value='' placeholder='获取中...' id="account" readonly tapmode onclick="updatePhone()" />
+					</div>
+				</div>
+			</li>
+			<li class="aui-list-item aui-list-item-middle">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-title">身份证</div>
+					<div class="aui-list-item-right" id="idCard">
+						<input type="text" value='' placeholder='设置' id="idCardNo" readonly />
+					</div>
+				</div>
+			</li>
+			<li class="aui-list-item aui-list-item-middle">
+				<div class="aui-list-item-inner aui-list-item-arrow" tapmode onclick="findPassword()">
+					<span>重置密码</span>
+				</div>
+			</li>
+			<li class="aui-list-item aui-list-item-middle">
+				<div class="aui-list-item-inner aui-list-item-arrow" tapmode onclick="openPrivacyPolicy()">
+					<span>隐私政策</span>
+				</div>
+			</li>
+			<!--<li class="aui-list-item aui-list-item-middle">
+			<div class="aui-list-item-inner aui-list-item-arrow" tapmode onclick="agreementManagement()">
+				<div class="aui-list-item-title">合同管理</div>
+				<div class="aui-list-item-right" id="isAuth" style='margin-right: 0.5rem;'></div>
+			</div>
+		</li>
+        <li class="aui-list-item aui-list-item-middle">
+			<div class="aui-list-item-inner aui-list-item-arrow" tapmode onclick="addressManagement()">
+				<div class="aui-list-item-title">地址管理</div>
+				<div class="aui-list-item-right" id="isAuth" style='margin-right: 0.5rem;'></div>
+			</div>
+		</li>
+		<li class="aui-list-item aui-list-item-middle">
+			<div class="aui-list-item-inner aui-list-item-arrow" tapmode onclick="invoiceManagement()">
+				<div class="aui-list-item-title">发票管理</div>
+				<div class="aui-list-item-right" id="isAuth" style='margin-right: 0.5rem;'></div>
+			</div>
+		</li>-->
+			<!-- <li class="aui-list-item aui-list-item-middle">
+			<div class="aui-list-item-inner aui-list-item-arrow" tapmode onclick="cancelAccount()">
+				<div class="aui-list-item-title">注销账号</div>
+				<div class="aui-list-item-right" id="isAuth" style='margin-right: 0.5rem;'></div>
+			</div>
+		</li> -->
+		</ul>
+		<ul class="aui-list aui-list-in aui-margin-b-10 aui-margin-t-10 deviceIdentifier">
+			<script type="text/template" charset="utf-8" id='deviceIdentifier'>
+				{{ for(var i=0;i < it.phoneBindList.length;i++){ }}
+        <li class="aui-list-item aui-list-item-middle">
+            <div class="aui-list-item-inner">
+             	 <div class="aui-list-item-title" style="font-size:0.7rem;">
+             	 	设备绑定手机号{{=i+1}}
+             	 	{{	if(it.phoneBindList[i].phoneStatus=='1'){	}}
+             	 		<font style="color: #f81212;font-size:0.6rem;">(当前账号)</font>
+             	 	{{	} }}
+             	 </div>
+                 <div class="aui-list-item-right">
+                 	<input type="text" value='' placeholder='{{=setPhone(it.phoneBindList[i].phoneNum)}}' value="" readonly/>
+                 </div>
+            </div>
+        </li>
+       {{ } }}
+       
+	</script>
+
+		</ul>
+		<ul class="aui-list aui-list-in aui-margin-b-10 aui-margin-t-10">
+
+			<li class="aui-list-item aui-list-item-middle">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-title">设备码</div>
+					<div class="aui-list-item-right" id="idCard" style="width: 70%;">
+						<textarea placeholder='获取中...' id="copy" readonly></textarea>
+					</div>
+				</div>
+			</li>
+		</ul>
+		<ul class="aui-list aui-list-in">
+			<li class="aui-list-item aui-list-item-middle" tapmode onclick="logout()">
+				<div class="aui-list-item-inner aui-list-item-arrow">
+	             	 <span>注销账户</span>
+	            </div>
+			</li>
+		</ul>
+	</body>
+	<script type="text/javascript">
+	    //退出登录
+	    function logout(){
+    		onEvent('mine157','账户注销');
+    		api.openWin({
+				name: 'logout_top1',
+				url: '../logout_top1.html',
+				slidBackEnabled:'true',
+				vScrollBarEnabled:'false',
+				hScrollBarEnabled:'false',
+				reload:true,
+				pageParam: {
+					data:null
+				}
+			});
+	    }
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var addressView;
+		var imageFilter;
+		var systemType;
+		var verificationCode = '';
+		var account = '';
+		apiready = function() {
+			imageFilter = api.require('imageFilter');
+			systemType = api.systemType;
+			if (islogin()) {
+				init();
+			} else {
+				alert_msg('未登录'); //赌5毛，不会进到这里
+			}
+			toEventListener('verificationCode', function(ret) {
+				log('hs', ret.value)
+				verificationCode = ret.value;
+			})
+			toEventListener('account', function(ret) {
+				log('hs', ret.value)
+				account = ret.value;
+			})
+		};
+
+
+		function setPhone(phone) {
+			return phone.substring(0, 3) + '****' + phone.substring(phone.length - 4, phone.length) //电话号码
+		}
+
+		//加载用户信息
+		function init() {
+			updateLearnerInfo(function(ret, err) {
+				log('获取的学员信息', ret);
+				if (ret && ret.code == 0) {
+					var deviceIdentifier = $('#deviceIdentifier').html();
+					log('获取的学员信息', ret.phoneBindList);
+					$('#copy').val(api.deviceId)
+					$(".deviceIdentifier").html(doT.template(deviceIdentifier)(ret));
+				} else {
+					alert_msg('获取学员信息失败');
+				}
+				loadUserInfo();
+			});
+		}
+
+		var dirId = ''; //区code
+		function loadUserInfo() {
+			//刷新下个人信息
+			esc_function('index', 'mine', 'renderAccountInfo()');
+			var cache_by_account = $api.getStorage('cache_by_account');
+
+			var headimgurl = cache_by_account.cache_account.headimgurl;
+			//console.log('headimgurl' + headimgurl);
+			if (headimgurl != undefined) {
+				$('#picture').val(headimgurl);
+				returnSmallerPic(file_load_url + headimgurl, function(smallerPath) {
+					$('.headImg').attr('src', smallerPath); //头像
+				});
+			}
+
+			var nickname = cache_by_account.cache_account.nickname;
+			if (nickname != undefined) {
+				$('#nickname').val(nickname); //昵称
+			}
+
+			isAuthTxt(); //是否认证
+
+			$('#account').val(cache_by_account.cache_account.account); //账号
+
+			var idcardNo = cache_by_account.cache_account.idcardNo;
+			if (isauth() && idcardNo != undefined) {
+				$('#idCardNo').val(idcardNo.substring(0, 4) + '************' + idcardNo.substring(idcardNo.length - 3, idcardNo.length)); //身份证
+			}
+		}
+		//找回密码
+		function findPassword() {
+			api.openWin({
+				name: 'forgetPassword',
+				url: '../forgetPassword.html',
+				slidBackEnabled: 'true',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				pageParam: {
+					data: null
+				}
+			});
+		}
+		//是否认证
+		function isAuthTxt() {
+			if (isauth()) {
+				if (isauthpass()) {
+					setTxt('已认证');
+				} else {
+					setTxt('认证中');
+				}
+			} else {
+				setTxt('未认证');
+			}
+		}
+
+		function setTxt(msg) {
+			$('#isAuth').html(msg);
+		}
+
+		//头像设置
+		var isSetImg = false; //标记是否选择照片
+		function setHeadImg() {
+			onEvent('mine01', '账户设置-头像设置');
+			opWithPermission('camera', function() {
+				api.actionSheet({
+					title: '选择需要上传的头像',
+					cancelTitle: '取消',
+					buttons: ['拍照', '从相册中选择']
+				}, function(ret, err) {
+					if (ret) {
+						if (ret.buttonIndex == 1 || ret.buttonIndex == 2) {
+							sourceType = ret.buttonIndex == 1 ? 'camera' : 'library'
+							getPicture(sourceType);
+						}
+					}
+				});
+			});
+		}
+
+		function getPicture(sourceType) {
+			api.getPicture({
+				sourceType: sourceType,
+				encodingType: 'jpg',
+				mediaValue: 'pic',
+				destinationType: 'url',
+				allowEdit: false,
+				quality: 50, //1-100图片质量
+				saveToPhotoAlbum: false
+			}, function(ret, err) {
+				if (ret && ret.data != '') {
+					picImageFilter(ret.data, function(smaller_path) {
+						if (smaller_path == '') {
+							alert_msg('头像压缩失败，改为原图');
+							smaller_path = ret.data;
+						}
+						$('.headImg').attr('src', smaller_path);
+						isSetImg = true; //标记选择了照片作为头像
+					});
+				} else {
+					console.log('系统故障或者未选中照片');
+				};
+			});
+		}
+
+		//点击保存
+		function saveUserInfo() {
+			open_load();
+			var headImgPath = $('.headImg').attr('src');
+			if (isSetImg && headImgPath != '../../icon/mine/icon_mine_head.png') { //如果用户设置了头像，就上传图片
+				params = {
+					bucketName: AliOssBucket,
+					fileNum: 1,
+					fileType: 'learnerApp/headImg/' + getUserId()
+				}
+				var isloadFlag = 0; //标记位 isload代表是否上传，0代表未上传，1代表捕捉上传，2代表与阿里云建立连接，3代表上传完成
+				getUploadFilePower(params, function(ret, err) {
+					if (ret && ret.code == 0) {
+						var headimgurl = ret.fileList[0].fileId;
+						isloadFlag = 1; //标记上传
+						//阿里云上传可能会崩，所以这里定时器：10秒后查询标记位，把isload为2的图片让用户选择上传
+						var judegeCollapse = setTimeout(function() {
+							collapse(isloadFlag);
+						}, 10000);
+						console.log('headImgPath:' + headImgPath);
+						file_upload(ret.fileList[0].signUrl, 'put', 'json', headImgPath, {}, function(ret, err) {
+							if (ret) {
+								clearTimeout(judegeCollapse); //清除定时器
+								isloadFlag = 2; //标记与阿里云服务器连接
+								if (ret.progress == 100 && ret.status == 1) {
+									$('#picture').val(headimgurl);
+									uploadUserInfo(headimgurl);
+									console.log('上传头像完成-android');
+								}
+							} else if (err) {
+								//ios一直会返回数据类型错误(目前找不到原因)，但是图片已上传完毕，所以也当success返回
+								if (systemType = 'ios' && err.progress == 100 && err.code == 3) {
+									clearTimeout(judegeCollapse); //清除定时器
+									isloadFlag = 2; //标记与阿里云服务器连接
+
+									$('#picture').val(headimgurl);
+									uploadUserInfo(headimgurl);
+									console.log('上传头像完成-ios');
+								} else if ((systemType == 'ios' && err.statusCode == 0) ||
+									(systemType == 'ios' && err.statusCode == 403)) {
+									//网络无法连接或者签名错误就重新上传
+									clearTimeout(judegeCollapse); //清除定时器
+									saveUserInfo();
+								}
+							}
+						});
+					} else {
+						close_load();
+						alert_msg('获取文件上传权限失败');
+					}
+				});
+			} else {
+				uploadUserInfo($('#picture').val());
+			}
+		}
+
+		//上传用户信息
+		function uploadUserInfo(headimgurl) {
+			url = 'api/learner/update';
+			params = {
+				learner: {
+					id: getUserId(),
+					nickname: $('#nickname').val(),
+					headimgurl: headimgurl
+				}
+			}
+			log('上传用户信息', params);
+			ajax_Request(url, 'put', 'json', params, function(ret, err) {
+				close_load();
+				if (ret) {
+					log('保存用户返回信息：', ret);
+					if (ret.code == 0) {
+						alert_msg('保存成功');
+						cache_by_account = $api.getStorage('cache_by_account');
+						cache_by_account.cache_account.headimgurl = headimgurl;
+						cache_by_account.cache_account.nickname = $('#nickname').val();
+						log('用户信息', cache_by_account);
+						$api.setStorage('cache_by_account', cache_by_account);
+						esc_function('index', 'mine', 'renderAccountInfo()');
+					} else {
+						alert_msg(ret.msg);
+					}
+				} else {
+					alert_msg('系统错误');
+				}
+			});
+		}
+
+		//打开实名认证
+		function openAuthentication() {
+			onEvent('mine02', '账户设置-实名认证');
+			if (islogin()) {
+				commonOpenWin('mine_account_auth_win', null);
+			} else {
+				isSure('提示', '还未登录，是否选择去登录', '是', '否', function() {
+					openLoginHtml();
+				});
+			}
+		}
+
+		//打开合同管理
+		function agreementManagement() {
+			onEvent('mine03', '账户设置-合同管理');
+			if (islogin()) {
+				params = {
+
+				}
+				api.openWin({
+					name: 'recode_my_contract_win',
+					url: '../mine/recode_my_contract_win.html',
+					slidBackEnabled: 'false',
+					vScrollBarEnabled: 'false',
+					hScrollBarEnabled: 'false',
+
+					reload: true,
+					pageParam: {
+						data: params
+					}
+				});
+			} else {
+				isSure('提示', '还未登录，是否选择去登录', '是', '否', function() {
+					openLoginHtml();
+				});
+			}
+		}
+		//打开地址管理
+		function addressManagement() {
+			onEvent('mine04', '账户设置-地址管理');
+			if (islogin()) {
+				params = {
+
+				}
+				api.openWin({
+					name: 'common_address_list_win',
+					url: '../common/learner_address/common_address_list_win.html',
+					slidBackEnabled: 'false',
+					vScrollBarEnabled: 'false',
+					hScrollBarEnabled: 'false',
+					reload: true,
+					pageParam: {
+						data: params
+					}
+				});
+			} else {
+				isSure('提示', '还未登录，是否选择去登录', '是', '否', function() {
+					openLoginHtml();
+				});
+			}
+		}
+		//打开发票管理
+		function invoiceManagement() {
+			onEvent('mine05', '账户设置-发票管理');
+			if (islogin()) {
+				params = {
+
+				}
+				api.openWin({
+					name: 'common_invoice_list_win',
+					url: '../common/learner_invoice/common_invoice_list_win.html',
+					slidBackEnabled: 'false',
+					vScrollBarEnabled: 'false',
+					hScrollBarEnabled: 'false',
+					reload: true,
+					pageParam: {
+						data: params
+					}
+				});
+			} else {
+				isSure('提示', '还未登录，是否选择去登录', '是', '否', function() {
+					openLoginHtml();
+				});
+			}
+		}
+
+		/**
+		 * 阅读隐私政策 
+		 */
+		function openPrivacyPolicy() {
+			api.openFrame({
+				name: 'privacy_policy',
+				url: '../privacy_policy.html',
+				bgColor: '#efeff4',
+				animation: {
+					type: "none", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300
+				},
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: null,
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+		//注销账号
+		function cancelAccount() {
+			sendEvent('post_cancel');
+			isSure('', '确定注销吗？', '确定注销', '取消', function() {
+				url = 'api/learner/delete';
+				params = {
+					learner: {
+						id: getUserId(),
+					}
+				}
+				log('用户id：', params);
+				ajax_Request(url, 'post', 'json', params, function(ret, err) {
+					if (ret) {
+						if (ret.code == 0) {
+							$api.setStorage('cache_by_account', ''); //清除与账户相关的缓存
+							$api.setStorage('islogin', false);
+							//esc_function('index','mine','renderAccountInfo()');
+							esc_function('index', '', 'bindJpush()'); //清除极光推送账号
+							esc_function('index', '', 'aliPush_init()'); //绑定阿里推送账号
+							api.closeWin({
+								name: 'mine_account_setting_win'
+							});
+						} else {
+							alert_msg(ret.msg);
+						}
+					} else {
+						alert_msg('服务器繁忙，请稍后再试！');
+					}
+				});
+			});
+		}
+		//判断是否有图片上传时候与阿里云断开连接
+		function collapse(isloadFlag) {
+			closedefaultload();
+			if (isloadFlag == 1) {
+				api.confirm({
+					title: '温馨提示',
+					msg: '上传照片服务器断开连接，是否重连',
+					buttons: ['重新连接', '取消']
+				}, function(ret, err) {
+					var index = ret.buttonIndex;
+					if (index == 1) {
+						saveUserInfo();
+					}
+				});
+			}
+		}
+
+		function updatePhone() {
+			var accounts = $('#account').val();
+			openMessage('温馨提示', '您即将修改账户手机号，请确认是否修改', '确定，下一步', '取消', 'toUpdatePhone(' + accounts + ')', '', null)
+		}
+
+		function toUpdatePhone(accounts) {
+			var params = {
+				accounts:accounts,
+				readonly:true
+			};
+			setTimeout(function(){
+				openMessage_i('验证手机号', params, '确定，下一步', '取消', 'toNewPhone(' + accounts + ')', 'cancleUpdatePhone()', true)
+			},300)
+			
+		}
+
+		function toNewPhone(accounts) {
+			console.log('手机号2+++++++++'+accounts)
+			var htmlParams = {
+				accounts:'',
+				readonly:false
+			};
+			if (!isPhoneAvailable(accounts)) {
+				alert_msg('请输入正确的手机号');
+				return;
+			}
+			if (!isCodeAvailable(verificationCode)) {
+				alert_msg('请输入正确的验证码');
+				return;
+			}
+			url = 'api/learner/update-phone-one';
+			params = {
+				account: accounts,
+				verificationCode: verificationCode,
+				id:getUserId()
+			}
+			log('用户id：', params);
+			ajax_Request(url, 'post', 'json', params, function(ret, err) {
+				log('手机号验证：', ret)
+				if (ret) {
+					if (ret.code == 0) {
+						esc_function('', 'common_alert_code', 'hideAlert()');
+						verificationCode = '';
+						setTimeout(function() {
+							openMessage_i('更换新手机号', htmlParams, '确定', '取消', 'updateNewPhone()', '', true);
+						}, 300)
+					} else {
+						alert_msg(ret.msg)
+					}
+				} else {
+					alert_msg('服务器繁忙，请稍后再试！');
+				}
+			});
+		}
+
+		function updateNewPhone() {
+			if (!isPhoneAvailable(account)) {
+				alert_msg('请输入正确的手机号');
+				return;
+			}
+			if (!isCodeAvailable(verificationCode)) {
+				alert_msg('请输入正确的验证码');
+				return;
+			}
+			url = 'api/learner/update-phone';
+			params = {
+				id: getUserId(),
+				account: account,
+				verificationCode: verificationCode
+			}
+			log('用户id：', params);
+			ajax_Request(url, 'put', 'json', params, function(ret, err) {
+				log('手机号验证：', ret)
+				if (ret) {
+					if (ret.code == 0) {
+						alert_msg('更换手机号成功！');
+						esc_function('', 'common_alert_code', 'hideAlert()');
+						$('#account').val(account);
+					} else {
+						alert_msg(ret.msg)
+					}
+				} else {
+					alert_msg('服务器繁忙，请稍后再试！');
+				}
+			});
+		}
+		
+		function cancleUpdatePhone(){
+			account = '';
+			verificationCode = '';
+		}
+
+
+		//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+		function openMessage_i(title, content, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+			console.log('手机号1+++++++++'+title)
+			api.openFrame({
+				name: 'common_alert_code',
+				url: '../common/common_alert_code.html',
+				bgColor: 'rgba(0,0,0,0.4)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					title: title,
+					content: content,
+					sureButton: sureButton,
+					sureFunc: sureFunc,
+					cancelButton: cancelButton,
+					cancelFunc: cancelFunc,
+					winName: api.winName,
+					frameName: api.frameName,
+					params: params
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+	</script>
+</html>

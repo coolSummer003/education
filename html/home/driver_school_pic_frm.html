@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>驾校图片列表</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	ul{
+	    	
+    	}
+    	li{
+		    width: 32.33333333%;
+		    float: left;
+		    height: 4rem;
+		    display: flex;
+		    margin: 0.5%;
+    	}
+    	li img{
+    		width: 100%;
+    		height: 100%;
+    		object-fit: cover;
+    	}
+    </style>
+</head>
+<body>
+	<ul>
+	</ul>
+	<script type="text/template" charset="utf-8" id='pic_list_scri'>
+		{{ for(var i=0;i<it.length;i++){ }}
+			<li tapmode onclick="openPic('{{=file_load_url + it[i].path}}')">
+				<img src="{{=file_load_url + it[i].path + '&style=image/resize,w_300'}}" alt="" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'"/>
+			</li>
+		{{ } }}
+	</script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		goLoad(function(ret,err){
+			page++;
+			init();
+		});
+		init();
+	}
+	
+	var limit = 10;
+	var page = 1;
+	function init(){
+		url = 'api/driving/media';
+		params = {
+			drivingSchool:{
+				id:cache.school_id
+			},
+			limit:limit,
+			page:page
+		}
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			log('图库列表',ret);
+			if(ret){
+				if(ret.code == 0){
+					var index = 0;//标记是否完成缩略图加载
+					if(ret.mediaList.length > 0){
+						var pic_list_scri = $('#pic_list_scri').html();
+						$("ul").append(doT.template( pic_list_scri )( ret.mediaList ));
+					}else{
+						alert_msg('暂无更多图片');
+					}
+				}else{
+					alert_msg(ret.msg);
+				}
+			}else{
+				alert_msg('服务器故障');
+			}
+		});
+	}
+	
+	function closeWin(){
+		api.closeWin({
+        });
+	}
+</script>
+</html>

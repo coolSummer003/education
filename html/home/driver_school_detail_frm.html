@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>驾校详情</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/swiper/swiper.css">
+    <style>
+    	html,body{
+    		background-color: #ffffff;
+    	}
+    	ul{
+    		
+    		padding: 0.5rem;
+    	}
+    	.community-head{
+    		height:2.5rem;
+    	}
+    	.community-head-icon{
+    		width:20%;
+    		float:left;
+    		display:flex;
+    		height:2.5rem;
+    	}
+    	.community-head-icon img{
+		    width: 2rem;
+		    border-radius: 100%;
+		    margin: auto;
+		    height: 2rem;
+		    object-fit: cover;
+    	}
+    	.community-head-info{
+    		width:80%;
+    		float:left;
+    		height:1rem;
+    	}
+    	.community-head-infos{
+    		position:relative;
+    		right:0.5rem;
+    		width:80%;
+    		float:left;
+    		height:1.5rem;
+    		margin-bottom:0.5rem;
+    		
+    	}
+    	.community-head-info-name{
+    		height:1.5rem;
+    		width:50%;
+    		line-height: 1.5rem;
+			margin-top: 0.2rem;
+    	}
+    	.community-head-label{
+    		height:1.7rem;
+    		width:30%;
+    		float:left;
+    	}
+    	.community-head-info-time{
+    		height:1.5rem;
+    		line-height: 1.5rem;
+			margin-top: -1.5rem;
+    		width:50%;
+    		font-size: 0.6rem;
+    		color:#939393;
+			text-align: right;
+    	}
+    	.community-title{
+    		width:80%;
+    		height: 2rem;
+		    line-height: 2rem;
+		    float: right;
+    	}
+    	.community-content{
+    		width:80%;
+		    float: right;
+		    font-size:0.8rem;
+		    color:#000;
+			margin-top: -2rem;
+    	}
+    	.community-pic-list{
+    		width:80%;
+    		float:right;
+    		margin-bottom: 0.5rem;
+    	}
+
+    	.community-icon{
+    		width:80%;
+    		float: right;
+    		font-size: 0.6rem;
+    		text-align: right;
+		    position:relative;
+	        height: 1.5rem;
+    	}
+    	.community-icon:after{
+    		content: '';
+		    height: 1px;
+		    background: #DDDDDD;
+		    width: 100%;
+		    background-color: #dddddd;
+		    display: block;
+	        margin-top: 0.5rem;
+		    -webkit-transform: scaleY(0.5);
+		    transform: scaleY(0.5);
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+	        position: absolute;
+    		bottom: 0rem;
+    	}
+		.commentCount{
+			float: right;
+			margin-right: 0.3rem;
+		}
+    	.community-icon img{
+    		height:0.8rem;
+    		margin: 0rem 0.1rem -0.1rem 0.8rem;
+    	}
+    	li{
+    		overflow: hidden;
+    		padding-top:0.5rem;
+    	}
+    	li:active{
+    		background:#FAFAFA;
+    	}
+    	.evaluate{
+    	margin-right:0.5rem;
+    	}
+    	.community-icon span{
+			color:#757575;
+		}
+		
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+		    color: #2c2c2c;
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    opacity: 1;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+    	.driver-school-pic{
+    		position: relative;
+    		height: 14rem;
+    	}
+    	.driver-school-pic img{
+    		width: 100%;
+    		height: 100%;
+    		object-fit: cover;
+    	}
+    	.driver-school-pic-num{
+    		position: absolute;
+		    bottom: 1rem;
+		    left: 1rem;
+		    background: url(../../icon/common/icon_shadow_small.png) transparent center center no-repeat;
+		    background-size: 100% 99%;
+		    padding: 0.4rem 0.5rem;
+		    color: #FFF;
+		    font-size:0.7rem;
+    	}
+    	.driver-school-name{
+		    font-size: 1rem;
+    		overflow: hidden;
+		    height: 2.7rem;
+		    line-height: 2.7rem;
+    	}
+    	.item-name{
+    		float:left;
+    		width: 75%;
+				height: 2.2rem;
+    		overflow: hidden;
+    	}
+    	.item-price{
+    		width: 25%;
+		    float: right;
+		    text-align: right;
+		    font-size: 0.7rem;
+		    color: #757575;
+    	}
+    	.item-price span{
+    		color:#FF5917;
+    		font-size:1rem;
+    	}
+    	.item-price font{
+    		color:#FF5917;
+    		font-size:0.7rem;
+    	}
+    	.driver-school-price{
+    		font-size: 0.7rem;
+    		color:#7D7D7D;
+    	}
+    	.driver-school-info{
+    		padding: 0rem 0.5rem;
+    	}
+    	.driver-school-percent{
+    		font-size: 0.7rem;
+    		margin-bottom:0.3rem;
+		    overflow: hidden;
+			padding-left: 0 !important;
+			padding-right: 0 !important;
+    	}
+    	.driver-school-percent li{
+    		float: left;
+			width: 28%;
+    		margin-right: 0rem;
+    	}
+		.driver-school-percent li:last-child {
+			width: 44%;
+			text-align: right;
+			margin-right: 0rem;
+		}
+    	.driver-school-label li{
+		    border: solid 1px #F1F1F1;
+		    background:#F1F1F1;
+		    margin-right: 0.4rem;
+		    margin-bottom:0rem;
+		    padding: 0rem 0.3rem;
+		    float:left;
+		    line-height: 0.9rem;
+    		height: 0.9rem;
+    		font-size:0.6rem;
+    	}
+		.tag-style0{
+			background:#DDEBFF !important;
+			border-color:#DDEBFF !important;
+			color:#75A9CB;
+		}
+		.tag-style1{
+			background:#E9FBF9 !important;
+			border-color:#E9FBF9 !important;
+			color:#63BD9F;
+		}
+		.tag-style2{
+			background:#FDF2E6 !important;
+			border-color:#FDF2E6 !important;
+			color:#ED9366;
+		}
+    	.font-list-item{
+    		color:#757575;
+		    font-size: 0.7rem;
+		    overflow: hidden;
+    	}
+    	.list_bar .list_bar_inner{
+			 position:absolute;
+			 min-width: 0rem;
+			 height:100%;
+			 top:0;
+			 left:50%;
+			 background-color:#03a9f4;
+			 -webkit-transform:translateX(-50%);
+			 transform:translateX(-50%);
+			 -webkit-transition: 0.3s ease;
+		}
+		.list_bar {
+			 position:absolute;
+			 bottom:0;
+			 left:0%;
+			 height:2px;
+			 width:20%;
+			 -webkit-transform:translateX(0%);
+			 transform:translateX(0%);
+			 -webkit-transition:all .25s ease;
+			 transition:all .25s ease;
+			 z-index:10;
+		}
+		.driver-school-sort-menu{
+			position: relative;
+		}
+		#score{
+			/*border:1px solid #ace;*/
+    		height: 2rem;
+    		line-height:2rem;
+    		display: inline-block;
+    		vertical-align: middle;
+    	}
+    	#score li{
+    	/*border:1px solid #a00;*/
+    		position:relative;
+    		bottom:0.5rem;
+    		float: left;
+    		height: 2rem;
+    		margin-left: 0.1rem;
+    		line-height:2rem;
+    		display: inline-block;
+    		vertical-align: middle;
+    	}
+    	#score li span{
+			font-size:0.6rem;
+			position:relative;
+	    	bottom:0.5rem;
+		}
+    	#score li img{
+    	/*border:1px solid #eac;*/
+    		position:relative;
+    		bottom:0.5rem;
+    		width: 0.8rem;
+    		margin-top: 0.2rem;
+    	}
+    	.head-portrait img{
+    		height:100%;
+    		border-radius:100%;
+    	}
+    	.aui-ellipsis-2 {
+		    display: -webkit-box !important;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		    word-wrap: break-word;
+		    white-space: normal !important;
+		    -webkit-line-clamp: 2;
+		    -webkit-box-orient: vertical;
+		}
+		.driver-img{
+			width: 2rem !important;
+    		height: 2rem !important;
+    		margin: auto !important;
+		}
+		.checkMore{
+			height: 3rem;
+		    line-height: 3rem;
+		    text-align: center;
+	        font-size: 0.7rem;
+		}
+		.checkMore img{
+			height: 0.8rem;
+    		margin-bottom: -0.1rem;
+    		-webkit-transform: rotate(180deg);
+		}
+		.driver-school-des{
+			padding: 0.8rem;
+   			font-size: 0.7rem;
+		}
+		.aui-border-t:before, .aui-border-b:after {
+		    width: 100%;
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    z-index: 2;
+		    left: 0;
+		    right: auto;
+		    -webkit-transform-origin: 100% 50%;
+		    transform-origin: 100% 50%;
+		    pointer-events: none;
+		}
+		.aui-bar-nav {
+		    top: 0;
+		    line-height: 2.25rem;
+		    background-color: #FFF;
+		    color: #000;
+		    border-bottom: none;
+		}
+		#aui-header1{
+		    opacity: 0;
+		    z-index:12;
+		}
+		#aui-header2{
+		    opacity: 1;
+		    background:#FFF !important;
+		    z-index:12;
+		}
+		.swiper-pagination-bullet-active {
+		    opacity: 1;
+		    background: #FFF;
+		}
+		.swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets {
+		    bottom: 10px;
+		    left: 0;
+		    width: 95%;
+		}
+		.swiper-pagination {
+		    position: absolute;
+		    text-align: right;
+		    -webkit-transition: 300ms;
+		    -moz-transition: 300ms;
+		    -o-transition: 300ms;
+		    transition: 300ms;
+		    -webkit-transform: translate3d(0, 0, 0);
+		    -ms-transform: translate3d(0, 0, 0);
+		    -o-transform: translate3d(0, 0, 0);
+		    transform: translate3d(0, 0, 0);
+		    z-index: 10;
+		}
+		.shadow{
+    		width:100%;
+    		height:100%;
+    		background:#000;
+    		opacity:0.3;
+    		position: absolute;
+    	}
+    	.driver-school-des img{
+    		max-width:100%;
+    	}
+    	.aui-list .aui-list-item-media {
+		    width: 3rem;
+		    position: relative;
+		    padding: 0.5rem 0;
+		    padding-right: 0.25rem;
+		    display: inherit;
+		    -webkit-flex-shrink: 0;
+		    flex-shrink: 0;
+		    -webkit-flex-wrap: nowrap;
+		    flex-wrap: nowrap;
+		    -webkit-box-align: center;
+		    -webkit-align-items: flex-start;
+		    align-items: flex-start;
+		}
+		/*场地*/
+		.place{
+			width: 5.5rem !important;
+		}
+		.placeName{
+			font-weight: 600;
+			font-size: 1.2rem;
+		}
+		.placeImg{
+			height: 0.8rem;
+				margin-bottom: 0.1rem;
+				-webkit-transform: rotate(180deg);
+		}
+		.jz {
+		    margin: 0.5rem 0rem;
+		}
+		.empty{
+			width:100%;
+			padding:3rem 0rem;
+			text-align:center;
+			font-size:0.6rem;
+		}
+		.empty img{
+			width:4rem;
+		}
+		.icon_img{
+			width:1rem;
+		}
+		#label li{
+			border: solid 1px #F1F1F1;
+			margin-right: 0.4rem;
+			font-size: 0.6rem;
+			padding: 0rem 0.2rem;
+			background:#F1F1F1;
+		}
+		/*评分*/
+		#score{
+			height: 1rem;
+			line-height:1rem;
+			display: inline-block;
+			vertical-align: middle;
+		}
+		#score li{
+			float: left;
+			width: 0.8rem;
+			height: 1rem;
+			margin-left: 0rem;
+			line-height:1rem;
+			display: inline-block;
+			vertical-align: middle;
+		}
+		#score li img{
+			width: 0.5rem;
+			margin-top: 0.2rem;
+		}
+		#score span{
+			color:#FFAC67;
+		}
+		.license{
+			background: #f3f4f4;
+			display:inline-block;
+			margin-bottom: 0.1rem;
+			height: 1rem;
+		}
+		.aui-active{
+			border-bottom-color: #1E8DD8 !important;
+			color: #1E8DD8 !important;
+		}
+		.driver-school-short-name{
+			margin-bottom:0.8rem;
+			margin-top:-0.5rem;
+			color:#757575;
+		}
+		.aui-list .aui-list-item-title {
+		    font-size: 0.7rem;
+		    position: relative;
+		    max-width: 100%;
+		    color: #03a9f4;
+		}
+		.aui-label-info {
+		    color: #ffffff;
+		    background-color: #FFB476;
+		}
+		.meal-detail{
+			height:6.6rem;
+			overflow: hidden;
+		}
+		.remove-overflow{
+			overflow:visible;
+			height: auto;
+		}
+		.get-more{
+		    height: 2rem;
+    		line-height: 2rem;
+    		text-align: center;
+		}
+		.get-more img{
+			width:0.6rem;
+		    margin-right: 0.1rem;
+		    -webkit-transition: 0.3s ease;
+		}
+		.get-more span{
+			color:#898787;
+			font-size:0.7rem;
+		}
+		.get-more:active{
+			background:#FAFAFA;
+		}
+		.msg{
+			background: #FFFFFF;
+		    height: 4rem;
+		    text-align: center;
+		    font-size:0.7rem;
+		    color:#515151;
+		}
+		.msg img{
+			width:1.5rem;
+			margin-top: 0.5rem;
+			margin-bottom:0.5rem;
+		}
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav none-bottom-style" id="aui-header1" style="background: none;">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+            <img src="../../icon/common/icon_header_return_white.png">
+        </a>
+        <div class="aui-title">
+        	
+        </div>
+	 	<a class="aui-pull-right aui-btn" tapmode onclick="openShareWindow()">
+            <img src="../../icon/common/icon_share_white.png">
+        </a>
+    </header>
+	<header class="aui-bar aui-bar-nav" id="aui-header2" style="background: none;">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+            <img src="../../icon/common/icon_header_return.png">
+        </a>
+        <div class="aui-title" id="driver_s_title">
+        	驾校详情
+        </div>
+	 	<a class="aui-pull-right aui-btn" tapmode onclick="openShareWindow()">
+            <img src="../../icon/common/icon_share.png">
+        </a>
+    </header>
+    <div id="driverschoolDetail">
+	    <div class='load_img'>
+	    	<img src="../../icon/common/icon_load_html.gif" alt="" />
+	    </div>
+	    <!-- <div class="driver-school-info">
+	    			<div class="driver-school-name">
+	    				<div class='item-name'>上虞区驾校</div>
+	    			</div>
+	    			<div class='driver-school-short-name'>全称：上虞区驾校</div>
+	    			<ul class="driver-school-percent font-list-item" style="margin-top: -0.5rem;">
+	    				<li>学员&nbsp;1111</li>
+	    				<li>合格率 &nbsp;100%</li>
+	    			</ul>
+	    			<div class="aui-content aui-margin-b-15">
+	    			    <ul class="aui-list aui-list-in none-top-style">
+	    			    	<li class="aui-list-item aui-list-item-arrow" tapmode onclick="openMap('{{=it.name}}','{{=it.longitude}}','{{=it.latitude}}')">
+	    						<div class="aui-list-item-label-icon">
+	    							<img src="../../icon/common/icon_place.png" alt="" class='icon_img'/>
+	    						</div>
+	    						<div class="aui-list-item-inner font-list-item">
+	    							<span>阿苏hi暗黄CIA</span>
+	    						</div>
+	    					</li>
+	    					<li class="aui-list-item aui-list-item-arrow none-bottom-style" tapmode onclick="checkMoreInfo('{{=it.learningPlanList[i].id}}','{{=it.learningPlanList[i].name}}')">
+	    			            <div class="aui-list-item-label-icon">
+	    			                <img src="../../icon/common/icon_support.png" alt="" class='icon_img'/>
+	    			            </div>
+	    			            <div class="aui-list-item-inner font-list-item none-bottom-style">
+	    			                <div class="aui-list-item-title">套餐1</div>
+	    			                <div class="aui-list-item-right">
+	    			                    <div class="aui-label aui-label-info">￥998</div>
+	    			                </div>
+	    			            </div>
+	    			        </li>
+	    			    	<div class='meal-detail'>
+	    					    <div class="msg">
+	    							<img src="../../icon/common/icon_defalut.png" alt="" /><br>
+	    				        	<span>未设置套餐</span>
+	    						</div>
+	    			    	</div>
+	    			    </ul>
+	    			</div>
+	    		</div> -->
+    </div>
+    <script type="text/template" charset="utf-8" id='error_src'>
+    	<div class='error_img'>
+	    	<img src="../../icon/common/icon_serive_error.png" alt="" />
+	    </div>
+    </script>
+    <script type="text/template" charset="utf-8" id='driverschoolDetail_src'>
+	    <div class="swiper-container">
+		    <div class="swiper-wrapper">
+		    	{{if(it.mediaList.length > 0){ }}
+			    	{{ for(var i=0;i<it.mediaList.length;i++){ }}
+				    	<div class="swiper-slide">
+				    		<div class='driver-school-pic'>
+								<img src="{{=file_load_url + it.mediaList[i].path}}" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" alt="" tapmode onclick="openPic('{{=it.id}}')"/>
+				    		</div>
+				    	</div>
+			    	{{ } }}
+		    	{{ }else{ }}
+		    		<div class="swiper-slide">
+			    		<div class='driver-school-pic'>
+							<img src="{{=file_load_url + it.logo}}" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" alt=""/>
+			    		</div>
+			    	</div>
+		    	{{ } }}
+		    </div>
+		    <div class="swiper-pagination"></div>
+		</div>
+		<div class="driver-school-info">
+			<ul class="driver-school-label font-list-item" style="margin-top:0.5rem;">
+				{{=getLabelList(it.tags)}}
+			</ul>
+			<div class="driver-school-name">
+				<div class='item-name'>{{=it.shortName}}</div>
+				<!-- <div class='item-price'>
+					<span>
+						<font>￥</font>
+						{{ if(it.entryFees.length > 0){ }}
+							{{=cashFormat_i(it.entryFees[0])}}<font>起</font>
+						{{ }else{ }}
+							暂无报价
+						{{ } }}
+					</span>&nbsp;
+				</div> -->
+			</div>
+			<div class='driver-school-short-name'>全称：{{=it.name}}</div>
+			<ul class="driver-school-percent font-list-item" style="margin-top: -0.5rem;">
+				{{if(it.learnerCount != null && it.learnerCount != undefined){ }}
+					<li>学员&nbsp;{{=it.learnerCount}}</li>
+				{{ }else{ }}	
+					<li>学员&nbsp;0</li>
+				{{ } }}
+				
+				
+				<li>合格率&nbsp;{{=it.passRate}}%</li>
+				<li>评分&nbsp;
+					<ul id="score">
+						{{=calcuStar(it.score)}}
+					</ul>
+				</li>
+			</ul>
+			<div class="aui-content aui-margin-b-15">
+			    <ul class="aui-list aui-list-in">
+			    	<!-- 驾校支持车辆类型先注释 -->
+			        <!-- {{ if(it.licenseTypeList.length > 3){ }}
+			        				    <li class="aui-list-item aui-list-item-arrow" tapmode onclick="checkMoreInfo(this)">
+			        {{ }else{ }}
+			        <li class="aui-list-item">
+			        {{ } }}
+			            <div class="aui-list-item-label-icon">
+			                <img src="../../icon/common/icon_support.png" alt="" class='icon_img'/>
+			            </div>
+			            <div class="aui-list-item-inner font-list-item" style="padding:0.5rem 0rem;">
+			                <span class='aui-ellipsis-3'>
+			                	{{ if(it.licenseTypeList.length > 0){ }}
+			                		{{ for(var i=0;i<it.licenseTypeList.length;i++){ }}
+			                			<span class="license">{{=it.licenseTypeList[i].dictionary.name}}</span><br>
+			                		{{ } }}
+			                	{{ }else{ }}
+			                		该驾校未设置支持驾考类型
+			                	{{ } }}
+			                </span>
+			            </div>
+			        </li> -->
+			        <li class="aui-list-item aui-list-item-arrow" tapmode onclick="openMap('{{=it.name}}','{{=it.longitude}}','{{=it.latitude}}')">
+						<div class="aui-list-item-label-icon">
+							<img src="../../icon/common/icon_place.png" alt="" class='icon_img'/>
+						</div>
+						<div class="aui-list-item-inner font-list-item" style='margin-top:0rem;'>
+							<span>{{=it.address}}</span>
+						</div>
+					</li>
+					{{ if(it.learningPlanList.length <= 3){ }}
+				        <div id='planContent'>
+					{{ }else{ }}
+				        <div class='meal-detail' id='planContent'>
+					{{ } }}
+			        	{{ if(it.learningPlanList.length > 0){ }}
+				        	{{ for(var i=0;i<it.learningPlanList.length;i++){ }}
+				        		{{ if(i%2 != 0){ }}
+						        <li class="aui-list-item aui-list-item-arrow none-bottom-style"style='background:#FAFAFA;' tapmode onclick="checkMoreInfo('{{=it.learningPlanList[i].id}}','{{=it.learningPlanList[i].name}}')">
+				        		{{ }else{ }}
+						        <li class="aui-list-item aui-list-item-arrow none-bottom-style" tapmode onclick="checkMoreInfo('{{=it.learningPlanList[i].id}}','{{=it.learningPlanList[i].name}}')">
+				        		{{ } }}
+						            <div class="aui-list-item-label-icon">
+						                <img src="../../icon/common/icon_support.png" alt="" class='icon_img'/>
+						            </div>
+						            <div class="aui-list-item-inner font-list-item none-bottom-style">
+						                <div class="aui-list-item-title">{{=it.learningPlanList[i].name}}</div>
+						                <div class="aui-list-item-right">
+						                    <div class="aui-label aui-label-info">￥{{=cashFormatO(it.learningPlanList[i].planPrice)}}</div>
+						                </div>
+						            </div>
+						        </li>
+					        {{ } }}
+			        	{{ }else{ }}
+			        		<div class="msg">
+								<img src="../../icon/common/icon_defalut.png" alt="" /><br>
+					        	<span>未设置套餐</span>
+							</div>
+			        	{{ } }}
+			        </div>
+			        {{ if(it.learningPlanList.length > 3){ }}
+				        <div class='get-more' tapmode onclick="getMorePlan(this)">
+				    		<img src="../../icon/common/icon_order.png" alt="" />
+				    		<span>更多套餐</span>
+				    	</div>
+			        {{ } }}
+			    </ul>
+			</div>
+		</div>
+		<div class="driver-school-sort">
+			<div class="driver-school-sort-menu">
+				<div class="aui-bar aui-bar-btn aui-bar-btn-full border-bottom" id="menu">
+				    <div class="aui-bar-btn-item aui-active">简介</div>
+				    <div class="aui-bar-btn-item">服务</div>
+				    <div class="aui-bar-btn-item">辅导员</div>
+				    <div class="aui-bar-btn-item">场地</div>
+				    <div class="aui-bar-btn-item">评价</div>
+				</div>
+				<div class="list_bar" id="slideSpan">
+			        <div class="list_bar_inner"></div>
+			    </div>
+			</div>
+		    <div class="bar-content">
+		    	<div class="bar-content-item">
+		    		{{ if(it.introduction != undefined&&it.introduction != null&&it.introduction != ''){ }}
+			    		<div class="driver-school-des" style="width:100%;overflow: auto;">
+			    			{{=it.introduction}}
+			    		</div>
+		    		{{ }else{ }}
+		    			<div class='empty'>
+		    				<img src="../../icon/common/empty.png" alt="" /><br>
+		    				<span>无驾校描述</span>
+		    			</div>
+		    		{{ } }}
+		    	</div>
+		    	<div class="bar-content-item aui-hide">
+		    		<div class="aui-content">
+				    	<ul class="aui-list aui-media-list" id="driverSchool">
+				    		{{ for(var i=0;i<(it.serviceList.length <= 3?it.serviceList.length:3);i++){ }}
+						        <li class="aui-list-item">
+						            <div class="aui-media-list-item-inner">
+						                <div class="aui-list-item-inner">
+						                    <div class="aui-list-item-text jz">
+						                        <div class="aui-list-item-title aui-ellipsis-1">{{=it.serviceList[i].name}}</div>
+						                        <div class="aui-info-item">￥{{=it.serviceList[i].price}}</div>
+						                    </div>
+						                    <div class="aui-list-item-text jz">
+						                        <div class="aui-info-item aui-ellipsis-2">{{=it.serviceList[i].introduce}}</div>
+						                    </div>
+						                </div>
+						            </div>
+						        </li>
+					        {{ } }}
+					    </ul>
+		    		</div>
+		    		{{ if(it.serviceList.length == 0){ }}
+		    			<div class='empty'>
+		    				<img src="../../icon/common/empty.png" alt="" /><br>
+		    				<span>无驾校服务</span>
+		    			</div>
+		    		{{ }else{ }}
+			    		<div class='checkMore' tapmode onclick="checkMore(0)">
+			    			<span>查看全部服务（共{{=it.serviceList.length}}个）</span>
+			    			<img src="../../icon/common/icon_header_return.png">
+			    		</div>
+		    		{{ } }}
+		    	</div>
+		    	<div class="bar-content-item aui-hide">
+		    		<div class="aui-content">
+				    	<ul class="aui-list aui-media-list" id="driverSchool">
+				    		{{ for(var i=0;i<(it.teacherList.length <= 3?it.teacherList.length:3);i++){ }}
+						        <li class="aui-list-item">
+						            <div class="aui-media-list-item-inner">
+						                <div class="aui-list-item-media head-portrait">
+						                    <img src="../../icon/common/icon_users.png" class="driver-img">
+						                </div>
+						                <div class="aui-list-item-inner">
+						                    <div class="aui-list-item-text jz">
+						                        <div class="aui-list-item-title aui-ellipsis-2">{{=it.teacherList[i].teacherName}}</div>    
+						                    </div>
+						                    <div class="aui-list-item-text jz">
+						                    	<ul id="score">
+						                    		{{=calcuStar(5)}}
+						                    	</ul>
+												<div class="aui-info-item">学员{{=it.teacherList[i].studentAll}}人</div>
+						                      <div class="aui-info-item" onclick="onlineContact()">{{=it.teacherList[i].phone}}</div>
+						                    </div>
+						                </div>
+						            </div>
+						        </li>
+					        {{ } }}
+					    </ul>
+		    		</div>
+		    		{{ if(it.teacherList.length == 0){ }}
+		    			<div class='empty'>
+		    				<img src="../../icon/common/empty.png" alt="" /><br>
+		    				<span>无辅导员</span>
+		    			</div>
+		    		{{ }else{ }}
+			    		<div class='checkMore' tapmode onclick="checkMore(1)">
+			    			<span>查看全部辅导员（共{{=it.teacherList.length}}个）</span>
+			    			<img src="../../icon/common/icon_header_return.png">
+			    		</div>
+		    		{{ } }}
+		    	</div>
+		    	<div class="bar-content-item aui-hide">
+		    		<div class="aui-content">
+				    	<ul class="aui-list aui-media-list" id="driverSchool">
+				    		{{ for(var i=0;i<(it.placeList.length <= 3?it.placeList.length:3);i++){ }}
+						        <li class="aui-list-item"  tapmode onclick="openMap('{{=it.placeList[i].name}}','{{=it.placeList[i].longitude}}','{{=it.placeList[i].latitude}}')">
+						            <div class="aui-media-list-item-inner">
+						                <div class="aui-list-item-media place">
+						                    <img src="{{=file_load_url + it.logo}}" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'">
+						                </div>
+						                <div class="aui-list-item-inner">
+						                    <div class="aui-list-item-text jz">
+						                        <div class="aui-list-item-title aui-ellipsis-2 placeName">{{=it.placeList[i].name}}</div>
+						                        
+						                    </div>
+						                    <div class="aui-list-item-text jz">
+						                        <div class="aui-info-item">{{=it.placeList[i].address}}</div>
+												<div class="aui-info-item">{{=calcuDistance(it.placeList[i].distance)}} &nbsp;<img class="placeImg" src="../../icon/common/icon_header_return.png"></div>					
+						                    </div>
+						                </div>
+						            </div>
+						        </li>
+					        {{ } }}
+					    </ul>
+		    		</div>
+		    		{{ if(it.placeList.length == 0){ }}
+		    			<div class='empty'>
+		    				<img src="../../icon/common/empty.png" alt="" /><br>
+		    				<span>无场地</span>
+		    			</div>
+		    		{{ }else{ }}
+			    		<div class='checkMore' tapmode onclick="checkMore(2)">
+			    			<span>查看全部场地（共{{=it.placeList.length}}个）</span>
+			    			<img src="../../icon/common/icon_header_return.png">
+			    		</div>
+		    		{{ } }}
+		    	</div>
+		    	<div class="bar-content-item aui-hide evaluate" >
+		    	
+		    	<div id='load_div'>
+				</div>
+				
+		    	</div>
+		    </div>
+		</div>
+    </script>
+    <script type="text/template" charset="utf-8" id='load_src'>
+		<div class="load">
+		<img src="../../icon/common/loadding.gif" alt="" /><br>
+		<span>加载中...</span>
+	</div>
+	</script>
+		<script type="text/template" charset="utf-8" id='msg_src'>
+			<div class="msg">
+			<img src="../../icon/common/empty.png" alt="" /><br>
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+		<script type="text/template" charset="utf-8" id='more_src'>
+			<div class="jiazai">
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+	<script type="text/template" charset="utf-8"  id="evaluateNull">
+	 <div class='empty'>
+			<img src="../../icon/common/empty.png" alt="" /><br>
+			<span>暂无评价</span>
+		</div>
+	</script>
+    <!--评价 -->
+    <script type="text/template" charset="utf-8"  id="evaluate">
+   
+	    {{ for(var i=0;i<it.cmOrderFeedbackList.length;i++){ }}
+			<li>
+				<div class='community-head' >
+					<div class='community-head-icon'>
+						<img src="{{=file_load_url +it.cmOrderFeedbackList[i].learnerHeadImgUrl}}" alt="" onerror="javascript:this.src='../../icon/mine/icon_mine_head_hui.png'" />
+					</div>
+					<div class='community-head-info'>
+						<div class='community-head-info-name aui-ellipsis-1'>
+							{{ if(it.cmOrderFeedbackList[i].learnerName == "" || it.cmOrderFeedbackList[i].learnerName == null || it.cmOrderFeedbackList[i].learnerName == undefined){ }}
+								匿名用户
+							{{ }else{ }}
+								{{=it.cmOrderFeedbackList[i].learnerName}}
+							{{ } }}
+						</div>
+						
+						<div class='community-head-info-time aui-pull-right'>{{=calcuTime(it.cmOrderFeedbackList[i].insertDt)}}</div>
+						
+					</div>
+					<div class='community-head-infos'>
+						<div class='community-head-info-name aui-ellipsis-1'>
+						<ul id="score">
+                    		{{=calcuStar(it.cmOrderFeedbackList[i].level)}}
+                    	</ul>
+						</div>
+						
+						
+					</div>
+			
+					<div class='community-head-label'></div>
+				</div>
+				<div class="community-acticle" >
+					<!-- <div class='community-title aui-ellipsis-1'></div> -->
+					<div class='community-content aui-ellipsis-3'>{{=it.cmOrderFeedbackList[i].content}}</div>
+				</div>
+				<div class='community-pic-list'  >
+				{{if(it.cmOrderFeedbackList[i].imgUrls){}}
+					{{ for(var j=0;j < spliceImg(it.cmOrderFeedbackList[i].imgUrls).length;j++){ }}
+						{{ if(spliceImg(it.cmOrderFeedbackList[i].imgUrls).length == 1){ }}
+							{{ if(spliceImg(it.cmOrderFeedbackList[i].imgUrls)[j] != ""){ }}
+							<div class="b_pic">
+								<img src="../../icon/default/icon_default_big_pic.png" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url + spliceImg(it.cmOrderFeedbackList[i].imgUrls)[j]}}" alt="" tapmode onclick="openPic('{{=file_load_url + spliceImg(it.cmOrderFeedbackList[i].imgUrls)[j] + '&style=imgUrls/resize,m_lfit,h_800,w_800'}}')"/>
+							</div>
+							{{ } }}
+						{{ }else if(spliceImg(it.cmOrderFeedbackList[i].imgUrls).length > 1 && spliceImg(it.cmOrderFeedbackList[i].imgUrls).length < 5){ }}
+							<div class="m_pic">
+								<img src="../../icon/default/icon_default_big_pic.png" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url + spliceImg(it.cmOrderFeedbackList[i].imgUrls)[j]}}" alt="" tapmode onclick="openPic('{{=file_load_url + spliceImg(it.cmOrderFeedbackList[i].imgUrls)[j] + '&style=imgUrls/resize,m_lfit,h_800,w_800'}}')"/>
+							</div>
+						{{ }else if(spliceImg(it.cmOrderFeedbackList[i].imgUrls).length >5){ }}
+							<div class="s_pic">
+								<img src="../../icon/default/icon_default_big_pic.png" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url + spliceImg(it.cmOrderFeedbackList[i].imgUrls)[j]}}" alt="" tapmode onclick="openPic('{{=file_load_url + spliceImg(it.cmOrderFeedbackList[i].imgUrls)[j] + '&style=imgUrls/resize,m_lfit,h_800,w_800'}}')"/>
+							</div>
+						{{ } }}
+					{{ } }}
+				{{ } }}
+				</div>
+				<div class='community-icon'>
+					
+					<!--<div class="commentCount" tapmode onclick="openOriginal('{{=it.cmOrderFeedbackList[i].id}}','{{=it.cmOrderFeedbackList[i].title}}')">
+						<img src="../../icon/article/icon_comment_new.png" alt="" style="margin-bottom:-0.2rem;"/>
+						<span>&nbsp;{{=it.cmOrderFeedbackList[i].commentCount}}</span>
+					</div>-->
+					<!--<div id="thumbsUp{{=it.cmOrderFeedbackList[i].id}}" onclick="giveTheThumbsUp('{{=it.cmOrderFeedbackList[i].id}}',this)">
+						{{ if(it.cmOrderFeedbackList[i].isFlag == 1){ }}
+						<img src="../../icon/article/icon_yizan_new.png" alt="" />
+						&nbsp;<span style="color: #1E8DD8;">{{=it.cmOrderFeedbackList[i].likeCount}}</span>
+						{{ }else{ }}
+						<img src="../../icon/article/icon_zan_new.png" alt="" />
+						&nbsp;<span>{{=it.cmOrderFeedbackList[i].likeCount}}</span>
+						{{ } }}
+					</div>-->
+				</div>
+			</li>
+		{{ } }}
+
+	    
+    </script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/swiper/swiper.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript" src="../../script/echo.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+	var clearance = 25;//间隙
+	var headerPos;
+	var threshold;//定义的阈值
+	var touchStyle;
+	var systemType;//系统类型
+	var cache;
+	var bMap;
+	var fs;
+	var flag=0;
+	var articleId;//驾校详情ID
+	apiready = function(){
+		$api.fixStatusBar($api.byId('aui-header1'));
+		$api.fixStatusBar($api.byId('aui-header2'));
+		fs = api.require('fs');
+		cache = api.pageParam.data;
+		log("驾校报名",cache)
+		articleId = cache.id;
+		bMap = api.require('bMap');
+		$('#driver_s_title').html(cache.d_school_name);
+		headerPos = $api.offset($api.byId('aui-header1'));
+		threshold = headerPos.h;
+		systemType = api.systemType;
+		touchStyle = systemType == "ios"?'touchmove':'scroll';
+		scroll();
+		renderingData();//渲染驾校数据
+		
+		//监听提交报名
+		toEventListener('click_regist',function(ret,err){
+			console.log(JSON.stringify(ret))
+			driver_sign_up(ret.value);
+		});
+		
+		//监听驾校详情刷新
+		toEventListener('register_pay_sucesss',function(ret,err){
+			console.log('刷新驾校详情');
+			renderingData();//渲染驾校数据
+		});
+		
+		//监听驾校详情刷新
+		toEventListener('school_refresh',function(ret,err){
+			console.log('刷新驾校详情');
+			renderingData();//渲染驾校数据
+		});
+		
+		goLoad(function(ret, err) {
+			loadList();
+		});
+//		setTimeout(function() {
+//			api.refreshHeaderLoading();
+//		}, 100);
+	}
+	
+	//监听页面滑动控制头部menu样式
+	var scrollPos;//监听上下滚动顶部的距离
+	var percent = 0;//白底header的隐藏属性值
+	var hidepercent = 0;//非白底header的隐藏属性值
+	function scroll(){
+		$(window).on(touchStyle,function(event){
+	        scrollPos = $(window).scrollTop();
+	        //安卓做限制滚动
+	    	if(((scrollPos/threshold).toFixed(2) <= 1)&&systemType == 'android'){
+	    		percent = (scrollPos/threshold).toFixed(2);
+		    	$('#aui-header2').css("opacity",percent);
+	    		hidepercent = 1 - percent;
+		    	$('#aui-header1').css("opacity",hidepercent);
+	    	}else{
+	    		percent = (scrollPos/threshold).toFixed(2) > 1?1:(scrollPos/threshold).toFixed(2);
+		    	$('#aui-header2').css("opacity",percent);
+	    		hidepercent = (1 - percent) < 0?0:(1 - percent);
+		    	$('#aui-header1').css("opacity",hidepercent);
+	    	}
+	    });
+	}
+    //列表上拉
+	function loadList() {
+		pageNo++;
+		refresh = false;
+		setLoad();
+		init();
+	
+	}
+	//设置页面加载的画面
+	function setLoad() {
+		if (refresh || $('.evaluate').find('li').length == 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+			$('#load_div').html('');
+		} else {
+			setTimeout(function() {
+				$('#load_div').html(doT.template(more_src)({
+					'msg': '加载更多中 ...',
+					'img': '../../icon/common/jiazai.gif'
+				}));
+			}, 500);
+		}
+	}
+    //渲染驾校数据
+    var driverSchoolData;
+    var contactNumber = null;
+    function renderingData(){
+    	mylocation(function(location_result){//获取当前定位
+	        //驾校详情传参
+	        params = {
+	        	learnerId:islogin()?getUserId():null,
+	        	drivingSchool:{
+	        		id:cache.id
+	        	}
+	        }
+			if(location_result.status){//有定位权限
+				params.lng = location_result.lon,
+				params.lat = location_result.lat
+			}
+	        //console.log('传参'+JSON.stringify(params));
+	        url = 'api/driving';
+	        ajax_Request(url, 'get', 'json', params, function(ret,err){
+	        	if(ret){
+	        		log('驾校详情数据：',ret);
+	        		driverSchoolData = ret.drivingSchoolDetail;
+	        		if(ret.code == 0){
+	        			$('#aui-header1').css("opacity",1);
+	        			$('#aui-header2').css("opacity",0);
+	        			var driverschoolDetail_src = $('#driverschoolDetail_src').html();
+	        			contactNumber = ret.drivingSchoolDetail.contactNumber;
+	        			$('#driverschoolDetail').html(doT.template(driverschoolDetail_src)(ret.drivingSchoolDetail));
+	        			init();
+	        			
+	        			toolInit(ret.drivingSchoolDetail);//样式初始化
+	        		}else{
+	        			setError(ret.msg);
+	        		}
+	        	}else{
+	        		setError('服务器繁忙，请稍后重试');
+	        	}
+	        });
+		});
+    }
+    //分割图片地址
+	function spliceImg(imgs){
+		return imgs.split(',');
+	}
+    //设置出错页面;
+    function setError(msg){
+    	var error_src = $('#error_src').html();
+		$('#driverschoolDetail').html(doT.template(error_src)({}));
+    	alert_msg(msg);
+    }
+    var pageNo=1;
+	var	pageSize=5;
+    function init(){
+
+		url="api/order-feedback/list";
+		params = {
+			feedbackType:'2',
+			correlationId :cache.id,
+			page: pageNo,
+			limit: pageSize
+		}
+		log('params',params)
+		ajax_Request(url, 'get', 'json', params, function(ret, err) {
+			log('社区列表：',ret);
+			if(ret){
+				if(ret.code == 0 && ret.cmOrderFeedbackList.length >= 0){
+					var evaluate = $('#evaluate').html();
+					//将登入标识放入数据体中
+					ret.loginId = islogin()?$api.getStorage('cache_by_account').cache_account.id:'';
+					if(pageNo==1&&ret.cmOrderFeedbackList.length==0){
+						flag=1;
+						$('.evaluate').html($('#evaluateNull').html());
+						log('evaluate')
+					}
+					if(flag==0){
+						if(pageNo == 1){
+						
+							$('.evaluate').html(doT.template(evaluate)(ret));
+						}else{
+							
+							$('.evaluate').append(doT.template(evaluate)(ret));
+						}
+					}
+					echoInit();
+					api.parseTapmode();
+				}
+				 
+			}else{
+				//setMsg("服务器繁忙，请稍后重试")
+			}
+
+		})
+		setTimeout(function() {
+			api.refreshHeaderLoadDone();
+		}, 500);
+	}
+    //工具初始化
+    function toolInit(drivingSchoolDetail){
+    	//切换menu初始化
+		var tabwork = new auiTab({
+	        element:document.getElementById("menu"),
+	        repeatClick:true
+	    },function(ret){
+	        if(ret){
+	        	$('.aui-bar-btn-item').removeClass('active');
+				f_slide($(ret.dom));
+	        	setViewFrame(ret.index-1);
+	        }
+	    });
+	    //初始化轮播
+	    var mySwiper = new Swiper(".swiper-container", {
+	    	pagination : '.swiper-pagination',
+			paginationElement : 'li'
+		});
+		
+		//给第一个menu添加样式
+	    $('.aui-bar-btn-item').each(function(index,e){
+	    	if(index == 0){
+	    		f_slide(e);
+	    	}
+	    });
+	    
+	    //发送驾考类型数据到win
+	    //sendEvent('licenseType_data',JSON.parse(JSON.stringify(drivingSchoolDetail.licenseTypeList)));
+	    
+	    if(drivingSchoolDetail.status != '011001'){
+	    	esc_function('driver_school_detail_win','','loadFinish('+false+',"休息中")');
+	    	return;
+	    }
+	    
+	    if(drivingSchoolDetail.licenseTypeList.length == 0){
+	    	//驾校没有支持的驾照类型那么不允许
+	    	esc_function('driver_school_detail_win','','loadFinish('+false+',"无支持的驾考类型")');
+	    	return;
+	    }
+	    
+	    if(drivingSchoolDetail.learningPlanList.length == 0){
+	    	//驾校没有套餐那么不允许
+	    	esc_function('driver_school_detail_win','','loadFinish('+false+',"该驾校还未设置套餐")');
+	    	return;
+	    }
+	    
+    	if(drivingSchoolDetail.driverSchoolRegistrationList.length == 0){
+    		//未报名的允许报名
+	    	esc_function('driver_school_detail_win','','loadFinish('+true+',"立刻报名")');
+    	}else if(drivingSchoolDetail.driverSchoolRegistrationList.length > 0
+    		&&(drivingSchoolDetail.driverSchoolRegistrationList[0].refundStatus == 1
+    		||drivingSchoolDetail.driverSchoolRegistrationList[0].refundStatus == 3
+    		||drivingSchoolDetail.driverSchoolRegistrationList[0].refundStatus == 2)){
+    		//已报名的订单退款中、退款完成的允许再次报名
+    		esc_function('driver_school_detail_win','','loadFinish('+true+',"立刻报名")');
+    	}else{
+    		//其余情况不允许报名
+	    	var status = drivingSchoolDetail.driverSchoolRegistrationList[0].status;
+	    	esc_function('driver_school_detail_win','','loadFinish('+true+',"'+status.name+'","'+status.code+'","'+drivingSchoolDetail.driverSchoolRegistrationList[0].id+'","'+drivingSchoolDetail.driverSchoolRegistrationList[0].paymentStatus+'")');
+    	}
+	    
+    }
+    
+    
+    //设置驾校服务页面展示
+    function setViewFrame(i){
+    	$('.bar-content-item').each(function(index,e){
+    		if(i == index){
+    			$(e).removeClass('aui-hide');
+    			//滚动到底部，后期得改下
+    		
+    			if(index == 4){
+    			
+    			}else{
+    				$('html,body').animate({scrollTop: $(document).height()-$(window).height()+'px'}, 300);
+    			}
+    		}else{
+    			$(e).addClass('aui-hide');
+    		}
+    	});
+    }
+    
+    //滑块加载事件
+	function f_slide(e){
+		$(e).addClass('active');
+		$('.list_bar').css('width',($('.active').width() - clearance*2)+'px');
+		$('.list_bar_inner').css('width',($('.active').width() - clearance*2)+'px');
+		document.getElementById('slideSpan').style.webkitTransform = 'translateX('+($(e).position().left + clearance)+'px)';
+	}
+	
+	//打开驾校图片列表
+	function openPic(id){
+		params = {
+			school_id:id
+		}
+		commonOpenWin('driver_school_pic_win',params);
+	}
+	
+	/**
+	 * 获取更多学习计划 
+	 */
+	function getMorePlan(e){
+		if($(e).find('span').html() == '更多套餐'){
+			$('#planContent').addClass('remove-overflow');
+			$(e).find('span').html('收起');
+			$(e).find('img').addClass('styleDeg90P');
+		}else{
+			$('#planContent').removeClass('remove-overflow');
+			$(e).find('span').html('更多套餐');
+			$(e).find('img').removeClass('styleDeg90P');
+		}
+	}
+	
+	//打开地图
+	function openMap(name,lon,lat){
+		cache.to_name = name;
+		cache.to_lon = lon;
+		cache.to_lat = lat;
+		api.openWin({
+	       name: 'common_map_loaction_win',
+	       url: '../common/common_map_loaction_win.html',
+	       slidBackEnabled:'true',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       pageParam: {
+	           data:cache
+	       }
+	   });
+	}
+	
+	//打开驾校服务更多内容
+	function checkMore(index){
+		param = {
+			index:index,
+			d_school_name:cache.d_school_name,
+			teacherList:driverSchoolData.teacherList,
+			placeList:driverSchoolData.placeList,
+			serviceList:driverSchoolData.serviceList
+		}
+		commonOpenWin('driver_school_serivce_win',param);
+	}
+	
+	//打开驾校报名
+	/**
+	 * @param {Object} plan_info
+	 * id 加盟驾校ID
+	 * tcmSchoolId 全驾校ID
+	 */
+	function driver_sign_up(plan_info){
+		var params = {
+			id:cache.id,
+			tcmSchoolId:cache.tcmSchoolId,
+			d_school_name:driverSchoolData.name,
+			district:driverSchoolData.district,
+			licenseTypeList:driverSchoolData.licenseTypeList,
+			plan_info:plan_info
+		}
+		//log('驾校数据：',params);
+		OpenDriveWin('driver_school_pre_sign_up_win',params);
+	}
+	function OpenDriveWin(name,data){
+		  api.openDrawerLayout({
+		       name: name,
+		       url: './'+name+'.html',
+		       slidBackEnabled:'false',
+		       vScrollBarEnabled:'false',
+		       hScrollBarEnabled:'false',
+		       reload:true,
+		       slidToOpenPane:false,
+		       useWKWebView:false,
+			   slidToOpenPane:false,
+			   slidToClosePane:false,
+		       pageParam: {
+		           data:data
+		       },
+		       animation: {
+		        type: 'push',
+		        subType:"from_right",
+				duration:300
+			    },
+			    rightPane: {
+			        name: 'driving_coach_win',
+			        url: '../common/select_coach/driving_coach_win.html',
+			        vScrollBarEnabled:false,
+			        hScrollBarEnabled:false,
+			        bounces:false,
+			        pageParam:{
+			        
+			        }
+			    }
+		   });
+	}
+	//打开分享页面
+	function openShareWindow(){
+		var data = {
+			shareData:{
+				shareData: 'web',
+				text:"",
+				contentUrl:"https://www.mohan-tech.com/share/html/share.html",
+				title:"注册页面"
+			},
+			forumId:articleId
+		}
+		openShare(data);
+	}
+	
+	//打开更多驾考类型
+	function checkMoreInfo(planId,planName){
+		params = {
+			planId:planId,
+        	plan_name:planName
+		}
+		api.openWin({
+	       name: 'plan_detail_win',
+	       url: './driver_school_learning_plan/plan_detail_win.html',
+	       slidBackEnabled:'false',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       useWKWebView:false,
+	       pageParam: params
+	   });
+	}
+	
+	//标签加载
+	function getLabelList(tags){
+		var tagList = tags.split(',');
+		var menu = "";
+		for(var i=0;i<(tagList.length > 3?3:tagList.length);i++){
+			menu += "<li class='tag-style"+i+"'><span>"+getLabelName(tagList[i])+"</span></li>";
+		}
+		return menu;
+	}
+
+	/**
+	 * 电话 
+	 */
+	function onlineContact(){
+		if(contactNumber != null){
+			isSure('提示','是否拨打电话'+contactNumber,'是','否',function(){
+				window.location.href = 'tel://' + contactNumber;
+			});
+		}else{
+			alert_msg('未设置联系方式');
+		}
+	}
+	
+	/**
+	 *  
+	 */
+	function cashFormat_i(cash){
+		var cashs = (cash + '').split('.');
+		if(cashs.length == 1){
+			return cash + '.0';
+		}else{
+			return cashs[0] + cashs[1];
+		}
+	}
+	
+	
+	function closeWin(){
+		api.closeWin({
+        });
+	}
+</script>
+</html>

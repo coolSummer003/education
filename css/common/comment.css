@@ -1,0 +1,147 @@
+li{
+	overflow: hidden;
+}
+.comment{
+	background: #FFF;
+}
+.comment-title{
+    font-size: 0.7rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    position: relative;
+    margin-bottom: 0.5rem;
+    padding-left: 0.6rem;
+}
+.comment-title:after{
+	content: '';
+    height: 1px;
+    background: #DDDDDD;
+    width: 100%;
+    background-color: #dddddd;
+    display: block;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+}
+.head-img{
+	width:15%;
+	float:left;
+    text-align: center;
+	padding-top: 0.5rem;
+}
+.head-img img{
+    width: 1.7rem;
+    height:1.7rem;
+	border-radius: 100%;
+}
+.comment-main{
+	width:85%;
+	float:right;
+	color: #2A2A2A;
+	position:relative;
+	padding-top: 0.5rem;
+	padding-right: 0.6rem;
+}
+.comment-main:after{
+	content: '';
+    height: 1px;
+    background: #DDDDDD;
+    width: 100%;
+    background-color: #dddddd;
+    display: block;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+}
+.commnent-nickname{
+    font-size: 0.7rem;
+	color: #6B6B6B;
+	overflow: hidden;
+}
+.comment-content{
+}
+.comment-comment{
+    background: #F7F7F7;
+    font-size: 0.7rem;
+    padding: 0.5rem;
+}
+.other-user{
+}
+.other-user span{
+	color:#517CAD;
+}
+.check-more{
+	color: #517CAD;
+    height: 1rem;
+    line-height: 1rem;
+}
+.check-more span{
+}
+.check-more img{
+	height: 0.8rem;
+	margin-bottom: -0.15rem;
+    margin-left: -0.2rem;
+}
+.comment-info{
+	position: relative;
+    height: 2rem;
+	display: flex;
+}
+.comment-info-time{
+	font-size: 0.6rem;
+    color: #7D7D7D;
+    height: 2rem;
+    display: flex;
+    width: 40%;
+	float: left;
+}
+.comment-info-time span{
+	margin:auto 0;
+}
+.comment-info-opertion{
+    width: 55%;
+    float: right;
+    text-align: right;
+    position: relative;
+    height: 2rem;
+}
+.comment-info-opertion img{
+    height: 0.9rem;
+	margin-top: 0.5rem;
+	margin-right: 0.5rem;
+}
+.comment-info-zan-num{
+    font-size: 0.6rem;
+    color: #7D7D7D;
+    float: right;
+    height: 2rem;
+    line-height: 2rem;
+}
+.nickname-left{
+	width:80%;
+	float:left;
+}
+.nickname-right{
+    float: right;
+	display: flex;
+    height: 1rem;
+}
+.nickname-right img{
+	height:0.9rem;
+    margin: auto 0;
+}
+.nickname-right span{
+	font-size:0.6rem;
+	margin-top: 0.1rem;
+}
+.comment-time{
+    text-align: right;
+    color: #7D7D7D;
+    font-size: 0.6rem;
+    height: 1rem;
+}
+.commnent-comment{
+    margin-top: 0.3rem;
+}

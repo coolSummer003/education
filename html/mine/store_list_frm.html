@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>门店列表</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html,body{
+    		background:#FFF;
+    	}
+    	#score{
+    		height: 1rem;
+    		line-height:1rem;
+    		display: inline-block;
+    		vertical-align: middle;
+    	}
+    	#score li{
+    		float: left;
+    		height: 1rem;
+    		margin-left: 0.1rem;
+    		line-height:1rem;
+    		display: inline-block;
+    		vertical-align: middle;
+    	}
+    	#score li img{
+    		width: 0.7rem;
+    		margin-top: 0.1rem;
+    	}
+    	#label li{
+    		border: solid 1px #F1F1F1;
+		    margin-right: 0.4rem;
+		    font-size: 0.6rem;
+		    padding: 0rem 0.2rem;
+		    background:#F1F1F1;
+    	}
+    	.aui-list .aui-list-item-media {
+		    width: 5.8rem;
+		    height: 5.8rem;
+		    position: relative;
+		    padding: 0.5rem 0;
+		    padding-right: 0.75rem;
+		    display: inherit;
+		    -webkit-flex-shrink: 0;
+		    flex-shrink: 0;
+		    -webkit-flex-wrap: nowrap;
+		    flex-wrap: nowrap;
+		    -webkit-box-align: center;
+		    -webkit-align-items: flex-start;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		}
+		.aui-list .aui-list-item-media img {
+		    width: 100%;
+		    display: block;
+		    height: 100%;
+		    object-fit: cover;
+		}
+		.msg{
+			background: #FFFFFF;
+		    height: 20rem;
+		    text-align: center;
+		    font-size:0.7rem;
+		}
+		.msg img{
+			width:8rem;
+			margin-top: 9rem;
+		}
+		.jiazai{
+    	    font-size: 0.7rem;
+		    background: #FFFFFF;
+		    color: #666565;
+		    padding-bottom: 0.3rem;
+		    text-align: center;
+		    padding-top: 0.3rem;
+	    }
+	    .jiazai img{
+	    	width: 1.5rem;
+	    }
+		.aui-list:after {
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    top: auto;
+		    right: auto;
+		    bottom: 0;
+		    left: 0;
+		    width: 100%;
+		    z-index: 2;
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		    pointer-events: none;
+		}
+		.aui-list .aui-list-item:last-child:after {
+		    height: 2px;
+		}
+		.selected{
+			background:url("../../icon/common/icon_list_selet.png") no-repeat;
+		    background-position-x: right;
+    		background-position-y: 1px;
+    		background-size: 10%;
+		}
+		.phone-img{
+			width:0.7rem;
+		}
+		.txt-blue{
+			color:#1E8DD8;
+		}
+		#label li{
+    		border: solid 1px #F1F1F1;
+		    margin-right: 0.4rem;
+		    font-size: 0.6rem;
+		    padding: 0rem 0.2rem;
+		    background:#F1F1F1;
+    	}
+    	.tag-style0{
+			background:#DDEBFF !important;
+			border-color:#DDEBFF !important;
+			color:#75A9CB;
+		}
+		.tag-style1{
+			background:#E9FBF9 !important;
+			border-color:#E9FBF9 !important;
+			color:#63BD9F;
+		}
+		.tag-style2{
+			background:#FDF2E6 !important;
+			border-color:#FDF2E6 !important;
+			color:#ED9366;
+		}
+		
+		.room_list{
+	    	overflow: hidden;
+	    	zoom: 1;
+		}
+		.room_list_div{
+			overflow-x:hidden;
+			width:100%;
+		}
+		.list_div{
+		    min-height: 2.2rem;
+    		padding: 0 0.3rem;
+			background: #FFF;
+			transition: all 0.5s;
+			-webkit-transition: all 0.5s;
+		    position: relative;
+		}
+		.list_div:after{
+			content: '';
+		    height: 1px;
+		    background: #DDDDDD;
+		    width: 100%;
+		    background-color: #dddddd;
+		    display: block;
+		    -webkit-transform: scaleY(0.5);
+		    transform: scaleY(0.5);
+		    -webkit-transform-origin: 20% 100%;
+		    transform-origin: 20% 100%;
+		}
+		.swipeleft{
+			min-height:2.2rem;
+			padding: 0 0.3rem;
+			background: #FFF;
+			transition: all 0.5s;
+			-webkit-transition: all 0.5s;
+			transform:translateX(-20%);
+			-webkit-transform:translateX(-20%);
+		    position: relative;
+		}
+		.option-btn{
+		    text-align: center;
+		    background: #F55252;
+		    width: 20%;
+		    float: right;
+		    position: absolute;
+		    height: 100%;
+	    	display: flex;
+		    top: 0;
+		    right: -20%;
+		    color: #fff;
+		}
+		.operation{
+		    width: 100%;
+    		height: 100%;
+		}
+		.navigation{
+		    width: 100%;
+    		height: 100%;
+    		display:flex;
+		    background: #F7B24D;
+		}
+		.navigation span{
+		    margin:auto;
+		}
+		.navigation img{
+		    margin:auto;
+		    width:2rem;
+		}
+		.jz{
+			font-size:0.7rem;
+			color:#9A9A9A;
+		}
+		.phone{
+			font-size:0.7rem;
+			color:#9A9A9A;
+			margin-top:0.4rem;
+		}
+		.selected{
+			background:url("../../icon/common/icon_list_selet.png") no-repeat;
+		    background-position-x: right;
+    		background-position-y: 1px;
+    		background-size: 10%;
+		}
+    </style>
+</head>
+<body>
+	<div class="aui-content room_list">
+		<ul class="aui-list aui-media-list room_list_div" id="store_list">
+	         <!--<li class="aui-list-item selected list_div">
+	            <div class="aui-media-list-item-inner">
+	               <div class="aui-list-item-media">
+	                    <img src="../../../image/demo/school/1.jpg" onerror="javascript:this.src='../../icon/default/icon_default_list.png'">
+	                </div>
+	                <div class="aui-list-item-inner">
+	                    <div class="aui-list-item-text">
+	                        <div class="aui-list-item-title aui-ellipsis-2">上虞海滨驾校</div>
+	                        <div class="aui-info-item">
+	                        	<span class="aui-margin-l-5">15.83km</span>
+	                        </div>
+	                    </div>
+	                    <div class="aui-info-item">
+	                    <img src="../../icon/common/icon_phone.png" alt="" class='phone-img phone'/>
+	                        	<span class="aui-margin-l-5 phone ">057582451254</span>
+	                   
+	                    </div>
+	                    <div class="aui-list-item-text">
+	                        
+	                        <div class="aui-info-item">
+	                    		 <img src="../../icon/common/icon_location.png" alt="" class='phone-img '/>
+	                    		 <span class="aui-margin-l-5 jz ">上虞是百官街道长海公路撒了哈</span>
+	                    			
+	                        </div>
+	                    </div>
+	                    <div class="aui-info aui-margin-t-5" style="padding:0">
+	                        <div class="aui-info-item">
+	                    		<ul id="label">
+	        		                    		<li class='tag-style0'><span>服务态度好</span></li>
+	        		                    		<li class='tag-style1'><span>教学水平高</span></li>
+	        		                    		<li class='tag-style2'><span>环境优美</span></li>
+	        		                    	</ul>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class='option-btn'>
+	            	<div class='operation'>
+	            		<div class='navigation bg-yellow'>
+	            			<img src="../../icon/common/icon_navigation.png" alt="" />
+	            		</div>
+	            	</div>
+	            </div>
+	        </li>--> 
+	    </ul>
+	</div>
+    <div id='load_div'>
+    </div>
+    <script type="text/template" charset="utf-8" id='load_src'>
+    	<div class="load">
+			<img src="../../icon/common/loadding.gif" alt="" /><br>
+        	<span>加载中...</span>
+		</div>
+    </script>
+    <script type="text/template" charset="utf-8" id='msg_src'>
+    	<div class="msg">
+			<img src="../../icon/common/empty.png" alt="" /><br>
+        	<span>{{=it.msg}}</span>
+		</div>
+    </script>
+    <script type="text/template" charset="utf-8" id='more_src'>
+    	<div class="jiazai">
+	    	<span>{{=it.msg}}</span>
+	    </div>
+    </script>
+    <script type="text/template" charset="utf-8" id='store_list_src'>
+    	{{ for(var i=0;i<it.length;i++){ }}
+	    	<li class="aui-list-item list_div">
+	    	
+	            <div class="aui-media-list-item-inner" tapmode onclick="openStore('{{=it[i].businessName}}','{{=it[i].id}}',this,'{{=it[i].businessCode}}')">
+	                <!--<div class="aui-list-item-media">
+	                    <img src="{{=file_load_url + it[i].logo}}" onerror="javascript:this.src='../../icon/default/icon_default_list.png'">
+	                </div>-->
+	                 <div class="aui-list-item-inner">
+	                    <div class="aui-list-item-text">
+	                        <div class="aui-list-item-title aui-ellipsis-2">{{=it[i].businessName}}</div>
+	                        <div class="aui-info-item">
+	                        	<span class="aui-margin-l-5">{{=(it[i].distance == undefined?"":calcuDistance(it[i].distance))}}</span>
+	                        </div>
+	                    </div>
+	                    <div class="aui-info-item">
+	                    <img src="../../icon/common/icon_phone.png" alt="" class='phone-img phone'/>
+	                        	<span class="aui-margin-l-5 phone ">{{=it[i].phone}}</span>
+	                   
+	                    </div>
+	                    <div class="aui-list-item-text">
+	                        
+	                        <div class="aui-info-item">
+	                    		 <img src="../../icon/common/icon_location.png" alt="" class='phone-img '/>
+	                    		 <span class="aui-margin-l-5 jz ">{{=it[i].address}}</span>
+	                    			
+	                        </div>
+	                    </div>
+	                    <div class="aui-info aui-margin-t-5" style="padding:0">
+	                        <div class="aui-info-item">
+	                    	<!--	<ul id="label">
+	        		                    		<li class='tag-style0'><span>服务态度好</span></li>
+	        		                    		<li class='tag-style1'><span>教学水平高</span></li>
+	        		                    		<li class='tag-style2'><span>环境优美</span></li>
+	        		                    	</ul>-->
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <!-- 地图导航 -->
+	            <div class='option-btn' tapmode onclick='openTestRoomMap("{{=it[i].shortName}}","{{=it[i].latitude}}","{{=it[i].longitude}}")'>
+	            	<div class='operation'>
+	            		<div class='navigation bg-yellow'>
+	            			<img src="../../icon/common/icon_navigation.png" alt="" />
+	            		</div>
+	            	</div>
+	            </div>
+	        </li>
+        {{ } }}
+    </script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var bMap;
+	var page = 1,limit = 10;
+	var load_src = $('#load_src').html();//加载src
+	var msg_src = $('#msg_src').html();//消息提示src
+	var more_src = $('#more_src').html();//更多src
+	var refresh = true;//标记是否是刷新操作
+	var cache;
+	var bu
+	apiready = function(){
+		bMap = api.require('bMap');
+		cache = api.pageParam.data;
+		goRefrash(40,'#FFFFFF',null,null,function(){
+			refreshList(sortType,sort);
+		});
+		goLoad(function(ret,err){
+			loadList(sortType,sort);
+		});
+		api.refreshHeaderLoading();
+	};
+	//swiftLeft();
+	
+	//列表刷新
+	function refreshList(sortType,sort){
+		page = 1;refresh = true;
+		setLoad();
+		init(sortType,sort);
+	}
+	//列表上拉
+	function loadList(sortType,sort){
+		page++;refresh = false;
+		setLoad();
+		init(sortType,sort);
+	}
+	//列表初始化
+	var sortType = 1;//驾校排序种类
+	var sort = 1;//正续还是倒叙 1正续 2倒叙
+	function init(index,value){
+		sortType = index;
+		sort = value;
+		mylocation(function(location_result){//获取当前定位
+			params = {
+	        	sortType:sortType - 0 + 1,
+	        	sort:sort,
+	        	page:page,
+	        	limit:limit
+	        }
+			if(location_result.status){//有定位权限
+		        //驾校传参
+		        params.lng = location_result.lon;
+		        params.lat = location_result.lat;
+			}else{
+				alert_msg('建议开启定位');
+			}
+			
+	       // console.log('传参'+JSON.stringify(params));
+	        url = 'api/business/list-business';
+	        ajax_Request(url, 'get', 'json', params, function(ret,err){
+	        	console.log('门店列表：'+JSON.stringify(ret));
+	        	if(ret){
+	        		if(ret.code == 0&&ret.listBusinessRecords.length > 0){
+						var store_list_src = $('#store_list_src').html();
+						if(refresh||$('#store_list').find('.aui-list-item').length == 0){
+							$("#store_list").html(doT.template( store_list_src )( ret.listBusinessRecords ));
+						}else{
+							$("#store_list").append(doT.template( store_list_src )( ret.listBusinessRecords ));
+						}
+
+	        		}else{
+	        			setMsg(refresh?'暂无门店列表':'暂无更多');
+	        		}
+	        	}else{
+	        		setMsg('请开启定位权限');
+	        	}
+	        	setTimeout(function(){
+			        api.refreshHeaderLoadDone();
+	        	},300);
+	        });
+		});
+	}
+	
+	//设置页面加载的画面
+	function setLoad(){
+		if(refresh||$('#store_list').find('.aui-list-item').length == 0){//如果是刷新或者之前无数据的下拉刷新，全屏提示
+			$('#load_div').html('');
+			//$("#store_list").html(doT.template( load_src )( null ));
+		}else{
+			setTimeout(function(){
+				$('#load_div').html(doT.template( more_src )( {'msg':'加载更多中...','img':'../../../icon/common/jiazai.gif'} ));
+			},500);
+		}
+	}
+	
+	//设置页面提示信息
+	function setMsg(msg){
+		if(refresh||$('#store_list').find('.aui-list-item').length == 0){//如果是刷新或者之前无数据的上拉加载，全屏提示
+			setTimeout(function(){
+				$("#store_list").html(doT.template( msg_src )( {'msg':msg} ));
+			},500);
+		}else{//原先已经有数据的情况下
+			setTimeout(function(){
+			    $('#load_div').html(doT.template( more_src )( {'msg':msg,'img':''} ));
+			},500);
+		}
+	}
+	//打开门店
+	function openStore(choose_store_list,id,e,business_code){
+
+			$('.aui-media-list-item-inner').removeClass('selected');
+			$(e).addClass('selected');
+			var data = {
+				choose_store_list:choose_store_list,
+				id:id,
+				business_code:business_code
+			}
+			console.log(cache.action);
+			//console.log(JSON.stringify(data));
+			sendEvent("store_choose",data);
+			//esc_function('common_exam_sign_up_win','common_exam_sign_up_frm','getExamRoom("'+choose_store_list+'","'+id+'")');
+			api.closeDrawerPane();
+		}
+</script>
+</html>

@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>疫情员工登记</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html,body{
+    		background: linear-gradient(to right, #2A67F8 , #2C66FB) !important;
+    	}
+    	.bgImg{
+    		width: 100%;
+    		height: auto;
+    	}
+    	.bgImg img{
+    		width: 100%;
+    	}
+    	.msgView{
+    		position: relative;
+    		width: 90%;
+    		height: auto;
+    		background: #EDF1FF;
+    		left: 5%;
+    		margin-top: -7rem;
+    		border-radius: 0.375rem;
+    		padding-top: 0.3125rem;
+    	}
+    	.msgViewTitle{
+    		width: 90%;
+    		height: 1.875rem;
+    		margin-left: 5%;
+    	}
+    	.msgViewTitle img{
+    		width: 70%;
+    		height: 26px;
+    		margin-left: 15%;
+    		margin-top: 0.4375rem;
+    	}
+    	.msgViewInput{
+    		width: 90%;
+    		height: auto;
+    		margin-left: 5%;
+    		margin-top: 1.475rem;
+    		padding-bottom: 3rem;
+    	}
+    	.msgViewInputLi{
+    		width: 100%;
+    		height: auto;
+    		margin-bottom: 0.9375rem;
+    	}
+    	.msgViewInputLiTitle{
+    		height: 1rem;
+    		line-height: 1rem;
+    		border-left: 4px solid #2A67F8;
+    		padding-left: 0.3125rem;
+    		color: #27344C;
+    		font-weight: 800;
+    	}
+    	.autograph{
+    		border-left-color: #EDF1FF;
+    	}
+    	.msgViewInputLiInput{
+    		height: 2.6rem;
+    		margin-top: 0.4rem;
+    	}
+    	.input{
+    		width: 100%;
+    		height: 2.6rem !important;
+    		border: 1px solid #CFDDFF !important;
+    		border-radius: 0.375rem !important;
+    		padding: 0.625rem !important;
+    		background: #fff !important;
+    	}
+    	.msgViewInputLiAddresss{
+    		width: 100%;
+    		height: 7.4rem;
+    	}
+    	.textarea{
+    		width: 100%;
+    		height: 5rem !important;
+    		border: 1px solid #CFDDFF !important;
+    		border-radius: 0.375rem !important;
+    		padding: 0.625rem !important;
+    		background: #fff !important;
+    	}
+    	
+    	.aui-list-item-arrow:before{
+    		top: 100%;
+    	}
+    	
+    	.autographView{
+    		width: 100%;
+    		height: 5rem;
+    		border-radius: 0.375rem;
+    		background: #fff;
+    		border: 1px solid #CFDDFF;
+    	}
+    	.time{
+    		width: 100%;
+    		text-align: right;
+    		color: #27344C;
+    		font-weight: 800;
+    	}
+    	.subBtn{
+    		position: relative;
+    		width: 70%;
+    		height: 2.5rem;
+    		border-radius: 1.5625rem;
+    		background: #FFBB3F;
+    		left: 15%;
+    		top: -1.25rem;
+    	}
+    	
+    	.subBtn img{
+    		width: 40%;
+    		margin-left: 30%;
+    		height: 1.25rem;
+    		margin-top: 0.625rem;
+    	}
+    	
+    	.selectArea{
+    		border-top: 1px solid #CBDCFF;
+    		margin-top: 0.625rem;
+    		padding-top: 0.625rem;
+    	}
+    	
+    	.signImg{
+    		width: 100%;
+    		height: 5rem;
+    	}
+		.bottom-slide:after{
+			height: 0;
+		}
+    </style>
+	</head>
+	<body>
+		<div class="bgImg">
+			<img src="../../../image/epidemicSituation/staffBg.png">
+		</div>
+		<div class="msgView">
+			<div class="msgViewTitle">
+				<img src="../../../image/epidemicSituation/staffTitle.png">
+			</div>
+			<div class="msgViewInput">
+				<ul>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							员工姓名
+						</div>
+						<div class="msgViewInputLiInput">
+							<input class="input" type="text" name="" id="name" value="" placeholder="输入您的姓名" />
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							身份证号码
+						</div>
+						<div class="msgViewInputLiInput">
+							<input class="input" type="text" name="" id="idCard" value="" placeholder="输入您的身份证号码" />
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							联系方式
+						</div>
+						<div class="msgViewInputLiInput">
+							<input class="input" type="tel" maxlength="11" name="" id="phone" value="" placeholder="输入您的联系方式" />
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							职业
+						</div>
+						<div class="msgViewInputLiInput">
+							<input class="input" type="text" name="" id="occupation" value="" placeholder="输入您的职业" />
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							工作单位
+						</div>
+						<div class="msgViewInputLiInput" onclick="openSelTcmSchool();">
+							<input class="input" type="text" name="" id="school" value="" readonly="" placeholder="输入您工作单位" />
+						</div>
+					</li>
+					<li class="msgViewInputLi msgViewInputLiAddresss">
+						<div class="msgViewInputLiTitle">
+							详细居住地址
+						</div>
+						<div class="msgViewInputLiInput aui-list-item-input bottom-slide aui-list-item-arrow" onclick="select_address();">
+							<textarea rows="" cols="" class="textarea" id="address" placeholder="选择您的具体居住地址" readonly=""></textarea>
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							近期是否到过湖北、温州、台州、宁波等疫区？
+						</div>
+						<div class="msgViewInputLiInput" style="margin-top: 1.5rem;height: auto;">
+							<div id="" onclick="selectAreas();">
+								<label><input class="aui-radio" type="radio" value='1' name="q1" id="yes1">&ensp;是</label>
+								&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+								<label><input class="aui-radio" type="radio" value='0' name="q1" id="no1">&ensp;否</label>
+							</div>
+							<div class="selectArea aui-hide" id="selectArea">
+								<label><input class="aui-radio" type="radio" value='湖北' name="a1" id="hub">&ensp;湖北</label>
+								&emsp;&emsp;&emsp;&emsp;&emsp;
+								<label><input class="aui-radio" type="radio" value='温州' name="a1" id="wenz">&ensp;温州</label>
+								<br>
+								<div class="" style="height: 0.625rem;"></div>
+								<label><input class="aui-radio" type="radio" value='台州' name="a1" id="taiz">&ensp;台州</label>
+								&emsp;&emsp;&emsp;&emsp;&emsp;
+								<label><input class="aui-radio" type="radio" value='宁波' name="a1" id="ningb">&ensp;宁波</label>
+							</div>
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							近期是否到过区内准确病例的所在地？
+						</div>
+						<div class="msgViewInputLiInput" style="margin-top: 0.75rem;height: 1.5rem;">
+							<label><input class="aui-radio" type="radio" value='1' name="q2" id="y2">&ensp;是</label>
+							&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+							<label><input class="aui-radio" type="radio" value='0' name="q2" id="n2">&ensp;否</label>
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							是否与医观隔离人员有过接触？
+						</div>
+						<div class="msgViewInputLiInput" style="margin-top: 0.75rem;height: 1.5rem;">
+							<label><input class="aui-radio" type="radio" value='1' name="q3" id="y3">&ensp;是</label>
+							&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+							<label><input class="aui-radio" type="radio" value='0' name="q3" id="n3">&ensp;否</label>
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							本人及亲属异常临床表现（发热、咳嗽、气促等症状）？
+						</div>
+						<div class="msgViewInputLiInput" style="margin-top: 1.5rem;height: 1.5rem;">
+							<label><input class="aui-radio" type="radio" value='1' name="q4" id="y4">&ensp;是</label>
+							&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+							<label><input class="aui-radio" type="radio" value='0' name="q4" id="n4">&ensp;否</label>
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							本人承诺
+						</div>
+						<div class="msgViewInputLiInput" style="margin-top: 0.75rem;height: auto;text-align: justify;">
+							本人提供的上述信息均属实，如有虚假信息或隐瞒漏报的，愿承担由此导致的一切责任。
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle autograph">
+							承诺人（签字）：
+						</div>
+						<div class="msgViewInputLiInput singName" style="margin-top: 0.75rem;height: auto;" onclick="sign();">
+							<div class="autographView" id="autographView">
+
+							</div>
+						</div>
+					</li>
+					<div class="time" id="time">
+						承诺时间：2020年2月15日
+					</div>
+				</ul>
+			</div>
+		</div>
+		<div class="subBtn" onclick="submitMsg();">
+			<img src="../../../image/epidemicSituation/subBtn.png">
+		</div>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/aui/aui_tab.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/swiper/swiper.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var clearance = 25; //间隙
+		var headerPos;
+		var threshold; //定义的阈值
+		var touchStyle;
+		var systemType; //系统类型
+		var cache;
+		var bMap;
+		var fs;
+		var articleId; //驾校详情ID
+		var addressViewCode = '';
+		var postalCode; //邮编
+		var selected_address_id; //选中地址的id
+		var addressDetail;
+		var imageFilter;
+		var schoolId;
+		var signUrl; //签名图片
+		apiready = function() {
+			$api.fixStatusBar($api.byId('aui-header1'));
+			$api.fixStatusBar($api.byId('aui-header2'));
+			fs = api.require('fs');
+			cache = api.pageParam;
+			//log("驾校报名"+JSON.stringify(cache))
+			bMap = api.require('bMap');
+			systemType = api.systemType;
+			touchStyle = systemType == "ios" ? 'touchmove' : 'scroll';
+			scroll();
+			imageFilter = api.require('imageFilter');
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			$('#time').html('承诺时间：' + year + '年' + month + '月' + day + '日')
+
+			//监听地址选择
+			toEventListener('driver_pre_sign_up', function(ret) {
+				//log('地址',ret.value);
+				var address_info = ret.value;
+				$('#address').val(address_info.district.provinceName + address_info.district.cityName + address_info.district
+					.districtName + '' + address_info.addressDetail);
+				addressViewCode = address_info.districtCd;
+				postalCode = address_info.postalCode;
+				selected_address_id = address_info.id;
+				addressDetail = address_info.addressDetail;
+			});
+			//监听所属驾校选择事件
+			toEventListener('sel_tcm_school_action', function(ret, err) {
+				var cache_by_account = $api.getStorage('cache_by_account');
+				var coach_info = cache_by_account.coach_info;
+				$('#school').val(ret.value.name);
+				schoolId = ret.value.id;
+				if (coach_info != undefined) {
+					coach_info.selTcmSchool = ret.value;
+				} else {
+					coach_info = {
+						selTcmSchool: ret.value
+					}
+				}
+				cache_by_account.coach_info = coach_info;
+				$api.setStorage('cache_by_account', cache_by_account);
+			});
+
+			api.parseTapmode();
+			init();
+
+			//先打开画板，然后关闭
+			api.openFrame({
+				name: 'common_sign',
+				url: '../../common/common_sign.html',
+				bgColor: 'rgba(0,0,0,0.6)',
+				animation: {
+					type: "none", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300
+				},
+				rect: {
+					x: 0,
+					y: -api.winHeight,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: null,
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+
+			/**
+			 * 签名
+			 * @param {Object} ret
+			 * @param {Object} err 
+			 */
+			toEventListener('showSign', function(ret, err) {
+
+				showSign(ret.value.url)
+			})
+		}
+		/**
+		 * 初始化
+		 */
+		function init() {
+			var cache_account = $api.getStorage('cache_by_account').cache_account;
+
+
+			//加载用户信息
+			load_user_info();
+			isload = true;
+
+		}
+
+		function load_user_info() {
+			licenseTypeMap = $api.getStorage('cache_by_app').licenseTypeMap;
+			//缓存中的字典表数据
+			var cache_dictionary = $api.getStorage('cache_by_app').cache_dictionary;
+			updateLearnerInfo(function(ret, err) {
+				if (ret && ret.code == 0) {
+					console.log('学员信息:' + JSON.stringify(ret));
+
+					$('#name').val(ret.learner.name); //真实姓名
+					$('#idCard').val(ret.learner.idcardNo); //身份证
+					$('#phone').val(ret.learner.account); //手机号码
+
+					//检验标准
+					// checkStandard();
+
+				} else {
+					alert_msg('获取学员信息失败');
+				}
+			});
+		}
+
+
+
+		/**
+		 * 获取地址
+		 */
+		function selectAreas() {
+			var sex = $('input:radio[name="q1"]:checked').val();
+			log('', sex)
+			if (sex == 1) {
+				$('#selectArea').removeClass('aui-hide');
+			} else {
+				$('#selectArea').addClass('aui-hide');
+			}
+		}
+
+
+		var isMsg = false; //标记是否提示过
+		//点击签名
+		function sign() {
+			// esc_function('sign_online_win','common_sign','signOpen()');//打开画板
+			if (!isMsg) {
+				isMsg = true;
+				openMessage_countdown('温馨提示', '&emsp;&emsp;请在签名区域写上完整姓名,然后点击确定按钮。', 'countdown', '确定', '', function() {}, '', null);
+			}
+			api.setFrameAttr({
+				name: 'common_sign',
+				hidden: false
+			});
+		}
+
+		//显示签名结果
+		function showSign(path) {
+			if (path == undefined || path == null) {
+				alert_msg('签名失败');
+			} else {
+				imageFilter.getAttr({
+					path: path
+				}, function(ret, err) {
+					if (ret.status) {
+						console.log(JSON.stringify(ret));
+					} else {
+						console.log(JSON.stringify(err));
+					}
+				});
+				$('.autographView').html('<img src="' + path + '" class="signImg">');
+				//上传签名图片
+				uploadSignImg();
+			}
+		}
+
+		//上传签名图片
+		function uploadSignImg() {
+			if ($('.autographView').find('img').length == 0) {
+				alert_msg('您还未签名');
+				return;
+			}
+			defaultload('上传签名...');
+			params = {
+				bucketName: AliOssBucket,
+				fileNum: 1,
+				fileType: 'learnerApp/contract/' + getUserId()
+			}
+			var isloadFlag = 0; //标记位 isload代表是否上传，0代表未上传，1代表捕捉上传，2代表与阿里云建立连接，3代表上传完成
+			getUploadFilePower(params, function(ret, err) {
+				if (ret && ret.code == 0) {
+					//console.log('获取文件上传权限：'+JSON.stringify(ret));
+					var path = ret.fileList[0].fileId;
+					isloadFlag = 1; //标记上传
+					//阿里云上传可能会崩，所以这里定时器：10秒后查询标记位，把isload为2的图片让用户选择上传
+					var judegeCollapse = setTimeout(function() {
+						collapse(isloadFlag);
+					}, 10000);
+					//console.log("签名地址"+ $('.signImg').attr('src'));
+					//var img_srcs = $('.signImg').attr('src').split('?');
+					file_upload(ret.fileList[0].signUrl, 'put', 'json', $('.signImg').attr('src'), {}, function(ret, err) {
+						log('签名上传ret:', ret);
+						log('签名上传err:', err);
+						if (ret) {
+							clearTimeout(judegeCollapse); //清除定时器
+							isloadFlag = 2; //标记与阿里云服务器连接
+							if (ret.progress == 100 && ret.status == 1) {
+								$('#signImgPath').val(path);
+								signUrl = path;
+								closedefaultload();
+							}
+						} else if (err) {
+							//ios一直会返回数据类型错误(目前找不到原因)，但是图片已上传完毕，所以也当success返回
+							if (systemType == 'ios' && err.progress == 100 && err.code == 3) {
+								clearTimeout(judegeCollapse); //清除定时器
+								isloadFlag = 2; //标记与阿里云服务器连接
+								$('#signImgPath').val(path);
+								signUrl = path;
+								closedefaultload();
+							} else if ((systemType == 'ios' && err.statusCode == 0) ||
+								(systemType == 'ios' && err.statusCode == 403)) {
+								//同样的操作，图片上传有几率出现签名错误，这里做一个捕捉该错误并且再次提交的操作，无奈
+								clearTimeout(judegeCollapse); //清除定时器
+								uploadSignImg();
+							}
+						}
+					});
+				} else {
+					closedefaultload();
+					alert_msg('获取文件上传权限失败，请重试');
+				}
+			});
+		}
+
+		//监听页面滑动控制头部menu样式
+		var scrollPos; //监听上下滚动顶部的距离
+		var percent = 0; //白底header的隐藏属性值
+		var hidepercent = 0; //非白底header的隐藏属性值
+		function scroll() {
+			$(window).on(touchStyle, function(event) {
+				scrollPos = $(window).scrollTop();
+				//安卓做限制滚动
+				if (((scrollPos / threshold).toFixed(2) <= 1) && systemType == 'android') {
+					percent = (scrollPos / threshold).toFixed(2);
+					$('#aui-header2').css("opacity", percent);
+					hidepercent = 1 - percent;
+					$('#aui-header1').css("opacity", hidepercent);
+				} else {
+					percent = (scrollPos / threshold).toFixed(2) > 1 ? 1 : (scrollPos / threshold).toFixed(2);
+					$('#aui-header2').css("opacity", percent);
+					hidepercent = (1 - percent) < 0 ? 0 : (1 - percent);
+					$('#aui-header1').css("opacity", hidepercent);
+				}
+			});
+		}
+
+
+		/**
+		 * 打开驾校列表
+		 */
+		function openSelTcmSchool() {
+			// auiHide();
+			api.openWin({
+				name: 'common_select_under_school_win',
+				url: '../../common/common_select_under_school_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: {
+					data: null
+				}
+			});
+		}
+
+		/**
+		 * 打开地址列表
+		 */
+		function select_address() {
+			params = {
+				selected_address_id: selected_address_id, //选中的地址id，可能为空，用来标记
+				isSelect: true, //是否是选择
+				action: 'driver_pre_sign_up' //动作监听name
+			}
+			api.openWin({
+				name: 'common_address_list_win',
+				url: '../../common/learner_address/common_address_list_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: params
+			});
+		}
+
+
+
+		//设置出错页面;
+		function setError(msg) {
+			var error_src = $('#error_src').html();
+			$('#driverschoolDetail').html(doT.template(error_src)({}));
+			alert_msg(msg);
+		}
+
+
+
+		function closeWin() {
+			api.closeWin({});
+		}
+
+
+
+		//倒计时通用弹出框
+		function openMessage_countdown(title, content, type, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+			api.openFrame({
+				name: 'common_alert_countdown',
+				url: '../../common/common_alert_countdown.html',
+				bgColor: 'rgba(0,0,0,0.4)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					title: title,
+					content: content,
+					type: type,
+					sureButton: sureButton,
+					sureFunc: sureFunc,
+					cancelButton: cancelButton,
+					cancelFunc: cancelFunc,
+					winName: api.winName,
+					frameName: api.frameName,
+					params: params
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+
+		/**
+		 * 提交信息
+		 */
+		function submitMsg() {
+			var isWorker = 1; //是否是工作人员：0学员 1员工
+			var name = $('#name').val();
+			if (name == null || name == '') {
+				alert_msg('请输入姓名');
+				return;
+			}
+			var phone = $('#phone').val();
+			if (!isPhoneAvailable(phone)) {
+				alert_msg('请输入正确的手机号');
+				return;
+			}
+			var idcardNo = $('#idCard').val();
+			if (!checkIDCard(idcardNo)) {
+				alert_msg('请输入正确的身份证');
+				return;
+			}
+
+			var belongToSchoolId = schoolId;
+			if (belongToSchoolId == null || belongToSchoolId == '') {
+				alert_msg('请输入工作单位');
+				return;
+			}
+			var occupation = $('#occupation').val();
+			if (occupation == null || occupation == '') {
+				alert_msg('请输入您的职业');
+				return;
+			}
+			var address = addressDetail;
+			if (address == null || address == '') {
+				alert_msg('请选择地址');
+				return;
+			}
+			var districtCd = addressViewCode;
+
+			var isGoDangerAddress = $('input:radio[name="q1"]:checked').val();
+			if (isGoDangerAddress == null || isGoDangerAddress == '') {
+				alert_msg('请选择问题一');
+				return;
+			}
+			if (isGoDangerAddress == 1) {
+				var goneDangerCity = $('input:radio[name="a1"]:checked').val();
+				if (goneDangerCity == null || goneDangerCity == '') {
+					alert_msg('请选择去过的地方');
+					return;
+				}
+			} else if (isGoDangerAddress == 0) {
+				var goneDangerCity = '';
+			}
+
+			var isGoLocalDangerAddress = $('input:radio[name="q2"]:checked').val();
+			if (isGoLocalDangerAddress == null || isGoLocalDangerAddress == '') {
+				alert_msg('请选择问题二');
+				return;
+			}
+			var isTouchDangerPeople = $('input:radio[name="q3"]:checked').val();
+			if (isTouchDangerPeople == null || isTouchDangerPeople == '') {
+				alert_msg('请选择问题三');
+				return;
+			}
+			var isFever = $('input:radio[name="q4"]:checked').val();
+			if (isFever == null || isFever == '') {
+				alert_msg('请选择问题四');
+				return;
+			}
+
+			log('tupian123:', signUrl)
+			if (signUrl == null || signUrl == '') {
+				alert_msg('请重新签名');
+				return;
+			}
+
+			var url = 'api/learneraboutpneumoniainfo/insert-worker-learner-about-pneumonia-info';
+			var params = {
+				learnerId: getUserId(),
+				isWorker: isWorker,
+				name: name,
+				phone: phone,
+				idcardNo: idcardNo,
+				belongToSchoolId: belongToSchoolId,
+				occupation: occupation,
+				address: address,
+				districtCd: districtCd,
+				isGoDangerAddress: isGoDangerAddress,
+				goneDangerCity: goneDangerCity,
+				isGoLocalDangerAddress: isGoLocalDangerAddress,
+				isTouchDangerPeople: isTouchDangerPeople,
+				isFever: isFever,
+				signUrl: signUrl
+			}
+			log('参数', params)
+			defaultload('信息提交中');
+			ajax_Request(url, 'post', 'json', params, function(ret, err) {
+				log('ret:', ret)
+				closedefaultload();
+				if (ret) {
+					if (ret.code == 0) {
+						alert_msg('提交成功!')
+						setTimeout(function() {
+							api.openWin({
+								name: 'body_temperature_records_add',
+								url: './body_temperature_records_add.html',
+								slidBackEnabled: 'false',
+								vScrollBarEnabled: 'false',
+								hScrollBarEnabled: 'false',
+								reload: true,
+								useWKWebView: false,
+								pageParam: {
+									infoId: ret.id,
+									type: 1
+								}
+							});
+						}, 1000)
+					} else {
+						alert_msg(ret.msg)
+						// api.openWin({
+						// 	name: 'body_temperature_records_add',
+						// 	url: './body_temperature_records_add.html',
+						// 	slidBackEnabled: 'false',
+						// 	vScrollBarEnabled: 'false',
+						// 	hScrollBarEnabled: 'false',
+						// 	reload: true,
+						// 	useWKWebView: false,
+						// 	pageParam: {
+						// 		infoId: ret.id,
+						// 		type: 1
+						// 	}
+						// });
+					}
+				} else {
+					alert_msg('系統异常')
+				}
+			})
+		}
+	</script>
+</html>

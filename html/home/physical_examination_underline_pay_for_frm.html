@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>确认医院预约信息</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		.pic_unit{
+		    overflow: hidden;
+	    	background: #F3F3F3;
+    	    padding-bottom: 0.5rem;
+    	    /*column-count: 2;
+    		column-gap: 0;*/
+		}
+		.pic_div{
+		    width: 45.5%;
+		    float: left;
+		    margin: 0.5rem 0% 0rem 3%;
+		    background: #FFFFFF;
+		}
+		.pic_div img{
+			width: 100%;
+		}
+		.f_left{
+			float: left;
+		    max-width: 90%;
+		    display: flex;
+		}
+		.f_right{
+			float: right;
+		}
+		.pic_title{
+		    margin: 0.5rem 0.7rem 0.1rem 0.7rem;
+		    font-size: 0.8rem;
+		    height: 2.4rem;
+		}
+		input[type="text"], input[type="password"], input[type="search"], input[type="email"], input[type="tel"], input[type="url"], input[type="date"], input[type="datetime-local"], input[type="time"], input[type="number"], select, textarea {
+		    border: none;
+		    background: none;
+		    border-radius: 0;
+		    box-shadow: none;
+		    display: block;
+		    padding: 0;
+		    margin: 0;
+		    width: 100%;
+		    min-height: 2.7rem;
+		    color: #424242;
+		    font-size: 0.8rem;
+		    font-family: inherit;
+		    box-sizing: border-box;
+		    -webkit-user-select: text;
+		    user-select: text;
+		    -webkit-appearance: none;
+		    appearance: none;
+		    -webkit-appearance: none;
+		}
+		.aui-list textarea {
+		    overflow: auto;
+		    margin: 0.5rem 0;
+		    height: 5rem;
+		    line-height: 1rem;
+		    resize: none;
+		}
+		.aui-list-item-label-fushu{
+		    color: #212121;
+		    width: 35%;
+		    min-width: 1.5rem;
+		    margin: 0;
+		    padding: 0;
+		    padding-right: 0.25rem;
+		    /* line-height: 2.2rem; */
+		    position: relative;
+		    overflow: hidden;
+		    white-space: nowrap;
+		    max-width: 100%;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    height: 5rem;
+    		line-height: 1rem;
+		}
+		.color_red{
+			color:#DC251F !important;
+		}
+		.hetong{
+			min-width: 14.5rem !important;
+    		font-size: 0.7rem !important;
+	        line-height: 1.3rem;
+	        text-align: center;
+	        padding-right: 0.75rem !important;
+		}
+		.aui-switch:checked {
+		    border-color: #DC251F;
+		    background-color: #DC251F;
+		}
+		.aui-list {
+		    padding: 0;
+		    margin: 0;
+		    position: relative;
+		    font-size: 0.8rem;
+		    background: #FFFFFF;
+		    padding-bottom: 1rem;
+	        overflow: hidden;
+		}
+		.aui-btn-info.aui-active, .aui-btn-info:active {
+		    color: #fff !important;
+		    background-color: #DE5A58 !important;
+		}
+		.pay_type{
+		    width: 50%;
+		    float: left;
+		    text-align: center;
+		    height: 4rem;
+		}
+		.pay_type img{
+		    width: 70%;
+		}
+		.pd_left{
+			padding-left:0.75rem !important;
+		}
+		.cancel{
+		    margin-top: 1rem;
+		}
+		.aui-radio:checked, .aui-radio.aui-checked, .aui-checkbox:checked, .aui-checkbox.aui-checked {
+		    background-color: #DC251F;
+		    border: solid 1px #DC251F;
+		    text-align: center;
+		    background-clip: padding-box;
+		}
+		.aui-list .aui-list-item {
+		    list-style: none;
+		    margin: 0;
+		    padding: 0;
+		    padding-left: 0.75rem;
+		    color: #212121;
+		    background-color: #ffffff;
+		    position: relative;
+		    min-height: 3.5rem;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		}
+		.danwei{
+			color:#A5A5A5;
+		}
+		.cash{
+		    color: #FB6500;
+		}
+		.ziBig{
+			font-size:1rem;
+		}
+		.zigeneral{
+			font-size: 0.8rem;
+		}
+		.order-cash{
+			float:right;
+			margin-right:0.5rem;
+		}
+    </style>
+</head>
+<body>
+	<div class="aui-content aui-margin-b-15">
+		<div class="aui-tips aui-margin-b-15e" id="tips-1">
+		    <i class="aui-iconfont aui-icon-info"></i>
+		    <div class="aui-tips-title">温馨提示：请在<span id="limit-time">00:00</span>之内进行支付</div>
+		    <i class="aui-iconfont aui-icon-date"></i>
+		</div>
+	    <ul class="aui-list aui-form-list none-bottom-style">
+	    	<li class="aui-list-item" style="min-height: 2.5rem;">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		日&emsp;&emsp;期：
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <span id="outline-set-date"></span>
+	                </div>
+	            </div>
+	        </li>
+	    	<li class="aui-list-item" style="min-height: 2.5rem;">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		医&emsp;&emsp;院：
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <span id="hospital-name"></span>
+	                </div>
+	            </div>
+	        </li>
+	        <li class="aui-list-item none-bottom-style" style="min-height: 2.5rem;">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		时&emsp;&emsp;间：
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <span id="outline-set-time"></span>
+	                    <!-- <span class="order-cash" id="outline-set-cash"> - 元</span> -->
+	                </div>
+	            </div>
+	        </li>
+	        <li class="aui-list-item">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		合&emsp;&emsp;计：
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <span class='danwei order-cash'>元</span>
+	                    <span class="cash order-cash" id='outline-set-totle-cash'> - </span>
+	                </div>
+	            </div>
+	        </li>
+	         <li class="aui-list-item" onclick='openReceipt()'>
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		开具发票
+	                </div>
+	             <div class="aui-list-item-input">
+                    <span class="order-cash cash" id="entity" style="float:right;margin-right: 0.5rem;color: #FB6500;font-size:0.6rem;">点击开具</span>
+                </div>
+	                
+	            </div>
+	        </li>
+	        <li class="aui-list-item" style="min-height: 2.5rem;padding-bottom: 0.5rem;">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		说&emsp;&emsp;明：
+	                </div>
+	                <div class="aui-list-item-input" style="margin-top:1.2rem;color: #767676;">
+	                    <span>系统已为您锁定该时段的体检名额，请在指定时间内完成付款</span>
+	                </div>
+	            </div>
+	        </li>
+            <div class="aui-list-item-inner pd_left">
+                <div class="aui-list-item-label">
+            		<!--请选择支付方式：-->
+            		支付方式：
+                </div>
+            </div>
+	        <li class="aui-list-item">
+                <div class="aui-list-item-input pay_method">
+                	<div class="pay_type zhifubao">
+                		<label><img src="../../icon/payfor/pay_zhifubao.jpg" alt="" /></label>
+                		<label><input class="aui-radio" type="radio" name="pay_method" checked value="1"></label>
+                	</div>
+       				<div class="pay_type caifutong">
+                		<label><img src="../../icon/payfor/pay_weixin.jpg" alt="" /></label>
+                		<input class="aui-radio " type="radio" name="pay_method" value="2"></label>
+                	</div>
+                </div>
+	        </li>
+		    <div class="aui-btn aui-btn-info aui-btn-block" id="m_pay" onclick="pay()">确认支付</div>
+	    </ul>
+	 </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var headerPos;
+	var cache;
+	var aliPayPlus;//支付宝
+	var wxPayPlus;//微信
+	var limitTime = 5*60;//设置支付超时时间
+	var dangertime = 1*60;//危险时间
+	var timer;
+	var params;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		aliPayPlus = api.require('aliPayPlus');
+		wxPayPlus = api.require('wxPayPlus');
+		setTimeDown();
+		timer = setInterval(setTimeDown, 1000);
+		init();
+		api.addEventListener({
+			    name: 'myEvent'
+			}, function(ret, err) {
+			    log("ashd",JSON.stringify(ret.value));
+			    params=ret.value;
+	});
+	}
+	function init(){
+		defaultload('获取订单信息中...');
+		url = 'api/offline/list';
+		params = {
+			learnerId:getUserId(),
+			id:cache.outline_appointment_id
+		}
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			log('获取的线下预约信息',ret);
+			api.hideProgress();
+			if(ret){
+				if(ret.code == 0){
+					if(ret.exaOffLineList.length > 0){
+						$('#outline-set-date').html(ret.exaOffLineList[0].reservationDate.substring(0,10));//日期
+						$('#hospital-name').html(cache.hospitalName);//医院
+						$('#outline-set-time').html(ret.exaOffLineList[0].startTime + ' ~ ' + ret.exaOffLineList[0].endTime);//时间段
+						//$('#outline-set-cash').html(ret.exaOffLineList[0].examinationFee);//金额
+						$('#outline-set-totle-cash').html(ret.exaOffLineList[0].examinationFee);//总金额
+					}else{
+						alert_msg('无效的订单');
+					}
+				}else{
+					alert_msg(ret.msg);
+				}
+			}else{
+				alert_msg('服务器故障');
+			}
+		});
+	}
+	//支付
+	var isAllowPay = true;//是否允许去支付
+	function pay(){
+		//successs_pay();return;
+		var channel = $("input:radio[name='pay_method']:checked").val();
+		if(isAllowPay){
+			url = 'api/offline/arousePay';
+			params = {
+				learnerId:getUserId(),
+				id:cache.outline_appointment_id,
+				orderId:cache.orderId,
+				channel:channel,
+				applyInvoice:{
+				   hospitalId:cache.hospitalId,//医院id
+					orderId:cache.orderId,//订单号
+					isPersonal:params.is_personal,//开票抬头个人/单位
+					name: params.name,//个人开票时的抬头
+					phone: params.phone,//电话
+					mail: params.mail,//邮箱
+					ein: params.ein,//税号
+					entityName: params.entity_name,//单位名称
+					organizationType:'1',//单位类型 医院
+					useWay:'0',//报名用途，写死
+					invoiceType:'0',//开票类型
+				}
+			}
+			defaultload('唤起支付中');
+			//清除定时器
+			clearInterval(timer);
+			ajax_Request(url, 'post', 'json', params, function(ret,err){
+				log('支付接口调用返回',ret);
+				if(ret){
+					if(ret.code == 0){
+						if(channel == 1){
+							AlipPay(ret.aliPayReturn,function(){
+								successs_pay();
+							},function(msg){
+								fail_pay(msg);
+							});//支付宝
+						}else if(channel == 2){
+							WechatPay(ret.wechatpayReturn,function(){
+								successs_pay();
+							},function(msg){
+								fail_pay(msg);
+							});//微信支付
+						}
+					}else{
+						fail_pay(ret.msg);
+					}
+				}else{
+					fail_pay('唤起支付失败');
+				}
+			});
+		}else{
+			alert_msg('已完成支付');
+		}
+		//esc_function('physical_examination_underline_sign_up_win','','pay_for_next()');
+	}
+	
+	//成功处理
+	function successs_pay(){
+		isAllowPay = false;//支付成功后就不允许再次点击支付
+		clearInterval(timer);//清除定时器
+		sendEvent('offline_pay_submit',cache);
+		api.hideProgress();
+	}
+	
+	//失败处理
+	function fail_pay(msg){
+		//定时器继续
+		timer = setInterval(setTimeDown, 1000);
+		alert_msg(msg);
+		api.hideProgress();
+	}
+	
+	//开发票
+	function openReceipt(){
+	api.addEventListener({
+			    name: 'myEvent'
+			}, function(ret, err) {
+			    log("ashd",JSON.stringify(ret.value));
+			    params=ret.value;
+			     if(params.is_personal){
+					    if(params.is_personal=='0'){
+					    	$("#entity").text(params.name);
+					    }else if(params.is_personal=='1'){
+					    	$("#entity").text(params.entity_name);
+					    }
+				 }
+	});
+   
+	api.openFrame({
+        name: 'common_receipt',
+        url: '../common/common_receipt.html',
+        bgColor: 'rgba(0,0,0,0.3)',
+        rect: {
+            x: 0,
+            y: 0,
+            w: 'auto',
+            h: api.winHeight
+        },
+        pageParam: {
+				data: params
+			},
+        bounces: false,
+        softInputBarEnabled:true,
+        softInputMode:'resize',
+       
+    });
+	
+}
+	
+	//倒计时
+	var maxtime = limitTime;
+	function setTimeDown(){
+        if (maxtime >= 0) {
+            minutes = Math.floor(maxtime / 60);
+            seconds = Math.floor(maxtime % 60);
+            msg = time_2(minutes) + ":" + time_2(seconds);
+            $('#limit-time').html(msg);
+            if (maxtime == dangertime){
+            	openMessage('温馨提示','支付还剩余最后1分钟','知道了','','','',null);
+            };
+            --maxtime;
+        } else {
+        	clearInterval(timer);
+            openMessage('温馨提示','支付超时','退出','','close()','',null);
+    	}
+	}
+	
+	//处理时间格式
+	function time_2(time){
+		if(time == 0){
+			return "00";
+		}else if(time.toString().length == 1){
+			return "0" + time;
+		}else{
+			return time;
+		}
+	}
+	
+	function close(){
+		api.closeWin({
+        });
+	}
+</script>
+</html>

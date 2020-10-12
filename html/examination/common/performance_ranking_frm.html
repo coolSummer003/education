@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>排名</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			body,html{
+    		background: #F5F5F5;
+			padding-top: 0.3rem;
+    	}
+		.header_all{
+			background: url(../../../image/background/paihanginfo.png) no-repeat;
+			background-size: 100% 100%;
+			width: 94%;
+			margin: auto;
+			height: 7rem;
+		    position: relative;
+		}
+		.header_img{
+			width: 3rem;
+		    margin-left: 5%;
+		    margin-top: 10%;
+		    display: inline-block;
+		    height: 3rem;
+		}
+		.header_img img{
+			width: 100%;
+			height:100%;
+			object-fit:cover;
+			border-radius: 100%;
+		}
+		.header_msg{
+			color: #FFF;
+			display: inline-block;
+			margin-left: 3%;
+		}
+		.header_msg p{
+			color: #FFF !important;
+			font-weight: 100;
+			margin-bottom: 0.2rem;
+			font-size: 0.7rem;
+		}
+		.msg_name{
+			font-weight: 600 !important;
+			font-size: 0.9rem !important;
+		}
+		.header_rank{
+		    display: inline-block;
+		    position: absolute;
+		    right: 1rem;
+		    top: 1.5rem;
+		}
+		.header_rank p{
+			font-weight: 100;
+			color: #FFF !important;
+			font-size: 0.7rem;
+			text-align: center;
+		}
+		.rank_line{
+			font-weight: 600 !important;
+			font-size: 1.1rem !important;
+		}
+		.aui-border-t:before, .aui-border-b:after{
+			height: 0;
+		}
+		.aui-tab-item{
+			color: #AFCDFF !important;
+			background: #F5F5F5;
+		}
+		.aui-tab{
+			display: flex !important;
+			flex-flow: row !important;
+			justify-content: space-between !important;
+		}
+		p {
+		    font-size: 0.7rem;
+		    color: #FFF;
+		}
+		.aui-tab-item.aui-active{
+			color: #3F86FF !important;
+			border-bottom: 2px solid #3F86FF;
+		}
+		.line_vertical{
+			height: 0.7rem;
+			width: 3px;
+			background: #3F86FF;
+			border-radius: 12px;
+		}
+		.line_name{
+			font-size: 0.8rem;
+			color: #333333;
+			height: 1rem;
+			line-height: 16px;
+		}
+		.line_all{
+			width: 100%;
+			padding-left: 3%;
+			position: relative;
+		}
+		.line_btn{
+			background: #3F86FF;
+		    border-radius: 12.5px;
+		    font-size: 0.7rem;
+		    color: #FFFFFF;
+		    text-align: center;
+		    padding: 0.1rem 0.5rem;
+		}
+		.line_time{
+			display: inline-block;
+			background: #E0E5EF;
+			width: 25%;
+			text-align: center;
+			font-size: 0.7rem;
+			height: 1rem;
+			line-height: 1rem;
+			position: absolute;
+			right: 4%;
+			border-radius: 0.6rem;
+			color: #99A9C6;
+			top: 0;
+		}
+		.line_time span{
+			width: 30%;
+		}
+		.line_day{
+			height: 1rem;
+			background: #3F86FF;
+			border-radius: 0.6rem;
+			color: #FFF;
+		}
+		.aui-padded-5{
+			margin-top: 5%;
+		}
+		
+		.aui-info {
+		    position: relative;
+		    padding: 0.5rem 0;
+		    font-size: 0.7rem;
+		    color: #FFF;
+		    background-color: transparent;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		    -webkit-box-align: center;
+		    -webkit-align-items: center;
+		    align-items: center;
+		}
+		
+		.aui-info-item > *, .aui-info > *{
+			display: inline-block;
+		}
+		
+		.main_msg_line{
+			width: 100%;
+		}
+		.msg_line_num{
+			vertical-align: top;
+			margin-top: 10%;
+			margin-right: 0.5rem;
+			width: 1rem;
+		}
+		.aui-margin-l-5 p:nth-child(1){
+			font-size: 0.8rem;
+			color: #FFF;
+		}
+		.aui-margin-l-5 p:nth-child(2){
+			font-size: 0.6rem;
+			color: #FFF;
+		}
+		.topThree{
+			width: 100%;
+		    height: 20rem;
+		    margin-top: 0.5rem;
+		    position: relative;
+		}
+		.topThreeBg{
+			width: 94%;
+			height: 20rem;
+			position: absolute;
+			background: url(../../../image/background/icon_top3.png) no-repeat;
+			background-size: 100% 100%;
+			left: 3%;
+			top: 0;
+		}
+		.flex{
+			display: flex;
+			flex-flow: column;
+			align-items: center;
+			position: absolute;
+		}
+		.topOne{
+			left: 50%;
+			top: 1rem;
+			transform: translate(-50%);
+		    color: #FFF;
+		}
+		.topTwo{
+			left: 10%;
+		    top: 3.5rem;
+		    color: #FFF;
+		    transform: rotate(-15deg);
+		}
+		.topTh{
+			right: 10%;
+		    top: 5rem;
+		    color: #FFF;
+		    transform: rotate(15deg);
+		}
+		.OneHearder{
+			border: #FFF solid 3px;
+		}
+		.OneHearder:after{
+			content: 'NO.1';
+		    width: 1.8rem;
+		    background-color: #FF7E00;
+		    font-size: 0.4rem;
+		    text-align: center;
+		    border-radius: 0.4rem;
+		    color: #fff;
+		    position: absolute;
+		    top: 4rem;
+		    left: 1rem;
+		    border: solid 1px;
+		}
+		.TwoHearder:after{
+			content: 'NO.2';
+			width: 1.8rem;
+			background-color: #CFD6E9;
+			font-size: 0.4rem;
+			text-align: center;
+			border-radius: 0.4rem;
+			color: #fff;
+			position: absolute;
+			top: 4rem;
+		    left: 1rem;
+		    border: solid 1px;
+		}
+		.ThreeHearder:after{
+			content: 'NO.3';
+			width: 1.8rem;
+			background-color: #EAAC74;
+			font-size: 0.4rem;
+			text-align: center;
+			border-radius: 0.4rem;
+			color: #fff;
+			position: absolute;
+			top: 4rem;
+		    left: 1rem;
+		    border: solid 1px;
+		}
+		.TwoHearder{
+			border: #FFF solid 3px;
+		}
+		.ThreeHearder{
+			border: #FFF solid 3px;
+		}
+		.OneHearder, .TwoHearder, .ThreeHearder{
+			width: 4rem;
+			height: 4rem;
+			border-radius: 100%;
+			background-color: #000;
+			position: relative;
+		}
+		.OneName{
+			margin-top: 1.5rem;
+		}
+		.TwoName{
+			margin-top: 1.3rem;
+		}
+		.ThreeName{
+			margin-top: 1.3rem;
+		}
+		.OneFraction, .TwoFraction, .ThreeFraction{
+			margin-top: 0.3rem;
+			background-color: #3F86FF;
+			text-align: center;
+			color: #fff;
+			width: 3rem;
+			font-size: 0.7rem;
+			border-radius: 1rem;
+			overflow: hidden;
+		}
+		.OneTime, .TwoTime, .ThreeTime{
+			font-size: 0.6rem;
+			margin-top: 0.3rem;
+		}
+		#time{
+			color: #fff !important;
+		}
+		.topimg{
+		    width: 100%;
+		    height: 100%;
+		    border-radius: 100%;
+		    object-fit: cover;
+		}
+		.aui-bar-btn-item.aui-active {
+		    background-color: #F5F5F5;
+		    color: #0165F1;
+		}
+		#menuPackage{
+			position: relative;
+		}
+		.aui-bar-btn-item {
+		    display: table-cell;
+		    position: relative;
+		    width: 1%;
+		    line-height: 2rem;
+		    text-align: center;
+		    vertical-align: middle;
+		    border-radius: 0;
+		    position: relative;
+		    border: none;
+		    color: #6F6F6F;
+		    background-color: #F5F5F5;
+		    padding-top: 0.5rem;
+		}
+		.school i{
+			color: #0165F1;
+		}
+		.one-name-power{
+			position: absolute;
+		    right: -0.3rem;
+		    top: -0.7rem;
+		    transform: rotate(5deg);
+		    width: 1.5rem;
+		}
+		.sec-name-power{
+			position: absolute;
+		    right: -0.3rem;
+		    top: -0.7rem;
+		    transform: rotate(5deg);
+		    width: 1.5rem;
+		}
+		.third-name-power{
+			position: absolute;
+		    right: -0.3rem;
+		    top: -0.7rem;
+		    transform: rotate(5deg);
+		    width: 1.5rem;
+		}
+		.more-ranking{
+			background: #0168F2;
+		    width: 94%;
+		    margin-left: 3%;
+		    color: #FFF;
+	        margin-top: -7rem;
+		}
+		.more-ranking-shadow{
+			background: #0168F2;
+		    height: 7rem;
+		    opacity: 0.6;
+		    position: absolute;
+   			width: 94%;
+		}
+		.aui-info:active{
+			background:#1271F2;
+		}
+    </style>
+	</head>
+	<body>
+		<div class="header_all">
+			<div class="header_img">
+				<img src="../../../icon/common/icon_users.png" id="header_img" onerror="javascript:this.src='../../../icon/common/icon_users.png'">
+			</div>
+			<div class="header_msg">
+				<p class="msg_name">用户名</p>
+				<p>最好成绩：0</p>
+				<p>所用时间：0分 0秒</p>
+			</div>
+			<div class="header_rank">
+				<p class="rank_line">0</p>
+				<p>当前排名</p>
+			</div>
+		</div>
+		<div class='bottom-slide'>
+			<div class="aui-bar aui-bar-btn aui-bar-btn-full" id="menu">
+			    <div class="aui-bar-btn-item">同教练榜</div>
+				<div class="aui-bar-btn-item aui-active">同驾校榜</div>
+				<div class="aui-bar-btn-item">同地区榜</div>
+				<div class="aui-bar-btn-item">全网榜</div>
+			</div>
+			<li class="list_bar" id="slideSpan">
+		        <div class="list_bar_inner"></div>
+		    </li>
+		</div>
+		<!-- 总榜 -->
+		<div class="aui-padded-5">
+			<!-- 同驾校 -->
+			<div id="tab1-con2">
+				<div class="line_all">
+					<span class="line_vertical"></span>
+					<span class="line_name"><span class="school"></span></span>
+					<span class="line_btn school-menu aui-hide" tapmode onclick="changeDriverSchool()">驾校切换</span>
+					<span class="line_btn distinct-menu aui-hide" tapmode onclick="changeDistinct()">地区切换</span>
+					<div class="line_time">
+						<span tapmode onclick="switchTime('day')">日</span>
+						<span class="line_day" tapmode onclick="switchTime('week')">周</span>
+						<span tapmode onclick="switchTime('month')">月</span>
+					</div>
+				</div>
+				<div class="main_msg_line" id='rankingInfo'>
+					<div class="topThree">
+						<div class="topThreeBg">
+						</div>
+						<div class="topOne flex">
+							<div class="OneHearder cover">
+								<img src="" class="topimg" id="schooltop1img" onerror="javascript:this.src='../../../icon/common/icon_users.png'">
+							</div>
+							<img src="../../../icon/subject/question/icon_no_1.png" alt="" class='one-name-power'/>
+							<div class="OneName" id="schooltop1name">虚位以待</div>
+							<div class="OneFraction" id="schooltop1fraction">0分</div>
+							<div class="OneTime" id="schooltop1time">0分0秒</div>
+						</div>
+						<div class="topTwo flex">
+							<div class="TwoHearder cover">
+								<img src="" class="topimg" id="schooltop2img" onerror="javascript:this.src='../../../icon/common/icon_users.png'">
+							</div>
+							<img src="../../../icon/subject/question/icon_no_2.png" alt="" class='sec-name-power'/>
+							<div class="TwoName" id="schooltop2name">虚位以待</div>
+							<div class="TwoFraction" id="schooltop2fraction">0分</div>
+							<div class="TwoTime" id="schooltop2time">0分0秒</div>	
+						</div>
+						<div class="topTh flex">
+							<div class="ThreeHearder cover">
+								<img src="" class="topimg" id="schooltop3img" onerror="javascript:this.src='../../../icon/common/icon_users.png'">
+							</div>
+							<img src="../../../icon/subject/question/icon_no_3.png" alt="" class='third-name-power'/>
+							<div class="ThreeName" id="schooltop3name">虚位以待</div>
+							<div class="ThreeFraction" id="schooltop3fraction">0分</div>
+							<div class="ThreeTime" id="schooltop3time">0分0秒</div>
+						</div>
+					</div>
+					<div class="more-ranking">
+						<div class="aui-info aui-padded-l-10 aui-padded-r-10 more-ranking-shadow"></div>
+						<!-- <div class="aui-info aui-padded-l-10 aui-padded-r-10 bottom-slide">
+							<div class="aui-info-item">
+								<div class="msg_line_num">1</div>
+								<img src="" style="width:1.8rem" class="aui-img-round" onerror="javascript:this.src='../../../icon/common/icon_users.png'"/>
+								<div class="aui-margin-l-10">
+									<p>赵钱孙</p>
+									<p>1分18秒</p>
+								</div>
+							</div>
+							<div class="aui-info-item">100分</div>
+						</div> -->
+					</div>
+				</div>
+			</div>
+		</div>
+	<script type="text/template" charset="utf-8" id='ranking_info_src'>
+			<div class="topThree">
+				<div class="topThreeBg"></div>
+				<!-- 第一名 -->
+				{{ if(it[0]){ }}
+					<div class="topOne flex">
+						<div class="OneHearder cover">
+							{{ if(it[0].sex == '006002'){ }}
+								<img src="{{=file_load_url + it[0].headimgurl + '&style=image/resize,m_fill,w_100'}}" class="topimg" onerror="javascript:this.src='../../../icon/common/icon_users_women.png'">
+							{{ }else{ }}
+								<img src="{{=file_load_url + it[0].headimgurl + '&style=image/resize,m_fill,w_100'}}" class="topimg" onerror="javascript:this.src='../../../icon/common/icon_users.png'">
+							{{ } }}
+						</div>
+						<img src="../../../icon/subject/question/icon_no_1.png" alt="" class='one-name-power'/>
+						<div class="OneName">{{=it[0].name?it[0].name:'匿名用户'}}</div>
+						<div class="OneFraction">{{=it[0].score}}分</div>
+						<div class="OneTime">{{=time_format_i(it[0].studySeconds)}}</div>
+					</div>
+				{{ }else{ }}
+					<div class="topOne flex">
+						<div class="OneHearder cover">
+							<img src="" class="topimg" id="schooltop1img" onerror="javascript:this.src='../../../icon/common/icon_users.png'">
+						</div>
+						<img src="../../../icon/subject/question/icon_no_1.png" alt="" class='one-name-power'/>
+						<div class="OneName" id="schooltop1name">虚位以待</div>
+					</div>
+				{{ } }}
+				
+				<!-- 第二名 -->
+				{{ if(it[1]){ }}
+					<div class="topTwo flex">
+						<div class="TwoHearder cover">
+							{{ if(it[1].sex == '006002'){ }}
+								<img src="{{=file_load_url + it[1].headimgurl + '&style=image/resize,m_fill,w_100'}}" class="topimg" onerror="javascript:this.src='../../../icon/common/icon_users_women.png'">
+							{{ }else{ }}
+								<img src="{{=file_load_url + it[1].headimgurl + '&style=image/resize,m_fill,w_100'}}" class="topimg" onerror="javascript:this.src='../../../icon/common/icon_users.png'">
+							{{ } }}
+						</div>
+						<img src="../../../icon/subject/question/icon_no_2.png" alt="" class='sec-name-power'/>
+						<div class="TwoName">{{=it[1].name?it[1].name:'匿名用户'}}</div>
+						<div class="TwoFraction">{{=it[1].score}}分</div>
+						<div class="TwoTime">{{=time_format_i(it[1].studySeconds)}}</div>
+					</div>
+				{{ }else{ }}
+					<div class="topTwo flex">
+						<div class="TwoHearder cover">
+							<img src="" class="topimg" id="schooltop2img" onerror="javascript:this.src='../../../icon/common/icon_users.png'">
+						</div>
+						<img src="../../../icon/subject/question/icon_no_2.png" alt="" class='sec-name-power'/>
+						<div class="TwoName" id="schooltop2name">虚位以待</div>
+					</div>
+				{{ } }}
+				
+				<!-- 第三名 -->
+				{{ if(it[2]){ }}
+					<div class="topTh flex">
+						<div class="ThreeHearder cover">
+							{{ if(it[2].sex == '006002'){ }}
+								<img src="{{=file_load_url + it[2].headimgurl + '&style=image/resize,m_fill,w_100'}}" class="topimg" onerror="javascript:this.src='../../../icon/common/icon_users_women.png'">
+							{{ }else{ }}
+								<img src="{{=file_load_url + it[2].headimgurl + '&style=image/resize,m_fill,w_100'}}" class="topimg" onerror="javascript:this.src='../../../icon/common/icon_users.png'">
+							{{ } }}
+						</div>
+						<img src="../../../icon/subject/question/icon_no_3.png" alt="" class='third-name-power'/>
+						<div class="ThreeName">{{=it[2].name?it[2].name:'匿名用户'}}</div>
+						<div class="ThreeFraction">{{=it[2].score}}分</div>
+						<div class="ThreeTime">{{=time_format_i(it[2].studySeconds)}}</div>
+					</div>
+				{{ }else{ }}
+					<div class="topTh flex">
+						<div class="ThreeHearder cover">
+							<img src="" class="topimg" id="schooltop3img" onerror="javascript:this.src='../../../icon/common/icon_users.png'">
+						</div>
+						<img src="../../../icon/subject/question/icon_no_3.png" alt="" class='third-name-power'/>
+						<div class="ThreeName" id="schooltop3name">虚位以待</div>
+					</div>
+				{{ } }}
+			</div>
+			<div class="more-ranking">
+				<div class="aui-info aui-padded-l-10 aui-padded-r-10 more-ranking-shadow"></div>
+				{{ if(it.length > 3){ }}
+					{{ for(var i=3;i<it.length;i++){ }}
+						<div class="aui-info  aui-padded-l-10 aui-padded-r-10 bottom-slide">
+							<div class="aui-info-item">
+								<div class="msg_line_num">{{=it[i].ranking}}</div>
+								{{ if(it[i].sex == '006002'){ }}
+									<img src="{{=file_load_url + it[i].headimgurl + '&style=image/resize,m_fill,w_100'}}" style="width:1.8rem" class="aui-img-round" onerror="javascript:this.src='../../../icon/common/icon_users_women.png'"/>
+								{{ }else{ }}
+									<img src="{{=file_load_url + it[i].headimgurl + '&style=image/resize,m_fill,w_100'}}" style="width:1.8rem" class="aui-img-round" onerror="javascript:this.src='../../../icon/common/icon_users.png'"/>
+								{{ } }}
+								<div class="aui-margin-l-10">
+									<p>{{=it[i].name?it[i].name:it[i].account.toString().substring(0,4) + '****' + it[i].account.toString().substring(7,11)}}</p>
+									<p>{{=time_format_i(it[i].studySeconds)}}</p>
+								</div>
+							</div>
+							<div class="aui-info-item"><span>{{=it[i].score}}</span>分</div>
+						</div>
+					{{ } }}
+				{{ } }}
+			</div>
+	</script>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/aui/aui_tab.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var statusBarHeight = 30;
+		var clearance = 30;//间隙
+		var dateType = 'week';
+		var id;
+		var coachId;
+		var distinctCd;
+		var tcmSchoolId;
+		var coachName;
+		var bankType;
+		var cache;
+		var sel_index = 1;//默认同驾校榜单
+		apiready = function() {
+			cache = api.pageParam.data;
+			bankType = getBankType(cache.kemu);
+		
+			//监听驾校选择
+			toEventListener('sel_tcm_school_action', function(ret) {
+				$('.school').html(ret.value.name);
+				tcmSchoolId = ret.value.id;
+				getRankingInfo(1);
+			});
+			
+			//监听地区选择
+			toEventListener('question_ranking', function(ret) {
+				$('.school').html(ret.value.cityName + '排行榜');
+				distinctCd = ret.value.cityCode;
+				getRankingInfo(2);
+			});
+			
+			var tab = new auiTab({
+				element:document.getElementById("menu"),
+	        	repeatClick:true
+			}, function(ret) {
+				if (ret) {
+					console.log('ret.index'+ret.index);
+					sel_index = ret.index - 1;
+					controleMenuStyle(sel_index);//控制样式
+					f_slide($(ret.dom));
+					getRankingInfo(sel_index);
+				}
+			});
+			
+			init();
+		}
+		
+		/**
+		 * 初始化 
+		 */
+		var schoolName;
+		var districtCdName;
+		var coachName;
+		function init() {
+			var cache_by_account = $api.getStorage('cache_by_account').cache_account;
+			var coach_info = cache_by_account.coach;
+			log('coach_info',coach_info);
+			if(coach_info){
+				tcmSchoolId = coach_info.tcmSchoolId;
+				distinctCd = coach_info.districtCd;
+				coachId = coach_info.id;
+				schoolName = coach_info.schoolName;
+				coachName = coach_info.name;
+				districtCdName = coach_info.districtCdName;
+			}
+			
+			if(isauth()){
+				//如果已实名认证
+				$('.header_msg').find('p').eq(0).html(cache_by_account.name);
+			}else{
+				$('.header_msg').find('p').eq(0).html(cache_by_account.account);
+			}
+			
+			getHeadImg(cache_by_account, function (smallerPath) {
+				if(smallerPath){
+				    $('#header_img').attr('src', smallerPath);
+				}
+			});
+			$('.aui-bar-btn-item').eq(1).click();//先加载同驾校榜
+		}
+		
+		//个人信息
+		function personalInformation(params_d) {
+
+			url = 'api/mock-exam-and-study/getQuestionMockExamRanking';
+			
+			params_d.learnerId = getUserId();
+			
+			log('个人信息入参', params_d);
+			ajax_Request(url, 'get', 'json', params_d, function(ret, err) {
+				log('个人信息出参', ret);
+				if(ret.code == 0){
+					if(ret.learnerQuestionRankings.length > 0){
+						personInfo = ret.learnerQuestionRankings[0];
+						$('.header_msg').find('p').eq(1).html('最好成绩：' + personInfo.score);
+						$('.header_msg').find('p').eq(2).html('所用时间：' + time_format_i(personInfo.studySeconds));
+						loadNum($('.rank_line').eq(0),personInfo.ranking,1000,'');
+					}else{
+						$('.rank_line').html('未上榜');
+					}
+				}
+			})
+		}
+		
+		/**
+		 * 控制隐私样式 
+		 */
+		function controleMenuStyle(sel_index){
+			$('.school-menu').addClass('aui-hide');
+			$('.distinct-menu').addClass('aui-hide');
+			switch(sel_index){
+				case 0:
+					//同教练榜
+					if(coachName){
+						$('.school').html('教练 <i>' + coachName + '</i> 的学员排行榜');
+					}else{
+						$('.school').html('请先绑定教练');
+					}
+					break
+				case 1:
+					//同驾校榜
+					if(schoolName){
+						$('.school').html(schoolName + '排行榜');
+					}else{
+						$('.school').html('请先绑定教练');
+					}
+					$('.school-menu').removeClass('aui-hide');
+					break
+				case 2:
+					//同地区榜
+					if(districtCdName){
+						$('.school').html(districtCdName + '排行榜');
+					}else{
+						$('.school').html('请先绑定教练');
+					}
+					$('.distinct-menu').removeClass('aui-hide');
+					break
+				case 3:
+					//全网榜
+					$('.school').html('全网排行榜');
+					break
+			}
+		}
+		
+		//获取榜单
+		function getRankingInfo(index){
+		
+			url = 'api/mock-exam-and-study/getQuestionMockExamRanking';
+		
+			params = handleParams(index);
+			
+			if(params.is_return){
+				//如果不符合要求
+				$('.header_msg').find('p').eq(1).html('最好成绩：0');
+				$('.header_msg').find('p').eq(2).html('所用时间：0分 0秒');
+				loadNum($('.rank_line').eq(0),0,1000,'');
+				return;
+			}
+			
+			log('榜单入参',params);
+			defaultload('计算排名中');
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('榜单信息', ret);
+				api.hideProgress();
+				if(ret.code == 0){
+					var ranking_info_src = $('#ranking_info_src').html();
+					$('#rankingInfo').html(doT.template(ranking_info_src)(ret.learnerQuestionRankings));
+					api.parseTapmode();
+				}else{
+					alert_msg(ret.msg);
+				}
+				//个人排名
+				personalInformation(params);
+			});
+		}
+		
+		/**
+		 *处理入参 
+		 */
+		function handleParams(index){
+			sel_index = index;
+			params = {
+				kemu: cache.kemu == '036001'?1:4, //1：科目一4：科目四 必填
+				dateType: dateType, //day/week/month 必填
+				bankType: bankType //用getBankType(kemu)共同方法即可 必填
+			}
+			
+			var ranking_info_src = $('#ranking_info_src').html();
+			switch(sel_index){
+				case 0:
+					//同教练榜
+					if(coachId){
+						params.coachId = coachId;//所属教练id
+					}else{
+						$('#rankingInfo').html(doT.template(ranking_info_src)([]));
+						alert_msg('请先绑定教练');
+						params.is_return = true;
+						return params;
+					}
+					break
+				case 1:
+					//同驾校榜
+					if(tcmSchoolId){
+						params.tcmSchoolId = tcmSchoolId;//所属驾校id
+					}else{
+						$('#rankingInfo').html(doT.template(ranking_info_src)([]));
+						alert_msg('请先绑定教练');
+						params.is_return = true;
+						return params;
+					}
+					break
+				case 2:
+					//同地区榜
+					if(distinctCd){
+						params.distinctCd = distinctCd;//所属地区
+					}else{
+						$('#rankingInfo').html(doT.template(ranking_info_src)([]));
+						alert_msg('请先绑定教练');
+						params.is_return = true;
+						return params;
+					}
+					break
+				case 3:
+					//全网榜
+					break
+			}
+			params.is_return = false;
+			return params;
+		}
+		
+		//驾校选择
+		function changeDriverSchool() {
+			api.openWin({
+				name: 'common_select_under_school_win',
+				url: '../../common/common_select_under_school_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: {}
+			});
+		}
+		
+		//地区切换
+		function changeDistinct(){
+			api.openFrame({
+		        name: 'common_select_location_city1',
+		        url: '../../common/common_select_location_city.html',
+		        rect: {
+		            x: 0,
+		            y: statusBarHeight,
+		            w: 'auto',
+		            h: api.winHeight - statusBarHeight
+		        },
+		        slidBackEnabled:'false',
+		        vScrollBarEnabled:'false',
+		        hScrollBarEnabled:'false',
+		        reload:true,
+		        pageParam:{
+		        	action:'question_ranking'
+		        }
+		    });
+		}
+
+		function switchTime(type) {
+			dateType = type;
+			if (type == 'day') {
+				$('.line_time').find('span').eq(0).addClass("line_day");
+				$('.line_time').find('span').eq(1).removeClass("line_day");
+				$('.line_time').find('span').eq(2).removeClass("line_day");
+			} else if (type == 'week') {
+				$('.line_time').find('span').eq(0).removeClass("line_day");
+				$('.line_time').find('span').eq(1).addClass("line_day");
+				$('.line_time').find('span').eq(2).removeClass("line_day");
+			} else if (type == 'month') {
+				$('.line_time').find('span').eq(0).removeClass("line_day");
+				$('.line_time').find('span').eq(1).removeClass("line_day");
+				$('.line_time').find('span').eq(2).addClass("line_day");
+			}
+			
+			getRankingInfo(sel_index);
+		}
+		
+		//滑块加载事件
+		function f_slide(e){
+			$('.aui-bar-btn-item').removeClass('aui-active');
+			$(e).addClass('aui-active');
+			$('.list_bar').css('width',($('.aui-active').width() - clearance*2)+'px');
+			$('.list_bar_inner').css('width',($('.aui-active').width() - clearance*2)+'px');
+			document.getElementById('slideSpan').style.webkitTransform = 'translateX('+($(e).position().left + clearance)+'px)';
+		}
+		
+		/**
+		 * 时间格式化
+		 */
+		function time_format_i(time){
+			var hourRounds = Math.floor(time/60/60);
+		  	var minRounds = Math.floor(time/60);
+		  	if(time == 0){
+		  		return '0分 0秒';
+		  	}else if(time < 60){
+			    return '0分 ' + time + '秒';
+		  	}else if(hourRounds == 0){
+			    return minRounds + '分 ' + time%60 + '秒';
+		  	}else{
+			    return hourRounds + '小时 ' + minRounds + '分 '  + time%60 + '秒';
+		  	}
+		}
+	</script>
+</html>

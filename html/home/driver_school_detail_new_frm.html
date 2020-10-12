@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>驾校详情</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/swiper/swiper.css">
+		<style>
+			html,body{
+    		background-color: #ffffff;
+    	}
+    	ul{
+    		
+    		padding: 0.5rem;
+    	}
+    	.community-head{
+    		height:2.5rem;
+    	}
+    	.community-head-icon{
+    		width:20%;
+    		float:left;
+    		display:flex;
+    		height:2.5rem;
+    	}
+    	.community-head-icon img{
+		    width: 2rem;
+		    border-radius: 100%;
+		    margin: auto;
+		    height: 2rem;
+		    object-fit: cover;
+    	}
+    	.community-head-info{
+    		width:80%;
+    		float:left;
+    		height:1rem;
+    	}
+    	.community-head-infos{
+    		position:relative;
+    		right:0.5rem;
+    		width:80%;
+    		float:left;
+    		height:1.5rem;
+    		margin-bottom:0.5rem;
+    		
+    	}
+    	.community-head-info-name{
+    		height:1.5rem;
+    		width:50%;
+    		line-height: 1.5rem;
+			margin-top: 0.2rem;
+    	}
+    	.community-head-label{
+    		height:1.7rem;
+    		width:30%;
+    		float:left;
+    	}
+    	.community-head-info-time{
+    		height:1.5rem;
+    		line-height: 1.5rem;
+			margin-top: -1.5rem;
+    		width:50%;
+    		font-size: 0.6rem;
+    		color:#939393;
+			text-align: right;
+    	}
+    	.community-title{
+    		width:80%;
+    		height: 2rem;
+		    line-height: 2rem;
+		    float: right;
+    	}
+    	.community-content{
+    		width:80%;
+		    float: right;
+		    font-size:0.8rem;
+		    color:#000;
+			margin-top: -2rem;
+    	}
+    	.community-pic-list{
+    		width:80%;
+    		float:right;
+    		margin-bottom: 0.5rem;
+    	}
+
+    	.community-icon{
+    		width:80%;
+    		float: right;
+    		font-size: 0.6rem;
+    		text-align: right;
+		    position:relative;
+	        height: 1.5rem;
+    	}
+    	.community-icon:after{
+    		content: '';
+		    height: 1px;
+		    background: #DDDDDD;
+		    width: 100%;
+		    background-color: #dddddd;
+		    display: block;
+	        margin-top: 0.5rem;
+		    -webkit-transform: scaleY(0.5);
+		    transform: scaleY(0.5);
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+	        position: absolute;
+    		bottom: 0rem;
+    	}
+		.commentCount{
+			float: right;
+			margin-right: 0.3rem;
+		}
+    	.community-icon img{
+    		height:0.8rem;
+    		margin: 0rem 0.1rem -0.1rem 0.8rem;
+    	}
+    	li{
+    		overflow: hidden;
+    		padding-top:0.5rem;
+    	}
+    	li:active{
+    		background:#FAFAFA;
+    	}
+    	.evaluate{
+    	margin-right:0.5rem;
+    	}
+    	.community-icon span{
+			color:#757575;
+		}
+		
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+		    color: #2c2c2c;
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    opacity: 1;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+    	.driver-school-pic{
+    		position: relative;
+    		height: 14rem;
+    	}
+    	.driver-school-pic img{
+    		width: 100%;
+    		height: 100%;
+    		object-fit: cover;
+    	}
+    	.driver-school-pic-num{
+    		position: absolute;
+		    bottom: 1rem;
+		    left: 1rem;
+		    background: url(../../icon/common/icon_shadow_small.png) transparent center center no-repeat;
+		    background-size: 100% 99%;
+		    padding: 0.4rem 0.5rem;
+		    color: #FFF;
+		    font-size:0.7rem;
+    	}
+    	.driver-school-name{
+    		/*float: left;*/
+		    font-size: 1rem;
+    		overflow: hidden;
+    		margin-left: 1.0rem;
+		    /*height: 5.0rem;*/
+		    line-height: 2rem;
+		    width: 100%;
+		    text-align: left;
+		    
+    	}
+    	.item-name{
+    		float:left;
+    		width: 50%;
+    		margin-top:0.2rem;
+			/*height: 2.2rem;*/
+			font-family:"微软雅黑";
+			font-size:larger;
+    		overflow: hidden;
+    	}
+    	.item-price{
+    		width: 25%;
+		    float: right;
+		    text-align: right;
+		    font-size: 0.7rem;
+		    color: #757575;
+    	}
+    	.item-price span{
+    		color:#FF5917;
+    		font-size:1rem;
+    	}
+    	.item-price font{
+    		color:#FF5917;
+    		font-size:0.7rem;
+    	}
+    	.driver-school-price{
+    		font-size: 0.7rem;
+    		color:#7D7D7D;
+    	}
+    	.driver-school-info{
+    		/*padding: 0rem 0.5rem;*/
+    	}
+    	.driver-school-percent{
+    		font-size: 0.7rem;
+    		/*margin-bottom:1rem;*/
+		    overflow: hidden;
+			/*padding-left: 0 !important;
+			padding-right: 0 !important;*/
+    	}
+    	.driver-school-percent li{
+    		float: left;
+			width: 28%;
+    		margin-right: 0rem;
+    	}
+		.driver-school-percent li:last-child {
+			width: 44%;
+			text-align: right;
+			margin-right: 0rem;
+		}
+    	.driver-school-label li{
+		    border: solid 1px #F1F1F1;
+		    background:#F1F1F1;
+		    margin-right: 0.4rem;
+		    margin-bottom:0rem;
+		    padding: 0rem 0.3rem;
+		    float:left;
+		    line-height: 0.9rem;
+    		height: 0.9rem;
+    		font-size:0.6rem;
+    	}
+		.tag-style0{
+			background:#DDEBFF !important;
+			border-color:#DDEBFF !important;
+			color:#75A9CB;
+		}
+		.tag-style1{
+			background:#E9FBF9 !important;
+			border-color:#E9FBF9 !important;
+			color:#63BD9F;
+		}
+		.tag-style2{
+			background:#FDF2E6 !important;
+			border-color:#FDF2E6 !important;
+			color:#ED9366;
+		}
+    	.font-list-item{
+    		color:#757575;
+		    font-size: 0.7rem;
+		    overflow: hidden;
+    	}
+    	.list_bar .list_bar_inner{
+			 position:absolute;
+			 min-width: 0rem;
+			 height:100%;
+			 top:0;
+			 left:50%;
+			 background-color:#03a9f4;
+			 -webkit-transform:translateX(-50%);
+			 transform:translateX(-50%);
+			 -webkit-transition: 0.3s ease;
+		}
+		.list_bar {
+			 position:absolute;
+			 bottom:0;
+			 left:0%;
+			 height:2px;
+			 width:20%;
+			 -webkit-transform:translateX(0%);
+			 transform:translateX(0%);
+			 -webkit-transition:all .25s ease;
+			 transition:all .25s ease;
+			 z-index:10;
+		}
+		.driver-school-sort-menu{
+			position: relative;
+		}
+		#score{
+			/*border:1px solid #ace;*/
+    		height: 2rem;
+    		/*line-height:2rem;*/
+    		display: inline-block;
+    		vertical-align: middle;
+    	}
+    	#score li{
+    	/*border:1px solid #a00;*/
+    		position:relative;
+    		bottom:0.5rem;
+    		float: left;
+    		height: 2rem;
+    		margin-left: 0.1rem;
+    		line-height:2rem;
+    		display: inline-block;
+    		vertical-align: middle;
+    	}
+    	#score li span{
+			font-size:0.6rem;
+			position:relative;
+	    	bottom:0.5rem;
+		}
+    	#score li img{
+    	/*border:1px solid #eac;*/
+    		position:relative;
+    		bottom:0.5rem;
+    		width: 0.8rem;
+    		/*margin-top: 0.2rem;*/
+    	}
+    	.head-portrait img{
+    		height:100%;
+    		border-radius:100%;
+    	}
+    	.aui-ellipsis-2 {
+		    display: -webkit-box !important;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		    word-wrap: break-word;
+		    white-space: normal !important;
+		    -webkit-line-clamp: 2;
+		    -webkit-box-orient: vertical;
+		}
+		.driver-img{
+			width: 2rem !important;
+    		height: 2rem !important;
+    		margin: auto !important;
+		}
+		.checkMore{
+			height: 3rem;
+		    line-height: 3rem;
+		    text-align: center;
+	        font-size: 0.7rem;
+		}
+		.checkMore img{
+			height: 0.8rem;
+    		margin-bottom: -0.1rem;
+    		-webkit-transform: rotate(180deg);
+		}
+		.driver-school-des{
+			padding-left: 0.8rem;
+			padding-right: 0.8rem;
+			/*padding-bottom: 0.8rem;*/
+   			font-size: 0.7rem;
+   			width:100%;
+   			/*height:6rem;*/
+   			overflow: hidden;
+   			transition: 0.5s linear;
+   			text-align:justify;
+   			/*text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 6;
+			-webkit-box-orient: vertical;*/
+		}
+		.open-btn{
+			position:absolute;
+			width:100%;
+			bottom:0;
+			height:78px;
+			/*float:right;*/
+	 	}
+	 	.open-btn a{
+			text-decoration:none;
+			display:inline-block;
+			margin-top:1.5rem;
+			/*margin-right:1rem;*/
+			background-color: #FFFFFFFF;
+			opacity:1;
+			margin-left:79%;
+		}
+		.aui-border-t:before, .aui-border-b:after {
+		    width: 100%;
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    z-index: 2;
+		    left: 0;
+		    right: auto;
+		    -webkit-transform-origin: 100% 50%;
+		    transform-origin: 100% 50%;
+		    pointer-events: none;
+		}
+		.aui-bar-nav {
+		    top: 0;
+		    line-height: 2.25rem;
+		    background-color: #FFF;
+		    color: #000;
+		    border-bottom: none;
+		}
+		#aui-header1{
+		    opacity: 0;
+		    z-index:12;
+		}
+		#aui-header2{
+		    opacity: 1;
+		    background:#FFF !important;
+		    z-index:12;
+		}
+		.swiper-pagination-bullet-active {
+			height:0.4rem;
+			width:0.4rem;
+		    opacity: 1;
+		    background: #FFF;
+		}
+		.swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets {
+		    bottom: 10px;
+		    left: 0;
+		    width: 95%;
+		    /*height:95%;*/
+		}
+		.swiper-pagination {
+		    position: absolute;
+		    text-align: right;
+		    -webkit-transition: 300ms;
+		    -moz-transition: 300ms;
+		    -o-transition: 300ms;
+		    transition: 300ms;
+		    -webkit-transform: translate3d(0, 0, 0);
+		    -ms-transform: translate3d(0, 0, 0);
+		    -o-transform: translate3d(0, 0, 0);
+		    transform: translate3d(0, 0, 0);
+		    z-index: 10;
+		}
+		.shadow{
+    		width:100%;
+    		height:100%;
+    		background:#000;
+    		opacity:0.3;
+    		position: absolute;
+    	}
+    	.driver-school-des img{
+    		max-width:100%;
+    	}
+    	.aui-list .aui-list-item-media {
+		    width: 3rem;
+		    position: relative;
+		    padding: 0.5rem 0;
+		    padding-right: 0.25rem;
+		    display: inherit;
+		    -webkit-flex-shrink: 0;
+		    flex-shrink: 0;
+		    -webkit-flex-wrap: nowrap;
+		    flex-wrap: nowrap;
+		    -webkit-box-align: center;
+		    -webkit-align-items: flex-start;
+		    align-items: flex-start;
+		}
+		/*场地*/
+		.place{
+			width: 5.5rem !important;
+		}
+		.placeName{
+			font-weight: 600;
+			font-size: 1.2rem;
+		}
+		.placeImg{
+			height: 0.8rem;
+				margin-bottom: 0.1rem;
+				-webkit-transform: rotate(180deg);
+		}
+		.jz {
+		    margin: 0.5rem 0rem;
+		}
+		.empty{
+			width:100%;
+			padding:3rem 0rem;
+			text-align:center;
+			font-size:0.6rem;
+		}
+		.empty img{
+			width:4rem;
+		}
+		.coach_empty{
+			width:100%;
+			/*padding:3rem 0rem;*/
+			text-align:center;
+			font-size:0.6rem;
+		}
+		.coach_empty img{
+			width:4rem;
+		}
+		.icon_img{
+			width:0.7rem;
+		}
+		.icon_right_img{
+			width:0.3rem;
+		}
+		
+		.icon_consultation_img{
+			padding-top: 0.3rem;
+			margin-right:0.2rem;
+			width:25%;
+			float: right;
+		}
+		.learner_font{
+		    margin-right: 1rem;
+		    /*margin-top: 0.4rem;*/
+		    font-size: 0.6rem;
+			vertical-align: middle;
+			min-height: 1.5rem;
+			line-height: 1.5rem;
+		}
+		.icon_phone_img{
+			margin-top: 0.2rem;
+			margin-left:1.5rem;
+			width:1.2rem;
+			height: 1.2rem;
+			vertical-align: middle;
+		}
+		#label li{
+			border: solid 1px #F1F1F1;
+			margin-right: 0.4rem;
+			font-size: 0.6rem;
+			padding: 0rem 0.2rem;
+			background:#F1F1F1;
+		}
+		/*评分*/
+		#score{
+			height: 1rem;
+			line-height:1rem;
+			display: inline-block;
+			vertical-align: middle;
+		}
+		#score li{
+			float: left;
+			width: 0.8rem;
+			height: 1rem;
+			margin-left: 0rem;
+			line-height:1rem;
+			display: inline-block;
+			vertical-align: middle;
+		}
+		#score li img{
+			width: 0.5rem;
+			margin-top: 0.2rem;
+		}
+		#score span{
+			color:#FFAC67;
+		}
+		.license{
+			background: #f3f4f4;
+			display:inline-block;
+			margin-bottom: 0.1rem;
+			height: 1rem;
+		}
+		.aui-active{
+			border-bottom-color: #1E8DD8 !important;
+			color: #1E8DD8 !important;
+		}
+		.driver-school-short-name{
+			margin-bottom:0.8rem;
+			margin-top:-0.5rem;
+			color:#757575;
+		}
+		.aui-list .aui-list-item-title {
+		    font-size: 0.7rem;
+		    position: relative;
+		    max-width: 100%;
+		    color: #03a9f4;
+		}
+		.aui-label-info {
+		    color: #ffffff;
+		    background-color: #FFB476;
+		}
+		.meal-detail{
+			height:10.2rem;
+			overflow: hidden;
+		}
+		.school-detail{
+			height:3rem;
+			overflow: hidden;
+		}
+		.remove-overflow{
+			overflow:visible;
+			height: auto;
+		}
+		.get-more{
+		    height: 2rem;
+    		line-height: 2rem;
+    		text-align: center;
+		}
+		.get-more img{
+			width:0.6rem;
+		    margin-right: 0.1rem;
+		    -webkit-transition: 0.3s ease;
+		}
+		.get-more span{
+			color:#898787;
+			font-size:0.7rem;
+		}
+		.get-more:active{
+			background:#FAFAFA;
+		}
+		.get-school-more{
+		    height: 2rem;
+    		line-height: 2rem;
+    		margin-bottom:1rem;
+    		text-align: center;
+		}
+		.get-school-more img{
+			width:0.6rem;
+		    margin-right: 0.1rem;
+		    -webkit-transition: 0.3s ease;
+		}
+		.get-school-more span{
+			color:#898787;
+			font-size:0.7rem;
+		}
+		.get-school-more:active{
+			background:#FAFAFA;
+		}
+		.msg{
+			background: #FFFFFF;
+		    height: 4rem;
+		    text-align: center;
+		    font-size:0.7rem;
+		    color:#515151;
+		}
+		.msg img{
+			width:1.5rem;
+			margin-top: 0.5rem;
+			margin-bottom:0.5rem;
+		}
+	  	.headerBox {
+	  		    width: 17rem;
+			    height: 8.5rem;
+			    background: #FFFFFF;
+			    box-shadow: 0rem 0.125rem 0.375rem 0rem rgba(215, 215, 215, 1);
+			    border-radius: 0.625rem;
+			    margin-left: 4%;
+			    margin-top: 2%;
+			    margin-bottom: 2%;
+			    overflow: visible;
+        }
+        .no-padding{
+        	padding-top:0.1rem !important;
+        	padding-bottom:0!important;
+        	padding-left:0!important;
+        	text-align: left;
+        	margin-left: 1.0rem;
+        }
+        .address-map{
+        	float: left;
+        	margin-top: 0.5rem;
+        }
+        .font{
+        	font-family: "微软雅黑";
+        	font-weight: bold;
+        }
+        .number_font{
+        	/*font-family: "微软雅黑";*/
+        	font-size:small;
+        	font-weight:bold;
+        	width:100%;
+        	padding:1rem 2em ;
+        }
+        .coach_font{
+        	float: right;
+        }
+        .menu_font{
+        	font-family: "微软雅黑";
+        	/*font-weight: bold;*/
+        	text-align: center;
+        }
+        .coach_msg_car_type_list_more {
+            width: 100%;
+            height: 1rem;
+            line-height: 1rem;
+            font-size: 0.6rem;
+            text-align: center;
+        }
+        .coach_msg_car_type_list {
+            width: 100%;
+            height: auto;
+            /* margin-top: 0.4rem; */
+        }
+        .coach_msg_car_type_list_show {
+            /*height: 8rem;*/
+            overflow: hidden;
+            transition: 0.5s linear;
+        }
+        .school_msg_list_show {
+            /*height: 5rem;*/
+            overflow: hidden;
+            transition: 0.5s linear;
+        }
+        .coach_msg_car_type_list_show_label_btn {
+            position: absolute;
+            width: 30%;
+            height: 1.5rem;
+            left: 70%;
+			font-size: 0.7rem;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+        }
+        .coach_msg_car_type_list_show_label_btns {
+            position: absolute;
+            width: 4rem;
+            height: 1.2rem;
+            line-height: 1.2rem;
+            text-align: center;
+            border: 1px solid #C2C2C2;
+            font-size: 0.7rem;
+            border-radius: 25px;
+            /*top: 0.15rem;*/
+            left: 50%;
+            margin-left: -2rem;
+        }
+        .coach_msg_car_type_list_show_label {
+            position: relative;
+            width: 100%;
+            height: 2.5rem;
+            margin-bottom: 0.3rem;
+        }
+        .coach_msg_car_type_list_show_label_name {
+            position: absolute;
+            width: 63%;
+            height: 2.5rem;
+            line-height: 1rem;
+            font-size: 0.7rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            left: 3%;
+        }
+        .line{
+        	float: left;
+        	width:0.2rem;
+			height:1rem;
+			background:#3F86FF;
+        	border-radius:0.4rem;
+        }
+        .coach_msg_driver_school, .coach_msg_phone {
+            position: absolute;
+            width: 48%;
+            height: 3rem;
+            box-shadow: 0px 1px 10px #ddd;
+        }
+        .coach_msg_phone {
+            margin-left: 52%;
+        }
+       	.school_commentary {
+        	position: absolute;
+            width: 100%;
+            /*height: 6rem;*/
+            /*padding: 0.3%;*/
+            margin-top: 0.625rem;
+        }
+        .commentary_content {
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            word-wrap: break-word;
+			word-break: break-all;
+        }
+        .address_font{
+	        overflow: hidden; 
+	        text-overflow: ellipsis; 
+	        -o-text-overflow: ellipsis;
+	        white-space:nowrap;
+    	}
+    	.address-padding {
+		    padding-top: 0.3rem !important;
+		    padding-bottom: 0!important;
+		    padding-left: 0!important;
+		    text-align: left;
+		    margin-left: 1.0rem;
+		}
+		.distance{
+	        width:50%;
+	        float:right;
+    	}
+    	.score-padding {
+		    padding-top: 0.5rem !important;
+		    padding-bottom: 0!important;
+		    padding-left: 0!important;
+		    text-align: left;
+		    margin-left: 1.0rem;
+		}
+		.coach_card {
+  		    width: 95%;
+		    height: 3.5rem;
+		    background: #FFFFFF;
+		    box-shadow: 0rem 0.125rem 0.375rem 0rem rgba(215, 215, 215, 1);
+		    border-radius: 0.625rem;
+		    /* text-align: center; */
+		    /* position: absolute; */
+		    margin: 0.4rem 0rem 0.5rem 0.7em;
+		    overflow: visible;
+		    position: relative;
+        }
+        .coach_img {
+            position: absolute;
+            width: 60%;
+            margin: 0.2rem 0rem 0rem 0rem;
+            height: 3rem;
+        }
+        .coach_img img {
+            position: absolute;
+            width: 2rem;
+            height: 2rem;
+            left: 50%;
+            margin: 0.5rem 0rem 0rem -2rem;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .coach_name{
+            /*width:auto;*/
+        	margin-top: 0.5rem;
+		    font-size: medium;
+		    float: right;
+        }
+        .leaner_number{
+        	font-size:small;
+        	float:right;
+        }
+        .swiper-card{
+		    width: 60%;
+		    height: 100%;
+		    /*position: relative;*/
+        }
+        
+        .swiper-2 .swiper-slide {
+			width: 55%!important;
+			margin-right: 15px!important;
+		}
+		.price_font{
+			/*background: #999999FF;*/
+			margin-top: 1rem;
+			font-size: 0.65rem;
+		}
+		.consultation_img{
+			width: 3rem;
+			margin-right:0.3rem;
+			margin-top:0.2rem;
+		}
+		.flag{
+			width:100%;
+		}
+
+		#driverSchool::before {
+			height: 0!important;
+		}
+		.load_img img{
+		    margin-top: 10.5rem;  
+		}
+    </style>
+	</head>
+	<body>
+		<header class="aui-bar aui-bar-nav none-bottom-style" id="aui-header1" style="background: none;">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+				<img src="../../icon/common/icon_header_return_white.png">
+			</a>
+			<div class="aui-title">
+
+			</div>
+			<a class="aui-pull-right aui-btn" tapmode onclick="openShareWindow()">
+				<img src="../../icon/common/icon_share_white.png">
+			</a>
+		</header>
+		<header class="aui-bar aui-bar-nav" id="aui-header2" style="background: none;">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+				<img src="../../icon/common/icon_header_return.png">
+			</a>
+			<div class="aui-title" id="driver_s_title">
+				驾校详情
+			</div>
+			<a class="aui-pull-right aui-btn" tapmode onclick="openShareWindow()">
+				<img src="../../icon/common/icon_share.png">
+			</a>
+		</header>
+		<div id="driverschoolDetail">
+			<div class='load_img'>
+				<img src="../../image/background/preloading.gif" alt="" />
+			</div>
+			<!--驾校信息卡片-->
+			<!--<div class="headerBox">
+			<div class="driver-school-name">
+				<div class='item-name'>上虞驾校</div>
+				<div class='icon_consultation_img'>
+					<img src="../../icon/common/icon_consultation.png"/>
+				</div>
+			</div>
+			<ul class="driver-school-label font-list-item no-padding">
+					‘撒覅各大uyfguyagfdua’
+			</ul>
+			<ul class="driver-school-percent font-list-item no-padding">
+					<li>学员&nbsp;3343</li>
+					<li style="float: right;">合格率&nbsp;100%</li>
+			</ul>
+			<ul class="aui-list-item-label-icon driver-school-percent font-list-item address-padding">
+						<li class="address_font" style="width:  55%;">
+						<img src="../../icon/common/icon_adress.png" alt="" class='icon_img'/>
+						浙江绍兴市上虞市曹娥街道恒熟直接技术学校
+						</li>
+						<li style="float: right;">
+							<span class="">88km&nbsp;
+								<img src="../../icon/common/icon_expand_all.png" alt="" class=''/>
+							</span>
+							
+						</li>
+			</ul>
+			<ul class="aui-list-item-label-icon driver-school-percent font-list-item score-padding score">
+				<img src="../../icon/common/icon_score.png" alt="" class=''/>
+				&nbsp;4.5
+			</ul>
+		</div>-->
+			<!--班型、场地-->
+			<!--<div class="driver-school-sort">
+			<div class="driver-school-sort-menu">
+				<div class="aui-bar aui-bar-btn aui-bar-btn-full border-bottom" id="menu">
+				    <div class="aui-bar-btn-item font aui-active">班型</div>
+				    <div class="aui-bar-btn-item font">场地</div>
+				</div>
+				<div class="list_bar" id="slideSpan">
+			        <div class="list_bar_inner"></div>
+			    </div>
+			</div>
+			<div class="bar-content">
+		    	<div class="coach_msg_car_type_list">
+                    <ul id="coach_msg_car_type_list_show" class="coach_msg_car_type_list_show">
+                        <li class="coach_msg_car_type_list_show_label">
+                            <div class="coach_msg_car_type_list_show_label_name">
+                                C1、c@套餐
+                            </div>
+                            <div class="coach_msg_car_type_list_show_label_name price_font">
+                                	<span style="color: #999999FF;">指导价:<span style="color: red;">3900</span>(含￥360报名费)</span>
+                            </div>
+                            <div class="coach_msg_car_type_list_show_label_btn">
+                                <div class="coach_msg_car_type_list_show_label_btns" tapmode
+                                     onclick="toSubmit('{{=it.teachPermitted[i]}}','{{=carTypeProcessing(it.teachPermitted[i])}}');">
+                                			  免费咨询
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="coach_msg_car_type_list_more" data-type="1" tapmode>
+                       		 更多套餐&nbsp;
+                        <img src="../../icon/common/icon_open.png" id="coach_msg_car_type_list_more_arrow" class="icon_img"
+                             style="transition: 0.5s linear;">
+                    </div>
+            	</div>
+		    </div>
+		</div>-->
+			<!--教练团队-->
+			<!--<div class="school_team">
+			<ul class="aui-list-item-label-icon driver-school-percent font-list-item ">
+	    	  <li style="width: 50%;">
+	    	  	<div class="line"></div>
+				<span class="">&nbsp;教练团队</span>
+	    	  </li>
+		      <li style="float: right;width: 50%;">
+				<span class="coach_font">全部888名教练&nbsp;
+					<img src="../../icon/common/icon_expand_all.png" alt="" class=''/>
+				</span>
+			  </li>
+	    	</ul>
+	    	<div class="swiper-container">
+			    <div class="swiper-wrapper">
+		    		<div class="swiper-card">
+			    		<div class='coach_card'>
+			    			<div class="coach_img" style="">
+					            <img src="{{=file_load_url +it.photo+'&style=image/resize,m_fill,w_400'}}" alt="" onerror="javascript:this.src='../../icon/mine/icon_mine_head_hui.png'"
+					                 data-echo="{{=file_load_url +it.photo+'&style=image/resize,m_fill,w_400'}}"/>
+					        </div>
+				        	<div class='coach_name'>
+			        			<div style="margin-right: 0.8rem;">张无忌
+			        				<img src="../../icon/common/icon_xing_light.png" alt="" class='icon_img'/>5
+			        			</div>
+		    					<div class="learner_font">学员&nbsp;60
+		    						<img src="../../icon/common/icon_driver_school_phone.png" tapmode onclick="coachPhone(event, '{{=it.coachList[i].mobile}}');" alt="" class='icon_phone_img'/>
+		    					</div>
+			    			</div>
+			    		</div>
+			    	</div>
+			    	<div class="swiper-card">
+			    		<div class='coach_card'>
+			    			<div class="coach_img" style="">
+					            <img src="{{=file_load_url +it.photo+'&style=image/resize,m_fill,w_400'}}" alt="" onerror="javascript:this.src='../../icon/mine/icon_mine_head_hui.png'"
+					                 data-echo="{{=file_load_url +it.photo+'&style=image/resize,m_fill,w_400'}}"/>
+					        </div>
+				        	<div class='coach_name'>
+				        		<div id="">
+				        			<span style="margin-right: 0.8rem;">张无忌</span>
+					    			<img src="../../icon/common/icon_xing_light.png" alt="" class='icon_img'/>	
+					    			<span>5</span>
+				        		</div>
+			    				<div style="margin-top: 0.4rem;">
+			    					<span style="margin-right: 1rem;">学员&nbsp;14322</span>
+			    					<img src="../../icon/common/icon_driver_school_phone.png" alt="" class='icon_img'/>	
+			    				</div>
+
+			    			</div>
+			    		</div>
+			    	</div>
+			    </div>
+		    	<div class="swiper-pagination"></div>
+			</div>
+        </div>-->
+			<!--驾校简介-->
+			<!--<div class="school_commentary">
+	    	<ul class="aui-list-item-label-icon driver-school-percent font-list-item ">
+		    	<li style="">
+		    	  	<div class="line"></div>
+					<span style="float: left;">&nbsp;驾校简介</span>
+	    	    </li>
+    	    </ul>
+	    	<div class="driver-school-des" id="schoolContent">
+		        <div class='meal-detail' id='textcontain'>
+		    		<div class="coach_msg_car_type_list_show" id="textcontain" style="">
+		    			{{=it.introduction}}
+		    		</div>
+		    	</div>
+    			
+    		</div>
+    		<div class="get-school-more" id="showMore" tapmode onclick="showMore(this)">
+               	<span>展示更多</span> 
+                <img src="../../icon/common/icon_open.png" id="coach_msg_car_type_list_more_arrow" class="icon_img">
+            </div>
+    	</div>-->
+
+			<script type="text/template" charset="utf-8" id='error_src'>
+				<div class='error_img'>
+	    	<img src="../../icon/common/icon_serive_error.png" alt="" />
+	    </div>
+    </script>
+			<script type="text/template" charset="utf-8" id='driverschoolDetail_src'>
+				<div class="swiper-container swiper-1">
+		    <div class="swiper-wrapper">
+		    	{{if(it.mediaList.length > 0){ }}
+			    	{{ for(var i=0;i<it.mediaList.length;i++){ }}
+				    	<div class="swiper-slide">
+				    		<div class='driver-school-pic'>
+								<img src="{{=file_load_url + it.mediaList[i].path}}" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" alt="" tapmode onclick="openPic('{{=it.id}}')"/>
+				    		</div>
+				    	</div>
+			    	{{ } }}
+		    	{{ }else{ }}
+		    		<div class="swiper-slide">
+			    		<div class='driver-school-pic'>
+							<img src="{{=file_load_url + it.logo}}" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" alt=""/>
+			    		</div>
+			    	</div>
+		    	{{ } }}
+		    </div>
+		    <div class="swiper-pagination"></div>
+		</div>
+		<div class="driver-school-info">
+			<div class="headerBox">
+				<div class="driver-school-name">
+					<div class='item-name'>{{=it.shortName}}</div>
+					<div class='icon_consultation_img' tapmode onclick="onlineContact('{{=it.contactNumber}}');">
+						<img src="../../icon/common/icon_consultation.png" class="consultation_img"/>
+					</div>
+				</div>
+				<ul class="driver-school-label font-list-item no-padding">
+						{{=getLabelList(it.tags)}}
+				</ul>
+				<ul class="driver-school-percent font-list-item no-padding">
+						{{if(it.learnerCount != null && it.learnerCount != undefined){ }}
+							<li>学员&nbsp;{{=it.learnerCount}}</li>
+						{{ }else{ }}	
+							<li>学员&nbsp;0</li>
+						{{ } }}
+						
+						<li style="float: right;"></li>
+				</ul>
+				<ul class="aui-list-item-label-icon driver-school-percent font-list-item address-padding" tapmode onclick="openMap('{{=it.name}}','{{=it.longitude}}','{{=it.latitude}}')">
+						<li class="address_font" style="width: 55%;">
+						<img src="../../icon/common/icon_adress.png" alt="" class='icon_img'/>
+							&nbsp;{{=it.address}}
+						</li>
+						<li style="float: right;">
+							<span class="">{{=calcuDistance(it.distance)}}&nbsp;
+								<img src="../../icon/common/icon_more_right.png" alt="" class="icon_right_img"/>
+							</span>
+						</li>
+				</ul>
+				<ul class="aui-list-item-label-icon driver-school-percent font-list-item score-padding score">
+					<img src="../../icon/common/icon_score.png" alt="" class='icon_img'/>
+					&nbsp;{{=it.score}}分
+				</ul>
+			</div>
+			<!--班型、场地-->		
+			<div>
+				<div class="driver-school-sort-menu">
+					<div class="aui-bar aui-bar-btn aui-bar-btn-full border-bottom" id="menu">
+						<div class="aui-bar-btn-item font aui-active">班型</div>
+						<div class="aui-bar-btn-item font">场地</div>
+					</div>
+					<div class="list_bar" id="slideSpan">
+						<div class="list_bar_inner"></div>
+					</div>
+				</div>
+				<div class="bar-content" >
+					<div class="bar-content-item">
+						<ul id="coach_msg_car_type_list_show" class="coach_msg_car_type_list_show">
+						{{ if(it.learningPlanList.length <= 3){ }}
+							<div id='planContent'>
+						{{ }else{ }}
+							<div class='meal-detail' id='planContent'>
+						{{ } }}
+						{{ if(it.learningPlanList.length > 0){ }}
+						<img src="../../icon/common/icon_flag_plan.png" class="flag"/>
+							{{ for(var i=0;i< it.learningPlanList.length;i++){ }}
+							<li class="coach_msg_car_type_list_show_label" >
+								 <!-- onclick="checkMoreInfo('{{=it.learningPlanList[i].id}}','{{=it.learningPlanList[i].name}}')" -->
+								<div class="aui-row" style="font-size: 0.7rem;">
+									<div class="aui-col-xs-6" style="text-align: left;">
+										<div>{{=it.learningPlanList[i].name}}</div>
+										<div>
+											指导价:
+											<span style="color: red;">￥{{=cashFormatO(it.learningPlanList[i].estimateTotlePrice)}}</span>
+										</div>
+									</div>
+									<div class="aui-col-xs-6" style="text-align: right;">
+										<div>报名费</div>
+										<span style="color: red;font-size: 0.7rem">￥{{=cashFormatO(it.learningPlanList[i].planPrice)}}</span>
+									</div>
+								</div>
+							<!--    <div class="coach_msg_car_type_list_show_label_name">
+									{{=it.learningPlanList[i].name}}
+								</div>
+								<div class="coach_msg_car_type_list_show_label_name price_font">
+										<span style="color: #999999FF;">
+										指导价:<span style="color: red;">￥{{=cashFormatO(it.learningPlanList[i].estimateTotlePrice)}}</span>&lt;!&ndash; (含￥{{=cashFormatO(it.learningPlanList[i].entryFee)}}报名费) &ndash;&gt;
+										</span>
+								</div>
+								<div class="coach_msg_car_type_list_show_label_btn">
+									<div style="float: right" >
+										<span>报名费:
+											<span style="color: red;font-size: 0.7rem">￥{{=cashFormatO(it.learningPlanList[i].planPrice)}}</span>
+										</span>
+
+										&lt;!&ndash; <img src="../../icon/common/icon_more_right.png" alt="" class='icon_right_img'/> &ndash;&gt;
+									</div>
+								</div>-->
+							</li>
+							{{ } }}
+						{{ }else{ }}
+							<div class="msg">
+								<img src="../../icon/common/icon_defalut.png" alt="" /><br>
+								<span>未设置套餐</span>
+							</div>
+						{{ } }}
+						</ul>
+						{{ if(it.learningPlanList.length > 3){ }}
+						<div class="get-more" tapmode onclick="getMorePlan(this)">
+							<span>更多套餐</span> 
+							<img src="../../icon/common/icon_open.png" id="coach_msg_car_type_list_more_arrow" class="icon_img">
+						</div>
+						{{ } }}
+				  </div>
+				  <div class="bar-content-item aui-hide">
+						<div class="aui-content">
+							<ul class="aui-list aui-media-list" id="driverSchool">
+								{{ for(var i=0;i<(it.placeList.length <= 3?it.placeList.length:3);i++){ }}
+									<li class="aui-list-item"  tapmode onclick="openMap('{{=it.placeList[i].name}}','{{=it.placeList[i].longitude}}','{{=it.placeList[i].latitude}}')">
+										<div class="aui-media-list-item-inner">
+											<div class="aui-list-item-media place">
+												<img src="{{=file_load_url + it.placeList[i].image}}" style="height: 4rem" onerror="javascript:this.src='../../icon/common/icon_place_null.png'">
+											</div>
+											<div class="aui-list-item-inner">
+												<div class="aui-list-item-text jz">
+													<div class="aui-list-item-title aui-ellipsis-2 placeName">{{=it.placeList[i].name}}</div>
+													
+												</div>
+												<div class="aui-list-item-text jz">
+													<div class="aui-info-item">{{=it.placeList[i].address}}</div>
+													<div class="aui-info-item">{{=calcuDistance(it.placeList[i].distance)}} &nbsp;<img class="placeImg" src="../../icon/common/icon_header_return.png"></div>					
+												</div>
+											</div>
+										</div>
+									</li>
+								{{ } }}
+							</ul>
+						</div>
+						{{ if(it.placeList.length == 0){ }}
+							<div class='empty'>
+								<img src="../../icon/common/empty.png" alt="" /><br>
+								<span>无场地</span>
+							</div>
+						{{ } }}
+						{{ if(it.placeList.length >1){ }}
+							<div class='checkMore' tapmode onclick="checkMore(2)">
+								<span>查看全部场地（共{{=it.placeList.length}}个）</span>
+								<img src="../../icon/common/icon_header_return.png">
+							</div>
+						{{ } }}
+					</div>
+				</div>
+			</div>
+			<!--教练团队-->
+			<div class="school_team">
+				<ul class="aui-list-item-label-icon driver-school-percent font-list-item ">
+		    	  <li style="width: 50%;">
+		    	  	<div class="line"></div>
+					<span class="">&nbsp;教练团队</span>
+		    	  </li>
+			      <li style="float: right;width: 50%;" tapmode onclick="openCoachList('{{=it.id}}')">
+					<span class="coach_font">全部{{=it.coachNumber}}名教练&nbsp;
+						<img src="../../icon/common/icon_more_right.png" alt="" class='icon_right_img'/>
+					</span>
+				  </li>
+	    		</ul>
+				{{ if(it.coachList.length > 0){ }}
+				<div class="swiper-container swiper-2">
+					<div class="swiper-wrapper">
+					{{ for(var i=0;i<(it.coachList.length <=3?it.coachList.length:3);i++){ }}
+						<div class="swiper-slide">
+							<div class='coach_card' tapmode onclick="openCoachDetail('{{=it.coachList[i].id}}')">
+								<div class="coach_img" style="">
+									<img src="{{=file_load_url +it.coachList[i].photo+'&style=image/resize,m_fill,w_400'}}" alt="" onerror="javascript:this.src='../../icon/mine/icon_mine_head_hui.png'"
+										 data-echo="{{=file_load_url +it.coachList[i].photo+'&style=image/resize,m_fill,w_400'}}"/>
+								</div>
+								<div class='coach_name'>
+									<div style="margin-right: 0.8rem;">{{=it.coachList[i].name}}&nbsp;
+										<img src="../../icon/common/icon_xing_light.png" alt="" class='icon_img' style="position: absolute;top: 0.7rem;"/><div style="margin-left: 0.8rem;display: inline-block;">{{=it.coachList[i].score?it.coachList[i].score:'5'}}</div>
+									</div>
+									<div class="learner_font">学员&nbsp;{{=it.coachList[i].stuNum}}
+										<img src="../../icon/common/icon_driver_school_phone.png" tapmode onclick="coachPhone(event, '{{=it.coachList[i].mobile}}');" alt="" class='icon_phone_img'/>
+									</div>
+								</div>
+							</div>
+						</div>
+						{{ }}}
+					</div>
+				</div>
+				{{ } }}
+				{{ if(it.coachList.length == 0){ }}
+				<div class='coach_empty'>
+					<img src="../../icon/common/empty.png" alt="" /><br>
+					<span>暂无教练</span>
+				</div>
+				{{ } }}
+	        </div>
+			<!--驾校简介-->	    	
+	    	<div class="school_commentary">
+		    	<ul class="aui-list-item-label-icon driver-school-percent font-list-item ">
+			    	<li style="">
+			    	  	<div class="line"></div>
+						<span style="float: left;">&nbsp;驾校简介</span>
+		    	    </li>
+	    	    </ul>
+		    	<div class="driver-school-des" id="schoolContent">
+		    	{{ if(it.introduction.length <= 255){ }}
+			        <div id='textcontain'>
+				{{ }else{ }}
+			        <div class='school-detail' id='textcontain'>
+				{{ } }}
+		    	{{ if(it.introduction != undefined&&it.introduction != null&&it.introduction != ''){ }}
+		    		<div class="school_msg_list_show" id="textcontain" style="">
+		    			{{=it.introduction}}
+		    		</div>
+	    		{{ }else{ }}
+	    			<div class='empty'>
+	    				<img src="../../icon/common/empty.png" alt="" /><br>
+	    				<span>无驾校描述</span>
+	    			</div>
+	    		{{ } }}
+		    	</div>
+	    	</div>
+	    	{{ if(it.introduction.length >255){ }}
+    			<div class="get-school-more" id="showMore" tapmode onclick="showMore(this)">
+                   	<span>展示更多</span> 
+                    <img src="../../icon/common/icon_open.png" id="coach_msg_car_type_list_more_arrow" class="icon_img">
+                </div>
+    		{{ } }}
+	    	</div>
+	    	<div class="bar-content-item aui-hide evaluate" >
+		    	
+	    	<div id='load_div'>
+			</div>
+			
+	    	</div>
+	    	
+	    </div>
+    </script>
+			<script type="text/template" charset="utf-8" id='load_src'>
+				<div class="load">
+		<img src="../../icon/common/loadding.gif" alt="" /><br>
+		<span>加载中...</span>
+	</div>
+	</script>
+			<script type="text/template" charset="utf-8" id='msg_src'>
+				<div class="msg">
+			<img src="../../icon/common/empty.png" alt="" /><br>
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+			<script type="text/template" charset="utf-8" id='more_src'>
+				<div class="jiazai">
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+			<script type="text/template" charset="utf-8" id="evaluateNull">
+				<div class='empty'>
+			<img src="../../icon/common/empty.png" alt="" /><br>
+			<span>暂无评价</span>
+		</div>
+	</script>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../script/swiper/swiper.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript" src="../../script/echo.min.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		var clearance = 25; //间隙
+		var headerPos;
+		var threshold; //定义的阈值
+		var touchStyle;
+		var systemType; //系统类型
+		var cache;
+		var bMap;
+		var fs;
+		var flag = 0;
+		var articleId; //驾校详情ID
+		var name;
+		apiready = function() {
+			$api.fixStatusBar($api.byId('aui-header1'));
+			$api.fixStatusBar($api.byId('aui-header2'));
+			fs = api.require('fs');
+			cache = api.pageParam.data;
+			log("驾校报名", cache)
+			articleId = cache.id;
+			bMap = api.require('bMap');
+			$('#driver_s_title').html(cache.d_school_name);
+			headerPos = $api.offset($api.byId('aui-header1'));
+			threshold = headerPos.h;
+			systemType = api.systemType;
+			touchStyle = systemType == "ios" ? 'touchmove' : 'scroll';
+			scroll();
+			renderingData(); //渲染驾校数据
+
+			//监听提交报名
+			toEventListener('click_regist', function(ret, err) {
+				console.log(JSON.stringify(ret))
+				driver_sign_up(ret.value);
+			});
+
+			//监听驾校详情刷新
+			toEventListener('register_pay_sucesss', function(ret, err) {
+				console.log('刷新驾校详情');
+				renderingData(); //渲染驾校数据
+			});
+
+			//监听驾校详情刷新
+			toEventListener('school_refresh', function(ret, err) {
+				console.log('刷新驾校详情');
+				renderingData(); //渲染驾校数据
+			});
+
+			goLoad(function(ret, err) {
+				loadList();
+			});
+			//		setTimeout(function() {
+			//			api.refreshHeaderLoading();
+			//		}, 100);
+		}
+
+		//监听页面滑动控制头部menu样式
+		var scrollPos; //监听上下滚动顶部的距离
+		var percent = 0; //白底header的隐藏属性值
+		var hidepercent = 0; //非白底header的隐藏属性值
+		function scroll() {
+			$(window).on(touchStyle, function(event) {
+				scrollPos = $(window).scrollTop();
+				//安卓做限制滚动
+				if (((scrollPos / threshold).toFixed(2) <= 1) && systemType == 'android') {
+					percent = (scrollPos / threshold).toFixed(2);
+					$('#aui-header2').css("opacity", percent);
+					hidepercent = 1 - percent;
+					$('#aui-header1').css("opacity", hidepercent);
+				} else {
+					percent = (scrollPos / threshold).toFixed(2) > 1 ? 1 : (scrollPos / threshold).toFixed(2);
+					$('#aui-header2').css("opacity", percent);
+					hidepercent = (1 - percent) < 0 ? 0 : (1 - percent);
+					$('#aui-header1').css("opacity", hidepercent);
+				}
+			});
+		}
+		//列表上拉
+		function loadList() {
+			pageNo++;
+			refresh = false;
+			setLoad();
+			init();
+
+		}
+		//设置页面加载的画面
+		function setLoad() {
+			if (refresh || $('.evaluate').find('li').length == 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+				$('#load_div').html('');
+			} else {
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': '加载更多中 ...',
+						'img': '../../icon/common/jiazai.gif'
+					}));
+				}, 500);
+			}
+		}
+		//渲染驾校数据
+		var driverSchoolData;
+		var contactNumber = null;
+
+		function renderingData() {
+			mylocation(function(location_result) { //获取当前定位
+				//驾校详情传参
+				params = {
+					learnerId: islogin() ? getUserId() : null,
+					drivingSchool: {
+						id: cache.id
+					}
+				}
+				if (location_result.status) { //有定位权限
+					params.lng = location_result.lon,
+						params.lat = location_result.lat
+				}
+				//console.log('传参'+JSON.stringify(params));
+				url = 'api/driving';
+				ajax_Request(url, 'get', 'json', params, function(ret, err) {
+					if (ret) {
+						log('驾校详情数据：', ret);
+						driverSchoolData = ret.drivingSchoolDetail;
+						if (ret.code == 0) {
+							$('#aui-header1').css("opacity", 1);
+							$('#aui-header2').css("opacity", 0);
+							var driverschoolDetail_src = $('#driverschoolDetail_src').html();
+							contactNumber = ret.drivingSchoolDetail.contactNumber;
+							$('#driverschoolDetail').html(doT.template(driverschoolDetail_src)(ret.drivingSchoolDetail));
+							//	        			init();
+
+							toolInit(ret.drivingSchoolDetail); //样式初始化
+						} else {
+							setError(ret.msg);
+						}
+					} else {
+						setError('服务器繁忙，请稍后重试');
+					}
+				});
+			});
+		}
+		//分割图片地址
+		function spliceImg(imgs) {
+			return imgs.split(',');
+		}
+		//设置出错页面;
+		function setError(msg) {
+			var error_src = $('#error_src').html();
+			$('#driverschoolDetail').html(doT.template(error_src)({}));
+			alert_msg(msg);
+		}
+		var pageNo = 1;
+		var pageSize = 5;
+
+		function init() {
+
+			url = "api/order-feedback/list";
+			params = {
+				feedbackType: '2',
+				correlationId: cache.id,
+				page: pageNo,
+				limit: pageSize
+			}
+			log('params', params)
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('社区列表：', ret);
+				if (ret) {
+					if (ret.code == 0 && ret.cmOrderFeedbackList.length >= 0) {
+						var evaluate = $('.evaluate').html();
+						//将登入标识放入数据体中
+						ret.loginId = islogin() ? $api.getStorage('cache_by_account').cache_account.id : '';
+						if (pageNo == 1 && ret.cmOrderFeedbackList.length == 0) {
+							flag = 1;
+							$('.evaluate').html($('#evaluateNull').html());
+							log('evaluate')
+						}
+						if (flag == 0) {
+							if (pageNo == 1) {
+
+								$('.evaluate').html(doT.template(evaluate)(ret));
+							} else {
+
+								$('.evaluate').append(doT.template(evaluate)(ret));
+							}
+						}
+						echoInit();
+						api.parseTapmode();
+					}
+
+				} else {
+					//setMsg("服务器繁忙，请稍后重试")
+				}
+
+			})
+			setTimeout(function() {
+				api.refreshHeaderLoadDone();
+			}, 500);
+		}
+		//工具初始化
+		function toolInit(drivingSchoolDetail) {
+			//切换menu初始化
+			var tabwork = new auiTab({
+				element: document.getElementById("menu"),
+				repeatClick: true
+			}, function(ret) {
+				if (ret) {
+					$('.aui-bar-btn-item').removeClass('active');
+					f_slide($(ret.dom));
+					setViewFrame(ret.index - 1);
+				}
+			});
+			//头部轮播
+			var mySwiper1 = new Swiper(".swiper-1", {
+				pagination: '.swiper-pagination',
+				//			paginationElement : 'li'
+			});
+			//教练团队轮播
+			var mySwiper2 = new Swiper(".swiper-2", {
+				slidesPerView: 'auto',
+			});
+
+			//给第一个menu添加样式
+			$('.aui-bar-btn-item').each(function(index, e) {
+				if (index == 0) {
+					f_slide(e);
+				}
+			});
+
+			//	     $(".driver-school-des").each(function() {
+			//		     var str = $(this).html();
+			//	       	 var subStr = str.substring(0, 150);
+			//	         $(this).html(subStr + (str.length > 10 ? '...' + "<a href='#' class='active'>&nbsp查看更多</a>" : ''));
+			//	         if(str.length > 150){
+			//	         	$(this).html(subStr + (str.length > 10 ? '...' + "<a href='#' class='active'>&nbsp查看更多</a>" : ''));
+			//				$('#textcontain').addClass('remove-overflow');
+			//				$(this).find('span').html('收起');
+			//				$(this).find('img').addClass('styleDeg90P');
+			//			}else{
+			//				$('#textcontain').removeClass('remove-overflow');
+			//				$(this).find('span').html('更多套餐');
+			//				$(this).find('img').removeClass('styleDeg90P');
+			//			}
+			//		});
+
+			//发送驾考类型数据到win
+			if (drivingSchoolDetail.status != '011001') {
+				esc_function('driver_school_detail_win', '', 'loadFinish(' + false + ',"休息中")');
+				return;
+			}
+
+			if (drivingSchoolDetail.licenseTypeList.length == 0) {
+				//驾校没有支持的驾照类型那么不允许
+				esc_function('driver_school_detail_win', '', 'loadFinish(' + false + ',"无支持的驾考类型")');
+				return;
+			}
+
+			if (drivingSchoolDetail.learningPlanList.length == 0) {
+				//驾校没有套餐那么不允许
+				esc_function('driver_school_detail_win', '', 'loadFinish(' + false + ',"该驾校还未设置套餐")');
+				return;
+			}
+
+			if (drivingSchoolDetail.driverSchoolRegistrationList.length == 0) {
+				//未报名的允许报名
+				esc_function('driver_school_detail_win', '', 'loadFinish(' + true + ',"立刻报名")');
+			} else if (drivingSchoolDetail.driverSchoolRegistrationList.length > 0 &&
+				(drivingSchoolDetail.driverSchoolRegistrationList[0].refundStatus == 1 ||
+					drivingSchoolDetail.driverSchoolRegistrationList[0].refundStatus == 3 ||
+					drivingSchoolDetail.driverSchoolRegistrationList[0].refundStatus == 2)) {
+				//已报名的订单退款中、退款完成的允许再次报名
+				esc_function('driver_school_detail_win', '', 'loadFinish(' + true + ',"立刻报名")');
+			} else {
+				//其余情况不允许报名
+				var status = drivingSchoolDetail.driverSchoolRegistrationList[0].status;
+				esc_function('driver_school_detail_win', '', 'loadFinish(' + true + ',"' + status.name + '","' + status.code +
+					'","' + drivingSchoolDetail.driverSchoolRegistrationList[0].id + '","' + drivingSchoolDetail.driverSchoolRegistrationList[
+						0].paymentStatus + '")');
+			}
+
+		}
+
+
+		//设置驾校服务页面展示
+		function setViewFrame(i) {
+			$('.bar-content-item').each(function(index, e) {
+				if (i == index) {
+					$(e).removeClass('aui-hide');
+					//滚动到底部，后期得改下
+
+					if (index == 4) {
+
+					} else {
+						//  				$('html,body').animate({scrollTop: $(document).height()-$(window).height()+'px'}, 300);
+					}
+				} else {
+					$(e).addClass('aui-hide');
+				}
+			});
+		}
+
+		//滑块加载事件
+		function f_slide(e) {
+			$(e).addClass('active');
+			$('.list_bar').css('width', ($('.active').width() - clearance * 2) + 'px');
+			$('.list_bar_inner').css('width', ($('.active').width() - clearance * 2) + 'px');
+			document.getElementById('slideSpan').style.webkitTransform = 'translateX(' + ($(e).position().left + clearance) +
+				'px)';
+		}
+
+		//打开驾校图片列表
+		function openPic(id) {
+			params = {
+				school_id: id
+			}
+			commonOpenWin('driver_school_pic_win', params);
+		}
+
+		/**
+		 * 获取更多学习计划 
+		 */
+		function getMorePlan(e) {
+			if ($(e).find('span').html() == '更多套餐') {
+				$('#planContent').addClass('remove-overflow');
+				$(e).find('span').html('收起');
+				$(e).find('img').addClass('styleDeg90P');
+			} else {
+				$('#planContent').removeClass('remove-overflow');
+				$(e).find('span').html('更多套餐');
+				$(e).find('img').removeClass('styleDeg90P');
+			}
+		}
+
+		/**
+		 * 获取更多学习计划 
+		 */
+		function showMore(e) {
+			if ($(e).find('span').html() == '展示更多') {
+				$('#textcontain').addClass('remove-overflow');
+				$(e).find('span').html('收起');
+				$(e).find('img').addClass('styleDeg90P');
+			} else {
+				$('#textcontain').removeClass('remove-overflow');
+				$(e).find('span').html('展示更多');
+				$(e).find('img').removeClass('styleDeg90P');
+			}
+		}
+
+
+
+		//打开地图
+		function openMap(name, lon, lat) {
+			cache.to_name = name;
+			cache.to_lon = lon;
+			cache.to_lat = lat;
+			api.openWin({
+				name: 'common_map_loaction_win',
+				url: '../common/common_map_loaction_win.html',
+				slidBackEnabled: 'true',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				pageParam: {
+					data: cache
+				}
+			});
+		}
+
+		function openCoachList(id) {
+			api.openWin({
+				name: 'driving_coach_new_win',
+				url: '../common/select_coach/driving_coach_new_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: {
+					data: {
+						id: id
+					}
+				}
+			})
+		}
+
+		//打开驾校服务更多内容
+		function checkMore(index) {
+			param = {
+				index: index,
+				d_school_name: cache.d_school_name,
+				//			teacherList:driverSchoolData.teacherList,
+				placeList: driverSchoolData.placeList,
+				//			serviceList:driverSchoolData.serviceList
+			}
+			commonOpenWin('driver_school_serivce_new_win', param);
+		}
+
+		//打开驾校报名
+		/**
+		 * @param {Object} plan_info
+		 * id 加盟驾校ID
+		 * tcmSchoolId 全驾校ID
+		 */
+		function driver_sign_up(plan_info) {
+			var params = {
+				id: cache.id,
+				tcmSchoolId: cache.tcmSchoolId,
+				d_school_name: driverSchoolData.name,
+				district: driverSchoolData.district,
+				licenseTypeList: driverSchoolData.licenseTypeList,
+				plan_info: plan_info
+			}
+			//log('驾校数据：',params);
+			OpenDriveWin('driver_school_pre_sign_up_win', params);
+		}
+
+		function OpenDriveWin(name, data) {
+			api.openDrawerLayout({
+				name: name,
+				url: './' + name + '.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				slidToOpenPane: false,
+				useWKWebView: false,
+				slidToOpenPane: false,
+				slidToClosePane: false,
+				pageParam: {
+					data: data
+				},
+				animation: {
+					type: 'push',
+					subType: "from_right",
+					duration: 300
+				},
+				rightPane: {
+					name: 'driving_coach_win',
+					url: '../common/select_coach/driving_coach_win.html',
+					vScrollBarEnabled: false,
+					hScrollBarEnabled: false,
+					bounces: false,
+					pageParam: {
+
+					}
+				}
+			});
+		}
+		//打开分享页面
+		function openShareWindow() {
+			var data = {
+				shareData: {
+					shareData: 'web',
+					text: "",
+					contentUrl: "https://www.mohan-tech.com/share/html/share.html",
+					title: "注册页面"
+				},
+				forumId: articleId
+			}
+			openShare(data);
+		}
+
+		//打开更多驾考类型
+		function checkMoreInfo(planId, planName) {
+			params = {
+				planId: planId,
+				plan_name: planName
+			}
+			api.openWin({
+				name: 'plan_detail_win',
+				url: './driver_school_learning_plan/plan_detail_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: params
+			});
+		}
+
+		//标签加载
+		function getLabelList(tags) {
+			var tagList = tags.split(',');
+			var menu = "";
+			for (var i = 0; i < (tagList.length > 3 ? 3 : tagList.length); i++) {
+				menu += "<li class='tag-style" + i + "'><span>" + getLabelName(tagList[i]) + "</span></li>";
+			}
+			return menu;
+		}
+
+		/**
+		 * 电话 
+		 */
+		function onlineContact() {
+			if (contactNumber != null) {
+				isSure('提示', '是否拨打电话' + contactNumber, '是', '否', function() {
+					window.location.href = 'tel://' + contactNumber;
+				});
+			} else {
+				alert_msg('未设置联系方式');
+			}
+		}
+
+		/**
+		 * 教练电话 
+		 */
+		function coachPhone(e, mobile) {
+			e.stopPropagation();
+			if (mobile != null) {
+				isSure('提示', '是否拨打教练电话' + mobile, '是', '否', function() {
+					window.location.href = 'tel://' + mobile;
+				});
+			} else {
+				alert_msg('未设置联系方式');
+			}
+		}
+		//选择教练详情
+		function openCoachDetail(id) {
+			api.openWin({
+				name: 'coach_detail_new_win',
+				url: '../home/driving_coach/coach_detail_new_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: {
+					data: {
+						id: id
+					}
+				}
+			})
+		}
+
+		/**
+		 *  
+		 */
+		function cashFormat_i(cash) {
+			var cashs = (cash + '').split('.');
+			if (cashs.length == 1) {
+				return cash + '.0';
+			} else {
+				return cashs[0] + cashs[1];
+			}
+		}
+
+		function showHideCode() {
+			$("#commentary_content").toggle();
+		}
+
+		function closeWin() {
+			api.closeWin({});
+		}
+	</script>
+</html>

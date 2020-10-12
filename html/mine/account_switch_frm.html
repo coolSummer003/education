@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>账号切换页面</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <style>
+    	html,body{
+    		background-color: #ffffff;
+    	}
+    	.upload-pic{
+    		width: 100%;
+    		height: 6rem;
+		    background: #FFF;
+		    position:relative;
+    	}
+    	.pic-item{
+    		height: 6rem;
+		    width: 45%;
+		    float: left;
+		    display: flex;
+		    margin-left: 3.3333%;
+		    position: relative;
+    	}
+    	.photo_pic{
+    		width:100%;
+    		height:90%;
+		    margin: auto;
+    	}
+    	.h_other{
+    		height: 12.5rem;
+    	}
+    	.msg{
+    		font-size: 0.6rem;
+    		padding: 0 2.5%;
+    		margin-bottom:1rem;
+    	}
+    	.dividing_line{
+    		height: 0.8rem;
+		    background: #f5f5f5;
+		    line-height: 0.8rem;
+		    padding-left: 0.75rem;
+		    font-size: 0.6rem;
+	        color: #DC251F;
+    	}
+    	.aui-tips .aui-tips-title {
+		    padding: 0 0.5rem;
+		    font-size: 0.7rem;
+		    position: relative;
+		    width: 100%;
+		    text-align: center;
+		}
+		.delete{
+		    width: 1.2rem !important;
+		    height: 1.2rem !important;
+		    position: absolute;
+	        right: 0.2rem;
+    		top: 0rem;
+		    z-index:10;
+		}
+		.id-card-head-img{
+		    position: absolute;
+		    right: 0.3rem;
+		    top: 17.38rem;
+		    z-index: 9;
+		    background: #FFF;
+		    /* border-radius: 100%; */
+		   	/* border: solid 1px #E0E0E0; */
+		    width: 4.7rem;
+		}
+		.id-card-head-img span{
+		    font-size:0.6rem;
+		    text-align: center;
+		    width: 100%;
+		    color:#DC251F;
+		    line-height: 0.7rem;
+		}
+		.id-card-head-img img{
+		    width: 4.7rem;
+    		height: 4.7rem;
+    		object-fit: contain;
+		}
+		.aui-list .aui-list-item {
+		    list-style: none;
+		    margin: 0;
+		    padding: 0;
+		    padding-left: 0.75rem;
+		    color: #212121;
+		    background-color: #ffffff;
+		    position: relative;
+		    min-height: 3.2rem;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		}
+		.coupon-div{
+	    	width: 90%;
+		    margin-left: 5%;
+		    background: #FEF6EF;
+	        margin-top: 0.8rem;
+	        overflow: hidden;
+	        border-radius: 0.5rem;
+	    }
+	    .coupon-info{
+    	    padding: 0.3rem 0.8rem;
+    		font-size: 0.6rem;
+    		float: left;
+		    width: 70%;
+		    border-right: dotted 2px #F1F1F1;
+	    }
+	    .coupon-status{
+    	    width: 30%;
+		    float: right;
+		    text-align: center;
+		    margin-top: 0.6rem;
+		    transform: rotate(45deg);
+		    color: #FFF;
+		    margin-right: -1.6rem;
+		    font-size: 0.6rem;
+	    }
+	    .test-room{
+	    	padding-bottom: 0.2rem;
+    		border-bottom: solid 1px #F1F1F1;
+   		 	margin-bottom: 0.1rem;
+	    }
+	    .name{
+	    	color:#75706B;
+	    }
+	    .time{
+	    	color:#75706B;
+	    }
+	    .reason{
+	    	color:#75706B;
+	    }
+	    .coupon-info span{
+	    	color:#FC5000;
+	    }
+	    .bg-orange{
+	    	background: linear-gradient(to left, #FA9062 , #FC5000);
+	    }
+	    .bg-hui{
+	    	background: linear-gradient(to left, #D3D3D3 , #959595);
+	    }
+	    .bg-blue{
+	    	background: linear-gradient(to left, #90DBF7 , #03B4F7);
+	    }
+	    .bg-huier{
+	    	background: #F0F0F0;
+	    }
+	    .bg-bluer{
+	    	background: #EAF7FA;
+	    }
+    </style>
+</head>
+<body>
+	<div class="aui-content aui-margin-b-10">
+	    <ul class="aui-list aui-form-list none-bottom-style">
+	    	 <li class="aui-list-item">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		输入身份证：
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <input type="text" value="" id="idcardNo"> 
+	                </div>
+	            </div>
+	         </li>
+	         <div class='dividing_line'></div>
+	    	 <li class="aui-list-item none-bottom-style" style='position: relative;'>
+	            <div class="aui-list-item-inner aui-list-item-arrow" tapmode onclick="idCardReginizeBypic()">
+	                <div class="aui-list-item-label">
+                		去拍照识别
+	                </div>
+	            </div>
+	         </li>
+	     </ul>
+	     <div id='account_info_list'>
+			 <!-- <div class='coupon-div bg-bluer'>
+			 				<div class='coupon-info'>
+			 					<div class='test-room'>赵炜炜</div>
+			 					<div class='name'>手机号：188****3591</div>
+			 				</div>
+			 				<div class='coupon-status bg-blue'>
+			 					<span>已认证</span>
+			 				</div>
+			 </div> -->
+	     </div>
+	 </div>
+	 <script type="text/template" charset="utf-8" id='account_info_src'>
+	 	{{ for(var i=0;i<it.length;i++){ }}
+			 <div class='coupon-div bg-bluer' tapmode onclick="switchAccount({{=it[i].id}})">
+				<div class='coupon-info'>
+					<div class='test-room'>{{=it[i].name}}</div>
+					<div class='name'>手机号：{{=it[i].account.substring(0,3) + '****' + it[i].account.substring(7,11)}}</div>
+				</div>
+				<div class='coupon-status bg-blue'>
+					<span>已认证</span>
+				</div>
+			 </div>
+	 	{{ } }}
+	 </script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var imageFilter;
+	apiready = function(){
+		imageFilter = api.require('imageFilter');
+		init();
+	};
+	
+	function init(){
+		$('#idcardNo').bind('input propertychange', function() {
+			if($(this).val().length == 18){
+				$(this).val($(this).val().toUpperCase());
+				if(checkIDCard($(this).val())){
+					getLearnerInfo($(this).val());
+				}else{
+					alert_msg('身份证格式不正确');
+				}
+			}
+		});
+		//初始化身份证识别
+		baiduAiIdcardInit();
+	}
+	
+	/**
+	 * 身份证识别 初始化
+	 */
+	var access_token;
+	function baiduAiIdcardInit(){
+		defaultload('获取中...');
+		url = third_url + "api/common/certificates/analysis";
+    	api.ajax({
+			url : url,
+			method : 'get',
+			tag:url,//为方便，全部统一
+			timeout:30,
+			dataType : 'json'
+		}, function(ret, err) {
+			//log('access_token',ret);
+			if(ret&&ret.code == 0){
+				access_token = ret.access_token;
+			}else{
+				alert_msg('初始化身份证识别模块失败');
+			}
+			api.hideProgress();
+		});
+	}
+	
+	/**
+	 * 根据身份证查询账号列表 
+	 */
+	function getLearnerInfo(idcardNo){
+		params = {
+			idcardNo:idcardNo
+		}
+		url = "api/learner/get-accout-by-idcard";
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			log('同一个身份证识别后果',ret);
+			if(ret){
+				if(ret.code == '0'){
+					if(ret.learnerList.length > 0){
+						var account_info_src = $('#account_info_src').html();
+						$('#account_info_list').html(doT.template(account_info_src)(ret.learnerList));
+						api.parseTapmode();
+					}else{
+						alert_msg('该身份证未注册');
+					}
+				}else{
+					alert_msg(ret.msg);
+				}
+			}else{
+				alert_msg('服务器繁忙，请稍后重试');
+			}
+		});
+	}
+	
+	/**
+	 * 切换账号 
+	 */
+	function switchAccount(learnerId){
+		defaultload('获取学员信息...');
+		url = 'api/learner';
+		params = {
+			learner:{
+				id:learnerId
+			}
+		}
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			closedefaultload();
+			//log('获取的学员信息',ret);
+			if(ret&&ret.code == 0){
+				var cache_by_account = $api.getStorage('cache_by_account');
+				cache_by_account.cache_account = ret.learner;
+				$api.setStorage('cache_by_account',cache_by_account);//更新app中的实名缓存信息
+				openMessage('温馨提示','切换账号会重启app','好的','','restartApp()','',{});
+			}else{
+				alert_msg('获取学员信息失败');
+			}
+		});
+	}
+	
+	/**
+	 * 重启app 
+	 */
+	function restartApp(){
+		api.rebootApp();
+	}
+	
+	/**
+	 * 身份证识别 
+	 */
+	function idCardReginizeBypic(){
+		opWithPermission('camera', function () {
+			api.actionSheet({
+	            title : '身份证正面',
+	            cancelTitle : '取消',
+	            buttons : ['拍照','相册']
+	        }, function(ret, err) {
+	            if (ret) {
+	            	if(ret.buttonIndex == 1||ret.buttonIndex == 2){
+	            		var sourceType = ret.buttonIndex == 1?'camera':'library'
+	                    getPicture(sourceType);
+	            	}
+	            }
+	        });
+		});
+	}
+	
+	//拍照或打开相机 sourceType：从相册选还是拍照 faceType代表
+    function getPicture(sourceType) {
+		api.getPicture({
+		    sourceType: sourceType,
+		    encodingType: 'jpg',
+		    mediaValue: 'pic',
+		    destinationType: 'url',
+		    allowEdit: false,
+		    quality: 40, //1-100图片质量
+		    saveToPhotoAlbum: false
+		}, function(ret, err) {
+		    if (ret&&ret.data != '') {
+				picImageFilter(ret.data,function(smaller_path){
+					if(smaller_path != ''){
+						baiduAiIdcard(smaller_path);
+					}else{
+						alert_msg('图片压缩失败，改为原图');
+						baiduAiIdcard(ret.data);
+					}
+				});
+            } else {
+                console.log('系统故障或者未选中照片');
+            };
+		});
+	}
+	
+	/**
+	 * 身份证识别 
+	 */
+	function baiduAiIdcard(local_img_path){
+		defaultload('身份证识别中...');
+		picToBase64(local_img_path,function(imgBase64){
+			//console.log('imgBase64:'+imgBase64.replace('data:image/png;base64,',''));
+			api.ajax({
+				url : 'https://aip.baidubce.com/rest/2.0/ocr/v1/idcard?access_token=' + access_token,
+				method : 'post',
+				tag:url,
+				timeout:30,
+				dataType : 'json',
+				headers : {
+					"Content-Type" : "application/x-www-form-urlencoded"
+				},
+				data: {
+					values: {
+						image:imgBase64.replace('data:image/png;base64,',''),
+						id_card_side:"front" //身份证正面
+					}
+				}
+			}, function(ret, err) {
+				log('身份证识别返回',ret);
+				api.hideProgress();
+				if(ret){
+					$('#idcardNo').val(ret.words_result['公民身份号码'].words);
+					if(checkIDCard(ret.words_result['公民身份号码'].words)){
+						getLearnerInfo(ret.words_result['公民身份号码'].words);
+					}else{
+						alert_msg('身份证格式不正确');
+					}
+				}else{
+					alert_msg('识别失败，请稍后重试');
+				}
+			});
+		});
+	}
+	
+	//打开通用弹出框
+	//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+	function openMessage(title,content,sureButton,cancelButton,sureFunc,cancelFunc,params){
+		api.openFrame({
+	        name: 'common_alert',
+	        url: '../common/common_alert.html',
+	        bgColor: 'rgba(0,0,0,0.4)',
+	        rect: {
+	            x: 0,
+	            y: 0,
+	            w: 'auto',
+	            h: api.winHeight
+	        },
+	        bounces: false,
+	        pageParam:{
+	        	title:title,
+	        	content:content,
+	        	sureButton:sureButton,
+	        	sureFunc:sureFunc,
+	        	cancelButton:cancelButton,
+	        	cancelFunc:cancelFunc,
+	        	winName:api.winName,
+	        	frameName:api.frameName,
+	        	params:params
+	        },
+	        softInputBarEnabled:true,
+	        softInputMode:'resize'
+	    });
+	}
+</script>
+</html>

@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>首页-win</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css"/>
+<!--    <link rel="stylesheet" type="text/css" href="../../css/swiper/swiper.css">-->
+    <style>
+        html, body {
+            background-color: #fff;
+        }
+
+        body > div {
+            padding: 0 5%;
+        }
+
+        #slider {
+            height: 7rem;
+            width: 100%;
+        }
+
+        #slider-images {
+            width: 100%;
+            height: 100%;
+        }
+
+        #register-epidemic-situation {
+            overflow: hidden;
+            padding-top: 1rem;
+        }
+
+        #register-epidemic-situation img {
+            width: 100%;
+            height: 3.5rem;
+        }
+
+        #signOrPE {
+            overflow: hidden;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        #signOrPE > div:first-child {
+            float: left;
+            height: 5rem;
+            width: 47.5%;
+            margin-right: 5%;
+            /*box-shadow: 0 0 20px 0 rgba(187, 187, 187, 0.50);*/
+        }
+
+        #signOrPE > div:last-child {
+            float: left;
+            height: 5rem;
+            width: 47.5%;
+            /*box-shadow: 0 0 20px 0 rgba(187, 187, 187, 0.50);*/
+        }
+
+        #signOrPE img {
+            width: 100%;
+            height: 100%;
+        }
+
+        #training {
+            color: #333;
+            font-size: 0.8rem;
+        }
+
+        #training img {
+            display: block;
+            width: 2.7rem;
+            height: 2.7rem;
+            margin: 0 auto 0.5rem;
+        }
+
+        #studySteps {
+            padding-bottom: 1rem;
+            overflow: auto;
+        }
+
+        #studyStepsContent {
+            padding: 0;
+        }
+
+        .aui-grid [class*=aui-col-] {
+            padding: 0.5rem 0;
+        }
+
+        #studyStepsContent .aui-col-xs-4 {
+            padding: 0.1rem 0;
+        }
+
+        #studyStepsContent img {
+            width: 90%;
+            height: 90%;
+        }
+
+        #manual img {
+            height: 3.5rem;
+            width: 100%;
+        }
+
+        #school-order {
+            height: 2.25rem;
+            line-height: 2.25rem;
+            position: relative;
+            background: #fff;
+        }
+
+        .aui-bar-btn-item {
+            font-size: 0.75rem !important;
+            color: #333;
+            padding-top: 0.25rem;
+        }
+
+        .aui-bar-btn-item.aui-active {
+            color: #3F86FF;
+        }
+
+        .list_bar .list_bar_inner {
+            background-color: #3F86FF;
+        }
+
+        #tab > div {
+            width: 33.3%;
+            float: left;
+            text-align: center;
+            font-size: 0.7rem;
+        }
+
+        #school-order img {
+            width: 0.4rem;
+            margin-bottom: 1px;
+            -webkit-transition: 0.3s ease;
+        }
+
+        #tag-list {
+            overflow: hidden;
+            height: 1.4rem;
+            margin: 0.75rem 0 0.25rem;
+        }
+
+        #tag-list-content {
+            float: left;
+            width: 80%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #school-filter {
+            float: left;
+            text-align: right;
+            width: 20%;
+            height: 100%;
+            line-height: 1.4rem;
+            font-size: 0.7rem;
+            color: #333;
+            box-shadow: 0 2px 6px 0 rgba(187, 187, 187, 0.50);
+        }
+
+        #school-filter img {
+            height: 0.8rem;
+            width: 0.4rem;
+            margin-left: 0.25rem;
+            vertical-align: middle;
+        }
+
+        #tag-list-content button {
+            display: block;
+            float: left;
+            padding: 0 0.5rem;
+            height: 1.2rem;
+            line-height: 1rem;
+            background: #F5F6F6;
+            border-radius: 1rem;
+            color: #333;
+            font-size: 0.6rem;
+            margin-right: 0.4rem;
+        }
+
+        #school-order li {
+            width: 25% !important;
+        }
+
+
+        .list_div {
+            min-height: 2.2rem;
+            background: #FFF;
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+        }
+
+        #driverSchool button {
+            display: block;
+            float: left;
+            margin: 0.25rem 0.25rem 0.25rem 0;
+            padding: 0 0.5rem;
+            height: 1rem;
+            line-height: 1rem;
+            background: #F5F6F6;
+            border-radius: 1rem;
+            color: #333;
+            font-size: 0.6rem;
+        }
+
+        #driverSchool .content {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .msg {
+            background: #FFFFFF;
+            height: 10rem;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        .msg img {
+            width: 8rem;
+            margin-top: 5rem;
+        }
+        
+        .pre_load_msg{
+            background: #FFFFFF;
+            height: 15rem;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+        
+        .pre_load_msg img{
+             width: 10rem;
+        }
+        
+        .aui-list:after{
+            height: 0
+        }
+        .loading {
+            font-size: 0.7rem;
+            background: #FFFFFF;
+            color: #7D7D7D;
+            padding-bottom: 0.3rem;
+            text-align: center;
+            padding-top: 0.3rem;
+        }
+
+        .mine-info-load {
+            width: 100%;
+            height: 7rem;
+            text-align: center;
+        }
+
+        .mine-info-load img {
+            height: 5rem;
+            margin-top: 5rem;
+        }
+
+        .aui-list:before {
+            height: 0;
+        }
+
+        .aui-list-item {
+            min-height: 8rem;
+            color: #666 !important;
+            padding: 0.5rem 0 0.25rem !important;
+        }
+
+        .aui-list-item-inner > .aui-col-xs-3 {
+            width: 33%;
+            height: 100%;
+        }
+
+        .aui-list-item-inner > .aui-col-xs-9 {
+            width: 67%;
+            height: 100%;
+        }
+
+        .aui-list .aui-list-item-inner {
+            padding-right: 0;
+        }
+
+        .school-img {
+            width: 5rem;
+            height: 3.4rem;
+            border-radius: 0.4rem;
+            background: url(../../icon/common/icon_loadding.gif) 50% 50%/1.2rem 1.2rem no-repeat;
+        }
+
+        .school-name {
+            float: left;
+            height: 1rem;
+            line-height: 1rem;
+            font-size: 0.75rem;
+            color: #333;
+            margin-right: 0.5rem;
+        }
+
+        .school-score {
+            float: right;
+            height: 1rem;
+            line-height: 1rem;
+            color: #F5A33C;
+            font-size: 0.6rem;
+        }
+
+        .school-score-star-div {
+            float: right;
+            height: 1rem;
+            overflow: hidden;
+        }
+
+        .school-score-star-icon {
+            float: left;
+            height: 0.5rem;
+            margin-right: 0.25rem;
+            margin-top: 0.25rem;
+        }
+
+        .school-desc {
+            height: 1rem;
+            line-height: 1rem;
+            margin: 0;
+            font-size: 0.7rem;
+            color: #666;
+        }
+
+        .school-district {
+            width: 41% !important;
+        }
+
+        .school-distance {
+            width: 27% !important;
+            font-size: 0.6rem;
+            font-weight: normal;
+            text-align: center;
+            overflow: hidden;
+        }
+
+
+        .school-sign-up-money {
+            width: 32% !important;
+            height: 100%;
+            font-size: 0.7rem;
+            text-align: right;
+            overflow: hidden;
+            color: #FF5C4D;
+        }
+
+        #load_div {
+            background-color: #fff;
+            text-align: center;
+            margin-bottom: 0.25rem;
+            color: #666;
+            font-size: 0.75rem;
+        }
+
+        /*-----疫情样式--------*/
+        .epidemic_situation {
+            position: relative;
+            height: 5rem;
+            padding: 1rem 1rem 0;
+        }
+
+        .epidemic_situation img {
+            position: absolute;
+            width: calc(100% - 2rem);
+            height: 4rem;
+        }
+
+        .epidemic_situation > div {
+            position: absolute;
+            bottom: 0;
+            left: 1rem;
+            width: 60%;
+            padding: 0.2rem 0 0.4rem 6%;
+            height: 2rem;
+            overflow: hidden;
+        }
+
+        .entrance-btn {
+            display: block;
+            float: left;
+            width: 45%;
+            padding: 0;
+            height: 1.2rem;
+            line-height: 1.2rem;
+            background-color: #FFC436;
+            border-radius: 1rem;
+            color: #fff;
+            font-size: 0.7rem;
+            text-align: center;
+        }
+
+        /*-----疫情样式--------*/
+        .callKefu {
+            position: fixed;
+            width: 5rem;
+            height: 1.5rem;
+            background-color: #4289FF;
+            bottom: 1rem;
+            right: 0;
+            border-radius: 25px 0 0 25px;
+            z-index: 99;
+        }
+
+        .callKefuImg {
+            position: absolute;
+            width: 1rem;
+            height: 1rem;
+            left: 0.5rem;
+            top: 0.25rem;
+        }
+
+        .callKefuName {
+            position: absolute;
+            height: 1rem;
+            line-height: 1rem;
+            width: 2.5rem;
+            left: 2rem;
+            text-align: center;
+            font-size: 0.6rem;
+            color: #fff;
+            top: 0.25rem;
+        }
+
+        #mine-menus {
+            padding-top: 1rem;
+            padding-bottom: 0.5rem;
+        }
+
+        #mine-menus img {
+            width: 1.9rem;
+            height: 1.9rem;
+        }
+
+        .aui-grid [class*=aui-col-] {
+            padding: 0.25rem 0;
+        }
+
+        .aui-active {
+            color: #3F86FF !important;
+        }
+
+        #mine-menus .aui-col-xs-3 {
+            width: 20% !important;
+            margin-bottom: 0.75rem !important;
+        }
+
+        #mine-menus .aui-grid .aui-grid-label {
+            font-size: 0.65rem !important;
+        }
+
+        .aui-grid .aui-badge {
+            position: absolute;
+            top: -0.25rem;
+            left: 25%;
+            width: 3.4rem !important;
+            z-index: 99;
+            font-size: 0.5rem;
+            padding: 0.1rem !important;
+        }
+
+        #mine-menus .menu-prompt {
+            position: absolute;
+            top: -0.25rem;
+            left: 40%;
+            width: 2.5rem;
+            height: 0.7rem;
+            z-index: 999;
+        }
+
+        .none-bottom-style::after {
+            height: 0 !important;
+        }
+		
+		.invitation{
+			width: 100%;
+		}
+		.invitation img{
+			width: 100%;
+		}
+		.contact{
+			width: 50px;
+			height: 50px;
+			padding: 0 !important;
+			border-radius: 25px;
+			background: url(../../icon/home/call_home.png) no-repeat;
+			background-size: 100% 100%;
+			overflow: hidden;
+			z-index: 998;
+			transition: all .5s;
+			position: fixed;
+			top: 90%;
+			left: 85%;
+			
+		}
+		.contactCloseAnimals{
+			transform: translateX(-60px);
+			transition: all .5s;
+		}
+		.explain{
+			width: 50px;
+			height: 50px;
+			padding: 0 !important;
+			border-radius: 25px;
+			background: url(../../icon/home/operation_home.png) no-repeat;
+			background-size: 100% 100%;
+			overflow: hidden;
+			z-index: 998;
+			transition: all .5s;
+			position: fixed;
+			top: 90%;
+			left: 85%;
+		}
+		.open{
+			width: 50px;
+			height: 50px;
+			padding: 0 !important;
+			border-radius: 25px;
+			background: url(../../icon/home/more_home.png) no-repeat;
+			background-size: 100% 100%;
+			z-index: 999;
+			box-shadow: 0px 0px 5px 3px #f5f5f5;
+			transform: rotate(0deg);
+			transition: all .5s;
+			position: fixed;
+			top: 90%;
+			left: 85%;
+		}
+		.explainCloseAnimals{
+			transform: translateY(-60px);
+			transition: all .5s;
+		}
+		.openAnimals{
+			transform: rotate(45deg);
+			transition: all .5s;
+		}
+		
+		.chooseRole{
+			width: 50px;
+			height: 50px;
+			padding: 0 !important;
+			border-radius: 25px;
+			background: url(../../icon/home/menu_hc.png) no-repeat;
+			background-size: 100% 100%;
+			overflow: hidden;
+			z-index: 998;
+			transition: all .5s;
+			position: fixed;
+			top: 90%;
+			left: 85%;
+			
+		}
+		.chooseRoleAnimals{
+			transform: translate(-60px,-60px);
+			transition: all .5s;
+		}
+		
+    </style>
+</head>
+<body>
+
+<!-- 轮播图 -->
+<div id="slider">
+    <div id="slider-images">
+        <div class="swiper-container swiper-no-swiping" style="height: 100%;">
+            <div class="swiper-wrapper" id="slider_list">
+
+            </div>
+            <div class="swiper-pagination" style="margin-bottom: -0.5rem;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 菜单栏 -->
+<div id="mine-menus" style="padding: 0.25rem 2.5% 0">
+			<div class="aui-grid aui-margin-t-10">
+				<div class="aui-row">
+					<div class="aui-col-xs-3" tapmode onclick="openWin(0)">
+						<div class="aui-list-item-label-icon">
+							<img src="../../icon/home/menu_sign_up.png" alt="" />
+						</div>
+						<div class="aui-grid-label">驾校报名</div>
+					</div>
+					<div class="aui-col-xs-3" tapmode onclick="openWin(1)">
+						<div class="aui-list-item-label-icon">
+							<img src="../../icon/home/menu_pe.png" alt="" />
+						</div>
+						<div class="aui-grid-label">信息采集</div>
+					</div>
+					<!-- <div class="aui-col-xs-3" tapmode onclick="expirationChange()">
+						<div class="aui-list-item-label-icon">
+							<img src="../../icon/home/menu_qmhz.png" alt="" />
+						</div>
+						<div class="aui-grid-label"><span>期满换证</span></div>
+					</div> -->
+					
+					<div class="aui-col-xs-3" tapmode onclick="to_step_exam()">
+						<div class="aui-list-item-label-icon">
+							<img src="../../icon/home/menu_oct.png" alt="" />
+						</div>
+						<div class="aui-grid-label"><span>计时培训</span></div>
+					</div>
+					<div class="aui-col-xs-3" tapmode onclick="openSimulatorAppointment('examinationCourse')">
+						<div class="aui-list-item-label-icon">
+							<img src="../../icon/home/menu_cta.png" alt="" />
+						</div>
+						<div class="aui-grid-label"><span>集中培训</span></div>
+					</div>
+					<div class="aui-col-xs-3" tapmode onclick="chooseRole()">
+						<div class="aui-list-item-label-icon">
+							<img src="../../icon/home/menu_hc.png" alt="" />
+						</div>
+						<div class="aui-grid-label"><span>健康码</span></div>
+					</div>
+					<div class="aui-col-xs-3" tapmode onclick="openSimulatorAppointment('simulator')">
+						<div class="aui-list-item-label-icon">
+							<img src="../../icon/home/menu_sa.png" alt="" />
+						</div>
+						<div class="aui-grid-label"><span>模拟器预约</span></div>
+					</div>
+					<div class="aui-col-xs-3" tapmode onclick="openSimulatorSignIn()">
+						<div class="aui-list-item-label-icon">
+							<!--                    <div class="aui-badge">签到/签退</div>-->
+							<img src="../../icon/home/menu_prompt.png" alt="" class="menu-prompt">
+							<img src="../../icon/home/menu_ssi.png" alt="" />
+						</div>
+						<div class="aui-grid-label"><span>模拟器签到</span></div>
+					</div>
+					<div class="aui-col-xs-3" tapmode onclick="openSubjectOneQuestion()">
+						<div class="aui-list-item-label-icon">
+							<img src="../../icon/home/menu_s1_question.png" alt="" />
+						</div>
+						<div class="aui-grid-label"><span>VIP题库</span></div>
+					</div>
+					<div class="aui-col-xs-3" tapmode onclick="openSubjectTwoVideo()">
+						<div class="aui-list-item-label-icon">
+							<img src="../../icon/home/menu_s2_video.png" alt="" />
+						</div>
+						<div class="aui-grid-label"><span>场考秘籍</span></div>
+					</div>
+					<div class="aui-col-xs-3" tapmode onclick="openSubjectThreeVideo()">
+						<div class="aui-list-item-label-icon">
+							<img src="../../icon/home/menu_s3_video.png" alt="" />
+						</div>
+						<div class="aui-grid-label"><span>路考宝典</span></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+<!-- 联系客服 -->
+<!-- <div class="callKefu" tapmode onclick="callKefu();">
+    <img src="../../icon/common/icon_kefu_white.png.png" class="callKefuImg">
+    <span class="callKefuName">联系客服</span>
+</div> -->
+
+<div class="invitation">
+	<img src="../../image/background/invitation_btn.png" tapmode onclick="invitation_btn()">
+</div>
+<!-- 驾校列表tab -->
+<div id="school-list">
+    <div id="school-order">
+        <ul class="aui-bar aui-bar-btn aui-bar-btn-full" id="tab">
+            <li class="aui-bar-btn-item aui-active" tapmode onclick="driverSchoolSort(this, 0)">
+                <span>推荐</span>
+            </li>
+            <li class="aui-bar-btn-item" tapmode onclick="driverSchoolSort(this, 2)">
+                <span>距离</span>
+                <img src="../../icon/home/gray_arrow_top.png" alt="" class='arrow'/>
+            </li>
+            <li class="aui-bar-btn-item" tapmode onclick="driverSchoolSort(this, 1)">
+                <span>价格</span>
+                <img src="../../icon/home/gray_arrow_top.png" alt="" class='arrow'/>
+            </li>
+            <!-- <li style="float: left; width: 4rem!important; font-size: 0.8rem; padding-top: 0.15rem; line-height: 2.2rem; text-align: right;"
+                tapmode onclick="openScreen()">
+                <img src="../../icon/home/school_filter.png" alt=""
+                     style="height: 0.7rem; width: 0.7rem; vertical-align: middle;"/>
+                筛选
+            </li> -->
+        </ul>
+        <div class="list_bar" id="slideSpan">
+            <div class="list_bar_inner"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 驾校列表内容 -->
+<div id="school-list-content" style="margin-top: 0.5rem;">
+    <ul class="aui-list list_div" id="driverSchool" style="min-height: 15rem !important;">
+
+    </ul>
+
+    <div id='load_div'>
+    </div>
+</div>
+<div class="open" tapmode onclick="openButtom()"></div>
+<div class="contact" tapmode onclick="callKefu()"></div>
+<!-- <div class="chooseRole" tapmode onclick="chooseRole()"></div> -->
+<div class="explain" tapmode onclick="openOperatingInstructions()"></div>
+
+<!-- 模板 -->
+<script type="text/template" charset="utf-8" id='tag_list_tpl'>
+    {{ for(var i=0;i< it.length;i++){ }}
+    <button tapmode onclick="shcoolTagFilter()">
+        普通班
+    </button>
+    {{ } }}
+</script>
+<script type="text/template" charset="utf-8" id='driverSchool_src'>
+    {{ for(var i=0;i< it.length;i++){ }}
+    <li class="aui-list-item content" tapmode
+        onclick="openDriverSchool('{{=it[i].name}}','{{=it[i].id}}','{{=it[i].district.cityName + it[i].district.areaName}}')">
+        <div class="aui-row aui-list-item-inner">
+            <div class="aui-col-xs-3">
+                <img src="{{=file_load_url + it[i].logo +'&style=image/resize,w_400'}}"
+                     onerror="javascript:this.src='../../icon/default/icon_default_list.png'"
+                     data-echo="{{=file_load_url + it[i].logo +'&style=image/resize,w_400'}}" class="school-img">
+            </div>
+            <div class="aui-col-xs-9">
+                <div style="overflow: hidden;">
+                    <div class="school-name">
+                        {{=it[i].shortName}}
+                    </div>
+                    <div class="school-score">
+                        {{=it[i].score.toFixed(1)}}分
+                    </div>
+                    <div class="school-score-star-div">
+                        <img src="../../icon/home/star.png" alt="" class="school-score-star-icon">
+                    </div>
+                </div>
+                <!--                <div style="margin-top: 0.25rem; height: 1rem; line-height: 1rem; font-size: 0.7rem;">-->
+                <!--                    <span>学员</span>-->
+                <!--                    <span>{{=it[i].learnerCount}}</span>-->
+                <!--                </div>-->
+                <div class="aui-row school-desc" style="margin-top: 0.25rem;">
+                    <div class="aui-col-xs-5 school-district">
+                        {{=it[i].district.cityName}} {{=it[i].district.areaName}}
+                    </div>
+                    <div class="aui-col-xs-3 school-distance">
+                        {{=calcuDistance(it[i].distance)}}
+                    </div>
+                    <!-- <div class="aui-col-xs-4 school-sign-up-money">
+                        {{ if(it[i].estimateTotlePrice.length > 0){ }}
+                        ￥{{=(it[i].estimateTotlePrice[0])}}
+                        <span style="color: #666; font-size: 0.6rem;">起</span>
+                        {{ }else{ }}
+                        暂无报价
+                        {{ } }}
+                    </div> -->
+                </div>
+                <div style="overflow: hidden;">
+                    {{ if(it[i].tags){ }}
+                    {{ for(var j=0;j<(it[i].tags.split(',').length > 3 ? 3 : it[i].tags.split(',').length);j++){ }}
+                    <button>
+                        {{=getLabelName(it[i].tags.split(',')[j])}}
+                    </button>
+                    {{ } }}
+                    {{ } }}
+                </div>
+            </div>
+        </div>
+    </li>
+    {{ } }}
+</script>
+
+<script type="text/template" charset="utf-8" id='load_src'>
+    <div class="mine-info-load">
+        <img src="../../icon/common/icon_common_load.gif" alt=""/><br>
+        <!--        <span>加载中...</span>-->
+    </div>
+</script>
+<script type="text/template" charset="utf-8" id='pre_load_src'>
+    <div class="pre_load_msg">
+        <img src="../../image/background/preloading.gif" alt=""/><br>
+    </div>
+</script>
+<script type="text/template" charset="utf-8" id='msg_src'>
+    <div class="msg">
+        <img src="../../icon/common/empty.png" alt=""/><br>
+        <span>{{=it.msg ? it.msg : '暂无驾校'}}</span>
+    </div>
+</script>
+<script type="text/template" charset="utf-8" id='more_src'>
+    <div class="loading">
+        <span>{{=it.msg}}</span>
+    </div>
+</script>
+
+<!--轮播图模板-->
+<script type="text/template" charset="utf-8" id="slider_list_tpl">
+    {{ for(var i=0;i< it.length;i++){ }}
+    <div class="swiper-slide" tapmode
+         onclick="openSlide('{{=i}}')">
+        <img src="{{=file_load_url + it[i].image + '&style=image/resize,w_400'}}" alt=""
+             style="height: 100%; width: 100%; border-radius: 0.5rem;">
+    </div>
+    {{ } }}
+</script>
+
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/echo.min.js" charset="utf-8"></script>
+<!--<script type="text/javascript" src="../../script/swiper/swiper.js"></script>-->
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+    /** ----------------------*/
+    var mySwiper;
+    var cache;
+    var clearance = 20; // 间隙
+    /** ----------------------*/
+    var bMap;
+    var page = 1,
+        limit = 20;
+    var load_src = $('#load_src').html(); //加载src
+    var msg_src = $('#msg_src').html(); //消息提示src
+    var more_src = $('#more_src').html(); //更多src
+    var pre_load_src = $('#pre_load_src').html(); //预加载src
+    var refresh = true; //标记是否是刷新操作
+    var city_code, city_name;
+    var cache_account;
+    var coachId;
+    var db;
+    var fs;
+    var UIScrollPicture; // 轮播
+    /** ----------------------*/
+    apiready = function () {
+        api.parseTapmode();
+        bMap = api.require('bMap');
+        db = api.require('db');
+        fs = api.require('fs');
+        UIScrollPicture = api.require('UIScrollPicture');
+        cache = api.pageParam;
+        goRefrash(40, '#FFFFFF', null, null, function () {
+            // getSlider(true);
+            getSlider();
+            onEvent('home8', '下拉刷新');
+            refreshList(sortType, sort);
+        });
+        getSlider();
+        $('.aui-active').click();
+        f_slide($('.aui-active')[0]);
+        //监听条件筛选
+        toEventListener('school_filter', function (ret) {
+            city_code = ret.value.cityCode;
+            city_name = ret.value.cityName;
+            refreshList(sortType, sort);
+        });
+        defaultload('加载驾校列表中...');
+        refreshList(sortType, sort);
+
+		setTimeout(function(){
+			if(!islogin()){
+				openMessage('提示', '您还未登录', '先去登录', '取消', 'openLoginHtml()', '', null);
+			}
+		},2000);
+		
+		// //获取缓存判断是否打开分享题库窗口
+		//登录情况下请求消息通知
+		var is_question_share = getGlobalData("is_question_share");
+		toEventListener('refresh_my_index',function(ret,err){
+			if(!is_question_share){
+				setTimeout(function() {openQuestionShare();}, 500);
+			}
+		});
+		
+		if (islogin()) {	
+			if(!is_question_share){
+				setTimeout(function() {openQuestionShare();}, 500);
+			}
+		}
+
+        //本地数据库初始化
+        db_init();
+    };
+
+    /**----------------------------------轮播图开始---------------------------------------------*/
+        //获取轮播的图片地址
+        // var sliderList;
+        // function getSlider(refreshFlag) {
+        //     //获取轮播图片地址
+        //     params = {};
+        //     url = 'common/get/slider';
+        //     ajax_Request(url, 'get', 'json', params, function (ret, err) {
+        //         log('获取轮播数据出参：', ret);
+        //         sliderData = ret.sliderList;
+        //         if (ret) {
+        //             if (ret.code === 0) {
+        //                 sliderList = ret.sliderList;
+        //                 var sliderListTpl = $('#slider_list_tpl').html();
+        //                 $("#slider_list").html(doT.template(sliderListTpl)(sliderList));
+        //                 api.parseTapmode();
+        //                 if (refreshFlag) {
+        //                     mySwiper.init();
+        //                 } else {
+        //                     mySwiper = new Swiper(".swiper-container", {
+        //                         loop: true,
+        //                         autoplay: 3000,
+        //                         autoplayDisableOnInteraction: false,
+        //                         pagination: '.swiper-pagination'
+        //                     });
+        //                 }
+        //             } else {
+        //                 alert_msg("服务器错误，请稍后重试");
+        //             }
+        //         } else {
+        //             alert_msg('服务器繁忙，请稍后重试');
+        //         }
+        //     });
+        // }
+
+	//悬浮按钮
+	var buttom = true;
+	function openButtom(){
+		if(buttom){
+			$('.contact').addClass('contactCloseAnimals');
+			$('.explain').addClass('explainCloseAnimals');
+			$('.open').addClass('openAnimals');
+			$('.chooseRole').addClass('chooseRoleAnimals');
+			buttom = !buttom;
+		}else{
+			$('.contact').removeClass('contactCloseAnimals');
+			$('.explain').removeClass('explainCloseAnimals');
+			$('.open').removeClass('openAnimals');
+			$('.chooseRole').removeClass('chooseRoleAnimals');
+			buttom = !buttom;
+		}
+		
+	}
+	
+	//打开操作说明
+	function openOperatingInstructions(){
+		 api.openWin({
+		    name: 'operating_instructions_win',
+		    url: './operating_instructions/operating_instructions_win.html',
+		    slidBackEnabled: 'false',
+		    vScrollBarEnabled: 'false',
+		    hScrollBarEnabled: 'false',
+		    reload: true,
+		    useWKWebView: false,
+		    pageParam: {}
+		});
+	}
+
+        //获取轮播的图片地址
+    var sliderList;
+    function getSlider() {
+        //获取轮播图片地址
+        url = 'common/get/slider';
+        ajax_Request(url, 'get', 'json', {}, function (ret, err) {
+            log('获取轮播数据出参：', ret);
+            if (ret) {
+                if (ret.code === 0) {
+                    sliderList = ret.sliderList;
+                    var imgPaths = [];
+                    for (var i = 0, len = sliderList.length; i < len; i++) {
+                        sliderList[i].image = file_load_url + sliderList[i].image;
+                        imgPaths[i] = sliderList[i].image;
+                    }
+                    showSlider(imgPaths);
+                } else {
+                    alert_msg("服务器错误，请稍后重试");
+                }
+            } else {
+                alert_msg('服务器繁忙，请稍后重试');
+            }
+        });
+    }
+
+    function showSlider(imgPaths) {
+        UIScrollPicture.open({
+            rect: {
+                x: 20,
+                y: 0,
+                w: api.winWidth - 40,
+                h: $('#slider').height()
+            },
+            data: {
+                paths: imgPaths,
+                // captions: ['apicloud', 'apicloud', 'apicloud', 'apicloud']
+            },
+            styles: {
+                // caption: {
+                //     height: 35,
+                //     color: '#E0FFFF',
+                //     size: 13,
+                //     bgColor: '#696969',
+                //     position: 'bottom'
+                // },
+                indicator: {
+                    dot:{
+                        w: 10,
+                        h: 10,
+                        r: '100%',
+                        margin: 5
+                    },
+                    align: 'center',
+                    color: '#fff',
+                    activeColor: '#ccc',
+                    bottom: 10
+                }
+            },
+            placeholderImg: 'widget://icon/default/icon_default_big_pic.png',
+            contentMode: 'scaleToFill',
+            interval: 3,
+            fixedOn: api.frameName,
+            loop: true,
+            fixed: false,
+            touchWait: true,
+            cornerRadius: 15
+        }, function(ret, err) {
+            if (ret) {
+                // alert(JSON.stringify(ret));
+                if (ret.status && ret.eventType === 'click') {
+                    openSlide(ret.index);
+                }
+            } else {
+                // alert(JSON.stringify(err));
+            }
+        });
+    }
+
+
+    //初始化本地数据库
+    function db_init() {
+        fs.exist({
+            path: 'fs://' + db_name
+        }, function (ret, err) {
+            if (ret.exist) {
+                console.log("已转移DB文件");
+                open_db();
+                //delete_db();//删除DB文件
+            } else if (err) {
+                sendErrorLog("检测数据库错误：", JSON.stringify(err));
+            } else {
+                console.log("未转移DB文件");
+                copy_db();//copy转移DB文件
+            }
+        });
+    }
+
+    //删除DB
+    function delete_db() {
+        fs.rmdir({
+            path: 'fs://' + db_name
+        }, function (ret, err) {
+            if (ret.status) {
+                console.log("删除DB成功" + JSON.stringify(ret));
+                copy_db();
+            } else if (err) {
+                sendErrorLog("删除数据库错误：", JSON.stringify(err));
+            } else {
+                console.log("删除DB失败" + JSON.stringify(err));
+            }
+        });
+    }
+
+    //复制DB文件到手机存储空间
+    function copy_db() {
+        fs.copyTo({
+            oldPath: 'widget://res/db/' + db_name,
+            newPath: 'fs://'
+        }, function (ret, err) {
+            if (ret.status) {
+                console.log("copyDB文件成功");
+                open_db();
+            } else if (err) {
+                sendErrorLog("复制数据库错误：", JSON.stringify(err));
+            } else {
+                console.log("copyDB文件失败" + JSON.stringify(err));
+            }
+        });
+    }
+
+    //打开数据库
+    function open_db() {
+        db.openDatabase({
+            name: 'drivingApp',
+            path: 'fs://' + db_name
+        }, function (ret, err) {
+            if (ret.status) {
+                log('db打开成功', {});
+            } else if (err) {
+                sendErrorLog("打开数据库错误：", JSON.stringify(err));
+            } else {
+                log('db打开失败', err);
+            }
+        });
+    }
+
+    function openWin(index) {
+        var action;
+        switch (index) {
+            case 0 :
+                logAppBuryingPoint({},'驾校报名','首页');
+                action = 'sign-up-action';
+                break;
+            case 1 :
+                logAppBuryingPoint({},'在线体检','首页');
+                action = 'phyical-exam-action';
+                break;
+            case 2 :
+                onEvent('home2', '优质教练');
+                action = '';
+                break;
+        }
+        params = {
+            index: index,
+            action: action
+        };
+        api.openDrawerLayout({
+            name: 'home_sign_win',
+            url: './home_sign_win.html',
+            slidBackEnabled: 'true',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            pageParam: {
+                data: params
+            },
+            animation: {
+                type: 'push',
+                subType: "from_right",
+                duration: 300
+            },
+            rightPane: {
+                name: 'search_detail',
+                url: './search_detail.html',
+                vScrollBarEnabled: false,
+                hScrollBarEnabled: false,
+                bounces: false,
+                pageParam: {
+                    data: params
+                }
+            }
+        });
+    }
+
+    /**
+     * 打开科目对应视频
+     */
+    function openVideo(name, path) {
+        if (name == '驾校报名') {
+            onEvent('home2', '驾校报名-说明');
+        }
+        if (name == '网上体检') {
+            onEvent('home3', '网上体检-说明');
+        }
+        if (name == '考前训练') {
+            onEvent('home4', '考前训练-说明');
+        }
+        //path = file_load_url + 'learnerApp/examination/video/DF68F076F31618023E8E808D0B6C7607.mp4';
+        /*console.log('path:'+path);
+        params = {
+            name:name,
+            url:file_load_url + path
+        }
+        openPlayer(params);*/
+        params = {
+            name: name,
+            url: path
+        };
+        api.openWin({
+            name: 'common_href_win',
+            url: '../common/common_href_win.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            useWKWebView: false,
+            pageParam: params
+        });
+    }
+
+    //打开轮播大图的链接
+    function openSlide(index) {
+        var currentSlider = sliderList[index];
+        if (currentSlider.type == '053002') {
+            //外部链接
+            openVideo(currentSlider.title, currentSlider.link);
+        } else if (currentSlider.type == '053003') {
+            //内链
+            openArticleDetail(currentSlider.articleId, currentSlider.title);
+        } else {
+            api.openWin({
+                name: 'common_slide_content_detail_frm',
+                url: '../common/common_slide_content_detail_frm.html',
+                slidBackEnabled: 'false',
+                vScrollBarEnabled: 'false',
+                hScrollBarEnabled: 'false',
+                reload: true,
+                useWKWebView: false,
+                pageParam: currentSlider
+            });
+        }
+    }
+
+    //跳转资讯详情
+    function openArticleDetail(id, title) {
+        var title = title;
+        params = {
+            name: title,
+            id: id,
+            flag: 'news',
+            type: '063001'
+        }
+        log('列表', JSON.stringify(params));
+        api.openWin({
+            name: 'subject_skill_detail_win',
+            url: '../common/subject_skill_detail_win.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            pageParam: {
+                data: params
+            }
+        });
+    }
+
+    /**----------------------------------轮播图结束---------------------------------------------*/
+
+
+    /**----------------------------------预约培训开始---------------------------------------------*/
+    // 打开在线计时培训
+    function to_step_exam() {
+    	logAppBuryingPoint({},'计时培训','首页');
+        esc_function('index', '', 'changeToFrame(1)');
+    }
+
+    //打开考前训练
+    function openPracticeBefore() {
+        if (!islogin()) {
+            openLoginHtml();
+        } else {
+            params = {
+                type: 'two',
+                from: 'before_exam'
+            };
+            api.openWin({
+                name: 'common_exam_room_list_win',
+                url: '../common/common_exam_room_list_win.html',
+                slidBackEnabled: 'false',
+                vScrollBarEnabled: 'false',
+                hScrollBarEnabled: 'false',
+                reload: true,
+                pageParam: {
+                    data: params
+                }
+            });
+        }
+    }
+
+    //打开模拟器预约 type为预约类型 simulator模拟器预约；
+    function openSimulatorAppointment(type) {
+        if (!islogin()) {
+            openLoginHtml();
+        } else {
+            if (isauth()) {
+                getLearnerStunum(type);
+            } else {
+                openMessage('提示', '您还未进行实名认证，是否进行实名认证？', '确定', '', 'openAuthentication()', '', null);
+            }
+        }
+    }
+
+    function getLearnerStunum(type) {
+    	logAppBuryingPoint({},type == 'simulator'?'模拟器预约':'集中培训','首页');
+        url = 'api/learner-register-info/check-learner-stunum-info';
+        params = {
+            learnerId: getUserId()
+        };
+        defaultload('获取有效信息中...');
+        ajax_Request(url, "get", "json", params, function (ret, err) {
+            log('获取信息', ret);
+            closedefaultload();
+            if (ret) {
+                if (ret.code == 0) {
+                    if (type == 'simulator') {
+                        openSimulation();
+                    } else {
+                        openClassAppointment(type)
+                    }
+                } else {
+                    if (type == 'simulator') {
+                        openSimulationWin();
+                    } else {
+                        openClassAppointment(type)
+                    }
+                    // interfaceCheck(type);
+                }
+            } else {
+                alert_msg('服务器繁忙，请稍后重试~');
+
+            }
+        });
+    }
+
+    //学员课堂学习
+    function openStuContinueEdu() {
+        api.openWin({
+            name: 'student_continue_education_win',
+            url: './student_continue_education/student_continue_education_win.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            useWKWebView: false,
+            pageParam: {}
+        })
+    }
+
+    // 课程预约
+    function openClassAppointment(type) {
+        if (!islogin()) {
+            openLoginHtml();
+        } else {
+            if (isauth()) {
+                url = 'api/third/check-weier-info';
+                params = {
+                    learnerId: getUserId()
+                };
+                log('最新题库', params);
+                ajax_Request(url, "get", "json", params, function (ret, err) {
+                    log('最新题库', ret);
+                    if (ret) {
+                        if (ret.code == 0) {
+                            openStuContinueEdu()
+                        } else if (ret.code == 400226) {
+
+                            interfaceCheck(type);
+                        }
+                    } else {
+                        alert_msg('服务器繁忙，请稍后重试~');
+                    }
+                });
+
+            } else {
+                openMessage('提示', '您还未进行实名认证，是否进行实名认证？', '确定', '', 'openAuthentication()', '', null);
+            }
+
+        }
+    }
+
+    // 模拟器
+    function openSimulationWin() {
+        if (!islogin()) {
+            openLoginHtml();
+        } else {
+            if (isauth()) {
+                url = 'api/third/check-weier-info';
+                params = {
+                    learnerId: getUserId()
+                }
+                log('最新题库', params);
+                ajax_Request(url, "get", "json", params, function (ret, err) {
+                    log('最新题库', ret);
+                    if (ret) {
+                        if (ret.code == 0) {
+                            openSimulation();
+                        } else if (ret.code == 400226) {
+                            interfaceCheck('simulator');
+                        }
+                    } else {
+                        alert_msg('服务器繁忙，请稍后重试~');
+                    }
+                });
+
+            } else {
+                openMessage('提示', '您还未进行实名认证，是否进行实名认证？', '确定', '', 'openAuthentication()', '', null);
+            }
+
+        }
+    }
+
+    function interfaceCheck(type) {
+        api.openWin({
+            name: 'examination_course_interface_check_win',
+            url: '../examination/subjectOne/examination_course_reservation/examination_course_interface_check_win.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            useWKWebView: false,
+            pageParam: {
+                type: type
+            }
+        });
+    }
+
+    function openSimulation() {
+        api.openWin({
+            name: 'select_driver_school_simulator_list_win',
+            url: '../examination/subjectTwo/select_driver_school_simulator_list_win.html',
+            slidBackEnabled: 'true',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            pageParam: null,
+        });
+    }
+
+    function commonOpenWin(name, data) {
+        api.openWin({
+            name: name,
+            url: '../home/' + name + '.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            useWKWebView: false,
+            pageParam: {
+                data: data
+            }
+        });
+    }
+
+    function openClassWin() {
+        api.openWin({
+            name: 'examination_course_reservation',
+            url: '../examination/subjectOne/examination_course_reservation/examination_course_reservation.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            useWKWebView: false,
+            pageParam: {}
+        });
+    }
+
+    // 打开模拟器签到
+    function openSimulatorSignIn() {
+    	logAppBuryingPoint({},'模拟器签到','首页');
+        openWin1('mine_common_win', '../mine/mine_common_win', {data: {type: 'record_scene_subject_two_simulator'}});
+    }
+
+    // 打开科一题库
+    function openSubjectOneQuestion() {
+    	logAppBuryingPoint({},'VIP题库','首页');
+        openVipQuestionWin('036001');
+    }
+
+    // 打开科四题库
+    function openSubjectFourQuestion() {
+        openVipQuestionWin('036004');
+    }
+
+    // 打开科二视频
+    function openSubjectTwoVideo() {
+    	logAppBuryingPoint({},'场考秘籍','首页');
+        openWin1('exam_room_list_win', '../vip_service/video/exam_room_list_win', {data: {type: '036002'}});
+    }
+
+    // 打开科三视频
+    function openSubjectThreeVideo() {
+    	logAppBuryingPoint({},'路考宝典','首页');
+        openWin1('exam_room_list_win', '../vip_service/video/exam_room_list_win', {data: {type: '036003'}});
+    }
+
+    //打开vip题库
+    function openVipQuestionWin(subject) {
+        if (islogin()) {
+            url = 'api/questionviporder/get-question-vip-order-info-is-buy';
+            params = {
+                learnerId: getUserId(),
+                type: 'vip'
+            };
+            ajax_Request(url, 'post', 'json', params, function (ret, err) {
+                log('购买vip套餐', ret);
+                if (ret) {
+                    if (ret.code == 0) {
+                        if (ret.isBuy == 0) {
+                            api.openWin({
+                                name: 'curriculum_service_win',
+                                url: '../vip_service/question_bank/curriculum_service_win.html',
+                                slidBackEnabled: 'false',
+                                vScrollBarEnabled: 'false',
+                                hScrollBarEnabled: 'false',
+                                reload: true,
+                                useWKWebView: false,
+                                pageParam: {
+                                    kemu: subject
+                                }
+                            })
+                        } else {
+                            api.openWin({
+                                name: 'question_bank_buy_index',
+                                url: '../vip_service/question_bank/question_bank_buy_index_new.html',
+                                slidBackEnabled: 'false',
+                                vScrollBarEnabled: 'false',
+                                hScrollBarEnabled: 'false',
+                                reload: true,
+                                useWKWebView: false,
+                                pageParam: {
+                                    kemu: subject
+                                }
+                            })
+                        }
+                    } else {
+                        console.log('查询学员是否购买vip题库，服务器异常');
+                    }
+                } else {
+                    console.log('查询学员是否购买vip题库，网络故障');
+                }
+            })
+        } else {
+            openLoginHtml(null);
+        }
+    }
+
+    // 打开科二视频
+    /**----------------------------------预约培训结束---------------------------------------------*/
+
+
+    /**----------------------------------驾校列表开始---------------------------------------------*/
+
+
+    // 滑块加载事件
+    function f_slide(e) {
+        $('.list_bar').css('width', ($('.aui-active').width() - clearance * 2) + 'px');
+        $('.list_bar_inner').css('width', ($('.aui-active').width() - clearance * 2) + 'px');
+        document.getElementById('slideSpan').style.webkitTransform = 'translateX(' + ($(e).position().left + clearance) +
+            'px)';
+    }
+
+    //驾校排序
+    var driverSchoolArray = [1, 1, 1];
+
+    function driverSchoolSort(it, i) {
+        setPreLoading();
+        f_slide(it);
+        $(it).parent().find('li').each(function (index, e) {
+            if ($(e).is($(it))) {
+                if ($(it).hasClass('aui-active')) {
+                    if (driverSchoolArray[i] === 1) {
+                        $(it).find('img').addClass('styleDeg90P');
+                        driverSchoolArray[i] = 2;
+                    } else {
+                        $(it).find('img').removeClass('styleDeg90P');
+                        driverSchoolArray[i] = 1;
+                    }
+                } else {
+                    $(it).addClass('aui-active');
+                    $(it).find('.arrow').attr('src', '../../icon/home/blue_arrow_top.png');
+                }
+            } else {
+                $(e).removeClass('aui-active');
+                $(e).find('.arrow').attr('src', '../../icon/home/gray_arrow_top.png');
+            }
+        });
+        refreshList(i, driverSchoolArray[i]);
+    }
+
+    // 打开筛选框
+    function openScreen() {
+        params = {
+            index: 0,
+            action: 'school_filter'
+        };
+        api.openFrame({
+            name: 'search_shadow',
+            url: 'search_shadow.html',
+            bgColor: 'rgba(0,0,0,0.3)',
+            rect: {
+                x: 0,
+                y: 0,
+                w: api.winWidth,
+                h: 'auto'
+            },
+            bounces: false,
+            softInputBarEnabled: true,
+            softInputMode: 'resize',
+            pageParam: {
+                data: params
+            }
+        });
+    }
+
+    //列表刷新
+    function refreshList(sortType, sort) {
+        setPreLoading();
+        if (sortType === 0) sort = 2;
+        api.removeEventListener({
+            name: 'scrolltobottom'
+        });
+        page = 1;
+        refresh = true;
+        setLoad();
+        init(sortType, sort, city_code, city_name);
+    }
+
+    //列表上拉
+    function loadList(sortType, sort) {
+        
+        page++;
+        refresh = false;
+        setLoad();
+        init(sortType, sort, city_code, city_name);
+    }
+
+    //列表初始化
+    var sortType = 0; //驾校排序种类,默认综合
+    var sort = 2; //正续还是倒叙 1正续 2倒叙
+    function init(index, value, cityCode, cityName) {
+        sortType = index;
+        sort = value;
+        mylocation(function (location_result) { //获取当前定位
+            params = {
+                lng: location_result.lon,
+                lat: location_result.lat,
+                sortType: sortType - 0 + 1,
+                sort: sort,
+                page: page,
+                limit: limit
+            };
+            if (location_result.status) { //有定位权限
+                //驾校传参
+                params.lng = location_result.lon;
+                params.lat = location_result.lat;
+            }
+            if (cityCode) {
+                params.districtCode = cityCode;
+            }
+            log('获取驾校列表入参：', params);
+            url = 'api/driving/list';
+            ajax_Request(url, 'get', 'json', params, function (ret, err) {
+                closedefaultload();
+                if (ret) {
+                    log('获取驾校列表出参：', ret);
+                    if (ret.code === 0 && ret.drivingSchoolList.length > 0) {
+                        var driverSchool_src = $('#driverSchool_src').html();
+                        if (refresh || $('#driverSchool').find('.aui-list-item').length === 0) {
+                            $("#driverSchool").html(doT.template(driverSchool_src)(ret.drivingSchoolList));
+                            //alert_msg('驾校列表刷新成功');
+                        } else {
+                            $("#driverSchool").append(doT.template(driverSchool_src)(ret.drivingSchoolList));
+                        }
+                        api.parseTapmode();
+                        echoInit();
+                    } else {
+                        setMsg(refresh ? '本地区暂无驾校入驻' : '暂无更多');
+                    }
+                    setTimeout(function () {
+                        goLoad(function (ret, err) {
+                            loadList(sortType, sort);
+                        });
+                    }, 100);
+                } else {
+                    setMsg('服务器繁忙，请稍后重试');
+                }
+                setTimeout(function () {
+                    api.refreshHeaderLoadDone();
+                }, 500);
+            });
+        });
+    }
+
+    //设置页面加载的画面
+    function setLoad() {
+        if (refresh || $('#driverSchool').find('.aui-list-item').length == 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+            setTimeout(function () {
+                $('#load_div').html('');
+                // $("#driverSchool").html(doT.template(load_src)(null));
+            }, 500);
+        } else {
+            setTimeout(function () {
+                $('#load_div').html(doT.template(more_src)({
+                    'msg': '加载更多中...',
+                    'img': '../../icon/common/jiazai.gif'
+                }));
+            }, 500);
+        }
+    }
+    
+    function setPreLoading(){
+        $("#driverSchool").html(doT.template(pre_load_src)({
+            'msg': ''
+        }));
+    }
+    //设置页面提示信息
+    function setMsg(msg) {
+        if (refresh || $('#driverSchool').find('.aui-list-item').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+            $('#driverSchool').addClass('none-bottom-style');
+            setTimeout(function () {
+                $("#driverSchool").html(doT.template(msg_src)({
+                    'msg': msg
+                }));
+            }, 500);
+        } else { //原先已经有数据的情况下
+            setTimeout(function () {
+                $('#load_div').html(doT.template(more_src)({
+                    'msg': msg,
+                    'img': ''
+                }));
+            }, 500);
+        }
+    }
+
+    //打开驾校详情页面
+    function openDriverSchool(d_school_name, id, are_name) {
+        param = {
+            'schoolName': d_school_name,
+        };
+        logAppBuryingPoint({name:d_school_name,id:id},'驾校列表','首页');
+        var data = {
+            d_school_name: d_school_name,
+            id: id,
+            are_name: are_name
+        };
+        commonOpenWin('driver_school_detail_win', data);
+    }
+
+    /**----------------------------------驾校列表结束---------------------------------------------*/
+    // 选择是员工还是学员
+    function chooseRole() {
+        // openMessage('温馨提示', '请选择您的身份', '我是学员', '我是员工', 'openEpidemicSituation(0)', 'openEpidemicSituation(1)', {
+        //     closeBtn: true,
+        //     tapClose: true
+        // });
+        logAppBuryingPoint({},'健康码','首页');
+        openEpidemicSituation(0)
+    }
+
+    // 查询是否登记过疫情信息
+    function openEpidemicSituation(type) {
+        if (islogin()) {
+            defaultload('获取信息中');
+            url = "api/learneraboutpneumoniainfo/get-is-into-learner-about-pneumonia-info";
+            params = {
+                learnerId: getUserId(),
+                isWorker: type
+            };
+            log('查询是否登记过疫情信息入参', params);
+            ajax_Request(url, 'get', 'json', params, function (ret, err) {
+                log('查询是否登记过疫情信息出参', ret);
+                api.hideProgress();
+                if (ret) {
+                    if (ret.code == 0) {
+                        if (ret.lsearnerAboutPneumoniaInfoCount.isIntoLearnerAboutPneumoniaInfo == 1) {
+                            openWin1('body_temperature_records_add', 'register_epidemic_situation/body_temperature_records_add', {
+                                infoId: ret.lsearnerAboutPneumoniaInfoCount.id,
+                                type: type
+                            });
+                        } else {
+                            if (type == 0) {
+                                cache_account = $api.getStorage('cache_by_account').cache_account;
+                                if (!cache_account.coachId) {
+                                    log("coachId", cache_account.coachId)
+                                    api.openFrame({
+                                        name: 'common_alert',
+                                        url: '../common/common_alert.html',
+                                        bgColor: 'rgba(0,0,0,0.4)',
+                                        rect: {
+                                            x: 0,
+                                            y: 0,
+                                            w: 'auto',
+                                            h: api.winHeight
+                                        },
+                                        bounces: false,
+                                        pageParam: {
+                                            title: '提示',
+                                            content: '您还没有绑定教练，是否先去绑定教练？',
+                                            sureButton: '去绑定教练',
+                                            sureFunc: 'toMine()',
+                                            cancelButton: '取消',
+                                            cancelFunc: '',
+                                            winName: api.winName,
+                                            frameName: api.frameName,
+                                            /* params:params */
+                                        },
+                                        softInputBarEnabled: true,
+                                        softInputMode: 'resize'
+                                    });
+
+                                    return;
+                                }
+
+                                openWin1('student_win', 'register_epidemic_situation/student_win');
+                            } else {
+                                openWin1('staff_win', 'register_epidemic_situation/staff_win');
+                            }
+                        }
+                    } else {
+                        alert_msg(ret.msg);
+                    }
+                } else {
+                    alert_msg('服务器繁忙，请稍候再试！');
+                }
+            });
+        } else {
+            openLoginHtml();
+        }
+    }
+
+    function toMine() {
+        api.openDrawerLayout({
+            name: 'coach_select_under_school_win',
+            url: '../common/select_coach/coach_select_under_school_win.html',
+            slidBackEnabled: 'true',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            slidToOpenPane: false,
+            slidToClosePane: false,
+            pageParam: {
+                data: params
+            },
+            animation: {
+                type: 'push',
+                subType: "from_right",
+                duration: 300
+            },
+            rightPane: {
+                name: 'driving_coach_win',
+                url: '../common/select_coach/driving_coach_win.html',
+                vScrollBarEnabled: false,
+                hScrollBarEnabled: false,
+                bounces: false,
+                pageParam: {
+                    data: params
+                }
+            }
+        });
+    }
+
+
+    function openWin1(name, url, pageParam) {
+        api.openWin({
+            name: name,
+            url: './' + url + '.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            useWKWebView: false,
+            pageParam: pageParam ? pageParam : {}
+        });
+    }
+
+    function callKefu() {
+    	logAppBuryingPoint({},'联系客服','首页');
+        isSure('提示', '是否拨打客服电话(0575)82202000', '是', '否', function () {
+            window.location.href = 'tel://(0575)82202000';
+        });
+    }
+
+    function toVip() {
+        url = 'api/questionviporder/get-question-vip-order-info-is-buy';
+        params = {
+            learnerId: getUserId()
+        };
+        ajax_Request(url, 'post', 'json', params, function (ret, err) {
+            log('购买vip套餐', ret)
+            if (ret) {
+                if (ret.code == 0) {
+                    if (ret.isBuy == 0) {
+                        api.openWin({
+                            name: 'curriculum_service_win',
+                            url: '../vip_service/question_bank/curriculum_service_win.html',
+                            slidBackEnabled: 'false',
+                            vScrollBarEnabled: 'false',
+                            hScrollBarEnabled: 'false',
+                            reload: true,
+                            useWKWebView: false,
+                            pageParam: {}
+                        })
+                    } else {
+                        api.openWin({
+                            name: 'question_bank_buy_index',
+                            url: '../vip_service/question_bank/question_bank_buy_index.html',
+                            slidBackEnabled: 'false',
+                            vScrollBarEnabled: 'false',
+                            hScrollBarEnabled: 'false',
+                            reload: true,
+                            useWKWebView: false,
+                            pageParam: {}
+                        })
+                    }
+                } else {
+
+                }
+            } else {
+
+            }
+        })
+    }
+
+    //打开实名认证
+    function openAuthentication() {
+        if (islogin()) {
+            api.openWin({
+                name: 'mine_account_auth_win',
+                url: '../mine/mine_account_auth_win.html',
+                slidBackEnabled: 'false',
+                vScrollBarEnabled: 'false',
+                hScrollBarEnabled: 'false',
+                reload: true,
+                useWKWebView: false,
+                pageParam: {}
+            });
+        } else { //賭五毛
+            isSure('提示', '还未登录，是否选择去登录', '是', '否', function () {
+                openLoginHtml();
+            });
+        }
+    }
+	function openLoginHtml(){
+		api.openWin({
+	       name: 'unpassword_login',
+	       url: '../unpassword_login.html',
+	       slidBackEnabled:'true',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       pageParam: ''
+	   });
+	}
+	
+	function invitation_btn(){
+		// api.openDrawerLayout({
+		//     name: 'examination_question_share_win',
+		//     url: '../examination/question_share/examination_question_share_win.html',
+		//     slidBackEnabled: 'true',
+		//     vScrollBarEnabled: 'false',
+		//     hScrollBarEnabled: 'false',
+		//     reload: true,
+		//     pageParam: {
+		//         // data: {
+		//         //     type: 'integral_shop'
+		//         // }
+		//     }
+		// });
+		
+		
+		if (islogin()) {
+			logAppBuryingPoint({},'考前满分押题试卷','首页');
+		    api.openDrawerLayout({
+		        name: 'examination_question_share_win',
+		        url: '../examination/question_share/examination_question_share_win.html',
+				// name: 'performance_ranking_win',
+				// url: '../examination/common/performance_ranking_win.html',
+		        slidBackEnabled: 'true',
+		        vScrollBarEnabled: 'false',
+		        hScrollBarEnabled: 'false',
+		        reload: true,
+		        pageParam: {
+		            data: {
+		                type: 'selected_topic'
+		            }
+		        }
+		    });
+		} else {
+		    openLoginHtml();
+		}
+		
+	}
+	
+	//题库分享窗口
+	function openQuestionShare(){
+		api.openFrame({
+			name: 'common_question_share',
+			url: '../common/common_question_share.html',
+			bgColor: 'rgba(255, 255, 255, 0.2)',
+			rect: {
+				x: 0,
+				y: 0,
+				w: 'auto',
+				h: 'auto'
+			},
+			bgColor: 'rgba(0, 0, 0, 0.3)',
+			animation: {
+				type: "fade", //动画类型（详见动画类型常量）
+				duration: 300 //动画过渡时间，默认300毫秒
+			}
+		});
+	}
+	
+	function expirationChange(){
+		if (islogin()) {
+			logAppBuryingPoint({},'期满换证','首页');
+			api.openDrawerLayout({
+				name: 'expiration_change_win',
+				url: './expiration_change/expiration_change_win.html',
+				// name: 'performance_ranking_win',
+				// url: '../examination/common/performance_ranking_win.html',
+				slidBackEnabled: 'true',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				pageParam: {
+					
+				}
+			});
+		} else {
+			openLoginHtml();
+		}
+	}
+</script>
+</html>

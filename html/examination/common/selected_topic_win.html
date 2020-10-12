@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+    	a.aui-pull-left, a.aui-pull-right {
+    	    color: #35A7FF;
+    	}
+    	header img {
+    	    width: 20px;
+    	}
+		.aui-header{
+			opacity: 0;
+		}
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav" id="aui-header">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+	        <img src="../../../icon/common/icon_header_return.png">
+	    </a>
+	    <div class="aui-title" id="exam_time">
+	    	考前巩固
+	    </div>
+	</header>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var section6Pos;
+	apiready = function(){
+		api.parseTapmode();
+		var section6 = $api.byId('aui-header');
+		$api.fixStatusBar(section6);
+		section6Pos = $api.offset(section6);
+		cache = api.pageParam;
+		init();
+	}
+	
+	function init(){
+		api.openFrame({
+	        name: 'selected_topic_frm',
+	        url: './selected_topic_frm.html',
+	        rect: {
+	           x: 0,
+	           y: section6Pos.h,
+	           w: 'auto',
+	           h: api.winHeight - section6Pos.h
+	        },
+	        bounces: false,
+	        pageParam:cache,
+	        reload:true,
+	        softInputBarEnabled:true,
+	        softInputMode:'resize'
+	    });
+	}
+	
+	function closeWin(){
+		api.closeWin({
+	    });
+	}
+	
+</script>
+</html>

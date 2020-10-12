@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>驾校图片详情</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<style>
+			html{
+    		background: transparent;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background: transparent;
+    		display:flex;
+    	}
+    	.pic-detail{
+    		margin: auto;
+		    position: absolute;
+		    height: 100%;
+		    display: flex;
+			-webkit-transform: scale(0);
+			transform:scale(0);
+			opacity: 0;
+			width: 100%;
+    	}
+    	.pic-detail img{
+		    width: 100%;
+    		margin: auto;
+    	}
+    	.shadow{
+    		width:100%;
+    		height:100%;
+    		background:#000;
+    		opacity:0;
+    		position: absolute;
+    	}
+    	.trans {
+            /*transition*/
+            -webkit-transition: 0.3s ease;
+            -moz-transition: 0.3s ease;
+            -ms-transition: 0.3s ease;
+            -o-transition: 0.3s ease;
+            transition: 0.3s ease;
+        }
+        .show{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+        }
+        .in{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+		}
+		.download{
+			position: fixed;
+			width: 100%;
+			height: 1rem;
+			line-height: 1rem;
+			text-align: center;
+			color: #fff;
+			font-size: 0.8rem;
+			top: 2rem;
+		}
+    </style>
+	</head>
+	<body>
+		<div class='shadow'></div>
+		<div class='pic-detail trans'>
+			<!-- <img alt="" id="ms" src=""/> -->
+		</div>
+		<div class="download aui-hide">
+			长按图片下载
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var path, flag,paths,paths1,fileName;
+		apiready = function() {
+			api.parseTapmode();
+			path = api.pageParam.path;
+			var imgReg = /(.*)\.(jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga)$/;
+			console.log(imgReg.test(path))
+			if(imgReg.test(path)){
+				console.log(123)
+				paths = path.split('/');
+				fileName = paths[paths.length-1];
+			}else{
+				console.log(456)
+				paths = path.split("?")[0];
+				paths1 = paths[1].split("=");
+				if(paths == 'https://file.mohan-tech.com/fileCenter/api/file/getFileAuth'){
+					path = path+'&style=image/format,jpg';
+					fileName = paths1[1]+'.jpg';
+				}else if(imgReg.test(paths)){
+					paths1 = paths.split('/');
+					fileName = paths1[paths1.length-1];
+				}else{
+					fileName = Number(new Date()) + '.jpg'
+				}
+			}
+			flag = api.pageParam.flag;
+			if (flag == true) {
+				$(".download").removeClass('aui-hide');
+
+				api.addEventListener({
+					name: 'longpress'
+				}, function(ret, err) {
+					openMessage('温馨提示', '是否下载该图片', '下载', '取消', 'downloadImg()', '', null)
+				});
+			}
+			$('.pic-detail').append('<img onload="fnLoadImage(this)" data-url="' + path +
+				'" alt="" id="ms" src="../../icon/common/icon_read_load.png"/>');
+			//$('#ms').attr('src',path);
+			$('.pic-detail').addClass('in');
+		}
+
+		var isLoad = true;
+
+		function fnLoadImage(ele_) {
+			if (isLoad) {
+				isLoad = false;
+				var dataUrl = $api.attr(ele_, 'data-url');
+				if (dataUrl) {
+					/*api.imageCache({
+						url:dataUrl
+					},function(ret,err){
+						if(ret){
+							ele_.src = ret.url;
+						}
+					});*/
+					ele_.src = dataUrl;
+				}
+			}
+		}
+
+		//注释部分表示判断是否是点击图片
+		$(".pic-detail").bind("click", function(e) {
+			/*if(e.target == $("#ms")[0]){
+				return;
+			} else {*/
+			$('.pic-detail').removeClass('in');
+			setTimeout(function() {
+				api.closeFrame({
+					name: 'common_pic_detail_frm'
+				});
+			}, 300);
+			/*}*/
+		})
+
+		function downloadImg() {
+			api.download({
+				url: path,
+				savePath: 'fs://'+fileName,
+				report: true,
+				cache: true,
+				allowResume: true,
+				encode:false
+			}, function(ret, err) {
+				log('下载成功',ret)
+				if (ret.state == 1) {
+					//下载成功
+					api.saveMediaToAlbum({
+					    path: 'fs://'+fileName
+					}, function(ret, err) {
+						log('++++++++++++++',ret)
+					    if (ret && ret.status) {
+					        alert_msg('图片保存成功，保存路径:手机存储/DCIM/Camera/'+fileName)
+					    } else {
+					        alert_msg('图片保存失败');
+					    }
+					});
+				} else {
+
+				}
+			});
+		}
+	</script>
+</html>

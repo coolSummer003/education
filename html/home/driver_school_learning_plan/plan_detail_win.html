@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>驾校套餐</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+		#title{
+		    font-weight: normal;
+		}
+		footer{
+	        height: 2.5rem;
+		    position: fixed;
+		    bottom: 0;
+		    width: 100%;
+		    z-index: 11;
+		    background: #F1F1F1;
+		    left: 0;
+    	}
+    	footer img{
+		    height: 1rem;
+    		margin-bottom: -0.3rem;
+    	}
+    	.b_l_1{
+		    width: 24.8%;
+		    height: 2.5rem;
+		    /*margin-right: 1%;*/
+		    border-right:1px solid #f5f5f5;
+		    text-align: center;	
+		    float: left;
+	        background: #FFFFFF;
+	        color: #717372;
+    	}
+    	.b_l_1 span{
+    		font-size: 0.6rem;
+    	}
+    	.b_l_2{
+	        width: 40%;
+		    height: 2.5rem;
+			line-height: 2.5rem;
+		    float: left;
+		    border-right:1px solid #f5f5f5;
+		    text-align: center;
+	        background: #FFFFFF;
+	        color: #717372;
+    	}
+    	.b_l_2 span{
+    		font-size: 0.8rem;
+			color: #323C41;
+    	}
+    	.unable{
+    		width: 100%;
+		    float: right;
+		    height: 2.5rem;
+		    background: #1E8DD8;
+		    color: #FFF;
+		    font-size: 0.9rem;
+		    line-height: 2.5rem;
+		    text-align: center;
+    	}
+    	.unable:active{
+    		background:#89BCE0;
+    	}
+    	.buy{
+		    background: #1E8DD8;
+    	}
+    	.buy:active{
+    		background:#1E8DD8;
+    	}
+    	
+    	#plan_name{
+    		font-weight:normal;
+    	}
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin()">
+            <img src="../../../icon/common/icon_header_return.png">
+        </a>
+        <div class="aui-title" id="plan_name">
+        	
+        </div>
+        <a class="aui-pull-right aui-btn">
+            <img src="../../../icon/common/icon_support.png" alt="" class='icon_img'/>
+        </a>
+    </header>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var headPos;
+	apiready = function(){
+		api.parseTapmode();
+		var header = $api.byId('aui-header');
+		$api.fixStatusBar(header);
+        headPos = $api.offset(header);
+		cache = api.pageParam;
+		$('#plan_name').html(cache.plan_name);
+		//console.log('cache'+JSON.stringify(cache));
+		init();
+	}
+	var sign_up_action = 'driver_plan_sign_up';
+	function init(){
+		api.openFrame({
+            name: 'plan_detail_frm',
+            url: './plan_detail_frm.html',
+            bgColor:'#efeff4',
+            rect: {
+                x: 0,
+                y: headPos.h,
+                w: 'auto',
+                h: api.winHeight - headPos.h
+            },
+            bounces: false,
+            pageParam:{
+            	data:cache
+            },
+            reload:true,
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+        //驾校报名动作监听
+        toEventListener(sign_up_action,function(ret,err){
+			driver_sign_up(ret.value);
+		});
+		//选择驾考类型动作监听
+		/*toEventListener('licenseType_data',function(ret,err){
+			cache.licenseTypeList = ret.value;
+		});*/
+	}
+	//驾校报名
+	function driver_sign_up(flag){
+		//自定义消息
+		params = {
+			event_action:sign_up_action
+		}
+		if(islogin()){//已登录
+			if(isauth()){//已认证
+				if(flag != ''){
+					//因为登录关闭动画需要延迟
+					setTimeout(function(){
+						judgeHasContract();
+						//commonOpenWin('driver_school_pre_sign_up_win',cache);
+					},350);
+				}else{
+					judgeHasContract();
+					//commonOpenWin('driver_school_pre_sign_up_win',cache);
+				}
+			}else{
+				if(flag != ''){
+					setTimeout(function(){
+						openAuthHtml(params);
+					},350);
+				}else{
+					openAuthHtml(params);
+				}
+			}
+		}else{
+			openLoginHtml(params);
+		}
+	}
+	
+	/**
+	 * 判断是否签了合同 
+	 */
+	function judgeHasContract(){
+		defaultload('获取合同相关信息中');
+		url = 'api/sign-contract/get-online-signing-info';
+		params = {
+			contract:{
+				learner:{
+					id:getUserId()
+				},
+				organizationId:cache.id,
+				type:'042001'
+			}
+		}
+		
+		log('合同传参',params);
+		
+		ajax_Request(url, "get", "json", params, function(ret,err){
+			api.hideProgress();
+			log('获得的合约信息',ret);
+			if(ret&&ret.code == 0){
+				if(ret.contractList.length > 0){//存在合约信息就不需要在线签约，直接进入下一步
+					
+					esc_function('driver_school_detail_win','driver_school_detail_frm','driver_sign_up()');
+				}else{
+					params = {
+						schoolId:cache.id,
+						flag:2
+					}
+					//定义完成驾校签约后的监听事件
+					toEventListener('finishContractNext',function(ret,err){
+						setTimeout(function(){
+							api.hideProgress();
+							esc_function('driver_school_detail_win','driver_school_detail_frm','driver_sign_up()');
+						},1500);
+					});
+					openSignContract(params);//打开在线签约共通
+				}
+			}else{
+				alert_msg('获取合约失败');
+			}
+		});
+	}
+	
+	/**
+	 * 打电话 
+	 */
+	function onlineContact(){
+		esc_function('driver_school_detail_win','driver_school_detail_frm','onlineContact()');
+	}
+	
+	/**
+	 * 关闭该win 
+	 */
+	function closeWin(){
+		api.closeWin({
+			name:'plan_detail_win'
+        });
+	}
+</script>
+</html>

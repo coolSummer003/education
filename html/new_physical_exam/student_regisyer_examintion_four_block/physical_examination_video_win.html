@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>体检录制</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html{
+    		background-color: #FFF;
+    	}
+    	header{
+    		height:1px;
+    		background:#FFF;
+    	}
+    	header img {
+		    width: 20px;
+		}
+		a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		section ul{
+			height:1.3rem;
+		    background: #FAFAFA;
+		}
+		section li{
+			height: 1.3rem;
+		    float: left;
+		    font-size: 0.7rem;
+		    padding: 0rem 0.3rem;
+		    line-height: 1.3rem;
+		}
+		.active{
+			color:#DC251F;
+			font-weight:bold;
+		}
+		.demo{
+			position:fixed;
+			height:40%;
+			background:#000000;
+			width:50%;
+			bottom:0;
+			left:0;
+		}
+		.w-red{
+    		color:#DC251F !important;
+    	}
+    	.txt-coloer{
+    		color:#3F86FF !important;
+    	}
+    </style>
+	</head>
+	<body>
+		<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeVideo()">
+				<img src="../../../icon/common/icon_header_return.png">
+			</a>
+			<div class="aui-title" id="common_title">
+				<!-- 第1项-辨色力/共5项 -->
+				<!-- 第1项-听力/共4项 -->
+			</div>
+			<a class="aui-pull-right aui-btn txt-coloer">
+
+			</a>
+		</header>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var videoRecorder; //录制视频模块
+		var headerPos;
+		var headerH;
+		var fs;
+		var systemType;
+		var limitTime = 7 * 60; //设置问卷提交时限，单位秒
+		var dangertime = 1 * 60; //危险时间
+		var isfinish = false; //视频录制是否完成
+		var videoLists = [];
+		var videoBlock; //录制的视频块 0 1 2 3 4
+		// var resumeFalg = true;
+		apiready = function() {
+			api.parseTapmode();
+			cache = api.pageParam.data.cache;
+			videoBlock = api.pageParam.data.videoBlock;
+			if (videoBlock != 0) {
+				exam_item_index = videoBlock - 1;
+				$('#common_title').html(examination_list[exam_item_index]);
+				maxtime = 3 * 60;
+			} else {
+				$('#common_title').html(examination_list[0]);
+			}
+			log("-----视频传来参数----", cache)
+			log("-----视频传来参数----", videoBlock)
+			log("-----视频传来参数----", exam_item_index)
+			
+			var header = $api.byId('aui-header');
+			fs = api.require('fs');
+			$api.fixStatusBar(header);
+			headerPos = $api.offset(header);
+			headerH = headerPos.h;
+			cache.headerH = headerH;
+			log('', cache)
+			videoRecorder = api.require('videoRecorder');
+			systemType = api.systemType;
+
+			api.addEventListener({
+				name: 'offline'
+			}, function(ret, err) {
+				// alert('断网了');
+				openMessage('温馨提示', '检测到您的网络已断开，请确认网络状态后重新体检', '忍痛离开', '', 'closeVideoRecode()', '', null);
+			});
+
+
+			init();
+		}
+		var timer;
+
+		function init() {
+			//添加对提交做题记录的监听
+			toEventListener('exam_item_result', function(ret, err) {
+				openFramecCurrent(ret.value);
+			});
+			//添加视频体检结束记录的监听
+			toEventListener('exam_item_finish', function(ret, err) {
+				videoLists.push(ret.value.videoId)
+				stopRecorder(ret.value);
+				log('录制完一块的数据videoLists:+++++++++++', videoLists)
+			});
+
+			toEventListener('exam_item_finish_block', function(ret, err) {
+				videoLists.push(ret.value.videoId)
+				stopRecorder(ret.value);
+				log('录制完一块的数据', ret.value)
+				log('录制完一块的数据videoLists:+++++++++++', videoLists)
+				setTimeout(function() {
+					openFramecCurrent(ret.value);
+				}, 500)
+				startTimeCal()
+			})
+
+			toEventListener('exam_item_start_block', function(ret, err) {
+				log('进来了,数据+++++++++++++', ret.value)
+				openVideoRecorder(ret.value);
+				if (ret.value == 4) {
+					setTimeout(function() {
+						setRectAgain();
+					}, 500)
+				}
+
+			})
+
+			//openFrameCommon('physical_examination_video_attention_frm',cache,0,api.winHeight,false);
+		}
+
+		/**
+		 * 开始倒计时 
+		 */
+		function startTimeCal() {
+			setTimeDown();
+			timer = setInterval(setTimeDown, 1000);
+		}
+
+		//倒计时
+		var maxtime = limitTime;
+
+		function setTimeDown() {
+			if (maxtime >= 0) {
+				minutes = Math.floor(maxtime / 60);
+				seconds = Math.floor(maxtime % 60);
+				msg = time_2(minutes) + ":" + time_2(seconds);
+				// log('时间走动',msg)
+				$('.aui-pull-right').html(msg);
+				if (maxtime == dangertime) {
+
+					openMessage_i_examination('温馨提示', '视频录制最多可录制'+Number(limitTime/60)+'分钟，剩余1分钟', 'timeEnd', '知道了', '', '', '', null);
+					// openMessage('温馨提示','视频录制最多可录制7分钟，还剩余1分钟','知道了','','','',null);
+
+
+					$('.aui-pull-right').addClass('w-red');
+				};
+				--maxtime;
+			} else {
+				clearInterval(timer);
+				logAppBuryingPoint({id:cache.hospitalId,name:cache.hospitalName},'超时录制','视频采集','医院列表','首页');
+				openMessage('温馨提示', '视频录制时间已超'+Number(limitTime/60)+'分钟', '结束', '', 'closeVideoRecode()', '', null);
+			}
+		}
+
+		//处理时间格式
+		function time_2(time) {
+			if (time == 0) {
+				return "00";
+			} else if (time.toString().length == 1) {
+				return "0" + time;
+			} else {
+				return time;
+			}
+		}
+
+		//判断原地址是否含有文件，有的话删除，虽然模块不要求这么做
+		var data;
+
+		function judgeExamVideo(orderId, modular) {
+			log('', orderId)
+			log('', orderId + '-' + modular)
+			deleteExamVideo(orderId + '-' + modular, function() {
+				openVideoRecorder(modular);
+			});
+		}
+
+		//打开摄像头
+		function openVideoRecorder(num) {
+			//查看是否有相机权限
+			console.log("打开地方" + num);
+			opWithPermission('camera', function() {
+				//查看是否有麦克风权限
+				opWithPermission('microphone', function() {
+					videoRecorder.open({
+						rect: {
+							x: 0.025 * api.winWidth,
+							y: (api.winHeight - headerH) * 0.5 + headerH,
+							w: api.winWidth * 0.475,
+							h: (api.winHeight - headerH) * 0.475
+						},
+						// quality: "low",
+						camera: 'front',
+						saveToAlbum: false,
+						save: {
+							path: 'fs://videoRecorder',
+							name: 'examVideo' + cache.orderId + '-' + num
+						},
+						fixedOn: api.frameName,
+						fixed: false
+					}, function(ret) {
+						console.log("打开录制参数+" + JSON.stringify(ret))
+						if (ret && ret.eventType == 'show') {
+							//openVideoTool();//打开视频录制工具栏
+							//startRecorder();
+							setTimeout(function() {
+								startRecorder(num);
+							}, 500)
+						}
+					});
+
+
+
+					//添加返回监听
+					api.addEventListener({
+						name: 'keyback'
+					}, function(ret, err) {
+						alertVideoMsg();
+					});
+					if (videoBlock == 0 && num == 1) {
+						openFramecCurrent(cache);
+					} else if (videoBlock != 0) {
+						openFramecCurrent(cache);
+					}
+				}, function(permission_name) {
+					openMessage('温馨提示', '您未获取' + permission_name + '权限', '重新获取', '放弃', 'openVideoRecorder()', 'closeWin()', null);
+				});
+			}, function(permission_name) {
+				openMessage('温馨提示', '您未获取' + permission_name + '权限', '重新获取', '放弃', 'openVideoRecorder()', 'closeWin()', null);
+			});
+		}
+
+		//关闭当前页面时关闭视频录制
+		function alertVideoMsg() {
+			//未完成情况下
+			if (!isfinish) {
+
+				openMessage('提示', '在线体检正在进行，确定结束？', '对，不想录了', '继续录制', 'closeVideoRecode()', '', null);
+
+				// isSure('提示','在线体检正在进行，确定结束？','对，不想录了','继续录制',function(){
+				// 	closeVideoRecode();
+				// });
+			} else {
+				closeWin();
+			}
+		}
+
+		//关闭视频录制
+		function closeVideoRecode() {
+			logAppBuryingPoint({id:cache.hospitalId,name:cache.hospitalName},'不想录了','视频采集','医院列表','首页');
+			videoRecorder.stop();
+			alert_msg('视频录制结束');
+			deleteExamVideo(cache.orderId, function() {
+				closeWin();
+
+			});
+		}
+
+		//开始录制
+		function startRecorder(num) {
+			api.addEventListener({
+				name: 'resume'
+			}, function(ret, err) {
+				// if(resumeFalg == true){
+				openMessage('温馨提示', '在录制过程中，检测到您有切换后台操作，请您重新体检', '忍痛离开', '', 'closeVideoRecode()', '', null);
+				// }
+
+			});
+			// if (videoBlock == 0 && exam_item_index == 0) {
+			// 	alert_msg('视频开始录制');
+			// }else{
+			// 	alert_msg('视频开始录制');
+			// }
+
+			//保持屏幕常亮
+			api.setKeepScreenOn({
+				keepOn: true
+			});
+			videoRecorder.start({
+				timer: 300,
+				save: {
+					path: 'fs://videoRecorder',
+					name: 'examVideo' + cache.orderId + '-' + num,
+					type: 'mpeg4'
+				}
+			});
+		}
+
+		//停止录像
+		function stopRecorder(examResult) {
+			log('支付检测数据++++++++++', examResult)
+
+			api.addEventListener({
+				name: 'resume'
+			}, function(ret, err) {
+
+			});
+			console.log('完成录像');
+			videoRecorder.stop();
+
+			//保持屏幕常亮
+			//停止计时
+			clearInterval(timer);
+			api.setKeepScreenOn({
+				keepOn: false
+			});
+
+			//将用户做题信息放入app缓存中(以exam_result+报名记录id为key)，不管用户是否选择直接付款上传视频，该缓存在用户付款完、上传视频完之后清除
+			var cache_by_account = $api.getStorage('cache_by_account');
+			cache_by_account['exam_result' + examResult.videoId] = examResult;
+			cache_by_account['videoLists' + examResult.exaId] = videoLists;
+			$api.setStorage('cache_by_account', cache_by_account);
+
+			log('获取的体检数据', $api.getStorage('cache_by_account'));
+			setTimeout(function() {
+				// resumeFalg = false;
+
+				closeRecorder();
+			}, 500);
+			//判断是否已支付，如果支付成功则直接上传
+			console.log(videoLists.length)
+			if (videoBlock == 0 && videoLists.length == '4') {
+				judgeToPay(examResult);
+				isfinish = true; //视频录制完成
+			} else if (videoBlock != 0) {
+				var params = {
+					orderId: examResult.exaId,
+					videoBlock: videoBlock,
+					videoLists: videoLists,
+					learnerId: cache.learnerId,
+					type:true
+				}
+				isfinish = true; //视频录制完成
+				// judgeToPay(examResult);
+				openResultWin(params)
+				// setTimeout(function(){
+				// 	sendEvent('uploadVideo', params)
+				// },500)
+			}
+		}
+
+		/**
+		 * 判断是否该录制的视频需要支付 
+		 */
+		function judgeToPay(examResult) {
+			defaultload('检测订单中...');
+			url = 'api/examination/get-pay-status';
+			params = {
+				orderId: examResult.exaId //订单id
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				api.hideProgress();
+				log('检测该订单是否需要支付', ret);
+				sendEvent('hospital_refresh_list', {});
+				//esc_function('index','mine','func_init(0)');//渲染【我的】网上体检
+				//esc_function('mine_common_win','record_hospital_examintion_list_frm','init()');//调用医院体检订单刷新，可能会报错
+				if (ret) {
+					if (ret.code == 0) {
+						//openMessage('温馨提示','视频录制完毕，是否上传','上传','暂不','openVideoUpload("'+examResult.exaId+'","'+api.winName+'")','closeWin()',null);
+						var datas = {
+							orderId: examResult.exaId,
+							videoBlock: videoBlock,
+							videoLists: videoLists,
+							learnerId: cache.learnerId,
+							type:true
+						}
+						openResultWin(datas)
+
+						// openVideoUpload(videoId,api.winName);
+					} else {
+						//openMessage('视频录制完毕','缴费成功后医院将审核您的体检记录','前去缴费','不要了','openVideoPay("'+examResult.exaId+'")','closeWin()',null);
+						openVideoPay(examResult.exaId, videoBlock, videoLists);
+					}
+				} else {
+					alert_msg('订单检测失败');
+				}
+			});
+		}
+
+		/**
+		 * 打开视频上传页面 videoLists
+		 */
+		// function openVideoUpload(orderId,winName){
+
+		// 	uploadVideoExam(orderId,winName,function(){
+		// 		//esc_function('index','mine','func_init(0)');
+		// 		sendEvent('uploadVideoFinish',{});
+		// 		sendEvent('hospital_refresh_list',{});
+		// 		//esc_function('mine_common_win','record_hospital_examintion_list_frm','init()');//调用医院体检订单刷新，可能会报错
+		// 		closeWin();
+		// 	});
+		// }
+		function openVideoUpload(videoId, winName) {
+			uploadVideoExam(videoLists[videoId], winName, function(ret) {
+				//esc_function('index','mine','func_init(0)');
+				log('上传显示数据', ret)
+				log('上传显示数据', videoId)
+				if (ret.progress == 100 && videoId == 4) {
+					sendEvent('uploadVideoFinish', {});
+					sendEvent('hospital_refresh_list', {});
+					//esc_function('mine_common_win','record_hospital_examintion_list_frm','init()');//调用医院体检订单刷新，可能会报错
+					closeWin();
+				} else if (ret.progress == 100 && (videoId == 1 || videoId == 2 || videoId == 3)) {
+					openVideoUpload(videoId, winName)
+				}
+
+			});
+		}
+
+		/**
+		 * 打开视频支付页面 
+		 */
+		function openVideoPay(order_id, videoBlock, videoLists) {
+			//打开上传视频所需要的付款页面
+			params = {
+				orderId: order_id, //订单id
+				from: 'video_luzhi', //标记来源于视频录制页面
+				videoBlock: videoBlock,
+				videoLists: videoLists,
+				type:true
+			}
+			api.openWin({
+			    name: 'physical_examination_pay_for_win',
+			    url: './physical_examination_pay_for_win.html',
+			    slidBackEnabled:'false',
+			    vScrollBarEnabled:'false',
+			    hScrollBarEnabled:'false',
+			    reload:true,
+			    useWKWebView:false,
+			    pageParam: {
+			        data:params
+			    }
+			});
+		}
+
+		//关闭录像机
+		function closeRecorder() {
+			videoRecorder.close();
+		}
+
+		//关闭视频录制页面
+		function closeVideo() {
+			alertVideoMsg();
+		}
+		var title = '';
+		var examination_list = [{
+				'frameName': 'physical_examination_listen_frm',
+				'frameTitle': '第1项-听力/共4项'
+			},
+			{
+				'frameName': 'physical_examination_color_frm',
+				'frameTitle': '第2项-辨色力/共4项'
+			},
+			{
+				'frameName': 'physical_examination_eye_frm',
+				'frameTitle': '第3项-视力/共4项'
+			},
+			{
+				'frameName': 'physical_examination_limb_frm',
+				'frameTitle': '第4项-头部颈部躯干四肢信息采集/共4项'
+			}
+		]
+		var exam_item_index = 0;
+
+		function openFramecCurrent(examResult) {
+			console.log(exam_item_index)
+			log('', examResult)
+			if (examResult.videoNodeList != undefined) {
+				minutes = Math.floor((limitTime - maxtime) / 60);
+				seconds = Math.floor((limitTime - maxtime) % 60);
+				msg = time_2(minutes) + ":" + time_2(seconds);
+				//视频节点
+				examResult.videoNodeList.push(msg);
+			}
+			console.log("打开frame----" + JSON.stringify(examResult))
+			
+			if(exam_item_index == 0){
+				logAppBuryingPoint({id:cache.hospitalId,name:cache.hospitalName},'听力采集','视频采集','医院列表','首页');
+			}
+			
+			if (exam_item_index == 1) {
+				logAppBuryingPoint({id:cache.hospitalId,name:cache.hospitalName},'辨色力采集','视频采集','医院列表','首页');
+				api.closeFrame({
+					name: 'physical_examination_listen_frm'
+				});
+			}
+			if (exam_item_index == 2) {
+				logAppBuryingPoint({id:cache.hospitalId,name:cache.hospitalName},'视力采集','视频采集','医院列表','首页');
+				api.closeFrame({
+					name: 'physical_examination_color_frm'
+				});
+
+				api.closeFrame({
+					name: 'physical_examination_listen_frm'
+				});
+				// rightBord(); 
+				console.log("进来重设" + headerH)
+				// setRectAgain();
+			}
+
+			if (exam_item_index == 3) {
+				logAppBuryingPoint({id:cache.hospitalId,name:cache.hospitalName},'四肢信息采集','视频采集','医院列表','首页');
+				api.closeFrame({
+					name: 'physical_examination_color_frm'
+				});
+				api.closeFrame({
+					name: 'physical_examination_eye_frm'
+				});
+				api.closeFrame({
+					name: 'physical_examination_listen_frm'
+				});
+
+				console.log("进来重设" + headerH)
+				closeFaceKuang();
+				// setRectAgain();
+				// videoRecorder.setRect({
+				//     rect: {
+				//        x: 0.025*api.winWidth,
+				//        y: (api.winHeight - headerH)*0.5 + headerH*0.8,
+				// 	   w: api.winWidth*0.95,
+				// 	   h: (api.winHeight - headerH)*0.5
+				//     }
+				// });
+			}
+			console.log(examination_list[exam_item_index].frameName)
+			api.openFrame({
+				name: examination_list[exam_item_index].frameName,
+				url: '../physical_examination_item_four_block/' + examination_list[exam_item_index].frameName + '.html',
+				// name: 'physical_examination_color_frm',
+				// url: '../physical_examination_item/physical_examination_color_frm.html',
+				bgColor: 'rgba(0,0,0,0)',
+				animation: {
+					type: "none", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300
+				},
+				rect: {
+					x: 0,
+					y: headerH,
+					w: 'auto',
+					h: api.frameHeight - headerH
+				},
+				progress: {
+					type: 'page',
+					color: '#DC251F'
+				},
+				reload: true,
+				bounces: false,
+				pageParam: {
+					examResult: examResult,
+					videoBlock: videoBlock
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+
+
+
+			// if(exam_item_index == 2){
+			// 	closeFaceKuang();//视力检测结束则关闭人脸识别
+			// }
+			$('#common_title').html(examination_list[exam_item_index].frameTitle);
+			exam_item_index++;
+		}
+
+		//显示隐藏type： 0显示  1隐藏
+		function setVideoRecorderShow(type) {
+			if (type == 0) {
+				videoRecorder.show();
+			} else {
+				videoRecorder.hide();
+			}
+		}
+
+		//全屏
+		function setRectAgain() {
+			console.log("设置全屏----+++---")
+			videoRecorder.setRect({
+				rect: {
+					x: 0,
+					y: headerH,
+					w: api.frameWidth,
+					h: api.frameHeight
+				}
+			});
+		}
+
+		//下一步
+		function next() {
+			api.closeFrame({
+				name: 'physical_examination_color_frm'
+			});
+		}
+
+		function rightBord() {
+			videoRecorder.setRect({
+				rect: {
+					x: 0.5 * api.winWidth,
+					y: (api.winHeight - headerH) * 0.5 + headerH,
+					w: api.winWidth * 0.475,
+					h: (api.winHeight - headerH) * 0.475
+				}
+			});
+		}
+
+		function rightBordTwo() {
+			videoRecorder.setRect({
+				rect: {
+					x: 0.025 * api.winWidth,
+					y: (api.winHeight - headerH) * 0.5 + headerH,
+					w: api.winWidth * 0.475,
+					h: (api.winHeight - headerH) * 0.475
+				}
+			});
+		}
+
+		//打开人脸识别框
+		function openFaceKuang() {   
+			api.openFrame({
+				name: 'common_video_kuang',
+				url: '../common_video_kuang.html',
+				bgColor: 'rgba(0,0,0,0.3)',
+				rect: {
+					x: 0.025 * api.winWidth,
+					y: (api.winHeight - headerH) * 0.5 + headerH,
+					w: api.winWidth * 0.475,
+					h: (api.winHeight - headerH) * 0.475
+				},
+				bounces: false,
+				pageParam: {
+					type: '1'
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+
+		function closeFreamea() {
+			api.closeFrame({
+				name: 'common_video_kuang'
+			});
+		}
+		//打开人脸识别框
+		function openFaceKuangTwo() {
+			api.openFrame({
+				name: 'common_video_kuang',
+				url: '../../common/common_video_kuang.html',
+				bgColor: 'rgba(0,0,0,0.3)',
+				rect: {
+					x: 0.5 * api.winWidth,
+					y: (api.winHeight - headerH) * 0.5 + headerH,
+					w: api.winWidth * 0.476,
+					h: (api.winHeight - headerH) * 0.475
+				},
+				bounces: false,
+				pageParam: {
+					type: '1'
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+		//打开体检step4、step5的人形框
+		// // function openRenKuang(){
+		// 	api.openFrame({
+		//         name: 'common_video_kuang',
+		//         url: '../../common/common_video_kuang.html',
+		//         // bgColor: 'rgba(0,0,0,0.3)',
+		//         rect: {
+		//             x: 0.25*api.winWidth,
+		//             y: (api.winHeight - headerH)*0.5 + headerH*0.8,
+		//             w: api.winWidth*0.475,
+		//             h: (api.winHeight - headerH)*0.5
+		//         },
+		//         bounces: false,
+		//         pageParam:{
+		//         	type:'2'
+		//           },
+		//         softInputBarEnabled:true,
+		//         softInputMode:'resize'
+		//     });
+		// }
+		//人脸识别逻辑
+		var access_token;
+		var startTime = new Date();
+
+		function startUserDetect() {
+			access_token = $api.getStorage('access_token');
+			console.log('截图开始时间' + (new Date()).Format('HH:mm:ss:S'));
+			if (access_token == undefined || access_token == null || access_token == '') {
+				alert_msg('人脸识别模块未生效');
+				return;
+			}
+			//console.log('开始人脸识别逻辑');
+			videoRecorder.takePhoto({
+				album: false,
+				path: 'fs://videoRecorder/userDetect' + (Math.floor(Math.random() * 999999)) + '.jpg',
+				quality: 0.1
+			}, function(ret) {
+				//log('视频截图',ret);
+				console.log('截图结束时间' + (new Date()).Format('HH:mm:ss:S'));
+				var status = systemType == "ios" ? ret.status : ret.state;
+				if (status) {
+					picToBase64(ret.path, function(imgBase64) {
+						picDecte(imgBase64);
+					});
+				} else {
+					console.log('截图视频录像失败');
+				}
+			});
+		}
+
+		//人脸识别
+		var image = new Image()
+		var imgWidth; //截取到的图像宽度，单位像素
+		var imgHeight; //截取到的图像高度，单位像素
+		function picDecte(imgBase64) {
+			//console.log('进入图片人脸识别逻辑');
+			//console.log('人脸识别开始时间'+(new Date()).Format('HH:mm:ss:S'));
+			var endTime = new Date();
+			image.onload = function() {
+				imgWidth = image.width;
+				imgHeight = image.height;
+				imgBase64 = imgBase64.replace('data:image/png;base64,', '');
+				api.ajax({
+					url: 'https://aip.baidubce.com/rest/2.0/face/v3/detect?access_token=' + access_token,
+					method: 'post',
+					tag: url,
+					timeout: 30,
+					dataType: 'json',
+					headers: {
+						"Content-Type": "application/json"
+					},
+					data: {
+						body: {
+							image: imgBase64,
+							image_type: 'BASE64',
+							face_field: 'beauty,quality'
+						}
+					}
+				}, function(ret, err) {
+					log('人脸识别ret', ret);
+					//console.log('人脸识别结束时间'+(new Date()).Format('HH:mm:ss:S'));
+					if (ret && ret.error_code == 0) {
+						judgePic(ret.result, imgWidth, imgHeight);
+					} else {
+						errHandle('人脸识别失败，面部请放入方框内');
+					}
+				});
+			}
+			image.src = imgBase64;
+		}
+
+		var errNum = 0; //不符合要求次数，3次封顶
+		var successNum = 0; //符合要求次数
+		var widthLimit = 0.4; //脸部宽度限制
+		var heightLimit = 0.4; //脸部高度限制
+		var topMinLimit; //脸部顶部最小限制
+		var topMaxLimit; //脸部顶部最大限制
+		var leftMinLimit; //脸部左部最小限制
+		var leftMaxLimit; //脸部左部最大限制
+		//根据返回数据识别所传照片
+		function judgePic(result, imgWidth, imgHeight) {
+			//console.log('图片宽度：'+imgWidth+'像素');
+			//console.log('图片高度：'+imgHeight+'像素');
+			//api.fsDir('fs://videoRecorder');
+			if (result.face_num == 1) { //脸数量
+				if (result.face_list[0].quality.completeness == 1) { //脸不超过边框
+					console.log("脸占的比例-宽" + (result.face_list[0].location.width / imgWidth));
+					console.log("脸占的比例-高" + (result.face_list[0].location.height / imgHeight));
+					console.log("脸在画面的位置-left" + (result.face_list[0].location.left / imgWidth));
+					console.log("脸在画面的位置-top" + (result.face_list[0].location.top / imgHeight));
+					//脸没有超过截图中图片边缘
+					if ((result.face_list[0].location.width / imgWidth) < widthLimit &&
+						(result.face_list[0].location.height / imgHeight) < heightLimit) {
+						//脸的大小符合要求，开始脸的位置校验
+						topMinLimit = systemType == 'ios' ? 0.5 : 0.25;
+						topMaxLimit = systemType == 'ios' ? 0.75 : 0.45;
+						leftMinLimit = systemType == 'ios' ? 0.3 : 0.25;
+						leftMaxLimit = systemType == 'ios' ? 0.6 : 0.45;
+						if ((result.face_list[0].location.left / imgWidth) > leftMinLimit &&
+							(result.face_list[0].location.left / imgWidth) < leftMaxLimit &&
+							(result.face_list[0].location.top / imgHeight) > topMinLimit &&
+							(result.face_list[0].location.top / imgHeight) < topMaxLimit) {
+							successHandle(); //面部在显示的方框内
+						} else {
+							errHandle('请将面部保持在方框内'); //脸的大小符合，位置不对
+						}
+					} else {
+						errHandle('请将面部保持在方框内'); //脸的大小不符合
+					}
+				} else {
+					errHandle('面部请勿超过视频边缘');
+				}
+			} else {
+				errHandle('请保证视频中有且只有一人');
+			}
+		}
+		//视力检测面部不符合要求逻辑处理
+		var timingAction;
+		var isAllowAttention = true; //是否允许人脸识别
+		function errHandle(msg) {
+			if (isAllowAttention) {
+				successNum = 1;
+				if (errNum < 3) {
+					errNum++;
+					alert(msg);
+					//2秒后再次执行人脸识别
+					timingAction = setTimeout(function() {
+						startUserDetect();
+					}, 3000);
+				} else {
+					alert('视力检测连续三次以上不符合要求，视频录制结束');
+					closeVideoRecode();
+					return;
+				}
+			} else {
+				console.log('不再允许人脸识别');
+			}
+		}
+
+		//视力检测面部符合要求逻辑处理
+		function successHandle() {
+			console.log('符合要求');
+			errNum = 0; //错误次数初始化为0
+			successNum++;
+			//3*n秒后执行
+			timingAction = setTimeout(function() {
+				startUserDetect();
+			}, successNum * 3 * 1000);
+		}
+
+		//关闭人脸识别
+		function closeFaceKuang() {
+			console.log('关闭人脸识别');
+			isAllowAttention = false;
+			api.closeFrame({
+				name: 'common_video_kuang'
+			});
+			api.cancelAjax({
+				tag: 'https://aip.baidubce.com/rest/2.0/face/v3/detect?access_token=' + access_token
+			});
+			//关闭定时器
+			clearTimeout(timingAction);
+		}
+
+		/**
+		 * 关闭窗口 
+		 */
+		function closeWin() {
+			console.log("9999---------------进来了")
+			//		console.log('exam_item_index'+exam_item_index);
+			//		log('examination_list',examination_list);
+			//		console.log('exam_item_index'+examination_list[exam_item_index - 1].frameName);
+			sendEvent('openVideoShow', {})
+			if (exam_item_index == 4 || exam_item_index == 5) {
+				esc_function(api.winName, examination_list[exam_item_index - 1].frameName, 'closeVideoPlayer()');
+			}
+			api.closeWin({
+				name: 'physical_examination_video_win'
+			});
+		}
+
+		function openMessage_i_examination(title, content, type, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+			api.openFrame({
+				name: 'common_alert_examination',
+				url: '../../common/common_alert_examination.html',
+				bgColor: 'rgba(0,0,0,0.4)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					title: title,
+					content: content,
+					type: type,
+					sureButton: sureButton,
+					sureFunc: sureFunc,
+					cancelButton: cancelButton,
+					cancelFunc: cancelFunc,
+					winName: api.winName,
+					frameName: api.frameName,
+					params: params
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+		
+		//打开通用弹出框
+		//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+		function openMessage(title,content,sureButton,cancelButton,sureFunc,cancelFunc,params){
+			api.openFrame({
+		        name: 'common_alert',
+		        url: '../../common/common_alert.html',
+		        bgColor: 'rgba(0,0,0,0.4)',
+		        rect: {
+		            x: 0,
+		            y: 0,
+		            w: 'auto',
+		            h: api.winHeight
+		        },
+		        bounces: false,
+		        pageParam:{
+		        	title:title,
+		        	content:content,
+		        	sureButton:sureButton,
+		        	sureFunc:sureFunc,
+		        	cancelButton:cancelButton,
+		        	cancelFunc:cancelFunc,
+		        	winName:api.winName,
+		        	frameName:api.frameName,
+		        	params:params
+		        },
+		        softInputBarEnabled:true,
+		        softInputMode:'resize'
+		    });
+		}
+
+		function openResultWin(data) {
+			api.openWin({
+				name: 'result_win',
+				url: '../physical_result/result_win.html',
+				slidBackEnabled: 'true',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				pageParam: {
+					data: data
+				}
+			});
+		}
+	</script>
+</html>

@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>资讯列表</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<style>
+		html{
+    		background:#fff;
+    	}
+		body{
+			background: #FFFFFF;
+		}
+    	.aui-card-list-content img, .aui-card-list-content-padded img {
+		    width: 100%;
+		    height:100%;
+		    display: block;
+		}
+		
+		.aui-col-xs-4 {
+		    width: 33.33333333%;
+		    height: 4rem;
+		}
+		.aui-card-list-content img, .aui-card-list-content-padded img {
+		    width: 100%;
+		    height: 100%;
+		    display: block;
+		    object-fit: cover;
+		}
+		.aui-card-list-user-name {
+		    color: #212121;
+		    position: relative;
+		    font-size: 0.7rem;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		    -webkit-box-align: center;
+		    -webkit-align-items: center;
+		    align-items: center;
+		}
+		.msg{
+			background: #FFFFFF;
+			height: 20rem;
+			text-align: center;
+			font-size:0.7rem;
+		}
+		.msg img{
+			width:8rem;
+			margin-top: 9rem;
+		}
+		
+		.pre_load_msg{
+            background: #FFFFFF;
+            height: 20rem;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+        
+        .pre_load_msg img{
+             width: 10rem;
+             margin-top: 6rem;
+        }
+        
+		
+		.jiazai{
+			font-size: 0.7rem;
+			background: #FFFFFF;
+			color: #666565;
+			padding-bottom: 0.3rem;
+			text-align: center;
+			padding-top: 0.3rem;
+		}
+		.jiazai img{
+			width: 1.5rem;
+		}
+		.auiCardList{
+			margin-bottom: 0.3rem;
+		}
+		.auiCardList:last-child{
+			margin-bottom:0rem;
+		}
+		.aui-card-list-footer{
+			min-height: 1.5rem !important;
+			padding: 0.1rem 0.75rem;
+		}
+		.auiIconLaud{
+			color: #1E8DD8;
+		}
+		.thumbUp{
+			height:0.8rem;
+			margin: 0rem 0.1rem -0.1rem 0rem;
+		}
+		.numColor{
+			color: #1E8DD8;
+		}
+		.browse-num{
+			color:#999999;
+			font-size:0.6rem;
+		}
+		.aui-label-danger{
+			position: relative;
+			bottom:0.1rem;
+			width:1.7rem;
+			height:0.8rem;
+			font-size:0.5rem;
+			text-align:center;
+			color:#FFFFFF;
+			padding:0.05rem;
+			display:inline-block;
+			line-height: 0.8rem;
+			margin-right:0.1rem;
+			/*border-radius:0 0 0.6rem 0;*/
+			background:linear-gradient(to right, #FF5E5E, #ED3F31); 
+		}
+		
+	    .top{
+			width:7rem;
+			height:1.7rem;
+			background-color:#393939; 	
+			margin: 0 auto;
+			margin-top:1rem;
+			margin-bottom:0.8rem;
+			text-align:center;
+		}
+		.img1{
+			font-size:0.5rem;
+			color: #FFFFFF;
+			font-weight: bold;
+			top: -1.89rem;
+			left:2.5rem;
+		}
+		.new_message{
+			font-size: 0.65rem;
+			color: #FFFFFF;
+			margin-top:0.37rem;
+		}
+    </style>
+	</head>
+	<body>
+	<section id="top_new">
+	
+	</section>
+	<script type="text/template" charset="utf-8" id='topNews'>
+		<div class="top" id="tips-1" onclick="news()">
+			<span class="new_message">{{=it.count}}条新消息<div class="aui-iconfont aui-icon-comment"style="top: -0.95rem;left:-2.6rem; "></div></span>
+			<div class="aui-iconfont aui-icon-right img1"></div>
+		</div>
+	</script>
+		
+		<section class="aui-content aui-margin-b-15">
+		 <ul class=" aui-media-list" style="background: #ffffff;" id="ul">
+		 </ul>
+		</section>
+		<script type="text/template" charset="utf-8" id='dis_ind_news'>
+		  
+			{{ for(var i=0;i < it.listInformationRecord.length;i++){ }}
+			 <li class="aui-list-item" style="border-bottom:0.02rem solid #DDDDDD;padding-bottom:0.2rem;">
+			 
+				<div tapmode onclick="openDetail('{{=it.listInformationRecord[i].id}}','{{=it.listInformationRecord[i].title}}')">
+				
+					<div class="aui-card-list-header aui-card-list-user">
+						<div class="aui-card-list-user-name">
+						
+							<div class="aui-ellipsis-2" style="font-size:0.8rem;">
+							{{if(it.listInformationRecord[i].isTop=='1'){}}
+							<div class="aui-label aui-label-danger"><img src="../../icon/common/top.png" style="height: 0.6rem;padding-top:0.1rem;"></img>置顶 </div>
+							{{}}}
+							{{=it.listInformationRecord[i].title}}</div>
+						</div>
+					</div>
+					<div class="aui-card-list-content-padded">
+						<div class="aui-row aui-row-padded " id="{{=it.listInformationRecord[i].id}}" style="margin-top: -1rem;">
+
+						</div>
+					</div>
+					<div class="" style="margin-left: 0.7rem;margin-right: 0.7rem;margin-bottom: 0.4rem;">
+					<!--收藏-->
+					<!-- <div><i class="aui-iconfont aui-icon-star"></i> {{=it.listInformationRecord[i].collectionCount}}</div> -->
+					<!--浏览量-->
+					<div style="height:1.7rem;font-size: 0.6rem;display:inline;width: 50%;">
+						<!--<span class="browse-num">{{=it.listInformationRecord[i].browseCount}}浏览量&emsp;</span>-->
+						<span class="browse-num">{{=calcuTime(it.listInformationRecord[i].insertDt)}}</span>
+						<span class="browse-num">&nbsp;驾所通</span>
+					</div>
+					<div style="float: right;font-size:0.6rem;text-align: right; height: 1.5rem;padding-top:0.2rem;">
+						<!--点赞-->
+						<!--{{ if(it.listInformationRecord[i].isFlag == 1){ }}
+						<img src="../../icon/article/icon_yizan_new.png" alt="" class="thumbUp"/>
+						<span class="numColor like-count">&nbsp;{{=it.listInformationRecord[i].likeCount}}</span>
+						{{ }else{ }}
+						<img src="../../icon/article/icon_zan_new.png" alt="" class="thumbUp" tapmode onclick="giveTheThumbsUp('{{=it.listInformationRecord[i].id}}',this,'{{=it.listInformationRecord[i].likeCount}}')"/>
+						<span class='like-count'>&nbsp;{{=it.listInformationRecord[i].likeCount}}</span>
+						{{ } }}
+						&emsp;-->
+						<!--评论-->
+						<!--<img src="../../icon/article/icon_comment_new.png" alt="" style="margin-bottom:-0.2rem;" class="thumbUp"  tapmode onclick="openOriginal('{{=it.listInformationRecord[i].id}}','{{=it.listInformationRecord[i].title}}')"/>
+						<span class='comment-count'>&nbsp;{{=it.listInformationRecord[i].commentCount}}</span>-->
+						<span class='browse-num'>{{=it.listInformationRecord[i].commentCount}}评论&nbsp;&nbsp;&nbsp;</span>
+						<span class='browse-num'>&nbsp;{{=it.listInformationRecord[i].browseCount}}次浏览</span>
+					</div>
+				</div>
+				</div>
+				
+			</li>
+		{{ } }}
+		   
+	</script>
+		<script type="text/template" charset="utf-8" id='dis_ind_news_img'>
+			{{ for(var i=0;i < it.length;i++){ }}
+			{{ if(it.length == 1){ }}
+			<div class="aui-col-xs-12">
+				<img src="../../icon/default/icon_default_big_pic.png" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url + it[i]}}" style="height: 10rem;object-fit: contain;"/>
+			</div>
+			{{ }else if(it.length == 2){ }}
+			<div class="aui-col-xs-6">
+				<img src="../../icon/default/icon_default_big_pic.png" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url + it[i]}}" />
+			</div>
+			{{ }else if(it.length == 3){ }}
+			<div class="aui-col-xs-4">
+				<img src="../../icon/default/icon_default_big_pic.png" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url + it[i]}}" />
+			</div>
+			{{ } }}
+		{{ } }}
+	</script>
+		<div id='load_div'>
+		</div>
+		<script type="text/template" charset="utf-8" id='load_src'>
+			<div class="load">
+		<img src="../../icon/common/loadding.gif" alt="" /><br>
+		<span>加载中...</span>
+	</div>
+	</script>
+		<script type="text/template" charset="utf-8" id='msg_src'>
+			<div class="msg">
+			<img src="../../icon/common/empty.png" alt="" /><br>
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+		<script type="text/template" charset="utf-8" id='more_src'>
+			<div class="jiazai">
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+	<script type="text/template" charset="utf-8" id='pre_load_src'>
+        <div class="pre_load_msg">
+            <img src="../../image/background/preloading.gif" alt=""/><br>
+        </div>
+    </script>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script src="../../script/echo.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var page = 1,
+			limit = 10;
+		var load_src = $('#load_src').html(); //加载src
+		var msg_src = $('#msg_src').html(); //消息提示src
+		var more_src = $('#more_src').html(); //更多src
+		var pre_load_src = $('#pre_load_src').html(); //预加载src
+		var refresh = true; //标记是否是刷新操作
+		var imgs; //存放图片
+		var learnerId; //用户ID
+		var type;
+		var count;
+		var refrash_heihgt = 0;
+		apiready = function() {
+			// init();
+			type = api.pageParam.type;
+			console.log(refrash_heihgt)
+			refreshList(); 
+			goLoad(function(ret, err) {
+				loadList();
+			});
+
+			if (islogin()) {
+				learnerId = getUserId();
+			} else {
+				learnerId = "";
+			}
+			
+			//监听退出action：执行消除红点操作
+			toEventListener('exit_action',function(ret,err){
+				$("#tips-1").addClass('aui-hide');
+			});
+			toEventListener('refresh_discovery',function(ret,err){
+                goRefrash(refrash_heihgt, '#FFFFFF', null, null, function() {
+                    refreshList()
+                });
+                
+            });
+
+		};
+		
+		//列表刷新
+        function refreshList() {
+            page = 1;           
+            refresh = true;
+            setLoad();
+            setPreLoading();
+            init();
+            message();
+            sendEvent('refresh');
+            
+       }
+            //列表上拉
+       function loadList() {
+           page++;
+           refresh = false;
+           setLoad();
+           init();
+           message();
+       }
+
+		function init() {
+		    refresh_height = 40;
+			url = 'api/information/list-news';
+			params = {
+				learnerId: learnerId,
+				page: page,
+				limit: limit,
+				type: type,
+				to: 0
+			}
+			log('params:', JSON.stringify(params));
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('资讯列表', ret);
+				if (ret) {
+					if (ret.code == 0 && ret.listInformationRecord.length > 0) {
+						if (page == 1) {
+							var dis_ind_news = $('#dis_ind_news').html();
+							$("#ul").html(doT.template(dis_ind_news)(ret));
+						} else {
+							var dis_ind_news = $('#dis_ind_news').html();
+							$("#ul").append(doT.template(dis_ind_news)(ret));
+						}
+
+						for (var i = 0; i < ret.listInformationRecord.length; i++) {
+							var img = ret.listInformationRecord[i].image;
+							// log("图片：--------",img)
+							imgs = img.split(',');
+							// log("多图片---------------:",imgs.length)
+							var dis_ind_news_img = $('#dis_ind_news_img').html();
+							$("#" + ret.listInformationRecord[i].id).html(doT.template(dis_ind_news_img)(imgs));
+						}
+							echoInit();
+						api.parseTapmode();
+					} else {
+						setMsg(refresh ? '暂无资讯' : '暂无更多');
+					}
+				} else {
+					setMsg('服务器繁忙，请稍后再试');
+				}
+			})
+			setTimeout(function() {
+				api.refreshHeaderLoadDone();
+				sendEvent('refresh_discovery');
+			}, 500);
+		}
+
+		//设置页面加载的画面
+		function setLoad() {
+			if (refresh || $('section').find('li').length == 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+				$('#load_div').html('');
+			} else {
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': '加载更多中...',
+						'img': '../../icon/common/jiazai.gif'
+					}));
+				}, 500);
+			}
+		}
+        
+        function setPreLoading(){
+            $("#load_div").html(doT.template(pre_load_src)({
+                'msg': ''
+            }));
+        }
+        
+		//设置页面提示信息
+		function setMsg(msg) {
+			if (refresh || $('section').find('li').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+			setTimeout(function() {
+				$("#communityList").html(doT.template(msg_src)({
+					'msg': msg
+				}));
+			}, 500);
+		} else { //原先已经有数据的情况下
+			setTimeout(function() {
+				$('#load_div').html(doT.template(more_src)({
+					'msg': msg,
+					'img': ''
+				}));
+			}, 500);
+		}
+		}
+
+		//标签加载
+		function getLabelList(tags) {
+			var menu = "";
+			if (tags != '' && tags != undefined && tags != null) {
+				var tagList = tags.split(',');
+				for (var i = 0; i < (tagList.length > 3 ? 3 : tagList.length); i++) {
+					menu += "<li><span>" + getLabelName(tagList[i]) + "</span></li>";
+				}
+			}
+			return menu;
+		}
+
+		//跳转资讯详情
+		function openDetail(id, title) {
+			logAppBuryingPoint({id:id,name:title},'资讯/通知','发现');
+			var title = title;
+			params = {
+				name: title,
+				id: id,
+				flag: 'news',
+				type: type
+			}
+			log('列表', JSON.stringify(params));
+			api.openWin({
+				name: 'subject_skill_detail_win',
+				url: '../common/subject_skill_detail_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				pageParam: {
+					data: params
+				}
+			});
+		}
+
+
+
+		//跳转评论
+		function openOriginal(id, title) {
+			var title = title;
+			params = {
+				name: title,
+				id: id,
+				flag: 'news'
+			}
+
+			api.openWin({
+				name: 'subject_skill_detail_win',
+				url: '../common/subject_skill_detail_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				pageParam: {
+					data: params
+				}
+			});
+		}
+		//收藏
+		function collection() {
+
+		}
+		//点赞
+		function giveTheThumbsUp(id, e,give) {
+			var give=give;
+			event.cancelBubble = true;
+			if (islogin()) {
+				var learnerId = getUserId();
+				url = "api/comment/insert-news-comment-by-article-id-or-comment-id-like";
+				params = {
+					informationId: id,
+					learnerId: learnerId
+				}
+				ajax_Request(url, 'post', 'json', params, function(ret, err) {
+					
+					if (ret) {
+						if (ret.code == 0) {
+					
+							var likeCounts = parseInt(give)+1;
+							log('点赞');
+							$(e).attr("src", "../../icon/article/icon_yizan_new.png");
+							$(e).parent().find('.like-count').html('&nbsp;' + likeCounts);
+							//$("#thumbsUp"+id).html('<img src="../../icon/article/icon_yizan.png" alt="" class="thumbUp" /><span class="numColor">&nbsp;'+likeCounts+'</span>');
+						} else if (ret.code == "200052") {
+							log('请不要重复点赞');
+						} else {
+
+						}
+					} else {
+						alert_msg("服务器繁忙，请稍后重试!");
+					}
+				})
+			} else {
+				alert_msg('尚未登录,请登录')
+			}	
+		}
+
+
+		//登录情况下请求消息通知
+		function message(){
+			if(islogin()){
+				url = 'api/information/getCount';		
+					params = {
+						learnerId:getUserId(),
+						type:type				
+					}
+				ajax_Request(url, 'get', 'json', params, function(ret, err) {
+					if (ret.code == 0) {
+						if(type=='063001'){
+							if(ret.count == 0){
+								$(".top").addClass('aui-hide');
+							}else{
+								var topNews = $('#topNews').html();
+								$("#top_new").html(doT.template(topNews)(ret));
+							}
+
+						}
+						if(type=='063002'){
+							if(ret.count == 0){
+								$(".top").addClass('aui-hide');
+							}else{
+								var topNews = $('#topNews').html();
+								$("#top_new").html(doT.template(topNews)(ret));
+							}
+							
+						}
+						
+					}
+				})
+			}
+		}
+		
+		//进入新消息页面
+		function news(){
+			api.addEventListener({
+				    name: 'Id'
+			}, function(ret, err) {
+				url="api/information/updateIsRead";
+				    if(type == '063001'){
+						params = {
+							type: '063001',
+							id:ret.value
+						}
+					}else{
+						params = {
+							type: '063002',
+							id:ret.value
+						}
+					}
+				ajax_Request(url, 'post', 'json', params, function(ret, err) {
+					if(ret){
+						if(ret.code == 0){
+							if(type == '063001'){ 
+							 	$("#tips-1").remove();
+							 	sendEvent('inits_second');
+							}else{
+								$("#tips-1").remove();
+								sendEvent('inits_second');
+							}
+						}
+					}
+				})
+			});
+			if(type == '063001'){
+				params = {
+					type: '063001'
+				}
+			}else{
+				params = {
+					type: '063002'
+				}
+			}
+			api.openWin({
+				name: 'comment_reply_win',
+				url: './comment_reply_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				pageParam: {
+					data: params
+				}
+			});
+			
+		}
+		
+	</script>
+</html>

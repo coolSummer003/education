@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>课程预约详情</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/mobiscroll/normalize3_0_2_min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/mobiscroll/mobiscroll.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/mobiscroll/mobiscroll_date.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html,body{
+    		background-color: #F5F5F5;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+    	#practical_appointment_title{
+    		font-weight:normal;
+    	}
+		.screen{
+		    /* float: left !important;
+		       			margin-right: 0.8rem; */
+		}
+		.screen img{
+			width: 0.8rem;
+    		margin-bottom: -0.05rem;
+		}
+		.active{
+	    	color: #1E8DD8;
+    		/* border-bottom: solid 2px; */
+	    }
+	    .practical-list{
+    	    background: #FFF;
+		    width: 96%;
+		    margin-left: 2%;
+	        font-size: 0.7rem;
+	        margin-bottom: 5rem;
+	    }
+	    .practical-list li{
+	    	height:3rem;
+	    	line-height:3rem;
+	    }
+	    .practical-list-item{
+	    	height:3rem;
+	    	padding: 0rem 0.5rem;
+	    }
+	    .practical-list-item-param{
+    	    float: left;
+    		height:3rem;
+	    }
+	    .practical-list-item-param input{
+	        margin-top: 0.9rem;
+	    }
+	    .c-btn{
+	    	width:10%;
+	    	-webkit-transition: 0.3s ease;
+	    	text-align: left;
+	    }
+	    .dark{
+	    	color:#A0A0A0;
+	    }
+	    .appointment-button{
+	    	
+	    }
+	    .appointment-button span{
+		    color: #0595F2;
+		    padding: 0.2rem 0rem;
+		    border-radius: 0.5rem;
+		    font-weight:bold;
+	    }
+	    .other-item{
+	    	width:100%;
+	    	overflow:hidden;
+    	    -webkit-transition: 0.3s ease;
+    	    float: right;
+	    }
+	    .w-90{
+	    	width:90% !important;
+	    }
+	    .text-r{
+	    	text-align:right;
+	    }
+	    .text-c{
+	    	text-align:center;
+	    }
+	    .text-l{
+	    	text-align:center;
+	    }
+	    .practical-list-item-param font{
+	    	color:#03B4F7;
+	    }
+	    .practical-select{
+	    	
+	    }
+	    .select_practical_title{
+    		font-weight: bold;
+		    text-align: left;
+		    height: 1.7rem;
+	        line-height: 1.7rem;
+            margin: 0.5rem;
+            padding-left:4%;
+		}
+		#appointment-date{
+			text-align: left;
+		    margin-left: 4%;
+		    width: 92%;
+		    background: #FFFFFF;
+		    padding-left: 1.2rem;
+		}
+		.nav {
+	        height: 100%;
+	        overflow-x: scroll;
+	        overflow-y: hidden;
+	        background-color: #FFFFFF;
+	        /*解决ios上滑动不流畅*/
+	        -webkit-overflow-scrolling: touch;
+	    }
+	    .con {
+	        height: 100%;
+		    display: -webkit-box;
+		    align-items: center;
+	        position: relative;
+	    }
+	    .con>li {
+	        text-align: center;
+		    font-size: 0.8rem;
+		    min-width: 3rem;
+		    list-style: none;
+		    margin: 0rem 0.5rem;
+	    }
+	    .container {
+            height: 2.5rem;
+		    line-height: 2.5rem;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    overflow: hidden;
+		    width:96%;
+	        margin-left: 2%;
+	    }
+	    .container ::-webkit-scrollbar {
+	        display: none;
+	    }
+	    .lump{
+	    	float: left;
+		    padding: 0rem 1rem;
+		    font-size: 0.8rem;
+		    color: #6F6F6F;
+		    height: 2rem;
+		    border-radius: 5px;
+		    border: solid 1px #F1F1F1;
+		    line-height: 2rem;
+	    }
+	    .lump-active {
+		   	color: #72A8C9 !important;
+		    border: solid 1px #72A8C9 !important;
+		    background: #DDEBFF !important;
+		}
+		.load-src{
+			width: 100%;
+    		display: flex;
+    		height: 8rem;
+		}
+		.load-src img{
+		    width: 5rem;
+    		margin: auto;
+		}
+		.msg-src{
+			width: 100%;
+			text-align:center;
+			padding-bottom: 3rem;
+		}
+		.msg-src img{
+			width: 4rem;
+    		margin-top: 3rem;
+		}
+		.msg-src span{
+			font-size:0.7rem;
+			color:#767676;
+		}
+		.select_practical_title img{
+		    width: 1rem;
+			margin-bottom: -0.2rem;
+		}
+		.fixed-b{
+			position: fixed;
+		    bottom: 0.5rem;
+		    margin: auto;
+		}
+		.select_practical_input{
+    	    text-align: left;
+		    height: 2rem;
+		    line-height: 2rem;
+	    }
+    </style>
+</head>
+<body>
+	<section class='practical-select' style='margin-top: 1rem;'>
+			<div class="select_practical_title">
+				<img src="../../../icon/subject/icon_area.png" alt="" />
+				<span>培训地点</span>
+			</div>
+			<div class="select_practical_input trainingName" style="background:#FFFFFF;margin-left:4%;margin-right:4%;padding-left:1rem;">
+				上虞区xxx理论培训中心
+			</div>
+	</section>
+	
+	<section class='practical-select' style='margin-top: 1rem;'>
+			<div class="select_practical_title">
+				<img src="../../../icon/common/icon_date.png" alt="" />
+				<span>根据培训日期</span>
+			</div>
+			<div class="select_practical_input">
+				<input type="text" id="appointment-date" onchange="selectDate()" style='margin-left: 4%;'>
+			</div>
+	</section>
+	
+    <section class='practical-select'>
+			<div class="select_practical_title">
+				<img src="../../../icon/subject/icon_cars.png" alt="" />
+				<span>选择车型</span>
+			</div>
+			<div class="container" style="">
+				<nav class="nav" id="area_nav">
+					<ul class="con">
+					</ul>
+				</nav>
+			</div>
+	</section>
+	
+	<script type="text/template" charset="utf-8" id='area_src'>
+		{{for(var key in it){}}
+			<li class="menuLi" tapmode onclick="selectArea(this,'{{=key}}','{{=it[key]}}')">
+		        {{=it[key]}}
+		    </li>
+		{{ } }}
+	    	<li class="list_bar" id="slideSpan">
+	            <div class="list_bar_inner"></div>
+	        </li>
+	</script>
+	
+    <div class='practical-list'>
+    	<ul>
+    		<li class='bottom-slide'>
+    			<div class="practical-list-item">
+    				<div class="practical-list-item-param c-btn aui-hide">
+    					
+    				</div>
+    				<div class='other-item bottom-slide w-90'>
+	    				<div class="practical-list-item-param text-c" style="width:36%;">预约时间段</div>
+	    				<div class="practical-list-item-param text-l" style="width:28%;">费用</div>
+	    				<div class="practical-list-item-param text-r" style="width:36%;">已预约/总人数</div>
+    				</div>
+    			</div>
+    		</li>
+    		<div id='data_list'>
+    			<div class='load-src'>
+		    		<img src="../../../icon/common/icon_common_load.gif" alt="" />
+		    	</div>
+    		</div>
+    	</ul>
+    </div>
+    
+    <div class="aui-btn aui-btn-info aui-btn-block" tapmode onclick="appointBatch()" style="bottom:0.5rem;position: fixed;z-index: 9999" id='appointment_btn'>预约</div>
+    
+	<script type="text/template" charset="utf-8" id='load_src'>
+		<div class='load-src'>
+    		<img src="../../icon/common/icon_common_load.gif" alt="" />
+		</div>
+	</script>
+	
+    <script type="text/template" charset="utf-8" id='msg_src'>
+    	<div class='msg-src'>
+    		<img src="../../../icon/common/empty.png" alt="" /><br>
+    		<span>{{=it.msg}}</span>
+    	</div>
+  	</script>
+  	
+    <script type="text/template" charset="utf-8" id='class_appointment_src'>
+    	{{ for(var i=0;i<it.length;i++){ }}
+    		<li class='checkStyle'>
+    			{{ if(it[i].orderSum >= it[i].carSum){ }}
+	    		<div class="practical-list-item dark">
+    			{{ }else{ }}
+	    		<div class="practical-list-item" tapmode onclick="selectTimeSlot(this,'{{=it[i].id}}')">
+    			{{ } }}
+    				<div class="practical-list-item-param c-btn">
+    					{{ if(it[i].orderSum < it[i].carSum){ }}
+	    					<input class="aui-radio" type="checkbox" name="class_appointment_appointment" value="{{=it[i].id}}" onclick="event.cancelBubble = true;">
+    					{{ }else{ }}
+							<input class="aui-radio" type="checkbox" name="class_appointment_appointment" value="{{=it[i].id}}" disabled>
+						{{ } }}
+    				</div>
+    				<div class='other-item w-90'>
+	    				<div class="practical-list-item-param text-c" style="width:36%;">{{=it[i].beginTime}}~{{=it[i].endTime}}</div>
+	    				<div class="practical-list-item-param text-l" style="width:28%;">￥{{=it[i].price}}</div>
+	    				<div class="practical-list-item-param text-r" style="width:26%;font-weight: bold;">
+	    					{{ if(it[i].orderSum >= it[i].carSum){ }}
+	    						预约已满
+	    					{{ }else{ }}
+		    					<font>{{=it[i].orderSum}}</font>/{{=it[i].carSum}}
+	    					{{ } }}
+	    				</div>
+					</div>
+    			</div>
+    		</li>
+    	{{ } }}
+    </script>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/mobiscroll/mobile_select.js"></script> 
+<script type="text/javascript" src="../../../script/mobiscroll/mobiscroll_date.js"></script> 
+<script type="text/javascript" src="../../../script/mobiscroll/mobiscroll.js"></script> 
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var headerPos;
+	var clearance = 5;
+	var load_src = $('#loadP_src').html();
+	var msg_src = $('#msg_src').html();
+	var carCode,carName;
+	var startDate,endDate;
+	var datas;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		console.log('传参'+JSON.stringify(cache));
+		$('.trainingName').text(cache.d_school_name);
+		startDate = (new Date(new Date().getTime())).Format('yyyy-MM-dd'); //30天内
+		endDate = (new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000)).Format('yyyy-MM-dd'); //30天内
+		$('#appointment-date').val(startDate);
+		appointDate = startDate;
+		mobiscrollDate(startDate, endDate, $('#appointment-date'), '最近'); //初始化日期组件
+		carTypeKeMuThreeMap = $api.getStorage('cache_by_app').carTypeKeMuThreeMap;	
+		load_car(carTypeKeMuThreeMap);
+		for (var key in carTypeKeMuThreeMap){
+			carCode = key;
+			carName = carTypeKeMuThreeMap[key];
+			break;
+		}
+		init();
+	}
+
+
+	//加载车型
+	function load_car(ret) {
+		if (Object.keys(ret).length> 0) {
+			var area_src = $('#area_src').html();
+			$('#area_nav').find('.con').html(doT.template(area_src)(ret));
+			f_slide($('#area_nav').find('.menuLi').eq(0)); //初始化加载menu下拉选中
+			api.parseTapmode();
+
+		} else {
+			carCode = '';
+			$('#area_nav').find('.con').html(doT.template(msg_src)({
+				msg: '无课程数据'
+			}));
+			$('#data_list').html(doT.template(msg_src)({
+				msg: '无课程数据'
+			}));
+		}
+
+
+	}
+
+	//滑块加载事件
+	function f_slide(e) {
+		$('#area_nav').find('li').removeClass('active');
+		$(e).addClass('active');
+		$('.list_bar').css('width', ($('.active').width() - clearance * 2) + 'px');
+		$('.list_bar_inner').css('width', ($('.active').width() - clearance * 2) + 'px');
+		document.getElementById('slideSpan').style.webkitTransform = 'translateX(' + ($(e).position().left + clearance) +'px)';
+		$("#area_nav").animate({
+			scrollLeft: $(e).position().left - 130 + 'px'
+		}, 500);
+	}
+
+	//点击预约
+	var class_appointment_ids;
+	var subscribe_data;
+	function appointBatch(ids){
+		class_appointment_ids = '';
+		if(ids == null||ids == undefined){
+			$('input[type="checkbox"]:checked').each(function(index,e){
+				class_appointment_ids = getcheckbox();
+			});
+			if(class_appointment_ids == ''){
+				alert_msg('请选择预约日期');return;
+			}
+		}else{
+			class_appointment_ids = ids;
+		}
+//		simulator_ids = simulator_ids.substring(0,simulator_ids.length - 1);
+		
+		url = 'api/ke-mu-three/add/ke-mu-three-order-and-detail';
+		params = {
+			learnerId:getUserId()
+		}
+		subscribe_data=class_appointment_ids.substring(0,class_appointment_ids.length-1)
+		params.ids=subscribe_data;
+		log('传参',params);
+		ajax_Request(url, 'post', 'json', params, function(ret,err){
+			log('训练预约信息提交返回',ret);
+			if(ret){
+				if(ret.code == 0){
+					cache.returnVal = ret.returnVal;
+					cache.payPrice = ret.payPrice;
+					cache.orderId = ret.orderId;i
+					cache.ids = params.ids;
+					cache.carName=carName
+					data = cache;
+//					frameRightOut('class_appointment_detail_frm');
+					commonOpenWin('class_appointment_pay_for_win', data);
+				}else{
+					var str='';
+	            	if(ret.code == 400216){
+	              		for(var i = 0;i < ret.repeatInfo.length;i++){  
+			                if(i == 0) str=ret.repeatInfo[0].beginTime+'~'+ret.repeatInfo[0].endTime;
+                			else str+=','+ret.repeatInfo[i].beginTime+'~'+ret.repeatInfo[i].endTime;
+	              		}
+	              		str='&emsp;您已预约过'+ret.repeatInfo[0].lessonDate+'的'+str+'时间段的课程，请勿重复预约'
+	              		openMessage_ii('提示',str,'确定','','','',null);
+					}
+				}
+			}else{
+				alert_msg('服务器繁忙，请稍后再试！');
+			}
+		});
+	}
+	
+	//选择该时间段
+	function selectTimeSlot(e,id){
+		$(e).parent().find("input[type='checkbox']").click();
+	}
+	
+	//选择车型
+	function selectArea(e,car_code,car_name) {
+		carCode = car_code;
+		carName = car_name;
+		f_slide($(e));
+		init();
+	}
+	function init(){
+		url = "api/ke-mu-three/get-ke-mu-three-lesson-list";
+		params = {
+			schoolId:cache.id,  //驾校id
+			lessonDate:appointDate,
+			learnerId:getUserId(),
+			licenseType:carCode
+		}
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			log('科目三课程数据',ret);
+			if(ret&&ret.code == 0){
+				if(ret.keMuThreeLessonList.length > 0){
+					var class_appointment_src = $('#class_appointment_src').html();
+					$('#data_list').html(doT.template(class_appointment_src)(ret.keMuThreeLessonList));
+				}else{
+					$('#data_list').html(doT.template(msg_src)({msg:'无课程数据'}));
+				}
+			}else{
+				$('#data_list').html(doT.template(msg_src)({msg:ret.msg}));
+			}
+		});
+		//load_classes();
+	}
+	
+	// 选择日期 
+	function selectDate() {
+		appointDate = $('#appointment-date').val();
+		init();
+	}
+	
+	//获取多个选中的id
+	function getcheckbox() {
+		var userids = new Array;
+		var str = {};
+		var idsList;
+		$("input[type='checkbox']:checked").each(function(i) {
+			//使用循环遍历迭代的方式得到所有被选中的checkbox复选框
+//			log('sh::', $(this).val());
+			str = $(this).val();
+			userids.push(parseInt(str)); //当前被选中checkbox背后对应的值
+			idsList = userids.toString()+",";
+		})
+			
+		return idsList;
+	}
+	
+	//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+      function openMessage_ii(title,content,sureButton,cancelButton,sureFunc,cancelFunc,params){
+        api.openFrame({
+              name: 'common_message',
+              url: '../../common/common_message.html',
+              bgColor: 'rgba(0,0,0,0.4)',
+              rect: {
+                  x: 0,
+                  y: 0,
+                  w: 'auto',
+                  h: api.winHeight
+              },
+              bounces: false,
+              pageParam:{
+                title:title,
+                content:content,
+                sureButton:sureButton,
+                sureFunc:sureFunc,
+                cancelButton:cancelButton,
+                cancelFunc:cancelFunc,
+                winName:api.winName,
+                frameName:api.frameName,
+                params:params
+              },
+              softInputBarEnabled:true,
+              softInputMode:'resize'
+          });
+      }
+
+</script>	
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>订单管理通用win</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<style>
+			html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+    	#common_title{
+    		font-weight:normal;
+    	}
+    	footer{
+    		height: 2rem;
+		    position: absolute;
+		    bottom: 0;
+		    width: 100%;
+	        padding-top: 0.4rem;	
+            border-top: solid 1px #F1F1F1;
+            font-size: 0.7rem;
+    	}
+    	footer img{
+    		height:0.8rem;
+    		margin-bottom: -0.15rem;
+    	}
+    	.order li{
+            float: left;
+		    font-size: 0.7rem;
+	        width: 33.33%;
+    		text-align: center;
+	    }
+	    .order{
+		    height: 2rem;
+		    line-height: 2rem;
+		    position: relative;
+	        background: #FFFFFF;
+		}
+	    .order img{
+		    width: 0.4rem;
+   			margin-bottom: 1px;
+   			-webkit-transition: 0.3s ease;
+		}
+		.active{
+	    	color: #FF9138;
+    		/* border-bottom: solid 2px; */
+	    }
+    </style>
+	</head>
+	<body>
+		<!-- 通用头部 -->
+		<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+				<img src="../../icon/common/icon_header_return.png">
+			</a>
+			<div class="aui-title" id="common_title">
+				通用头部
+			</div>
+		</header>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var headerPos;
+		var title = '';
+		var frameName = ''; //设置的frame名称
+		var frameUrl = ''; //设置的frame资源所在未知
+		var bounces = false; //是否弹动
+		apiready = function() {
+			api.parseTapmode();
+			var header = $api.byId('aui-header');
+			$api.fixStatusBar(header);
+			cache = api.pageParam.data;
+			switch (cache.type) {
+				case 'more-examination-order':
+					title = '医院体检订单';
+					frameName = 'record_hospital_examintion_list_frm';
+					frameUrl = './record_hospital_examintion_list_frm.html';
+					break;
+				case 'more-register-order':
+					title = '线上报名订单';
+					frameName = 'record_school_register_list_frm';
+					frameUrl = './record_school_register_list_frm.html';
+					break;
+				default:
+					title = '未知';
+			}
+			headerPos = $api.offset(header);
+			$('#common_title').html(title);
+			openFrame(headerPos.h, api.winHeight - headerPos.h, 'none', bounces);
+		}
+
+		function openFrame(y, h, animate, bounces) {
+			api.openFrame({
+				name: frameName,
+				url: frameUrl,
+				bgColor: '#efeff4',
+				rect: {
+					x: 0,
+					y: y,
+					w: 'auto',
+					h: h
+				},
+				animation: {
+					type: animate, //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300
+				},
+				bounces: bounces ? true : false,
+				pageParam: {
+					data: cache
+				},
+				reload: true,
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+
+		function closeWin() {
+			if (cache.type == 'more-examination-order') {
+				esc_function('index', '', 'changeToFrame(3)');
+				setTimeout(function() {
+					api.closeToWin({
+						name: 'index',
+						animation:{
+							type:"movein",
+							subType:"from_left"
+						}
+					});
+				}, 300)
+				// sendEvent('indexToMine',{});
+
+			} else {
+				api.closeWin({});
+			}
+
+		}
+	</script>
+</html>

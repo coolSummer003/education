@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>视频录制框</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background: transparent;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background: transparent;
+    	}
+    	.kuang{
+		    text-align: center;
+		    overflow: hidden;
+		    height: 100%;
+    	}
+    	.kuang img{
+    		width: 100%;
+    	}
+    	.ren{
+		    text-align: center;
+		    overflow: hidden;
+		    height: 100%;
+    	}
+    	.ren img{
+    		height:100%;
+    	}
+    </style>
+</head>
+<body>
+	<div class='kuang'>
+		<img src="../../icon/common/icon_collection.png" alt="" />
+	</div>
+	<!-- <div class='ren'>
+		<img src="../../icon/common/icon_ren_kuang.png" alt="" />
+	</div> -->
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		//为1时显示视力框
+		if(cache.type == 1){
+			$(".ren").remove();
+		}
+		//为2时显示人形框
+		if(cache.type == 2){
+			$(".kuang").remove();
+		}
+	}
+	
+</script>
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>vip题库音频播放</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html{
+    		background: transparent;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background: transparent;
+    	}
+    	.attention-div{
+    		margin: auto;
+		    position: absolute;
+		    height: 100%;
+			-webkit-transform: scale(0);
+			transform:scale(0);
+			opacity: 0;
+			width: 100%;
+		    padding: 2rem 1rem 0rem 1rem;
+	        background: #FFF;
+    	}
+    	.shadow{
+    		width:100%;
+    		height:100%;
+    		background:#000;
+    		opacity:0;
+    		position: absolute;
+    	}
+    	.trans {
+            /*transition*/
+            -webkit-transition: 0.3s ease;
+            -moz-transition: 0.3s ease;
+            -ms-transition: 0.3s ease;
+            -o-transition: 0.3s ease;
+            transition: 0.3s ease;
+        }
+        .show{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+        }
+		.sure{
+		    height: 2rem;
+		    line-height: 2rem;
+		    background: #DC251F;
+		    color: #FFF;
+		    border-radius: 0.2rem;
+		}
+		.voice-txt{
+		    width: 100%;
+		    min-height: 8rem;
+		    text-align: center;
+		    font-size: 0.7rem;
+		    -webkit-transform: scale(0);
+		    transform: scale(0);
+		    opacity: 0;
+		    background: #FFF;
+		    position: fixed;
+		    bottom: 0;
+		    left: 0;
+		}
+		.voice-txt-title{
+			width: 100%;
+		    height: 2.5rem;
+		    line-height: 2.5rem;
+		    border-radius: 0.5rem 0.5rem 0rem 0rem;
+    		border-bottom: none;
+    		font-weight: bold;
+    		color:#4D4D4D;
+    		font-size:0.9rem;
+		}
+		.voice-txt-content{
+		    width: 100%;
+		    height: 4rem;
+		    text-align: left;
+		    display: flex;
+		    line-height: 1.3rem;
+		    color:#4D4D4D;
+		    padding: 0 0.5rem ;
+		}
+		.voice-txt-content span{
+			margin:auto;
+			padding: 0 0.3rem;
+		    font-size: 0.8rem;
+		}
+		.voice-txt-button{
+	        width: 86%;
+		    height: 2rem;
+		    line-height: 2rem;
+		    background: linear-gradient(to left, #03B4F7 , #90DBF7);
+		    color: #fff;
+		    border-radius: 1rem;
+		    margin-left: 7%;
+		}
+		.voice-txt-button:active{
+			background:#90DBF7;
+		}
+		.in{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+		}
+		.bottom-slide-red {
+		    position: relative;
+		}
+		.bottom-slide-red:after {
+		    content: '';
+		    height: 1px;
+		    background: #DDDDDD;
+		    width: 100%;
+		    display: block;
+		    -webkit-transform: scaleY(0.3);
+		    transform: scaleY(0.3);
+		    -webkit-transform-origin: 30% 100%;
+		    transform-origin: 30% 100%;
+		    bottom: 0;
+		    left: 0;
+		    position: absolute;
+		}
+		.small{
+		    width: 35%;
+		    float: left;
+		    margin-left: 10%;
+		   	background: #F4F7F7;
+			color: #27344C !important; 
+		}
+		.sure_btn{
+			color: #fff !important; 
+			background: linear-gradient(to left ,#3F86FE,#64ADF6);
+		}
+        .delete_img{
+            position: absolute;
+            right: 0.5rem;
+            top: 0.5rem;
+            z-index: 10;
+        }
+        .delete_img img{
+            width: 1rem;
+        }
+        .aui-btn-block {
+		    display: block;
+		    width: 90%;
+		    padding: 0.4rem 0;
+		    font-size: 0.9rem;
+		    margin: 0 auto;
+		    float: left;
+		    margin-left: 5%;
+		    bottom: 0rem;
+		    font-size: 0.8rem;
+		    margin-top: 0rem !important;
+		}
+		.aui-btn-block:active{
+		    background:#64ADF6 !important;
+		}
+		.vip-voice-title{
+		    height: 2rem;
+		    line-height: 2rem;
+		    font-size: 0.8rem;
+		    font-weight: bold;
+		    width: 90%;
+		    margin-left: 5%;
+		    text-align: left;
+		}
+		.vip-voice-title img{
+			width: 1.8rem;
+			
+		}
+		.exist-time{
+		    color: #A3B1C9;
+			font-weight: normal;
+			font-size: 0.7rem;
+			position: absolute;
+			top: 0;
+			width: 7rem;
+			left: 6rem;
+			height: 1.5rem;
+			line-height: 1.5rem;
+		}
+		.exist-time font{
+			color:#3F86FF;
+		}
+		.voice-play-icon{
+		    width: 6rem;
+		    margin-left: 5%;
+		    text-align: left;
+		    margin-top: 0.8rem;
+		    background: #E2EDFF;
+		    color: #3F86FF;
+		    border: solid #8EB8FF 1px;
+		    border-radius: 1rem;
+		    padding: 0.2rem 1rem;
+		    position: relative;
+		}
+		.voice-play-icon img{
+			height: 0.8rem;
+		}
+		.voice-txt-desc{
+		    width: 90%;
+		    margin: 1rem 5%;
+		    text-align: left;
+		    font-size: 0.9rem !important;
+	        background: #F5F6F8;
+   		 	padding: 0.4rem;
+		}
+		.voice-txt-desc p{
+		    font-size: 0.9rem !important;
+		}
+    </style>
+</head>
+<body>
+    <div class="shadow" tapmode onclick="closeFrame()"></div>
+	<div class='voice-txt trans in'>
+        
+	</div>
+	<script type="text/template" charset="utf-8" id='voice_play_src'>
+		<div class='delete_img' tapmode onclick="closeFrame()">
+        	<img src="../../../icon/common/icon_close.png" alt=""/>
+        </div>
+        <div class='vip-voice-title bottom-slide'>
+        	<span>答题攻略</span>
+        	<img src="../../../icon/subject/subjectOne/icon_vip_power.png" alt=""/>
+        </div>
+        <div class='voice-play-icon' tapmode onclick='stop_start_voice(this)'>
+        	<span id='voiceTxt'>语音技巧</span>
+        	<!-- <img src="../../../icon/vip/video/icon_voice_play.gif" alt="" /> -->
+        	<img src="../../../icon/vip/video/icon_voice_play.png" alt="" style='margin-bottom: -0.15rem;'/>
+        	{{ if(!it.is_vip){ }}
+        		<!-- 如果不是vip的话 -->
+	        	<div class='exist-time'>&emsp;限时体验<font>10</font>题</div>
+        	{{ } }}
+        </div>
+        <div class='voice-txt-desc'>
+        	<span>{{=Base64.decode(it.vip_description)}}</span>
+        </div>
+        {{ if(!it.is_vip){ }}
+        	<!-- 如果不是vip的话，那么去购买，这一步的控制很重要 -->
+	        <div class="aui-btn aui-btn-info aui-btn-block" tapmode onclick="buy_vip()">解锁全部技巧</div>
+        {{ } }}
+	</script>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var audioStreamer;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		audioStreamer = api.require('audioStreamer');
+		var voice_play_src = $('#voice_play_src').html();
+		$('.voice-txt').html(doT.template(voice_play_src)(cache));
+		//console.log('数据'+doT.template(voice_play_src)(cache));
+		if(cache.voice_path != null
+			&&cache.voice_path != undefined
+			&&cache.voice_path != ''
+			&&cache.voice_path != 'undefined'){
+			//有语音数据则初始化播放器并自动播放
+			init_voice_player(file_load_url + cache.voice_path,true);
+		}else{
+			//没有语音的话直接隐藏
+			$('.voice-play-icon').addClass('aui-hide');
+		}
+	};
+	
+	/**
+	 * 初始化音频播放 
+	 */
+	function init_voice_player(path,is_init){
+		audioStreamer.openPlayer({
+		    path: path
+		}, function(ret) {
+	    	log('初始化音频',ret);
+		    if (ret.status) {
+		    	if(is_init){
+		    		//如果是初始化音频
+		    		audioStreamer.getVolume(function(ret) {
+					    if(ret&&ret.volume < 0.6){
+				    		audioStreamer.setVolume({volume: 0.6});//设置音量
+					    }
+					});
+		    		audioStreamer.addEventListener({
+					}, function(ret) {
+					    log('播放监听',ret.state);
+					   	switch(ret.state){
+					   		case 'prepare':
+					   			//准备完成
+					   			//removeVoicePlayStyle();
+					   			break;
+					   		case 'finished':
+					   			//播放完成
+					   			removeVoicePlayStyle();
+					   			break;
+					   		case 'buffering':
+					   			//正在缓冲
+					   			//$('#voiceTxt').html('缓冲中...');
+					   			break;
+					   		case 'pause':
+					   			//暂停
+					   			removeVoicePlayStyle();
+					   			break;
+					   		case 'resume':
+					   			//恢复播放
+					   			addVoicePlayStyle();
+					   			break;
+					   	}
+					});
+					addVoicePlayStyle();
+		    	}
+		    }else{
+		    	alert_msg('初始化音频出错');
+		    }
+		});
+	}
+	
+	/**
+	 *  播放音频样式
+	 */
+	function addVoicePlayStyle(){
+		$('#voiceTxt').html('&nbsp;播放中&nbsp;');
+		$('.voice-play-icon').find('img').attr('src','../../../icon/vip/video/icon_voice_play.gif');
+	}
+	
+	/**
+	 *  停止音频样式
+	 */
+	function removeVoicePlayStyle(){
+		$('#voiceTxt').html('语音技巧');
+		$('.voice-play-icon').find('img').attr('src','../../../icon/vip/video/icon_voice_play.png');
+	}
+
+    function closeFrame(){
+        $('.voice-txt').removeClass('in');
+        setTimeout(function(){
+            close_alert();
+        },300);
+    }
+    
+    /**
+     * 播放/停止音频 
+     */
+    function stop_start_voice(e){
+    	if($(e).find('img').attr('src') == '../../../icon/vip/video/icon_voice_play.png'){
+    		//播放
+    		if(api.systemType == 'ios'){
+    			audioStreamer.seekToTime({time: 0});
+	    		audioStreamer.resume();
+    		}else{
+    			init_voice_player(cache.voice_path);
+    		}
+    		addVoicePlayStyle();
+    	}else{
+    		//停止
+    		audioStreamer.pause();
+    	}
+    }
+    
+    /**
+     * 去开通vip 
+     */
+    function buy_vip(){
+		api.openWin({
+			name: 'curriculum_service_win',
+			url: 'widget://html/vip_service/question_bank/question_bank_buy_index_new.html',
+			slidBackEnabled: 'false',
+			vScrollBarEnabled: 'false',
+			hScrollBarEnabled: 'false',
+			reload: true,
+			useWKWebView: false,
+			pageParam: {
+				kemu:'036001'
+			}
+		});
+    }
+	
+	//关闭弹窗
+	function close_alert(){
+		api.closeFrame({
+        });
+	}
+</script>
+</html>

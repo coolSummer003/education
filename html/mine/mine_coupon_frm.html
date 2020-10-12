@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+        <title>我的优惠券</title>
+        <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+        <style>
+        html{
+            background:#f5f5f5;
+        }
+        body{
+            background: #F3F4F4;
+        }
+        .msg{
+            background: #f5f5f5;
+            height: 20rem;
+            text-align: center;
+            font-size:0.7rem;
+        }
+        .msg img{
+            width: 12rem;
+            margin-top: 9rem;
+        }
+        .jiazai{
+            font-size: 0.7rem;
+            background: #FFFFFF;
+            color: #666565;
+            padding-bottom: 0.3rem;
+            text-align: center;
+            padding-top: 0.3rem;
+        }
+        .jiazai img{
+            width: 1.5rem;
+        }
+        .aui-content{
+            width:100%;
+        }
+        .aui-list-item{
+            padding:0.35rem 1.5rem 0.35rem 1rem;
+            width:100%;
+            margin-bottom: 0.5rem;
+            background: #FFFFFF;
+        }
+        .body_top{
+            background:url(../../image/background/mine_integral_background.png);
+            background-size:cover;
+            height: 9rem;
+            margin: 0.75rem;
+        }
+        
+      
+        .mine_coupon_list{
+            background:url("../../image/background/mine_coupon_background.png");
+            background-size:cover;
+            /*margin: 0.75rem;*/
+            position: relative;
+            overflow: hidden;
+         }
+         .coupon_name {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #333333;
+            width: 70%;
+         }
+         .coupon_discount {
+            font-size: 0.7rem;
+            color: #999999;
+            display: inline;
+            position: absolute;
+            right: 1.5rem;
+         }
+         .coupon_money {
+            font-size: 1.5rem;
+            color: #FF4D44;
+            font-weight: bold;
+         }
+         .coupon_effective_date {
+            color: #999999;
+            font-size: 0.7rem;
+         }
+         .coupon_tips {
+            color: #999999;
+            font-size: 0.6rem;
+            margin-top: 0.55rem;
+         }
+         .aui-tab-item.aui-active {
+            color: #039be5;
+            border-bottom: 2px solid #039be5;
+            z-index: 100;
+         }
+         .aui-bar-btn-item {
+            font-size: 0.75rem !important;
+            color: #333;
+            padding-top: 0.25rem;
+        }
+
+        .aui-bar-btn-item.aui-active {
+            color: #3F86FF;
+        }
+
+        .list_bar .list_bar_inner {
+            background-color: #3F86FF;
+        }
+
+        #tab > div {
+            width: 33.3%;
+            float: left;
+            text-align: center;
+            font-size: 0.7rem;
+        }      
+        #coupon-order {
+            height: 2rem;
+            line-height: 2rem;
+            position: relative;
+            background: #fff;
+        }
+        #coupon-order li {
+            width: 25% !important;
+        }
+        .status_img{
+            position: absolute;
+            right: 1.5rem;
+            bottom: -1.4rem;
+        }
+        .status_icon{
+            width: 4rem;
+        }
+        .symbol{
+            font-size: 0.9rem;
+            margin-left: -0.3rem;
+        }
+    </style>
+    </head>
+    <body>
+    <!-- 驾校列表tab -->
+<div id="school-list">
+    <div id="coupon-order">
+        <ul class="aui-bar aui-bar-btn aui-bar-btn-full" id="tab">
+            <li class="aui-bar-btn-item aui-active" tapmode onclick="couponSort(this, 0)">
+                <span>未使用</span>
+            </li>
+            <li class="aui-bar-btn-item" tapmode onclick="couponSort(this, 1)">
+                <span>已使用</span>
+                
+            </li>
+            <li class="aui-bar-btn-item" tapmode onclick="couponSort(this, 2)">
+                <span>已过期</span>
+                
+            </li>
+            
+        </ul>
+        <div class="list_bar" id="slideSpan">
+            <div class="list_bar_inner"></div>
+        </div>
+    </div>
+</div>
+        <section class="aui-content">
+            <ul class="refreshs" style="margin: 0.75rem;">
+                <!--<li class="aui-list-item aui-list-item-middle mine_coupon_list" >
+                    <div class="aui-media-list-item-inner" >
+                        <div class="aui-list-item-inner " style="width:100%;">
+                            <div class="aui-card-list-user-name">
+                                <div class="aui-ellipsis-1 coupon_name">
+                                    巴邑火锅优惠券已
+                                </div>
+                                <div class="aui-list-item-right coupon_money">
+                                    ￥50
+                                  
+                                </div>
+                            </div>
+                            <div class="aui-list-item-text coupon_effective_date">
+                                有效期至2020-05-19
+                                <div class="coupon_discount">
+                                   
+                                  满200可用
+                                </div>
+                            </div>
+                            <div class="aui-list-item-text coupon_tips">
+                                不可与其他活动共享，仅限线下使用
+                         
+                            </div>
+                            <div class="status_img">
+                                <img src="../../image/background/coupon_used.png" class="status_icon"/>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </li>
+                 <li class="aui-list-item aui-list-item-middle mine_coupon_list" >
+                    <div class="aui-media-list-item-inner" >
+                        <div class="aui-list-item-inner " style="width:100%;">
+                            <div class="aui-card-list-user-name">
+                                <div class="aui-ellipsis-1 coupon_name">
+                                    玛莎造型体验券
+                                </div>
+                                <div class="aui-list-item-right coupon_money">
+                                    1
+                                   <span style="font-size: 0.9rem">次</span>
+                                </div>
+                            </div>
+                            <div class="aui-list-item-text coupon_effective_date">
+                                有效期至2020-05-19
+                                <div class="coupon_discount">
+                                   
+                                 体验券
+                                </div>
+                            </div>
+                            <div class="aui-list-item-text coupon_tips">
+                                不可与其他活动共享，仅限线下使用
+                         
+                            </div>
+                        </div>
+                        
+                    </div>
+                </li>-->
+            </ul>
+     </section>
+        <script type="text/template" charset="utf-8" id='mine_coupon_list'>
+            {{ for(var i=0;i < it.listIntegralGoodsRecordCoupon.length;i++){ }}
+        <div>
+                   {{ if(it.listIntegralGoodsRecordCoupon[i].isWriteOff == "0"){}}
+                       <li class="aui-list-item aui-list-item-middle mine_coupon_list" onclick='openCouponDetail("{{=it.listIntegralGoodsRecordCoupon[i].orderId}}","{{=it.listIntegralGoodsRecordCoupon[i].id}}")'>                                
+                        {{ }else { }}
+                       <li class="aui-list-item aui-list-item-middle mine_coupon_list">                                                 
+                        {{ } }}
+                
+                    <div class="aui-media-list-item-inner" >
+                        <div class="aui-list-item-inner " style="width:100%;">
+                            <div class="aui-card-list-user-name">
+                                <div class="aui-ellipsis-1 coupon_name">
+                                    {{=it.listIntegralGoodsRecordCoupon[i].name}}
+                                </div>
+                                {{ if(it.listIntegralGoodsRecordCoupon[i].isWriteOff == "0"){}}
+                                    {{ if(it.listIntegralGoodsRecordCoupon[i].type == "A00011"){}}
+                                    <div class="aui-list-item-right coupon_money">
+                                        <span style="font-size: 0.9rem;margin-right: -0.3rem;">￥</span>
+                                        {{=it.listIntegralGoodsRecordCoupon[i].discountAmount}}
+                                    </div> 
+                                    {{ }else if(it.listIntegralGoodsRecordCoupon[i].type == "A00012"){ }}
+                                        <div class="aui-list-item-right coupon_money">
+                                            {{=it.listIntegralGoodsRecordCoupon[i].discount*10}}
+                                            <span class="symbol">%</span>                                            
+                                        </div> 
+                                    {{ }else if(it.listIntegralGoodsRecordCoupon[i].type == "A00013"){ }}
+                                         <div class="aui-list-item-right coupon_money">
+                                            1
+                                            <span class="symbol">次</span>                                                   
+                                        </div> 
+                                    {{ } }}             
+                                {{ }else { }}
+                                    {{ if(it.listIntegralGoodsRecordCoupon[i].type == "A00011"){}}
+                                    <div class="aui-list-item-right coupon_money" style="color:#999999;">
+                                        <span style="font-size: 0.9rem;margin-right: -0.3rem;">￥</span>
+                                        {{=it.listIntegralGoodsRecordCoupon[i].discountAmount}}
+                                    </div> 
+                                    {{ }else if(it.listIntegralGoodsRecordCoupon[i].type == "A00012"){ }}
+                                        <div class="aui-list-item-right coupon_money" style="color:#999999;">
+                                            {{=it.listIntegralGoodsRecordCoupon[i].discount*10}}
+                                            <span class="symbol">%</span>                                           
+                                        </div> 
+                                    {{ }else if(it.listIntegralGoodsRecordCoupon[i].type == "A00013"){ }}
+                                         <div class="aui-list-item-right coupon_money" style="color:#999999;">
+                                             1
+                                             <span class="symbol">次</span>                                               
+                                        </div> 
+                                    {{ } }}                                              
+                                {{ } }}
+                
+                                
+                            </div>
+                            <div class="aui-list-item-text coupon_effective_date">
+                                有效期至{{=it.listIntegralGoodsRecordCoupon[i].useEndTime}}
+                                <div class="coupon_discount">
+                                    {{ if(it.listIntegralGoodsRecordCoupon[i].type == "A00011"){ }}
+                                                                                         满{{=it.listIntegralGoodsRecordCoupon[i].conditionsAmount}}可用
+                                    {{ }else if(it.listIntegralGoodsRecordCoupon[i].type == "A00012"){ }}
+                                        {{ if(it.listIntegralGoodsRecordCoupon[i].conditionsAmount == "0"){ }}
+                                                                                            折扣券
+                                        {{ }else { }}
+                                                                                                满{{=it.listIntegralGoodsRecordCoupon[i].conditionsAmount}}可用                          
+                                        {{ } }}
+                                   
+                                    {{ }else if(it.listIntegralGoodsRecordCoupon[i].type == "A00013"){ }}
+                                                                                         体验券
+                                    {{ } }}                    
+                                  
+                                </div>
+                            </div>
+                            <div class="aui-list-item-text coupon_tips">
+                                不可与其他活动共享，仅限线下使用
+                         
+                            </div>
+                            {{ if(it.listIntegralGoodsRecordCoupon[i].isWriteOff == "1"){}}
+                                    <div class="status_img">
+                                        <img src="../../image/background/coupon_used.png" class="status_icon"/>
+                                    </div>            
+                                {{ }else if(it.listIntegralGoodsRecordCoupon[i].isWriteOff == "2"){ }}
+                                     <div class="status_img">
+                                        <img src="../../image/background/coupon_expired.png" class="status_icon"/>
+                                    </div>                                       
+                                {{ } }}
+                           
+                        </div>
+                        
+                    </div>
+                </li>
+        </div>
+        {{ } }}
+    </script>
+
+        <div id='load_div'></div>
+        <script type="text/template" charset="utf-8" id='load_src'>
+            <div class="load">
+            <img src="../../icon/common/loadding.gif" alt="" /><br>
+            <span>加载中...</span>
+        </div>
+    </script>
+        <script type="text/template" charset="utf-8" id='msg_src'>
+            <div class="msg">
+            <img src="../../icon/common/empty.png" alt="" /><br>
+            <span>{{=it.msg}}</span>
+        </div>
+    </script>
+        <script type="text/template" charset="utf-8" id='more_src'>
+            <div class="jiazai">
+            <span>{{=it.msg}}</span>
+        </div>
+    </script>
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+    <script src="../../script/echo.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="../../script/doT_min.js"></script>
+    <script type="text/javascript" src="../../script/common/common.js"></script>
+    <script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+    <script type="text/javascript">
+        var page = 1,
+            limit = 10;
+        var clearance = 40; // 间隙
+        var load_src = $('#load_src').html(); //加载src
+        var msg_src = $('#msg_src').html(); //消息提示src
+        var more_src = $('#more_src').html(); //更多src
+        var refresh = true; //标记是否是刷新操作
+        var learnerId; //用户ID
+        var status = 0;
+        apiready = function() {
+            // init();
+            goRefrash(40, '#FFFFFF', null, null, function() {
+                refreshList();
+            });
+            goLoad(function(ret, err) {
+                loadList();
+            });
+            api.refreshHeaderLoading();
+            if (islogin()) {
+                learnerId = getUserId();
+            } else {
+                learnerId = "";
+            }
+             $('.aui-active').click();
+        f_slide($('.aui-active')[0]);
+            
+        };
+        
+        // 滑块加载事件
+        function f_slide(e) {
+            $('.list_bar').css('width', ($('.aui-active').width() - clearance * 2) + 'px');
+            $('.list_bar_inner').css('width', ($('.aui-active').width() - clearance * 2) + 'px');
+            document.getElementById('slideSpan').style.webkitTransform = 'translateX(' + ($(e).position().left + clearance) +
+                'px)';
+        }
+        
+        function couponSort(it, i) {
+            f_slide(it);
+            $(it).parent().find('li').each(function (index, e) {
+                if ($(e).is($(it))) {
+                    if ($(it).hasClass('aui-active')) {
+                        
+                    } else {
+                        $(it).addClass('aui-active');
+                        $(it).find('.arrow').attr('src', '../../icon/home/blue_arrow.png');
+                    }
+                } else {
+                    $(e).removeClass('aui-active');
+                    $(e).find('.arrow').attr('src', '../../icon/home/gray_arrow.png');
+                }
+            });
+            status = i;
+            init(status)
+        }
+            
+        //列表下拉
+        function refreshList() {
+            page = 1;
+            refresh = true;
+            //setLoad();
+            init(status);
+        }
+        //列表上拉
+        function loadList() {
+            page++;
+            if ($('.refreshs').find('li').length == 0) refresh = true;
+            else refresh = false;
+            setLoad();
+            //console.log($('.aui-list').find('li').length);
+            // alert(page);
+            init(status);
+        }
+
+        function init(status) {
+            defaultload("加载中");
+            url = '/api/integral-goods/mine-list-integral-goods-coupon';
+            params = {
+                learnerId: learnerId,
+                page: page,
+                limit: limit,
+                isWriteOff: status
+            }
+            log('tioajian', params);
+            ajax_Request(url, 'get', 'json', params, function(ret, err) {
+                 log('我的优惠券', ret);
+                if (ret) {
+                    if (ret.code == 0 && ret.listIntegralGoodsRecordCoupon.length > 0) {
+                        if (page == 1) {
+                            var mine_coupon_list = $('#mine_coupon_list').html();
+                            $(".refreshs").html(doT.template(mine_coupon_list)(ret));
+                        } else {
+                            var mine_coupon_list = $('#mine_coupon_list').html();
+                            $(".refreshs").append(doT.template(mine_coupon_list)(ret));
+                        }
+                        api.hideProgress();
+                        api.parseTapmode();
+                    } else {
+                        api.hideProgress();
+                        if(status == "0"){
+                            setMsg(refresh ? '暂无未使用优惠券' : '暂无更多');
+                        }else if(status == "1"){
+                            setMsg(refresh ? '暂无已使用优惠券' : '暂无更多');
+                        }else if(status == "2"){
+                            setMsg(refresh ? '暂无已过期优惠券' : '暂无更多'); 
+                        }
+                        
+                    }
+                } else {
+                    api.hideProgress();
+                    setMsg('服务器繁忙，请稍候再试！');
+                }
+            })
+            setTimeout(function() {
+                api.refreshHeaderLoadDone();
+            }, 500);
+        }
+        
+        function openCouponDetail(orderId,couponId){
+            console.log(couponId)
+            var params = {
+                couponId: couponId,
+                orderId: orderId
+            }
+           api.openWin({
+                name: 'coupon_detail_win',
+                url: './coupon_detail_win.html',
+                slidBackEnabled: 'false',
+                vScrollBarEnabled: 'false',
+                hScrollBarEnabled: 'false',
+                reload: true,
+                pageParam: {
+                    data: params
+                }
+            });
+        }
+        
+        //设置页面加载的画面
+        function setLoad() {
+            if (refresh || $('.refreshs').find('li').length == 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+                $('#load_div').html('');
+            } else {
+                setTimeout(function() {
+                    $('#load_div').html(doT.template(more_src)({
+                        'msg': '加载更多中...',
+                        'img': '../../icon/common/jiazai.gif'
+                    }));
+                }, 500);
+            }
+        }
+
+        //设置页面提示信息
+        function setMsg(msg) {
+            if (refresh || $('.refreshs').find('li').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+                setTimeout(function() {
+                    $(".refreshs").html(doT.template(msg_src)({
+                        'msg': msg
+                    }));
+                }, 500);
+            } else { //原先已经有数据的情况下
+                setTimeout(function() {
+                    $('#load_div').html(doT.template(more_src)({
+                        'msg': msg,
+                        'img': ''
+                    }));
+                }, 500);
+            }
+        }
+    </script>
+</html>

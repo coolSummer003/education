@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+	<link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+	<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	body,html{
+			background: #FEFEFE !important;
+    	}
+		.main_top{
+			width: 100%;
+			height: 18rem;
+			background-image: linear-gradient(#3BABFA, #4763FF);
+			z-index: 0;
+			padding-top: 2rem;
+		}
+		.main_out{
+			width: 12rem;
+			height: 12rem;
+			margin: auto;
+			background: #FFF;
+			z-index: 1;
+			padding-top: 0.5rem;
+			border-radius: 50%;
+		}
+		.main_out1{
+			width: 11rem;
+			height: 11rem;
+			margin: auto;
+			z-index: 2;
+			padding-top: 0.5rem;
+			border-radius: 50%;
+			background-image: linear-gradient(#4D8FFF, #4A8DFF);
+		}
+		.main_out2{
+			width: 10rem;
+			height: 10rem;
+			margin: auto;
+			background: #FFF;
+			z-index: 3;
+			padding-top: 0.5rem;
+			border-radius: 50%;
+		}
+		.top_bor{
+			width: 9rem;
+			height: 9rem;
+			margin: auto;
+			background-image: linear-gradient(#3EA3FA, #4380F9);
+			z-index: 4;
+			border-radius: 50%;
+			text-align: center;
+			color: #FFF;
+			padding-top: 1.5rem;
+		}
+		.bor_top_msg{
+			font-size: 0.8rem;
+		}
+		.bor_top_city{
+			font-size: 1.5rem;
+		}
+		.bor_top_question{
+			font-size: 1.5rem;
+		}
+		.bor_top_time{
+			font-size: 0.7rem;
+		}
+		.main_btn{
+			width: 60%;
+			margin: auto;
+			text-align: center;
+			background: #FFF;
+			border-radius: 1.5625rem;
+			padding: 0.4rem 0 ;
+			margin-top: 1rem;
+			color: #437CFD;
+   		 	font-weight: bold;
+		}
+		.main_content{
+			width: 100%;
+			padding-top: 1rem;
+			
+		}
+		.main_content_block{
+			width: 95%;
+			background: #FFF;
+			height: 4.5rem;
+			display: inline-block;
+			margin-left: 2.5%;
+			padding : 0.5rem 0.5rem ;
+			box-shadow: 0px 0px 10px #E4E7ED;
+			border-radius: 5px;
+		}
+		.main_content_msg{
+			font-size: 0.6rem;
+			color: #A3A9AF;
+		}
+		.main_content_centen{
+			font-size:0.7rem;
+			text-align: right;
+    		padding-right: 0.5rem;
+		}
+		.main_content_centen_num{
+			font-size:1.2rem;
+			margin-right: 0.2rem;
+		}
+		.centen_num_blue{
+			color: #4A90E2;
+		}
+		.centen_num_red{
+			color: #F42850;
+		}
+		.centen_num_yellow{
+			color: #F6A93B;
+		}
+		.centen_num_green{
+			color: #7ED321;
+		}
+		.num_right{
+			margin-right: 0.25rem;
+		}
+		.speed_progress{
+			border-radius: 1.5625rem;
+			margin-top: 0.5rem;
+		}
+		
+		.bg_blue{
+			background: #4A90E2;
+		}
+		.bg_red{
+			background: #F42850;
+		}
+		.bg_yellow{
+			background: #F6A93B;
+		}
+		.bg_green{
+			background: #7ED321;
+		}
+    </style>
+</head>
+<body>
+	<div class="main_top">
+		<div class="main_out">
+			<div class="main_out1">
+				<div class="main_out2">
+					<div class="top_bor">
+						<div class="bor_top_msg">上次同步时间</div>
+						<div class="bor_top_city">暂无<br>记录</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="main_btn" tapmode onclick='syncRecode(this)'>检测中...</div>
+	</div>
+	
+	<div>
+		<div class="main_content">
+			<div class="main_content_block">
+				<div class="main_content_msg"> <span class="centen_num_blue num_right">•</span> 已做题</div>
+				<div class="main_content_centen"><span class="main_content_centen_num centen_num_blue">0</span>题</div>
+				<div class="aui-progress aui-progress-xxs speed_progress">
+					<div class="aui-progress-bar bg_blue" style="width: 0%;"></div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="main_content">
+			<div class="main_content_block">
+				<div class="main_content_msg"><span class="centen_num_yellow num_right">•</span>未同步记录</div>
+				<div class="main_content_centen"><span class="main_content_centen_num centen_num_yellow">0</span>条</div>
+				<div class="aui-progress aui-progress-xxs speed_progress">
+					<div class="aui-progress-bar bg_yellow" style="width: 0%;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript" src="../../../script/question_sync/question_sync.js"></script>
+<script type="text/javascript">
+	var db;
+	var cache;
+	var fs;
+	var isallow = false;//是否允许同步
+	apiready = function(){
+		db = api.require('db');
+		fs = api.require('fs'); 
+		cache = api.pageParam.data;
+		
+		//监听同步完成
+		toEventListener('sync_success',function(ret){
+			setTimeout(function(){
+				init();
+				$('.main_btn').html('同步完成');
+			},300);
+		})
+		
+		//监听无效同步
+		toEventListener('sync_success_none',function(ret){
+			setTimeout(function(){
+				$('.main_btn').html('同步完成');
+			},300);
+		})
+		setTimeout(function(){
+			init();
+		},300);
+	};
+	
+	function init(){
+		var bankType = getBankType(cache.kemu);
+		sql = 'SELECT * FROM sync_date_recode WHERE learner_id = ' + getUserId() + ' AND kemu = "'+ cache.kemu +'" ORDER BY sync_dt DESC';
+		db.selectSql({
+	        name:'drivingApp',
+	        sql:sql
+        },function(ret,err){
+        	log('同步记录',ret);
+        	if(ret&&ret.status&&ret.data.length > 0){
+        		$('.bor_top_city').html(ret.data[0].sync_dt.toString().substring(0,10) + '<br>' + ret.data[0].sync_dt.substring(11,19));
+        	}
+        });
+		
+		sql = 'SELECT recode_num, right_percent, totle_num FROM ';
+			sql += '(SELECT COUNT(DISTINCT Q.question_id) recode_num FROM cm_question q LEFT JOIN cm_question_recode r ON r.question_id = q.question_id WHERE r.id IS NOT NULL AND kemu = "'+ cache.kemu +'" AND belong_bank_type = "' + bankType + '" AND learner_id = '+getUserId()+') Q1 LEFT OUTER JOIN ';
+			sql += '(SELECT COUNT(DISTINCT Q.question_id) totle_num FROM cm_question q WHERE kemu = "'+ cache.kemu +'" AND bank_type like "%' + bankType + '%") Q2 LEFT OUTER JOIN ';
+			sql += '(SELECT (right_num * 100)/(right_num + wrong_num) right_percent FROM (';
+				sql += 'SELECT right_num,wrong_num FROM (SELECT SUM(r.right_num) right_num FROM cm_question q LEFT JOIN cm_question_recode r ON r.question_id = q.question_id WHERE r.right_num > 0 AND kemu = "'+ cache.kemu +'" AND belong_bank_type = "' + bankType + '" AND learner_id = '+getUserId()+') T1 ';
+				sql += 'LEFT OUTER JOIN (SELECT SUM(r.wrong_num) wrong_num FROM cm_question q LEFT JOIN cm_question_recode r ON r.question_id = q.question_id WHERE r.wrong_num > 0 AND kemu = "'+ cache.kemu +'" AND belong_bank_type = "' + bankType + '" AND learner_id = '+getUserId()+') T2 ';
+		sql += ')) Q3';
+		db.selectSql({
+	        name:'drivingApp',
+	        sql:sql
+        },function(ret,err){
+        	log('做题统计',ret);
+        	if(ret){
+        		if(ret.status){
+        			loadNum($('.centen_num_blue').eq(1),ret.data[0].recode_num,1000, '');
+        		}else{
+        			alert_msg(JSON.stringify(ret));
+        		}
+        	}else{
+        		//数据库有问题
+        	}
+        });
+       	
+       	sql = 'SELECT COUNT(DISTINCT r.id) r_recode FROM cm_recode r LEFT JOIN cm_question q ON r.question_id = q.question_id ';
+       	sql += 'WHERE q.kemu = "' + cache.kemu + '" AND r.learner_id = ' + getUserId();
+       	db.selectSql({
+	        name:'drivingApp',
+	        sql:sql
+        },function(ret,err){
+        	log('未同步记录',ret);
+        	if(ret){
+        		if(ret.status){
+        			loadNum($('.centen_num_yellow').eq(1),ret.data[0].r_recode,1000,'');
+        			if(ret.data[0].r_recode == 0){
+        				$('.main_btn').html('无记录可同步');
+        			}else{
+        				isallow = true;
+        				$('.main_btn').html('立刻同步');
+        			}
+        		}else{
+        			alert_msg(JSON.stringify(ret));
+        		}
+        	}else{
+        		//数据库有问题
+        	}
+        });
+	}
+	
+	/**
+	 * 同步记录 
+	 */
+	function syncRecode(e){
+		if(isallow){
+			isallow = false;
+			$(e).html('同步中...');
+			sync_question_recode(cache.kemu);
+		}
+	}
+</script>
+</html>

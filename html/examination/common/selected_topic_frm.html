@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>选题</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	body,html{
+    		margin: 0;
+    		padding: 0;
+    		background: #F8DEC7;
+    	}
+    	.invitation_background_img{
+    		width: 100%;
+    		height: 100%;
+    	}
+    	.all_bor{
+    		position: relative;
+    	}
+    	
+    	
+    	.line_text_notice{
+    		font-size: 0.8rem;
+    		font-weight: bold;
+    		width: 100%;
+    		text-align: center;
+    	}
+    	.text_notice{
+    		position: absolute;
+    		color: #FFF;
+    		bottom: 4.2%;
+    		left: 30%;
+    		font-size: 0.7rem;
+    	}
+    	.right{
+    		left: 55%;
+    	}
+    	.add_invition_img{
+    		width: 20%;
+    		margin-left: 38%;
+    		margin-top: 10%;
+    	}
+		.content_all{
+			width: 100%;
+			padding-left: 10%;
+			padding-right: 10%;
+			position: absolute;
+			/* top:30%; */
+		}
+		
+		/* .aui-media-list{
+			margin-bottom: 1rem;
+		} */
+		.content_all_selected{
+			top:40%;
+		}
+		.selected_topic{
+			margin-bottom: 0.5rem;
+		}
+		
+		.content_all_click{
+			top:50%;
+		}
+		.selected_topic_click{
+			margin-bottom: 2rem;
+		}
+		
+		
+		.aui-media-list .aui-list-item{
+			border-radius:10px;
+		}
+		.aui-list:before{
+			height: 0;
+		}
+		.aui-list:after{
+			height: 0;
+		}
+		li{
+			height: 3.5rem;
+		}
+		.aui-list-item-right{
+			background-image: linear-gradient(229deg, #FFC6A6 0%, #FF9569 100%);
+			color: #FFF !important;
+			width: 4rem;
+			text-align: center;
+			height: 1.5rem;
+			line-height: 1.5rem;
+			border-radius: 1.2rem;
+			position: absolute !important;
+			top: 45%;
+			right: 0;
+		}
+    </style>
+</head>
+<body>
+	<div class="all_bor">
+		<img class="invitation_background_img" src="../../../image/background/invitation_background.png" >
+		   <div class="aui-card-list-content content_all content_all_selected">
+			   <div id="exam_one" class="aui-hide">
+		            <ul class="aui-list aui-media-list selected_topic">
+		                <li class="aui-list-item aui-list-item-middle">
+		                    <div class="aui-media-list-item-inner">
+		                        <div class="aui-list-item-inner " tapmode onclick="toExam('sercet1')">
+		                            <div class="aui-list-item-text">
+		                                <div class="aui-list-item-title aui-font-size-18">科目一精选题试卷一</div>
+		                                <div class="aui-list-item-right">立即做题</div>
+		                            </div>
+		                            <div class="aui-list-item-text">
+		                                浙江省历年考试真题集
+		                            </div>
+		                        </div>
+		                    </div>
+		                </li>
+		               
+		            </ul>
+					<ul class="aui-list aui-media-list selected_topic">
+					    <li class="aui-list-item aui-list-item-middle">
+					        <div class="aui-media-list-item-inner">
+					            <div class="aui-list-item-inner " tapmode onclick="toExam('sercet2')">
+					                <div class="aui-list-item-text">
+					                    <div class="aui-list-item-title aui-font-size-18">科目一精选题试卷二</div>
+					                    <div class="aui-list-item-right">立即做题</div>
+					                </div>
+					                <div class="aui-list-item-text">
+					                    浙江省历年考试真题集
+					                </div>
+					            </div>
+					        </div>
+					    </li>
+					   
+					</ul>
+				</div>
+				<div id="exam_four" class="aui-hide">
+					<ul class="aui-list aui-media-list selected_topic">
+						<li class="aui-list-item aui-list-item-middle">
+							<div class="aui-media-list-item-inner">
+								<div class="aui-list-item-inner " tapmode onclick="toExam('sercet3')">
+									<div class="aui-list-item-text">
+										<div class="aui-list-item-title aui-font-size-18">科目四精选题试卷一</div>
+										<div class="aui-list-item-right">立即做题</div>
+									</div>
+									<div class="aui-list-item-text">
+									   浙江省历年考试真题集
+									</div>
+								</div>
+							</div>
+						</li>
+					   
+					</ul>
+					<ul class="aui-list aui-media-list selected_topic">
+						<li class="aui-list-item aui-list-item-middle">
+							<div class="aui-media-list-item-inner">
+								<div class="aui-list-item-inner " tapmode onclick="toExam('sercet4')">
+									<div class="aui-list-item-text">
+										<div class="aui-list-item-title aui-font-size-18">科目四精选题试卷二</div>
+										<div class="aui-list-item-right">立即做题</div>
+									</div>
+									<div class="aui-list-item-text">
+										浙江省历年考试真题集
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+	        </div>
+<!-- 		<span class="text_notice">活动规则</span>
+		<span class="text_notice right">常见问题</span> -->
+	</div>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript" src="../../../script/question_sync/question_download.js"></script>
+<script type="text/javascript" src="../../../script/question_sync/question_sync.js"></script>
+<script type="text/javascript">
+	var cache;
+	var flag;
+	var type;
+	var param;
+	var db;
+	var selectOne;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		db = api.require('db');
+		console.log("前页面数据-----"+JSON.stringify(cache))
+		type = cache.data.type;
+		if(type == "selected_topic"){
+			$("#exam_one").removeClass("aui-hide")
+			$("#exam_four").removeClass("aui-hide")
+			$(".aui-media-list").addClass("selected_topic");
+			$(".content_all").addClass("content_all_selected")
+			$(".aui-media-list").removeClass("selected_topic_click");
+			$(".content_all").removeClass("content_all_click")
+		}else{
+			$(".aui-media-list").addClass("selected_topic_click");
+			$(".content_all").addClass("content_all_click")
+			$(".aui-media-list").removeClass("selected_topic");
+			$(".content_all").removeClass("content_all_selected")
+			if(type == 'click_one'){
+				$("#exam_one").removeClass("aui-hide")
+			}else if(type == 'click_four'){
+				$("#exam_four").removeClass("aui-hide")
+			}
+		}
+		
+		
+		// sendEvent('',{kemu:cache.kemu});
+		//监听注销时，重新初始化加载
+		toEventListener('question_download_finish',function(ret,err){
+			console.log("回调题库"+JSON.stringify(ret))
+			var kemu = ret.value.kemu;
+			if(kemu == '036001'){
+				toExamSubject('subjectOne');
+			}else{
+				toExamSubject('subjectFour');
+			}
+		})
+		
+	};
+	
+	function toExam(exam_type){
+		
+		//获取最新题库
+		var kemu = '';
+		param = {
+			exam_type:exam_type//密卷
+		}
+		
+		var folder = '';
+		if(exam_type == 'sercet1'||exam_type == 'sercet2'){
+			folder = 'subjectOne';
+			kemu = '036001'
+		}else{
+			folder = 'subjectFour';
+			kemu = '036004'
+		}
+		
+		if(getBankType(kemu) == '036001' ||getBankType(kemu) == '036004' || getBankType(kemu) == '022001'){
+			getNewestQuestion(kemu,folder);
+		}else{
+			openMessage_i('提示', '该试卷仅为小车提供', '去切换', '取消', 'changeBankType("'+kemu+'")', '', null);
+		}
+	}
+	
+	/**
+	 * 切换题库
+	 */
+	function changeBankType(kemu){
+		var floder_name = kemu == '036001'?'subjectOne':'subjectFour';
+		api.openWin({
+	        name: 'select_item_bank_win',
+	        url: '../' + floder_name + '/practice_common_win.html',
+	        slidBackEnabled:'false',
+	        vScrollBarEnabled:'false',
+	        hScrollBarEnabled:'false',
+	        reload:true,
+	        useWKWebView:false,
+	        pageParam: {
+	            data:{
+	            	type:'select-question-type'
+	            }
+	        }
+	    });
+	}
+	
+	//打开通用弹出框    //title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null    function openMessage_i(title, content, sureButton, cancelButton, sureFunc, cancelFunc, params) {        api.openFrame({            name: 'common_alert',            url: '../../common/common_alert.html',            bgColor: 'rgba(0,0,0,0.4)',            rect: {                x: 0,                y: 0,                w: 'auto',                h: api.winHeight            },            bounces: false,            pageParam: {                title: title,                content: content,                sureButton: sureButton,                sureFunc: sureFunc,                cancelButton: cancelButton,                cancelFunc: cancelFunc,                winName: api.winName,                frameName: api.frameName,                params: params            },            softInputBarEnabled: true,            softInputMode: 'resize'        });    }
+	
+	
+	//获取最新题库
+	function getNewestQuestion(kemu,folder){
+		url = 'api/question/version';
+		params = {
+			kemu:kemu
+		}
+		if(islogin()){
+			params.learnerId = getUserId();
+		}
+		ajax_Request(url, "get", "json", params, function(ret,err){
+			log('最新题库版本',ret);
+			if(ret&&ret.code == 0){
+				checkVersion(ret.question.version,kemu,folder);//拿服务器最新题库版本和本地题库版本做校验
+			}else{
+				alert_msg('获取最新题库版本号失败');
+			}
+		});
+	}
+	
+	//拿服务器最新题库版本和本地题库版本做校验
+	function checkVersion(serverVersion,kemu,folder){
+		sql = 'SELECT version FROM cm_question WHERE kemu = "' + kemu + '" ORDER BY version DESC LIMIT 0,1';
+		db.selectSql({
+	        name:'drivingApp',
+	        sql:sql
+	    },function(ret,err){
+	    	log('本地版本号',ret);
+	    	if(ret&&ret.status){
+	    		if(ret.data.length > 0){
+	    			if(serverVersion != ret.data[0].version){//版本不一致，以服务器的为准
+	    				openDownloadVisionNew(serverVersion,kemu);//下载题库
+	    			}else{
+	    				console.log('题库已最新');
+	    				//题库如果最新，那么直接去同步
+	    				// start_sync(kemu);
+						 toExamSubject(folder);
+	    			}
+	    		}else{
+	    			openDownloadVisionNew(serverVersion,kemu);//下载题库
+	    		}
+	    	}else if(err){
+	    		sendErrorLog('科目一比较版本失败',JSON.stringify(err));
+				//数据库出现异常，重新加载数据库
+				openMessageNew('温馨提示', '检测到题库版本较低，请手动更新', '更新', '', 'delete_db("'+kemu+'")', '', null);
+	    	}
+	    });
+	};
+	
+	
+	function toExamSubject(folder){
+		console.log("跳转页面参数-------"+JSON.stringify(param));
+		var url = 'api/exam-service-learners/select';
+		var params = {
+			learnerId: getUserId()
+		}
+		ajax_Request(url, 'get', 'json', params, function(ret, err) {
+			if(ret.code == 0){
+				flag = true;
+			}else{
+				flag = false;
+			}
+			param.flag = flag;
+			api.openWin({
+			   name: 'exam_simulation_win',
+			   url: '../'+ folder +'/exam_simulation_win.html',
+			   slidBackEnabled:'false',
+			   vScrollBarEnabled:'false',
+			   hScrollBarEnabled:'false',
+			   reload:true,
+			   useWKWebView:false,
+			   pageParam: {
+			       data:param
+			   }
+			});
+		});
+	}
+	
+	//打开题库下载界面
+	function openDownloadVisionNew(serverVersion,kemu){
+		api.openFrame({
+	        name: 'download_progress_frm',
+	        url: '../../common/question/download_progress_frm.html',
+	        bgColor: 'rgba(0,0,0,0.1)',
+	        rect: {
+	            x: 0,
+	            y: 0,
+	            w: 'auto',
+	            h: api.winHeight
+	        },
+	        bounces: false,
+	        pageParam:{
+	        	serverVersion:serverVersion,
+	        	kemu:kemu,
+	        	winName:api.winName,
+	        	frameName:api.frameName
+	        },
+	        softInputBarEnabled:true,
+	        softInputMode:'resize'
+	    });
+	}
+	
+	//打开通用弹出框
+	//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+	function openMessageNew(title,content,sureButton,cancelButton,sureFunc,cancelFunc,params){
+		api.openFrame({
+	        name: 'common_alert',
+	        url: '../../common/common_alert.html',
+	        bgColor: 'rgba(0,0,0,0.4)',
+	        rect: {
+	            x: 0,
+	            y: 0,
+	            w: 'auto',
+	            h: api.winHeight
+	        },
+	        bounces: false,
+	        pageParam:{
+	        	title:title,
+	        	content:content,
+	        	sureButton:sureButton,
+	        	sureFunc:sureFunc,
+	        	cancelButton:cancelButton,
+	        	cancelFunc:cancelFunc,
+	        	winName:api.winName,
+	        	frameName:api.frameName,
+	        	params:params
+	        },
+	        softInputBarEnabled:true,
+	        softInputMode:'resize'
+	    });
+	}
+	
+	
+	
+</script>
+</html>

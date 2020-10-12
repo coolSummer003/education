@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>理赔激活条件</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/swiper/swiper_min.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style type="text/css">
+			html,body{
+				background: #fff;
+			}
+			.title{
+				position: relative;
+				width: 100%;
+				height: 14rem;
+			}
+			.title_bg {
+				position: absolute;
+				width: 100%;
+				height: auto;
+			}
+			.title_condition{
+				position: absolute;
+				width: 100%;
+				height: auto;
+				margin-top: 1rem;
+			}
+			.title_condition_list{
+				width: 90%;
+				height: 1.5rem;
+				margin-left: 5%;
+				margin-top: 0.9rem;
+			}
+			.title_condition_list_img{
+				width: 1.5rem;
+				height: 1.5rem;
+			}
+			.title_condition_list_img img{
+				width: 1.3rem;
+				height: 1.3rem;
+				margin-top: 0.1rem;
+			}
+			.title_condition_list_span{
+				width: auto;
+				height: 1.5rem;
+				line-height: 1.5rem;
+				color: #fff;
+				font-size: 0.7rem;
+				margin-left: 1.8rem;
+				margin-top: -1.5rem;
+			}
+			.title_condition_list_span_no{
+				color: #443636;
+			}
+			.tips{
+				width: 94%;
+				height: 3rem;
+				margin-left: 3%;
+			}
+			.tips_img{
+				width: 0.8rem;
+				height: 0.8rem;
+			}
+			.tips_img img{
+				width: 0.8rem;
+				height: 0.8rem;
+				vertical-align: middle;
+			}
+			.tip_msg{
+				width: auto;
+				height: 3rem;
+				margin-left: 1.2rem;
+				margin-top: -0.8rem;
+				font-size: 0.7rem;
+				color: #9D9EA7;
+				text-align: justify;
+			}
+			.btn{
+				width: 100%;
+				height: 2.5rem;
+				margin-top: 3rem;
+			}
+			.btn_no{
+				width: 94%;
+				height: 2.5rem;
+				margin-left: 3%;
+				border-radius: 1.5625rem;
+				background: #7E7373;
+				color: #FFC696;
+				text-align: center;
+				line-height: 2.5rem;
+			}
+			.btn_yes{
+				background: #443636;
+				color: #FFC696;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="title">
+			<img src="../../../icon/vip/question_bank/requirement_bg.png" class="title_bg">
+			<div class="title_condition">
+				<ul>
+					<li class="title_condition_list">
+						<div class="title_condition_list_img">
+							<img src="../../../icon/vip/question_bank/yes.png" >
+						</div>
+						<div class="title_condition_list_span">
+							学员开通VIP课程后，完成精选题500的练习
+						</div>
+					</li>
+					<li class="title_condition_list">
+						<div class="title_condition_list_img">
+							<img src="../../../icon/vip/question_bank/yes.png" >
+						</div>
+						<div class="title_condition_list_span">
+							考前模拟卷5次成绩中3次达到95分以上
+						</div>
+					</li>
+					<li class="title_condition_list">
+						<div class="title_condition_list_img">
+							<img src="../../../icon/vip/question_bank/no.png" >
+						</div>
+						<div class="title_condition_list_span title_condition_list_span_no">
+							预测通过率，达到90%以上
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="tips">
+			<div class="tips_img">
+				<img src="../../../icon/vip/question_bank/icon_vip_tag.jpg" >
+			</div>
+			<div class="tip_msg">
+				以上条件同时满足时，保障服务激活，我们建议您参加理论考试，预祝您考试通过哦！
+			</div>
+		</div>
+		<div class="btn">
+			<div class="btn_no btn_yes" tapmode onclick="toClainSettlement();">
+				您尚不符合理赔要求，请继续努力！
+			</div>
+		</div>
+		<script type="text/javascript" src="../../../script/api.js"></script>
+		<script type="text/javascript" src="../../../script/aui/aui_tab.js"></script>
+		<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+		<script src="../../../script/swiper/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../../script/common/common.js"></script>
+		<script type="text/javascript">
+			var cache;
+			apiready = function() {
+				api.parseTapmode();
+				cache = api.pageParam.data;
+			}
+			/**
+			 * 去在线理赔
+			 */
+			function toClainSettlement(){
+				commonOpenWin('online_claim_settlement_win',cache);
+			}
+		</script>
+	</body>
+</html>

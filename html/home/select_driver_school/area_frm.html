@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>地图</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<style>
+			html{
+    		background-color: #ffffff;
+    	}
+    </style>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var systemType;
+		var bMap;
+		var chanceLon;
+		var chanceLat;
+		var infor = {};
+		var address;
+		var locallon;
+		var locallat;
+		var winWidth;
+		var right;
+		apiready = function() {
+			api.parseTapmode();
+			winWidth = api.winWidth;
+			right=(winWidth/2)-200;
+			cache = api.pageParam;
+			bMap = api.require('bMap');
+			systemType = api.systemType;
+			log("经纬度数据", cache);
+			locallon=cache.location_lon;
+			locallat=cache.location_lat;
+			toEventListener('back', function(ret) {
+				log('------复位-----', ret);
+				addAnnotations(locallon,locallat);
+				chanceLon=locallon;
+				chanceLat=locallat;
+				bMap.getNameFromCoords({
+					lon: chanceLon,
+					lat: chanceLat
+				}, function(ret, err) {
+					infor.lon = chanceLon;
+					infor.lat = chanceLat;
+					infor.address = ret.address + ret.sematicDescription;
+					log("地址信息", infor);
+					sendEvent("area", infor);
+				});
+				bMap.setCenter({
+                    coords: {
+                        lon: chanceLon,
+                        lat: chanceLat
+                    },
+                    animation: true
+                });
+				
+				
+			})
+			//log('地图传入数据',cache);
+			setTimeout(init, 100); //延迟100毫秒，防止页面卡顿
+		}
+
+		function init() {
+			bMap.getNameFromCoords({
+				lon: cache.location_lon,
+				lat: cache.location_lat
+			}, function(ret, err) {
+			
+				infor.address = ret.address + ret.sematicDescription;
+				log("地址信息", infor);
+				sendEvent("area", infor);
+			});
+			openBaiduMap(cache.location_lon, cache.location_lat);
+			infor.lon = cache.location_lon;
+			infor.lat = cache.location_lat;
+			api.openFrame({
+
+				// 返回的 图标 在另一个frame
+				name: 'back_frm',
+				url: './back_frm.html',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 60,
+					h: 60,
+					marginBottom: 100, 
+					marginRight: 20
+				},
+				bounces: false,
+				vScrollBarEnabled: false,
+				hScrollBarEnabled: false
+			});
+			api.openFrame({
+			
+				// 搜索页面
+				name: 'search_frm',
+				url: './search_frm.html',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 400,
+					h: 60,
+					marginTop: 100, 
+					marginLeft: right
+					
+				},
+				bounces: false,
+				vScrollBarEnabled: false,
+				hScrollBarEnabled: false
+			});
+		}
+
+		//打开百度地图
+		function openBaiduMap(lon, lat) {
+			bMap.open({
+				rect: {
+					x: 0,
+					y: 0,
+					w: api.frameWidth,
+					h: api.frameHeight
+				},
+				zoomLevel: 15,
+				center: {
+					lon: lon,
+					lat: lat
+				},
+				showUserLocation: true,
+				fixedOn: api.frameName,
+				fixed: true
+			}, function(ret) {
+				if (ret.status) {
+					console.log('地图打开成功');
+					addAnnotations(lon, lat);
+					bMap.setBuilding({
+						building: true
+					});
+					bMap.addEventListener({
+						name: 'click'
+					}, function(ret) {
+						chanceLon = ret.lon;
+						chanceLat = ret.lat;
+						log("经度", chanceLon);
+						log("纬度", chanceLat)
+						addAnnotations(chanceLon, chanceLat);
+						infor.lon = chanceLon;
+						infor.lat = chanceLat;
+						bMap.getNameFromCoords({
+							lon: chanceLon,
+							lat: chanceLat
+						}, function(ret, err) {
+
+							infor.address = ret.address + ret.sematicDescription;
+							log("地址信息", infor);
+							sendEvent("area", infor);
+						});
+
+
+					});
+				}
+			});
+		}
+
+		//设置地图气泡
+		function addAnnotations(lon, lat) {
+			bMap.addAnnotations({
+				annotations: [{
+					id: 1,
+					lon: lon,
+					lat: lat
+				}],
+				draggable: false
+			}, function(ret) {
+				if (ret) {
+					console.log('设置气泡：' + JSON.stringify(ret));
+				}
+			});
+		}
+
+		//关闭百度地图
+		function closeMap() {
+			log('关闭百度地图', {});
+			bMap.close(); //关闭百度地图
+		}
+	</script>
+</html>

@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>医院体检订单详情</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<style>
+			.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+		#driver_s_title{
+		    font-weight: normal;
+		}
+		#code{
+			width:70%;
+		}
+		.sendCode{
+	        width: 50%;
+		    height: 1.8rem;
+		    text-align: center;
+		    line-height: 1.8rem;
+		    border: solid 1px #F1F1F1;
+		    border-radius: 1rem;
+		}
+		.block-bottom-style:after{
+			width: 74%;
+		    height: 1px;
+		    background-color: #dddddd;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    top: auto;
+		    right: 0;
+		    bottom: 0;
+		    z-index: 2;
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		    pointer-events: none;
+		}
+		.aui-list .aui-list-item-label, .aui-list .aui-list-item-label-icon {
+		    color: #212121;
+		    width: 35%;
+		    min-width: 1.5rem;
+		    margin: 0;
+		    padding: 0;
+		    padding-right: 0.25rem;
+		    line-height: 2.2rem;
+		    position: relative;
+		    overflow: hidden;
+		    white-space: nowrap;
+		    max-width: 100%;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: inline;
+		    -webkit-align-items: center;
+		    align-items: center;
+		    text-align: left;
+		}
+		.uploadPic{
+		    height: 8rem;
+		    width: 5rem;
+		    position: relative;
+		}
+		.uploadPic img{
+			height: 5rem;
+    		margin: 0 auto;
+    		margin-top: 1.5rem;
+    		width: 5rem;
+    		object-fit: cover;
+		}
+		.msg{
+			font-size:0.7rem;
+		}
+		.delete{
+		    width: 1.2rem !important;
+		    height: 1.2rem !important;
+		    position: absolute;
+            right: -0.6rem;
+    		top: -0.6rem;
+		    z-index:10;
+		}
+		.check-style{
+		    font-size: 0.7rem;
+		    color: #03B4F7;
+		    text-align: right;
+		    position: absolute;
+		    top: 3.2rem;
+		    right: -5rem;
+		}
+		#other_area{
+			color:#03B4F7;
+		}
+		.arrow_blue:before{
+			border: 1px solid #03B4F7;
+			border-top: none;
+    		border-right: none;
+		}
+		.weight-font{
+			font-weight:bold;
+			padding-left: 1% !important;
+		}
+		.blue{
+			color:#3F86FF;
+		}
+		.cash{
+			color:#21C994;
+		}
+		.changeButton{
+			position:absolute;
+			/*background:linear-gradient(to left, #03B4F7 , #90DBF7);*/
+			color:#3F86FF;
+			/*border-radius: 2px;*/
+			padding:0.2rem 0.5rem 0.1rem 0.5rem;
+			right:1rem;
+			font-size:0.7rem;
+		}
+		.changeButtonStatus{
+			background:#FFF;
+			/*border:solid 1px #3F86FF;*/
+			color:#3F86FF;
+		}
+		.unheg{
+			color:#FF685B;
+			font-size:0.7rem;
+		}
+		.heg{
+			color:#3F86FF;
+			font-size:0.7rem;
+		}
+		.line_vertical{
+			height: 0.7rem;
+			width: 3px;
+			background: #3F86FF;
+			vertical-align: text-top;
+			margin-top: 0.1rem;
+			margin-right: 0.4rem;
+		}
+		.hui-back{
+			background-color:  #F5F5F5 !important;
+		}
+		.aui-list-item:after,
+		.aui-list-item:before{
+			height: 0;
+		}
+		.aui-list-item-inner:after,
+		.aui-list-item-inner:before{
+			height: 0;
+		}
+		.aui-btn-block{
+			background: linear-gradient(to left ,#3F86FE,#64ADF6) !important;
+			position: fixed;
+		    bottom: 0.4rem;
+		    left: 5%;
+		    margin: 0;
+		    z-index:10;
+		}
+		.more_then_right img{
+			width: 0.4rem;
+			height: 0.8rem;
+			margin-top: 0.25rem;
+			margin-right: 0.6rem;
+		}
+		.aui-list-item-input:after{
+			height: 0;
+		}
+		.line_transverse{
+			width: 5rem%;
+			height: 1px;
+			background: #F5F5F5;
+			margin-left: 5%;
+		}
+		#orderDetail{
+			margin-bottom:5rem !important;
+		}
+		.lookPhysicalRecord{
+			position: absolute;
+			width: 40%;
+			border-radius: 25px;
+			text-align: right;
+			height: 1.55rem;
+			line-height: 1.55rem;
+			/* background: linear-gradient(to right, #64ADF6, #3F86FE); */
+			color: #333;
+			font-size: 0.8rem;
+			top: 0.35rem;
+			right: 0.5rem;
+		}
+		.lookPhysicalRecord img{
+			width: 7px;
+		}
+    </style>
+	</head>
+	<body>
+		<div id='orderDetail'>
+			<!-- <img src="../../icon/common/icon_more.png"/> -->
+		</div>
+		<script type="text/template" charset="utf-8" id='order_detail_src'>
+			<div class="aui-content aui-margin-b-15  none-bottom-style none-top-style">
+		    <ul class="aui-list aui-form-list none-top-style">
+		        <li class="aui-list-item hui-back none-bottom-style none-top-style">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label weight-font">
+	                		<span class="line_vertical"></span>基本信息&emsp;
+		                </div>
+		                <div class="aui-list-item-input">
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item">
+		            <div class="aui-list-item-inner none-top-style">
+		                <div class="aui-list-item-label">
+	                		真实姓名：
+		                </div>
+		                <div class="aui-list-item-input aui-list-item-arrow bottom-slide" tapmode onclick='openAuth()'>
+		                    <input type="text" value="{{=getUserName()}}" id="name" readonly>
+		                    <!--<span class="more_then_right"><img src="../../icon/common/icon_more.png"/></span>-->
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label" style="float: left;">
+	                		身高/cm：
+		                </div>
+		                <div class="aui-list-item-input" style='display: inherit;'>
+		                    <input type="tel" maxlength="3" id="height" placeholder="厘米" value="{{=it[0].height}}">
+		                </div>
+		            </div>
+		            <!--<div class="aui-list-item-inner">
+		                <div class="aui-list-item-label" style="width: 114%;">
+	                		体重/kg：
+		                </div>
+		                <div class="aui-list-item-input" style='display: inherit;'>
+		                    <input type="tel" maxlength="3" id="weight" placeholder="公斤" value="{{=it[0].weight}}">
+		                </div>
+		            </div>-->
+		        </li>
+		        {{ if(it[0].paymentStatus == 1){ }}
+		        <li class="aui-list-item">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label">
+	                		矫正视力：
+		                </div>
+		                <div class="aui-list-item-input bottom-slide" id="sex_option">
+	                        <label>
+	                        	{{ if(it[0].isWearGlasses == 0){ }}
+	                        		<input class="aui-radio" type="radio" value='0' name="isWearGlasses" checked>
+	                        	{{ }else{ }}
+	                        		<input class="aui-radio" type="radio" value='0' name="isWearGlasses">
+	                        	{{ } }}
+	                        	&ensp;未矫正
+	                        </label>
+	                        &emsp;
+	                        <label>
+	                        	{{ if(it[0].isWearGlasses == 1){ }}
+		                        	<input class="aui-radio" type="radio" value='1' name="isWearGlasses" checked>
+	                        	{{ }else{ }}
+		                        	<input class="aui-radio" type="radio" value='1' name="isWearGlasses">
+	                        	{{ } }}
+	                        	&ensp;矫正
+	                        </label>
+	                    </div>
+		            </div>
+		        </li>
+		        {{ } }}
+		        <li class="aui-list-item none-bottom-style">
+		            <div class="aui-list-item-inner none-bottom-style ">
+		                <div class="aui-list-item-label">
+	                		邮寄地址：
+		                </div>
+		                <div class="aui-list-item-input bottom-slide aui-list-item-arrow" tapmode onclick='select_address()'>
+		                    <input type="text" id="addressView" value="{{=it[0].district.provinceName}} {{=it[0].district.cityName}} {{=it[0].district.areaName}}" readonly>
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item ">
+	                <div class="aui-list-item-inner">
+	                    <div class="aui-list-item-label">
+	                       	
+	                    </div>
+	                    <div class="aui-list-item-input">
+		                    <input type="text" placeholder="详细地址" value="{{=it[0].address}}" id="addressDetail">
+		                </div>
+	                </div>
+	            </li>
+		        <li class="aui-list-item hui-back none-bottom-style none-top-style">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label weight-font">
+	                		<span class="line_vertical"></span>订单信息
+		                </div>
+		                <div class="aui-list-item-input">
+		                </div>
+		            </div>
+		        </li>
+		    </ul>
+		    <ul class="aui-list aui-media-list none-top-style none-bottom-style">
+		    	<li class="aui-list-item">
+	                <div class="aui-media-list-item-inner">
+	                    <div class="aui-list-item-media">
+	                        <img src="{{=(file_load_url + it[0].hospital.logo)}}">
+	                    </div>
+	                    <div class="aui-list-item-inner">
+	                        <div class="aui-list-item-text">
+	                            <div class="aui-list-item-title">{{=it[0].hospital.name}}</div>
+	                        </div>
+	                        <div class="aui-list-item-text">
+	                           <span>{{=it[0].hospital.address}}</span>
+	                        </div>
+	                    </div>
+	                </div>
+	            </li>
+			</ul>
+			<ul class="aui-list aui-form-list none-top-style">
+				<li class="aui-list-item none-bottom-style">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							申请业务
+						</div>
+						<div class="aui-list-item-input bottom-slide" style='display: inherit;'>
+							<select type="select" id="apply_type" onchange="selectApplyType()" style='color:#3F86FF;'>
+						        {{ for(var i=0;i<it[0].apply_type.dictionaryList.length;i++){ }}
+						        	{{ if(it[0].apply_type.dictionaryList[i].code == it[0].applyType){ }}
+						        		<option value="{{=it[0].apply_type.dictionaryList[i].code}}" selected>{{=it[0].apply_type.dictionaryList[i].name}}</option>
+							        {{ }else{ }}
+						        		<option value="{{=it[0].apply_type.dictionaryList[i].code}}">{{=it[0].apply_type.dictionaryList[i].name}}</option>
+							        {{ } }}
+						        {{ } }}
+								<!-- <option value="028001">期满换证</option> -->
+								
+						    </select>
+						</div>
+						<span class="more_then_right"><img src="../../icon/common/icon_more.png"/></span>
+					</div>
+				</li>
+				{{ if(it[0].applyType == '028002'){ }}
+				<!-- 申请业务为增驾的就显示已拥有车型 -->
+				<li class="aui-list-item none-bottom-style" id='orignialCarType'>
+				{{ }else{ }}
+				<li class="aui-list-item none-bottom-style aui-hide" id='orignialCarType'>
+				{{ } }}
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							
+						</div>
+						<div class="aui-list-item-input bottom-slide" tapmode onclick='selOrignialCarType()'>
+							<input type="text" placeholder="请选择已拥有车型" value="{{=it[0].originalCarType}}" id='haveCarType' readonly>
+						</div>
+						<span class="more_then_right"><img src="../../icon/common/icon_more.png"/></span>
+					</div>
+				</li>
+				
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							准驾车型
+						</div>
+						<div class="aui-list-item-input" style='display: inherit;' id="license_type">
+							<select type="select" id="licenseType" style='color:#3F86FF;'>
+								{{ for(var i=0;i<it[0].license_type.dictionaryList.length;i++){ }}
+									{{ if(it[0].license_type.dictionaryList[i].code == it[0].licenseTypeCode){ }}
+							        	<option value="{{=it[0].license_type.dictionaryList[i].code}}" selected>{{=it[0].license_type.dictionaryList[i].name}}&#x200E</option>
+									{{ }else if(it[0].license_type.dictionaryList[i].code == '002007' || it[0].license_type.dictionaryList[i].code == '002006'){ }}
+							        	<option value="{{=it[0].license_type.dictionaryList[i].code}}">{{=it[0].license_type.dictionaryList[i].name}}&#x200E</option>
+									{{ } }}
+								{{ } }}
+							</select>
+						</div>
+						<span class="more_then_right"><img src="../../icon/common/icon_more.png"/></span>
+					</div>
+				</li>
+				
+	            <li class="aui-list-item top-slide">
+	                <div class="aui-list-item-inner">
+	                    <div class="aui-list-item-label">
+	                       	自拍照：
+	                    </div>
+	                    <div class="aui-list-item-input bottom-slide">
+	                    	<!-- 本地图片地址 -->
+	                    	<div class='aui-hide' id="local_pic"></div>
+	                    	<!-- 阿里云oss图片地址 -->
+	                    	<input type="hidden" id='picture' value='{{=it[0].picture}}'/>
+	                    	<span class='blue' tapmode onclick='checkPic()'>查看照片</span>
+		                </div>
+		               <!--  只要不是在订单取消、体检合格的情况下都可以重新拍摄自拍照 -->
+		               {{ if(it[0].statusCode != '014008'&&it[0].statusCode != '014006'){ }}
+			                <div class='changeButton' tapmode onclick="repeatPhoto()">重拍</div>
+			                <span class="more_then_right"><img src="../../icon/common/icon_more.png"/></span>
+		               {{ } }}
+	                </div>
+	            </li>
+		        <li class="aui-list-item">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label">
+	                		报名费用：
+		                </div>
+		                <div class="aui-list-item-input bottom-slide" style="margin-left: -0.32rem;">
+		                	<!--<span class='cash' style='font-size:0.6rem;'>￥</span>-->
+		                	<span class='cash'>{{=cashFormatO(it[0].examinationFee)}}元</span>
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label">
+	                		支付状态：
+		                </div>
+		                <div class="aui-list-item-input bottom-slide">
+		                	{{ if(it[0].paymentStatus == 1){ }}
+		                		{{ if(it[0].refundStatus == 1||it[0].refundStatus == 3){ }}
+		                			<!-- 退款中 -->
+		                			<div class='changeButtonStatus'>退款中</div>
+		                		{{ } else if(it[0].refundStatus == 2){ }}
+		                			<!-- 退款完成 -->
+		                			<div class='changeButtonStatus'>已退款{{=it[0].refundAmount}}元</div>
+								{{ }else if(it[0].refundStatus == 9){ }}
+									<div class='changeButtonStatus' tapmode onclick="checkRemark('{{=it[0].refundRemark}}')">退款拒绝</div>
+		                		{{ }else{ }}
+		                			<span class='cash'>已支付</span>
+		                		{{ } }}
+		                	{{ }else if(it[0].paymentStatus == 0){ }}
+		                		未支付
+		                	{{ }else if(it[0].paymentStatus == 9){ }}
+		                		支付失败
+		                	{{ } }}
+		                </div>
+		                <!-- 订单没取消且没付款的情况下才能去支付 -->
+		                <!-- {{ if(it[0].paymentStatus == 0&&it[0].statusCode != '014008'){ }}
+			                <div class='changeButton' tapmode onclick="pay('{{=it[0].id}}','{{=it[0].hospital.id}}')">去缴费</div>
+		                {{ } }} -->
+		                <!-- 已支付、未退款、体检还未合格的情况下才允许退款，其余情况不允许 -->
+		                {{ if(it[0].paymentStatus == 1&&it[0].refundStatus == 0&&it[0].statusCode != '014006'){ }}
+			                <div class='changeButton' tapmode onclick="refundApply('{{=it[0].id}}','{{=it[0].paymentAmount}}','{{=it[0].hospital.name}}','{{=it[0].licenseType.name}}','{{=it[0].status.name}}','{{=it[0].hospital.logo}}')">申请退款</div>
+							<span class="more_then_right"><img src="../../icon/common/icon_more.png"/></span>
+		                {{ } }}
+		                <!-- 退款中 -->
+		                <!-- {{ if(it[0].refundStatus == 1||it[0].refundStatus == 3){ }}
+		                	<div class='changeButton changeButtonStatus'>退款中</div>
+		                {{ } }} -->
+		                <!-- 退款完成 -->
+		               <!-- {{ if(it[0].refundStatus == 2){ }}
+		                	<div class='changeButton changeButtonStatus'>已退款{{=it[0].refundAmount}}元</div>
+		                {{ } }} -->
+		                <!-- 退款失败-->
+		                <!-- {{ if(it[0].refundStatus == 9){ }}
+		                	<div class='changeButton changeButtonStatus' tapmode onclick="checkRemark('{{=it[0].refundRemark}}')">退款拒绝</div>
+		                {{ } }} -->
+		                
+		                <!-- 退款失败的情况可能也允许再次发起，待定，可能会有次数限制，或者询问工作人员？-->
+		            </div>
+		        </li>
+		        <li class="aui-list-item none-bottom-style">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label">
+	                		报名状态：
+		                </div>
+		                <div class="aui-list-item-input" style="margin-left: -0.32rem;">
+		                	{{=it[0].status.name}}
+		                </div>
+		                <!-- 报名失败-->
+		                {{ if(it[0].statusCode == '005004'){ }}
+		                	<div class='changeButton changeButtonStatus' tapmode onclick="checkRemark('{{=it[0].remark}}')">查看原因</div>
+		                {{ } }}
+		            </div>
+		        </li>
+		        <li class="aui-list-item hui-back none-bottom-style none-top-style">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label weight-font">
+	                		<span class="line_vertical"></span>体检信息
+		                </div>
+		                <div class="aui-list-item-input">
+		                </div>
+		                <!-- 未取消订单状态下 -->
+		                {{ if(it[0].statusCode != '014008'){ }}
+			                <!-- 线上线下：只是医院体检报了名，未支付未体检 -->
+			                {{ if(it[0].paymentStatus == 0&&it[0].hospitalMedia.length == 0&&it[0].offlineSetId == undefined&&!isLocalHasVideo(it[0].id)){ }}
+			                	<div class='changeButton' tapmode onclick="toHospitalExam('{{=it[0].id}}','{{=it[0].licenseType.code}}','{{=it[0].hospital.id}}','{{=it[0].hospital.name}}','{{=it[0].hospital.longitude}}','{{=it[0].hospital.latitude}}','{{=it[0].hospital.onoffLine}}','{{=it[0].hospitalMedia.length}}')">继续体检</div>
+			                <!-- 线上：未支付，但是已录制视频，提示去缴费 -->
+			                {{ }else if(it[0].paymentStatus == 0&&isLocalHasVideo(it[0].id)){ }}
+			                	<div class='changeButton' tapmode onclick="pay('{{=it[0].id}}','{{=it[0].hospital.id}}')">已录制完视频，请缴费</div>
+			                <!-- 线上：已支付，未上传视频或者是最近一次视频不合格且还未超过允许上传次数 -->
+				    		{{ }else if(it[0].paymentStatus == 1&&it[0].offlineSetId == undefined&&!isLocalHasVideo(it[0].id)&&isAllowUploadMedia(it[0]) && (it[0].refundStatus == 0 || it[0].refundStatus == 9)){ }}
+			                	<div class='changeButton' tapmode onclick="toHospitalExam('{{=it[0].id}}','{{=it[0].licenseType.code}}','{{=it[0].hospital.id}}','{{=it[0].hospital.name}}','{{=it[0].hospital.longitude}}','{{=it[0].hospital.latitude}}','{{=it[0].hospital.onoffLine}}','online','{{=it[0].hospitalMedia.length}}')">重新体检</div>
+			            	<!-- 线上：已支付，本地已录制好体检视频，但未上传 -->
+				    		{{ }else if(it[0].paymentStatus == 1&&it[0].offlineSetId == undefined&&isLocalHasVideo(it[0].id)&&isAllowUploadMedia(it[0])){ }}
+				    			<div class='changeButton' tapmode onclick="uploadExamVideo('{{=it[0].id}}',this)">上传视频</div>
+				    		{{ } }}
+			    		{{ } }}
+		            </div>
+		        </li>
+		        <li class="aui-list-item none-bottom-style">
+	            	<div class="aui-list-item-inner">
+		                <div class="aui-list-item-label">
+	                		上传记录：
+		                </div>
+		                <div class="aui-list-item-input">
+		                	{{ if(it[0].hospitalMedia.length == 0){ }}
+			                	无上传视频记录
+							{{ }else{ }}
+								<div class="lookPhysicalRecord" tapmode onclick="toLookPhysicalRecordMore('{{=it[0].id}}','{{=it[0].licenseType.code}}','{{=it[0].hospital.id}}','{{=it[0].hospital.name}}','{{=it[0].hospital.longitude}}','{{=it[0].hospital.latitude}}','{{=it[0].hospital.onoffLine}}','online')" >
+									查看体检记录 
+									<img src="../../icon/mine/arrow.png" >
+								</div>
+							{{ } }}
+							{{ if(it[0].videoUploadTimes <= it[0].videoHasUploadTimes && it[0].reviewStatus == 0 && it[0].hospitalMedia[0].status == 1){ }}
+								<div class="" id="hosTips" style="position: absolute;top: 0.3rem;">
+									<img src="../../icon/common/hos_tips.png" style="width: 90%;height: auto;margin-left: 5%;" onclick="closeThisTips();" >
+								</div>
+							{{ } }}
+		                </div>
+		            </div>
+		        </li>
+		        <!-- {{ for(var i=0;i<it[0].hospitalMedia.length;i++){ }}
+		        <li class="aui-list-item">
+		        	<div class="aui-list-item-inner">
+		                <div class="aui-list-item-label" style='text-align:center;'>
+	                		{{ if(it[0].hospitalMedia[i].status == 1){ }}
+	                			<font class='unheg'>不合格</font>
+	                		{{ }else{ }}
+	                			<font class='heg'>已上传</font>
+	                		{{ } }}
+		                </div>
+		                <div class="aui-list-item-input">
+		                	{{=it[0].hospitalMedia[i].insertDt}}
+		                </div>
+		                {{ if(it[0].hospitalMedia[i].status == 1){ }}
+			                <div class='changeButton changeButtonStatus' tapmode onclick="checkRemark('{{=it[0].hospitalMedia[i].reason}}')">为什么?</div>
+		                {{ } }}
+		            </div>
+		        </li>
+		        {{ } }} -->
+		        
+		        
+		        {{ if(it[0].hospitalExamResult.length > 0){ }}
+			        <li class="aui-list-item">
+		            	<div class="aui-list-item-inner">
+			                <div class="aui-list-item-label">
+		                		体检报告：
+			                </div>
+			                <div class="aui-list-item-input">
+			                </div>
+			                <div class='changeButton' tapmode onclick="openExamReport('{{=it[0].hospitalExamResult[0].id}}')">点击查看</div>
+			            </div>
+			        </li>
+		        {{ } }}
+		        
+		        <!-- 体检媒体信息 -->
+		        
+		        <!-- 除了取消订单和体检合格情况不允许修改信息之外，其余都允许（不是退款情况下） -->
+		        {{ if(it[0].statusCode != '014008'&&it[0].statusCode != '014006'&&(it[0].refundStatus == 0||it[0].refundStatus == 9)){ }}
+			        <div class="aui-btn aui-btn-info aui-btn-block" onclick="updateOrder()">保存订单</div>
+		        {{ } }}
+		    </ul>
+		 </div>
+	 </script>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var orderId; //订单标识
+		var selected_address_id; //选中地址的id
+		var addressViewCode; //选中地址的区域code
+		var postalCode; //选中地址的邮编
+		var imageFilter;
+		var fs;
+		var systemType;
+		var FNPhotograph;
+		apiready = function() {
+			cache = api.pageParam.data;
+			orderId = cache.orderId;
+			imageFilter = api.require('imageFilter');
+			fs = api.require('fs');
+			FNPhotograph = api.require('FNPhotograph');
+			systemType = api.systemType;
+
+			//监听地址选择
+			toEventListener('examination_order_update', function(ret) {
+				//log('地址',ret.value);
+				var address_info = ret.value;
+				$('#addressView').val(address_info.district.provinceName + address_info.district.cityName + address_info.district
+					.districtName);
+				$('#addressDetail').val(address_info.addressDetail);
+				addressViewCode = address_info.districtCd;
+				postalCode = address_info.postalCode;
+				selected_address_id = address_info.id;
+			});
+
+			//监听实名认证
+			toEventListener('examination_auth_update', function(ret) {
+				$('#name').val(getUserName());
+			});
+
+			//监听上传视频完成
+			toEventListener('uploadVideoFinish', function(ret) {
+				init();
+			});
+
+			//监听支付成功回调
+			toEventListener('hospital_pay_submit', function(ret) {
+				init();
+			});
+
+			//监听提交退款完成
+			toEventListener('refund_apply_submit', function(ret) {
+				init();
+			});
+
+			//监听原始准驾车型选择
+			toEventListener('sel_car_num_action', function(ret) {
+				$('#haveCarType').val('');
+				if (ret.value.indexOf($('#licenseType').val()) != -1) {
+					//原有车型不能包含当前申请车型
+					alert_msg('不能包含' + $('#licenseType').find('option:selected').text());
+					return;
+				}
+				$('#haveCarType').val(getCarTypeShortName(ret.value));
+			});
+
+			init();
+		};
+
+		function init() {
+			defaultload('获取详情中');
+			url = 'api/examination';
+			params = {
+				learnerId: getUserId(),
+				orderId: orderId
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('医院体检订单详情', ret);
+				if (ret) {
+					if (ret.code == 0) {
+						var order_detail_src = $('#order_detail_src').html();
+						var cache_dictionary_type = $api.getStorage('cache_by_app').cache_dictionary;
+						ret.hospitalExamination[0].apply_type = cache_dictionary_type['028000']; //申请业务code
+						ret.hospitalExamination[0].license_type = cache_dictionary_type['002000']; //准驾车型
+						log('医院体检订单详情msg', ret);
+						$('#orderDetail').html(doT.template(order_detail_src)(ret.hospitalExamination));
+						console.log('医院渲染模板' + doT.template(order_detail_src)(ret.hospitalExamination));
+						//不是已付款且订单状态不是已取消才能取消
+						if (ret.hospitalExamination[0].paymentStatus != 1 && ret.hospitalExamination[0].statusCode != '014008') {
+							esc_function('record_order_detail_win', '', 'showCancelButton()');
+						} else {
+							esc_function('record_order_detail_win', '', 'hideCancelButton()');
+						}
+						api.parseTapmode();
+					} else {
+						alert_msg(ret.msg);
+					}
+					api.hideProgress();
+				} else {
+					api.hideProgress();
+					alert_msg('网络连接异常');
+				}
+			});
+		}
+
+		/**
+		 * 根据codelist显示车型 
+		 */
+		function getCarTypeShortName(licenTypeTags) {
+			var cache_dictionary = $api.getStorage('cache_by_app').cache_dictionary;
+			licenseTypeMap = $api.getStorage('cache_by_app').licenseTypeMap;
+			var car_menu = '';
+			for (var i = 0; i < licenTypeTags.split(',').length; i++) {
+				car_menu += licenseTypeMap[licenTypeTags.split(',')[i]].name.split('（')[0] + ' ';
+			}
+			return car_menu;
+		}
+
+		/**
+		 * 申请业务切换 
+		 */
+		function selectApplyType() {
+			var apply_type = $('#apply_type').find("option:selected").val();
+			if (apply_type == '028002') {
+				//如果是增驾
+				$('#orignialCarType').removeClass('aui-hide');
+			} else {
+				$('#haveCarType').val('');
+				$('#orignialCarType').addClass('aui-hide');
+			}
+		}
+
+		/**
+		 * 选择拥有驾考类型
+		 */
+		function selOrignialCarType() {
+			api.openWin({
+				name: 'common_lincense_select_win',
+				url: '../common/lincense_type_select/common_lincense_select_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: {
+					limit_select: 2 //最多可选的准驾车型
+				}
+			});
+		}
+
+		/**
+		 * 查看图片 
+		 */
+		function checkPic() {
+			var img_path = $('#picture').val();
+			openPic(file_load_url + img_path);
+		}
+
+		/**
+		 * 获取学员name
+		 */
+		function getUserName() {
+			if (islogin()) {
+				return $api.getStorage('cache_by_account').cache_account.name;
+			}
+		}
+
+		/**
+		 *  打开实名认证
+		 */
+		function openAuth() {
+			params = {
+				event_action: 'examination_auth_update'
+			}
+			api.openWin({
+				name: 'mine_account_auth_win',
+				url: '../mine/mine_account_auth_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: params
+			});
+		}
+
+		/**
+		 * 选择省市区 
+		 */
+		function select_address() {
+			params = {
+				selected_address_id: selected_address_id, //选中的地址id，可能为空，用来标记
+				isSelect: true, //是否是选择
+				action: 'examination_order_update' //动作监听name
+			}
+			api.openWin({
+				name: 'common_address_list_win',
+				url: '../common/learner_address/common_address_list_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: params
+			});
+		}
+
+		/**
+		 * 重新拍摄 
+		 */
+		var sourceType;
+
+		function repeatPhoto() {
+			opWithPermission('camera', function() {
+				FNPhotograph.open({
+					path: 'fs://FNPhotographPhotos',
+					album: false,
+					qualityValue: 50
+				}, function(ret) {
+					if (ret && ret.eventType == 'takePhoto') {
+						FNPhotograph.close();
+						$('#picture').val(''); //修改图片后清空隐藏域中的地址字段
+						$('#local_pic').html(ret.imagePath);
+						uploadPic();
+						api.parseTapmode();
+					}
+				});
+			});
+			//			var takePicCutOut = api.require('takePicCutOut');
+			//			opWithPermission('camera',function(){
+			//				takePicCutOut.openCustomCut({
+			//					isCardFront: true,
+			//				}, function(ret, err) {
+			//					// alert('获取的图片路径'+JSON.stringify(ret));
+			//					if (ret && ret.filePath != undefined) {
+			//						picImageFilters(ret.filePath, function(smaller_path) {
+			//							log('smaller_path',smaller_path)
+			//							if (smaller_path != '') {
+			//								$('#local_pic').html(smaller_path);
+			//							} else {
+			//								$('#local_pic').html(ret.filePath);
+			//								alert_msg('图片压缩失败，改为原图');
+			//							}
+			//							uploadPic();
+			//							api.parseTapmode();
+			//						});
+			//					} else {
+			//						console.log('系统故障或者未选中照片');
+			//					}
+			//				});
+			//			});
+		}
+
+		/**
+		 * 压缩图片
+		 */
+		function picImageFilters(img_path, func) {
+			var path_img = img_path.split("/");
+			var img_name = path_img[path_img.length - 1];
+			imageFilter.compress({
+				img: img_path,
+				quality: 0.5,
+				save: {
+					album: false, //(可选项)布尔值，是否保存到系统相册，默认false
+					imgPath: 'fs://smallerPictrue', //(可选项)保存的文件路径,字符串类型，无默认值,不传或传空则不保存，若路径不存在文件夹则创建此目录
+					imgName: img_name //(可选项)保存的图片名字，支持png和jpg格式，若不指定格式，则默认png，字符串类型，无默认值,不传或传空则不保存
+				}
+			}, function(ret, err) {
+				if (ret.status) {
+					func(api.fsDir + '/smallerPictrue/' + img_name);
+				} else {
+					func(img_path);
+				}
+			});
+		}
+
+		/**
+		 * 拍照或打开相机 sourceType：从相册选还是拍照 faceType代表
+		 */
+		function getPicture(sourceType) {
+			api.getPicture({
+				sourceType: sourceType,
+				encodingType: 'jpg',
+				mediaValue: 'pic',
+				destinationType: 'url',
+				allowEdit: false,
+				quality: 20, //1-100图片质量
+				direction: 'front',
+				saveToPhotoAlbum: false
+			}, function(ret, err) {
+				//console.log('选择图片：'+JSON.stringify(ret));
+				if (ret && ret.data != '') {
+					$('#picture').val(''); //修改图片后清空隐藏域中的地址字段
+					$('#local_pic').html(ret.data);
+					uploadPic();
+					api.parseTapmode();
+				};
+			});
+		}
+
+		/**
+		 * 上传图片
+		 */
+		function uploadPic() {
+			defaultload('上传照片中');
+			params = {
+				bucketName: AliOssBucket,
+				fileNum: 1,
+				fileType: 'learnerApp/examination/' + getUserId()
+			}
+			var isloadFlag = 0; //标记位 isload代表是否上传，0代表未上传，1代表捕捉上传，2代表与阿里云建立连接，3代表上传完成
+			getUploadFilePower(params, function(ret, err) {
+				if (ret && ret.code == 0) {
+					console.log('获取文件上传权限：' + JSON.stringify(ret));
+					var path = ret.fileList[0].fileId;
+					log('path', path)
+					isloadFlag = 1; //标记上传
+					//阿里云上传可能会崩，所以这里定时器：10秒后查询标记位，把isload为2的图片让用户选择上传
+					var judegeCollapse = setTimeout(function() {
+						collapse(isloadFlag);
+					}, 10000);
+					file_upload(ret.fileList[0].signUrl, 'put', 'json', $('#local_pic').html(), {}, function(ret, err) {
+						log('ret:', ret);
+						log('err:', err);
+						if (ret) {
+							clearTimeout(judegeCollapse); //清除定时器
+							isloadFlag = 2; //标记与阿里云服务器连接
+							defaultload('上传进度' + ret.progress + '%');
+							if (ret.progress == 100 && ret.status == 1) {
+								$('#picture').val(path);
+								api.hideProgress();
+							}
+						} else if (err) {
+							//ios一直会返回数据类型错误(目前找不到原因)，但是图片已上传完毕，所以也当success返回
+							if (systemType = 'ios' && err.progress == 100 && err.code == 3) {
+								clearTimeout(judegeCollapse); //清除定时器
+								isloadFlag = 2; //标记与阿里云服务器连接
+								$('#picture').val(path);
+								api.hideProgress();
+							} else if ((systemType == 'ios' && err.statusCode == 0) ||
+								(systemType == 'ios' && err.statusCode == 403)) {
+								clearTimeout(judegeCollapse); //清除定时器
+								//网络无法连接或者签名错误就重新上传
+								uploadPic();
+							} else if (systemType == 'ios' && err.msg.indexOf('网络无法连接') != -1) {
+								collapse(isloadFlag);
+							}
+						}
+					});
+				} else {
+					alert_msg('获取文件上传权限失败');
+				}
+			});
+		}
+
+		/**
+		 * 判断是否有图片上传时候与阿里云断开连接
+		 */
+		function collapse(isloadFlag) {
+			api.hideProgress();
+			if (isloadFlag == 1) {
+				api.confirm({
+					title: '温馨提示',
+					msg: '上传照片服务器断开连接，是否重连',
+					buttons: ['重新连接', '取消']
+				}, function(ret, err) {
+					var index = ret.buttonIndex;
+					if (index == 1) {
+						uploadPic();
+					}
+				});
+			}
+		}
+
+		/**
+		 * 申请退款 
+		 */
+		function refundApply(id, paymentAmount, name, licenseType, status, logo) {
+			params = {
+				orderId: id,
+				paymentAmount: paymentAmount,
+				name: name,
+				licenseType: licenseType,
+				status: status,
+				logo: logo,
+				type: 'hospital'
+			}
+			log('退款数据', params)
+			api.openWin({
+				name: 'common_order_refund_win',
+				url: '../common/common_order_refund_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: params
+			});
+		}
+
+		/**
+		 * 去支付 
+		 */
+		function pay(orderId, organizationId) {			
+			log('cache_by_account:',orderId)
+			var cache_by_account = $api.getStorage('cache_by_account');
+			var videoBlock = cache_by_account['videoLists'+ orderId].length == 4 ? 0 : cache_by_account['videoLists'+ orderId].length == 1 ?cache_by_account['videoLists'+ orderId][0].split('-')[1] : '';
+			log('cache_by_account:',cache_by_account)
+			params = {
+				orderId: orderId,
+				hospitalId: organizationId,
+				flag: 1,
+				videoBlock: videoBlock,
+				videoLists: '',
+				type:true
+			}
+			// commonOpenWin('physical_examination_pay_for_win', params);
+			api.openWin({
+			    name: 'physical_examination_pay_for_win',
+			    url: '../new_physical_exam/student_regisyer_examintion_four_block/physical_examination_pay_for_win.html',
+			    slidBackEnabled:'false',
+			    vScrollBarEnabled:'false',
+			    hScrollBarEnabled:'false',
+			    reload:true,
+			    useWKWebView:false,
+			    pageParam: {
+			        data:params
+			    }
+			});
+		}
+
+		/**
+		 * 修改订单 
+		 */
+		function updateOrder() {
+			defaultload('提交修改信息中');
+
+			//申请的准驾车型
+			var licenseType = $('#licenseType').find('option:selected').val();
+
+			//申请业务
+			var applyType = $('#apply_type').find('option:selected').val();
+			//拥有的准驾车型
+			var haveCarType = $('#haveCarType').val().replace(/\s/g, "");
+			if (applyType == '028002' && haveCarType == '') {
+				api.hideProgress();
+				alert_msg('请选择已拥有车型');
+				return;
+			}
+
+			url = 'api/examination/update-examination-info';
+			params = {
+				learnerId: getUserId(),
+				id: orderId,
+				isWearGlasses: $('input:radio[name="isWearGlasses"]:checked').val(),
+				height: $('#height').val(),
+				weight: 50,
+				picture: $('#picture').val(),
+				districtCd: addressViewCode,
+				address: $('#addressDetail').val(),
+				licenseType: licenseType,
+				applyType: applyType,
+				originalCarType: haveCarType
+			}
+			log('修改传参', params);
+			ajax_Request(url, 'put', 'json', params, function(ret, err) {
+				api.hideProgress();
+				if (ret) {
+					if (ret.code == 0) {
+						alert_msg('修改成功');
+						setTimeout(function() {
+							api.closeWin({});
+						}, 1500);
+					} else {
+						alert_msg(ret.msg);
+					}
+				} else {
+					alert_msg('网络出错');
+				}
+			});
+		}
+
+		/**
+		 * 查看备注 
+		 */
+		function checkRemark(msg) {
+			openMessage_i('医生备注', msg, '确定', '', '', '', null);
+		}
+
+		//打开通用弹出框
+		//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+		function openMessage_i(title, content, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+			api.openFrame({
+				name: 'common_alert',
+				url: '../common/common_alert.html',
+				bgColor: 'rgba(0,0,0,0.4)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					title: title,
+					content: content,
+					sureButton: sureButton,
+					sureFunc: sureFunc,
+					cancelButton: cancelButton,
+					cancelFunc: cancelFunc,
+					winName: api.winName,
+					frameName: api.frameName,
+					params: params
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+
+		//本地是否含有录制视频
+		function isLocalHasVideo(orderId) {
+			var examResult = $api.getStorage('cache_by_account')['videoLists'+orderId];
+			if(examResult == null || examResult == undefined || examResult == ''){
+				return false;
+			} else {
+				if(examResult.length == 4){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}
+
+		//去体检
+		var hospital_data;
+		function toHospitalExam(orderId, licenseType, hospitalId, hospitalName, longitude, latitude, onoffLine, flag,hospitalExamResultLength) {
+			console.log(hospitalExamResultLength)
+			defaultload('获取订单信息中');
+			url = 'api/sign-contract/get-online-signing-info';
+			params = {
+				contract: {
+					learner: {
+						id: getUserId()
+					},
+					organizationId: hospitalId,
+					type: '042002'
+				}
+			}
+			ajax_Request(url, "get", "json", params, function(ret, err) {
+				closedefaultload();
+				if (ret) {
+					if (ret.code == 0) {
+						hospital_data = {
+							orderId: orderId,
+							licenseType: licenseType,
+							hospitalId: hospitalId,
+							hospitalName: hospitalName,
+							onoffLine: onoffLine,
+							longitude: longitude,
+							latitude: latitude
+						}
+						if (ret.contractList.length > 0) { //存在合约信息就不需要在线签约，直接进入下一步
+							// commonOpenWin('physical_examination_notice_win', hospital_data);
+							if (hospitalExamResultLength == 0 || hospitalExamResultLength == undefined) {
+								api.openWin({
+								    name: 'physical_examination_notice_win',
+								    url: '../new_physical_exam/student_regisyer_examintion_four_block/physical_examination_notice_win.html',
+								    slidBackEnabled:'false',
+								    vScrollBarEnabled:'false',
+								    hScrollBarEnabled:'false',
+								    reload:true,
+								    useWKWebView:false,
+								    pageParam: {
+								        data:hospital_data
+								    }
+								});
+							} else {
+								url = 'api/examination/check-examination-info';
+								params = {
+									orderId: orderId
+								}
+								ajax_Request(url, "post", "json", params, function(ret, err) {
+									log("修改订单信息", ret);
+									if (ret) {
+										if (ret.code == 0 || ret.code == 60114) {
+											api.openWin({
+												name: 'result_win',
+												url: '../new_physical_exam/physical_result/result_win.html',
+												slidBackEnabled: 'false',
+												vScrollBarEnabled: 'false',
+												hScrollBarEnabled: 'false',
+												reload: true,
+												pageParam: {
+													data: {
+														videoBlock: '',
+														orderId: orderId,
+														videoLists: [],
+														learnerId: getUserId(),
+														hospital_data: hospital_data
+													}
+												}
+											})
+										} else {
+							
+										}
+									} else {
+							
+									}
+								})
+							}
+							
+						} else {
+							hospital_data.flag = 1;
+							//定义完成医院签约后的监听事件
+							toEventListener('finishContractNext', function(ret, err) {
+								// commonOpenWin('physical_examination_notice_win', ret.value);
+								api.openWin({
+								    name: 'physical_examination_notice_win',
+								    url: '../new_physical_exam/student_regisyer_examintion_four_block/physical_examination_notice_win.html',
+								    slidBackEnabled:'false',
+								    vScrollBarEnabled:'false',
+								    hScrollBarEnabled:'false',
+								    reload:true,
+								    useWKWebView:false,
+								    pageParam: {
+								        data:ret.value
+								    }
+								});
+							});
+							openSignContract(hospital_data); //打开在线签约共通
+						}
+					} else {
+						alert_msg(ret.msg);
+					}
+				} else {
+					alert_msg('服务器繁忙，请稍后再试~');
+				}
+			});
+		}
+
+		/**
+		 * 检测是否允许体检 
+		 */
+		function isAllowUploadMedia(hospitalExamination) {
+			var isAllowUpload = false;
+			if (hospitalExamination.hospitalMedia.length == 0) {
+				//未上传，那么允许上传
+				isAllowUpload = true;
+			} else if ((hospitalExamination.videoHasUploadTimes < hospitalExamination.videoUploadTimes) &&
+				hospitalExamination.hospitalMedia[0].status == 1) {
+				//未超过允许上传次数且最近一次体检视频为不合格，则也允许上传
+				isAllowUpload = true;
+			}
+			return isAllowUpload;
+		}
+
+		//上传体检视频
+		function uploadExamVideo(orderId, e) {
+			// uploadVideoExam(orderId, 'record_order_detail_win', function() {
+			// 	init();
+			// });
+			var videoLists = $api.getStorage('cache_by_account')['videoLists'+orderId];
+			api.openWin({
+				name: 'result_win',
+				url: '../new_physical_exam/physical_result/result_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: {
+					data: {
+						orderId: orderId,
+						videoBlock: videoLists.length == 4 ? 0 : videoLists[0].split('-')[1],
+						videoLists: videoLists,
+						type: true,
+						hospital_data:hospital_data
+					}
+				}
+			});
+		}
+
+		//打开体检报告
+		function openExamReport(examResultId) {
+			params = {
+				examResultId: examResultId
+			}
+			openFrameAlert('report_physical_examination_frm', params, 0, api.winHeight);
+		}
+
+		/**
+		 * 关闭上传记录提示
+		 */
+		function closeThisTips() {
+			$('#hosTips').addClass('aui-hide');
+		}
+
+		/**
+		 * 查看更多体检记录
+		 */
+		function toLookPhysicalRecordMore(orderId, licenseType, hospitalId, hospitalName, longitude, latitude, onoffLine) {
+			var videoLists = $api.getStorage('cache_by_account')['videoLists'+orderId];
+			var videoBlock = videoLists == undefined || videoLists == null || videoLists == '' ? 0 : videoLists.length == 4 ? 0 :videoLists[0].split('-')[1];
+			hospital_data = {
+				orderId: orderId,
+				licenseType: licenseType,
+				hospitalId: hospitalId,
+				hospitalName: hospitalName,
+				onoffLine: onoffLine,
+				longitude: longitude,
+				latitude: latitude
+			}
+			log('体检数据hospital_data',hospital_data)
+			api.openWin({
+				name: 'result_win',
+				url: '../new_physical_exam/physical_result/result_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: {
+					data: {
+						orderId: orderId,
+						videoBlock: videoBlock,
+						videoLists: videoLists,
+						type: false,
+						hospital_data:hospital_data
+					}
+				}
+			});
+		}
+	</script>
+</html>

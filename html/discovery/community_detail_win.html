@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>帖子详情</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common/comment.css"/>
+    <style>
+        html, body {
+            background-color: #ffffff;
+            height: 100%;
+            padding: 0.3rem;
+        }
+
+        .aui-bar-nav, .aui-bar-tab {
+            background-color: #ffffff;
+        }
+
+        .aui-bar-nav {
+            color: #2c2c2c;
+            position: fixed;
+            top: 0;
+            left: 0;
+            opacity: 1;
+        }
+
+        a.aui-pull-left, a.aui-pull-right {
+            color: #35A7FF;
+        }
+
+        .msg {
+            background: #FFFFFF;
+            height: 10rem;
+            text-align: center;
+            font-size: 0.7rem;
+        }
+
+        .msg img {
+            width: 5rem;
+            margin-top: 2rem;
+        }
+
+        .jiazai {
+            font-size: 0.7rem;
+            background: #FFFFFF;
+            color: #666565;
+            padding-bottom: 0.3rem;
+            text-align: center;
+            padding-top: 0.3rem;
+        }
+
+        .jiazai img {
+            width: 1.5rem;
+        }
+
+        header img {
+            width: 20px;
+
+        }
+
+        .community-head {
+            height: 2.5rem;
+        }
+
+        .community-head-icon {
+            width: 20%;
+            float: left;
+            display: flex;
+            height: 2.5rem;
+        }
+
+        .community-head-icon img {
+            width: 2rem;
+            border-radius: 100%;
+            margin: auto;
+            height: 2rem;
+            object-fit: cover;
+        }
+
+        .community-head-info {
+            width: 50%;
+            float: left;
+            height: 2.5rem;
+        }
+
+        .community-head-info-name {
+            height: 1.5rem;
+            width: 100%;
+            line-height: 1.5rem;
+        }
+
+        .community-head-label {
+            height: 2.5rem;
+            width: 30%;
+            float: left;
+        }
+
+        .community-head-info-time {
+            height: 1rem;
+            width: 100%;
+            font-size: 0.6rem;
+            color: #939393;
+        }
+
+        .content img {
+            width: 100%;
+            margin: 0.1rem 0rem;
+        }
+
+        footer {
+            height: 2.5rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 0.7rem;
+            left: 0;
+            background: #FFF;
+        }
+
+        .footer-input {
+            float: left;
+            height: 2.5rem;
+            width: 70%;
+            padding-left: 0.5rem;
+        }
+
+        .footer-input input {
+            min-height: 1.7rem;
+            background: #F1F1F1;
+            padding: 0 0.5rem;
+            margin-top: 0.4rem;
+            border-radius: 1rem;
+            line-height: 1.7rem;
+        }
+
+        .footer-send {
+            width: 13%;
+            margin-right: 2%;
+            float: right;
+            height: 2.5rem;
+            display: flex;
+        }
+
+        .footer-opinion {
+            width: 15%;
+            float: right;
+            height: 2.5rem;
+            display: flex;
+            position: relative;
+        }
+
+        .footer-opinion img {
+            width: 1.3rem;
+            height: 1.3rem;
+            margin: auto;
+        }
+
+        .footer-send img {
+            width: 1.3rem;
+            margin: auto;
+        }
+
+        .opinion-num {
+            position: absolute;
+            background: #F45454;
+            color: #FFF;
+            padding: 0rem 0.25rem;
+            border-radius: 0.4rem;
+            font-size: 0.5rem;
+            left: 1.6rem;
+            top: 0.4rem;
+            height: 0.8rem;
+
+            line-height: 0.8rem;
+        }
+
+        .content {
+            padding: 0.6rem;
+        }
+
+        .mian-content {
+            position: absolute;
+            top: 0;
+            right: 0rem;
+            left: 0rem;
+            bottom: 2.5rem;
+            overflow: scroll;
+            -webkit-overflow-scrolling: touch;
+            padding-top: 3.5rem;
+        }
+
+        #aui-header1 {
+            opacity: 1;
+            z-index: 12;
+        }
+
+        #aui-header2 {
+            opacity: 0;
+            background: #FFF !important;
+            z-index: 12;
+        }
+
+        #spliter {
+            height: 0.25rem;
+            background: #F3F4F4;
+            width: 100%;
+            position: relative;
+        }
+
+        #bigComment {
+
+            background: #ffffff;
+            width: 100%;
+            position: relative;
+
+
+        }
+
+        .send {
+            width: 3rem;
+            height: 1.6rem;
+            margin-top: 0.4rem;
+            line-height: 1.6rem;
+            padding: 0rem;
+            background: #1E8DD8;
+            color: #fff;
+            padding-top: 0.1rem;
+        }
+
+        .content span {
+            text-align: justify;
+        }
+
+    </style>
+</head>
+<body>
+<header class="aui-bar aui-bar-nav none-bottom-style" id="aui-header1" style="background: none;">
+    <a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+        <img src="../../icon/common/icon_header_return.png">
+    </a>
+    <div class="aui-title">
+        帖子详情
+    </div>
+    <a class="aui-pull-right aui-btn" tapmode onclick="openShareWindow()">
+        <img src="../../icon/common/icon_share.png">
+    </a>
+</header>
+<header class="aui-bar aui-bar-nav" id="aui-header2" style="background: none;">
+    <a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+        <img src="../../icon/common/icon_header_return.png">
+    </a>
+    <div class="aui-title" id="author_title">
+        帖子详情
+    </div>
+    <a class="aui-pull-right aui-btn" tapmode onclick="openShareWindow()">
+        <img src="../../icon/common/icon_share.png">
+    </a>
+</header>
+
+
+<!-- 评论 -->
+
+
+<div class='mian-content'>
+
+    <div class='contentt'>
+    </div>
+    <div id="bigComment"></div>
+    <div id="spliter"></div>
+
+    <div class='comment'>
+
+        <div class='comment-title aui-hide'>
+
+            <span id="comment-titleNum">评论（共0条）</span>
+        </div>
+        <div class="commentList">
+        </div>
+    </div>
+
+    <div id='load_div'>
+    </div>
+</div>
+<script type="text/template" charset="UTF-8" id="content">
+    <div class='community-head'>
+        <div class='community-head-icon'>
+            <img src="{{=file_load_url+it.forum.headimgurl}}" alt=""
+                 onerror="javascript:this.src='../../icon/mine/icon_mine_head_hui.png'"/>
+        </div>
+        <div class='community-head-info'>
+            <div class='community-head-info-name aui-ellipsis-1' id="name{{=it.forum.id}}">{{=it.forum.name}}</div>
+            <div class='community-head-info-time' id="time">{{=it.forum.insertDt}}</div>
+        </div>
+        <div class='community-head-label'></div>
+    </div>
+    <div class='content'>
+					<span>
+						{{=it.forum.description}}
+					</span>
+    </div>
+</script>
+
+
+<script type="text/template" charset="UTF-8" id="newsCommentList">
+    <ul id="newsComment" onclick="checkMakeComment()">
+        {{ for(var i=0;i< it.informationMessageDtoList.length;i++){ }}
+        <li>
+            <div class='head-img'>
+                <img src="{{=file_load_url + it.informationMessageDtoList[i].headimgurl}}" alt=""
+                     onerror="javascript:this.src='../../icon/mine/icon_mine_head_hui.png'"/>
+            </div>
+            <div class='comment-main'>
+                <div class='commnent-nickname' id="name{{=it.informationMessageDtoList[i].id}}">
+                    {{=it.informationMessageDtoList[i].name}}
+                </div>
+                <div class='commnent-content'>{{=it.informationMessageDtoList[i].message}}</div>
+                {{ if(it.informationMessageDtoList[i].informationMessageDtoSmalllist.length > 0){ }}
+                <div class='comment-comment'>
+                    {{ for(var j=0;j < it.informationMessageDtoList[i].informationMessageDtoSmalllist.length;j++){ }}
+                    <div class='other-user'><span
+                            id="name{{=it.informationMessageDtoList[i].informationMessageDtoSmalllist[j].id}}">{{=it.informationMessageDtoList[i].informationMessageDtoSmalllist[j].name}}：</span>{{=it.informationMessageDtoList[i].informationMessageDtoSmalllist[j].message}}
+                    </div>
+
+                    {{ } }}
+                    <div class='check-more' tapmode
+                         onclick="checkComment('{{=it.informationMessageDtoList[i].id}}','{{=it.informationMessageDtoList[i].name}}')">
+                        <span>共{{=it.informationMessageDtoList[i].fcount}}条回复</span>
+                        <img src="../../icon/common/icon_back.png" alt=""/>
+                    </div>
+
+                </div>
+                {{ } }}
+                <div class='comment-info'>
+                    <div class='comment-info-time'><span>{{=it.informationMessageDtoList[i].insertDt}}</span></div>
+                    <div class='comment-info-opertion'>
+                        <img class="isSend{{=it.informationMessageDtoList[i].id}}"
+                             src="../../icon/article/icon_comment.png" alt=""
+                             onclick="commentary('{{=it.informationMessageDtoList[i].id}}','{{=it.informationMessageDtoList[i].name}}',api.pageParam.data.flag)"/>
+
+                        <!-- <img src="../../icon/article/icon_zan.png" alt="" style="margin-right:0.2rem;"/> -->
+                    </div>
+                    <div class='comment-info-zan-num'>
+                        <!-- <span>23</span> -->
+                    </div>
+                    <!-- <div class='footer-input' id="input{{=it.informationMessageDtoList[i].id}}">
+                        <input type="text" placeholder='随便说点什么' value="" id='newComments{{=it.informationMessageDtoList[i].id}}' />
+                        <div class="reply">
+                            <button class="send" tapmode onclick="reply('{{=it.informationMessageDtoList[i].id}}')">留言</button>
+                            <button class="sendCancel" id="sendCancel" tapmode onclick="cancle('{{=it.informationMessageDtoList[i].id}}')">取消</button>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </li>
+        {{ } }}
+    </ul>
+</script>
+
+<script type="text/template" charset="UTF-8" id="dis_img">
+    {{ for(var i=0;i< it.length;i++){ }}
+    <img src="{{=file_load_url + it[i]}}" alt=""/>
+    {{ } }}
+</script>
+
+
+<footer id="footer">
+    <div class='footer-input'>
+        <input type="text" placeholder='随便说点什么' id='newComments'/>
+    </div>
+    <div class='footer-send' onclick="newComments()">
+        <!-- <img src="../../icon/article/icon_send.png" alt="" /> -->
+        <button class="send">留言</button>
+    </div>
+    <div class='footer-opinion' tapmode>
+        <img src="../../icon/article/icon_opinion.png" alt="" onclick="newScroll()"/>
+        <script type="text/template" charset="UTF-8" id="commentCount">
+            {{ if(it != '0'){ }}
+            <div class='opinion-num'>
+                {{=it}}
+            </div>
+            {{ } }}
+        </script>
+    </div>
+</footer>
+
+<script type="text/template" charset="utf-8" id='msg_src'>
+    <div class="msg">
+        <img src="../../icon/common/shafa.png" alt=""/><br>
+        <span>{{=it.msg}}</span>
+    </div>
+</script>
+<script type="text/template" charset="utf-8" id='more_src'>
+    <div class="jiazai"><!--上拉加载-->
+        <span>{{=it.msg}}</span>
+    </div>
+</script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+    var cache;
+    var flag = "";
+    var oDomNode = $api.offset($api.dom('header')).h
+    var type; //评论类型
+    var pageNo = 1; //评论页数
+    var pageSize = 5; //评论显示条数
+    var pageSonNo = 1; //子评论页数
+    var pageSonSize = 5; //子评论显示条数
+    var refresh = true; //标记是否是刷新操作
+    var bigComment = document.getElementById('bigComment');
+    var systemType; //系统类型
+    var touchStyle;
+    var headerPos;
+    var threshold; //定义的阈值
+    var articleId;
+    var channel;
+    var appVersion;
+
+
+    var msg_src = $('#msg_src').html(); //消息提示src
+    var more_src = $('#more_src').html(); //更多src
+    apiready = function () {
+        bigComment.style.padding = oDomNode - 40 + 'px';
+        $api.fixStatusBar($api.byId('aui-header1'));
+        $api.fixStatusBar($api.byId('aui-header2'));
+        cache = api.pageParam;
+        flag = api.pageParam.data.flag;
+        log("cache-------", JSON.stringify(cache));
+        onEvent('find12', '点击考场通知列表');
+        newsId = cache.data.id;
+        headerPos = $api.offset($api.byId('aui-header1'));
+        threshold = headerPos.h;
+        systemType = api.systemType;
+        cache = api.pageParam;
+        channel = api.channel;
+        touchStyle = systemType == "ios" ? 'touchmove' : 'scroll';
+        scroll();
+        init();
+        loadComment(flag);
+        //上拉加载
+        goLoad(function (ret, err) {
+            loadList(flag);
+        });
+
+    }
+    //监听页面滑动控制头部menu样式
+    var scrollPos; //监听上下滚动顶部的距离
+    var percent = 0; //白底header的隐藏属性值
+    var hidepercent = 0; //非白底header的隐藏属性值
+    function scroll() {
+        $('.mian-content').on(touchStyle, function (event) {
+            scrollPos = $('.mian-content').scrollTop();
+            //安卓做限制滚动
+            if (((scrollPos / threshold).toFixed(2) <= 1) && systemType == 'android') {
+                percent = (scrollPos / threshold).toFixed(2);
+                $('#aui-header2').css("opacity", percent);
+                hidepercent = 1 - percent;
+                $('#aui-header1').css("opacity", hidepercent);
+            } else {
+                percent = (scrollPos / threshold).toFixed(2) > 1 ? 1 : (scrollPos / threshold).toFixed(2);
+                $('#aui-header2').css("opacity", percent);
+                hidepercent = (1 - percent) < 0 ? 0 : (1 - percent);
+                $('#aui-header1').css("opacity", hidepercent);
+            }
+        });
+    }
+
+    //打开分享页面
+    function openShareWindow() {
+        var data = {
+            shareData: {
+                shareData: 'web',
+                text: "",
+                contentUrl: "https://www.mohan-tech.com/share/html/share.html?fatherId=",
+                // contentUrl:"http://192.168.2.147:8848/source/html/share.html?fatherId=",
+                title: "学车就找“驾所通”"
+            },
+            forumId: articleId,
+            type: "community"
+        }
+
+        openShare(data);
+    }
+
+    function commentary(fatherId, name, type) {
+        //让输入框获取焦点
+        var str = "对" + name + "的回复"
+        event.cancelBubble = true;
+        $("#newComments").attr("placeholder", str);
+
+        $("#newComments")[0].focus();
+        //$("#send").attr("onclick","reply('fatherId')");
+        $(".footer-send").prop("onclick", null).off("click");
+
+        $(".footer-send").click(function () {
+            reply(fatherId, type)
+            event.cancelBubble = true;
+
+        });
+    }
+
+    //点击其他地方评论
+    function checkMakeComment() {
+        $("#newComments").attr("placeholder", "随便说点什么");
+
+        $("#newComments")[0].focus();
+        //$("#send").attr("onclick","reply('fatherId')");
+        $(".footer-send").prop("onclick", null).off("click");
+        $(".footer-send").click(function () {
+            newComments()
+
+        });
+
+    }
+
+    function init() {
+        url = "api/forum/get-forum-detail-by-id";
+        params = {
+            id: newsId
+        };
+        ajax_Request(url, 'get', 'json', params, function (ret, err) {
+            log('社区详情：', JSON.stringify(ret));
+            if (ret) {
+                if (ret.code === 0) {
+                    if (ret.forum) {
+                        var mianContent = $("#content").html();
+                        $(".contentt").html(doT.template(mianContent)(ret))
+                        var commentCount = $("#commentCount").html();
+                        $(".footer-opinion").append(doT.template(commentCount)(ret.forum.commentCount))
+                        var time = ret.forum.insertDt.slice(0, -3);
+                        $("#time").html(time);
+
+                        if (ret.forum.name == "" || ret.forum.name == null || ret.forum.name == undefined) {
+                            var phone = ret.forum.telephone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+                            $("#name" + ret.forum.id).html(phone)
+                        } else {
+                            $("#name" + ret.forum.id).html(ret.forum.name)
+                        }
+                        $(".aui-title").html("帖子详情")
+
+                        var img = ret.forum.image;
+                        // log("图片：--------" + img)
+                        if (img != undefined && img != null && img != "") {
+                            var imgs = img.split(',');
+                            // log("多图片：--------" + imgs)
+                            var dis_ind_news_img = $('#dis_img').html();
+                            $(".content").append(doT.template(dis_ind_news_img)(imgs));
+                        } else {
+                            var html = "";
+                            $(".content").append(html);
+                        }
+                    } else {
+                        setTimeout(function() {
+                            closeWin();
+                        }, 500);
+                    }
+                } else {
+                    alert_msg("服务器繁忙,请稍后重试！");
+                }
+            } else {
+                alert_msg("服务器繁忙,请稍后重试！");
+            }
+        })
+    }
+
+    //刷新评论后的评论数
+    function initMin() {
+        url = "api/forum/get-forum-detail-by-id";
+        params = {
+            id: newsId
+        };
+        ajax_Request(url, 'get', 'json', params, function (ret, err) {
+            log('社区详情：', JSON.stringify(ret));
+            if (ret) {
+                if (ret.code == 0) {
+
+                    var commentCount = $("#commentCount").html();
+                    $(".footer-opinion").append(doT.template(commentCount)(ret.forum.commentCount))
+
+
+                } else {
+
+                }
+            } else {
+                alert_msg("服务器繁忙,请稍后重试");
+            }
+        })
+    }
+
+    function loadList(type) {
+        pageNo++;
+        if ($('#newsComment').find('li').length == 0) refresh = true;
+        else refresh = false;
+        setLoad();
+        loadComment(type)
+    }
+
+    //设置页面加载的画面
+    function setLoad() {
+        if (refresh || $('#newsComment').find('li').length == 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+            $('#load_div').html('');
+        } else {
+            setTimeout(function () {
+                $('#load_div').html(doT.template(more_src)({
+                    'msg': '加载更多中...',
+                    'img': '../../icon/common/jiazai.gif'
+                }));
+            }, 500);
+        }
+    }
+
+    //加载评论
+    function loadComment(type) {
+        console.log('type' + type)
+        console.log("有开始加载评论了" + type)
+        if (type == "all" || type == "video" || type == "drivingSkill") {
+            //科目二，科目三,驾考技巧走评论
+            url = 'api/knowledge/getKnowledgeMessageList';
+            params = {
+                knowledgeId: newsId,
+                page: pageNo,
+                limit: pageSize
+            }
+            comment(url, params)
+        } else if (type == "news") {
+            //资讯走评论
+            url = 'api/comment/list-news-comment-by-article-id';
+            params = {
+                articleId: newsId,
+                pageNo: pageNo,
+                pageSize: pageSize
+            }
+            comment(url, params)
+        } else if (type == "community") {
+            //社区走评论
+            url = 'api/comment/list-forum-comment-by-article-id';
+            params = {
+                articleId: newsId,
+                pageNo: pageNo,
+                pageSize: pageSize
+            }
+            comment(url, params)
+
+        }
+    }
+
+    //请求评论列表
+    function comment(url, params) {
+        log('传参', params);
+
+        ajax_Request(url, 'get', 'json', params, function (ret, err) {
+            log('评论列表', ret);
+            log('评论列表报错', err);
+            if (ret) {
+
+                if (ret.code == 0 && ret.informationMessageDtoList.length > 0) {
+                    log('我是评论区', ret);
+                    var newsCommentList = $("#newsCommentList").html();
+                    // var total = ret.total + 5 * (page - 1);
+                    $("#comment-titleNum").html('评论（共' + ret.total + '条）');
+                    $('.comment-title').removeClass('aui-hide');
+
+                    if (pageNo == 1) {
+                        $(".commentList").html(doT.template(newsCommentList)(ret));
+                    } else {
+                        $(".commentList").append(doT.template(newsCommentList)(ret));
+                    }
+                    for (var i = 0; i < ret.informationMessageDtoList.length; i++) {
+
+                        if (ret.informationMessageDtoList[i].name == "" || ret.informationMessageDtoList[i].name == null || ret.informationMessageDtoList[i].name == undefined) {
+                            // var phone = ret.informationMessageDtoList[i].telephone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+                            $("#name" + ret.informationMessageDtoList[i].id).html("匿名用户")
+                        } else {
+                            $("#name" + ret.informationMessageDtoList[i].id).html(ret.informationMessageDtoList[i].name)
+                        }
+                        for (var j = 0; j < ret.informationMessageDtoList[i].informationMessageDtoSmalllist.length; j++) {
+
+                            if (ret.informationMessageDtoList[i].informationMessageDtoSmalllist[j].name == "" || ret.informationMessageDtoList[i].informationMessageDtoSmalllist[j].name == null || ret.informationMessageDtoList[i].informationMessageDtoSmalllist[j].name == undefined) {
+                                // var sonPhone = ret.informationMessageDtoList[i].informationMessageDtoSmalllist[j].telephone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+                                $("#name" + ret.informationMessageDtoList[i].informationMessageDtoSmalllist[j].id).html("匿名用户:")
+                            } else {
+                                $("#name" + ret.informationMessageDtoList[i].informationMessageDtoSmalllist[j].id).html(ret.informationMessageDtoList[i].informationMessageDtoSmalllist[j].name + ":")
+                            }
+                        }
+                    }
+                } else {
+
+                    setCommentMsg(refresh ? '沙发为空，还不快抢~' : '暂无更多');
+                }
+            } else {
+                setCommentMsg('服务器繁忙,请稍后重试！');
+            }
+        })
+    }
+
+    ///设置评论提示详情
+    function setCommentMsg(msg) {
+        // log(msg);
+        if ($('#newsComment').find('li').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+            setTimeout(function () {
+                $("#comment-titleNum").html('评论区');
+                $('.comment-title').removeClass('aui-hide');
+                $(".commentList").html(doT.template(msg_src)({
+                    'msg': msg
+                }));
+            }, 100);
+        } else { //原先已经有数据的情况下
+            setTimeout(function () {
+                $('#load_div').html(doT.template(more_src)({
+                    'msg': msg,
+                    'img': ''
+                }));
+            }, 500);
+        }
+    }
+
+    function reply(fatherId, type) {
+        if (islogin()) {
+            // log(true);
+            var userId = getUserId();
+            // log("学员ID" + userId);
+            var newCommentsVal = $("#newComments").val();
+            // log("资讯ID：" + articleId)
+            // log(newCommentsVal);
+
+            if (newCommentsVal == "" || newCommentsVal == null || newCommentsVal == undefined) {
+                alert_msg("尚未填写内容")
+            } else {
+                sensitiveWords(newCommentsVal, function (ret, err) {
+
+                    if (ret.code == 0) {
+                        var newCommentsMsg = newCommentsVal;
+                    } else {
+                        var newCommentsMsg = ret.msg;
+                    }
+                    if (type == "all" || type == "video" || type == "drivingSkill") {
+                        //科目二科目三，驾考技巧走子评论
+                        url = 'api/knowledge/insertKnowledgeMessage';
+                        params = {
+                            fatherMessageId: fatherId, //父评论id
+                            knowledgeId: newsId, //id
+                            learnerId: userId, //登入人id
+                            message: newCommentsMsg //输入的东西
+                        }
+
+                        replyComment(url, params, type)
+                    } else if (type == "news") {
+                        //资讯走子评论
+                        url = 'api/comment/insert-news-comment-by-article-id-or-comment-id';
+                        params = {
+                            fatherMessageId: fatherId, //父评论id
+                            informationid: newsId, //id
+                            learnerId: userId, //登入人id
+                            message: newCommentsMsg //输入的东西
+                        }
+                        log("回复+", JSON.stringify(params));
+                        replyComment(url, params, type)
+                    } else {
+                        //社区走子评论
+                        url = 'api/comment/insert-forum-comment-by-article-id-or-comment-id';
+                        params = {
+                            fatherMessageId: fatherId, //父评论id
+                            forumId: newsId, //id
+                            learnerId: userId, //登入人id
+                            message: newCommentsMsg //输入的东西
+                        }
+                        replyComment(url, params, type)
+                    }
+                })
+            }
+        } else {
+            alert_msg('暂未登录,请先登录')
+        }
+    }
+
+    //打开子评论
+    function checkComment(id, name, type) {
+        event.cancelBubble = true;
+        var commentData = {
+            fatherMessageId: id,
+            fatherName: name,
+            type: type
+        }
+        log("评论 " + JSON.stringify(commentData))
+        openComment(commentData);
+    }
+
+    //点击其他地方评论
+    function checkMakeComment() {
+        $("#newComments").attr("placeholder", "随便说点什么");
+
+        $("#newComments")[0].focus();
+        //$("#send").attr("onclick","reply('fatherId')");
+        $(".footer-send").prop("onclick", null).off("click");
+        $(".footer-send").click(function () {
+            newComments()
+
+        });
+
+    }
+
+    //打开评论
+    function openOriginal() {
+        params = {
+            name: '最新评论',
+            communityId: newsId,
+            flag: 'community'
+        }
+        api.openWin({
+            name: 'common_original_comment_win',
+            url: '../common/common_original_comment_win.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            pageParam: {
+                data: params
+            }
+        });
+    }
+
+    //新增评论
+    function newComments() {
+        if (islogin()) {
+            // log(true);
+            var userId = getUserId();
+            // log("学员ID"+userId);
+            var newCommentsVal = $("#newComments").val();
+            // log("社区ID：" + articleId)
+            // log(newCommentsVal);
+            if (newCommentsVal == "" || newCommentsVal == null || newCommentsVal == undefined) {
+                alert_msg("尚未填评论内容")
+            } else {
+                sensitiveWords(newCommentsVal, function (ret, err) {
+                    log("成功+", JSON.stringify(ret));
+                    if (ret.code == 0) {
+                        var newCommentsMsg = newCommentsVal;
+                    } else {
+                        var newCommentsMsg = ret.msg;
+                    }
+                    log('flag：', flag);
+                    url = 'api/comment/insert-forum-comment-by-article-id-or-comment-id';
+                    params = {
+                        fatherMessageId: null,       //父评论
+                        forumId: newsId,         //id
+                        learnerId: userId,        //登入人id
+                        message: newCommentsMsg     //输入的东西
+                    }
+
+                    submit_comment(url, params, flag);
+                })
+            }
+        } else {
+            alert_msg('暂未登录,请先登录')
+        }
+
+    }
+
+    //获得积分
+    function ReadIntegral() {
+        url = '/api/integral-policy/integral-change'
+        params = {
+            learnerId: getUserId(),
+            policyCode: '6'
+        }
+        log('详情params：', JSON.stringify(params));
+        ajax_Request(url, 'post', 'json', params, function (ret, err) {
+            log('详情：', ret);
+            if (ret.code == 0) {
+
+                api.openFrame({
+                    name: 'common_Integral_Acquisition_frm',
+                    url: '../common/common_Integral_Acquisition_frm.html',
+                    bgColor: 'rgba(255, 255, 255, 0.2)',
+                    rect: {
+                        x: 0,
+                        y: 0,
+                        w: 'auto',
+                        h: 'auto'
+                    },
+                    bgColor: 'rgba(0, 0, 0, 0.3)',
+                    pageParam: {
+                        data: '2',
+                        information: '社区留言、评论'
+
+                    },
+                    animation: {
+                        type: "fade", //动画类型（详见动画类型常量）
+
+                        duration: 300 //动画过渡时间，默认300毫秒
+                    }
+                });
+
+
+            } else {
+
+            }
+        })
+
+    }
+
+    //点击图标至评论区
+    function newScroll() {
+
+        document.getElementById('bigComment').scrollIntoView({block: "start", behavior: "smooth"});
+
+    }
+
+    function submit_comment(url, params, flag) {
+        ajax_Request(url, 'post', 'json', params, function (ret, err) {
+            log('资讯详情：', flag);
+            if (ret) {
+                if (ret.code == 0) {
+                    alert_msg("评论成功！")
+                    initMin();
+                    pageNo = 1;
+                    loadComment(flag);
+                    document.getElementById('bigComment').scrollIntoView({block: "start", behavior: "smooth"});
+                    $("#newComments").val("");
+                    ReadIntegral();
+                } else if (ret.code === -2) {
+                    alert_msg(ret.msg)
+                } else {
+                    alert_msg("评论失败！")
+                }
+            } else {
+                alert_msg("服务器繁忙,请稍后 ")
+            }
+        })
+    }
+
+    //请求发送子评论
+    function replyComment(url, params, type) {
+        ajax_Request(url, 'post', 'json', params, function (ret, err) {
+            log('资讯详情：', ret);
+            if (ret) {
+                if (ret.code == 0) {
+                    alert_msg("回复成功！")
+                    $("#newComments").attr("placeholder", "随便说点什么");
+                    $("#newComments").val("");
+                    pageNo = 1;
+                    loadComment(type)
+                    $(".footer-send").prop("onclick", null).off("click");
+                    $(".footer-send").click(function () {
+                        newComments()
+                    });
+                    // console.log("replyComment:获取回复"+type);
+                } else if(ret.code === -2) {
+                    alert_msg(ret.msg)
+                } else {
+                    alert_msg("评论失败！")
+                }
+            } else {
+                alert_msg("服务器繁忙,请稍后重试！")
+            }
+        })
+    }
+
+    function closeWin() {
+        api.closeWin({});
+    }
+</script>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>下载进度条框</title>
+	<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+	<style>
+		html,body{
+			height:100%;
+			width: 100%;
+			background: rgba(0,0,0,0.2);
+		}
+		.download{
+			position:relative;
+			width: 100%;
+			height: 100%;
+		}
+		.downloadContent{
+			position: absolute;
+			width: 90%;
+			height: 14rem;
+			background: url(../../../icon/common/downloadImg.png) no-repeat;
+			background-size: 100% 100%;
+			top: 50%;
+			margin-top: -7rem;
+			left: 5%;
+		}
+		.downloadBg{
+			position: absolute;
+			width: 75%;
+			height: 1.6rem;
+			border-radius: 25px;
+			background: linear-gradient(to bottom,#a1bde2,#f0f6ff);
+			top: 75%;
+			margin-top: -0.8rem;
+			left: 5%;
+			overflow: hidden;
+		}
+		.downloadMsg{
+			position: absolute;
+			width: 100%;
+			height: 2rem;
+			text-align: center;
+			top: 30%;
+			margin-top: -1rem;
+			color: #fff;
+			font-size: 0.9rem;
+		}
+		.downloadMsgX{
+			display: inline-block;
+			width: auto;
+		}
+		.downloadBg1{
+			position: absolute;
+			width: 0;
+			height: 1.6rem;
+			border-radius: 25px;
+			background: linear-gradient(to top,#40adff,#27a1fe,#1879dc);
+			transition: 0.5s;
+		}
+		.downloadView{
+			position: absolute;
+			width: 0;
+			height: 1.6rem;
+			border-radius: 25px;
+			background-image: repeating-linear-gradient(120deg,hsla(0,0%,100%,0.5),hsla(0,0%,100%,0.5) 15px,transparent 0,transparent 30px);
+			transition: 0.5s;
+		}
+		.downloadNum{
+			position: absolute;
+			width: 10%;
+			height: 1.6rem;
+			line-height: 1.6rem;
+			background: rgba(0,0,0,0);
+			text-align: center;
+			color: #448BFA;
+			font-size: 0.8rem;
+			top: 75%;
+			margin-top: -0.8rem;
+			left: 83%;
+		}
+		.install{
+			position: absolute;
+		    width: 6rem;
+		    height: 2rem;
+		    line-height: 2rem;
+		    text-align: center;
+		    background: #448BFA;
+		    border-radius: 25px;
+		    color: #fff;
+		    font-size: 0.7rem;
+		    left: 27%;
+		    margin-left: -3rem;
+		    bottom: 1.5rem;
+		}
+		.cancel{
+			right: 9%;
+		    left: auto;
+		    background: #FFF;
+		    color: #448BFA;
+		    border: solid 1px #448BFA;
+		}
+		.msg{
+			position: absolute;
+		    bottom: 3.5rem;
+		    width: 100%;
+		    text-align: center;
+		    color: #448BFA;
+		}
+    </style>
+	</head>
+	<body>
+		<div class="download">
+			<div class="downloadContent">
+				<div class="downloadMsg">
+					下载题库中...请勿关闭
+				</div>
+				<div class="downloadBg" id="downloadBg">
+					<div class="downloadBg1" id="downloadBg1">
+						<div class="downloadView" id="downloadView">
+
+						</div>
+					</div>
+				</div>
+				<div class="downloadNum" id="downloadNum">
+					0%
+				</div>
+				<div id='op_button'>
+					<div class="install aui-hide" tapmode onclick="re_download_question()">
+						重新下载
+					</div>
+					<div class="install cancel aui-hide" tapmode onclick="close_download()">
+						取消
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript" src="../../../script/question_sync/question_sync.js"></script>
+	<script type="text/javascript">
+		var cache;
+		// var audioStreamer;
+		var times = 0;
+		var headerPos;
+		var savePath; //下载地址
+		var fs;
+		var db;
+		apiready = function() {
+			api.parseTapmode();
+			cache = api.pageParam;
+			log('-----数据----',cache);
+			fs = api.require('fs');
+			db = api.require('db');
+			var header = $api.byId('downloadBg');
+			headerPos = $api.offset(header);
+			
+			//下载题库
+			download_question('cm/question/' + (cache.kemu == '036001'?'one':'four') + '/version_' + cache.serverVersion + '.json');
+		}
+		
+		function download_question(fileName){
+			api.download({
+			    url: file_load_url + fileName,
+			    savePath: 'fs://' + fileName,
+			    report: true,
+			    cache: false,
+			    allowResume: true
+			}, function(ret, err) {
+				log('下载数据',ret);
+				if(ret){
+					progress(ret.percent/5*4);
+					if (ret.state == 1) {
+						//countDownInstall('更新完成，请稍后');
+						$('.downloadMsg').html('下载完成，更新中，预计5秒');
+			        	//下载成功
+						fs.open({
+						    path: ret.savePath,
+						    flags: 'read_write'
+						}, function(ret, err) {
+						    if (ret.status) {
+						        fs.read({
+								    fd: ret.fd,
+								    offset: 0
+								}, function(ret, err) {
+								    if (ret.status) {
+								    	var serverQuestionList = JSON.parse(ret.data);
+								    	//log('题库',serverQuestionList);
+								    	sql = 'DELETE FROM cm_question WHERE kemu = "'+cache.kemu+'"';
+										db.executeSql({
+						                    name:'drivingApp',
+						                    sql:sql
+					                    },function(ret,err){
+					                    	if(ret&&ret.status){
+					                    		//启用事务插入题库
+					                    		db.transaction({
+						                            name:'drivingApp',
+						                            operation:'begin'
+					                            },function(ret,err){
+					                            	log('启动事务成功',ret);
+					                            	if(ret.status){
+					                            		//执行插入语句
+						                        		startInsertN(serverQuestionList);
+					                            		db.transaction({
+						                                    name:'drivingApp',
+						                                    operation:'commit'
+					                                    },function(ret,err){
+					                                    	if(ret.status){
+					                                    		//下载题库结束后开始同步
+					                                    		esc_function(cache.winName,cache.frameName,'start_sync("'+cache.kemu+'")');
+					                                    		console.log('事务执行成功');
+					                                    	}else{
+					                                    		console.log('结束事务失败');
+					                                    	}
+					                                    });
+					                            	}else{
+					                            		console.log('启动事务失败');
+					                            		closedefaultload();
+												        api.refreshHeaderLoadDone();
+					                            	}
+					                            });
+					                    	}else{
+					                    		log('',err);
+					                    		setFailView('清空本地题库失败，请重试');
+					                    		closedefaultload();
+										        api.refreshHeaderLoadDone();
+					                    	}
+					                    });
+								    } else {
+								        setFailView("读取题库失败");
+								    }
+								});
+						    } else {
+						        setFailView("打开题库失败");
+						    }
+						});
+				    } else if(ret.state == 2) {
+						setFailView('题库下载失败，请检查您的网络');
+				    }
+				}else{
+					setFailView('题库下载失败，请检查您的网络');
+				}
+			});
+		}
+		
+		/**
+		 * 预计倒计时
+		 */
+		var c = 5;
+		function countDownInstall(mes){
+			if(0 < c && c <= 5) {
+				c = c - 1;
+				console.log('c'+c);
+				$('.downloadMsg').html('下载完成，更新中，预计' + c + '秒');
+				setTimeout(function(){
+					countDownInstall(mes);
+				}, 1000);
+			} else if(c == 0) {
+				$('.downloadMsg').html(mes);
+				c = 5;
+			}
+		}
+		
+		/**
+		 * 	执行插入语句
+		 */
+		function startInsertN(serverQuestionList){
+			for(var i=0;i<serverQuestionList.length;i++){
+				for(var j=0;j<serverQuestionList[i].options.length;j++){
+					sql = "INSERT INTO cm_question (question_id,type,question_type,tags,bank_type,kemu,chapter,title,image,description,vip_description,difficulty,check_point,key_words,voice_url,province,city,area,is_vip,is_cal_vip,is_example,status,option_code,option_name,is_right,insert_dt,version)";
+					sql += "VALUES('"+serverQuestionList[i].id+"',";
+					sql += "'"+serverQuestionList[i].type+"',";
+					sql += "'"+serverQuestionList[i].questionType+"',";
+					sql += "'"+serverQuestionList[i].tags+"',";
+					sql += "'"+serverQuestionList[i].bankType+"',";
+					sql += "'"+serverQuestionList[i].kemu+"',";
+					sql += "'"+serverQuestionList[i].chapter+"',";
+					sql += "'"+serverQuestionList[i].title+"',";
+					sql += "'"+serverQuestionList[i].image+"',";
+					sql += "'"+Base64.encode(serverQuestionList[i].description)+"',";
+					sql += "'"+Base64.encode(serverQuestionList[i].vipDescription)+"',";
+					sql += "'"+serverQuestionList[i].difficulty+"',";
+					sql += "'"+serverQuestionList[i].checkPoint+"',";
+					sql += "'"+serverQuestionList[i].keyWords+"',";
+					sql += "'"+serverQuestionList[i].voiceUrl+"',";
+					sql += "'"+serverQuestionList[i].province+"',";
+					sql += "'"+serverQuestionList[i].city+"',";
+					sql += "'"+serverQuestionList[i].area+"',";
+					sql += "'"+serverQuestionList[i].isVip+"',";
+					sql += "'"+serverQuestionList[i].isCalVip+"',";
+					sql += "'"+serverQuestionList[i].isExample+"',";
+					sql += "'"+serverQuestionList[i].status+"',";
+					sql += "'"+serverQuestionList[i].options[j].optionCode+"',";
+					sql += "'"+serverQuestionList[i].options[j].optionName+"',";
+					sql += "'"+serverQuestionList[i].options[j].isRight+"',";
+					sql += "'"+serverQuestionList[i].insertDt+"',";
+					sql += "'"+serverQuestionList[i].version+"')";
+					db.executeSql({
+				        name:'drivingApp',
+				        sql:sql
+			        },function(ret,err){
+			        	if(ret&&ret.status){
+			        	}else{
+			        		log('失败',ret);
+			        		log('失败',err);
+			        	}
+			        });
+				}
+			}
+			progress(100);//显示进度
+			$('.downloadMsg').html('更新题库成功');
+			sendEvent('question_download_finish',{kemu:cache.kemu});
+			setTimeout(function(){
+				close_download();
+			},1000);
+		}
+		
+		/**
+		 * 计算百分比 
+		 */
+		function progress(percent){
+			$('#downloadBg1').css('width', headerPos.w * (percent / 100) + 'px');
+			$('#downloadView').css('width', headerPos.w * (percent / 100) + 'px');
+			$('#downloadNum').html((parseInt(percent)) + '%');
+		}
+	
+		/**
+		 * 设置失败样式
+		 */	
+		function setFailView(msg){
+			$('.downloadMsg').html(msg);
+			$('.downloadNum').addClass('aui-hide');
+			$('.downloadBg').addClass('aui-hide');
+			$('.install').removeClass('aui-hide');
+		}
+		
+		/**
+		 * 重新下载 
+		 */
+		function re_download_question(){
+			progress(0);
+			$('.downloadMsg').html('下载题库中...请勿关闭');
+			$('.downloadNum').removeClass('aui-hide');
+			$('.downloadBg').removeClass('aui-hide');
+			$('.install').addClass('aui-hide');
+			download_question('cm/question/' + (cache.kemu == '036001'?'one':'four') + '/version_' + cache.serverVersion + '.json');//放一个备用的
+		}
+		
+		/**
+		 * 关闭题库
+		 */
+		function close_download(){
+			api.closeFrame({
+            });
+		}
+	</script>
+</html>

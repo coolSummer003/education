@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>sds</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/comment.css" />
+		<style>
+			html{
+    		background:transparent;
+    		height:100%;
+    	
+    	}
+    	body{
+    		background:transparent !important;
+    		height: auto;
+		    top: 0;
+		  	padding:0rem;
+			overflow-y: auto;
+			overflow-x: hidden;
+		    overflow-y: scroll;
+		    -webkit-overflow-scrolling: touch;
+
+    	}
+    	.community-content{
+    		float: right;
+			font-size: 0.6rem;
+			color:#939393;
+			}
+		.aui-list-item-media{
+			width:4rem;
+			height:3.5rem;
+			display:inline;
+			float:left;
+			padding-right:0.75rem;
+		}
+		.aui-list-item-media img{
+			width:100%;
+			height:100%;
+			
+		}
+		.aui-card-list-from{
+			font-size: 0.6rem;
+			color: #757575;
+			
+		}
+		.order_txt{
+			padding-left:0.2rem;
+			background: #F9F9F9;
+		
+		}
+		.text-title{
+			padding:0.2rem
+		}
+		section{
+			width: 95%;
+			margin-left:2.5%;
+			margin-bottom:0.5rem;
+			position:absolute;
+			bottom:0rem;
+			display:none;
+			border:1px solid #f5f5f5;
+			border-radius:0.3rem;
+		}
+		
+		#close img{
+			width:1rem;
+			height: 1rem;
+			position: absolute;
+			right: -0.5rem;
+			top:-0.5rem;
+			
+		}
+		.aui-card-list-header{
+		padding-top:0rem !important;
+		margin-top:0.5rem;
+		}
+		.aui-card-list{
+		position:relative;
+		top:0.5rem;
+		}
+    </style>
+	</head>
+	<body>
+	<script type="text/template" charset="UTF-8" id="information">
+	
+		{{ for(var i=0;i<it.length;i++){ }}
+	
+		<section class="section" id="section{{=i}}" style="padding:0.3rem;background:#FFFFFF" >
+		
+			<div id="close">
+				<img src="../../../icon/common/close.png" alt=""/>
+			</div>
+			
+			<div class="aui-card-list" style="background:transparent;" id="auiDot" >
+				
+				<div class="aui-card-list-header" >
+					<div style="margin-top:0.5rem;margin-left:0.5rem">
+						{{=cutstr(it[i].title,'11')}}
+					</div>
+					<div class='community-content aui-ellipsis-3' style="margin-top:0.5rem">{{=it[i].insertDt}}</div>
+				</div>
+				<div class="aui-card-list-content-padded">
+					<div class='order_content'>
+						<div class='order_txt'>
+							<div class='txt-title text-title'>
+								<div class="txt-title" style="margin-bottom:0.2rem;height:3rem;">{{=cutstr(it[i].message,'50')}}</span></div>
+								<div class='txt-title-second aui-card-list-from'>
+									{{if(it[i].fromType=='2'){}}
+									<span style="margin-bottom:0.2rem;">来自{{=it[i].from}}</span>
+									{{}else{}}
+									<span style="margin-bottom:0.2rem;">来自系统</span>
+									{{}}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	
+		{{}}}
+	</script>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var learnerId;
+		var isPopup;
+		var flag=1;
+		var number=0;
+		var sectionFlag=0;
+		apiready = function() {
+		//判断是否登陆	
+			if (islogin()) {
+				//登录-获取id
+				learnerId = getUserId();
+			} else {
+				//未登录-id为空
+				learnerId = ''
+				
+			}
+			init();
+			
+		};
+		
+		function init() {
+			
+			url = 'api/message/message-list';
+
+			params = {
+				learnerId: learnerId,
+				isPopup:'1'
+			}
+			defaultload('获取消息中...');
+			ajax(url, params);
+		}
+		//请求弹出的消息（多个）
+		function ajax(url, params) {
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('消息列表', ret);
+				api.hideProgress();
+				if (ret) {
+					if (ret.code == 0) {
+							var information = $('#information').html();
+							$("body").append(doT.template(information)(ret.returnVal));
+							setTimeout(function() { 
+								for(var i=0;i<ret.returnVal.length;i++) 
+								{ 
+									(function(e){ 
+									//当未读和人工发送时消息弹出
+										if(ret.returnVal[e].isRead==0 && ret.returnVal[e].fromType=='2')
+										{ 
+											
+											 if(flag==1){
+											 //第一次弹出消息前增加遮罩，如果没有消息就不遮罩
+												 $("html").css({
+												 	'background' :'rgba(0,0,0,0.3)' 
+												 }); 
+											 	flag=0;
+												} 
+											setTimeout(function() {
+												 //当点击最后一个消息关闭时，要关闭页面遮罩，其余关闭消息只关闭消息，点击消息时同理
+												 if(sectionFlag==0){
+															$('#section'+e).children('#close').click(function(){
+															 
+																closeFrm(ret.returnVal[e].fromType,ret.returnVal[e].isRead,ret.returnVal[e].id)
+															 	
+															});
+															$('#section'+e).children('#auiDot').click(function(){
+															 
+																auiDot('#section'+e,ret.returnVal[e].fromType,ret.returnVal[e].isRead,ret.returnVal[e].id,'0')
+															 
+															});
+												     		sectionFlag=1;
+												 	}else{
+															$('#section'+e).children('#close').click(function(){
+													
+														 	 	closeSection('#section'+e,ret.returnVal[e].fromType,ret.returnVal[e].isRead,ret.returnVal[e].id)
+														 	 });
+														 	 $('#section'+e).children('#auiDot').click(function(){
+													
+														 	 	auiDot('#section'+e,ret.returnVal[e].fromType,ret.returnVal[e].isRead,ret.returnVal[e].id,'1')
+														 	 
+													 	 	 });
+												 	}
+													$('#section'+e).slideDown(400); 
+											}, 400*(e+1));
+											//number判断是否有人工消息0代表没有1代表有
+											number=1;
+										}
+									})(i)
+								}
+		
+								if(number==0){
+									closeFrmAll();
+								}
+							}, 1200); 
+					} else {
+						
+						closeFrmAll()
+					}
+				} else {
+					closeFrmAll();
+					setMsg('服务器繁忙,请稍后重试！');
+				}
+			})
+		}
+		//字数过多进行省略
+		function cutstr(str, len) {
+			var strre = '';
+			if (str.length > len) {
+				strre = str.substr(0, len)
+				strre += '...'
+				log('str', strre);
+			} else {
+				strre = str;
+			}
+			return strre;
+		}
+		
+		function auiDot(e, fromType, isRead, id,type) {
+			
+			
+			url = 'api/message/message-by-id';
+			params = {
+				learnerId: learnerId,
+				id: id,
+				fromType: fromType
+
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				if (ret) {
+					if (ret.code == 0) {
+						
+						commonOpenWin('message_center', ret.returnVal);
+						$(e).addClass('aui-hide');
+						if(type=='0'){
+						closeFrmAll();
+						}
+						
+					} else {
+						alert_msg('暂无详情');
+					}
+				} else {
+					alert_msg('服务器繁忙,请稍后重试！');
+					
+				}
+
+			});
+		}
+		function closeFrmAll(){
+			api.closeFrame({
+   			});
+		}
+		function closeFrm(fromType, isRead, id){
+			url = 'api/message/message-by-id';
+			params = {
+				learnerId: learnerId,
+				id: id,
+				fromType: fromType
+			}
+			
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				if (ret) {
+					if (ret.code == 0) {
+					} else {
+					}
+				} else {
+				}
+			});
+			api.closeFrame({
+	   		});
+		}
+		
+		function closeSection(e,fromType, isRead, id){
+			$(e).slideUp(200);
+			url = 'api/message/message-by-id';
+			params = {
+				learnerId: learnerId,
+				id: id,
+				fromType: fromType
+			}
+			log('closeSection',params)
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				if (ret) {
+					if (ret.code == 0) {
+						} else {
+					}
+				} else {
+					
+				}
+
+			});
+		}
+	</script>
+</html>

@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>消息列表</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/comment.css" />
+		<style>
+            html, body {
+                background-color: #f2f2f2;
+                height: 100%;
+                padding: 0rem;
+            }
+            .article-title {
+                margin-top: 0.5rem;
+                font-size: 1rem;
+                font-weight: bold;
+            }
+            .article-auther {
+                height: 1.4rem;
+                font-size: 0.7rem;
+            }
+            .item-left {
+                float: left;
+                display: flex;
+                height: 1rem;
+                padding: 0.2rem 0;
+            }
+            .item-left span {
+                margin: auto;
+                margin-left: 0rem;
+            }
+            .item-left img {
+                width: 1.5rem;
+                margin: auto;
+                border-radius: 100%;
+            }
+            .item-right span {
+                margin: auto;
+            }
+            .item-right {
+                float: right;
+                height: 3rem;
+                display: flex;
+            }
+            .content img {
+                width: 100%;
+                margin: 0.5rem 0rem;
+            }
+            .send {
+                width: 3rem;
+                height: 1.6rem;
+                margin-top: 0.4rem;
+                line-height: 1.6rem;
+                padding: 0rem;
+                background: #1E8DD8;
+                color: #fff;
+                padding-top: 0.1rem;
+            }
+            /*.mian-content{
+             position: absolute;
+             top: 0;
+             right: 0rem;
+             left: 0rem;
+             bottom:0rem;
+             overflow-y: auto;
+             overflow-x: hidden;
+             overflow-y: scroll;
+             -webkit-overflow-scrolling: touch;
+             }*/
+            .msg {
+                background: #f2f2f2;
+                height: 20rem;
+                text-align: center;
+                font-size: 0.7rem;
+            }
+            .msg img {
+                width: 2rem;
+                margin-top: 12rem;
+            }
+            .jiazai {
+                font-size: 0.7rem;
+                color: #666565;
+                padding-bottom: 0.3rem;
+                text-align: center;
+                padding-top: 0.3rem;
+            }
+            .jiazai img {
+                width: 1.5rem;
+            }
+            .content span {
+                text-align: justify;
+            }
+            .community-content {
+                text-align: right;
+                font-size: 0.6rem;
+                color: #939393;
+            }
+            .aui-list-item-media {
+                width: 4rem;
+                height: 3.5rem;
+                display: inline;
+                float: left;
+                padding-right: 0.75rem;
+            }
+            .aui-list-item-media img {
+                width: 100%;
+                height: 100%;
+            }
+            .aui-card-list-from {
+                font-size: 0.6rem;
+                color: #757575;
+            }
+            .aui-card-list {
+                border-radius: 10px;
+                margin-bottom: 0;
+            }
+            .order_txt {
+                padding-left: 0.2rem;
+                background: #FFFFFF;
+                color: #646B7E;
+            }
+            .text-title {
+                padding: 0.2rem
+            }
+            .aui-dot {
+                position: absolute;
+                left: 0.5rem;
+                top: 0.9rem;
+            }
+            .tips {
+                position: relative;
+                left: 40%;
+                width: 20%;
+                text-align: center;
+                top: 0rem;
+                height: 1.2rem;
+                line-height: 1.2rem;
+                color: #FFFFFF;
+                font-size: 0.65rem;
+                background: #D5D5D5;
+                padding: 0 0.2rem 0 0.2rem;
+                border-radius: 0.2rem;
+            }
+            .aui-card-list-header {
+                padding-bottom: 0rem !important;
+            }
+            .w-button {
+                width: 0;
+                height: 0;
+            }
+            .message-title {
+                margin-left: 0.8rem;
+                padding-top: 0.5rem;
+                font-size: 0.7rem;
+                margin-right: 0.8rem;
+            }
+            .message-insert {
+                display: inline;
+                float: right;
+                margin-right: 0.5rem;
+            }
+            .aui-card-list-content-padded {
+                padding-top: 0;
+                padding: 0 0.35rem 0.2 rem 0.35rem;
+                margin-top: -0.5rem;
+            }
+            .app_logo {
+                width: 1.8rem !important;
+                height: 1.8rem;
+                border-radius: 50%;
+                display: inline !important;
+                vertical-align: sub;
+            }
+            .e-button, .w-button {
+                display: inline-block;
+                width: 5rem;
+                height: 1.5rem;
+                line-height: 1.5rem;
+                text-align: center;
+                color: #FFFFFF;
+                background: linear-gradient(to left, #03B4F7 , #90DBF7);
+                margin-top: 0.3rem;
+                border-radius: 2px;
+            }
+            .w-button {
+                margin-left: 1rem;
+            }
+            .e-button:active, .w-button:active {
+                background: #90DBF7;
+            }
+            .aui-chat .aui-chat-left .aui-chat-inner {
+                max-width: 100%!important;
+            }
+            .aui-chat .aui-chat-content{
+                max-width: 90%;
+                z-index: 1;
+            }
+            .aui-chat .aui-chat-left .aui-chat-content {
+                background-color: #FFFFFF;
+                padding: 0;
+            }
+            .content span{
+            text-align: justify;
+        }
+        .community-content{
+            float: right;
+            font-size: 0.6rem;
+            color:#939393;
+            }
+        .aui-list-item-media{
+            width:4rem;
+            height:3.5rem;
+            display:inline;
+            float:left;
+            padding-right:0.75rem;
+        }
+        .aui-list .aui-list-item:after{
+            height:0!important;
+        }
+        .aui-list:after{
+            height:0!important;
+        }
+        .aui-list:before{
+            height:0!important;
+        }
+        .aui-list-item-media img{
+            width:100%;
+            height:100%;            
+        }
+        .aui-card-list-from{
+            font-size: 0.6rem;
+            color: #757575;
+        }
+        .order_txt{
+            padding-left:0.2rem;
+            background: #F9F9F9;
+        }
+        .text-title{
+            padding:0.2rem
+        }
+        .aui-list-item-title{
+        font-size:0.9rem;
+        font-weight:600;
+        line-height:1.3rem;
+        }
+        .list{
+        padding:0.3rem;
+        }
+        .aui-margin-l-5{
+        border-right:1px solid #F5F5F5;
+        }
+        .list-font{
+            font-size:0.6rem;
+            color:#64769A;
+        }
+        .form-content{
+            background:#FFFFFF!important;
+        }
+        .aui-list-item-label{
+            color:#27344C!important;
+            text-align:left;
+            width: 5rem!important;
+            /*font-weight:500!important;*/
+        }
+        input[type="text"]{
+            color:#27344C!important;
+            margin-left: 0.5rem;
+        }
+        .aui-btn-info{
+            background:linear-gradient(to left, #3F86FE , #64ADF6)!important;
+            margin-top: 1rem!important;
+            z-index: 1;   
+        }
+        .aui-list-item{
+            padding-left:0!important;
+            padding-right:0!important;
+        }
+        .pre_load_msg{
+            height: 40rem;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+        
+        .pre_load_msg img{
+             width: 10rem;
+             margin-top: 6.5rem;
+        }
+    </style>
+	</head>
+	<body>
+		<div class='mian-content' tapmode>
+            <div id='content' style="margin:0.5rem 0.5rem 0 0.5rem;" tapmode></div>
+	        <div id='load_div' style="margin-right: 0.5rem;margin-left:0.5rem;">
+	           
+	        </div>
+        </div>
+        
+		<script type="text/template" charset="UTF-8" id="information">
+			{{ for(var i=0;i<it.length;i++){ }}
+				<!--{{ if(it[i].fromType=='1'){ }}
+					<div class="tips">系统消息</div> 
+				{{ } }}-->
+				
+              <section class="aui-chat">
+                <div class="aui-chat-item aui-chat-left">
+                    <div class="aui-chat-media">
+                        <img src="../../../icon/app/app_logo.png" class="app_logo"/>
+                    </div>
+                    <div class="aui-chat-inner">
+                        <div class="aui-chat-name">
+                           {{ if(it[i].fromType=='2'){ }}
+                            <span style="margin-bottom:0.2rem;">{{=it[i].from}}</span>
+                           {{ }else{ }}
+                            <span style="margin-bottom:0.2rem;">系统通知</span>
+                           {{ } }}
+                              <div class="message-insert">
+                                  {{=calcuTime(it[i].insertDt)}}
+                              </div>  
+                        </div>
+                        <div class="aui-chat-content">
+                            <section class="" style="padding:0.3rem" onclick="auiDot(this,'{{=it[i].fromType}}','{{=it[i].isRead}}','{{=it[i].id}}')">
+                                {{if(it[i].fromType=='2'){}}
+                                    {{ if(it[i].isRead=='0'){ }}
+                                        <div class="aui-dot"></div>
+                                    {{ } }} 
+                                {{ } }} 
+                                <div class="aui-card-list">
+                                    <div class="aui-card-list-header" style="padding-top:0!important;">
+                                       <div class="aui-ellipsis-2" style="margin-bottom: 0.5rem">
+                                          {{=it[i].title}}
+                                       </div>
+                                    </div>
+                                <div class="aui-card-list-content-padded" style="line-height:1.2rem;color: #27344C;;width: 13rem;">{{=it[i].message}}</div>
+                               </div>
+                            </section>
+                        </div>
+                    </div> 
+                  </div> 
+                </section>	
+			{{ } }}
+		</script>
+
+
+		<script type="text/template" charset="utf-8" id='msg_src'>
+			<div class="msg">
+				<img src="../../../icon/common/icon_defalut.png" alt="" /><br>
+				<span>{{=it.msg}}</span>
+			</div>
+		</script>
+		<script type="text/template" charset="utf-8" id='more_src'>
+			<div class="jiazai"><!--上拉加载-->
+			<span>{{=it.msg}}</span>
+		</div>
+		</script>
+        <script type="text/template" charset="utf-8" id='pre_load_src'>
+            <div class="pre_load_msg">
+                <img src="../../../image/background/preloading.gif" alt=""/><br>
+            </div>
+        </script>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var flag = "";
+		var pageNo = 1; //页数
+		var pageSize = 10; //一页显示条数
+		var refresh = true; //标记是否是刷新操作
+		var cache;
+		var learnerId;
+		var msg_src = $('#msg_src').html(); //消息提示src
+		var more_src = $('#more_src').html(); //更多src
+		var pre_load_src = $('#pre_load_src').html(); //预加载src
+		apiready = function() {
+			cache = api.pageParam;
+			api.parseTapmode();
+			
+			//下拉刷新
+			goRefrash(40, '#f2f2f2', null, null, function() {
+				refreshList();
+			});
+
+			//上拉加载
+			goLoad(function(ret, err) {
+				loadList(flag);
+			});
+			
+			if (islogin()) {
+				//登录-获取id
+				learnerId = getUserId();
+			} else {
+				//未登录-id为空
+				learnerId = ''
+			}
+			init();
+			
+			//监听清除未读
+			toEventListener('cancleRedDots',function(ret,err){
+				refreshList();
+			})
+		}
+		function refreshList() {
+			pageNo = 1;
+			refresh = true;
+			setLoad();
+			init();
+		}
+		function init() {
+			url = 'api/message/message-list';
+			params = {
+				learnerId: learnerId,
+				page:pageNo,
+				limit:pageSize
+			}
+			log('详情：', params);
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				$(".HeartAnimation").addClass('like-active');
+				if (ret) {
+					if (ret.code == 0) {
+						if(ret.returnVal.length > 0){
+							var information = $('#information').html();
+							if(refresh){
+								$("#content").html(doT.template(information)(ret.returnVal));
+							}else{
+								$("#content").append(doT.template(information)(ret.returnVal));
+							}
+							api.parseTapmode();
+						}else{
+							setMsg('无更多消息');
+						}
+					} else {
+						setMsg(ret.msg);
+					}
+				} else {
+					setMsg('服务器繁忙,请稍后重试！');
+				}
+				setTimeout(function() {
+					api.refreshHeaderLoadDone();
+				}, 500);
+			});
+		}
+		
+		//点击事件消除红点，跳转 页面详情
+		function auiDot(e, fromType, isRead, id) {
+			$(e).children('.aui-dot').attr("style", "display:none;");
+			url = 'api/message/message-by-id';
+			params = {
+				learnerId: learnerId,
+				id: id,
+				fromType: fromType
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				if (ret) {
+					if (ret.code == 0) {
+//						commonOpenWin('message_center', ret.returnVal);
+					} else {
+//						alert_msg('暂无详情');
+					}
+				} else {
+					alert_msg('服务器繁忙,请稍后重试！');
+				}
+
+			});
+		}
+
+		//设置页面提示信息
+		function setMsg(msg) {
+			if ($('#content').find('.aui-chat').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+				setTimeout(function() {
+					$("#load_div").html(doT.template(msg_src)({
+						'msg': msg
+					}));
+				}, 500);
+			} else { //原先已经有数据的情况下
+				// log("2"+msg)
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': msg,
+						'img': ''
+					}));
+				}, 500);
+			}
+		}
+
+
+		//设置页面加载的画面
+		function setLoad() {
+			if (refresh || $('.aui-chat').length == 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+				setPreLoading();
+			} else {
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': '加载更多中...',
+						'img': '../../../icon/common/jiazai.gif'
+					}));
+				}, 500);
+			}
+		}
+		
+		//预加载
+		 function setPreLoading(){
+            $("#content").html(doT.template(pre_load_src)({
+                'msg': ''
+            }));
+        }
+		
+		function loadList(type) {
+			pageNo++;
+			if(($('.aui-chat').length == 0)){
+				refresh = true;
+			}else{
+				refresh = false;
+			}
+			setLoad();
+			init();
+		}
+		
+		/**
+         * 地图跳转 
+         */
+        function openMap(name, latitude, longitude) {
+            params = {
+                to_lon: longitude,
+                to_lat: latitude,
+                to_name: name
+            }
+            log('params', params);
+            api.openWin({
+                name: 'common_map_loaction_win',
+                url: '../../common/common_map_loaction_win.html',
+                slidBackEnabled: 'true',
+                vScrollBarEnabled: 'false',
+                hScrollBarEnabled: 'false',
+                reload: true,
+                pageParam: {
+                    data: params
+                }
+            });
+        }
+
+        /**
+         * 查看考前训练预约详情 
+         */
+        function openAppointDetail(flag, id) {
+            params = {
+                orderId: id,
+                flag: flag == 2 ? 'two' : 'three',
+                vipGrade: 0,
+                type: 'appointment-before-exam-order'
+            }
+            log('传参', params);
+            api.openWin({
+                name: 'record_order_detail_win',
+                url: '../../mine/record_order_detail_win.html',
+                slidBackEnabled: 'false',
+                vScrollBarEnabled: 'false',
+                hScrollBarEnabled: 'false',
+                reload: true,
+                useWKWebView: false,
+                pageParam: {
+                    data: params
+                }
+            });
+        }
+        //下一步
+
+        function submitBt(e){
+            var business_type = $(e).parent().parent().find('input').eq(4).attr("busine"), //业务code
+                business_type_name = $(e).parent().parent().find("#busubessType").val(), //业务名称
+                coachId = $(e).parent().parent().find('input').eq(1).attr("coachId"), //教练id
+                coachName = $(e).parent().parent().find("#coachName").val(),
+                schoolId = $(e).parent().parent().find('input').eq(0).attr("schoolId"),
+                carType = $(e).parent().parent().find('input').eq(2).attr("carType"),
+                meal = $(e).parent().parent().find('input').eq(3).attr("mealId")
+                console.log(schoolId);
+                
+            var data = {
+                business_type: business_type,
+                business_type_name: business_type_name,
+                coachId: coachId,
+                coachName: coachName,
+                schoolId: schoolId,
+                carType: carType,
+                meal: meal
+            }
+            console.log(JSON.stringify(data))
+            //判断是否有购买过订单
+            getSchoolDate(schoolId);
+            params = {
+                learnerId: learnerId
+            }
+            url = '/api/porpose/third/findLearnerRegis';
+            ajax_Request(url, 'get', 'json', params, function(ret, err) {
+                if (ret) {
+                    log('报名订单判断：', ret);
+                    if (ret.code == 0) {
+                        driver_sign_up_hetong("1",data);
+                    } else {
+                        alert_msg("您已报名过此驾校学车套餐");
+                    }
+                } else {
+                    alert_msg('服务器繁忙，请稍后重试');
+                }
+            });
+        }
+        //打开驾校报名
+        function driver_sign_up(plan_info,data) {
+            var params = {
+                id: driverSchoolData.id, //驾校id
+                d_school_name: driverSchoolData.name, //驾校name
+                district: driverSchoolData.district,
+                licenseTypeList: driverSchoolData.licenseTypeList, //报考车型
+                plan_info: plan_info, //套餐信息
+                business_type: data.business_type, //教练推荐车型code
+                business_type_name: data.business_type_name, //教练推荐车型name
+                coachId: data.coachId, //教练id
+                coachName: data.coachName, //教练name
+            }
+//            log('驾校数据：',params);
+            console.log(JSON.stringify(params))
+            commonOpenWin('../driver_school_pre_sign_up_win', params);
+        }
+        //得到驾校信息
+        function getSchoolDate(id) {
+        console.log(id)
+            if(!id){
+                return;
+            }
+            //驾校详情传参
+            params = {
+                drivingSchool: {
+                    id: id
+                }
+            }
+            console.log(JSON.stringify(params))
+            url = 'api/driving';
+            ajax_Request(url, 'get', 'json', params, function(ret, err) {
+                if (ret) {
+                    log('驾校详情数据：', ret);
+                    driverSchoolData = ret.drivingSchoolDetail;
+                    if (ret.code == 0) {
+
+                    } else {
+                        setError(ret.msg);
+                    }
+                } else {
+                    setError('服务器繁忙，请稍后重试');
+                }
+            });
+        }
+
+        /**
+         * 判断是否签了合同 
+         */
+        function judgeHasContract(data) {
+            defaultload('获取合同相关信息中');
+            console.log(JSON.stringify(data))
+//          var id = $('#schoolName').attr("schoolId")
+            url = 'api/sign-contract/get-online-signing-info';
+            params = {
+                contract: {
+                    learner: {
+                        id: getUserId()
+                    },
+                    organizationId: data.schoolId,
+                    type: '042001'
+                }
+            }
+
+            var learn_plan = {
+                licenseType: data.carType,
+                id: data.meal,
+                learnerId: getUserId()
+            }
+            log('合同传参', params);
+
+            ajax_Request(url, "get", "json", params, function(ret, err) {
+                api.hideProgress();
+                log('获得的合约信息', ret);
+                if (ret && ret.code == 0) {
+                    if (ret.contractList.length > 0) { //存在合约信息就不需要在线签约，直接进入下一步
+                        checkInfo(data)
+                        //esc_function('driver_school_detail_win','driver_school_detail_frm','driver_sign_up()');
+                    } else {
+                        params = {
+                            schoolId: data.schoolId,
+                            flag: 2
+                        }
+                        //定义完成驾校签约后的监听事件
+                        toEventListener('finishContractNext', function(ret, err) {
+                            setTimeout(function() {
+                                api.hideProgress();
+                                checkInfo(data)
+                                //esc_function('driver_school_detail_win','driver_school_detail_frm','driver_sign_up()');
+                            }, 1500);
+                        });
+                        openSignContract(params); //打开在线签约共通
+                    }
+                } else {
+                    alert_msg('获取合约失败');
+                }
+            });
+        }
+
+        /**
+         * 打开签约页面共通
+         */
+        function openSignContract(params) {
+            api.openWin({
+                name: 'common_sign_online_win',
+                url: '../../common/common_sign_online_win.html',
+                slidBackEnabled: 'false',
+                vScrollBarEnabled: 'false',
+                hScrollBarEnabled: 'false',
+                reload: true,
+                pageParam: params
+            });
+        }
+
+        function driver_sign_up_hetong(index,data) {
+         console.log(JSON.stringify(data))
+            var sign_up_action = 'driver_sign_up';
+            params = {
+                event_action: sign_up_action
+            }
+            flag = "已选套餐";
+            if (islogin()) { //已登录
+                if (isauth()) { //已认证
+                    console.log("已认证")
+                    if (flag != '') {
+                        //因为登录关闭动画需要延迟
+                        setTimeout(function() {
+                            judgeHasContract(data);
+                            //commonOpenWin('driver_school_pre_sign_up_win',cache);
+                        }, 350);
+                    } else {
+                        judgeHasContract(data);
+                        //commonOpenWin('driver_school_pre_sign_up_win',cache);
+                    }
+                } else {
+                    if (flag != '') {
+                        setTimeout(function() {
+                            openAuthHtml(params);
+                        }, 350);
+                    } else {
+                        openAuthHtml(params);
+                    }
+                }
+            } else {
+                openLoginHtml(params);
+            }
+        }
+        /**
+         * 对选择的套餐和驾考类型进行校验，购买过的套餐且未退款的无法再次购买
+         */
+
+        function checkInfo(data) {
+            console.log(JSON.stringify(data))
+            defaultload('校验中...');
+            url = 'api/study-plan/check-buy-power';
+            params = {
+                licenseType: data.carType,
+                id: data.meal,
+                learnerId: getUserId()
+            }
+            ajax_Request(url, 'get', 'json', params, function(ret, err) {
+                log('获取权限', ret);
+                api.hideProgress();
+                if (ret) {
+                    if (ret.code == 0) {
+                        if (ret.learnerBuyPlanList.length > 0) {
+                            alert_msg('您已购买过该套餐');
+                        } else {
+                            //执行报名操作
+                            driver_sign_up(params,data);
+                        }
+                    } else {
+                        alert_msg(ret.msg);
+                    }
+                } else {
+                    alert_msg('服务器繁忙，请稍后再试');
+                }
+            });
+        }
+
+        /**
+         * 去认证
+         */
+        function openAuthHtml(data) {
+            api.openWin({
+                name: 'mine_account_auth_win',
+                url: '../../mine/mine_account_auth_win.html',
+                slidBackEnabled: 'true',
+                vScrollBarEnabled: 'false',
+                hScrollBarEnabled: 'false',
+                reload: true,
+                pageParam: data
+            });
+        }
+
+
+        /**
+         * 对教练的评价
+         */
+        function evaluateCoach(orderId, id, businessType, classificationCode) {
+            params = {
+                coachId: id,
+                orderId: orderId,
+                businessType: businessType,
+                classificationCode: classificationCode
+            }
+            log('', params)
+            api.openWin({
+                name: 'evaluate_detail_win',
+                url: '../../mine/evaluate/evaluate_detail_win.html',
+                slidBackEnabled: 'false',
+                vScrollBarEnabled: 'false',
+                hScrollBarEnabled: 'false',
+                reload: true,
+                useWKWebView: false,
+                pageParam: {
+                    data: params
+                }
+            });
+        }
+		
+	</script>
+</html>

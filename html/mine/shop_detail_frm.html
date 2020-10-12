@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>商品详情</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/comment.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/swiper/swiper.css">
+		<style>
+		html,body{
+	        background:#F8F8F8;
+	        margin-bottom: 2.5rem;
+		}
+		.swiper-pagination-bullet-active {
+			opacity: 1;
+			background: #FFF;
+		}
+		.swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets {
+			bottom: 10px;
+			left: 0;
+			width: 95%;
+		}
+		.swiper-pagination {
+			position: absolute;
+			text-align: center;
+			-webkit-transition: 300ms;
+			-moz-transition: 300ms;
+			-o-transition: 300ms;
+			transition: 300ms;
+			-webkit-transform: translate3d(0, 0, 0);
+			-ms-transform: translate3d(0, 0, 0);
+			-o-transform: translate3d(0, 0, 0);
+			transform: translate3d(0, 0, 0);
+			z-index: 10;
+		}
+		.b_l_2{
+    		width: 40%;
+    		height: 2.5rem;
+    		line-height: 2.5rem;
+    		float: left;
+    		border-right:1px solid #f5f5f5;
+    		text-align: center;
+    		background: #FFFFFF;
+    		color: #717372;
+    	}
+    	.b_l_2 span{
+    		font-size: 0.8rem;
+    		color: #323C41;
+    	}
+    	.unable{
+    		width: 80%;
+    		height: 2rem;
+    		background:rgba(63,134,255,1);
+    		color: #FFF;
+    		margin: auto;
+    		font-size: 0.9rem;
+    		line-height: 2rem;
+    		text-align: center;
+    		margin-top: 0.5rem;
+    		border-radius: 2rem;
+    	}
+		.kefu{
+			color: #202429;
+			font-size: 0.9rem;
+			height: 2.5rem;
+			line-height: 2.5rem;
+    		text-align: center;
+		}
+    	.article-title{
+		    margin-top: 0.5rem;
+		    font-size: 1rem;
+		    font-weight: bold;
+    	}
+    	.article-auther{
+    		height: 1.4rem;
+    		font-size: 0.7rem;
+    	}
+    	.item-left{
+    		float: left;
+		    display: flex;
+		    height: 1rem;
+			padding: 0.2rem 0;
+    	}
+    	.item-left span{
+		    margin: auto;
+    		margin-left: 0rem;
+    	}
+    	.item-left img{
+		    width: 1.5rem;
+    		margin: auto;
+		    border-radius: 100%;
+    	}
+    	.item-right span{
+    		margin: auto;
+    	}
+    	.item-right{
+    		float: right;
+		    height: 3rem;
+		    display: flex;
+    	}
+    	.image1{
+			width: 100%;
+			height: 20rem;
+			object-fit: cover;
+    	}
+
+    	footer{
+    		height: 3rem;
+		    position: fixed;
+		    background: #FFFFFF;
+		    bottom: 0rem;
+		    width: 100%;
+		    font-size: 0.7rem;
+		    left: 0;
+    	}
+		.footer-input{
+			float: left;
+		    height: 2.5rem;
+		    width: 70%;
+		    padding-left: 0.5rem;
+		}
+		.footer-input input{
+		    min-height: 1.7rem;
+		    background: #F1F1F1;
+		    padding: 0 0.5rem;
+		    margin-top: 0.4rem;
+		    border-radius: 1rem;
+		    line-height: 1.7rem;
+		}
+
+		.footer-send{
+			width:13%;
+			float:right;
+			margin-right: 2%;
+			height: 2.5rem;
+			display: flex;
+		}
+		.footer-opinion{
+			width:15%;
+			float:right;
+			height: 2.5rem;
+			display: flex;
+			position: relative;
+		}
+		.footer-opinion img{
+			width: 1.3rem;
+    		margin: auto;
+		}
+		.footer-send img{
+			width: 1.3rem;
+			margin: auto;
+		}
+		.back_top{
+			position: fixed;
+			right: 0.6rem;
+			bottom: 6rem;
+			width: 1.8rem;
+			z-index: 999;
+		}
+		header img {
+			width: 20px;
+		}
+		#aui-header1{
+			opacity: 1;
+			z-index:12;
+		}
+		#aui-header2{
+			opacity: 0;
+			z-index:12;
+		}
+		.aui-bar-nav {
+			top: 0;
+			line-height: 2.25rem;
+			background-color: #FFF;
+			color: #000;
+			border-bottom: none;
+		}
+		.aui-bar-nav,.aui-bar-tab{
+			background-color: #ffffff;
+		}
+		.aui-bar-nav{
+			color: #2c2c2c;
+			position: fixed;
+			top: 0;
+			left: 0;
+			opacity: 1;
+		}
+		a.aui-pull-left, a.aui-pull-right {
+			color: #35A7FF;
+		}
+		.information_content{
+			padding: 0.3rem;
+			width: auto;
+			height: auto;
+			color: red;
+			background-color: #ffffff;
+		}
+		.send{
+			width: 5rem;
+			height: 1.6rem;
+			margin-top: 0.4rem;
+			right: 0.8rem;
+			line-height: 1.6rem;
+			padding: 0rem;
+			background: #EC7718;
+			color: #fff;
+			padding-top: 0.1rem;
+		}
+		.opinion-num{
+			position: absolute;
+		    background: #F45454;
+		    color: #FFF;
+		    padding: 0rem 0.2rem;
+		    border-radius: 0.5rem;
+		    font-size: 0.5rem;
+		    right: 0.1rem;
+		    top: 0.3rem;
+		    height: 0.8rem;
+    		line-height: 0.8rem;
+		}
+		.mian-content{
+			height: auto;
+		    top: 0;
+		    bottom: 2.5rem;
+			overflow-y: auto;
+			overflow-x: hidden;
+		    overflow-y: scroll;
+		    -webkit-overflow-scrolling: touch;
+		}
+
+		.msg{
+			background: #FFFFFF;
+			height: 20rem;
+			text-align: center;
+			font-size:0.7rem;
+		}
+		.msg img{
+			width:8rem;
+			margin-top: 9rem;
+		}
+		.jiazai {
+			font-size: 0.7rem;
+			background: #FFFFFF;
+			color: #666565;
+			padding-bottom: 0.3rem;
+			text-align: center;
+			padding-top: 0.3rem;
+		}
+
+		.jiazai img {
+			width: 1.5rem;
+		}
+		.content span{
+			text-align: justify;
+		}
+        .slideImages{
+            
+        }
+        .money_delete{
+            position: absolute;
+            left: 0.6rem;
+            letter-spacing: -3px;
+        }
+        .goods_detail_title{
+            font-size:0.8rem;
+            color:#333333;
+            margin-left: 1.05rem;
+            font-weight: 500;
+            padding-bottom: 0.3rem;
+        }
+        .aui-list .aui-list-item{
+            padding-left: 1.05rem;
+            min-height: 2.6rem;
+        }
+        .goods_content{
+            font-size:1.2rem;
+            color:red;
+        }
+        .goods_name{
+            color: #333333;
+            fone-size: 0.7rem;
+            margin-left: 0.75rem;
+            width: 90%;
+        }
+        .goods_jifen{
+            font-size: 1rem;
+            margin-top:0.25rem;
+            display: inline;
+        }
+        .goods_money_icon{
+            font-size: 1rem;
+            margin-top:0.25rem;
+            margin-left: 0.75rem;
+            display: inline;
+        }
+        .goods_price{
+            margin-top:0.1rem;
+            display: inline;
+        }
+        .detail{
+            top:0.5rem;
+            width:auto;
+            background-color:#ffffff;
+            padding:1.2rem;
+            height: auto;
+        }
+        .detail img{
+            width: 100% ! important ;
+            height: auto;
+        }
+        .aui-list:before,.aui-list:after{
+            height: 0;
+        }
+        .goods_num_converted{
+            font-size:0.7rem;
+            color:#9a9a9a;
+            float:right;
+            line-height: 1.8rem;
+            margin-right: 0.75rem;
+        }
+    </style>
+	</head>
+	<body>
+    	<header class="aui-bar aui-bar-nav" id="aui-header1" style="background: #FFFFFF;">
+                <a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+                    <img src="../../icon/common/icon_header_return.png">
+                </a>
+                <div class="aui-title" id="driver_s_title">
+                    商品详情
+                </div>
+                <a class="aui-pull-right aui-btn" tapmode onclick="openShareWindow()">
+    
+                </a>
+            </header>
+		<header class="aui-bar aui-bar-nav none-bottom-style" id="aui-header2" style="background: none;">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+				<img src="../../icon/common/icon_header_return_white.png">
+			</a>
+			<div class="aui-title">
+
+			</div>
+			<a class="aui-pull-right aui-btn" tapmode onclick="openShareWindow()">
+
+			</a>
+		</header>
+		
+			<div class='mian-content'>
+		<div>
+			<!--<img src="../../icon/mine/icon_top_back.png" alt="" class="back_top" onclick="newScroll()" />-->
+		</div>
+
+				<div class="slideImages" id="mainContent">
+					<div class='load_img'>
+						<img src="../../icon/common/icon_load_html.gif" alt="" />
+					</div>
+				</div>
+
+				<div id='content1'>
+				    <!-- <div class="information_content">
+                        <div class="goods_content">
+                             <div class="goods_money_icon">￥</div><div class="goods_price">0.01</div>
+                           <div class="goods_price">+2222222</div><div class="goods_jifen">积分</div>
+                           <div class="" style="font-size:0.7rem;color:#9a9a9a;text-decoration: line-through;display: inline">
+                            <del>111111</del>
+                        </div> 
+                         <div class="goods_num_converted">
+                            已兑30件
+                        </div>   
+                        </div>
+                       
+                        
+                        <div class="aui-ellipsis-1 goods_name">
+                            充电宝
+                        </div>
+                </div>
+                <ul class="aui-list aui-list-in aui-margin-b-10 aui-margin-t-10" >
+                     <li class="aui-list-item aui-list-item-middle">
+                        <div class="aui-list-item-inner aui-list-item-arrow" tapmode onclick="findPassword()">
+                             <span id="specsName">选择规格</span>
+                        </div>
+                    </li>
+                </ul>
+                <div style="font-size:1rem;color:#333333;margin-left: 1.05rem;font-weight: bold;">
+                         商品详情 
+                </div>
+                <div style="top:0.5rem;width:auto;background-color:#ffffff;padding:1.2rem;">
+                                                暂无详情
+                </div>-->
+				</div>
+
+				<div id='load_div'>
+
+				</div>
+
+			</div>
+			<script type="text/template" charset="utf-8" id='slideImages'>
+					<div class="swiper-container">
+						  <div class="swiper-wrapper">
+							{{ for(var i=0;i < it.length;i++){ }}
+						    <div class="swiper-slide"><img src="{{=file_load_url + it[i] }}" alt="" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'"  class="image1"/></div>
+							{{ } }}
+						  </div>
+						<div class="swiper-pagination"></div>
+					</div>
+			</script>
+			<script type="text/template" charset="UTF-8" id="information">
+			     <div class="information_content">
+				        <div class="goods_content">
+				            {{ if(it.integralGoodsRecordById.price != "0" && it.integralGoodsRecordById.integral != "0"){}}
+                           <div class="goods_money_icon">￥</div><div class="goods_price">{{=it.integralGoodsRecordById.price==undefined?0:it.integralGoodsRecordById.price}}</div>
+                           <div class="goods_price">+{{=it.integralGoodsRecordById.integral==undefined?0:it.integralGoodsRecordById.integral}}</div><div class="goods_jifen">积分</div>     
+                        {{ }else if(it.integralGoodsRecordById.price == "0" && it.integralGoodsRecordById.integral != "0"){ }}
+                          <div class="goods_money_icon">{{=it.integralGoodsRecordById.integral==undefined?0:it.integralGoodsRecordById.integral}}</div><div class="goods_jifen">积分</div>
+                        {{ }else if(it.integralGoodsRecordById.price != "0" && it.integralGoodsRecordById.integral == "0"){ }}
+                           <div class="goods_money_icon">{{=it.integralGoodsRecordById.price==undefined?0:it.integralGoodsRecordById.price}}</div>                                     
+                        {{ }else { }}
+                           <div class="goods_money_icon">免费</div>                                         
+                        {{ } }}
+                        <div class="aui-card-list-header" style="font-size:0.7rem;color:#9a9a9a;text-decoration: line-through;display: inline;">   
+                            <del>￥{{=it.integralGoodsRecordById.origalPrice==undefined?0:it.integralGoodsRecordById.origalPrice}}</del>
+                        </div>
+                         <div class="goods_num_converted">
+                                                            已兑{{=it.integralGoodsRecordById.exchangeCount==undefined?0:it.integralGoodsRecordById.exchangeCount}}件
+                        </div>  
+				          	<!--<div style="float:left;margin-top:0.1rem;">{{=it.integralGoodsRecordById.integral==undefined?0:it.integralGoodsRecordById.integral}}</div><div style="float:left;font-size: 1rem;margin-top:0.25rem;">积分</div>-->
+				        </div>
+						
+			        	
+				        <div class="aui-ellipsis-2 goods_name">
+				        	{{=it.integralGoodsRecordById.name}}
+				       
+				        </div>
+			    </div>
+			    <ul class="aui-list aui-list-in aui-margin-b-10 aui-margin-t-10" >
+			         <li class="aui-list-item aui-list-item-middle">
+                        <div class="aui-list-item-inner aui-list-item-arrow" tapmode onclick="select_goods_specs()">
+                             <span id="specsName" >选择规格</span>
+                        </div>
+                    </li>
+			    </ul>
+			    <div class="goods_detail_title">
+                                        商品简介
+                </div>
+			    <div  class="detail">
+			      {{=it.integralGoodsRecordById.detail==undefined?'暂无详情':it.integralGoodsRecordById.detail}}
+			    </div>
+		
+		    </script>
+
+			<footer id="footer">
+				<!-- <div tapmode onclick="exchange()"> -->
+				<!--<div class="b_l_2" tapmode onclick="call()">
+					<img src="../../icon/mine/icon_kefu1.png" alt="" style="width:1.3rem;position:absolute;top:0.60rem;left:0.45rem;" />
+					<div class="kefu">电话咨询</div>
+				</div>-->
+				<div class="unable" tapmode onclick="select_goods_specs()"><span>立即兑换</span></div>
+				<!-- </div> -->
+				<script type="text/template" charset="UTF-8" id="commentCount">
+					{{ if(it != '0'){ }}
+				<div class='opinion-num'>
+					{{=it}}
+				</div>
+			{{ } }}
+			</script>
+
+			</footer>
+
+			<script type="text/template" charset="utf-8" id='msg_src'>
+				<div class="msg">
+				<img src="../../icon/common/empty.png" alt="" /><br>
+				<span>{{=it.msg}}</span>
+			</div>
+			</script>
+			<script type="text/template" charset="utf-8" id='more_src'>
+				<div class="jiazai"><!--上拉加载-->
+					<span>{{=it.msg}}</span>
+				</div>
+			</script>
+			<!--<div style="background-color:#F8F8F8;width:100%;height:5rem;">
+				<div style="color:#9DA5B4;text-align:center;margin-top:1rem;">已经到底啦.</div>
+			</div>-->
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript" src="../../script/swiper/swiper.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var newsId;
+		var flag = "";
+		var integralExist = "";
+		var type; //评论类型
+		var image = "";
+		var refresh = true; //标记是否是刷新操作
+		var systemType
+		var name = "";
+		var msg_src = $('#msg_src').html(); //消息提示src
+		var more_src = $('#more_src').html(); //更多src
+		var headerPos;
+		var threshold; //定义的阈值
+		var touchStyle;
+		//监听页面滑动控制头部menu样式
+		var scrollPos; //监听上下滚动顶部的距离
+		var percent = 0; //白底header的隐藏属性值
+		var hidepercent = 0; //非白底header的隐藏属性值
+		var fs;
+		var goodsDetail;
+		var selectId;
+		var numbers = 1;
+		apiready = function() {
+			api.parseTapmode();
+			cache = api.pageParam;
+			newsId = cache.data.id;
+			integralExist = cache.data.integralExist==undefined?0:cache.data.integralExist;
+			tmp = integralExist;
+			var exp = "undefined";
+	 		if (exp == integralExist){
+				integralExist =0;
+	 		}
+			integral = cache.data.integral;
+			image = cache.data.image;
+			flag = cache.data.flag;
+			name = cache.data.name;
+			init();
+			$api.fixStatusBar($api.byId('aui-header1'));
+			$api.fixStatusBar($api.byId('aui-header2'));
+			fs = api.require('fs');
+			//判断机型  ios / android
+			headerPos = $api.offset($api.byId('aui-header1'));
+			threshold = headerPos.h;
+			systemType = api.systemType;
+			touchStyle = systemType == "ios" ? 'touchmove' : 'scroll';
+			scroll();
+		}
+
+		function scroll() {
+			$(window).on(touchStyle, function(event) {
+				scrollPos = $(window).scrollTop();
+				//安卓做限制滚动
+				if (((scrollPos / threshold).toFixed(2) <= 1) && systemType == 'android') {
+					percent = (scrollPos / threshold).toFixed(2) > 1 ? 1 : (scrollPos / threshold).toFixed(2);
+					$('#aui-header2').css("opacity", percent);
+					hidepercent = (1 - percent) < 0 ? 0 : (1 - percent);
+					$('#aui-header1').css("opacity", hidepercent);
+
+				} else {
+					percent = (scrollPos / threshold).toFixed(2);
+					$('#aui-header2').css("opacity", percent);
+					hidepercent = 1 - percent;
+					$('#aui-header1').css("opacity", hidepercent);
+				}
+			});
+		}
+
+		function init() {
+			if (flag == "news") {
+				//商品详情
+				url = 'api/integral-goods/get-integral-goods-by-id';
+				params = {
+					id: newsId
+				}
+				ajax(url, params)
+			}
+		}
+
+		//跳转至顶部
+		function newScroll() {
+			document.getElementById('mainContent').scrollIntoView({
+				block: "start",
+				behavior: "smooth"
+			});
+		}
+		//请求获取详情
+		function ajax(url, params) {
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('详情：', ret);
+				if (ret) {
+					if (ret.code == 0) {
+					    goodsDetail = ret.integralGoodsRecordById;
+						var information = $('#information').html();
+						var commentCount = $("#commentCount").html();
+						var simgs = ret.integralGoodsRecordById.slideImage.split(',');
+						var slideImages = $('#slideImages').html();
+						$('.slideImages').html(doT.template(slideImages)(simgs));
+						//初始化轮播
+						var mySwiper = new Swiper(".swiper-container", {
+							pagination: '.swiper-pagination',
+							paginationElement: 'li'
+						});
+						if (flag == "news") {
+							$("#content1").append(doT.template(information)(ret));
+						}
+						api.parseTapmode();
+					} else {
+						setMsg('暂无详情');
+						$("#footer").css("display", "none");
+					}
+				} else {
+					setMsg('服务器繁忙,请稍候再试！');
+				}
+			})
+		}
+
+		//设置页面提示信息
+		function setMsg(msg) {
+			if ($('#con').find('.article-title').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+				setTimeout(function() {
+					$("#con").html(doT.template(msg_src)({
+						'msg': msg
+					}));
+				}, 500);
+			} else { //原先已经有数据的情况下
+				// log("2"+msg)
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': msg,
+						'img': ''
+					}));
+				}, 500);
+			}
+		}
+
+		//设置页面加载的画面
+		function setLoad() {
+			if (refresh || $('#newsComment').find('li').length == 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+				$('#load_div').html('');
+			} else {
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': '加载更多中...',
+						'img': '../../icon/common/jiazai.gif'
+					}));
+				}, 500);
+			}
+		}
+
+//		//跳转立即兑换
+//		function openDetail(e) {
+//			params = {
+//				id: e.id,
+//				integral: e.integral,
+//				image: e.image,
+//				name: e.name,
+//				integralExist:e.integralExist
+//			}
+//			//console.log(JSON.stringify(params));
+//			api.openDrawerLayout({
+//		    name: 'shop_order_win',
+//			url: '../mine/shop_order_win.html',
+//		    slidBackEnabled:'true',
+//		    vScrollBarEnabled:'false',
+//	  		hScrollBarEnabled:'false',
+//	  		reload:true,
+//		    pageParam: {
+//		    		data: params
+//		    },
+//		    animation: {
+//		        type: 'push',
+//		        subType:"from_right",
+//				duration:300
+//		    },
+//		    rightPane: {
+//		        name: 'leftPane',
+//		        url: '../mine/store_list_win.html',
+//		        vScrollBarEnabled:false,
+//		        hScrollBarEnabled:false,
+//		        bounces:false,
+//		        pageParam:{
+//		        	data:{
+//			        	action:'store_choose',
+//		        	}
+//		        }
+//		    }
+//		});
+//			
+//		}
+
+		function closeWin() {
+			api.closeWin({});
+		}
+
+		function call() {
+			window.location.href = 'tel://0575-82202000';
+		}
+		
+		//选规格
+		function select_goods_specs(){
+		    if (isauth()) {  
+                var params = {
+                    goodsDetail: goodsDetail,
+                    integralExist: integralExist,
+                    selectId: selectId,
+                    number: numbers
+                }
+    		  api.openFrame({
+                    name : 'select_goods_specs_frm',
+                    url : './select_goods_specs_frm.html',
+                    bgColor: 'rgba(0,0,0,0.3)',
+                     rect: {
+                     x: 0,
+                     y: 0,
+                     w: 'auto',
+                     h: api.winHeight
+                     },
+                     pageParam: {
+                      data: params
+                    },
+                     bounces: false,
+                     softInputBarEnabled:true,
+                     softInputMode:'resize',
+                 });
+    		}else{
+    		  openMessage('提示', '您还未进行实名认证，是否进行实名认证？', '确定', '', 'openAuthentication()', '', null);
+    		}
+		}
+		
+		/**
+     * 去认证
+     */
+    function openAuthentication() {
+        commonOpenWin('mine_account_auth_win', null);
+    }
+    
+    function getSelectSpecifications(id,name,number){
+        console.log(id,name,number)
+        numbers = number;
+        if(id == ""){
+            selectId = "";
+            $("#specsName").html("选择规格");
+        }else{
+            selectId = id;
+            $("#specsName").html("已选：  "+name);
+        }
+        
+    }
+	</script>
+</html>

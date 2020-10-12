@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>通用提示框</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background: transparent;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background: transparent;
+    		display:flex;
+    	}
+    	.attention-div{
+    		margin: auto;
+		    position: absolute;
+		    height: 100%;
+			-webkit-transform: scale(0);
+			transform:scale(0);
+			opacity: 0;
+			width: 100%;
+		    padding: 2rem 1rem 0rem 1rem;
+	        background: #FFF;
+    	}
+    	.shadow{
+    		width:100%;
+    		height:100%;
+    		background:#000;
+    		opacity:0;
+    		position: absolute;
+    	}
+    	.trans {
+            /*transition*/
+            -webkit-transition: 0.3s ease;
+            -moz-transition: 0.3s ease;
+            -ms-transition: 0.3s ease;
+            -o-transition: 0.3s ease;
+            transition: 0.3s ease;
+        }
+        .show{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+        }
+		.sure{
+		    height: 2rem;
+		    line-height: 2rem;
+		    background: #DC251F;
+		    color: #FFF;
+		    border-radius: 0.2rem;
+		}
+		.message-txt{
+		    width: 80%;
+		    margin: auto;
+		    text-align: center;
+		    font-size: 0.7rem;
+		    -webkit-transform: scale(0);
+			transform:scale(0);
+			opacity: 0;
+			background: #FFF;
+			border-radius: 0.5rem;
+		}
+		.message-txt-title{
+			width: 100%;
+		    height: 2.5rem;
+		    line-height: 2.5rem;
+		    border-radius: 0.5rem 0.5rem 0rem 0rem;
+    		border-bottom: none;
+    		color:#4D4D4D;
+    		font-size:0.9rem;
+		}
+		.message-txt-content{
+	        width: 100%;
+		    text-align: left;
+		    line-height: 1.3rem;
+		    color: #7D7D7D;
+		    font-size: 0.65rem;
+		    padding: 2rem 0.7rem;
+		}
+		.message-txt-content span{
+			margin:auto;
+			padding: 0 0.3rem;
+		    font-size: 0.8rem;
+		}
+		.message-txt-button{
+	        width: 100%;
+		    height: 2.5rem;
+		    line-height: 2.5rem;
+		    color: #75A4E9;
+	        font-size: 0.8rem;
+	        border-radius:0rem 0rem 0.5rem 0.5rem;
+		}
+		.message-txt-button:active{
+			background:#F0F0F0;
+		}
+		.in{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+		}
+		.bottom-slide-red {
+		    position: relative;
+		}
+		.bottom-slide-red:after {
+		    content: '';
+		    height: 1px;
+		    background: #DDDDDD;
+		    width: 100%;
+		    display: block;
+		    -webkit-transform: scaleY(0.3);
+		    transform: scaleY(0.3);
+		    -webkit-transform-origin: 30% 100%;
+		    transform-origin: 30% 100%;
+		    bottom: 0;
+		    left: 0;
+		    position: absolute;
+		}
+		.small{
+		    width: 50%;
+		    float: left;
+		}
+		.left{
+			border-radius:0rem 0rem 0rem 0.5rem;
+		}
+		.right{
+			border-radius:0rem 0rem 0.5rem 0rem;
+		}
+    </style>
+</head>
+<body>
+	<!-- 提示说明 -->
+	<div class='message-txt trans' id="messageTxt">
+		<div class='message-txt-title'>标题</div>
+		<div class='message-txt-content bottom-slide-red'><span>-内容-</span></div>
+		<div class='message-txt-button' id='sureButton'>确定</div>
+		<div class='message-txt-button small right aui-hide' id='cancelButton'>取消</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		$('.message-txt-title').html(cache.title);
+		$('.message-txt-content').find('span').html(cache.content);
+		$('#sureButton').html(cache.sureButton);
+		if(cache.cancelButton != ''){
+			$('#sureButton').addClass('small');
+			$('#sureButton').addClass('left');
+			$('#cancelButton').removeClass('aui-hide');
+			$('#cancelButton').html(cache.cancelButton);
+			setTimeout(function(){
+				document.getElementById('cancelButton').onclick = function(){
+					cancel();
+				}
+			},300);
+		}
+		$('#messageTxt').addClass('in');
+		setTimeout(function(){
+			document.getElementById('sureButton').onclick = function(){
+				sure();
+			}
+			api.parseTapmode();
+		},300);
+	}
+	
+	//点击执行按钮
+	function sure(){
+		if(cache.params == null||cache.params.isAllowClose){
+			$('#messageTxt').removeClass('in');
+		}
+        setTimeout(function(){
+        	//如果有事件，优先回调事件
+        	if(cache.params != null
+        		&&cache.params != undefined
+        		&&cache.params.send_event_name!= null
+        		&&cache.params.send_event_name != undefined){
+        		sendEvent(cache.params.send_event_name,cache.params.data);
+        	}else{
+	        	if(cache.sureFunc != ''&&cache.sureFunc != undefined){
+		        	esc_function(cache.winName,cache.frameName,cache.sureFunc);
+	        	}
+        	}
+        	log('参数',cache);
+        	if(cache.params == null||cache.params.isAllowClose){
+				close_alert();
+        	}
+        },300);
+	}
+	
+	//点击取消按钮
+	function cancel(){
+		$('#messageTxt').removeClass('in');
+		setTimeout(function(){
+			if(cache.cancelFunc != ''&&cache.cancelFunc != undefined){
+	        	esc_function(cache.winName,cache.frameName,cache.cancelFunc);
+			}
+			close_alert();
+        },300);
+	}
+	
+	//关闭弹窗
+	function close_alert(){
+		api.closeFrame({
+			name:'common_message'
+        });
+	}
+</script>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>评论回复列表win</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common/comment.css"/>
+    <style>
+        html, body {
+            background: #fff;
+            width: 100%;
+            height: 100%;
+        }
+
+        #aui-header {
+            color: #fff;
+            background: rgba(0, 0, 0, 0);
+        }
+
+        #aui-header:after {
+            /*height: 0;*/
+        }
+
+        #aui-header img {
+            width: 1rem;
+        }
+
+    </style>
+</head>
+<body>
+<!-- 头部 -->
+<header class="aui-bar aui-bar-nav aui-border-b" id="aui-header">
+
+    <a class="aui-pull-left aui-btn" tapmode onclick="closeWin()">
+        <img src="../../icon/common/icon_header_return.png" alt="">
+    </a>
+    <div class="aui-title" style="color: #000;">
+    </div>
+
+</header>
+
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+    var cache;
+    apiready = function () {
+        api.parseTapmode();
+        var header = $api.byId('aui-header');
+        $api.fixStatusBar(header);
+        cache = api.pageParam.data;
+        log('cache', cache);
+        var h = header.offsetHeight;
+        var fatherName = cache.fatherName;
+        $(".aui-title").html('对' + (fatherName ? fatherName : '匿名用户') + '评论的回复');
+        openFrameCommon('common_comment_reply_frm', cache, h, api.winHeight - h, true);
+    };
+
+    function closeWin() {
+        api.closeWin({});
+    }
+</script>
+</html>

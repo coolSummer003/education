@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>接口校验</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../css/common/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../css/mobiscroll/normalize3_0_2_min.css" />
+	<link rel="stylesheet" type="text/css" href="../../../../css/mobiscroll/mobiscroll.css" />
+	<link rel="stylesheet" type="text/css" href="../../../../css/mobiscroll/mobiscroll_date.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+		#driver_s_title{
+		    font-weight: normal;
+		}
+		#code{
+			width:70%;
+		}
+		.sendCode{
+	        width: 50%;
+		    height: 1.8rem;
+		    text-align: center;
+		    line-height: 1.8rem;
+		    border: solid 1px #F1F1F1;
+		    border-radius: 1rem;
+		}
+		.block-bottom-style:after{
+			width: 74%;
+		    height: 1px;
+		    background-color: #dddddd;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    top: auto;
+		    right: 0;
+		    bottom: 0;
+		    z-index: 2;
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		    pointer-events: none;
+		}
+		.aui-list .aui-list-item-label, .aui-list .aui-list-item-label-icon {
+		    color: #212121;
+		    width: 35%;
+		    min-width: 1.5rem;
+		    margin: 0;
+		    padding: 0;
+		    padding-right: 0.25rem;
+		    line-height: 2.2rem;
+		    position: relative;
+		    overflow: hidden;
+		    white-space: nowrap;
+		    max-width: 100%;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: inline;
+		    -webkit-align-items: center;
+		    align-items: center;
+		    text-align: right;
+		}
+		.uploadPic{
+		    height: 8rem;
+		    width: 5rem;
+		    position: relative;
+		}
+		.uploadPic img{
+			height: 5rem;
+    		margin: 0 auto;
+    		margin-top: 1.5rem;
+    		width: 5rem;
+    		object-fit: cover;
+		}
+		.msg{
+			font-size:0.7rem;
+		}
+		.delete{
+		    width: 1.2rem !important;
+		    height: 1.2rem !important;
+		    position: absolute;
+            right: -0.6rem;
+    		top: -0.6rem;
+		    z-index:10;
+		}
+		.check-style{
+		    font-size: 0.7rem;
+		    color: #03B4F7;
+		    text-align: right;
+		    position: absolute;
+		    top: 3.2rem;
+		    right: -5rem;
+		}
+		#other_area{
+			color:#03B4F7;
+		}
+		.arrow_blue:before{
+			border: 1px solid #03B4F7;
+			border-top: none;
+    		border-right: none;
+		}
+		#entryFee{
+			color:#FB6500;
+		}
+		#look-pic{
+			color:#03B4F7;
+		}
+		.icon_img{
+			width:1rem;
+		    margin-bottom: -0.2rem;
+		}
+		.aui-label-info {
+		    color: #ffffff;
+		    background-color: #FFB476;
+		    margin-right: 0.5rem;
+		}
+		.aui-radio, .aui-checkbox {
+		    width: 1rem;
+		    height: 1rem;
+		    background-color: #ffffff;
+		    border: solid 1px #dddddd;
+		    -webkit-border-radius: 0.6rem;
+		    border-radius: 0.6rem;
+		    font-size: 0.8rem;
+		    margin: 0;
+		    padding: 0;
+		    position: relative;
+		    display: inline-block;
+		    vertical-align: top;
+		    cursor: default;
+		    -webkit-appearance: none;
+		    -webkit-user-select: none;
+		    user-select: none;
+		    -webkit-transition: background-color ease 0.1s;
+		    transition: background-color ease 0.1s;
+		}
+		#learnPlan{
+			padding:0.5rem 0rem;
+			background:#FAFAFA;
+		}
+		.plan-empty{
+		    padding: 0.5rem 0rem;
+    		background: #FAFAFA;
+    		color: #989898;
+		    text-align: center;
+    		font-size: 0.6rem;
+		}
+		.plan-empty img{
+			width:1rem;
+		}
+		.attention{
+		    font-size: 0.7rem;
+		    min-height:1rem !important;
+		    height: 1rem !important;
+		    display: inline !important;
+		}
+		.attention img{
+			width:0.7rem;
+			margin-bottom: -0.1rem;
+		}
+    </style>
+</head>
+<body>
+	<div class="aui-content aui-margin-b-15">
+	    <ul class="aui-list aui-form-list none-top-style">
+	       
+	        <li class="aui-list-item">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		姓&emsp;&emsp;名：
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <input type="text" placeholder="请输入姓名" value="" id="name" readonly>
+	                </div>
+	            </div>
+	        </li>
+	        <li class="aui-list-item">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		身&ensp;份&ensp;证：
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <input type="text" placeholder="请输入身份证号码" value="" id="idCardNo" readonly> 
+	                </div>
+	            </div>
+	        </li>
+	        
+	        
+	        <li class="aui-list-item">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		手机号码：
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <input type="phone" maxlength="11" placeholder="请输入手机号码" id="account" readonly>
+	                </div>
+	            </div>
+	        </li>
+	        <ul>
+	         <ul class="aui-list aui-form-list none-top-style" style="margin-top:0.3rem;">
+	        <li class="aui-list-item none-bottom-style">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		联系地址：
+	                </div>
+	                <div class="aui-list-item-input bottom-slide aui-list-item-arrow" id="addressViews" tapmode onclick='select_address()'>
+	                    <input type="text" placeholder="请选择联系地址" id="addressView" readonly>
+	                </div>
+	                <div class="aui-list-item-input aui-hide" id="addressSecond">
+	                    <input type="text" placeholder="详细地址" id="addressThird" readonly>
+	                </div>
+	            </div>
+	        </li>
+	        <li class="aui-list-item" id="addressDetails">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                       	
+                    </div>
+                    <div class="aui-list-item-input">
+	                    <input type="text" placeholder="详细地址" id="addressDetail">
+	                </div>
+                </div>
+            </li>
+            </ul>
+            <!-- <li class="aui-list-item">
+            	            <div class="aui-list-item-inner">
+            	                <div class="aui-list-item-label">
+                		报名费用：
+            	                </div>
+            	                <div class="aui-list-item-input">
+            	                	<span id="entryFee"></span>
+            	                </div>
+            	            </div>
+            	        </li> -->
+            <ul class="aui-list aui-form-list none-top-style " style="margin-top:0.3rem;">
+            	<li class="aui-list-item" tapmode onclick="openSelTcmSchool()">
+					<div class="aui-list-item-inner aui-list-item-arrow" >
+						<div class="aui-list-item-label">
+							所属驾校：
+						</div>
+						<div class="aui-list-item-input">
+							<span id="schoolName" >请选择驾校</span>
+						</div>
+					</div>
+				</li>
+	        <li class="aui-list-item aui-list-item-arrow" id="license_types">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		报考车型：
+	                </div>
+	                <div class="aui-list-item-input" id="license_type">
+	                </div>
+	            </div>
+	        </li>
+	      	
+	        <li class="aui-list-item aui-list-item-arrow" id="business_level1_cds">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		申请业务：
+	                </div>
+	                <div class="aui-list-item-input" id="business_level1_cd">
+	                </div>
+	            </div>
+	        </li>
+	        <li class="aui-list-item aui-list-item-arrow arrow_blue aui-hide" id="proveDriver">
+	            <div class="aui-list-item-inner">
+	            	<div class="aui-list-item-label" style="text-align:left;">
+                		<span id='look-pic'></span>
+	                </div>
+	                <div class="aui-list-item-input" id="other_area" tapmode onclick="uploadDriveImg()">
+	                	上传驾驶证正副证
+	                </div>
+	            </div>
+	        </li>
+	        <li class="aui-list-item">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label"style="width:40%">
+                		驾校报名日期：
+	                </div>
+	                <div class="aui-list-item-input" id="appointment-dates-second">
+							<input type="text" id="appointment-date" onchange="selectDate()" style='margin-left: 4%;'>
+					 </div>
+					 <div class="aui-list-item-input aui-hide" id="appointment-dates-third">
+							<input type="text" id="appointment-dates"  style='margin-left: 4%;' readonly>
+					 </div>
+	            </div>
+	        </li>
+	        <li class="aui-list-item none-bottom-style" style="line-height:2.2rem;">
+	            <div class="aui-list-item-inner attention ">
+	            	<img src="../../../../icon/payfor/icon_tan.png" alt="" class="icon" />
+	               	<span>吊销驾照重新考驾照请选择初次申领。</span>
+	            </div>
+	        </li>
+	        <li class="aui-list-item none-bottom-style" style="padding-bottom:9rem;">
+	         
+	         <div class="aui-btn aui-btn-info aui-btn-block" id="submitInformation" tapmode onclick="sign_up()">提交</div>
+	       </li>
+	    </ul>
+	 </div>
+	 
+	 <!-- 准驾类型src -->
+	 <script type="text/template" charset="utf-8" id='license_type_src'>
+	 	<select type="select" id="licenseType" onchange="checkStandard()">
+	 		{{ for(var i=0;i<it.licenseTypeList.length;i++){ }}
+	 			{{ if(it.licenseTypeList[i].code == it.plan_info.licenseType){ }}
+		        	<option value="{{=it.licenseTypeList[i].code}}" selected="">{{=it.licenseTypeList[i].name}}</option>
+	 			{{ }else{ }}
+		        	<option value="{{=it.licenseTypeList[i].code}}">{{=it.licenseTypeList[i].name}}</option>
+	 			{{ } }}
+	 		{{ } }}
+        </select>
+	 </script>
+	 
+	 <!-- 申请业务src -->
+	 <script type="text/template" charset="utf-8" id='business_level1_cd_src'>
+	 	<select type="select" id="businessLevel1Cd" onchange="checkStandard()">
+	 		{{ for(var i=0;i<it.length;i++){ }}
+	 			{{ if(it[i].code == '028001'){ }}
+		        	<option value="{{=it[i].code}}" selected>{{=it[i].name}}</option>
+	 			{{ }else{ }}
+		        	<option value="{{=it[i].code}}">{{=it[i].name}}</option>
+	 			{{ } }}
+	 		{{ } }}
+        </select>
+	 </script>
+	 
+	
+</body>
+<script type="text/javascript" src="../../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../../script/common/common.js"></script>
+<script type="text/javascript" src="../../../../script/mobiscroll/mobile_select.js"></script>
+<script type="text/javascript" src="../../../../script/mobiscroll/mobiscroll_date.js"></script>
+<script type="text/javascript" src="../../../../script/mobiscroll/mobiscroll.js"></script>
+<script type="text/javascript">
+	var cache;
+	var isload = false;//是否已经加载成功的标识
+	var addressViewCode = '';
+	var imageFilter;
+	var licenseTypeMap;
+	var postalCode;//邮编
+	var selected_address_id,code;//选中地址的id
+	var caches = {};
+	var bMap;
+	var licenseTypeMap;
+	var code;//车型
+	var business_code;//申请业务
+	var schoolId;
+	var mode;//0：维尔；1:一诺
+	var commonSchoolId;//培训机构 编号
+	var appointDate;
+	var historicalModels=true;
+	var type;
+	var cache_dictionary;
+	var flag;
+	apiready = function(){
+		imageFilter = api.require('imageFilter');//图片压缩
+		cache = api.pageParam;
+		log('cache====',cache);
+		type = cache.data.type;
+		flag = cache.data.flag;
+		//字典表缓存
+		 cache_dictionary = $api.getStorage('cache_by_app').cache_dictionary;
+		
+		//监听所属驾校选择事件
+			toEventListener('sel_tcm_school_action',function(ret,err){
+				
+			if(ret.value.id=='107'){
+				alert_msg('所属驾校不能选择一证通考，请重新选择驾校');
+			}else{
+				$('#schoolName').text(ret.value.name);
+				schoolId = ret.value.id;
+				mode=ret.value.mode;
+				commonSchoolId=ret.value.commonSchoolId;
+				log('schoolId',schoolId);
+				log('mode',mode);
+			}
+				
+			});
+		//监听地址选择
+		toEventListener('driver_pre_sign_up',function(ret){
+			//log('地址',ret.value);
+			var address_info = ret.value;
+			$('#addressView').val(address_info.district.provinceName + address_info.district.cityName + address_info.district.districtName);
+			$('#addressDetail').val(address_info.addressDetail);
+			addressViewCode = address_info.districtCd;
+			postalCode = address_info.postalCode;
+			selected_address_id = address_info.id;
+		});
+		var startDate =(new Date(new Date().getTime()- 3650 * 24 * 60 * 60 * 1000)).Format('yyyy-MM-dd'); //十年前
+		var endDate =(new Date(new Date().getTime())).Format('yyyy-MM-dd'); //今天
+		$('#appointment-date').val(endDate);
+		appointDate = endDate;
+
+		mobiscrollDate(startDate,endDate, $('#appointment-date'), '最近'); //初始化日期组件
+		api.parseTapmode();
+		 initHuanCun();
+		 //修改驾校时更改列表样式，为了不允许输入
+		if(flag == 'changeExamination' || flag == 'changeSimulator'){
+			$('#addressViews').addClass('aui-hide');
+			$('#addressDetails').addClass('aui-hide');
+			$('#addressSecond').removeClass('aui-hide');
+			$('#license_types').removeClass('aui-list-item-arrow');
+			$('#business_level1_cds').removeClass('aui-list-item-arrow');	
+			$('#appointment-dates-third').removeClass('aui-hide');
+			$('#appointment-dates-second').addClass('aui-hide');
+			$('#submitInformation').text('修改');		
+			getInformation();
+		}
+		openMessage_countdown('重要提示','&emsp;请正确选择报名驾校！','countdown','确定','',function(){
+			},'',null);
+	}
+	/**
+	 * 选择日期 
+	 */
+	function selectDate() {
+		appointDate = $('#appointment-date').val();
+		
+	}
+	function initHuanCun(){
+		code='002006'; 
+	    business_code='028001'; 
+		//車型
+		caches.licenseTypeList=cache_dictionary['002000'].dictionaryList,
+		log('002000',cache_dictionary['002000']);
+	    //如果没有先选择驾考类型，那么就默认C1  
+	    		
+		caches.plan_info = {
+			licenseType:'002006'
+		};
+		var license_type_src = $('#license_type_src').html();
+		$('#license_type').html(doT.template(license_type_src)(caches));
+		//申请业务
+		var business_level1_cd_src = $('#business_level1_cd_src').html();
+		$('#business_level1_cd').html(doT.template(business_level1_cd_src)(cache_dictionary['028000'].dictionaryList));
+		
+		//$('#other_area').html('户口不在' + cache.district.cityName + cache.district.districtName + '请点击');
+		//加载用户信息
+		load_user_info();
+		}
+	/**
+	 * 打开驾校列表
+	 */
+	function openSelTcmSchool(){
+		api.openWin({
+	       name: 'common_select_under_school_win',
+	       url: '../../../common/common_select_under_school_win.html',
+	       slidBackEnabled:'false',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       useWKWebView:false,
+	       pageParam: {
+	           data:null
+	       }
+	    });
+	}
+	
+	
+	/**
+	 * 选择省市区 
+	 */
+	function select_address(){
+		params = {
+			selected_address_id:selected_address_id,//选中的地址id，可能为空，用来标记
+			isSelect:true, //是否是选择
+			action:'driver_pre_sign_up' //动作监听name
+		}
+		api.openWin({
+	       name: 'common_address_list_win',
+	       url: '../../../common/learner_address/common_address_list_win.html',
+	       slidBackEnabled:'false',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       useWKWebView:false,
+	       pageParam: params
+	   });
+	}
+	
+	//加载数据到驾校报名
+	function load_user_info(){
+		licenseTypeMap = $api.getStorage('cache_by_app').licenseTypeMap;
+		updateLearnerInfo(function(ret,err){
+			if(ret&&ret.code == 0){
+				console.log('学员信息:'+JSON.stringify(ret));
+				
+				$('#name').val(ret.learner.name);//真实姓名
+				$('#idCardNo').val(ret.learner.idcardNo);//身份证
+				$('#account').val(ret.learner.account);//手机号码，也是账户名
+				//取消默认报名照片为手持身份照
+				/*if(ret.learner.img3 != null&&ret.learner.img3 != ''){
+					var imgPath = file_load_url + ret.learner.img3;
+					$('#photo').attr('src',imgPath);//正面自拍照物理地址
+					$('#picture').val(ret.learner.img3);//正面自拍照网络地址
+					$('.delete').removeClass('aui-hide');
+					document.getElementById('photo').onclick = function(){
+						openPic(imgPath);
+					};
+				}*/
+				//检验标准
+				checkStandard();
+				//获取对应报考车型所需要的报名费
+				//getEntryFeeByLincense();
+			}else{
+				alert_msg('获取学员信息失败');
+			}
+		});
+	}
+
+	//检验标准
+//	var min_age = 0;
+//	var max_age = 100;
+	function checkStandard(){
+		code = $('#licenseType').val();
+		log('取得的数据',code);
+//		if(code != ''){
+//			min_age = licenseTypeMap[code].min_age;
+//			max_age = licenseTypeMap[code].max_age;
+//			//获取驾考类型的对应套餐
+//			getEntryFeeByLincense();
+//		}else{
+//			$('#entryFee').html('未选择报考车型');
+//		}
+		
+		var cache_account = $api.getStorage('cache_by_account').cache_account;
+		
+		var businessLevel1Cd = $('#businessLevel1Cd').val();//申请业务种类
+		business_code=businessLevel1Cd;
+		if((code == '002001'
+			||code == '002002'
+			||code == '002004')
+			||(businessLevel1Cd == '028002')){
+			//A1,A2,B1一定有驾驶证，所以肯定得上传驾驶证正反面
+			//其余车型如果是汽车并且是增驾，那么也需要上传驾驶证正反面
+			$('#proveDriver').removeClass('aui-hide');
+			$('#businessLevel1Cd').val('028002');
+		}else{
+			$('#proveDriver').addClass('aui-hide');
+		}
+	}
+	
+	//点击报名
+	function sign_up(){
+		//修改驾校的时候点的提交
+		if(flag == 'changeExamination' || flag == 'changeSimulator'){
+			url = 'api/courseReservation/update/registerInfo';
+			params = {
+				learnerId: getUserId(),
+				commonSchoolId:commonSchoolId,
+				mode:mode,
+			}
+			log('params+++',params);
+			ajax_Request(url, 'post', 'json', params, function(ret,err){
+				log('更新驾校',ret);
+				if(ret){
+					if(ret.code == 0){
+						openNewWin(flag);
+	        			setTimeout(function(){
+						   	closeWin();
+						},1000);
+					}else{
+						alert_msg(ret.msg);
+					}
+					if(ret.code == 200003){
+						alert_msg('请选择您要修改的驾校');
+					}
+				}else{
+					alert_msg('服务器繁忙，请稍后再试~');
+				}
+			});			
+		}else{//初始填信息时点的提交
+			var code = $('#licenseType').val();
+			var addressView = $('#addressView').val();//省市区
+			if(addressView == null||addressView == ''){
+				alert_msg('请选择联系地址');
+				return;
+			}
+			var addressDetail = $('#addressDetail').val();//详细地址
+			if(addressDetail == null||addressDetail == ''){
+				alert_msg('请填写详细地址');
+				return;
+			}
+			var licenseType = $('#licenseType').val();//详细地址
+			if(licenseType == null||licenseType == ''){
+				alert_msg('请选择报考车型');
+				return;
+			}
+			
+			var cache_account = $api.getStorage('cache_by_account').cache_account;
+			var idCardNo = $('#idCardNo').val();
+			var businessLevel1Cd = $('#businessLevel1Cd').val();
+			if(schoolId == null||schoolId == ''){
+				alert_msg('请选择驾校名称');
+				return;
+			}
+			if(businessLevel1Cd == null||businessLevel1Cd == ''){
+				alert_msg('请选择申请业务种类');
+				return;
+			}
+			if(appointDate == null||appointDate == ''){
+				alert_msg('请选择驾校报名日期');
+				return;
+			}
+			
+			
+			if((licenseType == '002001'
+				||licenseType == '002002'
+				||licenseType == '002004')
+				||(businessLevel1Cd == '028002')){
+				//A1,A2,B1一定有驾驶证，所以肯定得上传驾驶证正反面
+				//其余车型如果是汽车并且是增驾，那么也需要上传驾驶证正反面
+				if(cache_account.driverLicenseFont == undefined||cache_account.driverLicenseFont == undefined){
+					alert_msg('请上传驾驶证正反面');
+					return;
+				}
+				else if(cache_account.perdritype == undefined||cache_account.perdritype == ''){
+					alert_msg('驾驶证编号为空');
+					return;
+				}
+				else if(cache_account.fstdrilicdate == undefined||cache_account.fstdrilicdate == ''){
+					alert_msg('驾驶证初领日期为空');
+					return;
+				}
+				else if(cache_account.driverLincenseNum == undefined||cache_account.driverLincenseNum == ''){
+					alert_msg('驾驶证准驾车型为空');
+					return;
+				}
+				
+			}
+			
+			
+			$('input').blur();//使input框失去焦点
+			params = {
+				historicalModels:historicalModels,
+				learnerId:getUserId(),//用户id
+//				schoolId:schoolId,//驾校id
+//				schoolName:$('#schoolName').text(),//驾校名称
+//				name:$('#name').val(),//name
+//				idCardNo:$('#idCardNo').val(),//身份证id
+//				account:$('#account').val(),//账号
+				address:addressView+addressDetail,//地址
+				districtCd:addressViewCode,//省市区code
+				commonSchoolId:commonSchoolId,//培训机构编号
+				applydate:appointDate,
+				mode:mode,//0：维尔；1:一诺
+//				postalCode:postalCode,//邮政编号
+				traintype:licenseType,//报考车型code
+//				traintype:$('#licenseType').find('option:selected').text(),//报考车型name,
+				busitype:businessLevel1Cd,//申请业务种类code
+//				businessLevel1Name:$('#businessLevel1Cd').find('option:selected').text(),//申请业务种类name
+//				applyWay:'029001',//申请方式，暂定默认是本人申请
+			}
+			defaultload('上传信息中...');
+			log('params',params)
+			url = 'api/third/check-weier-historical-models';
+			  ajax_Request(url, 'post', 'json', params, function(ret,err){
+			  closedefaultload();
+	        	log('ret',ret);
+	        
+		        	if(ret){
+		        		console.log('列表数据：'+JSON.stringify(ret));
+		        		if(ret.code == 0){
+		        			openClassWin(type);
+		        			setTimeout(function(){
+							   	closeWin();
+							},1000);
+			        		}else if(ret.code == 400227){
+		        			openMessage('提示',ret.msg,'确认','取消','setHistoricalModels()','',null);
+		        		}else{
+		        			alert_msg(ret.msg);
+		        		}
+		        	}else{
+		        		alert_msg('服务器繁忙，请稍后重试');
+		        	}
+	        	});
+	     }
+	}
+	
+	function openNewWin(flag){
+		if(flag == 'changeSimulator'){
+			api.openWin({
+	            name: 'select_driver_school_simulator_list_win',
+	            url: '../../subjectTwo/select_driver_school_simulator_list_win.html',
+	            slidBackEnabled:'true',
+	            vScrollBarEnabled:'false',
+	            hScrollBarEnabled:'false',
+	            reload:true,
+	            pageParam: null,
+	        });
+		}else{
+			api.openWin({
+		       name: 'examination_course_reservation',
+		       url: './examination_course_reservation.html',
+		       slidBackEnabled:'false',
+		       vScrollBarEnabled:'false',
+		       hScrollBarEnabled:'false',
+		       reload:true,
+		       useWKWebView:false,
+		       pageParam: {}
+			});	
+		}
+	}
+	
+	
+	function openClassWin(type){
+		if(type == 'simulator'){
+			api.openWin({
+	            name: 'select_driver_school_simulator_list_win',
+	            url: '../../subjectTwo/select_driver_school_simulator_list_win.html',
+	            slidBackEnabled:'true',
+	            vScrollBarEnabled:'false',
+	            hScrollBarEnabled:'false',
+	            reload:true,
+	            pageParam: null,
+	        });
+		}else{
+			// api.openWin({
+		 //       name: 'examination_course_reservation',
+		 //       url: './examination_course_reservation.html',
+		 //       slidBackEnabled:'false',
+		 //       vScrollBarEnabled:'false',
+		 //       hScrollBarEnabled:'false',
+		 //       reload:true,
+		 //       useWKWebView:false,
+		 //       pageParam: {}
+			// });	
+			api.openWin({
+				name: 'student_continue_education_win',
+				url: '../../../home/student_continue_education/student_continue_education_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: {
+					
+				}
+			})
+		}
+	}
+	function setHistoricalModels(){
+		historicalModels=false;
+		sign_up();
+		
+	}
+	function closeWin(){
+		
+		api.closeWin({
+			name:'examination_course_interface_check_win'
+        });
+	}
+	
+	function openMessage(title,content,sureButton,cancelButton,sureFunc,cancelFunc,params){
+			api.openFrame({
+		        name: 'common_alert',
+		        url: '../../../common/common_alert.html',
+		        bgColor: 'rgba(0,0,0,0.4)',
+		        rect: {
+		            x: 0,
+		            y: 0,
+		            w: 'auto',
+		            h: api.winHeight
+		        },
+		        bounces: false,
+		        pageParam:{
+		        	title:title,
+		        	content:content,
+		        	sureButton:sureButton,
+		        	sureFunc:sureFunc,
+		        	cancelButton:cancelButton,
+		        	cancelFunc:cancelFunc,
+		        	winName:api.winName,
+		        	frameName:api.frameName,
+		        	params:params
+		        },
+		        softInputBarEnabled:true,
+		        softInputMode:'resize'
+		    });
+		}
+	/**
+	 * 上传驾驶证正反面
+	 */
+	function uploadDriveImg(){
+		api.openWin({
+	       name: 'common_drive_upload_win',
+	       url: '../../../common/common_drive_upload_win.html',
+	       slidBackEnabled:'false',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       useWKWebView:false,
+	       pageParam: null
+	   });
+	}
+	
+	function getInformation(){
+		url = 'api/courseReservation/get/registerInfo';
+		params = {
+			learnerId: getUserId()
+		}
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			log('获取之前数据',ret);
+			if(ret){
+				if(ret.code == 0){
+					document.getElementById("addressThird").value=ret.registerInfoList[0].address;//联系地址
+					$('#schoolName').text(ret.registerInfoList[0].tcmDrivingSchool.name);//所属驾校
+					$('#license_type').text(ret.registerInfoList[0].traintype);//报考驾校
+					if(ret.registerInfoList[0].busitype == '0'){
+						ret.registerInfoList[0].busitype = '初次申领';
+					}else{
+						ret.registerInfoList[0].busitype = '增加准驾车型';
+					}
+					$('#business_level1_cd').text(ret.registerInfoList[0].busitype);//申报业务
+					document.getElementById("appointment-dates").value=ret.registerInfoList[0].schoolApplyDate;//申报业务
+				}else{
+					alert_msg('获取信息失败');
+				}
+			}else{
+				alert_msg('服务器繁忙，请稍后再试~');
+			}
+		});
+	}
+	
+	//倒计时通用弹出框
+	function openMessage_countdown(title,content,type,sureButton,cancelButton,sureFunc,cancelFunc,params){
+		api.openFrame({
+	        name: 'common_alert_countdown',
+	        url: '../../../common/common_alert_countdown.html',
+	        bgColor: 'rgba(0,0,0,0.4)',
+	        rect: {
+	            x: 0,
+	            y: 0,
+	            w: 'auto',
+	            h: api.winHeight
+	        },
+	        bounces: false,
+	        pageParam:{
+	        	title:title,
+	        	content:content,
+	        	type:type,
+	        	sureButton:sureButton,
+	        	sureFunc:sureFunc,
+	        	cancelButton:cancelButton,
+	        	cancelFunc:cancelFunc,
+	        	winName:api.winName,
+	        	frameName:api.frameName,
+	        	second:params
+	        },
+	        softInputBarEnabled:true,
+	        softInputMode:'resize'
+	    });
+	}
+</script>
+</html>

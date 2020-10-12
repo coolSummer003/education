@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>疫情员工登记</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html,body{
+    		background: #2A67F8;
+    	}
+    	header img {
+		    width: 20px;
+		}
+		#menu{
+			font-size:0.8rem;
+		}
+		#menuPackage{
+			position: relative;
+			background: linear-gradient(to left, #03B4F7 , #90DBF7) !important;
+		}
+		.select{
+	    	height: 2.5rem;
+		    line-height: 2.5rem;
+		    /* text-align: right; */
+		    position: relative;
+		    background: linear-gradient(to left, #03B4F7 , #90DBF7);
+	    }
+	    .select_kuang{
+	    	width: 3rem;
+		    position: absolute;
+		    right: 0.5rem;
+		    text-align: right;
+		    font-size: 0.8rem;
+	    }
+	    .active{
+	    	color: #FF9138;
+    		/* border-bottom: solid 2px; */
+	    }
+	    .order li{
+            float: left;
+		    font-size: 0.7rem;
+		    margin-left: 2.2rem;
+	    }
+	    .order{
+		    height: 2rem;
+		    line-height: 2rem;
+		    position: relative;
+	        background: #FFFFFF;
+		}
+	    .order img{
+		    width: 0.4rem;
+   			margin-bottom: 1px;
+   			-webkit-transition: 0.3s ease;
+		}
+		.screen{
+		    float: right !important;
+   			margin-right: 0.8rem;
+		}
+		.screen img{
+			width: 0.8rem;
+    		margin-bottom: -0.05rem;
+		}
+		.fenge{
+			margin-left: 0rem !important;
+		    width: 23%;
+		    text-align: center;
+		}
+		.grad{
+    		background: linear-gradient(to left, #03B4F7 , #90DBF7) !important;
+    	}
+    	.aui-searchbar-cancel img{
+    		width:1.1rem;
+    		margin-top: 0.25rem;
+    	}
+    	.messageNum{
+		    width: 0.9rem;
+		    height: 0.9rem;
+		    background: #FF9138;
+		    border-radius: 100%;
+		    color: #FFF;
+		    position: absolute;
+		    right: 0.2rem;
+		    top: 0.3rem;
+		    line-height: 0.9rem;
+		    font-size: 0.6rem;
+    	}
+    	.location{
+		    width: 5rem !important;
+   			margin-right: 0rem !important;
+		}
+		.location-img{
+		    width: 0.8rem !important;
+	        margin-bottom: -0.15rem;
+	        margin-right: 0.2rem;
+		}
+		.location span{
+			color:#5F676B;
+			font-size:0.8rem;
+		}
+		.location-arrow{
+			width: 0.5rem !important;
+		    margin-bottom: -0.2rem !important;
+    		margin-left: 0.2rem !important;
+		}
+		.blue-b{
+			background: linear-gradient(to left, #2A67F8 , #2A67F8) !important;
+			color:#FFFFFF;
+		}
+    	
+    </style>
+</head>
+<body>
+	<div id="menuPackage">
+		<header class="aui-bar aui-bar-nav aui-border-b tab1 blue-b none-bottom-style" id="aui-header">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+		        <img src="../../../icon/common/icon_header_return_white.png">
+		    </a>
+		    <div class="aui-title" id="common_title">
+		    	开工企业上岗员工信息采集表
+		    </div>
+		    <a class="aui-pull-right aui-btn location">
+		    </a>
+		</header>
+	</div>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var menuHeight;//menu高度
+	var clearance = 70;//间隙
+	var target_index = 0;//menu标记
+	var cache;
+	var yu_height;//沉浸部分的高度
+	apiready = function(){
+		cache = api.pageParam.data;
+		var or_menu_height = $api.byId('menuPackage').offsetHeight;
+		$api.fixStatusBar($api.byId('menuPackage'));
+		//计算得到沉浸部分的高度
+		yu_height = $api.byId('menuPackage').offsetHeight - or_menu_height;
+		menuHeight = $api.byId('menuPackage').offsetHeight;
+
+		init()
+	};
+	
+	function init(){
+		api.openFrame({
+		    name: 'staff_frm',
+		    url: './staff_frm.html',
+		    bgColor:'#FFFFFF',
+		    rect: {
+		        x: 0,
+		        y: menuHeight,
+		        w: 'auto',
+		        h: api.winHeight - menuHeight
+		    },
+		    bounces: true,
+		    pageParam:null,
+		    reload:true,
+		    softInputBarEnabled:true,
+		    softInputMode:'resize'
+		});
+	}
+	
+	function closeWin(){
+		api.closeWin({
+        });
+	}
+</script>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>评论详情</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/comment.css" />
+		<style type="text/css">
+			html{
+				background-color: #ffffff;
+			}
+			.aui-bar-nav,.aui-bar-tab{
+				background-color: #ffffff;
+			}
+			.aui-bar-nav{
+				color:#2c2c2c;
+			}
+			a.aui-pull-left, a.aui-pull-right {
+				color: #35A7FF;
+			}
+			header img {
+				width: 20px;
+			}
+			#common_title{
+				font-weight:normal;
+				color:#2E2E2E;
+			}
+			.aui-bar-nav {
+				top: 0;
+				line-height: 2.25rem;
+				background-color: #FFF;
+				color: #000;
+				border-bottom: solid 1px #FFFFFF;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+				<img src="../../icon/common/icon_header_return.png">
+			</a>
+			<div class="aui-title" id="common_title">
+				- 
+			</div>
+			<!-- <a class="aui-pull-right aui-btn" onclick="openNext()">
+				<img src="../../icon/common/icon_share.png">
+			</a> -->
+		</header>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var headerPos;
+		var frmName;
+		apiready = function(){
+			api.parseTapmode();
+			var header = $api.byId('aui-header');
+			var origal_h = $api.offset(header).h;
+			$api.fixStatusBar(header);
+			cache = api.pageParam.data;
+			headerPos = $api.offset(header);
+			cache.h_c = headerPos.h - origal_h;//视频详情页需要的参数
+			$('#common_title').html(cache.name);
+			frmName = ('common_original_comment_frm');
+			openFrame(frmName,headerPos.h, api.winHeight - headerPos.h,'none');
+		}
+		function openFrame(frameName,y,h,animate){
+			api.openFrame({
+				name: frameName,
+				url: './'+frameName+'.html',
+				bgColor:'#efeff4',
+				rect: {
+					x: 0,
+					y: y,
+					w: 'auto',
+					h: h
+				},
+				animation:{
+					type:animate,                //动画类型（详见动画类型常量）
+					subType:"from_right",       //动画子类型（详见动画子类型常量）
+					duration:300
+				},
+				bounces: false,
+				pageParam:{
+					data:cache
+				},
+				reload:true,
+				softInputBarEnabled:true,
+				softInputMode:'resize'
+			});
+		}
+		function closeWin(){
+			api.closeWin({
+			});
+		}
+	</script>
+</html>

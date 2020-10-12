@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+        <title>选择商品规格</title>
+        <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+        <style>
+            html, body {
+                background: transparent;
+                width: 100%;
+                height: 100%;
+               
+            }
+           
+            .share{
+                /*overflow-x:hidden;*/
+                overflow: auto;
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                height: 24rem;
+                padding-bottom: 4.5rem;
+                background:rgba(255,255,255,1);
+                border-radius:10px 10px 0px 0px;
+            }
+            .aui-grid {
+                background: #FFFFFF;
+                padding-top: 0.2rem;
+                display: unset;
+            }
+            .aui-card-list-header{
+                padding: 0 0.75rem !important;
+                justify-content: center;
+            }
+            .aui-grid [class=aui-col-] {
+                display: table-cell;
+                position: relative;
+                text-align: center;
+                vertical-align: middle;
+                padding: 0.5rem 0;
+            }
+            .msg{
+                background: #FFFFFF;
+                height: 12rem;
+                font-size:0.7rem;
+                text-align: center;
+                padding-top:3rem;
+            }
+            .msg img{
+                width:6rem;
+                margin-top: 0.6rem;
+                margin:0 auto;
+            }
+            .shadow {
+                position: absolute;
+                bottom: 0rem;
+                top: 0rem;
+                width: 100%;
+            }
+            .aui-grid [class=aui-col-xs-]:active {
+                background-color: #FFFFFF;
+            }
+            
+            
+            .aui-card-list-header {
+                font-size: 0.9rem;
+                white-space: nowrap;
+                color:#27344B;
+            }
+            
+            .aui-list .aui-list-item-media {
+                width: 6rem;
+                height: 5.4rem;
+            }
+            #shopImg{
+                width: 5.5rem;
+                height: 4.5rem;
+                background-size: cover;
+            }
+   /*         .aui-list .aui-list-item .aui-list-item-inner {
+                min-height: 4.5rem;
+            }*/
+            .aui-list-item-title {
+                font-size: 0.8rem!important;
+                color: #333333;
+                display:block;
+                white-space:nowrap;
+                overflow:hidden;
+                text-overflow:ellipsis;
+            }
+            /*.aui-list .aui-list-item:last-child:after {
+                height: 0!important;
+            }*/
+            
+            .aui-media-list-item-inner{
+                width: 100%;
+            }
+            .not_selected{
+                border: solid 1px #000;
+                color: #000!important;
+            }
+            .selected{
+                border: solid 1px rgba(63,134,255,1);
+                color: #3F86FF!important;
+            }
+            .aui-list:before,.aui-list:after{
+                height:0;
+            }
+            .goods_money{
+                font-size: 0.7rem!important;
+                color: #333333!important;
+                margin-top: 0.5rem;
+                display: inline;
+            }
+            .aui-list .aui-list-item-right, .aui-list-item-title-row em{
+                font-size: 0.7rem!important;
+            }
+            .goods_specs_title{
+                margin-left: 0.75rem;
+                font-size: 0.9rem;
+                color: #333333;
+                font-weight: 500;
+                display: inline;
+                margin-top: 0.3rem;
+            }
+            .specs_name{
+                padding: 0.2rem;
+                padding-left:0.5rem;
+                padding-right: 0.5rem;
+                font-size: 0.8rem!important;
+                border-radius: 2rem;
+                width: auto;
+                margin: 0.5rem;
+                margin-right: 0rem;
+                display: inline;
+                background: #FFFFFF;
+            }
+            .goods_number{
+                float: right;
+                margin-right: 1rem;
+                display: inline;
+            }
+            .goods_number_text{
+                display: inline-block;
+                font-size: 0.8rem;
+                background: #F5F5F5;
+                width: 1.5rem;
+                height: 1.5rem;
+                text-align: center;
+                border-radius: unset;
+                line-height: 1.5rem;
+                float: left;
+            }
+            .aui-list .aui-list-item:after{
+                height: 0;
+            }
+            .goods_specs_number{
+                position: fixed;
+                bottom: 0.5rem;
+                left: 10%;
+                width: 80%;
+                height: 2.5rem;
+                background:rgba(63,134,255,1);
+                color: #FFF;
+                font-size: 0.8rem;
+                line-height: 2.5rem;
+                text-align: center;
+                margin-bottom: 0.5rem;
+                border-radius: 2rem;
+                font-weight: bold;
+            }
+            .aui-content{
+                margin-top: 0.5rem;
+            }
+            #origalPrice{
+                color:#999999;
+                font-size: 0.7rem;
+            }
+            #shopName{
+                width: auto;
+                max-width: 90%;
+            }
+            #shopNumber{
+                color:#999999;
+                font-size: 0.6rem!important;
+                margin-top: 0.1rem;
+            }
+            .close_img{
+                position: absolute;
+                right: 0.5rem;
+                width: 0.7rem!important;
+                top: -0.6rem;
+            }
+            #exchangeLimit{
+                vertical-align: middle;
+                font-size: 0.6rem;
+                color: #999999;
+                
+            }
+        </style>
+    </head>
+    <body>
+        <div class="shadow" tapmode onclick="closeShadow()"></div>
+        <div class='share'>
+            <section class="aui-grid">
+                <div class="aui-content">
+                    <div class="aui-card-list" style="margin-bottom: 0.5rem;">
+                        <div class="aui-card-list-content">
+                            <ul class="aui-list aui-media-list">
+                                <li class="aui-list-item aui-list-item-middle">
+                                    <div class="aui-media-list-item-inner">
+                                        <div class="aui-list-item-media">
+                                            <img  class="aui-list-img-sm" src="../../icon/common/icon_load_html.gif" id="shopImg">
+                                        </div>
+                                        <div class="aui-list-item-inner" style="width: 65%!important;">
+                                        <img src="../../icon/common/icon_shop_close.png" class="close_img" tapmode onclick="closeShadow()"/>
+                                            <div class="aui-list-item-text">
+                                                <div class="aui-list-item-title" id="shopName">
+                                              
+                                                </div>
+                                               
+                                            </div>
+                                            <div class="aui-list-item-text goods_money" style="display: inline">
+                                               <span id="shopMoney">请选择规格</span>  
+                                            </div>
+                                            <div style="display: inline;margin-left: 0.5rem;">
+                                               <span >
+                                                    <del style="display: contents;text-decoration: line-through" id="origalPrice"></del>
+                                               </span>
+                                            </div>
+                                             <div class="aui-list-item-text">
+                                               <div class="aui-list-item-title" id="shopNumber">
+                                                                                                             
+                                                </div>
+                                               
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="goods_specs_title">
+                        规格
+                    </div>
+                        <div id="shopSpecsList">
+                          
+                    </div>
+                    <div class="goods_specs_title">
+                        数量  <span id="exchangeLimit"></span>
+                    </div>
+                    <div class="goods_number">
+                       <div class="goods_number_text" style="border-right: solid 2px #FFF;" onclick="reduceNumber()" id="addNumber">-</div>
+                       <input class="goods_number_text" style="width: 3rem;" id="shoppingNumber" value="1" readonly=""></input>
+                       <div class="goods_number_text" style="border-left:  solid 2px #FFF;" onclick="addNumber()" id="reduceNumber">+</div>
+                    </div>
+                    <div class="goods_specs_number" tapmode onclick="exchange()"><span>立即换购</span></div>
+
+                    
+                </div>
+            </section>
+        </div>
+        <script type="text/template" charset="utf-8" id='shop_specs_list'>
+            {{ for(var i=0;i<it.list.length;i++){ }}
+            <!--<li class="aui-list-item aui-list-item-middle" tapmode style="padding-left: 0!important;" >
+                <div class="aui-media-list-item-inner" style="min-height: 2.2rem;">
+                        <div class="aui-list-item-inner aui-list-item">
+                            <div class="aui-list-item-text">   
+                                
+                            </div>
+                        </div>
+                    
+                </div>
+            </li>-->
+              
+            <button class="aui-list-item-title specs_name not_selected" value="{{=it.list[i].id}}" id="list{{=i}}" onclick='select_this_specs(this,{{=i}})'>
+                {{=it.list[i].name}}
+            </button>                                                                                  
+            {{ } }}
+        </script>
+        <div id='load_div'></div>
+        <script type="text/template" charset="utf-8" id='load_src'>
+            <div class="load">
+            <img src="../../icon/common/loadding.gif" alt="" /><br>
+            <span>加载中...</span>
+            </div>
+        </script>
+        <script type="text/template" charset="utf-8" id='msg_src'>
+            <div class="msg">
+            <img src="../../../icon/common/empty.png" alt="" /><br>
+            <span>{{=it.msg}}</span>
+            </div>
+        </script>
+        <!--<script type="text/template" charset="utf-8" id='more_src'>
+            <div class="jiazai">
+            <span>{{=it.msg}}</span>
+            </div>
+        </script>-->
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+    <script type="text/javascript" src="../../script/common/common.js"></script>
+    <script type="text/javascript" src="../../script/doT_min.js"></script>
+    <script type="text/javascript">
+        var path;
+        var cache;
+        var subBranchList = "";
+        var load_src = $('#load_src').html();
+        var selectSpecs;
+        //加载src
+        var msg_src = $('#msg_src').html();
+        var totalStock = 0;
+        var goodsDetail;
+        apiready = function() {
+            api.parseTapmode();
+            cache = api.pageParam;
+            console.log(JSON.stringify(cache))
+            init(cache.data)
+        }
+        
+        function setMsg(msg) {
+            if ($('#shopSpecsList').find('li').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+                setTimeout(function() {
+                    $("#shopSpecsList").html(doT.template(msg_src)({
+                        'msg': msg
+                    }));
+                }, 500);
+            }
+        }
+        function init(ret) {
+            goodsDetail = ret.goodsDetail;
+                console.log(JSON.stringify(ret.number))
+                $("#shopImg").attr("src",file_load_url+ goodsDetail.image + "&style=image/resize,w_400");
+                $("#shopName").html(goodsDetail.name);
+                var shop_specs_list = $('#shop_specs_list').html();
+                $("#shopSpecsList").html(doT.template(shop_specs_list)(ret.goodsDetail));
+                $("#shopNumber").html("库存"+goodsDetail.repertory);
+                $("#shoppingNumber").val(ret.number);
+                if(goodsDetail.exchangeLimit == "0"){
+                
+                }else{
+                    $("#exchangeLimit").html("(限购"+goodsDetail.exchangeLimit+"件)") 
+                }
+                    
+                for(var i=0;i<ret.goodsDetail.list.length;i++){    
+                    if(ret.goodsDetail.list[i].id == ret.selectId){
+                        select_this_specs('',i);
+                    }
+                }
+                
+        }
+
+
+        //点击阴影关闭，保存选中信息
+        function closeShadow() {
+            var number = $("#shoppingNumber").val();
+             if(selectSpecs == undefined || selectSpecs == "" || selectSpecs == null){
+                esc_function('','shop_detail_frm','getSelectSpecifications("","","'+number+'")');
+            }else{
+                esc_function('','shop_detail_frm','getSelectSpecifications("'+selectSpecs.id+'","'+selectSpecs.name+'","'+number+'")');
+            }
+            setTimeout(function() {
+               api.closeFrame({
+                   name : 'select_goods_specs_frm'
+               });
+            }, 100);             
+            
+        }
+        
+        
+        /**
+         * 选中商品规格
+         */
+        function select_this_specs(e,i) {
+                 console.log(JSON.stringify(e))
+                 console.log(goodsDetail.list[i]);
+                 selectSpecs = goodsDetail.list[i];
+                 if($("#list"+i).attr("class") == "aui-list-item-title specs_name not_selected"){
+                     console.log("选中")
+                    $(".selected").attr("class","aui-list-item-title specs_name not_selected")
+                    $("#list"+i).attr("class","aui-list-item-title specs_name selected")
+                    $(".not_selected").attr("style","border: solid 1px #999999;color: #999999!important;")
+                    $(".selected").attr("style","border: solid 1px rgba(63,134,255,1);color: #3F86FF!important;")
+                 }else{
+                     console.log("取消选中")
+                     $("#list"+i).attr("class","aui-list-item-title specs_name not_selected")
+                     $(".not_selected").attr("style","border: solid 1px #999999;color: #999999!important;")
+                     $("#shopNumber").html("");
+                     selectSpecs = "";
+                     $("#shopMoney").html("请选择规格");
+                     $("#origalPrice").html("")
+                     $("#shopNumber").html("库存"+goodsDetail.repertory);
+                     return;
+                 }
+                 
+                 $("#shopNumber").html("库存"+goodsDetail.list[i].repertory);
+                if(goodsDetail.list[i].integral == "0" && goodsDetail.list[i].price != "0"){
+                    $("#shopMoney").html("￥"+goodsDetail.list[i].price+"元");
+                    $("#origalPrice").html("￥"+goodsDetail.list[i].origalPrice)
+                }else if(goodsDetail.list[i].integral != "0" && goodsDetail.list[i].price == "0"){
+                    $("#shopMoney").html(goodsDetail.list[i].integral+"积分");
+                    $("#origalPrice").html("")
+                }else if(goodsDetail.list[i].integral != "0" && goodsDetail.list[i].price != "0"){
+                    $("#shopMoney").html(goodsDetail.list[i].integral+"积分+"+goodsDetail.list[i].price+"元");
+                    $("#origalPrice").html("￥"+goodsDetail.list[i].origalPrice)
+                }else{
+                    $("#shopMoney").html("免费");
+                }
+        }
+        
+        function reduceNumber(){
+            var shoppingNumber = $("#shoppingNumber").val();
+           if((parseInt(shoppingNumber)-1) <= "1"){
+                $("#shoppingNumber").val(1);
+                return;
+            }else{
+                $("#shoppingNumber").val(parseInt(shoppingNumber)-1);
+                return;
+            }
+            $("#shoppingNumber").val(parseInt(shoppingNumber)-1);
+             
+        }
+        
+        function addNumber(){
+            var shoppingNumber = $("#shoppingNumber").val();
+            $("#shoppingNumber").val(parseInt(shoppingNumber)+1);
+        
+        }
+        
+        function exchange(){
+           openDetail(goodsDetail);
+        }    
+       //跳转立即兑换
+        function openDetail(detail) {
+            var shoppingNumber = $("#shoppingNumber").val();
+            console.log(selectSpecs)
+            if(selectSpecs == undefined || selectSpecs == "" || selectSpecs == null){
+                alert_msg("请选择商品规格")
+                return;
+            }
+            if(selectSpecs.repertory == "0"){
+                alert_msg("暂无库存,无法兑换")
+                return;
+            }
+            params = {
+                id: selectSpecs.id,
+                goodsId: detail.id,
+                integral: selectSpecs.integral,
+                image: detail.image,
+                name: selectSpecs.name,
+                price:selectSpecs.price,
+                origalPrice:selectSpecs.origalPrice,
+                shoppingNumber:shoppingNumber,
+                integralExist: detail.integralExist,
+                isMail: detail.isMail,
+                traderId: detail.traderId
+            }
+              console.log(JSON.stringify(params));
+            api.openDrawerLayout({
+            name: 'shop_order_win',
+            url: '../mine/shop_order_win.html',
+            slidBackEnabled:'true',
+            vScrollBarEnabled:'false',
+            hScrollBarEnabled:'false',
+            reload:true,
+            pageParam: {
+                    data: params
+            },
+            animation: {
+                type: 'push',
+                subType:"from_right",
+                duration:300
+            },
+            rightPane: {
+                name: 'leftPane',
+                url: '../mine/store_list_win.html',
+                vScrollBarEnabled:false,
+                hScrollBarEnabled:false,
+                bounces:false,
+                pageParam:{
+                    data:{
+                        action:'store_choose',
+                    }
+                }
+            }
+        });
+            
+        }     
+    </script>
+    </html> 

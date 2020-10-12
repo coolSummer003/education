@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>成绩排行</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html,body{
+            background-color: #ffffff;
+            height:100%;
+        }
+        .content{
+            padding-top: 0.5rem;
+        }
+        .aui-tab{
+            width: 40%;
+            margin: auto;
+        }
+        .aui-tab-item.aui-active{
+            border: none;
+            background: #3F86FF;
+            color: #FFFFFF;
+            font-weight:bold;
+            /*border-radius: 4px 0px 0px 4px;*/
+        }
+        .aui-tab-item{
+            height: 1.5rem!important;
+            line-height: 1.4rem!important;
+            border: 1px solid #3F86FF;
+            background: #FFFFFF;
+            color: #3F86FF;
+        }
+        .left-radius{
+            border-radius: 4px 0px 0px 4px;
+        }
+        
+        .right-radius{
+            border-radius: 0px 4px 4px 0px;
+        }
+        .achievement_body{
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .fracton_background{
+            width: 12rem;
+		    margin: 0 auto;
+		    background: url(../../../image/background/learner_achievement/fraction_background.png) no-repeat center;
+		    height: 12rem;
+		    background-size: 100% 100%;
+        }
+        .achievement_title{
+            position: absolute;
+            top: 9rem;
+            width: 4rem;
+            left: 50%;
+            margin-left: -2rem;
+            font-size: 0.75rem;
+            color: #FFFFFF;
+            font-family: PingFangSC-Regular;
+        }
+        .achievement{
+            color: #FFFFFF;
+		    font-size: 2.5rem;
+		    top: 5.5rem;
+		    font-weight: bold;
+		    margin: auto;
+		    padding-top: 3.7rem;
+        }
+        .achievement_message{
+            width: 90%;
+            margin: auto;
+            height: 4rem;
+            background: url("../../../image/background/learner_achievement/achievement_message.png");
+            background-size: cover;
+            margin-top: 1rem;
+        }
+        .achievement_message_title{
+            color: #607385;
+            font-size: 0.7rem;
+            
+        }
+        .achievement_message_text{
+            color: #0086FF;
+            font-size: 1rem;
+            height: 2.2rem;
+            line-height: 2.8rem;
+            font-weight: bold;
+        }
+        .achievement_list{
+            
+        }
+        .historical_achievements{
+            width: 0.8rem;
+           
+        }
+        .achievement_list_title{
+            color: #333333;
+            font-size: 0.8rem;
+            margin-top: -1.3rem;
+            margin-left: 1.5rem;
+            font-weight: bold;
+        }
+        .achievement_list_top{
+            height: 1.2rem;
+            line-height: 1.2rem;
+            text-align: left;
+            margin-top: 1.5rem;
+            margin-left: 1rem;
+        }
+        .left_button{
+             
+        
+        }
+        .right_buttom{
+            float: right;
+            margin-right: 1.5rem;
+            height: 1.2rem;
+            text-align: center;
+            width: 3rem;
+            background: #E0E5EF;
+            border-radius: 12px;
+        }
+        .samll_img_left{
+            width: 0.7rem;
+        }
+        .samll_img_right{
+            position: relative;
+            top: 0.1rem;
+            width: 0.7rem;
+        }
+        .tab_button_active{
+            border-radius: 12px;
+            background: #3F86FF;
+            width: 1.5rem;
+            display: inline-block;
+        }
+        .achievement_discount_chart{
+            /*background: #EEF5FF;*/
+            border-radius: 10px;
+            height: 9rem;
+            width: 90%;
+            margin: auto;
+        }
+        .achievement_list_table{
+            width: 100%;
+            margin-top: 1rem;
+            height: 100%;
+        }
+        table{
+            border-top: solid 1px #F5F5F5;
+            border-bottom: solid 1px #F5F5F5;
+        }
+        td{
+            padding: 0.5rem;
+        }
+        tr{
+           border-top: solid 1px #F5F5F5;
+        }
+        .score{
+            color: #3F86FF;
+        }
+        .time,.date{
+            color: #999999;
+        }
+        .title{
+            color: #333333;
+        }
+        .score_red{
+            color: #FF5151; 
+        }
+        .achievement_foot_body{
+            padding-bottom: 1rem;
+            margin-top: 1rem;
+        }
+        .tab_button{
+            width: 1.5rem;
+            display:inline;
+        }
+        .aui-btn-more{
+            color: #A5B6CE;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.7rem;
+        }
+        .msg{
+            background: #FFFFFF;
+            height: 9rem;
+            text-align: center;
+            font-size:0.7rem;
+        }
+        .msg img{
+            width:6rem;
+            margin: auto;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+	<div class="content">
+        <div class="achievement_body">
+        	<div class='fracton_background'>
+	            <span class="achievement_title">历史最高分</span>
+	            <div class="achievement" id="maxScore">0</div>
+        	</div>
+            <div class="achievement_message">
+                <div class="aui-col-xs-4">
+                    <div class="achievement_message_text">0</div>
+                    <div class="achievement_message_title">合格次数</div>
+                </div>
+                <div class="aui-col-xs-4">
+                    <div class="achievement_message_text">0%</div>
+                    <div class="achievement_message_title">正确率</div>
+                </div>
+                <div class="aui-col-xs-4">
+                    <div class="achievement_message_text">0</div>
+                    <div class="achievement_message_title">已做题</div>
+                </div>
+            </div>
+            <div class="achievement_list">
+                <div class="achievement_list_top">
+                    <div class="left_button aui-col-xs-6">
+                        <img src="../../../image/background/learner_achievement/historical_achievements.png" class="historical_achievements">
+                        <div class="achievement_list_title">最近成绩</div>
+                    </div>
+                    <div class="right_buttom">
+                        <div class="tab_button_active tab_button_left" style="float: left" tapmode onclick="tab_img('achievement_list')">
+                            <img src="../../../image/background/learner_achievement/achievement_list_selected.png" class="samll_img_left" />
+                        </div>
+                        <div class="tab_button tab_button_right" style="float: right" tapmode onclick="tab_img('data_statistics')">
+                            <img src="../../../image/background/learner_achievement/data_statistics_not_select.png" class="samll_img_right"/>
+                        </div>
+                    </div>
+                    
+                    <!--<div class="right_button aui-col-xs-6">
+                        <img src="../../../image/background/learner_achievement/data_statistics.png" class="samll_img"/>
+                    </div>-->
+                </div>
+                <div class="achievement_foot_body">
+                    <div class="achievement_discount_chart" id="chartstable">
+                    </div>
+                    <div class="achievement_list_table aui-hide" id="table">
+                        <table style="width: 100%" id="tableList">
+                            <!--<tr>
+                                <td class="score_red">89分</td>
+                                <td class="time">15分00秒</td>
+                                <td class="date">8月13日</td>
+                                <td class="title">预备车手</td>
+                            </tr>-->
+                        </table>
+                        <div class="aui-btn-more" tapmode onclick="detail()">查看更多<i class="aui-iconfont aui-icon-right"></i></div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+	</div>
+	<script type="text/template" charset="utf-8" id='table_list'>
+        {{ for(var i=0;i<it.length;i++){ }}
+            <tr>
+              {{ if(it[i].score > "89"){}}
+                <td class="score">{{=it[i].score}}</td>         
+              {{ }else {}}
+                <td class="score_red">{{=it[i].score}}分</td>                         
+              {{ } }}  
+              <td class="time">{{=it[i].studySecond}}</td>
+              <td class="date">{{=it[i].month}}月{{=it[i].day}}日</td>
+              {{ if(it[i].score >= "96" && it[i].score <= "98"){}}
+                <td class="title">老司机</td>        
+              {{ }else if(it[i].score >= "99"){}}
+                <td class="title">车神驾到</td>
+              {{ }else if(it[i].score <= "95" && it[i].score >= "91"){}}
+                <td class="title">新手上路</td>  
+              {{ }else if(it[i].score <= "90" && it[i].score > "60"){}}
+                <td class="title">预备车手</td>
+              {{ }else if(it[i].score <= "60"){}}
+                <td class="title">驾考菜鸟</td>                          
+              {{ } }} 
+              
+            </tr>
+        {{ } }}
+    </script>
+    <script type="text/template" charset="utf-8" id='msg_src'>
+        <div class="msg">
+            <img src="../../../image/background/learner_achievement/achievement_list_empty.png" alt="" /><br>
+            <span>{{=it.msg}}</span>
+        </div>
+    </script>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript" src="../../../script/echarts.min.js"></script>
+<script type="text/javascript">
+    var cache;
+    var msg_src = $('#msg_src').html();//消息提示src
+    var db;
+    apiready = function(){
+        api.parseTapmode();
+        cache = api.pageParam.data;
+        db = api.require('db');
+        init("achievement_list");
+    }
+    
+    function init(type){
+        url = 'api/mock-exam-and-study/getKemuList';
+        params = {
+            learnerId: getUserId(),
+            kemuStatus: cache.kemu == '036001'?1:4,
+            bankType: getBankType(cache.kemu)
+        }
+        log('tiojian', params);
+        ajax_Request(url, 'get', 'json', params, function(ret, err) {
+            api.hideProgress();
+            if (ret) {
+                if (ret.code == 0) {
+                    loadNum($("#maxScore"), ret.maxScore, 1000,'');
+                    loadNum($(".achievement_message_text").eq(0), ret.totalQualified, 1000,'');
+                    data = cache.kemu == "036001"?ret.listOne:ret.listFour;
+                    if(type == "achievement_list"){
+                        if(data.length == 0){
+                            setMsg('暂无成绩记录');
+                        }else{
+                            $(".achievement_discount_chart").attr("style","background:#EEF5FF")
+                            setTable(data);
+                        }
+                    }else{
+                        if(data.length == 0){
+                           setMsg('暂无成绩记录');
+                        }else{
+                            var table_list = $('#table_list').html();
+                            $('#tableList').html(doT.template( table_list )(data))
+                        }
+                    }
+                    api.parseTapmode();
+                } else {
+                	setMsg(ret.msg);
+                }
+            } else {
+                setMsg('服务器繁忙，请稍候再试！');
+            }
+        });
+        
+        var bankType = getBankType(cache.kemu);
+        sql = 'SELECT recode_num, right_percent, totle_num FROM ';
+			sql += '(SELECT COUNT(DISTINCT Q.question_id) recode_num FROM cm_question q LEFT JOIN cm_question_recode r ON r.question_id = q.question_id WHERE r.id IS NOT NULL AND kemu = "'+ cache.kemu +'" AND belong_bank_type = "' + bankType + '" AND learner_id = '+getUserId()+') Q1 LEFT OUTER JOIN ';
+			sql += '(SELECT COUNT(DISTINCT Q.question_id) totle_num FROM cm_question q WHERE kemu = "'+ cache.kemu +'" AND bank_type like "%' + bankType + '%" AND (city = "" OR city IS NULL)) Q2 LEFT OUTER JOIN ';
+			sql += '(SELECT ROUND((CAST(right_num as double) * 100)/(CAST(right_num as double) + CAST(wrong_num as double)),0) right_percent FROM (';
+				sql += 'SELECT right_num,wrong_num FROM (SELECT SUM(T1.right_num) right_num FROM (SELECT DISTINCT r.* FROM cm_question q LEFT JOIN cm_question_recode r ON r.question_id = q.question_id WHERE r.right_num > 0 AND kemu = "'+ cache.kemu +'" AND belong_bank_type = "' + bankType + '" AND learner_id = '+getUserId()+') T1) G ';
+				sql += 'LEFT OUTER JOIN (SELECT SUM(T2.wrong_num) wrong_num FROM (SELECT DISTINCT r.* FROM cm_question q LEFT JOIN cm_question_recode r ON r.question_id = q.question_id WHERE r.wrong_num > 0 AND kemu = "'+ cache.kemu +'" AND belong_bank_type = "' + bankType + '" AND learner_id = '+getUserId()+') T2) G';
+		sql += ')) Q3';
+		db.selectSql({
+	        name:'drivingApp',
+	        sql:sql
+        },function(ret,err){
+        	log(ret,ret.data);
+        	if(ret){
+        		if(ret.status){
+        			loadNum($(".achievement_message_text").eq(1), ret.data[0].right_percent?ret.data[0].right_percent:0, 1000,'%');
+        			loadNum($(".achievement_message_text").eq(2), ret.data[0].recode_num, 1000,'');
+        		}else{
+        			alert_msg(JSON.stringify(ret));
+        		}
+        	}else{
+        		//数据库有问题
+        	}
+        });
+    }
+    //选中
+    function tab_img(type){
+        if(type == "data_statistics"){
+            $(".samll_img_left").attr("src","../../../image/background/learner_achievement/achievement_list_not_select.png")
+            $(".samll_img_right").attr("src","../../../image/background/learner_achievement/data_statistics_selected.png")
+            $(".tab_button_left").attr("class","tab_button_left tab_button")
+            $(".tab_button_right").attr("class","tab_button_right tab_button_active")
+            init("data_statistics");
+            $(".achievement_discount_chart").addClass("aui-hide");
+            $("#table").removeClass("aui-hide");
+        }else if(type == "achievement_list"){
+            $(".samll_img_left").attr("src","../../../image/background/learner_achievement/achievement_list_selected.png")
+            $(".samll_img_right").attr("src","../../../image/background/learner_achievement/data_statistics_not_select.png")
+            $(".tab_button_left").attr("class","tab_button_left tab_button_active")
+            $(".tab_button_right").attr("class","tab_button_right tab_button")
+            init("achievement_list");
+            $(".achievement_discount_chart").removeClass("aui-hide");
+            $("#table").addClass("aui-hide");
+        }
+    }
+        
+    //设置页面提示信息
+    function setMsg(msg) {
+      setTimeout(function() {
+        $("#table").html(doT.template( msg_src )({
+          'msg' : msg
+         }));
+        $("#chartstable").html(doT.template( msg_src )({
+          'msg' : msg
+         }));
+      }, 300);
+    }
+    //渲染表格
+    var myChart;
+    var option;
+    function setTable(list){
+        var listdata = new Array();
+        for(var i=list.length-1;i>=0;i--){
+            listdata.push(list[i].score)
+        }
+        myChart = echarts.init(document.getElementById('chartstable'));
+        option = {
+            xAxis: {
+                type: 'category',
+                splitLine: {
+                    show: false
+                },
+                axisLine:{
+                    lineStyle: {
+                       color: "#CCDFFF"
+                    }
+                }
+            
+            },
+             grid: {
+                    left: '5%',
+                    right: '10%',
+                    bottom: '10%',
+                    top: '20%',
+                    containLabel: true
+                },
+            yAxis: {
+                type: 'value',
+                axisLine: {show:false},
+                min:0,
+                max:100,
+                minInterval: 1,
+                splitNumber : 10, 
+                axisTick:{
+                    show: false,
+                },
+                axisLabel:{
+                    formatter: function (value) {
+                    var texts = [];
+                    if(value == 90){
+                    texts.push('90');
+                    }else if(value == 0){
+                    texts.push('0');
+                    }
+                    else {
+                    texts.push('');
+                    }
+                    return texts;
+                    }
+                },
+                splitLine: {
+                    show: false
+                }
+            },
+//          visualMap: {
+//              show: false,
+//              dimension: 1,
+//              pieces: [],  //pieces的值由动态数据决定
+//              outOfRange: {
+//                   color: '#3F86FF'
+//              }
+//          },
+            series: [{
+                data: listdata,
+                type: 'line',
+                smooth: true,
+                symbol: 'circle',     //设定为实心点
+                symbolSize: 10,   //设定实心点的大小
+                areaStyle: {
+                    normal: {
+                       //折线图区域颜色渐变
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[{
+                                offset: 0.9, color: '#EDF4FF' // 100% 处的颜色
+                             }, { 
+                                 offset: 0, color: '#B4D0FF' // 0% 处的颜色
+                             },{ 
+                                 offset: 0.4, color: '#B7D1FF' // 40% 处的颜色
+                             }
+                             ]
+                         ), //背景渐变色     //改变区域颜色
+                    }
+                },
+                lineStyle: {
+                    normal:{
+                        color: "#3F86FF"
+                    }
+                },
+                itemStyle : {
+                    normal : {
+                       color:'#3F86FF',
+                       label : {
+                            show: true
+                        }
+                    },
+                },
+                 markLine: {
+                    silent: true,
+                    symbol:'none',//去掉箭头
+                    data: [{
+                        yAxis: 90
+                    }],
+                    lineStyle: {
+                        normal:{
+                            color: "#3F86FF"
+                        }
+                    },
+
+                },
+                
+            }]
+        };
+//      option.visualMap.pieces[0] = {gte: 0, lte: 89, color: '#FF5151'};
+        chartsOption() 
+    }
+    
+    function chartsOption() {
+       myChart.clear();
+       // 使用刚指定的配置项和数据显示图表。
+       myChart.setOption(option);
+   }
+   
+   function detail(){
+        if(cache.kemu == "036001"){
+            params = {
+               type: "record_exam_subject_one",
+            };
+        }else{
+            params = {
+               type: "record_exam_subject_four",
+            };
+        }
+        
+        commonOpenWin('../../mine/mine_common_win', params);
+   }
+</script>
+</html>

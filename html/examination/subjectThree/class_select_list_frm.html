@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>车辆预约列表</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/mobiscroll/normalize3_0_2_min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/mobiscroll/mobiscroll.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/mobiscroll/mobiscroll_date.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html,body{
+    		background-color: transparent;
+    		height: 99%;
+    	}
+		.daoh{
+		    width: 3rem;
+    		margin: 0 auto;
+    	}
+    	.aui-grid [class*=aui-col-xs-]:active {
+		    background-color: #FFF;
+		}
+		.menu{
+		    position: fixed;
+		    height: 3rem;
+		    width: 85%;
+		    bottom: 0;
+		    left: 0;
+		    z-index: 999;
+    	}
+    	.menuButton{
+    		height: 3rem;
+		    width: 50%;
+		    float: left;
+		    text-align: center;
+		    font-size: 0.9rem;
+		    padding-top: 0.8rem;
+    	}
+    	.reset{
+	        border-top: solid 0.5px #F1F1F1;
+	        background-color: #fff;
+    	}
+    	.select{
+		    background: #DC251F;
+    		color: #FFFFFF;
+	        border-top: solid 0.5px #DC251F;
+    	}
+    	.reset:active{
+    		background-color: #F1F1F1;
+    	}
+    	.select:active{
+    		background-color: #DE5A58;
+    	}
+    	.shadow{
+		    width: 100%;
+		    height: 100%;
+		    background: #000000;
+		    opacity: 0;
+		    position: fixed;
+		    z-index: 100;
+    	}
+    	.aui-grid {
+		    width: 85%;
+		    background-color: #ffffff;
+		    display: table;
+		    table-layout: fixed;
+		    float:left;
+		    z-index:101;
+		    height:100%;
+	        padding-top: 2.3rem;
+	        touch-action: auto;
+	        position: relative;
+		}
+		.select_practical_title{
+			border-bottom: solid 1px #F1F1F1;
+    		padding: 0rem 0.5rem 0.2rem 0.5rem;
+		    font-weight: bold;
+		}
+		#appointment-date{
+			padding:0rem 0.5rem;
+		}
+		.aui-row {
+		    overflow: auto;
+		    margin: 0;
+    		position: absolute;
+		    top: 10.9rem;
+		    bottom: 2.3rem;
+		}
+		.nav {
+	        height: 100%;
+	        overflow-x: scroll;
+	        overflow-y: hidden;
+	        background-color: #FFFFFF;
+	        /*解决ios上滑动不流畅*/
+	        -webkit-overflow-scrolling: touch;
+	    }
+	    .con {
+	        height: 100%;
+		    display: -webkit-box;
+		    align-items: center;
+	        position: relative;
+	    }
+	    .con>li {
+	        text-align: center;
+		    font-size: 0.8rem;
+		    min-width: 3rem;
+		    list-style: none;
+		    margin: 0rem 0.5rem;
+	    }
+	    .container {
+            height: 2.5rem;
+		    line-height: 2.5rem;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    overflow: hidden;
+	    }
+	    .container ::-webkit-scrollbar {
+	        display: none;
+	    }
+	    .active{
+	    	color: #DC251F;
+    		/* border-bottom: solid 2px; */
+	    }
+    </style>
+</head>
+<body>
+	<div class="shadow" tapmode onclick="closeSelect()"></div>
+	<section class="aui-grid aui-margin-b-10">
+        <div class="select_practical_title">选择预约日期</div>
+        <div class="appointment-data">
+	        <input type="text" placeholder="请选择预约日期" id="appointment-date">
+        </div>
+		<div class="select_practical_title" style="margin-top: 1rem;">选择车辆</div>
+        <div class="container" style="display: none;">
+	        <nav class="nav">
+	            <ul class="con">
+	                
+	            </ul>
+	        </nav>
+	        <script type="text/template" charset="utf-8" id='car_type_src'>
+		        {{ for(var i=0;i<it.length;i++){ }}
+	                <li class="menuLi" tapmode onclick="slideOnclick(this)">
+	                	{{=it[i].name}}
+	                </li>
+	        	{{ } }}
+	        	<li class="list_bar" id="slideSpan">
+	                <div class="list_bar_inner"></div>
+	            </li>
+            </script>
+        </div>
+        <div class="aui-row" id="practical-list">
+            <!-- <div class="aui-col-xs-3" tapmode onclick="checkpractical()">
+                <img src="../../icon/subject/icon_practical.png" class="daoh cache"/>
+                <div class="aui-grid-label mt">模拟器一</div>
+            </div> -->
+        </div>
+        <script type="text/template" charset="utf-8" id='practical_list_src'>
+        	{{ for(var i=0;i<it.length;i++){ }}
+        	<div class="aui-col-xs-4" tapmode onclick="checkpractical(this)">
+                <img src="../../../icon/subject/icon_car.png" class="daoh"/>
+                <div class="aui-grid-label mt">{{=it[i].name}}</div>
+            </div>
+            {{ } }}
+        </script>
+    </section>
+    <div class="menu">
+		<div class="menuButton select" tapmode onclick="selectpractical()">确定</div>
+		<div class="menuButton reset" tapmode onclick="">取消</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript" src="../../../script/mobiscroll/mobile_select.js"></script> 
+<script type="text/javascript" src="../../../script/mobiscroll/mobiscroll_date.js"></script> 
+<script type="text/javascript" src="../../../script/mobiscroll/mobiscroll.js"></script> 
+<script type="text/javascript">
+	var cache;
+	var headerPos;
+	var demoJson = [
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		},
+		{
+			name:'浙D3KF28'
+		}
+	];
+	var jsondemo2 = [
+		{"name":"新桑塔纳"},{"name":"老桑塔纳"},{"name":"新捷达"}
+	]
+	apiready = function(){
+		api.parseTapmode();
+	}
+		init();
+		
+	var currYear = (new Date()).getFullYear();	
+	var opt={};
+	opt.date = {preset : 'date'};
+	opt.datetime = {preset : 'datetime'};
+	opt.time = {preset : 'time'};
+	opt.default = {
+		theme: 'android-ics light', //皮肤样式
+		display: 'modal', //显示方式 
+		mode: 'scroller', //日期选择模式
+		dateFormat: 'yyyy-mm-dd',
+		lang: 'zh',
+		showNow: true,
+		nowText: "今天",
+		minDate: new Date('2018-11-13'),
+		maxDate: new Date('2018-12-13'),
+		preset: 'date'//日期类型--datatime --time,
+	}
+	$("#appointment-date").mobiscroll($.extend(opt['datetime'], opt['default']));
+	function init(){
+		var car_type_src = $('#car_type_src').html();
+		$(".con").html(doT.template( car_type_src )( jsondemo2 ));
+		$('.container').slideDown(300);
+		setTimeout(function(){
+			f_slide($('.menuLi').eq(0));
+		},400);
+		setTimeout(function(){
+			var practical_list_src = $('#practical_list_src').html();
+			$("#practical-list").html(doT.template( practical_list_src )( demoJson ));
+		},500);
+	}
+	function checkpractical(o){
+		$('.aui-col-xs-4').each(function(index,e){
+			if($(e).is($(o))){
+				$(e).find('img').attr("src","../../../icon/subject/icon_car_active.png");
+			}else{
+				$(e).find('img').attr("src","../../../icon/subject/icon_car.png");
+			}
+		});
+	}
+	//二级菜单点击事件
+	function slideOnclick(e,i){
+		$('li').removeClass('active');
+		f_slide($(e));
+		document.getElementById('slideSpan').style.webkitTransform = 'translateX('+$(e).position().left+'px)';
+		$("nav").animate({scrollLeft: $(e).position().left-130+'px'}, 500);
+	}
+	//滑块加载事件
+	function f_slide(e){
+		$(e).addClass('active');
+		$('.list_bar').css('width',$('.active').width()+'px');
+		$('.list_bar_inner').css('width',$('.active').width()+'px');
+	}
+	//选择好模拟器
+	function selectpractical(){
+		
+	}
+	//关闭选择框
+	function closeSelect(){
+		esc_function('','class_select_shadow','closeSelectShadow()');
+	}
+</script>
+</html>

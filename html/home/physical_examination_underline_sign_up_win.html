@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>医院线下预约</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+    	#physical_examination_underline_title{
+    		font-weight:normal;
+    	}
+    	.order li{
+            float: left;
+		    font-size: 0.7rem;
+		    margin-left: 2.2rem;
+	    }
+	    .order{
+		    height: 2rem;
+		    line-height: 2rem;
+		    position: relative;
+	        background: #FFFFFF;
+		}
+	    .order img{
+		    width: 0.4rem;
+   			margin-bottom: 1px;
+   			-webkit-transition: 0.3s ease;
+		}
+		.screen{
+		    float: right !important;
+   			margin-right: 0.8rem;
+		}
+		.screen img{
+			width: 0.8rem;
+    		margin-bottom: -0.05rem;
+		}
+		.active{
+	    	color: #DC251F !important;
+    		/* border-bottom: solid 2px; */
+	    }
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+            <img src="../../icon/common/icon_header_return.png">
+        </a>
+        <div class="aui-title" id="physical_examination_underline_title">
+        	医院线下预约
+        </div>
+        <a class="aui-pull-right aui-btn" id="batch" tapmode onclick="openHosiptalMap()">
+           	 去这里
+        </a>
+    </header>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var headerPos;
+	apiready = function(){
+		api.parseTapmode();
+		var header = $api.byId('aui-header');
+		$api.fixStatusBar(header);
+		headerPos = $api.offset(header);
+		cache = api.pageParam.data;
+		init();
+	}
+	function init(){
+		api.openFrame({
+            name: 'physical_examination_underline_sign_up_frm',
+            url: './physical_examination_underline_sign_up_frm.html',
+            bgColor:'#efeff4',
+            rect: {
+                x: 0,
+                y: headerPos.h,
+                w: 'auto',
+                h: api.winHeight - headerPos.h
+            },
+            bounces: false,
+            pageParam:cache,
+            reload:true,
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+        //监听支付完成后一步
+        toEventListener('offline_pay_submit',function(ret,err){
+        	pay_for_next(ret.value);
+        });
+	}
+	
+	function closeWin(){
+		api.closeWin({
+        });
+	}
+	//修改头部名
+	function changeMenuTitle(name,jsfun){
+		$('#physical_examination_underline_title').html(name);
+	}
+	//预约下一步
+	function batch_next(outline_appointment_id,hospitalName,orderId){
+		changeMenuTitle('线下预约确认');
+		$('#batch').addClass('aui-hide');
+		frameRightOut('physical_examination_underline_sign_up_frm');
+		params = {
+			outline_appointment_id:outline_appointment_id,
+			hospitalName:hospitalName,
+			orderId:orderId
+		}
+		openFrameFromRight('physical_examination_underline_pay_for_frm',params,headerPos.h,api.winHeight - headerPos.h);
+	}
+	//支付后下一步
+	function pay_for_next(data){
+		changeMenuTitle('线下预约结果');
+		//$('#batch').removeClass('aui-hide');
+		openFrameCommon('physical_examination_underline_notice_frm',data,headerPos.h,api.winHeight - headerPos.h,false);
+	}
+	
+	//打开地图
+	function openHosiptalMap(){
+		params = {
+			to_name:cache.hospitalName,
+			to_lon:cache.longitude,
+			to_lat:cache.latitude
+		}
+		api.openWin({
+	       name: 'common_map_loaction_win',
+	       url: '../common/common_map_loaction_win.html',
+	       slidBackEnabled:'false',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       pageParam: {
+	           data:params
+	       }
+	    });
+	}
+</script>
+</html>

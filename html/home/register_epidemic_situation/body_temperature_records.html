@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>体温记录</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css"/>
+    <style>
+        html, body {
+            height: 100%;
+            background-image: url(../../../icon/home/register_epidemic_situation/body_temperature_records_bg.png);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        #aui-header {
+            background-color: transparent;
+        }
+
+        #aui-header:after {
+            height: 0;
+        }
+
+        #aui-header img {
+            width: 20px;
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+
+        #record-list-div {
+            margin: 1rem 5% 0;
+            padding: 0 0.5rem;
+            height: 20rem;
+            border-top-left-radius: 0.5rem;
+            border-top-right-radius: 0.5rem;
+            background-color: #ECF2FF;
+            overflow-y: auto;
+        }
+
+        .record-list-list-item {
+            padding: 0.5rem;
+            height: 4rem;
+            border-bottom: 1px solid #CBDCFF;
+        }
+
+        .record-list-list-item-top {
+            height: 2rem;
+            line-height: 2rem;
+            font-size: 0.9rem;
+            color: #333;
+            overflow: hidden;
+        }
+
+        .record-list-list-item-top > div:first-child {
+            float: left;
+            height: 100%;
+        }
+
+        .record-list-list-item-top > div:last-child {
+            float: left;
+            height: 100%;
+            padding: 0.55rem 0.25rem;
+        }
+
+        .temperature-img {
+            display: block;
+            height: 0.9rem;
+            width: 2.3rem;
+        }
+
+        .record-list-list-item-bottom {
+            overflow: hidden;
+            height: 1rem;
+            line-height: 1rem;
+            font-size: 0.7rem;
+            color: #666;
+        }
+
+        .study-time {
+            float: left;
+            height: 100%;
+            text-align: left;
+        }
+
+        .study-step {
+            float: right;
+            height: 100%;
+            text-align: right;
+            font-size: 0.8rem;
+        }
+
+        #add-btn-div {
+            display: none;
+            position: relative;
+            height: 2rem;
+            z-index: 998;
+        }
+
+        #add-btn {
+            position: absolute;
+            left: 10%;
+            top: -1.1rem;
+            height: 2.2rem;
+            line-height: 2.2rem;
+            padding: 0;
+            width: 80%;
+            background-color: #FFBB3F;
+            border-radius: 1rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #0C55FF;
+            text-align: center;
+            z-index: 999;
+        }
+
+        #load_div {
+            background-color: transparent;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #666;
+            font-size: 0.75rem;
+        }
+
+        .loading {
+            font-size: 0.7rem;
+            background: transparent;
+            color: #7D7D7D;
+            padding-bottom: 0.3rem;
+            text-align: center;
+            padding-top: 0.3rem;
+        }
+
+        .msg {
+            background: transparent;
+            height: 20rem;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        .msg img {
+            width: 8rem;
+            margin-top: 9rem;
+        }
+
+        .load{
+            background: transparent;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- 头部 -->
+<header class="aui-bar aui-bar-nav aui-border-b" id="aui-header">
+    <a class="aui-pull-left aui-btn" tapmode onclick="closeWin()">
+        <img src="../../../icon/common/icon_header_return_white.png">
+    </a>
+    <div class="aui-title title">
+        体温记录
+    </div>
+    <a class="aui-pull-right aui-btn" id="opinion_submit" tapmode onclick="reload()">
+        <span>刷新</span>
+    </a>
+</header>
+
+<!-- 温度记录列表 -->
+<div id="record-list-div">
+    <div id="record-list">
+      <!--  <div class="record-list-list-item">
+            <div class="record-list-list-item-top">
+                <div>
+                    36.4℃
+                </div>
+                <div>
+                    <img src="../../../icon/home/register_epidemic_situation/normal.png" alt="" class="temperature-img">
+                </div>
+            </div>
+            <div class="record-list-list-item-bottom">
+                <div class="study-time">
+                    2020-02-20 12:19:19
+                </div>
+                <div class="study-step">
+                    科目二培训
+                </div>
+            </div>
+        </div>-->
+    </div>
+
+    <div id='load_div'>
+
+    </div>
+</div>
+
+<!-- 添加温度记录按钮 -->
+<div id="add-btn-div">
+    <img id="add-btn" src="../../../icon/home/register_epidemic_situation/add_record.png" alt="" tapmode onclick="openAddRecordPage()">
+  <!--  <button id="add-btn" tapmode onclick="openAddRecordPage()">
+        添加体温记录
+    </button>-->
+</div>
+
+<!-- 温度记录模板 -->
+<script type="text/template" charset="utf-8" id='record-list-tpl'>
+    {{ for(var i=0;i<it.length;i++){ }}
+    <div class="record-list-list-item">
+        <div class="record-list-list-item-top">
+            <div>
+                {{=it[i].temperature}}℃
+            </div>
+            <div>
+                {{ if(it[i].temperature >= 36 && it[i].temperature <= 37){ }}
+                <img src="../../../icon/home/register_epidemic_situation/normal.png" alt="" class="temperature-img">
+                {{ }else if(it[i].temperature < 36){  }}
+                <img src="../../../icon/home/register_epidemic_situation/low.png" alt="" class="temperature-img">
+                {{ } else {  }}
+                <img src="../../../icon/home/register_epidemic_situation/high.png" alt="" class="temperature-img">
+                {{ } }}
+            </div>
+        </div>
+        <div class="record-list-list-item-bottom">
+            <div class="study-time">
+                {{=it[i].insertDt}}
+            </div>
+            <div class="study-step">
+                {{=it[i].businessType}}
+            </div>
+        </div>
+    </div>
+    {{ } }}
+</script>
+
+
+<script type="text/template" charset="utf-8" id='load_src'>
+    <div class="load">
+        <img src="../../../icon/common/icon_loadding.gif" alt=""/><br>
+        <span>加载中...</span>
+    </div>
+</script>
+<script type="text/template" charset="utf-8" id='msg_src'>
+    <div class="msg">
+        <img src="../../../icon/common/empty.png" alt=""/><br>
+        <span>{{=it.msg}}</span>
+    </div>
+</script>
+<script type="text/template" charset="utf-8" id='more_src'>
+    <div class="loading">
+        <span>{{=it.msg}}</span>
+    </div>
+</script>
+
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+    var page = 1, limit = 10;
+    var load_src = $('#load_src').html();//加载src
+    var msg_src = $('#msg_src').html();//消息提示src
+    var more_src = $('#more_src').html();//更多src
+    var refresh = true;//标记是否是刷新操作
+    var pageParam;
+    apiready = function () {
+        pageParam = api.pageParam;
+        api.parseTapmode();
+        var header = $api.byId('aui-header');
+        $api.fixStatusBar(header);
+        $('#record-list-div').height(api.winHeight * 0.8);
+        $('#add-btn-div').show();
+        if (pageParam.learnerId) {
+            $('#add-btn-div').hide();
+        }
+        toEventListener('add_record_success', function (ret, err) {
+            refreshList();
+        });
+        goLoad(function (ret, err) {
+            loadList();
+        });
+        defaultload('获取中');
+        init();
+    };
+
+    function init() {
+        url = "api/temperature/temperature-daily-list";
+        params = {
+            learnerId: pageParam.learnerId ?  pageParam.learnerId : getUserId(),
+            page: page,
+            limit: limit
+        };
+        log('学员温度记录列表入参', JSON.stringify(params));
+        ajax_Request(url, 'get', 'json', params, function (ret, err) {
+            log('学员温度记录列表出参', ret);
+            if (ret) {
+                closedefaultload();
+                if (ret.code === 0 && ret.temperatureOfDaliyList.length > 0) {
+                    var tpl = $('#record-list-tpl').html();
+                    if (page === 1) {
+                        $('#record-list').html(doT.template(tpl)(ret.temperatureOfDaliyList));
+                    } else {
+                        $('#record-list').append(doT.template(tpl)(ret.temperatureOfDaliyList));
+                    }
+                } else {
+                    setMsg(refresh ? '暂无记录' : '暂无更多');
+                }
+            } else {
+                setMsg('服务器繁忙，请稍候再试！');
+            }
+        });
+    }
+
+
+    //列表刷新
+    function refreshList() {
+        page = 1;
+        refresh = true;
+        setLoad();
+        init();
+    }
+
+    //列表上拉
+    function loadList() {
+        page++;
+        if ($('.record-list-list-item').length === 0) refresh = true;
+        else refresh = false;
+        setLoad();
+        init();
+    }
+
+    // 设置页面加载的画面
+    function setLoad() {
+        if (refresh || $('.record-list-list-item').length === 0) {//如果是刷新或者之前无数据的下拉刷新，全屏提示
+            $('#load_div').html('');
+            $("#record-list").html(load_src);
+        } else {
+            setTimeout(function () {
+                $('#load_div').html(doT.template(more_src)({
+                    'msg': '加载更多中...',
+                    'img': '../../icon/common/jiazai.gif'
+                }));
+            }, 300);
+        }
+    }
+
+    //设置页面提示信息
+    function setMsg(msg) {
+        if (refresh || $('.record-list-list-item').length === 0) {//如果是刷新或者之前无数据的上拉加载，全屏提示
+            setTimeout(function () {
+                $("#record-list").html("");
+                $("#load_div").html(doT.template(msg_src)({'msg': msg}));
+            }, 300);
+        } else {//原先已经有数据的情况下
+            setTimeout(function () {
+                $('#load_div').html(doT.template(more_src)({'msg': msg, 'img': ''}));
+            }, 300);
+        }
+    }
+
+    // 打开体温收集表页面
+    function openAddRecordPage() {
+        openWin1('body_temperature_records_add', 'body_temperature_records_add', {infoId: pageParam.infoId, type: pageParam.type});
+    }
+
+    function openWin1(name, url, pageParam) {
+        api.openWin({
+            name: name,
+            url: './' + url + '.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            useWKWebView: false,
+            pageParam: pageParam ? pageParam : {}
+        });
+    }
+
+    function reload() {
+        refreshList();
+    }
+
+    function closeWin() {
+        api.closeWin({});
+    }
+
+</script>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>支付通知</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.payIcon{
+			font-size: 1rem;
+		    background: #FFFFFF;
+		    text-align: center;
+		}
+		.success_pay{
+	        padding: 1rem 0rem;
+	        color: #7DCF15;
+		}
+		.aui-list .aui-list-item {
+		    list-style: none;
+		    margin: 0;
+		    color: #7E7E7E;
+		    background-color: #ffffff;
+		    position: relative;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		    padding: 0.5rem 2.5rem;
+		    text-align:center;
+		    font-size: 0.7rem;
+		}
+		.marTop{
+		    margin-top: 1rem;
+		}
+		.pd_left{
+			padding-left:0.75rem !important;
+		}
+		.aui-btn-block {
+		    display: block;
+		    width: 86%;
+		    padding: 0.4rem 0;
+		    font-size: 0.9rem;
+		    float: left;
+		    margin-left: 7%;
+		}
+		.aui-btn-info {
+		    color: #ffffff !important;
+		    background-color: #DC251F !important;
+		    margin-top: 1rem;
+		}
+		.aui-btn-info.aui-active, .aui-btn-info:active {
+		    color: #fff !important;
+		    background-color: #DE5A58 !important;
+		}
+		.payIcon img{
+    		height: 4rem;
+		    margin-top: 6rem;
+		}
+		.border-none:before{ 
+			background-color: #FFFFFF !important;
+		}
+		.border-none:after{
+			background-color: #FFFFFF !important;
+		}
+		.outline{
+			color: #F6A171 !important;
+    		border: 1px solid #F6A171 !important;
+		}
+		.aui-btn-outlined {
+		    background: transparent !important;
+		    border: 1px solid #bdbdbd;
+		    color: #bdbdbd;
+		}
+    </style>
+</head>
+<body>
+	<div class="payIcon">
+	    <div><img src="../../../icon/payfor/icon_success.png" alt="" /></div>
+	    <div class="success_pay"><span>支付成功</span></div>
+	</div>
+	<div class="aui-content aui-margin-b-15">
+	    <ul class="aui-list aui-form-list border-none">
+	    	
+	    </ul>
+	 </div>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var fs;
+	var systemType;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		fs = api.require('fs');
+		systemType = api.systemType;
+		log('体检付款页面的传参',cache);
+	}
+</script>
+</html>

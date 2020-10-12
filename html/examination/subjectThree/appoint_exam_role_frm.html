@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>考前训练预约-角色选择</title>
+	<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/aui/aui.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+</head>
+<style type="text/css">
+	body{
+		background-color: white;
+	}
+	span{
+		line-height: 1rem;
+	}
+	.span{
+		vertical-align:middle
+	}
+</style>
+<body>
+	<section class="aui-content" style="margin-top:2rem;">
+		<div class="aui-card-list" style="margin: 0rem 1.25rem 1rem 1.2rem;">
+			<div class="aui-card-list-content" tapmode onclick='examRole("normal")' style="background-image: url(../../../image/background/bg_user.png);background-size:100%;height: 100%;width: 100%;line-height: 6rem;border-radius: 0.5rem;">
+				<div class="box" style="text-align: center;font-weight:bold;">
+					<span style="color: #000000;font-size: 1.25rem;" class="span">
+						我要预约
+						<br/>
+						<span style="font-size:0.75rem;margin-top:0.75rem;">
+								（车辆：考场提供<span style="margin-left:1.25rem;">指导：教练）</span>
+							</span>
+					</span>
+					<!-- <span style="color: #ffffff;">
+
+					</span> -->
+
+
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="aui-content">
+		<div class="aui-card-list" style="margin: 0rem 1.25rem 1rem 1.2rem;">
+			<div class="aui-card-list-content " tapmode onclick='examRole("normal_vip")' style="background-image: url(../../../image/background/bg_mine_login.png);background-size: 100%;height: 6rem;width: 100%; line-height: 6rem;border-radius: 0.5rem;">
+				<div class="box" style="text-align: center;font-weight:bold;">
+					<span style="color: #ffffff;font-size: 1.25rem;" class="span">
+						高级vip服务
+						<br/>
+						<span style="font-size:0.75rem;margin-top:0.75rem;">
+							（车辆：考场提供<span style="margin-left:1.25rem;">指导：考场提供）</span>
+						</span>
+					</span>
+
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+<script type="text/javascript " src="../../../script/api.js "></script>
+<script type="text/javascript " src="../../../script/jquery_3_2_1_min.js "></script>
+<script type="text/javascript " src="../../../script/common/common.js "></script>
+<script type="text/javascript ">
+	var cache;
+	var role_sel = 'role_select';
+	var sel_role;
+	apiready = function(){
+		cache = api.pageParam;
+
+		//登录完成动作监听
+        toEventListener(role_sel,function(ret,err){
+			examRole(sel_role,'go_on');
+		});
+	}
+	//第一个为普通预约，第二个为VIP预约，图片后期更换
+	function examRole(role) {
+		sel_role = role;
+		if(islogin()){
+			if(isauth()){
+				roadSel(role);
+			}else{
+				//需要实名认证
+				openAuthHtml_i(null);
+			}
+		}else{
+			//需要先登录
+			openLoginHtml_i(null);
+		}
+	}
+
+	/**
+	 * 打开角色选择
+	 */
+	function roadSel(role){
+		console.log('role:'+role);
+		params = {
+			type:'three',
+			from:'before_exam',
+			role:role
+		}
+		api.openWin({
+	        name: 'common_exam_room_list_win',
+	        url: '../../common/common_exam_room_list_win.html',
+	        slidBackEnabled:'false',
+	        vScrollBarEnabled:'false',
+	        hScrollBarEnabled:'false',
+	        reload:true,
+	        pageParam: {
+	        	data:params
+	        }
+	    });
+	}
+
+	/**
+	 * 打开实名认证
+	 */
+	function openAuthHtml_i(data){
+		api.openWin({
+	       name: 'mine_account_auth_win',
+	       url: '../../mine/mine_account_auth_win.html',
+	       slidBackEnabled:'true',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       pageParam: data
+	   });
+	}
+
+	/**
+	 * 去登录
+	 */
+	function openLoginHtml_i(data){
+		api.openWin({
+	       name: 'unpassword_login',
+	       url: '../../unpassword_login.html',
+	       slidBackEnabled:'true',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       pageParam: data
+	   });
+	}
+
+</script>
+</html>

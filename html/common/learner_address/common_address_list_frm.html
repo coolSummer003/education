@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>地址管理</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html,body{
+    		background-color: #ffffff;
+    		height:100%;
+    	}
+		header img {
+		    width: 20px;
+		}
+		.container{
+			width: 100%;
+		    height: 100%;
+		}
+		.address{
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		    height: 100%;
+		}
+		.address_list{
+			width: 98%;
+			margin-left:2%;
+			padding-left: 1%;
+			height: auto;
+		}
+		.address_list:after{
+			content: '';
+			height: 1px;
+			background: #DDDDDD;
+			width: 100%;
+			background-color: #dddddd;
+			display: block;
+			margin-top: 0.5rem;
+			-webkit-transform: scaleY(0.5);
+			transform: scaleY(0.5);
+			-webkit-transform-origin: 50% 100%;
+			transform-origin: 50% 100%;
+		}
+		.address_content{
+			width: 100%;
+			height: auto;
+		}
+		.address_name{
+			height: 2rem;
+			padding-top: 0.5rem;
+		}
+		.address_address{
+			height: auto;
+		}
+		.name{
+			display: inline-block;
+			height: 1.5rem;
+			line-height: 1.5rem;
+			width: 30%;
+			font-weight: 700;
+		}
+		.phone{
+			display: inline-block;
+			height: 1.5rem;
+			line-height: 1.5rem;
+			width: 30%;
+			margin-left: 5%;
+			font-weight: 700;
+		}
+		.default{
+			display: inline-block;
+			height: 0.7rem;
+			line-height: 0.7rem;
+			margin-bottom: 0.4rem;
+			width: 1.2rem;
+			text-align: center;
+			font-size: 0.5rem;
+			background: #B9D3FF;
+			color: #3F86FF;
+			border-radius: 10%;
+			padding-top: 0.05rem;
+		}
+		.detailAddress{
+			width: 85%;
+			height: auto;
+			line-height: 1rem;
+			color: #333;
+		}
+		.address_edit{
+			width: 12%;
+			height: auto;
+			margin-left: 90%;
+			margin-top: -1.5rem;
+			margin-bottom: 1rem;
+		}
+		.address_edit img{
+			width: 1rem;
+			vertical-align: top;
+		}
+		.newAdd{
+			position: fixed;
+			bottom: 0.5rem;
+			width: 70%;
+			left: 15%;
+			height: 2rem;
+			border-radius: 25px;
+			overflow: hidden;
+			line-height: 2rem;
+			background: linear-gradient(to left, #3F86FE , #64ADF6) !important;
+			color: #fff;
+			text-align: center;
+		}
+		.newAdd img{
+			width: 0.8rem;
+			margin-bottom: -1px;
+		}
+		.btnName{
+			font-size: 0.9rem;
+		}
+		.msg{
+			background: #FFFFFF;
+		    height: 90%;
+			text-align: center;
+			font-size:0.7rem;
+		    display: flex;
+		}
+		.msg img{
+			width:8rem;
+			margin-top: 9rem;
+		}
+		.msg span{
+			margin:auto;
+		}
+		.selected{
+			background:url("../../../icon/common/icon_list_selet.png") no-repeat;
+		    background-position-x: right;
+    		background-position-y: 0px;
+    		background-size: 6%;
+    		background-color:#F0F0F0;
+		}
+    </style>
+</head>
+<body>
+	<div class="container">
+	    <ul class="address" id="address">
+	    	<!--<li class="address_list selected" tapmode onclick='select_this_address(this,"{{=i}}")'>
+			<li class="address_list" tapmode onclick='select_this_address(this,"{{=i}}")'>
+				<div class="address_content">
+					<div class="address_name">
+						<span class="name aui-ellipsis-1">666</span>
+						<span class="phone aui-ellipsis-1">18267206329</span>
+						<span class="default aui-ellipsis-1">默认</span>
+					</div>
+					<div class="address_address">
+						<p class="detailAddress aui-ellipsis-2">666</p>
+						<div class="address_edit" tapmode onclick="addressModify('{{=it[i].name}}','{{=it[i].telephone}}','{{=it[i].isDefault}}','{{=it[i].districtCd}}','{{=it[i].district.provinceName}}','{{=it[i].district.cityName}}','{{=it[i].district.areaName}}','{{=it[i].district.provinceCd}}','{{=it[i].district.cityCd}}','{{=it[i].district.areaCd}}','{{=it[i].addressDetail}}','{{=it[i].id}}','{{=it[i].version}}','{{=it[i].postalCode}}')">
+							<img src="../../../icon/common/icon_address_edit.png">
+						</div>
+					</div>
+				</div>
+			</li>-->
+	    </ul>
+	    <!-- 地址列表 -->
+		<script type="text/template" charset="UTF-8" id="addressList">
+			{{ for(var i=0;i<it.length;i++){ }}
+			{{ if(it[0].selected_address_id == it[i].id){ }}
+			<li class="address_list selected" tapmode onclick='select_this_address(this,"{{=i}}")'>
+			{{ }else{ }}
+			<li class="address_list" tapmode onclick='select_this_address(this,"{{=i}}")'>
+			{{ } }}
+				<div class="address_content">
+					<div class="address_name">
+						<span class="name aui-ellipsis-1">{{=it[i].name}}</span>
+						<span class="phone aui-ellipsis-1">{{=phone(it[i].telephone)}}</span>
+						{{ if(it[i].isDefault != 0){ }}
+						<span class="default aui-ellipsis-1">默认</span>
+						{{ } }}
+					</div>
+					<div class="address_address">
+						<p class="detailAddress aui-ellipsis-2">{{=it[i].district.provinceName}}&nbsp;{{=it[i].district.cityName}}&nbsp;{{=it[i].district.areaName}}&nbsp;{{=it[i].addressDetail}}</p>
+						<div class="address_edit" tapmode onclick="addressModify('{{=it[i].name}}','{{=it[i].telephone}}','{{=it[i].isDefault}}','{{=it[i].districtCd}}','{{=it[i].district.provinceName}}','{{=it[i].district.cityName}}','{{=it[i].district.areaName}}','{{=it[i].district.provinceCd}}','{{=it[i].district.cityCd}}','{{=it[i].district.areaCd}}','{{=it[i].addressDetail}}','{{=it[i].id}}','{{=it[i].version}}','{{=it[i].postalCode}}')">
+							<img src="../../../icon/common/icon_address_edit.png">
+						</div>
+					</div>
+				</div>
+			</li>
+			{{ } }}
+		</script>
+		<!--<div class="newAdd" tapmode onclick="addressEdit()">
+			<img src="../../../icon/common/icon_add_white.png" >
+			<span class="btnName">新建地址</span>
+		</div>-->
+	</div>
+	<div id='load_div'>
+	</div>
+	</script>
+	<script type="text/template" charset="utf-8" id='msg_src'>
+		<div class="msg">
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var msg_src = $('#msg_src').html(); //更多src
+	var isEmpty = false;//标记是否未设置地址
+	var isAllowNew = true;//是否允许再创建
+	var addressLimit = 8;//允许创建的最大地址数
+	var learnerAddressList;//学员地址全局变量
+	apiready = function(){
+		cache = api.pageParam;
+		api.addEventListener({
+			name: 'init'
+		}, function(ret, err) {
+			location.reload();
+		});
+		init();
+	}
+	function init(){
+		defaultload();
+		url="api/learner/address-list";
+		params={
+			learnerId:getUserId()
+		}
+		ajax_Request(url,"get","json",params,function(ret,err){
+			log("地址数据：",ret);
+			if(ret){
+				if(ret.code == 0){
+					if(ret.learnerAddressList.length>0){
+						if(ret.learnerAddressList.length == 1){
+							//只有一条地址时候必须是默认
+							isEmpty = true;
+						}
+						if(ret.learnerAddressList.length >= addressLimit){
+							//超过最大限制则不允许创建
+							isAllowNew = false;
+						}
+						if(cache.isSelect){
+							//如果是通过选择页面进来的，需要标记被选中的哪条地址
+							ret.learnerAddressList[0].selected_address_id = cache.selected_address_id;
+						}
+						learnerAddressList = ret.learnerAddressList;
+						var addressList = $("#addressList").html();
+						$("#address").html(doT.template(addressList)(ret.learnerAddressList));
+						api.parseTapmode();
+					}else{
+						isEmpty = true;
+						setMsg("您还未添加地址，请点击新建~");
+					}
+				}else{
+					setMsg(ret.msg);
+				}
+				api.hideProgress();
+			}else{
+				alert_msg("服务器繁忙，请稍后再试");
+				api.hideProgress();
+			}
+		})
+	}
+	
+	//手机号处理
+	function phone(phone){
+		var tel = phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+		return tel;
+	}
+
+	//设置页面提示信息
+	function setMsg(msg) {
+		if ($('#address').find('li').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+			setTimeout(function() {
+				$("#address").html(doT.template(msg_src)({
+					'msg': msg
+				}));
+			}, 500);
+		} else { //原先已经有数据的情况下
+			setTimeout(function() {
+				$('#load_div').html(doT.template(more_src)({
+					'msg': msg,
+					'img': ''
+				}));
+			}, 500);
+		}
+	}
+	//打开新建页面
+	function addressEdit(){
+		if(isAllowNew){
+			params = {
+				flag:"new",
+				isEmpty:isEmpty
+			}
+			api.openWin({
+				name: 'common_address_edit_win',
+				url: './common_address_edit_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				pageParam: params
+			});
+		}else{
+			alert_msg('地址最多只能建'+addressLimit+'个');
+		}
+	}
+	
+	//打开修改页面
+	function addressModify(name,phone,isDefault,districtCd,province,city,area,provinceCd,cityCd,areaCd,address,id,version,postalCode){
+		params = {
+			name:name,
+			phone:phone,
+			isDefault:isDefault,
+			district:{
+				districtCd:districtCd,
+				province:province,
+				city:city,
+				area:area,
+				provinceCd:provinceCd,
+				cityCd:cityCd,
+				areaCd:areaCd
+			},
+			isEmpty:isEmpty,
+			address:address,
+			id:id,
+			version:version,
+			postalCode:postalCode,
+			flag:"modify"
+		}
+		api.openWin({
+			name: 'common_address_edit_win',
+			url: './common_address_edit_win.html',
+			slidBackEnabled: 'false',
+			vScrollBarEnabled: 'false',
+			hScrollBarEnabled: 'false',
+			reload: true,
+			pageParam: params
+		});
+	}
+	
+	/**
+	 * 选中该地址 
+	 */
+	function select_this_address(e,index){
+		if(cache.isSelect){
+			$('.address_list').removeClass('selected');
+			$(e).addClass('selected');
+			sendEvent(cache.action,learnerAddressList[index]);
+			api.closeWin({
+            });
+		}
+	}
+</script>
+</html>

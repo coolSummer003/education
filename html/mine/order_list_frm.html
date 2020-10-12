@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>我的订单</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_list_swipe.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+        body,html{
+            background:#F5F5F5;
+        }
+        *{
+          -webkit-user-select:element;
+        }
+        .aui-list:before {
+            height: 1px;
+            background-color: #FFF;
+            display: block;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: auto;
+            bottom: auto;
+            width: 100%;
+            z-index: 2;
+            -webkit-transform-origin: 50% 100%;
+            transform-origin: 50% 100%;
+            pointer-events: none;
+        }
+        .order_list{
+            overflow: hidden;
+            zoom: 1;
+            margin-left: 0.5rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0rem!important;
+        }
+        .order_list_div{
+            overflow-x:hidden;
+            width:100%;
+        }
+        .list_div{
+            min-height: 2.2rem;
+            padding: 0 0.3rem;
+            background: #FFF;
+            margin-left:0.7rem;
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            position: relative;
+        }
+        .list_div:after{
+            content: '';
+            height: 1px;
+            background: #DDDDDD;
+            width: 100%;
+            background-color: #dddddd;
+            display: block;
+            -webkit-transform: scaleY(0.5);
+            transform: scaleY(0.5);
+            -webkit-transform-origin: 50% 100%;
+            transform-origin: 50% 100%;
+        }
+        .swipeleft{
+            min-height:2.2rem;
+            padding: 0 0.3rem;
+            background: #FFF;
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            transform:translateX(-50%);
+            -webkit-transform:translateX(-50%);
+            position: relative;
+        }
+        .swipeleft:after{
+            content: '';
+            height: 1px;
+            background: #DDDDDD;
+            width: 100%;
+            background-color: #dddddd;
+            display: block;
+            -webkit-transform: scaleY(0.5);
+            transform: scaleY(0.5);
+            -webkit-transform-origin: 50% 100%;
+            transform-origin: 50% 100%;
+        }
+        .order_title{
+            height:1.5rem;
+            font-size:0.7rem;
+            line-height:1.5rem;
+            padding-top: 0.3rem;
+        }
+        .order_title img{
+            height: 1rem;
+            width: 1rem;
+            margin-bottom: -0.2rem;
+            border-radius: 100%;
+            object-fit: cover;
+            margin-right: 0.2rem;
+        }
+        .order_title font{
+            color:#7D7D7D;
+            font-size: 0.6rem;
+        }
+        .order_content{
+            width:100%;
+            overflow:hidden;
+            margin-top: 0.5rem;
+            position: relative;
+        }
+        .recode-img{
+            width:20%;
+            float:left;
+        }
+        .recode-img_div{
+            width:3.5rem;
+            height:3.5rem;
+            margin: auto;
+        }
+        .recode-img_div img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+        }
+        .order_txt{
+            padding: 0 0.5rem;
+            position: relative;
+        }
+        .txt-title{
+            font-size: 0.7rem;
+            position: relative;
+            overflow: hidden;
+            margin-top: 0.1rem;
+        }
+        .txt-start{
+            font-size:0.7rem;
+            color:#7D7D7D;
+        }
+        .txt-submit-time{
+            font-size:0.7rem;
+            color:#7D7D7D;
+        }
+        .txt-price{
+            font-size: 0.6rem;
+            text-align: right;
+            height: 1.5rem;
+            line-height: 1.5rem;
+        }
+        .txt-price span{
+            font-size:0.8rem;
+            color: #FF9641;
+        }
+        .recode-status{
+            font-size: 0.6rem;
+            position: absolute;
+            right: 0.5rem;
+            background: #1E8DD8;
+            color: #FFF;
+            padding: 1px 0.2rem;
+            z-index: 1;
+        }
+        .w-orange{
+            color:#FF9641;
+        }
+        .txt-title span{
+            color:#7D7D7D;
+        }
+        .order_title span{
+            color:#4D92E3;
+        }
+        .label{
+            font-size: 0.5rem;
+            background: #FDF2E6;
+            color: #EE9A70;
+            border:solid 1px #FDF2E6;
+            float: left;
+            padding: 0rem 0.1rem;
+            margin-top: 0.1rem;
+            margin-right:0.5rem;
+        }
+        .label-status{
+            font-size: 0.5rem;
+            border:solid 1px #EE9A70;
+            color: #EE9A70;
+            float: left;
+            padding: 0rem 0.2rem;
+            margin-top: 0.1rem;
+            margin-right:0.5rem;
+        }
+        .msg{
+            background: #F5F5F5;
+            height: 20rem;
+            text-align: center;
+            font-size:0.7rem;
+        }
+        .msg img{
+            width:12rem;
+            margin: auto;
+            margin-top: 9rem;
+        }
+        .jiazai{
+            font-size: 0.7rem;
+            background: #F5F5F5;
+            color: #666565;
+            padding-bottom: 0.3rem;
+            text-align: center;
+            padding-top: 0.3rem;
+        }
+        .jiazai img{
+            width: 1.5rem;
+        }
+        .order-button{
+            overflow: hidden;
+            padding: 0.5rem 0rem;
+        }
+        .op-button{
+            color: #535860;
+            font-size: 0.7rem;
+            text-align: center;
+            border-radius: 1rem;
+            float: right;
+            margin-left: 0.5rem;
+            background: #F1F2F4;
+            padding: 0.1rem 0.6rem;
+        }
+        .unabled{
+            color:#909090;
+        }
+        .unabled-cash{
+            color:#EE9A70;
+            background:#FDF2E6;
+        }
+        .order-button-detail{
+            color:#03A9F4;
+            background:#E8F7FA;
+        }
+        .mainImage{
+            width:4rem;
+            height:4rem;
+            float:left;
+            position:relative;
+            margin:0.1rem 1rem 0 0;
+            object-fit: content;
+        }
+        .shop_name{
+            color: #333333!important;
+            font-size: 0.9rem!important;
+            font-weight: bold;
+            width: 85%;
+            margin-bottom: 0.5rem;
+            margin-top: 0.25rem;
+        }
+        .shop_price{
+            color: #333333!important;
+            font-size: 0.8rem!important;
+        }
+        .shop_number{
+            font-size: 0.8rem!important;
+            margin-bottom: 0.5rem;
+        }
+        #order_list{
+            border-radius:5px;
+        }
+       .aui-list-item{
+            border-radius: 10px;
+            margin-top: 0.5rem!important;
+            margin-bottom: 0.5rem!important;
+            box-shadow:0px 5px 5px 0px rgba(0,0,0,0.02),0px 7px 5px 0px rgba(0,0,0,0.05),0px 3px 5px 0px rgba(0,0,0,0.03);
+        }
+        .li-inner-top{
+            border-bottom: solid 1px #F5F5F5;
+            padding-top:0.3rem;
+            padding-bottom: 0.3rem;
+            margin-right:0.5rem;
+            color: #999999;
+        }
+        .aui-card-list{
+            background: unset;
+        }
+        .aui-list:before,.aui-list:after{
+            height: 0;
+        }
+        .aui-media-list .aui-list-item-inner{
+            width: 73%;
+            padding-top: 1rem!important;
+            padding-right: 0!important;
+        }
+        .aui-btn{
+            color: #3F86FF;
+            border-radius: 1rem;
+            border: solid 1px #3F86FF;
+            background: #FFFFFF;
+            height: 1.5rem;
+            line-height: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        .shop_image{
+           height: 3.75rem;
+           margin-top: 0.3rem;
+        }
+        .shop_expree_number{
+            display: inline!important;
+            bottom: 0.3rem;
+            margin-top: 0.2rem;
+        }
+        .aui-media-list-item-inner{
+            margin-top: -0.2rem;
+        }
+        .pay_btn{
+            position: relative;
+            bottom: 0.5rem;
+            text-align: right;
+            right: 0.5rem;
+        }
+        .copy_img,.delivery_road,.delivery_begins{
+            width: 1rem!important;
+            display: inline!important;
+            vertical-align: middle;
+            z-index: 99;
+        }
+        .delivery_road{
+            margin-left: -0.3rem;
+            margin-right: 0.2rem
+        }
+        .delivery_begins{
+            width: 1.5rem!important;
+            margin-left: -0.5rem;
+        }
+        
+        .expreeNumber{
+           color:#999999!important;
+           font-size: 0.7rem;
+           padding-bottom: 0.5rem;
+        }
+        .bubble{
+            width: 10rem!important;
+        }
+        .aui-list .aui-list-item:after{
+            height: 0;
+        }
+       .icon_bottom{
+           width: 0.7rem!important;
+           margin: auto; 
+       }
+       .logistics_list{
+            border-radius: 0px!important;
+            padding-bottom: 0.5rem!important;
+            border-top:solid 1px #F5F5F5;
+            margin-right:0.5rem;
+            margin-top: 0.3rem
+       }
+       .aui-btn{
+            margin-right: 0.5rem;
+       }
+    </style>
+</head>
+<body>
+    <div class="order_list aui-card-list" id="orderdetail">
+        <div class="aui-card-list-content">
+        <ul class="aui-list aui-media-list" id="order_list">
+             
+            <!--<li class="aui-list-item aui-list-item-middle" tapmode onclick = 'openOrderDetail("135")'>
+                <div>
+                <div class="aui-media-list-item-inner li-inner-top">
+                   <div class="aui-list-item-text" style="font-size: 0.7rem;width: 100%;">
+                     <div class="aui-list-item-title aui-font-size-14">2020-01-08 11:20:15</div>
+                     <div class="aui-list-item-right">已取消</div>  
+                   </div>
+                   
+                </div>
+                <div class="aui-media-list-item-inner">
+                   
+                   <div class="aui-list-item-media">
+                        <img src="../../../image/demo/school/1.jpg" class="shop_image" onerror="javascript:this.src='../../icon/default/icon_default_list.png'">
+                    </div>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title aui-ellipsis-2 shop_name">充电宝</div>
+                            <div class="aui-info-item">
+                                <span class="aui-margin-l-5 shop_number">x1</span>
+                            </div>
+                        </div>
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title aui-ellipsis-2 shop_price">88积分+12元</div>
+                            
+                            
+                        </div>
+                       
+                    </div>
+                    
+                </div>
+               
+               </div>
+               <div class="aui-list-item-text shop_expree_number" >
+                                       快递单号:<div  id="expreeNumber" class="expreeNumber">1521365421542</div> 
+                   <div class="aui-card-list" style="border-radius: 0px;">
+                            <div class="aui-card-list-content">
+                                <ul class="aui-list aui-media-list">
+                                    <li class="aui-list-item aui-list-item-middle" style="border:none;box-shadow: unset;">
+                                        <div class="aui-media-list-item-inner">
+                                            <div class="aui-list-item-media">
+                                               <div class="aui-list-item-text">
+                                                    <div class="aui-list-item-title aui-font-size-14">2020-08-01 00:00:00</div>
+                                                </div>
+                                            </div>
+                                            <div class="aui-list-item-inner">
+                                                <div class="aui-list-item-text">
+                                                    <div class="aui-list-item-title aui-font-size-14">AUI</div>
+                                                    <div class="aui-list-item-right">08:00</div>
+                                                </div>
+                                                <div class="aui-list-item-text layui-timeline-item">
+                                                <img src="../../icon/common/icon_delivery_begins.png" class="delivery_begins"/>
+                                                    <span style="margin-left: 0.5rem;">快件由【陕西西安转运中心】发往【浙江杭州转运中心】</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                   <li class="aui-list-item aui-list-item-middle" style="border:none;box-shadow: unset;padding-left: 0rem;">
+                                        <div class="aui-media-list-item-inner">
+                                            <div class="aui-list-item-media">
+                                               <div class="aui-list-item-text">
+                                                    <div class="aui-list-item-title aui-font-size-14" style="text-align: center">2020-08-01 00:00</div>
+                                                </div>
+                                            </div>
+                                            <div class="aui-list-item-inner" style="padding-top: 0.5rem!important;">
+                                                
+                                                <div class="aui-list-item-text layui-timeline-item">
+                                                <img src="../../icon/common/icon_delivery_road.png" class="delivery_road"/>
+                                                <span style="margin-left: 0.5rem;">快件已到达【陕西西安转运中心】扫描员是【杭州组】</span> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                          
+                        </div>   
+               </div>
+               <div class="pay_btn">
+                   <div class="aui-btn" tapmode  onclick='cancelOrder("1")'>取消订单</div>
+                   <div class="aui-btn">立刻支付</div>             
+                 </div>
+                 
+            </li> 
+           <li class="aui-list-item aui-list-item-middle" tapmode onclick = 'openOrderDetail("135")'>
+                <div class="aui-media-list-item-inner li-inner-top">
+                   <div class="aui-list-item-text" style="font-size: 0.7rem;">
+                     2020-01-08 11:20:15
+                   </div>   
+                </div>
+                <div class="aui-media-list-item-inner">
+                   
+                   <div class="aui-list-item-media">
+                        <img src="../../image/background/xiaofengshan.jpg">
+                    </div>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title aui-ellipsis-1 shop_name">电风扇1111111111111111111111111111</div>
+                            <div class="aui-info-item">
+                                <span class="aui-margin-l-5 shop_number">x1</span>
+                            </div>
+                        </div>
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title aui-ellipsis-2 shop_price">88积分+12元</div>
+                            
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+               
+            </li> -->
+        </ul>
+    </div>
+        
+    </div>
+    
+    <div id='load_div'>
+    </div>
+    <script type="text/template" charset="utf-8" id='load_src'>
+        <div class="load">
+            <img src="../../icon/common/loadding.gif" alt="" /><br>
+            <span>加载中...</span>
+        </div>
+    </script>
+    <script type="text/template" charset="utf-8" id='msg_src'>
+        <div class="msg">
+            <img src="../../icon/common/empty.png" alt="" /><br>
+            <span>{{=it.msg}}</span>
+        </div>
+    </script>
+    <script type="text/template" charset="utf-8" id='more_src'>
+        <div class="jiazai">
+            <span>{{=it.msg}}</span>
+        </div>
+    </script>
+    <script type="text/template" charset="utf-8" id='order_list_src'>
+    {{ for(var i=0;i<it.length;i++){ }}
+           
+            <li class="aui-list-item aui-list-item-middle" >
+                <div tapmode onclick = 'openOrderDetail("{{=it[i].id}}","{{=it[i].expreeNumber}}")'>
+                <div class="aui-media-list-item-inner li-inner-top">
+                   <div class="aui-list-item-text" style="font-size: 0.7rem;width: 100%;">
+                     {{=it[i].insertDt}}
+                     <div class="aui-list-item-right">
+                        {{ if(it[i].paymentStatus == "0"){}}
+                            <span style="color:red">待支付</span>         
+                        {{ }else if(it[i].paymentStatus == "1" && it[i].pickupWay == "0"){ }}
+                             {{ if(it[i].status == "0"){}}
+                                                                    已支付-待发货
+                              {{ }else if(it[i].status == "1"){ }}
+                                                                    已支付-已发货
+                              {{ }else if(it[i].status == "2"){ }}  
+                                                                    已支付-已收货
+                              {{ } }}
+                        {{ }else if(it[i].paymentStatus == "1" && it[i].pickupWay == "1"){ }}  
+                            已支付                                 
+                        {{ }else if(it[i].paymentStatus == "2"){ }}
+                                                            已取消                                     
+                        {{ } }}
+                     </div>  
+                   </div>   
+                </div>
+                <div class="aui-media-list-item-inner">
+                   <div class="aui-list-item-media">
+                        <img src="../../icon/default/icon_default_big_pic.png" class="shop_image" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url +  it[i].image}}">
+                    </div>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title aui-ellipsis-1 shop_name">{{=it[i].name}}</div>
+                            <div class="aui-info-item">
+                                <span class="aui-margin-l-5 shop_number">x{{=it[i].quantity}}</span>
+                            </div>
+                        </div>
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title aui-ellipsis-2 shop_price">
+                            {{ if(it[i].orderAmount != "" && it[i].integral != ""){}}
+                                                            ￥{{=it[i].orderAmount}}+{{=it[i].integral}}积分        
+                            {{ }else if(it[i].orderAmount == "0" && it[i].integral != "0"){ }}
+                              {{=it[i].integral}}积分
+                            {{ }else if(it[i].orderAmount != "0" && it[i].integral == "0"){ }}
+                                                             ￥{{=it[i].orderAmount}}                
+                            {{ } }}
+                        </div>
+                        
+                        </div>
+                        
+                    </div>
+                    
+                </div>  
+               </div>
+               {{ if(it[i].expreeNumber != ""){}}
+                          <div class="expreeNumber" > 快递单号：{{=it[i].expreeNumber}}</div>  
+                         {{ } }}
+                     
+                     <div class="pay_btn">
+                        {{ if(it[i].paymentStatus == "0"){}}
+                            <div class="aui-btn" tapmode  onclick='cancelOrder("{{=it[i].id}}")'>取消订单</div>  
+                            <div class="aui-btn" tapmode  onclick='openPay("{{=it[i].id}}","{{=it[i].insertDt}}","{{=it[i].name}}","{{=it[i].orderAmount}}")'>立刻支付</div>
+                        {{ }else if(it[i].paymentStatus == "1" && it[i].status != "2"){}}
+                             <!--<div class="aui-btn" tapmode  onclick='confirmReceipt("{{=it[i].id}}")'>确认收货</div>-->                                        
+                        {{ } }}     
+                    </div>  
+            </li> 
+            
+        {{ } }}
+    </script>
+
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script src="../../script/echo.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript" src="../../script/dist/clipboard.min.js"></script>
+<script type="text/javascript">
+    var cache;
+    var page = 1,limit = 10;
+    var load_src = $('#load_src').html();//加载src
+    var msg_src = $('#msg_src').html();//消息提示src
+    var more_src = $('#more_src').html();//更多src
+    var refresh = true;//标记是否是刷新操作
+		apiready = function() {
+			cache = api.pageParam.data;
+			learnerid = cache.learnerId;
+			goRefrash(40, '#FFFFFF', null, null, function() {
+				refreshList();
+			});
+			goLoad(function(ret, err) {
+				loadList();
+			});
+			init();
+			api.parseTapmode();
+			api.addEventListener({
+				name : 'closeWin'
+			}, function(ret, err) {
+				if (ret.value.key1 == '1') {
+					refreshList();
+				}
+			});
+		};
+		//列表刷新
+		function refreshList() {
+			page = 1;
+			refresh = true;
+			//           setLoad();
+			init();
+		}
+
+		//列表上拉
+		function loadList() {
+			page++;
+			if ($('#order_list').find(".aui-list-item").length == 0)
+				refresh = true;
+			else
+				refresh = false;
+			setLoad();
+			init();
+			
+		}
+
+		function init() {
+		    defaultload("订单加载中");
+			url = "api/integral-order/list-integral-order";
+			params = {
+				learnerId : getUserId(),
+				page : page,
+				limit : limit
+			}
+			console.log(JSON.stringify(params));
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('订单信息', ret);
+				if (ret) {
+					if (ret.code == 0 && ret.listIntegralOrderRecords != "") {
+						if (page == 1) {
+							var order_list_src = $('#order_list_src').html();
+							$('#order_list').html(doT.template( order_list_src )(ret.listIntegralOrderRecords));
+							//                          $("#0").append("<img src='../../icon/common/bubble.png' class='bubble' id='bubble'/>")
+						} else {
+							var order_list_src = $('#order_list_src').html();
+							$('#order_list').append(doT.template( order_list_src )(ret.listIntegralOrderRecords));
+						}
+						api.hideProgress();
+            			//延迟加载图片
+                        setTimeout(function() {
+                            echoInit();
+                            api.refreshHeaderLoadDone();
+                        }, 300);
+						
+					}else if(ret.code == 0 && ret.listIntegralOrderRecords == ""){
+					   setMsg(refresh ? '暂无订单' : '暂无更多');
+					   api.hideProgress();
+					}
+				}else{
+                    setMsg('服务器繁忙,请稍后再试！');
+                    api.hideProgress();
+                }
+			});
+		}
+
+		//设置页面加载的画面
+		function setLoad() {
+			if (refresh || $('#order_list').find('.aui-list-item').length == 0) {//如果是刷新或者之前无数据的下拉刷新，全屏提示
+				$('#load_div').html('');
+				//          $("#order_list").html(doT.template( load_src )( null ));
+			} else {
+				setTimeout(function() {
+					$('#load_div').html(doT.template( more_src )({
+						'msg' : '加载更多中...',
+						'img' : '../../icon/common/jiazai.gif'
+					}));
+				}, 300);
+			}
+		}
+
+		//设置页面提示信息
+		function setMsg(msg) {
+			if (refresh || $('#order_list').find('.aui-list-item').length == 0) {//如果是刷新或者之前无数据的上拉加载，全屏提示
+				console.log("提示")
+				setTimeout(function() {
+					$("#order_list").html(doT.template( msg_src )({
+						'msg' : msg
+					}));
+				}, 300);
+			} else {//原先已经有数据的情况下
+				setTimeout(function() {
+					$('#load_div').html(doT.template( more_src )({
+						'msg' : msg,
+						'img' : ''
+					}));
+				}, 300);
+			}
+		}
+
+		//打开订单详情
+		function openOrderDetail(id,expreeNumber) {
+			console.log(id);
+			console.log(expreeNumber)
+			api.openWin({
+				name : 'order_detail_win',
+				url : './order_detail_win.html',
+				slidBackEnabled : 'false',
+				vScrollBarEnabled : 'false',
+				hScrollBarEnabled : 'false',
+				reload : true,
+				pageParam : {
+					id : id,
+					expreeNumber: expreeNumber
+				}
+			});
+			api.parseTapmode();
+		}
+
+		//打开支付页面
+		function openPay(orderId, time, name, money) {
+			console.log(orderId, time, name, money)
+			commonOpenWin('goods_shop_pay_frm', {
+				orderId : orderId,
+				price : money,
+				serviceName : name,
+				orderTime : time,
+			});
+			api.parseTapmode();
+		}
+
+		//取消订单
+		function cancelOrder(orderId) {
+			defaultload("取消订单中");
+			url = "/api/integral-order/cancelOrder";
+			params = {
+				id : orderId,
+			}
+			console.log(JSON.stringify(params));
+			ajax_Request(url, 'post', 'json', params, function(ret, err) {
+				log('取消订单', ret);
+				if (ret) {
+					if (ret.code == 0) {
+						alert_msg('取消订单成功！');
+						setTimeout(function() {
+							refreshList();
+						}, 300);
+						api.hideProgress();
+						api.parseTapmode();
+					} else {
+						api.hideProgress();
+						alert_msg(ret.msg);
+					}
+				} else {
+					api.hideProgress();
+					alert_msg('服务器繁忙，请稍候再试！');
+				}
+			})
+		}
+        
+        //确认收货
+        function confirmReceipt(orderId) {
+            defaultload("确认收货中")
+            url = "/api/integral-order/confirmReceipt";
+            params = {
+                id : orderId,
+            }
+            console.log(JSON.stringify(params));
+            ajax_Request(url, 'post', 'json', params, function(ret, err) {
+                log('确认收货', ret);
+                if (ret) {
+                    if (ret.code == 0) {
+                        alert_msg('确认收货成功！');
+                        setTimeout(function() {
+                            refreshList();
+                        }, 300);
+                        api.hideProgress();
+                        api.parseTapmode();
+                    } else {
+                        api.hideProgress();
+                        alert_msg(ret.msg);
+                    }
+                } else {
+                    api.hideProgress();
+                    alert_msg('服务器繁忙，请稍候再试！');
+                }
+            })
+        }
+        
+        
+        
+</script>
+</html>
+</body>

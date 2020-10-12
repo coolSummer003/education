@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>确认订单</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../css/common/common.css" />
+    <style>
+    	
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+		#common_title{
+    		font-weight:normal;
+    		color:#2E2E2E;
+    	}
+    
+    	.aui-bar-nav {
+		    top: 0;
+		    line-height: 2.25rem;
+		    background-color: #FFF;
+		    color: #000;
+		    border-bottom: solid 1px #FFFFFF;
+		}
+	
+	
+	
+		
+	
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+            <img src="../../../../icon/common/icon_header_return.png">
+        </a>
+        <div class="aui-title" id="common_title">
+        	确认订单
+        </div>
+      
+    </header>
+</body>
+<script type="text/javascript" src="../../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../../script/common/common.js"></script>
+<script type="text/javascript">
+
+	var headerPos;
+	var frmName;
+	var articleId;
+	var systemType;
+	var cache;
+	apiready = function(){
+		api.parseTapmode();
+		var header = $api.byId('aui-header');
+		var origal_h = $api.offset(header).h;
+		$api.fixStatusBar(header);
+		cache = api.pageParam.data;
+		systemType = api.systemType;
+		headerPos = $api.offset(header);
+		//监听物理返回键
+        api.addEventListener({
+	    	name: 'keyback'
+		}, function(ret, err) {
+		    closeWin();
+		});
+		openFrame(cache.name,headerPos.h-3, api.winHeight - headerPos.h,'none');
+		log('cache::::::',cache);
+		
+	}
+	function openFrame(name,y,h,animate){
+		api.openFrame({
+            name: name,
+            url: './'+name+'.html',
+            bgColor:'#efeff4',
+            rect: {
+                x: 0,
+                y: y,
+                w: 'auto',
+                h: h
+            },
+            animation:{
+	        	type:animate,                //动画类型（详见动画类型常量）
+			    subType:"from_right",       //动画子类型（详见动画子类型常量）
+			    duration:300
+	        },
+            bounces: false,
+            pageParam:{
+           		data:cache
+            },
+            reload:true,
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+	}
+	function closeWin(){
+	
+			api.closeWin({
+            });
+	
+	}
+	
+	function changeMenuTitle(name){
+		$('#common_title').html(name);
+		log('支付结果1')
+		
+	}
+	//支付后下一步
+	function pay_for_next(){
+		changeMenuTitle('支付结果');
+		log('支付结果2')
+		data={
+		name:cache.name
+		}
+		openFrameCommon('examination_sure',data,headerPos.h-3,api.winHeight - headerPos.h,false);
+	}
+
+</script>
+</html>

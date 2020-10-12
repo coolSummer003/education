@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>发现</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	body{
+			background-color: #3F86FF;
+    	}
+
+			header img {
+				width: 20px;
+		}
+    	#menu{
+			font-size:0.8rem;
+
+		}
+		#menuPackage{
+			position: relative;
+			background-color: #fff;
+		}
+		#aui-header{
+			background-color: #3F86FF;
+			color: #fff;
+		}
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header" style="border-bottom: none;">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+						<img src="../../icon/common/icon_header_return_white.png">
+				</a>
+				<div class="aui-title">
+					 合同管理
+				</div>
+		</header>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+
+	var headHieght;//头部高度
+	var clearance = 40;//间隙
+	var target_index = 0;//menu标记
+	apiready = function(){
+		api.setFrameAttr({
+		    bounces: false
+		});
+
+		$api.fixStatusBar($api.dom('header'));
+		headHieght = $api.dom('header').offsetHeight;
+
+		openFrameGroup();
+		//切换menu初始化
+// 		var tabwork = new auiTab({
+// 	        element:document.getElementById("menu"),
+// 	        repeatClick:true
+// 	    },function(ret){
+// 
+// 	        if(ret){
+// 
+// 				f_slide($(ret.dom));
+// 	        	setViewFrame(ret.index-1);
+// 	        }
+// 	    });
+	    // $('.aui-active').click();
+		//给第一个menu添加样式
+		// f_slide($(".aui-bar-btn-item").eq(0));
+	};
+
+    //滑块加载事件
+	// function f_slide(e){
+	// 	$('.aui-bar-btn-item').removeClass('aui-active');
+	// 	$(e).addClass('aui-active');
+	// 	$('.list_bar').css('width',($('.aui-active').width() - clearance*2)+'px');
+	// 	$('.list_bar_inner').css('width',($('.aui-active').width() - clearance*2)+'px');
+	// 	document.getElementById('slideSpan').style.webkitTransform = 'translateX('+($(e).position().left + clearance)+'px)';
+	// }
+
+    //设置frameGroup可见frame
+//     function setViewFrame(index){
+// 
+//     	api.setFrameGroupIndex({
+// 		    name: 'mine_contract_group',
+// 		    index: index
+// 		});
+//     }
+
+    //加载home的group
+    function openFrameGroup(){
+		api.openFrame({
+		    name: 'recode_my_contract_frm',
+		    url: './'+'recode_my_contract_frm'+'.html',
+		    bgColor:'#efeff4',
+		    rect: {
+		        x: 0,
+		        y: headHieght,
+		        w: 'auto',
+		        h: api.winHeight - headHieght
+		    },
+		    bounces: false,
+		    pageParam:{
+				type:'042001'
+			},
+		    reload:true,
+		    softInputBarEnabled:true,
+		    softInputMode:'resize'
+		});
+  //   	api.openFrameGroup({
+		//     name: 'mine_contract_group',
+		//     scrollEnabled:true,
+		//     preload:0,
+		//     rect: {
+		//         x: 0,
+		//         y: headHieght,
+		//         w: 'auto',
+		//         h: api.winHeight - headHieght
+		//     },
+		//     frames: [{
+		//         name: 'recode_my_contract_frm',//驾校
+		//         url: '../mine/recode_my_contract_frm.html',
+		//         bgColor: '#EFEFF4',
+		//         bounces: true,
+		//         scrollToTop:true,
+		// 				pageParam:{
+		// 					type:'042001'
+		// 			}
+		// 	},{
+		//         name: 'recode_my_contract_hospital_frm',//医院
+		//         bounces: true,
+		//         url: '../mine/recode_my_contract_frm.html',
+		//         bgColor: '#EFEFF4',
+		//         scrollToTop:true,
+		// 				pageParam:{
+		// 					type:'042002'
+		// 			}
+		//     }]
+		// }, function(ret, err) {
+		//     var index = ret.index;
+		// 		  console.log("加载了"+JSON.stringify(ret));
+		//     f_slide($('.aui-bar-btn-item').eq(index));
+		// });
+    }
+		function closeWin(){
+			api.closeWin({
+				name:'recode_my_contract_win'
+					});
+		}
+</script>
+</html>

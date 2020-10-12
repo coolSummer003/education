@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>积分明细</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<style>
+		html,body{
+    		background:#f5f5f5;
+    		overflow-x: hidden;
+    	}
+		
+		.msg{
+			background: #FFFFFF;
+			height: 20rem;
+			text-align: center;
+			font-size:0.7rem;
+		}
+		.msg img{
+			width:8rem;
+			margin-top: 9rem;
+		}
+		.jiazai{
+			font-size: 0.7rem;
+			background: #FFFFFF;
+			color: #666565;
+			padding-bottom: 0.3rem;
+			text-align: center;
+			padding-top: 0.3rem;
+		}
+		.jiazai img{
+			width: 1.5rem;
+		}
+		.aui-content{
+			width:100%;
+		}
+		.aui-list-item{
+			border-bottom:0.02rem solid #DDDDDD;
+			padding:0.35rem 1.5rem 0.35rem 1rem;
+			width:100%;
+			background: #FFFFFF
+		}
+		.body_top{
+		    background:url(../../image/background/mine_integral_background.png);
+		    background-size:cover;
+		    height: 9rem;
+		    margin: 0.75rem;
+		}
+		.top_word{
+            font-size:1rem;
+            position: relative;
+            color: #FFFFFF;
+            top: 1.5rem;
+            left: 1.5rem;
+        }
+        .mine_integral{
+            font-size:1.5rem;
+            position: relative;
+            top: 1.5rem;
+            left:1.5rem;
+            color: #FFFFFF!important;
+            font-weight: bold;
+        }
+        .today_integral{
+            font-size: 0.8rem;
+            display: inline;
+            margin-top:0.75rem;
+            margin-left: 0.5rem;
+            color: #FFFFFF;
+        }
+        .today_integral_title{
+            color: #FFFFFF;
+            float:left;
+            font-size:0.8rem;
+            position: relative;
+            left:1.5rem;
+            top: 1.5rem;
+        }
+        .integral_detail{
+            margin-left: 0.75rem;
+            margin-bottom: 0.75rem;
+            color: #27344B;
+            font-size: 1rem;
+            font-weight:bold;
+        }
+        .mine_integral_list{
+            background:rgba(255,255,255,1);
+            box-shadow:0px 1px 8px 0px rgba(64,134,254,0.1);
+            border-radius:10px;
+        }
+    </style>
+	</head>
+	<body>
+        <div class="body_top">
+            <div class="top">
+                <div class="top_word">我的积分</div>
+                <div class="mine_integral" id="exchange">0</div>
+            <div  class="today_integral_title" >今日新增<div class="today_integral" id="dayExchang">+0</div></div>
+            </div>
+        </div>
+        <div class="integral_detail">积分明细</div>
+		<section class="aui-content">
+                <ul class="refreshs" style="margin: 0.75rem;">      
+                <!--<li class="aui-list-item aui-list-item-middle mine_integral_list" >
+                    <div class="aui-media-list-item-inner" >
+                        <div class="aui-list-item-inner " style="width:100%;">
+                            <div class="aui-card-list-user-name">
+                                <div class="aui-ellipsis-1" style="font-size:1.5rem;font-weight: bold;color: #27344B">
+                                    denglu
+                                </div>
+                                 
+                            <div class="aui-list-item-right" style="font-size:0.8rem;top:0.5rem;color:#EB7718">+1积分</div>
+                                    
+                            </div>
+                            <div class="aui-list-item-text" style="color: #767676;font-size: 0.7rem;">
+                                    2020-05-19 05:15:55
+                            </div>
+                        </div>
+                    </div>
+                </li>-->
+            </ul>  
+		</section>
+		<script type="text/template" charset="utf-8" id='dis_ind_news'>
+			{{ for(var i=0;i < it.listIntegralExchangeRecords.length;i++){ }}
+		<div>
+			<ul class="refreshs" style="margin: 0.75rem;">		
+				<li class="aui-list-item aui-list-item-middle mine_integral_list" >
+					<div class="aui-media-list-item-inner" >
+						<div class="aui-list-item-inner " style="width:100%;">
+							<div class="aui-card-list-user-name">
+								<div class="aui-ellipsis-1" style="font-size:1.5rem;font-weight: bold;color: #27344B">
+									{{? it.listIntegralExchangeRecords[i].integralChange<=0}}
+									<p>兑换了{{=it.listIntegralExchangeRecords[i].name}}</p>
+									{{?? it.listIntegralExchangeRecords[i].integralChange>0}}
+									<p>{{=it.listIntegralExchangeRecords[i].policyName}}</p>
+									{{?}}
+								</div>
+									{{? it.listIntegralExchangeRecords[i].integralChange<=0}}
+                            <div class="aui-list-item-right" style="font-size:1.2rem;top:0.5rem;color:#FFA23A">{{=it.listIntegralExchangeRecords[i].integralChange}}</div>
+									{{?? it.listIntegralExchangeRecords[i].integralChange>0}}
+							<div class="aui-list-item-right" style="font-size:1.2rem;top:0.5rem;color:#FFA23A">+{{=it.listIntegralExchangeRecords[i].integralChange}}</div>
+									{{?}}
+							</div>
+							<div class="aui-list-item-text" style="color: #888888;font-size: 0.7rem;">
+									{{=it.listIntegralExchangeRecords[i].insertDt}}
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		{{ } }}
+	</script>
+
+		<div id='load_div'></div>
+		<script type="text/template" charset="utf-8" id='load_src'>
+			<div class="load">
+			<img src="../../icon/common/loadding.gif" alt="" /><br>
+			<span>加载中...</span>
+		</div>
+	</script>
+		<script type="text/template" charset="utf-8" id='msg_src'>
+			<div class="msg">
+			<img src="../../icon/common/empty.png" alt="" /><br>
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+		<script type="text/template" charset="utf-8" id='more_src'>
+			<div class="jiazai">
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script src="../../script/echo.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var page = 1,
+			limit = 10;
+		var load_src = $('#load_src').html(); //加载src
+		var msg_src = $('#msg_src').html(); //消息提示src
+		var more_src = $('#more_src').html(); //更多src
+		var refresh = true; //标记是否是刷新操作
+		var imgs; //存放图片
+		var learnerId; //用户ID
+		apiready = function() {
+			// init();
+			goRefrash(40, '#FFFFFF', null, null, function() {
+				refreshList();
+			});
+			goLoad(function(ret, err) {
+				loadList();
+			});
+			api.refreshHeaderLoading();
+			if (islogin()) {
+				learnerId = getUserId();
+			} else {
+				learnerId = "";
+			}
+		};
+		//列表下拉
+		function refreshList() {
+			page = 1;
+			refresh = true;
+			//setLoad();
+			init();
+		}
+		//列表上拉
+		function loadList() {
+			page++;
+			if ($('.refreshs').find('li').length == 0) refresh = true;
+			else refresh = false;
+			setLoad();
+			init();
+		}
+
+		function init() {
+			url = 'api/integral-exchange/list-integral-exchange';
+			params = {
+				learnerId: getUserId(),
+				page: page,
+				limit: limit
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				 log('积分明细', ret);
+				if (ret) {
+					if (ret.code == 0 && ret.listIntegralExchangeRecords.length > 0) {
+					   $("#dayExchang").html("+"+ret.dayExchang)
+					   $("#exchange").html(ret.exchange);
+						if (page == 1) {
+							var dis_ind_news = $('#dis_ind_news').html();
+							$("section").html(doT.template(dis_ind_news)(ret));
+						} else {
+							var dis_ind_news = $('#dis_ind_news').html();
+							$("section").append(doT.template(dis_ind_news)(ret));
+						}
+						api.parseTapmode();
+					} else {
+						setMsg(refresh ? '暂无积分明细' : '暂无更多');
+					}
+				} else {
+					setMsg('服务器繁忙，请稍候再试！');
+				}
+			})
+			setTimeout(function() {
+				api.refreshHeaderLoadDone();
+			}, 500);
+		}
+
+		//设置页面加载的画面
+		function setLoad() {
+			if (refresh || $('.refreshs').find('li').length == 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+				$('#load_div').html('');
+			} else {
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': '加载更多中...',
+						'img': '../../icon/common/jiazai.gif'
+					}));
+				}, 500);
+			}
+		}
+
+		//设置页面提示信息
+		function setMsg(msg) {
+			if (refresh || $('.refreshs').find('li').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+				setTimeout(function() {
+					$("section").html(doT.template(msg_src)({
+						'msg': msg
+					}));
+				}, 500);
+			} else { //原先已经有数据的情况下
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': msg,
+						'img': ''
+					}));
+				}, 500);
+			}
+		}
+	</script>
+</html>

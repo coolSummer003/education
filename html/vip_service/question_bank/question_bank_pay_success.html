@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>题库支付成功</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html, body {
+            background-color: #fff;
+            padding: 0;
+            margin: 0;
+        }
+
+        #aui-header {
+            color: #333;
+        }
+
+        #aui-header img {
+            width: 1rem;
+        }
+
+        #aui-header:after {
+            height: 0;
+        }
+
+        .pay-success-img {
+			position: fixed;
+			width: 94%;
+			left: 3%;
+			height: auto;
+			top: 4rem;
+        }
+		.pay-success-text-div{
+			position: fixed;
+			width: 70%;
+			height: auto;
+			top: 10.5rem;
+			left: 15%;
+		}
+        .pay-success-text-div-title{
+			font-size: 0.8rem;
+			color: #75492B;
+			text-align: center;
+			font-weight: bold;
+		}
+		.pay-success-text-div-title span{
+			display: inline-block;
+			color: #292626;
+		}
+		.pay-success-text-div-titles{
+			font-size: 0.8rem;
+			color: #75492B;
+			text-align: center;
+			font-weight: bold;
+		}
+		.valid_times {
+			margin-top: 2rem;
+            color: #75492B;
+            font-size: 0.7rem;
+        }
+        .redirect-btn {
+			position: fixed;
+			top: 23.5rem;
+            width: 60%;
+			left: 20%;
+            height: 2.25rem;
+            line-height: 2.25rem;
+            background: linear-gradient(to bottom,#FEEDD9,#FAD5AC);
+            border-radius: 1.25rem;
+            color: #75492B;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-align: center;
+        }
+ 
+
+       
+    </style>
+	</head>
+	<body>
+		<div class="aui-content aui-padded-b-10">
+			<div class="pay-success-img-div">
+				<img src="../../../icon/vip/question_bank/vip_success_bg.png" alt="" class="pay-success-img">
+			</div>
+			<div class="pay-success-text-div">
+				<div class="pay-success-text-div-title">恭喜您已成功购买<span id="package_name"></span></div>
+				<div class="pay-success-text-div-titles">祝您考试成功，早日拿本！</div>
+				<div class="valid_times">
+					服务有效时间：<div id="valid_time" style="display: inline-block;"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="redirect-btn" tapmode onclick="redirectVipIndex()">
+			去享特权
+		</div>
+
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		apiready = function() {
+			api.parseTapmode();
+			cache = api.pageParam.data;
+			log('', cache)
+			defaultload();
+			$('#package_name').html(cache.packageName);
+			init();
+		};
+
+		function init() {
+			url = 'api/questionviporder/get-question-vip-service-order-info';
+			params = {
+				orderId: cache.orderId
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('收到的时间', ret)
+				if (ret) {
+					if (ret.code == 0) {
+						$('#valid_time').html((ret.questionVipOrderInfo.serviceStartDt).split(' ')[0] + '~' + (ret.questionVipOrderInfo
+							.serviceEndDt).split(' ')[0]);
+						closedefaultload();
+					}
+				} else {
+
+				}
+			})
+		}
+
+		// 跳转到vip主页
+		function redirectVipIndex() {
+			// esc_function('question_bank_pay_win','','closeThis();')
+			//打开新页面的同时关闭当前页
+			api.addEventListener({
+				name: 'viewdisappear'
+			}, function() {
+				api.closeWin({
+					name: api.winName
+				});
+			});
+			sendEvent('closeVipO', {})
+			commonOpenWin('curriculum_service_win', '')
+		}
+	</script>
+</html>

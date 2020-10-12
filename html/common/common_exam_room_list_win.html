@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>考场选择列表</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+    	#simulator_appointment_title{
+    		font-weight:normal;
+    	}
+    	.order li{
+            float: left;
+		    font-size: 0.7rem;
+		    width: 33.333%;
+    		text-align: center;
+	    }
+	    .order{
+		    height: 2rem;
+		    line-height: 2rem;
+		    position: relative;
+	        background: #FFFFFF;
+		}
+	    .order img{
+		    width: 0.4rem;
+   			margin-bottom: 1px;
+   			-webkit-transition: 0.3s ease;
+		}
+		.screen{
+		    float: right !important;
+   			margin-right: 0.8rem;
+		}
+		.screen img{
+			width: 0.8rem;
+    		margin-bottom: -0.05rem;
+		}
+		.active{
+	    	color: #FF9138;
+    		/* border-bottom: solid 2px; */
+	    }
+    </style>
+</head>
+<body>
+	<div id="header_menu">
+		<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+			<a class="aui-pull-left aui-btn aui-hide" tapmode onclick="closeWin();">
+	            <img src="../../icon/common/icon_header_return.png">
+	        </a>
+	        <div class="aui-title" id="simulator_appointment_title">
+	        	考场选择列表
+	        </div>
+	    </header>
+	    <div class="order" id="order">
+	    	<ul>
+	    		<li>
+	    			<span> </span>
+	    		</li>
+	    		<li>
+	    			<span> </span>
+	    			<!-- <span>价格</span>
+	    			<img src="../../icon/common/icon_order.png" alt="" class="arrow"/> -->
+	    		</li>
+	    		<li tapmode onclick="driverSchoolSort(this,2)" class="active">
+	    			<span>距离</span>
+	    			<img src="../../icon/common/icon_order_active.png" alt="" class="arrow"/>
+	    		</li>
+	    	</ul>
+	    </div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var headerPos;
+	apiready = function(){
+		api.parseTapmode();
+		var header = $api.byId('header_menu');
+		$api.fixStatusBar(header);
+		headerPos = $api.offset(header);
+		cache = api.pageParam.data;
+		//如果是考前训练预约，则需要有后退按钮
+		if(cache.from == 'before_exam'){
+			$('.aui-pull-left').removeClass('aui-hide');
+		}
+		if(cache.type == 'one'){
+			$('#simulator_appointment_title').html('科目一考场');
+		}else if(cache.type == 'two'){
+			$('#simulator_appointment_title').html('科目二考场');
+		}else if(cache.type == 'three'){
+			$('#simulator_appointment_title').html('科目三考场');
+		}else if(cache.type == 'four'){
+			$('#simulator_appointment_title').html('科目四考场');
+		}
+		init();
+	}
+	function init(){
+		api.openFrame({
+            name: 'common_exam_room_list_frm',
+            url: './common_exam_room_list_frm.html',
+            bgColor:'#efeff4',
+            rect: {
+                x: 0,
+                y: headerPos.h,
+                w: 'auto',
+                h: api.winHeight - headerPos.h
+            },
+            bounces: true,
+            pageParam:{
+            	data:cache
+            },
+            reload:true,
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+	}
+	//排序
+	var driverSchoolArray = [1,1,1];
+	function driverSchoolSort(it,i){
+		$('.order li').each(function(index,e){
+			if($(e).is($(it))){
+				if($(it).hasClass('active')){
+					if(driverSchoolArray[i] == 1){
+						$(it).find('img').addClass('styleDeg90P');
+						driverSchoolArray[i] = 2;
+					}else{
+						$(it).find('img').removeClass('styleDeg90P');
+						driverSchoolArray[i] = 1;
+					}
+				}else{
+					$(it).addClass('active');
+					$(it).find('.arrow').attr('src','../../icon/common/icon_order_active.png');
+				}
+			}else{
+				$(e).removeClass('active');
+				$(e).find('.arrow').attr('src','../../icon/common/icon_order.png');
+			}
+		})
+		sort(i,driverSchoolArray[i]);
+	}
+
+	function sort(sortType,sort){
+		esc_function('leftPane','common_exam_room_list_frm','refreshList('+sortType+','+sort+')');
+	}
+	
+	function closeWin(){
+		api.closeWin({
+        });
+	}
+</script>
+</html>

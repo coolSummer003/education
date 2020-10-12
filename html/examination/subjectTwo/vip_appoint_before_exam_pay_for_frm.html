@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>确认预约信息</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/swiper/swiper.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html,body{
+    		background-color: #EFEFF4;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		.pic_unit{
+		    overflow: hidden;
+	    	background: #F3F3F3;
+    	    padding-bottom: 0.5rem;
+    	    /*column-count: 2;
+    		column-gap: 0;*/
+		}
+		.pic_div{
+		    width: 45.5%;
+		    float: left;
+		    margin: 0.5rem 0% 0rem 3%;
+		    background: #FFFFFF;
+		}
+		.pic_div img{
+			width: 100%;
+		}
+		.f_left{
+			float: left;
+		    max-width: 90%;
+		    display: flex;
+		}
+		.f_right{
+			float: right;
+		}
+		.pic_title{
+		    margin: 0.5rem 0.7rem 0.1rem 0.7rem;
+		    font-size: 0.8rem;
+		    height: 2.4rem;
+		}
+		input[type="text"], input[type="password"], input[type="search"], input[type="email"], input[type="tel"], input[type="url"], input[type="date"], input[type="datetime-local"], input[type="time"], input[type="number"], select, textarea {
+		    border: none;
+		    background: none;
+		    border-radius: 0;
+		    box-shadow: none;
+		    display: block;
+		    padding: 0;
+		    margin: 0;
+		    width: 100%;
+		    min-height: 2.7rem;
+		    color: #424242;
+		    font-size: 0.8rem;
+		    font-family: inherit;
+		    box-sizing: border-box;
+		    -webkit-user-select: text;
+		    user-select: text;
+		    -webkit-appearance: none;
+		    appearance: none;
+		    -webkit-appearance: none;
+		}
+		.aui-list textarea {
+		    overflow: auto;
+		    margin: 0.5rem 0;
+		    height: 5rem;
+		    line-height: 1rem;
+		    resize: none;
+		}
+		.aui-list-item-label-fushu{
+		    color: #212121;
+		    width: 35%;
+		    min-width: 1.5rem;
+		    margin: 0;
+		    padding: 0;
+		    padding-right: 0.25rem;
+		    /* line-height: 2.2rem; */
+		    position: relative;
+		    overflow: hidden;
+		    white-space: nowrap;
+		    max-width: 100%;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    height: 5rem;
+    		line-height: 1rem;
+		}
+		.color_red{
+			color:#DC251F !important;
+		}
+		.hetong{
+			min-width: 14.5rem !important;
+    		font-size: 0.7rem !important;
+	        line-height: 1.3rem;
+	        text-align: center;
+	        padding-right: 0.75rem !important;
+		}
+		.aui-switch:checked {
+		    border-color: #DC251F;
+		    background-color: #DC251F;
+		}
+		.aui-list {
+		    padding: 0;
+		    margin: 0;
+		    position: relative;
+		    font-size: 0.8rem;
+		    padding-bottom: 1rem;
+	        overflow: hidden;
+		}
+		.aui-btn-info.aui-active, .aui-btn-info:active {
+		    color: #fff !important;
+		    background-color: #DE5A58 !important;
+		}
+		.aui-btn {
+		    color: #ffffff;
+		    background: linear-gradient(to left, #03B4F7 , #79D6FA) !important;
+		    border-radius: 2rem;
+		    margin-bottom: 1rem !important;
+		}
+		.pd_left{
+			padding-left:0.75rem !important;
+		}
+		.cancel{
+		    margin-top: 1rem;
+		}
+		.aui-radio:checked, .aui-radio.aui-checked, .aui-checkbox:checked, .aui-checkbox.aui-checked {
+		    background-color: #DC251F;
+		    border: solid 1px #DC251F;
+		    text-align: center;
+		    background-clip: padding-box;
+		}
+		.aui-list .aui-list-item {
+		    list-style: none;
+		    margin: 0;
+		    padding: 0;
+		    padding-left: 0.75rem;
+		    color: #212121;
+		    background-color: #ffffff;
+		    position: relative;
+		    min-height: 3.5rem;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		}
+		.danwei{
+			color:#A5A5A5;
+		}
+		.cash{
+		    color: #FB6500;
+		}
+		.ziBig{
+			font-size:1rem;
+		}
+		.zigeneral{
+			font-size: 0.8rem;
+		}
+		.order-cash{
+			float:right;
+			margin-right:0.5rem;
+		}
+		.coupon{
+			font-size:0.6rem;
+			color:#FB6500;
+		}
+		.nav {
+	        height: 100%;
+	        overflow-x: scroll;
+	        overflow-y: hidden;
+	        background-color: #FFFFFF;
+	        /*解决ios上滑动不流畅*/
+	        -webkit-overflow-scrolling: touch;
+	    }
+	    .con {
+	        height: 100%;
+		    display: -webkit-box;
+		    align-items: center;
+	        position: relative;
+	    }
+	    .con>li {
+            text-align: center;
+		    font-size: 0.8rem;
+		    min-width: 3rem;
+		    list-style: none;
+		    margin-top: 0.3rem;
+		    margin-left: 0.5rem;
+		    margin-bottom: 0.3rem;
+	    }
+	    .container {
+            height: 2.5rem;
+		    line-height: 2.5rem;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    overflow: hidden;
+	    }
+	    .container ::-webkit-scrollbar {
+	        display: none;
+	    }
+	    .lump{
+		    float: left;
+		    padding: 0rem 0.7rem;
+		    font-size: 0.8rem;
+		    color: #6F6F6F;
+		    height: 1.5rem;
+		    border-radius: 5px;
+		    border: solid 1px #F1F1F1;
+		    line-height: 1.5rem;
+	    }
+	    .lump-active {
+		    color: #72A8C9 !important;
+		    border: solid 1px #72A8C9 !important;
+		    background: #DDEBFF !important;
+		}
+		.pay_type {
+		    width: 100%;
+		    text-align: center;
+		}
+		.pay_type img {
+		    width: 6rem;
+		    margin-top: 0.3rem;
+		}
+		.pay-icon{
+			float: left;
+			width: 90%;
+    		text-align: left;
+		}
+		.check-box{
+			float: right;
+		    margin-top: 0.7rem;
+		}
+		.aui-list.aui-form-list .aui-list-item:active {
+		    background-color: #F1F1F1;
+		}
+		.aui-tips {
+		    padding: 0 0.75rem;
+		    width: 100%;
+		    z-index: 99;
+		    height: 1.9rem;
+		    line-height: 1.9rem;
+		    position: relative;
+		    background-color: #FFE9D6;
+		    color: #FF9036;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		    -webkit-align-items: center;
+		    align-items: center;
+		}
+    </style>
+</head>
+<body>
+	<div class="aui-content aui-margin-b-15">
+		<div class="aui-tips aui-margin-b-15e" id="tips-1" style="position: fixed;top: 0;">
+		    <i class="aui-iconfont aui-icon-info"></i>
+		    <div class="aui-tips-title">温馨提示：请在<span id="limit-time">00:00</span>之内支付完毕</div>
+		    <i class="aui-iconfont aui-icon-date"></i>
+		</div>
+	    <ul class="aui-list aui-form-list none-bottom-style" style="margin-top: 1.9rem;">
+	    	<li class="aui-list-item none-bottom-style" style="min-height: 2.5rem;">
+	            <div class="aui-list-item-inner bottom-slide">
+	                <div class="aui-list-item-label">
+                		训练日期：
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <span id="trainDate"></span>
+	                </div>
+	            </div>
+	        </li>
+	    	<li class="aui-list-item none-bottom-style" style="min-height: 2.5rem;">
+	            <div class="aui-list-item-inner bottom-slide">
+	                <div class="aui-list-item-label">
+                		考试日期：
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <span id="testDate"></span>
+	                </div>
+	            </div>
+	        </li>
+	    	<li class="aui-list-item none-bottom-style" style="min-height: 2.2rem;">
+	            <div class="aui-list-item-inner bottom-slide">
+	                <div class="aui-list-item-label">
+                		班次：
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <span id="shiftsName"></span>
+	                </div>
+	            </div>
+	            <div class="aui-list-item-inner bottom-slide">
+	                <div class="aui-list-item-label">
+                		车型：
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <span id="carTypeName"></span>
+	                </div>
+	            </div>
+	        </li>
+	    	<li class="aui-list-item none-bottom-style" style="min-height: 2.2rem;">
+	            <div class="aui-list-item-inner bottom-slide">
+	                <div class="aui-list-item-label">
+                		区域：
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <span id="areaName"></span>
+	                </div>
+	            </div>
+	            <div class="aui-list-item-inner bottom-slide">
+	                <div class="aui-list-item-label">
+                		线路：
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <span id="roadName"></span>
+	                </div>
+	            </div>
+	        </li>
+	        <div class="aui-hide" id="coach_info">
+		        <li class="aui-list-item none-bottom-style" style="min-height: 2.2rem;margin-top:0.5rem;">
+		            <div class="aui-list-item-inner bottom-slide">
+		                <div class="aui-list-item-label">
+	                		教练：
+		                </div>
+		                <div class="aui-list-item-input">
+		                    <span id="coachName"></span>
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item none-bottom-style" style="min-height: 2.2rem;">
+		        	<div class="aui-list-item-inner bottom-slide">
+		                <div class="aui-list-item-label">
+	                		电话：
+		                </div>
+		                <div class="aui-list-item-input">
+		                    <span id="coachPhone"></span>
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item none-bottom-style" style="min-height: 2.2rem;">
+		        	<div class="aui-list-item-inner bottom-slide">
+		                <div class="aui-list-item-label">
+	                		身份证：
+		                </div>
+		                <div class="aui-list-item-input">
+		                    <span id="coachIdCard"></span>
+		                </div>
+		            </div>
+		        </li>
+	        </div>
+	       	<div id='learners'>
+		        
+	       	</div>
+	    </ul>
+	 </div>
+	 <!-- 学员列表 -->
+	 <script type="text/template" charset="utf-8" id="studentListTemplate">
+	 	<nav class="nav" id="button_nav" style='margin-top:0.5rem;'>
+            <ul class="con">
+       			<li class="menuLi margin-top-0-5">
+	            	<div class='lump lump-active' tapmode onclick="selectbutton(this,0)">
+	            		<span>总览</span>
+	            	</div>
+	            </li>
+	            {{ for(var i=0;i<it.appointOrderVipList.length;i++){ }}
+	       			<li class="menuLi margin-top-0-5">
+		            	<div class='lump' tapmode onclick="selectbutton(this,({{=(i - 0 + 1)}}))">
+		            		<span>学员{{=(i - 0 + 1)}}</span>
+		            	</div>
+		            </li>
+	            {{ } }}
+	  		</ul>
+		</nav>
+	 	<div class="swiper-container">
+		    <div class="swiper-wrapper">
+		    	<div class="swiper-slide">
+		       		<li class="aui-list-item none-bottom-style" style="min-height: 2.2rem;">
+			        	<div class="aui-list-item-inner bottom-slide">
+			                <div class="aui-list-item-label">
+		                		学员数：
+			                </div>
+			                <div class="aui-list-item-input">
+			                    <span>{{=it.appointOrderVipList.length}}人</span>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item none-bottom-style" style="min-height: 2.2rem;">
+			            <div class="aui-list-item-inner bottom-slide">
+			                <div class="aui-list-item-label">
+		                		训练总费用：
+			                </div>
+			                <div class="aui-list-item-input">
+			                  	  ￥{{=cashFormatO(calTotleAmount(it.appointOrderVipList))}}
+			                    {{ for(var i=0;i<it.appointOrderVipList.length;i++){ }}
+			                    	{{ if(it.appointOrderVipList[i].couponsList.length > 0){ }}
+			                    		<span class='coupon'>&ensp;(优惠金额{{=calCoupon(it.appointOrderVipList)}}元)</span>
+			                    		{{ break; }}
+			                    	{{ } }}
+			                    {{ } }}
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item none-bottom-style" style="min-height: 2.2rem;">
+			            <div class="aui-list-item-inner bottom-slide">
+			                <div class="aui-list-item-label">
+		                		训练总费用：
+			                </div>
+			                <div class="aui-list-item-input">
+			                  	  ￥{{=cashFormatO(calTotleAmountService(it.appointOrderVipList))}}
+			                    {{ for(var i=0;i<it.appointOrderVipList.length;i++){ }}
+			                    	{{ if(it.appointOrderVipList[i].couponsList.length > 0){ }}
+			                    		<span class='coupon'>&ensp;(优惠金额{{=calCouponService(it.appointOrderVipList)}}元)</span>
+			                    		{{ break; }}
+			                    	{{ } }}
+			                    {{ } }}
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item none-bottom-style" style="min-height: 2.2rem;">
+			        	<div class="aui-list-item-inner bottom-slide">
+			                <div class="aui-list-item-label">
+		                		实际总支付：
+			                </div>
+			                <div class="aui-list-item-input">
+			                    <span class='order-cash danwei'>元</span>
+	                    		<span class="order-cash cash">{{=cashFormatO(it.paymentFee)}}</span>
+			                </div>
+			            </div>
+			        </li>
+		    	</div>
+		    	{{ for(var i=0;i<it.appointOrderVipList.length;i++){ }}
+	    		<div class="swiper-slide">
+		       		<li class="aui-list-item none-bottom-style" style="min-height: 2.2rem;">
+			        	<div class="aui-list-item-inner bottom-slide">
+			                <div class="aui-list-item-label">
+		                		学员姓名：
+			                </div>
+			                <div class="aui-list-item-input">
+			                    <span>{{=it.appointOrderVipList[i].learnerName}}</span>
+			                </div>
+			            </div>
+			        </li>
+		       		<li class="aui-list-item none-bottom-style" style="min-height: 2.2rem;">
+			        	<div class="aui-list-item-inner bottom-slide">
+			                <div class="aui-list-item-label">
+		                		身份证：
+			                </div>
+			                <div class="aui-list-item-input">
+			                    <span>{{=it.appointOrderVipList[i].idcardNo}}</span>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item none-bottom-style" style="min-height: 2.2rem;">
+			        	<div class="aui-list-item-inner bottom-slide">
+			                <div class="aui-list-item-label">
+		                		所属驾校：
+			                </div>
+			                <div class="aui-list-item-input">
+			                    <span id="schoolName">{{=it.schoolName}}</span>
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item none-bottom-style" style="min-height: 2.2rem;">
+			            <div class="aui-list-item-inner bottom-slide">
+			                <div class="aui-list-item-label">
+		                		训练费用：
+			                </div>
+			                <div class="aui-list-item-input">
+			                    	￥{{=cashFormatO(it.appointOrderVipList[i].trainingFee)}}
+			                    {{ if(it.appointOrderVipList[i].couponsList.length > 0){ }}
+				                    <span class='coupon'>&ensp;(优惠券金额{{=it.appointOrderVipList[i].couponsList[0].trainingFee}}元)</span>
+			                    {{ } }}
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item none-bottom-style" style="min-height: 2.2rem;">
+			            <div class="aui-list-item-inner bottom-slide">
+			                <div class="aui-list-item-label">
+		                		服务费用：
+			                </div>
+			                <div class="aui-list-item-input">
+			                    	￥{{=cashFormatO(it.appointOrderVipList[i].serviceFee)}}
+			                    {{ if(it.appointOrderVipList[i].couponsList.length > 0){ }}
+				                    <span class='coupon'>&ensp;(优惠券金额{{=it.appointOrderVipList[i].couponsList[0].serviceFee}}元)</span>
+			                    {{ } }}
+			                </div>
+			            </div>
+			        </li>
+			        <li class="aui-list-item none-bottom-style" style="min-height: 2.2rem;">
+			        	<div class="aui-list-item-inner bottom-slide">
+			                <div class="aui-list-item-label">
+		                		实际支付：
+			                </div>
+			                <div class="aui-list-item-input">
+								<span class='order-cash danwei'>元</span>
+			                    <span class='order-cash cash'>
+			                    	{{ if(it.appointOrderVipList[i].couponsList.length > 0){ }}
+					                    {{=cashFormatO(it.appointOrderVipList[i].trainingFee - it.appointOrderVipList[i].couponsList[0].trainingFee)}}
+				                    {{ }else{ }}
+				                    	{{=cashFormatO(it.appointOrderVipList[i].trainingFee)}}
+				                    {{ } }}
+								</span>
+			                </div>
+			            </div>
+			        </li>
+		    	</div>
+		    	{{ } }}
+		    </div>
+		</div>
+		<li class="aui-list-item none-bottom-style" style="min-height: 2.2rem;margin-top:0.5rem;">
+            <div class="aui-list-item-inner bottom-slide"  onclick='openReceipt()'>
+                <div class="aui-list-item-label">
+            		发&emsp;&emsp;票
+                </div>
+                <div class="aui-list-item-input">
+                    
+                    <span class="order-cash cash" id="entity" style="font-size:0.6rem;">点击开具</span>
+                </div>
+            </div>
+        </li>
+		<li class="aui-list-item none-bottom-style" style="min-height: 2.2rem;">
+            <div class="aui-list-item-inner bottom-slide">
+                <div class="aui-list-item-label">
+            		合&emsp;&emsp;计：
+                </div>
+                <div class="aui-list-item-input">
+                    <span class='order-cash danwei'>元</span>
+                    <span class="order-cash cash">{{=cashFormatO(it.paymentFee)}}</span>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item" style="min-height: 2.2rem;">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label">
+            		支付方式
+                </div>
+            </div>
+        </li>
+        {{ if(it.testCenterId != 5){ }}
+        <li class="aui-list-item none-bottom-style" style='min-height:2.5rem;'>
+            <div class="aui-list-item-input pay_method bottom-slide">
+            	<div class="pay_type zhifubao">
+            		<div class='pay-icon' tapmode onclick="selPayType(this)">
+            			<img src="../../../icon/payfor/pay_zhifubao.png" alt="" />
+            		</div>
+            		<div class='check-box'>
+            			<input class="aui-radio" type="radio" name="pay_method" checked value="1">
+            		</div>
+            	</div>
+            </div>
+        </li>
+        <li class="aui-list-item none-bottom-style" style='min-height:2.5rem;'>
+        	                <div class="aui-list-item-input pay_method bottom-slide">
+        	       				<div class="pay_type caifutong">
+        	                		<div class='pay-icon' tapmode onclick="selPayType(this)">
+        	                			<img src="../../../icon/payfor/pay_weixin.png" alt="" />
+        	                		</div>
+        	                		<div class='check-box'>
+                		<input class="aui-radio " type="radio" name="pay_method" value="2"></label>
+        	                		</div>
+        	                	</div>
+        	            	</div>
+        </li>
+        {{ }else{ }}
+        <li class="aui-list-item none-bottom-style" style='min-height:2.5rem;'>
+            <div class="aui-list-item-input pay_method bottom-slide">
+            	<div class="pay_type zhifubao">
+            		<div class='pay-icon' tapmode onclick="selPayType(this)">
+            			<img src="../../../icon/payfor/pay_zhifubao.png" alt="" />
+            		</div>
+            		<div class='check-box'>
+            			<input class="aui-radio" type="radio" name="pay_method" checked value="3">
+            		</div>
+            	</div>
+            </div>
+        </li>
+        <!-- <li class="aui-list-item none-bottom-style" style='min-height:2.5rem;'>
+        	                <div class="aui-list-item-input pay_method bottom-slide">
+        	       				<div class="pay_type caifutong">
+        	                		<div class='pay-icon' tapmode onclick="selPayType(this)">
+        	                			<img src="../../../icon/payfor/pay_weixin.png" alt="" />
+        	                		</div>
+        	                		<div class='check-box'>
+                		<input class="aui-radio " type="radio" name="pay_method" value="4"></label>
+        	                		</div>
+        	                	</div>
+        	            	</div>
+        </li> -->
+        <li class="aui-list-item none-bottom-style" style='min-height:2.5rem;'>
+            <div class="aui-list-item-input pay_method">
+           				<div class="pay_type caifutong">
+            		<div class='pay-icon' tapmode onclick="selPayType(this)">
+            			<img src="../../../icon/payfor/pay_yunshanfu.png" alt="" />
+            		</div>
+            		<div class='check-box'>
+                		<input class="aui-radio " type="radio" name="pay_method" value="5"></label>
+            		</div>
+            	</div>
+        	</div>
+        </li>
+        {{ } }}
+	    <div class="aui-tips aui-margin-b-15" id="tips" style="background-color:#EFEFF4;color:#FB6500;font-size:0.6rem;margin-top:0.5rem;">
+    		<i class="aui-iconfont aui-icon-info" style="padding-bottom:1rem;"></i>
+    		
+    		<div class="" style="line-height:1rem;text-align:left;position:absolute;left:1.6rem;">退款请在考试日期之前申请，过了考试日期则视为放弃。</br>申请退款之后将于七个工作日内退款。</div>
+	   	</div>
+	    <div class="aui-btn  aui-btn-block" id="m_pay" tapmode onclick="pay()">确认支付</div>
+	 </script>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/swiper/swiper.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var headerPos;
+	var limitTime = 5*60;//设置支付超时时间
+	var dangertime = 1*60;//危险时间
+	var timer;
+	var cache;
+	var aliPayPlus;//支付宝
+	var wxPayPlus;//微信
+	var invoiceData;//发票回调数据
+	var systemType;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		log('最后获得的参数',cache);
+		aliPayPlus = api.require('aliPayPlus');
+		wxPayPlus = api.require('wxPayPlus');
+		systemType = api.systemType;
+		setTimeDown();
+		timer = setInterval(setTimeDown, 1000);
+		init();
+		//选择发票action
+		api.addEventListener({
+		    name: 'myEvent'
+		}, function(ret, err) {
+		    invoiceData=ret.value;
+		    if(invoiceData.is_personal=='0'){
+		    	$("#entity").text(invoiceData.name);
+		    }else if(invoiceData.is_personal=='1'){
+		    	$("#entity").text(invoiceData.entity_name);
+		    }
+		});
+	}
+	function init(){
+		defaultload('加载订单信息中...');
+		
+		//训练日期
+		$('#trainDate').html(cache.trainDate);
+		//考试日期
+		$('#testDate').html(cache.testDate.substring(0,10));
+		//区域
+		$('#areaName').html(cache.areaName);
+		//车型
+		$('#carTypeName').html(cache.carTypeName);
+		//线路
+		$('#roadName').html(cache.roadName);
+		//班次
+		$('#shiftsName').html(cache.shiftsName);
+		
+		if(cache.role == 'normal_vip'){
+			//教练信息
+			$('#coachName').html(cache.coachName);
+			$('#coachPhone').html(cache.coachPhone);
+			$('#coachIdCard').html(cache.idCard);
+			$('#coach_info').removeClass('aui-hide');
+		}
+		
+		url = 'api/appointment-vip/getAppointScheduleDetail';
+		params = {
+			id:cache.trainingScheduleVId,
+			learnerId:getUserId()
+		}
+		log('传参',params);
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			log('返回数据',ret);
+			if(ret){
+				if(ret.code == 0){
+					var studentListTemplate = $('#studentListTemplate').html();
+					ret.appointmentScheduleVip.schoolName = cache.schoolName;
+					$('#learners').html(doT.template(studentListTemplate)(ret.appointmentScheduleVip));
+					cache.testCenterId=ret.appointmentScheduleVip.testCenterId;
+					loadSwiper();
+					api.hideProgress();
+				}else{
+					alert_msg(ret.msg);
+					api.hideProgress();
+				}
+			}else{
+				alert_msg('获取订单失败');
+				api.hideProgress();
+			}
+		});
+	}
+	
+	//支付
+	var isAllowPay = true;//是否允许去支付
+	function pay(){
+		//success_pay();return;
+		var channel = $("input:radio[name='pay_method']:checked").val();
+		if(isAllowPay){
+			url = 'api/appointment-vip/arousePay';
+			params = {
+				learnerId:getUserId(),
+				channel:channel,
+				orderId:cache.trainingScheduleVId,
+				systemType:systemType
+			}
+			if(invoiceData != undefined){
+				params.applyInvoice = {
+					testCenterId:cache.testCenterId,
+					orderId:cache.trainingScheduleVId,//订单号
+					kemu:'036002',
+					isVip:'1',
+					isPersonal:invoiceData.is_personal,//开票抬头  个人/单位
+					name: invoiceData.name,//个人开票时的抬头
+					phone: invoiceData.phone,//电话
+					mail: invoiceData.mail,//邮箱
+					ein: invoiceData.ein,//税号
+					entityName: invoiceData.entity_name,//单位名称
+					organizationType:'0',//单位类型 驾校
+					useWay:'0',//报名用途，写死
+					invoiceType:'0'//开票类型
+				}
+			}
+			
+			defaultload('唤起支付中');
+			//清除定时器
+			clearInterval(timer);
+			ajax_Request(url, 'post', 'json', params, function(ret,err){
+				log('支付接口调用返回',ret);
+				if(ret){
+					if(ret.code == 0){
+						if(channel == 1){
+							AlipPay(ret.aliPayReturn,function(){
+								success_pay();
+							},function(msg){
+								fail_pay(msg);
+							});//支付宝
+						}else if(channel == 2){
+							WechatPay(ret.wechatpayReturn,function(){
+								success_pay();
+							},function(msg){
+								fail_pay(msg);
+							});//微信支付
+						}else{
+							//银联支付跳转
+							arousePay('支付页面',ret.arousePayUrl,ret.payOrderNo);
+						}
+					}else if(ret.code == 700013||ret.code == '700013'){//支付金额为0，可直接支付成功
+						//跳转到支付页面
+						success_pay();
+					}else{
+						fail_pay(ret.msg);
+					}
+				}else{
+					fail_pay('唤起支付失败');
+				}
+			});
+		}else{
+			alert_msg('已完成支付');
+		}
+	}
+	
+	/**
+	 * 选择支付方式 
+	 */
+	function selPayType(e){
+		$(e).parent().find("input[type='radio']").click();
+	}
+	
+	/**
+	 * 银联支付跳转
+	 */
+	function arousePay(name,path,payOrderNo) {
+		params = {
+			name:name,
+			url:path,
+			flag:'appoint-kemu2-vip', //科二考前训练预约flag
+			orderId:cache.trainingScheduleVId,
+			payOrderNo:payOrderNo,
+			winName:api.winName,
+			frmName:api.frameName,
+			channel:$("input:radio[name='pay_method']:checked").val()
+		}
+		api.openWin({
+	       name: 'common_href_win',
+	       url: '../../common/common_href_win.html',
+	       slidBackEnabled:'false',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       useWKWebView:false,
+	       pageParam: params
+	   });
+	}
+	
+	//成功处理
+	function success_pay(){
+		api.hideProgress();
+		isAllowPay = false;//支付成功后就不允许再次点击支付
+		clearInterval(timer);//清除定时器
+		sendEvent('appoint_pay_finish',cache);
+	}
+	
+	//失败处理
+	function fail_pay(msg){
+		//定时器继续
+		timer = setInterval(setTimeDown, 1000);
+		api.hideProgress();
+		alert_msg(msg);
+	}
+	
+	//开发票
+	function openReceipt(){
+		api.openFrame({
+	        name: 'common_receipt',
+	        url: '../../common/common_receipt.html',
+	        bgColor: 'rgba(0,0,0,0.3)',
+	        rect: {
+	            x: 0,
+	            y: 0,
+	            w: 'auto',
+	            h: api.winHeight
+	        },
+	        pageParam: {
+				data: params
+			},
+	        bounces: false,
+	        softInputBarEnabled:true,
+	        softInputMode:'resize',
+	       
+	    });
+	}
+	//初始化轮播
+	var mySwiper;
+	function loadSwiper(){
+		mySwiper = new Swiper(".swiper-container", {
+			autoHeight: true, //高度随内容变化
+			onSlideChangeEnd:function(swiper){
+		       fildeStyle($('.lump').eq(swiper.activeIndex));
+		    }
+		});
+	}
+	
+	//选择预览
+	function selectbutton(o,index){
+		fildeStyle(o);
+		mySwiper.slideTo(index, 500, false);
+	}
+	
+	//移动样式
+	function fildeStyle(o){
+		$('#button_nav').find('.lump').each(function(index,e){
+			if($(e).is($(o))){
+				$(e).addClass('lump-active');
+			}else{
+				$(e).removeClass('lump-active');
+			}
+		});
+		$("#button_nav").animate({scrollLeft: $(o).position().left - 130 + 'px'}, 500);
+	}
+	
+	//计算训练总金额
+	function calTotleAmount(appointOrderVipList){
+		var totleAmout = 0;
+		for(var i=0;i<appointOrderVipList.length;i++){
+			totleAmout = totleAmout + appointOrderVipList[i].trainingFee;
+		}
+		return totleAmout;
+	}
+	
+	//计算服务总金额
+	function calTotleAmountService(appointOrderVipList){
+		var totleAmout = 0;
+		for(var i=0;i<appointOrderVipList.length;i++){
+			totleAmout = totleAmout + appointOrderVipList[i].serviceFee;
+		}
+		return totleAmout;
+	}
+	
+	//计算训练优惠券减免
+	function calCoupon(appointOrderVipList){
+		var couponAmout = 0;
+		for(var i=0;i<appointOrderVipList.length;i++){
+			if(appointOrderVipList[i].couponsList.length > 0){
+				couponAmout = couponAmout + appointOrderVipList[i].couponsList[0].trainingFee;
+			}
+		}
+		return couponAmout;
+	}
+	
+	//计算服务优惠券减免
+	function calCouponService(appointOrderVipList){
+		var couponAmout = 0;
+		for(var i=0;i<appointOrderVipList.length;i++){
+			if(appointOrderVipList[i].couponsList.length > 0){
+				couponAmout = couponAmout + appointOrderVipList[i].couponsList[0].serviceFee;
+			}
+		}
+		return couponAmout;
+	}
+	
+	//计算实际总金额
+	function calActualAmout(appointOrderVipList){
+		var actualAmout = calTotleAmount(appointOrderVipList)
+						+ calTotleAmountService(appointOrderVipList)
+						- calCouponService(appointOrderVipList)
+						- calCoupon(appointOrderVipList);
+		return actualAmout;
+	}
+	
+	//倒计时
+	var maxtime = limitTime;
+	function setTimeDown(){
+        if (maxtime >= 0) {
+            minutes = Math.floor(maxtime / 60);
+            seconds = Math.floor(maxtime % 60);
+            msg = time_2(minutes) + ":" + time_2(seconds);
+            $('#limit-time').html(msg);
+            if (maxtime == dangertime){
+            	openMessage_i('温馨提示','还剩余最后1分钟','知道了','','','',null);
+            };
+            --maxtime;
+        } else {
+        	clearInterval(timer);
+            openMessage_i('温馨提示','支付超时','退出','','close()','',null);
+    	}
+	}
+	
+	//处理时间格式
+	function time_2(time){
+		if(time == 0){
+			return "00";
+		}else if(time.toString().length == 1){
+			return "0" + time;
+		}else{
+			return time;
+		}
+	}
+	
+	//打开通用弹出框
+	//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+	function openMessage_i(title,content,sureButton,cancelButton,sureFunc,cancelFunc,params){
+		api.openFrame({
+	        name: 'common_alert',
+	        url: '../../common/common_alert.html',
+	        bgColor: 'rgba(0,0,0,0.4)',
+	        rect: {
+	            x: 0,
+	            y: 0,
+	            w: 'auto',
+	            h: api.winHeight
+	        },
+	        bounces: false,
+	        pageParam:{
+	        	title:title,
+	        	content:content,
+	        	sureButton:sureButton,
+	        	sureFunc:sureFunc,
+	        	cancelButton:cancelButton,
+	        	cancelFunc:cancelFunc,
+	        	winName:api.winName,
+	        	frameName:api.frameName,
+	        	params:params
+	        },
+	        softInputBarEnabled:true,
+	        softInputMode:'resize'
+	    });
+	}
+	function close(){
+		api.closeWin({
+        });
+	}
+</script>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>发票抬头管理frm</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css"/>
+
+    <style>
+        html, body {
+            background-color: #f5f5f5;
+            height: 100%;
+        }
+
+        header img {
+            width: 20px;
+        }
+
+        .container {
+            padding-top: 0.5rem;
+        }
+
+        .address {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .newAdd {
+            position: fixed;
+            bottom: 1rem;
+            width: 90%;
+            left: 5%;
+            height: 2rem;
+            border-radius: 1rem;
+            overflow: hidden;
+            line-height: 2rem;
+            background-image: linear-gradient(270deg, #3F86FE 0%, #64ADF6 99%);
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .newAdd img {
+            float: left;
+            width: 1.2rem;
+            margin-top: 0.4rem;
+            margin-right: 0.5rem;
+        }
+
+        .msg {
+            background: transparent;
+            height: 100%;
+            text-align: center;
+            font-size: 0.8rem;
+            display: flex;
+        }
+
+        .msg img {
+            width: 8rem;
+            margin-top: 8rem;
+        }
+
+        .msg span {
+            margin: auto;
+        }
+
+        .aui-card-list {
+            margin: 0 5% 0.5rem;
+        }
+
+        .aui-card-list span {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .aui-card-list-user {
+            height: 1.6rem;
+            text-align: right;
+        }
+
+        .tips {
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            width: 4rem;
+            height: 1.2rem;
+            line-height: 1.2rem;
+            text-align: center;
+            color: #FFFFFF;
+            font-size: 0.7rem;
+            background: #6A96FF;
+            padding: 0 0.2rem 0 0.2rem;
+            border-radius: 0 0 0.5rem 0.5rem;
+        }
+
+        .msg-s {
+            margin: auto;
+        }
+
+        .aui-list-item-label {
+            height: 1.5rem;
+            line-height: 1.5rem;
+        }
+
+        .invoice-edit-icon {
+            height: 1rem;
+            width: 1rem;
+            margin-top: 0.5rem;
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="address" id="address">
+
+    </div>
+    <div class="newAdd" tapmode onclick="addressEdit()">
+        <div style="width: 30%; height: 100%; margin: 0 auto; overflow: hidden;">
+            <img src="../../../icon/mine/add_invoice.png" alt="">
+            <div style="float: left;">新建发票</div>
+        </div>
+    </div>
+</div>
+<div id='load_div'>
+</div>
+
+<script type="text/template" charset="utf-8" id='msg_src'>
+    <div class="msg">
+        <div class='msg-s'>
+            <img src="../../../icon/common/empty.png" alt=""/><br>
+            <span>{{=it.msg}}</span>
+        </div>
+    </div>
+</script>
+<!-- 发票列表 -->
+<script type="text/template" charset="UTF-8" id="addressList">
+    {{ for(var i=0;i< it.length;i++){ }}
+    <div class="aui-card-list"
+         style="{{=it[i].isPersonal=='1'?'background: url(../../../icon/mine/company_invoice_bg.png) 0 0/100% 100% no-repeat;':'background: url(../../../icon/mine/personal_invoice_bg.png) 0 0/100% 100% no-repeat;'}}">
+        <div class="aui-card-list-user">
+            <div class="aui-card-list-user-name">
+                {{ if(it[i].isPersonal=='1'){ }}
+                <div class="tips" style="background-color: #FF906B;">单位发票</div>
+                {{ }else if(it[i].isPersonal=='0'){ }}
+                <div class="tips">个人发票</div>
+                {{ } }}
+            </div>
+            <img src="../../../icon/mine/invoice_edit.png" alt="" class="invoice-edit-icon"
+                 tapmode
+                 onclick="addressModify('{{=it[i].name}}','{{=it[i].phone}}','{{=it[i].mail}}','{{=it[i].isPersonal}}','{{=it[i].ein}}','{{=it[i].entityName}}', '{{=it[i].type}}')">
+        </div>
+        <div class="aui-row aui-card-list-content-padded" style="padding: 0 1rem 0.5rem;" tapmode onclick=selInvoice('{{=it[i].ein}}','{{=it[i].entityName}}','{{=it[i].isPersonal}}','{{=it[i].mail}}','{{=it[i].name}}','{{=it[i].phone}}','{{=it[i].type}}')>
+            <div class="aui-col-xs-3">
+                <div class="aui-list-item-label">
+                    {{if(it[i].isPersonal=='1'){}}
+                    <span>单位名称</span>
+                    {{ }else if(it[i].isPersonal=='0'){ }}
+                    <span>开票抬头</span>
+                    {{ } }}
+                </div>
+                <div class="aui-list-item-label">
+                    <span>电话</span>
+                </div>
+                <div class="aui-list-item-label">
+                    <span>邮箱</span>
+                </div>
+                {{if(it[i].isPersonal=='1'){}}
+                <div class="aui-list-item-label">
+                    <span>发票种类</span>
+                </div>
+                {{ } }}
+            </div>
+            <div class="aui-col-xs-9" style="font-size: 0.8rem; color: #333; font-weight: normal;">
+                <div class="aui-list-item-label">
+                    {{if(it[i].isPersonal=='1'){}}
+                    {{=it[i].entityName}}
+                    {{ }else if(it[i].isPersonal=='0'){ }}
+                    {{=it[i].name}}
+                    {{ } }}
+                </div>
+                <div class="aui-list-item-label">
+                    {{=it[i].phone}}
+                </div>
+                <div class="aui-list-item-label">
+                    {{=it[i].mail}}
+                </div>
+                {{if(it[i].isPersonal=='1'){}}
+                <div class="aui-list-item-label">
+                    {{if(it[i].type=='0'){}}
+                    普通发票
+                    {{ }else if(it[i].type=='1'){ }}
+                    专用发票
+                    {{ }else{ }}
+                    	不合法的发票种类
+                    {{ } }}
+                </div>
+                {{ } }}
+            </div>
+        </div>
+    </div>
+    {{ } }}
+</script>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+    var cache;
+    var msg_src = $('#msg_src').html(); //更多src
+    var isEmpty = false;//标记是否未设置地址
+    var isAllowNew = true;//是否允许再创建
+    var addressLimit = 8;//允许创建的最大地址数
+    var learnerAddressList;//学员地址全局变量
+    var isPersonal; //发票抬头
+    var name; //收票人姓名
+    var phone; //电话
+    var mail; //邮箱
+    var entity_name; //单位名称
+    var ein; //税号
+    apiready = function () {
+        cache = api.pageParam;
+        log('传参', cache);
+        api.addEventListener({
+            name: 'init'
+        }, function (ret, err) {
+            location.reload();
+        });
+        init();
+    };
+
+    function init() {
+        defaultload();
+        url = "/api/invoices/get/InvoiceSettingInfo";
+        params = {
+            learnerId: getUserId()
+        };
+        ajax_Request(url, "get", "json", params, function (ret, err) {
+            log("发票数据：", ret);
+            if (ret) {
+                if (ret.code == 0) {
+                    if (ret.invoiceSettingInfoList.length > 0) {
+
+                        if (ret.invoiceSettingInfoList.length > 1) {
+                            //超过最大限制则不允许创建
+                            isAllowNew = false;
+                        }
+                        if (ret.invoiceSettingInfoList.length >= 1) {
+                            //判断建了什么抬头
+                            ret.invoiceSettingInfoList[0].isPersonal == '0' ? isPersonal = '1' : isPersonal = '0';
+                        }
+                        var addressList = $("#addressList").html();
+                        $("#address").html(doT.template(addressList)(ret.invoiceSettingInfoList));
+                        //初始化轮播
+
+                        api.parseTapmode();
+                    } else {
+                        isEmpty = true;
+                        setMsg("您还未添加发票，请点击新建~");
+                    }
+                } else {
+                    setMsg(ret.msg);
+                }
+                api.hideProgress();
+            } else {
+                alert_msg("服务器繁忙，请稍后再试");
+                api.hideProgress();
+            }
+        })
+    }
+
+    /**
+     * 选择发票
+     */
+    function selInvoice(ein, entityName, isPersonal, mail, name, phone, type) {
+        if (cache.ordId != '' && cache.ordId != undefined) {
+            console.log('发送发票');
+            cache.ein = ein;
+            cache.entityName = entityName;
+            cache.isPersonal = isPersonal;
+            cache.mail = mail;
+            cache.name = name;
+            cache.phone = phone;
+            cache.invoiceType = type;
+
+            sendEvent('sel_invoice_action', cache);
+            api.closeWin({});
+        }
+    }
+
+    //设置页面提示信息
+    function setMsg(msg) {
+        if ($('#address').find('li').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+            setTimeout(function () {
+                $("#address").html(doT.template(msg_src)({
+                    'msg': msg
+                }));
+            }, 500);
+        } else { //原先已经有数据的情况下
+            setTimeout(function () {
+                $('#load_div').html(doT.template(more_src)({
+                    'msg': msg,
+                    'img': ''
+                }));
+            }, 500);
+        }
+    }
+
+    //打开新建页面
+    function addressEdit() {
+        if (isAllowNew) {
+            params = {
+                flag: "new",
+                isPersonal: isPersonal,
+                isEmpty: isEmpty
+            };
+            api.openWin({
+                name: 'common_invoice_edit_win',
+                url: './common_invoice_edit_win.html',
+                slidBackEnabled: 'false',
+                vScrollBarEnabled: 'false',
+                hScrollBarEnabled: 'false',
+                reload: true,
+                pageParam: params
+            });
+        } else {
+            alert_msg('发票抬头最多只能建2个');
+        }
+    }
+
+    //打开修改页面
+    function addressModify(name, phone, mail, isPersonal, ein, entityName, type) {
+        params = {
+            isPersonal: isPersonal,
+            name: name,
+            phone: phone,
+            mail: mail,
+            ein: ein,
+            entity_name: entityName,
+            isEmpty: isEmpty,
+            flag: "modify",
+            type: type
+        };
+        api.openWin({
+            name: 'common_invoice_edit_win',
+            url: './common_invoice_edit_win.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            pageParam: params
+        });
+    }
+
+
+</script>
+</html>

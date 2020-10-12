@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>帮我选驾校</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+		.search{
+			width: 400px;
+			height: 60px;
+			
+		}
+		
+    	
+    </style>
+	</head>
+	<body>
+			<div id="menuPackage search" class='bottom-slide'>
+			<div class="aui-searchbar select" id="search">
+			    <div class="aui-searchbar-input aui-border-radius">
+			        <i class="aui-iconfont aui-icon-search"></i>
+		            <input type="search" placeholder="输入城市名" id="search-input">
+		            <img src="../../icon/common/icon_delete.png" alt="" class="img_delete"/>
+			    </div>
+			    <div class="aui-searchbar-cancel" tapmode onclick='hiddenCitySel()'>
+			    	<span>取消</span>
+			    </div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/aui/aui_tab.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/swiper/swiper.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+
+	function back(){
+		sendEvent("back");
+	}
+
+
+	</script>
+</html>

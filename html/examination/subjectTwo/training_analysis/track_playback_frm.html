@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>轨迹回放</title>
+		<link rel="stylesheet" type="text/css" href="../../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../../css/common/common.css" />
+
+		<style>
+			html,body{
+    		background-color: #f5f5f5;
+    		height:100%;
+    	}
+		header img {
+		    width: 20px;
+		}
+		
+		.container{
+			width: 100%;
+		    height: 100%;
+		}
+		.tracks{
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		    height: 100%;
+		}
+		.default{
+			display: inline-block;
+			height: 0.7rem;
+			line-height: 0.7rem;
+			margin-bottom: 0.4rem;
+			width: 1.2rem;
+			text-align: center;
+			font-size: 0.5rem;
+			background: #f00;
+			color: #fff;
+			border-radius: 10%;
+		}
+		.msg{
+			background: #FFFFFF;
+		    height: 90%;
+			text-align: center;
+			font-size:0.7rem;
+		}
+		.msg img{
+			width:8rem;
+			margin-top: 9rem;
+		}
+		.msg span{
+			margin:auto;
+		}
+		.jiazai{
+			font-size: 0.7rem;
+			background: #FFFFFF;
+			color: #666565;
+			padding-bottom: 0.3rem;
+			text-align: center;
+			padding-top: 0.3rem;
+		}
+		.jiazai img{
+			width: 1.5rem;
+		}
+		.notclick{
+			pointer-events: none;
+		}
+    </style>
+	</head>
+	<body>
+		<section class="tracks" id="track">
+
+		</section>
+		<!-- 轨迹列表 -->
+		<script type="text/template" charset="UTF-8" id="trackList">
+			{{ for(var i=0;i<it.returnVal.length;i++){ }}
+			<li>
+				<div class="aui-card-list">
+			        <div class="aui-card-list-content-padded">
+			           		<div id="unit">
+			           			<div class="aui-list-item-label">
+									<span style="font-size: 0.8rem;">训练时间: {{=it.returnVal[i].time.substring(0,10)}}</span>
+								</div>
+								<div class="aui-list-item-label">
+									<span style="font-size: 0.8rem;">错误内容: {{=it.returnVal[i].errorContent}}</span>
+								</div>
+							</div>
+						 	<div class="aui-list-item-label">
+								<span style="font-size: 0.65rem;color: #788398">错误原因: {{=it.returnVal[i].errorReason}}</span>				
+							</div>
+							<div class="aui-list-item-label">
+								<span style="font-size: 0.65rem;color: #788398">错误时间: {{=it.returnVal[i].time}}</span>				
+							</div>
+			        </div>
+			        <div class="aui-border-t" style="text-align:center;padding: 0.5rem 0.75rem;">
+			            <div tapmode class="bottom"  id="look_track" onclick="trackModify('{{=it.returnVal[i].practiceID}}')">
+							<span style="font-size: 0.7rem;color: #3296FA;">查看轨迹</span>
+						</div>
+				    </div>
+		        </div>
+        	</li>
+        	{{ } }}	
+		</script>
+
+		<div id='load_div'>
+		</div>
+		<script type="text/template" charset="utf-8" id='load_src'>
+			<div class="load">
+			<img src="../../../../icon/common/loadding.gif" alt="" /><br>
+			<span>加载中...</span>
+		</div>
+	</script>
+		<script type="text/template" charset="utf-8" id='msg_src'>
+			<div class="msg">
+			<img src="../../../../icon/common/empty.png" alt="" /><br>
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+		<script type="text/template" charset="utf-8" id='more_src'>
+			<div class="jiazai">
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+	</body>
+	<script type="text/javascript" src="../../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var f1 = false;//轨迹第一个接口无数据接收
+		var f2 = false;//轨迹第二个接口无数据接收
+		var load_src = $('#load_src').html(); //加载src
+		var msg_src = $('#msg_src').html(); //消息提示src
+		var more_src = $('#more_src').html(); //更多src
+		var refresh = true; //标记是否是刷新操作
+		var page = 1,
+			limit = 10;
+		var jkDemo;
+		var map, path;
+		apiready = function() {
+			jkDemo = api.require('jkDemo');
+			goRefrash(40, '#FFFFFF', null, null, function() {
+				refreshList();
+			});
+			goLoad(function(ret, err) {
+				loadList();
+			});
+			cache = api.pageParam;
+			console.log("====" + JSON.stringify(cache));
+			init();
+		}
+
+		//列表刷新
+		function refreshList() {
+			page = 1;
+			refresh = true;
+			setLoad();
+			init();
+		}
+
+		//列表上拉
+		function loadList() {
+			page++;
+			if ($('section').find('li').length == 0) refresh = true;
+			else refresh = false;
+			setLoad();
+			init();
+		}
+
+		function init() {
+			url = "api/robot/recent-practice-error/list";
+			params = {
+				pId: cache.pId,
+				page: page,
+				limit: limit
+			}
+			console.log("====" + JSON.stringify(params));
+			ajax_Request(url, "get", "json", params, function(ret, err) {
+				log("轨迹数据：", ret);
+				if (ret) {
+					if (ret.code == 0 && ret.returnVal.length > 0) {
+						if (page == 1) {
+							var trackList = $("#trackList").html();
+							$("#track").html(doT.template(trackList)(ret));
+						} else {
+							var trackList = $("#trackList").html();
+							$("#track").append(doT.template(trackList)(ret));
+						}
+					} else {
+						setMsg(refresh ? '暂无轨迹回放' : '暂无更多');
+					}
+				} else {
+					alert_msg("服务器繁忙，请稍后再试");
+				}
+			})
+			setTimeout(function() {
+				api.refreshHeaderLoadDone();
+			}, 500);
+		}
+
+		//设置页面加载的画面
+		function setLoad() {
+			if (refresh || $('section').find('li').length == 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+				$('#load_div').html('');
+			} else {
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': '加载更多中...',
+						'img': '../../../../icon/common/jiazai.gif'
+					}));
+				}, 500);
+			}
+		}
+
+		//设置页面提示信息
+		function setMsg(msg) {
+			if (refresh || $('section').find('li').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+				setTimeout(function() {
+					$("#track").html(doT.template(msg_src)({
+						'msg': msg
+					}));
+				}, 500);
+			} else { //原先已经有数据的情况下
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': msg,
+						'img': ''
+					}));
+				}, 500);
+			}
+		}
+
+		//打开查看轨迹页面
+		function trackModify(practiceID) {
+			log('practiceID',practiceID);
+			url = "api/robot/track-data/list";
+			params = {
+				practiceId: practiceID
+			}
+			ajax_Request(url, "get", "json", params, function(ret, err) {
+				log('path1', ret);
+				if (ret) {
+					if(ret.returnValue != undefined){
+						f1 = true;//轨迹第一个接口有数据接收
+						path = ret.returnValue;
+					}else{
+						alert_msg("暂无轨迹数据，请稍候再试！")
+					}
+				} else {
+					alert_msg("服务器繁忙，请稍后再试");
+				}
+			})
+			
+			$("#look_track").addClass("notclick");
+			url = "http://61.182.219.102:23333/app/track/getMapData?schoolCode=004&licenseType=C1";
+			api.ajax({
+				url: url,
+				method: 'get',
+				timeout: 100,
+				dataType: 'json'
+			}, function(ret, err) {
+				f2 = true;//轨迹第二个接口有数据接收
+				map = ret.returnValue;
+				log('ret1', ret)
+			});
+			setTimeout(function() {
+				var param = {
+					map: map,
+					path: path
+				}
+				$("#look_track").removeClass("notclick");
+				log('param', param)	
+				if(f1 == true && f2 == true){
+					f1 = false;f2=false;
+					jkDemo.openMap(param);		
+				}				
+			}, 3000);	
+		}
+	</script>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>操作演示视频播放</title>
+		<link rel="stylesheet" type="text/css" href="../../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../../css/common/common.css" />
+		<style>
+		html{
+			background-color: #fff;
+		}
+    </style>
+	</head>
+	<body>
+		<div id="video_player"></div>
+	</body>
+	<script type="text/javascript" src="../../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		 var cache;
+		var systemType;
+		var moviePlayer;
+		var dkplayer;
+		var videoUrl;
+		var file_load_url = 'https://file.mohan-tech.com/fileCenter/api/file/getFileAuth?bucketName=jiakaozhijia&fileName=';
+		apiready = function () {
+		    api.parseTapmode();
+		    cache = api.pageParam;
+			videoUrl = cache.videoUrl
+		    log('cache: ', cache);
+		    systemType = api.systemType;
+		    $('#video_player').css('height', parseInt((api.frameWidth) / 15 * 11) + 'px');
+			if (systemType == 'ios') {
+			    //初始化ios播放
+			    moviePlayer = api.require('moviePlayer');
+			} else {
+			    //初始化安卓播放
+			    dkplayer = api.require('dkplayer');
+			}
+		    toEventListener('close_player', function (ret, err) {
+		        closeVideoPlayer();
+		    });
+			toEventListener('pause', function (ret, err) {
+				if (systemType == 'ios') {                                                                                                                                                                                                                                                                                     
+				    //初始化ios播放
+				    moviePlayer.pause();
+				} else {
+				    //初始化安卓播放
+				    dkplayer.pause();
+				}
+			    
+			});
+			playVideo(videoUrl);
+		};
+		
+		    // 关闭视频播放器
+		function closeVideoPlayer() {
+		    if (systemType != 'ios') {
+		        if (dkplayer.isFullScreen()) {
+		            if (dkplayer.isLock()) {
+		                api.toast({
+		                    msg: '请先解锁屏幕！',
+		                    global: true
+		                });
+		            } else {
+		                api.setScreenOrientation({
+		                    orientation: 'portrait_up'
+		                });
+		                dkplayer.stopFullScreen();
+		            }
+		        } else {
+		            console.log('关闭播放器');
+		            dkplayer.removeOnVideoViewStateChangeListener();
+		            dkplayer.release();
+		        }
+		    } else {
+		        moviePlayer.close();
+		    }
+		}
+		function playVideo(videoUrl, coverImg) {
+		    if (systemType != 'ios') {
+		        dkplayer.open({
+		            rect: {
+		                x: 0,
+		                y: -1,
+		                w: api.frameWidth,
+		                h: api.frameHeight
+		            },
+		            url: file_load_url + videoUrl,
+		            coverImg: coverImg,
+		            animation: false,
+		            title: '',
+		            isLive: false,
+		            enableFull: false, //是否全屏
+		            autoPlay: true, //自动播放
+		            fixedOn: api.frameName,
+		            fixed: true
+		        }, function (ret, err) {
+		            
+		        });
+		    } else {
+		        moviePlayer.open({
+		            rect: {
+		                x: 0,
+		                y: parseInt(cache.headerHeight),
+		                w: api.frameWidth,
+		                h: parseInt(api.frameHeight-50)
+		            },
+		            coverImg: coverImg,
+		            styles: {
+		                head: {
+		                    height: 0,
+		                    y: 20,
+		                    backSize: 0
+		                },
+		                foot: {
+		                    bg: 'rgba(0,0,0,0)',
+		                    height: 44,
+		                    palyBtn: {
+		                        size: 25,
+		                        playImg: 'widget://res/icon_play.png', //（可选项）字符串类型；底部播放按钮的背景图片，要求本地路径（widget://、fs://）；默认：播放按钮图标
+		                        pauseImg: 'widget://res/icon_stop.png', //（可选项）字符串类型；底部暂停按钮的背景图片，要求本地路径（widget://、fs://）；默认：暂停按钮图标
+		                        marginLeft: 10
+		                    },
+		                    currentTimeLabel: {
+		                        textSize: 12,
+		                        textColor: "#FFF",
+		                        textWidth: 43,
+		                        marginLeft: 5
+		                    },
+		                    seekBar: {
+		                        sliderW: 15,
+		                        sliderH: 15,
+		                        progressColor: '#696969',
+		                        progressSelected: '#76EE00',
+		                        marginLeft: 10,
+		                        marginRight: 10
+		                    },
+		                    totalTimeLabel: {
+		                        textSize: 14,
+		                        textColor: "#FFF",
+		                        textWidth: 43,
+		                        marginRight: 5
+		                    },
+		                    fullscreenBtn: {
+		                        size: 0,
+		                    }
+		                }
+		            },
+		            path: file_load_url + videoUrl,
+		            autoPlay: true,
+		            autorotation: false
+		        }, function (ret, err) {
+		           
+		        });
+		    }
+		}
+	</script>
+</html>

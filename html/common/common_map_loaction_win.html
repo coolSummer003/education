@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>地图</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #388BFF;
+		}
+		header img {
+		    width: 20px;
+		}
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+            <img src="../../icon/common/icon_header_return.png">
+        </a>
+        <div class="aui-title" id="location_title">
+        	
+        </div>
+        <a class="aui-pull-right aui-btn" tapmode onclick="selectMap()">
+        	到这里去
+        </a>
+    </header>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var headerPos;
+	var cache;
+	var bMap;
+	apiready = function(){
+		api.parseTapmode();
+		bMap = api.require('bMap');
+		var header = $api.byId('aui-header');
+		cache = api.pageParam.data;
+		$('#location_title').html(cache.to_name);
+		$api.fixStatusBar(header);
+		headerPos = $api.offset(header);
+		mylocation(function(location_result){//获取当前定位
+			if(location_result.status){//有定位权限
+		        init(location_result.lon,location_result.lat);
+			}else{
+				alert_msg(location_result.msg);
+			}
+		});
+	}
+	function init(location_lon,location_lat){
+		cache.location_lon = location_lon;//初始位置
+		cache.location_lat = location_lat;//初始位置
+		api.openFrame({
+            name: 'common_map_loaction_frm',
+            url: './common_map_loaction_frm.html',
+            bgColor:'#efeff4',
+            rect: {
+                x: 0,
+                y: headerPos.h,
+                w: 'auto',
+                h: api.winHeight - headerPos.h
+            },
+            bounces: false,
+            pageParam:cache,
+            reload:true,
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+	}
+	
+	//选择导航的地图app
+	function selectMap(){
+		api.openFrame({
+	        name: 'common_select_map_app_frm',
+	        url: './common_select_map_app_frm.html',
+	        bgColor: 'rgba(0,0,0,0)',
+	        animation:{
+	        	type:"push",                 //动画类型（详见动画类型常量）
+			    subType:"from_bottom",       //动画子类型（详见动画子类型常量）
+			    duration:300
+	        },
+	        rect: {
+	            x: 0,
+	            y: 0,
+	            w: 'auto',
+	            h: api.winHeight
+	        },
+	        bounces: false,
+	        softInputBarEnabled:true,
+	        softInputMode:'resize',
+	        pageParam:cache
+	    });
+	}
+	
+	function closeWin(){
+		api.closeWin({
+			name:'common_map_loaction_win'
+        });
+	}
+</script>
+</html>

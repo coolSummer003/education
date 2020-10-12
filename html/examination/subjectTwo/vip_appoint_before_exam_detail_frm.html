@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>考前训练预约-vip</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/mobiscroll/normalize3_0_2_min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/mobiscroll/mobiscroll.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/mobiscroll/mobiscroll_date.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html,body{
+    		background-color: #F5F5F5;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+    	#practical_appointment_title{
+    		font-weight:normal;
+    	}
+		.screen{
+		    /* float: left !important;
+		       			margin-right: 0.8rem; */
+		}
+		.screen img{
+			width: 0.8rem;
+    		margin-bottom: -0.05rem;
+		}
+		.active{
+	    	color: #1E8DD8;
+    		/* border-bottom: solid 2px; */
+	    }
+	    .practical-list{
+	        background: #FFF;
+		    width: 96%;
+		    margin-left: 4%;
+	        font-size: 0.7rem;
+	        margin-bottom: 4rem;
+	    }
+	    .practical-list li{
+	    	height:3rem;
+	    	line-height:3rem;
+	    }
+	    .practical-list-item{
+	    	height:3rem;
+	    	padding: 0rem 0.5rem;
+	    }
+	    .practical-list-item-param{
+    	    float: left;
+    		height:3rem;
+	    }
+	    .practical-list-item-param input{
+	        margin-top: 0.9rem;
+	    }
+	    .c-btn{
+	    	width:10%;
+	    	-webkit-transition: 0.3s ease;
+	    	text-align: left;
+	    }
+	    .dark{
+	    	color:#A0A0A0;
+	    }
+	    .appointment-button{
+	    	
+	    }
+	    .appointment-button span{
+		    color: #0595F2;
+		    padding: 0.2rem 0rem;
+		    border-radius: 0.5rem;
+		    font-weight:bold;
+	    }
+	    .other-item{
+	    	width:100%;
+	    	overflow:hidden;
+    	    -webkit-transition: 0.3s ease;
+    	    float: right;
+	    }
+	    .w-90{
+	    	width:90% !important;
+	    }
+	    .text-r{
+	    	text-align:right;
+	    }
+	    .text-c{
+	    	text-align:center;
+	    }
+	    .text-l{
+	    	text-align:center;
+	    }
+	    .practical-list-item-param font{
+	    	color:#03B4F7;
+	    }
+	    .practical-select{
+	    	
+	    }
+	    .select_practical_input{
+    	    text-align: left;
+		    height: 2rem;
+		    line-height: 2rem;
+	    }
+	    .select_practical_title{
+		    font-weight: bold;
+		    text-align: left;
+		    height: 1.7rem;
+		    line-height: 1.7rem;
+		    margin-top: 0.5rem;
+		    padding-left: 4%;
+		}
+		#appointment-date{
+			text-align: left;
+		    margin-left: 4%;
+		    width: 92%;
+		    background: #FFFFFF;
+		    padding-left: 1.2rem;
+		}
+		.select_practical_title img{
+		    width: 1rem;
+			margin-bottom: -0.2rem;
+		}
+		.nav {
+	        height: 100%;
+	        overflow-x: scroll;
+	        overflow-y: hidden;
+	        background-color: #FFFFFF;
+	        /*解决ios上滑动不流畅*/
+	        -webkit-overflow-scrolling: touch;
+	    }
+	    .con {
+	        height: 100%;
+		    display: -webkit-box;
+		    align-items: center;
+	        position: relative;
+	    }
+	    .con>li {
+	        text-align: center;
+		    font-size: 0.8rem;
+		    min-width: 3rem;
+		    list-style: none;
+		    margin: 0rem 0.5rem;
+	    }
+	    .container {
+            height: 2.5rem;
+		    line-height: 2.5rem;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    overflow: hidden;
+	        margin-left: 4%;
+	    }
+	    .container ::-webkit-scrollbar {
+	        display: none;
+	    }
+	    .lump{
+		    float: left;
+		    padding: 0rem 1rem;
+		    font-size: 0.8rem;
+		    color: #6F6F6F;
+		    height: 2rem;
+		    border-radius: 5px;
+		    border: solid 1px #F1F1F1;
+		    line-height: 2rem;
+	    }
+	    .lump-active {
+		    color: #72A8C9 !important;
+		    border: solid 1px #72A8C9 !important;
+		    background: #DDEBFF !important;
+		}
+		.list_bar .list_bar_inner {
+		    position: absolute;
+		    min-width: 0rem;
+		    height: 100%;
+		    top: 0;
+		    left: 50%;
+		    background-color: #1E8DD8;
+		    -webkit-transform: translateX(-50%);
+		    transform: translateX(-50%);
+		    -webkit-transition: 0.3s ease;
+		}
+		.margin-top-0-5{
+			margin-top:0.5rem !important;
+		}
+		.empty-img{
+			width: 2rem;
+    		margin-bottom: -0.35rem;
+		}
+		.load-src{
+			width: 100%;
+    		display: flex;
+    		height: 8rem;
+		}
+		.load-src img{
+		    width: 5rem;
+    		margin: auto;
+		}
+		.msg-src{
+			width: 100%;
+			text-align:center;
+			padding-bottom: 3rem;
+		}
+		.msg-src img{
+			width: 4rem;
+    		margin-top: 3rem;
+		}
+		.msg-src span{
+			font-size:0.7rem;
+			color:#767676;
+		}
+		.fixed-b{
+			position: fixed;
+		    bottom: 0.5rem;
+		    margin: auto;
+		}
+		#holayshit{
+			color:#DC251F;
+			font-size:0.6rem;
+		}
+		.notice_importent{
+			height: 2rem;
+		    line-height: 2rem;
+		    text-align: center;
+		    position: fixed;
+		    top: 0;
+		    width: 100%;
+		    color: #DC251F;
+		    background: #F5D3D3;
+		    opacity: 0.8;
+		}
+		#test-date {
+		    text-align: left;
+		    margin-left: 4%;
+		    width: 92%;
+		    background: #FFFFFF;
+		    padding-left: 1.2rem;
+		}
+		.rights{
+		position:absolute;
+		margin-top:0.5rem;
+		z-index: 999;
+		right:0rem;
+		padding:0 0.3rem;
+		width:2.6rem;
+		line-height:0.7rem;
+		background: #FFFFFF;
+		font-size:0.5rem;
+		text-align: center;
+		color: #043EB8;
+		}
+    </style>
+</head>
+<body>
+	<section class='practical-select' style='margin-top: 2rem;'>
+		<div class="select_practical_title">
+			<img src="../../../icon/common/icon_date.png" alt="" />
+			<span>根据训练日期</span>
+	    </div>
+		<!-- <div class="select_practical_title" style='width:50%;float:right;'>
+			<img src="../../../icon/common/icon_date.png" alt="" />
+			<span>根据考试日期</span>
+			    </div> -->
+	    <div class="select_practical_input">
+	        <input type="text" id="appointment-date" onchange="selectDate()" style='margin-left: 4%;'>
+	    </div>
+	    <!-- <div class="select_practical_input" style='width:50%;float:right;'>
+	        <input type="text" id="test-date" onchange="selectTestDate()" style='margin-left: 8%;'>
+	    </div> -->
+	</section>
+	<section class='practical-select'>
+		<div class="select_practical_title">
+			<img src="../../../icon/subject/icon_shifts.png" alt="" />
+	    </div>
+	    <div class="container" style="height:3rem;line-height:3rem;">
+	        <nav class="nav" id="shifts_nav">
+	            <ul class="con">
+	            	
+	            </ul>
+	        </nav>
+        </div>
+	</section>
+	<script type="text/template" charset="utf-8" id='shifts_src'>
+		{{ for(var i=0;i<it.length;i++){ }}
+			<li class="menuLi margin-top-0-5">
+            	<div class='lump' style='width: 5rem;' tapmode onclick="selectShifts(this,'{{=it[i].code}}','{{=getBatchName(it[i].code)}}')">
+            		<span>{{=getBatchName(it[i].code)}}</span>
+            	</div>
+            </li>
+		{{ } }}
+	</script>
+	<section class='practical-select'>
+		<div class="select_practical_title">
+			<img src="../../../icon/subject/icon_cars.png" alt="" />
+			<span>选择车型</span>
+	    </div>
+	    <div class="container" style="height:3rem;line-height:3rem;">
+	        <nav class="nav" id="carTypes_nav">
+	        <div class="rights aui-hide">
+				<img src="../../../icon/subject/right.png" alt=""	class="right"	style="height:1.2rem;margin-left:0.2rem;"/>
+				向左滑动
+			</div>
+	            <ul class="con">
+	            	
+	            </ul>
+	        </nav>
+        </div>
+	</section>
+	<script type="text/template" charset="utf-8" id='carTypes_src'>
+		{{ for(var i=0;i<it.length;i++){ }}
+			<li class="menuLi margin-top-0-5">
+            	<div class='lump' tapmode onclick="selectCarTypes(this,'{{=it[i].code}}','{{=getCarTypeName(it[i].code)}}')">
+            		<span>{{=getCarTypeName(it[i].code)}}</span>
+            	</div>
+            </li>
+		{{ } }}
+	</script>
+	<section class='practical-select'>
+		<div class="select_practical_title">
+			<img src="../../../icon/subject/icon_area.png" alt="" />
+			<span>请选择考场区域</span>
+	    </div>
+	    <div class="container" style="">
+	        <nav class="nav" id="area_nav">
+	            <ul class="con">
+	            </ul>
+	        </nav>
+        </div>
+	</section>
+	<script type="text/template" charset="utf-8" id='area_src'>
+		{{ for(var i=0;i<it.length;i++){ }}
+			<li class="menuLi" tapmode onclick="selectArea(this,'{{=it[i].id}}','{{=it[i].name}}')">
+	        	{{=it[i].name}}
+	        </li>
+		{{ } }}
+    	<li class="list_bar" id="slideSpan">
+            <div class="list_bar_inner"></div>
+        </li>
+	</script>
+	<section class='practical-select'>
+		<div class="select_practical_title">
+			<img src="../../../icon/subject/icon_road.png" alt="" />
+			<span>请选择路线</span>
+	    </div>
+        <div class="container" style="height:3rem;line-height:3rem;">
+	        <nav class="nav" id="roads_nav">
+	        	 <div class="rights aui-hide">
+				<img src="../../../icon/subject/right.png" alt=""	class="right"	style="height:1.2rem;margin-left:0.2rem;"/>
+				向左滑动
+			</div>
+	            <ul class="con">
+	                <!-- <li class="menuLi margin-top-0-5">
+	                	<div class='lump lump-active' tapmode onclick="selectRoads(this)">
+	                		<span>A1-A2</span>
+	                	</div>
+	                </li> -->
+	            </ul>
+	        </nav>
+        </div>
+	</section>
+	<script type="text/template" charset="utf-8" id='roads_src'>
+		{{ for(var i=0;i<it.length;i++){ }}
+			<li class="menuLi margin-top-0-5">
+            	<div class='lump lump-active' tapmode onclick="selectRoads(this,'{{=it[i].id}}','{{=it[i].name}}')">
+            		<span>{{=it[i].name}}</span>
+            	</div>
+            </li>
+		{{ } }}
+	</script>
+    <div class='practical-list'>
+    	<ul>
+    		<li class='bottom-slide'>
+    			<div class="practical-list-item">
+    				<div class="practical-list-item-param c-btn aui-hide">
+    					
+    				</div>
+    				<div class='other-item bottom-slide w-90'>
+	    				<div class="practical-list-item-param text-c" style="width:27%;">考试日期</div>
+	    				<div class="practical-list-item-param text-c" style="width:15%;line-height: 1.2rem;">可预<br>约数</div>
+	    				<div class="practical-list-item-param text-c" style="width:19.5%;">训练费</div>
+	    				<div class="practical-list-item-param text-c" style="width:19.5%;">服务费</div>
+	    				<div class="practical-list-item-param text-c" style="width:19%;">状态</div>
+    				</div>
+    			</div>
+    		</li>
+    		<div id='data_list'>
+		    	<div class='load-src'>
+		    		<img src="../../../icon/common/icon_common_load.gif" alt="" />
+		    	</div>
+    		</div>
+    		<!-- <li>
+    			<div class="practical-list-item dark">
+    				<div class="practical-list-item-param c-btn">
+    				</div>
+    				<div class='other-item w-90'>
+    			    				<div class="practical-list-item-param text-c" style="width:10%;">1</div>
+    			    				<div class="practical-list-item-param text-c" style="width:22.5%;">3人</div>
+    			    				<div class="practical-list-item-param text-c" style="width:22.5%;">5人</div>
+    			    				<div class="practical-list-item-param text-c" style="width:22.5%;">￥300</div>
+    			    				<div class="practical-list-item-param text-c" style="width:22.5%;">可预约</div>
+    				</div>
+    			</div>
+    		</li>
+    		<li class='checkStyle'>
+    			<div class="practical-list-item">
+    				<div class="practical-list-item-param c-btn">
+    					<input class="aui-radio" type="radio" name="appointment1">
+    				</div>
+    				<div class='other-item w-90' tapmode onclick="selectTimeSlot(this)">
+    			    				<div class="practical-list-item-param text-c" style="width:10%;">2</div>
+    			    				<div class="practical-list-item-param text-c" style="width:22.5%;">3人</div>
+    			    				<div class="practical-list-item-param text-c" style="width:22.5%;">5人</div>
+    			    				<div class="practical-list-item-param text-c" style="width:22.5%;">￥300</div>
+    			    				<div class="practical-list-item-param text-c" style="width:22.5%;">可预约</div>
+    				</div>
+    			</div>
+    		</li> -->
+    	</ul>
+    	<div class="aui-btn aui-btn-info aui-btn-block fixed-b" tapmode onclick="appointBatch()">预约</div>
+    </div>
+    <div class='notice_importent'>请选择排班</div>
+    <!-- 排班 -->
+    <script type="text/template" charset="utf-8" id='schedule_src'>
+    	{{ for(var i=0;i<it.length;i++){ }}
+    	<li class='checkStyle'>
+			{{ if(it[i].status != 2){ }}
+    		<div class="practical-list-item dark">
+			{{ }else{ }}
+    		<div class="practical-list-item" tapmode onclick="selectTimeSlot(this,'{{=it[i].id}}','{{=it[i].remark}}')">
+			{{ } }}
+				<div class="practical-list-item-param c-btn">
+					{{ if(it[i].status == 2){ }}
+    					<input class="aui-radio" type="radio" name="outline_appointment" value="{{=it[i].id}}">
+					{{ }else{ }}
+						<input class="aui-radio" type="radio" name="outline_appointment" value="{{=it[i].id}}" disabled>
+					{{ } }}
+				</div>
+				<div class='other-item w-90'>
+    				<div class="practical-list-item-param text-c" style="width:27%;">{{=it[i].testDate}}</div>
+    				<div class="practical-list-item-param text-c" style="width:15%;"><span class='max-people'>{{=it[i].maxPeople}}</span>人</div>
+    				<div class="practical-list-item-param text-c" style="width:19.5%;">{{=cashFormatO(it[i].trainingFee)}}</div>
+    				<div class="practical-list-item-param text-c" style="width:19.5%;">{{=cashFormatO(it[i].serviceFee)}}</div>
+    				<div class="practical-list-item-param text-c" style="width:19%;">
+    					{{ if(it[i].status == 2){ }}
+    						可预约
+    					{{ }else if(it[i].status == 0){ }}
+    						不可预约
+    					{{ }else if(it[i].status == -1){ }}
+    						名额已满
+    					{{ }else if(it[i].status == -2){ }}
+    						已关闭
+    					{{ } }}
+    				</div>
+    				<input type="hidden" class='test-date' value="{{=it[i].testDate}}"/>
+				</div>
+			</div>
+		</li>
+		{{ } }}
+    </script>
+    
+    <!-- 选择条件提示 -->
+    <script type="text/template" charset="utf-8" id='msg_src'>
+    	<li>
+	    	<img src="../../../icon/common/icon_empty.png" alt="" class='empty-img'/>
+	    	<span>{{=it.msg}}</span>
+	    </li>
+    </script>
+    <!-- 数据展示提示 -->
+    <script type="text/template" charset="utf-8" id='data_msg_src'>
+    	<div class='msg-src'>
+    		<img src="../../../icon/common/empty.png" alt="" /><br>
+    		<span>{{=it.msg}}</span>
+    	</div>
+  	</script>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/mobiscroll/mobile_select.js"></script> 
+<script type="text/javascript" src="../../../script/mobiscroll/mobiscroll_date.js"></script> 
+<script type="text/javascript" src="../../../script/mobiscroll/mobiscroll.js"></script> 
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var headerPos;
+	var clearance = 5;
+	var msg_src = $('#msg_src').html();
+	var data_msg_src = $('#data_msg_src').html();
+	var batchVipKemuTwoMap;//字典表缓存-科目二vip批次
+	var carTypeKeMuTwoMap;//字典表缓存-科目二车型
+	var systemType;
+	var touchStyle;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		batchVipKemuTwoMap = $api.getStorage('cache_by_app').batchVipKemuTwoMap;
+		carTypeKeMuTwoMap = $api.getStorage('cache_by_app').carTypeKeMuTwoMap;
+		systemType = api.systemType;
+		touchStyle = systemType == "ios" ? 'touchmove' : 'scroll';
+		init();
+	}
+	
+	/**
+	 * 定义几个全局变量 
+	 */
+	var appointDate;//选择训练日期
+	var testDate;//选择考试日期
+	var shiftsId;//班次id
+	var carTypeId;//车型id
+	var areaId;//考场区域id
+	var roadId;//线路id
+	var shiftsName;//班次
+	var carTypeName;//车型
+	var areaName;//考场区域
+	var roadName;//线路
+	function init(){
+		var startDate = (new Date(new Date().getTime() + 1*24*60*60*1000)).Format('yyyy-MM-dd');//4天内
+		var endDate = (new Date(new Date().getTime() + 5*24*60*60*1000)).Format('yyyy-MM-dd');//4天内
+		$('#appointment-date').val(startDate);
+		appointDate = startDate;
+		
+		mobiscrollDate(startDate,endDate,$('#appointment-date'),'最近');//初始化日期组件
+		mobiscrollDate(startDate,endDate,$('#test-date'),'最近');//初始化日期组件
+		
+		//获取排班中的班次集合和车型集合（去重）
+		getShiftAndCarTypeList();
+		scroll();
+	}
+	
+	function scroll() {
+			$('#carTypes_nav').on(touchStyle, function(event) {
+				if($('#carTypes_nav').scrollLeft() >= 5){
+					$('#carTypes_nav').children('.rights').addClass('aui-hide');
+				}
+			});
+			$('#roads_nav').on(touchStyle, function(event) {
+				if($('#roads_nav').scrollLeft() >= 5){
+					$('#roads_nav').children('.rights').addClass('aui-hide');
+				}
+			});
+		}
+	/**
+	 * 获取排班中的班次集合和车型集合（去重）
+	 */
+	function getShiftAndCarTypeList(){
+		params = {
+			trainingDate:$('#appointment-date').val(),
+			testDate:$('#test-date').val(),
+			roomId:cache.e_room_id
+		}
+		//vip等级-普通
+		switch(cache.role){
+			case 'normal_vip':
+				params.vipGrade = 0;
+				break;
+			case 'senior_vip':
+				params.vipGrade = 1;
+				break;
+		}
+		
+		log('传参',params);
+		url = 'api/appointment-vip/get-shifts-and-carType';
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			log('班次集合和车型集合',ret);
+			if(ret){
+				if(ret.code ==0){
+					load_shifts(ret.shiftList,ret.carTypeList);
+				}else{
+					$('#shifts_nav').find('.con').html(doT.template(msg_src)({msg:ret.msg}));
+					$('#carTypes_nav').find('.con').html(doT.template(msg_src)({msg:ret.msg}));
+					$('#data_list').html(doT.template(data_msg_src)({msg:ret.msg}));
+					load_area();
+				}
+			}else{
+				$('#shifts_nav').find('.con').html(doT.template(msg_src)({msg:'获取班次失败'}));
+				$('#carTypes_nav').find('.con').html(doT.template(msg_src)({msg:'获取车型失败'}));
+				$('#data_list').html(doT.template(data_msg_src)({msg:'获取班次失败'}));
+				load_area();
+			}
+		});
+	}
+	
+	//获取批次name
+	function getBatchName(code){
+		return batchVipKemuTwoMap[code];
+	}
+	
+	/**
+	 * 加载班次
+	 */
+	function load_shifts(shiftList,carTypeList){
+		if(shiftList.length > 0){
+			var shifts_src = $('#shifts_src').html();
+			$('#shifts_nav').find('.con').html(doT.template(shifts_src)(shiftList));
+			selectShifts($('#shifts_nav').find('.lump').eq(0),shiftList[0].code,getBatchName(shiftList[0].code),'first');
+			api.parseTapmode();
+		}else{
+			$('#shifts_nav').find('.con').html(doT.template(msg_src)({msg:'无排班'}));
+			$('#data_list').html(doT.template(data_msg_src)({msg:'未选择班次'}));
+		}
+		load_carTypes(carTypeList);
+	}
+	
+	//获取车型name
+	function getCarTypeName(code){
+		return carTypeKeMuTwoMap[code];
+	}
+	
+	/**
+	 * 加载车型 
+	 */
+	function load_carTypes(carTypeList){
+		if(carTypeList.length > 0){
+			if(carTypeList.length>3){
+				$('#carTypes_nav').children('.rights').removeClass("aui-hide");
+			}
+			var carTypes_src = $('#carTypes_src').html();
+			$('#carTypes_nav').find('.con').html(doT.template(carTypes_src)(carTypeList));
+			selectCarTypes($('#carTypes_nav').find('.lump').eq(0),carTypeList[0].code,getCarTypeName(carTypeList[0].code),'first');
+			api.parseTapmode();
+		}else{
+			$('#carTypes_nav').find('.con').html(doT.template(msg_src)({msg:'无排班'}));
+			$('#data_list').html(doT.template(data_msg_src)({msg:'未选择车型'}));
+		}
+		load_area();
+	}
+	
+	/**
+	 * 加载区域 
+	 */
+	function load_area(){
+		url = 'api/appointment/getAppointmentAreaList';
+		params = {
+			testCenterId:cache.e_room_id,
+			kemuId:cache.type == 'two'?'036002':'036003',
+			isVip:1
+		}
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			log('考场区域数据',ret);
+			if(ret){
+				if(ret.code == 0){
+					if(ret.appointmentAreaList.length > 0){
+						var area_src = $('#area_src').html();
+						$('#area_nav').find('.con').html(doT.template(area_src)(ret.appointmentAreaList));
+						f_slide($('#area_nav').find('.menuLi').eq(0));//初始化加载menu下拉选中
+						areaId = ret.appointmentAreaList[0].id;
+						areaName = ret.appointmentAreaList[0].name;
+						load_road(ret.appointmentAreaList[0].id,ret.appointmentAreaList[0].id);
+						api.parseTapmode();
+					}else{
+						areaId = '';
+						$('#area_nav').find('.con').html(doT.template(msg_src)({msg:'无考场区域数据'}));
+						$('#roads_nav').find('.con').html(doT.template(msg_src)({msg:'无考场vip线路数据'}));
+						$('#data_list').html(doT.template(data_msg_src)({msg:'未选择区域'}));
+					}
+				}else{
+					areaId = '';
+					$('#area_nav').find('.con').html(doT.template(msg_src)({msg:ret.msg}));
+					$('#roads_nav').find('.con').html(doT.template(msg_src)({msg:ret.msg}));
+					$('#data_list').html(doT.template(data_msg_src)({msg:'未选择区域'}));
+				}
+			}else{
+				areaId = '';
+				$('#area_nav').find('.con').html(doT.template(msg_src)({msg:'服务器繁忙，请稍后重试'}));
+				$('#roads_nav').find('.con').html(doT.template(msg_src)({msg:'服务器繁忙，请稍后重试'}));
+				$('#data_list').html(doT.template(data_msg_src)({msg:'未选择区域'}));
+			}
+		});
+	}
+	
+	/**
+	 * 加载线路 
+	 */
+	function load_road(area_id){
+		url = 'api/appointment/getAppointmentLineList';
+		params = {
+			areaId:area_id,
+			isVip:1 // 0普通     1VIP
+		}
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			log('线路数据',ret);
+			if(ret){
+				if(ret.code == 0){
+					if(ret.appointmentLineList.length > 0){
+						if(ret.appointmentLineList.length >3){
+							$('#roads_nav').children('.rights').removeClass("aui-hide");
+						}
+						var roads_src = $('#roads_src').html();
+						$('#roads_nav').find('.con').html(doT.template(roads_src)(ret.appointmentLineList));
+						selectRoads($('#roads_nav').find('.lump').eq(0),ret.appointmentLineList[0].id,ret.appointmentLineList[0].name);
+						api.parseTapmode();
+					}else{
+						$('#roads_nav').find('.con').html(doT.template(msg_src)({msg:'无考场vip线路数据'}));
+						roadId = '';
+						load_classes();
+					}
+				}else{
+					$('#roads_nav').find('.con').html(doT.template(msg_src)({msg:ret.msg}));
+					roadId = '';
+					load_classes();
+				}
+			}else{
+				$('#roads_nav').find('.con').html(doT.template(msg_src)({msg:'服务器繁忙，请稍后重试'}));
+				roadId = '';
+				load_classes();
+			}
+		});
+	}
+	
+	/**
+	 * 加载排班
+	 */
+	function load_classes(){
+		
+		//预约日期为空
+		if(appointDate == ''&&testDate == ''){
+			$('#data_list').html(doT.template(data_msg_src)({msg:'未选择训练或考试日期'}));
+			return;
+		}
+		//车型标识为空
+		if(carTypeId == ''){
+			$('#data_list').html(doT.template(data_msg_src)({msg:'未选择车型'}));
+			return;
+		}
+		//区域标识为空
+		if(areaId == ''){
+			$('#data_list').html(doT.template(data_msg_src)({msg:'未选择区域'}));
+			return;
+		}
+		//线路标识为空
+		if(roadId == ''){
+			$('#data_list').html(doT.template(data_msg_src)({msg:'未选择线路'}));
+			return;
+		}
+		url = 'api/appointment/getAppointmentScheduleList';
+		
+		params = {
+			learnerId:getUserId(),
+			testCenterId:cache.e_room_id,
+			trainingDate:appointDate,
+			testDate:testDate,
+			lessonId:shiftsId,//班次
+			carType:carTypeId,//车型
+			areaId:areaId,//区域id
+			lineId:roadId,//线路id
+			isVip:1//vip
+		}
+		
+		//vip等级-普通
+		switch(cache.role){
+			case 'normal_vip':
+				params.vipGrade = 0;
+				break;
+			case 'senior_vip':
+				params.vipGrade = 1;
+				break;
+		}
+		
+		//log('传参------------',params);
+		$('.notice_importent').html('请选择排班');
+		defaultload('获取排班数据中...');
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			log('排班数据',ret);
+			if(ret){
+				if(ret.code == 0){
+					if(ret.appointmentScheduleVipList.length > 0){
+						var schedule_src = $('#schedule_src').html();
+						$('#data_list').html(doT.template(schedule_src)(ret.appointmentScheduleVipList));
+						api.parseTapmode();
+						api.hideProgress();
+					}else{
+						$('#data_list').html(doT.template(data_msg_src)({msg:'无可预约信息'}));
+						api.hideProgress();
+					}
+				}else{
+					$('#data_list').html(doT.template(data_msg_src)({msg:ret.msg}));
+					api.hideProgress();
+				}
+			}else{
+				$('#data_list').html(doT.template(data_msg_src)({msg:'服务器繁忙，请稍后重试'}));
+				api.hideProgress();
+			}
+		});
+	}
+	
+	/**
+	 * 选择日期 
+	 */
+	function selectDate(){
+		appointDate = $('#appointment-date').val();
+		$('#test-date').val('');
+		testDate = '';
+		getShiftAndCarTypeList();
+	}
+	
+	/**
+	 * 选择考试日期 
+	 */
+	function selectTestDate(){
+		testDate = $('#test-date').val();
+		$('#appointment-date').val('');
+		appointDate = '';
+		getShiftAndCarTypeList();
+	}
+	
+	//选择班次
+	function selectShifts(o,code,name,flag){
+		$('#shifts_nav').find('.lump').each(function(index,e){
+			if($(e).is($(o))){
+				$(e).addClass('lump-active');
+			}else{
+				$(e).removeClass('lump-active');
+			}
+		});
+		shiftsId = code;
+		shiftsName = name;
+		if(flag != 'first'){
+			load_classes();
+		}
+		$("#shifs_nav").animate({scrollLeft: $(o).position().left - 130 + 'px'}, 500);
+	}
+	
+	//选择车型
+	function selectCarTypes(o,code,name,flag){
+		$('#carTypes_nav').find('.lump').each(function(index,e){
+			if($(e).is($(o))){
+				$(e).addClass('lump-active');
+			}else{
+				$(e).removeClass('lump-active');
+			}
+		});
+		carTypeId = code;
+		carTypeName = name;
+		if(flag != 'first'){
+			load_classes();
+		}
+		$("#carTypes_nav").animate({scrollLeft: $(o).position().left - 130 + 'px'}, 500);
+	}
+	
+	//选择考场区域
+	function selectArea(e,area_id,area_name){
+		areaId = area_id;
+		areaName = area_name;
+		f_slide($(e));
+		load_road(area_id);
+	}
+	
+	//选择路线
+	function selectRoads(o,road_id,road_name){
+		$('#roads_nav').find('.lump').each(function(index,e){
+			if($(e).is($(o))){
+				$(e).addClass('lump-active');
+			}else{
+				$(e).removeClass('lump-active');
+			}
+		});
+		roadId = road_id;
+		roadName = road_name;
+		$("#roads_nav").animate({scrollLeft: $(o).position().left - 130 + 'px'}, 500);
+		load_classes();
+	}
+	
+	/**
+	 * 选择排班 
+	 */
+	function selectTimeSlot(e,id,remark){
+		$(e).parent().find("input[type='radio']").click();
+		$('.notice_importent').html(remark);
+	}
+	
+	/**
+	 * 提交预约 
+	 */
+	function appointBatch(){
+		var checked = $('input[type="radio"]:checked');
+		var outline_appointment_id = checked.val();
+		if(outline_appointment_id == ''||outline_appointment_id == null){
+			alert_msg('请选择排班');
+			return;
+		}
+		
+		defaultload('提交预约中...');
+		url = 'api/appointment-vip/schedule-seize-seat';
+		params = {
+			learnerId:getUserId(),
+			id:outline_appointment_id
+		}
+		log('传参',params);
+		ajax_Request(url, 'post', 'json', params, function(ret,err){
+			log('返回数据',ret);
+			if(ret){
+				if(ret.code == 0){//占据坑位成功
+					params.minStudentNum = checked.parent().parent().find('.min-people').html();
+					params.maxStudentNum = checked.parent().parent().find('.max-people').html();
+					params.testDate = checked.parent().parent().find('.test-date').val();//考试日期
+					params.trainDate = appointDate;//训练日期
+					params.shiftsName = shiftsName;//班次
+					params.carTypeName = carTypeName;//车型
+					params.testCenterId = cache.e_room_id;//考场标识
+					params.areaName = areaName;//考场区域
+					params.roadName = roadName;//线路
+					params.role = cache.role;//vip区分
+					params.existNum = ret.existNum;//该线路剩余可预约人数
+					api.hideProgress();
+					sendEvent('success_seize_seat',params);
+				}else{
+					api.hideProgress();
+					openMessage_i('温馨提示',ret.msg,'确定','','','',null);
+				}
+			}else{
+				api.hideProgress();
+				alert_msg('服务器繁忙，请稍后重试');
+			}
+		});
+	}
+	
+	//滑块加载事件
+	function f_slide(e){
+		$('#area_nav').find('li').removeClass('active');
+		$(e).addClass('active');
+		$('.list_bar').css('width',($('.active').width() - clearance*2) + 'px');
+		$('.list_bar_inner').css('width',($('.active').width() - clearance*2) + 'px');
+		document.getElementById('slideSpan').style.webkitTransform = 'translateX(' + ($(e).position().left + clearance) + 'px)';
+		$("#area_nav").animate({scrollLeft: $(e).position().left - 130 + 'px'}, 500);
+	}
+	
+	//打开通用弹出框
+	//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+	function openMessage_i(title,content,sureButton,cancelButton,sureFunc,cancelFunc,params){
+		api.openFrame({
+	        name: 'common_alert',
+	        url: '../../common/common_alert.html',
+	        bgColor: 'rgba(0,0,0,0.4)',
+	        rect: {
+	            x: 0,
+	            y: 0,
+	            w: 'auto',
+	            h: api.winHeight
+	        },
+	        bounces: false,
+	        pageParam:{
+	        	title:title,
+	        	content:content,
+	        	sureButton:sureButton,
+	        	sureFunc:sureFunc,
+	        	cancelButton:cancelButton,
+	        	cancelFunc:cancelFunc,
+	        	winName:api.winName,
+	        	frameName:api.frameName,
+	        	params:params
+	        },
+	        softInputBarEnabled:true,
+	        softInputMode:'resize'
+	    });
+	}
+</script>
+</html>

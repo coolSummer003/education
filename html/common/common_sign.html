@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>通用签名页面</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background: transparent;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background: transparent;
+    		display:flex;
+    	}
+    	footer{
+    		background:#FFF;
+    		width:100%;
+		    position: fixed;
+		    bottom: 0;
+		    left: 0;
+    	}
+    	.aui-range {
+		    position: relative;
+		    display: inline-block;
+		    width: 100%;
+		}
+		.operationButton{
+			height: 2.2rem;
+			line-height:2.2rem;
+    		margin-bottom: 9rem;
+		}
+		.operationButton ul{
+			height: 2.2rem;
+		}
+		.operationButton li{
+			height: 2.2rem;
+			width:25%;
+			float:left;
+			text-align:center;
+		}
+		.operationButton li:active{
+			background:#EFEFF4;
+		}
+		.right-font{
+		    text-align: right !important;
+		    display: block !important;
+		    line-height: 2.2rem !important;
+		    padding-right: 0.75rem !important;
+		    font-weight:bold !important;
+		}
+		.center-font{
+		    text-align: center !important;
+		    display: block !important;
+		    line-height: 2.2rem !important;
+		}
+    </style>
+</head>
+<body>
+	<footer>
+		<div class='operationButton bottom-slide' id="operationButton">
+			<ul>
+				<li tapmode onclick="closeSign()">关闭</li>
+				<li tapmode onclick="cancelSign()">撤回</li>
+				<li tapmode onclick="emptySign()">清空</li>
+				<li tapmode onclick="sureSign()">确定</li>
+			</ul>
+		</div>
+		<div class="aui-content" id="pen">
+    		<ul class="aui-list aui-form-list none-bottom-style">
+    			<li class="aui-list-item">
+		            <div class="aui-list-item-inner">
+		                <span>细</span>
+		            </div>
+		            <div class="aui-list-item-inner center-font">
+		                <span>线条</span>
+		            </div>
+		            <div class="aui-list-item-inner right-font">
+		                <span>粗</span>
+		            </div>
+		        </li>
+				<!-- <li class="aui-list-item none-bottom-style">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-input">
+		                    <div class="aui-range">
+		                        <input type="range" class="aui-range" value="60" max="100" min="1" step="1" id="range"/>
+		                    </div>
+		                </div>
+		            </div>
+		        </li> -->
+    		</ul>
+    	</div>
+	</footer>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_range.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var drawingBoard;//签名模块
+	var footerHeight;
+	var penHeight;
+	var operationButtonHieght;
+	apiready = function(){
+		api.parseTapmode();
+		//setV();
+		setHidden();
+		drawingBoard = api.require('drawingBoard');
+		footerHeight = $api.dom('footer').offsetHeight;
+		penHeight = $api.byId('pen').offsetHeight;
+		operationButtonHieght = $api.byId('operationButton').offsetHeight;
+		cache = api.pageParam;
+		signOpen();
+	}
+	
+	//设置位置
+	function setV(){
+		api.setFrameAttr({
+		    name: 'common_sign',
+		    rect: {
+	            x: 0,
+	            y: 0,
+	            w: 'auto',
+	            h: api.winHeight
+	        },
+		});
+	}
+	
+	//设置隐藏
+	function setHidden(){
+		api.setFrameAttr({
+		    name: 'common_sign',
+		    rect: {
+	            x: 0,
+	            y: 0
+	        },
+		    hidden: true
+		});
+	}
+	
+	//打开drawingBoard
+	function signOpen(){
+		drawingBoard.open({
+		    rect: {
+		        x: 0,
+		        y: api.winHeight - footerHeight + operationButtonHieght,
+		        w: api.winWidth,
+		        h: footerHeight - operationButtonHieght - penHeight + 2
+		    },
+		    styles: {
+		        brush: {
+		            color: '#000',
+		            width: 6
+		        },
+		        bgColor: '#F2F2F2'
+		    },
+		    fixedOn: api.frameName
+		});
+		/*var range = new auiRange({
+	    	element:document.getElementById("range") //滑块容器
+		},function(ret){
+		    drawingBoard.resetBrush({
+		    	width: ret.value/10
+		    });
+		});*/
+	}
+	
+	//确定
+	function sureSign(){
+		drawingBoard.save({
+		    savePath: 'fs://drawingBoard/mySign' + Math.floor(Math.random()*100000) + '.png',
+		    copyToAlbum: false,//（可选项）是否将结果同时保存到系统相册
+		    overlay:false //（可选项）保存图片时，是否将背景一起保存 mk
+		}, function(ret) {
+			log('sas',ret)
+			// esc_function('common_sign_online_win','common_sign_online_frm','showSign("'+ret.absolutePath+'")');
+			// esc_function('student_win','student_frm','showSign("'+ret.absolutePath+'")');
+			var param = {
+				url:ret.absolutePath
+			}
+			sendEvent('showSign',param)
+			closeSign();
+		});
+	}
+	
+	//关闭
+	function closeSign(){
+		setHidden();
+	}
+	
+	//撤销
+	function cancelSign(){
+		drawingBoard.revoke();
+	}
+	
+	//清空
+	function emptySign(){
+		drawingBoard.clear();
+	}
+</script>
+</html>

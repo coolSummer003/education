@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>在线理赔</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html,body{
+    		background-color: #ffffff;
+    	}
+		.online_empyt{
+			width: 100%;
+			height: auto;
+		}
+		.online_empyt img{
+			width: 60%;
+			height: auto;
+			margin-left: 20%;
+			margin-top: 4rem;
+		}
+		.online_empyt_text{
+			position: relative;
+			width: 100%;
+			height: auto;
+			margin-top: 1rem;
+		}
+		.online_empyt_text_title{
+			width: 100%;
+			height: 2rem;
+			line-height: 2rem;
+			text-align: center;
+			font-weight: 700;
+			font-size: 0.8rem;
+		}
+		.online_empyt_text_titles{
+			width: 100%;
+			height: auto;
+			text-align: center;
+			color: #9D9EA7;
+			margin-top: 0.5rem;
+			font-size: 0.7rem;
+		}
+		.online_empyt_text_title_btn{
+			position: absolute;
+			width: 9rem;
+			height: 2.5rem;
+			line-height: 2.5rem;
+			text-align: center;
+			background: #443636;
+			color: #FFC696;
+			border-radius: 25px;
+			margin-top: 1.5rem;
+			left: 50%;
+			margin-left: -4.5rem;
+		}
+    </style>
+	</head>
+	<body>
+		<div class="online_empyt">
+			<img src="../../../icon/vip/question_bank/online_empty.png" >
+		</div>
+		<div class="online_empyt_text">
+			<div class="online_empyt_text_title">
+				提交成功
+			</div>
+			<div class="online_empyt_text_titles">
+				您的理赔申请已提交，正在审核中，请耐心等待。
+			</div>
+			<div class="online_empyt_text_title_btn" tapmode onclick="showDetail();">
+				查看进度
+			</div>
+		</div>
+		
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript" src="../../../script/echo.min.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		var cache;
+		apiready = function() {
+			api.parseTapmode();
+			cache = api.pageParam.data;
+			log('se', cache)
+		}
+		
+		function showDetail(){
+			commonOpenWin('details_of_claim_settlement_win',cache)
+			setTimeout(function(){
+				sendEvent('closeThisWin2',{})
+			},1000)
+		}
+	</script>
+</html>

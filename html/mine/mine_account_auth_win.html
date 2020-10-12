@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>实名认证</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+            <img src="../../icon/common/icon_header_return.png">
+        </a>
+        <div class="aui-title" id="common_title">
+        	实名认证
+        </div>
+        <a class="aui-pull-right aui-btn aui-hide" id='authButton' tapmode onclick='submitInfo()'>
+           <span>提交</span>
+        </a>
+    </header>
+    
+    <!-- 截图工具 -->
+	<header class="aui-bar aui-bar-nav aui-border-b aui-hide" id="aui-header2">
+		<a class="aui-pull-left aui-btn" tapmode onclick="cancelCut()">
+            <span>取消</span>
+        </a>
+        <div class="aui-title">
+        	把身份证放入框内
+        </div>
+        <a class="aui-pull-right aui-btn" tapmode onclick='getCut()'>
+           <span>截取</span>
+        </a>
+    </header>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var headerPos;
+	var title = '';
+	var frameName = '';
+	apiready = function(){
+		api.parseTapmode();
+		var header = $api.byId('aui-header');
+		var header2 = $api.byId('aui-header2');
+		$api.fixStatusBar(header);
+		$api.fixStatusBar(header2);
+		cache = api.pageParam;
+		headerPos = $api.offset(header);
+		init();
+	}
+	
+	function init(){
+		changeButton();
+		openFrame('mine_account_auth_frm',headerPos.h, api.winHeight - headerPos.h,'none');
+	}
+	
+	//根据认证状态判断按钮
+	function changeButton(){
+		if(!isauth()){//如果未认证，显示提交按钮
+			$('#authButton').removeClass('aui-hide');
+		}else if(!isauthpass()){//如果是认证中，显示修改按钮
+			$('#authButton').removeClass('aui-hide');
+			$('#authButton').find('span').html('修改');
+		}
+	}
+	
+	function openFrame(frameName,y,h,animate){
+		api.openFrame({
+            name: frameName,
+            url: './'+frameName+'.html',
+            bgColor:'#efeff4',
+            rect: {
+                x: 0,
+                y: y,
+                w: 'auto',
+                h: h
+            },
+            animation:{
+	        	type:animate,                //动画类型（详见动画类型常量）
+			    subType:"from_right",       //动画子类型（详见动画子类型常量）
+			    duration:300
+	        },
+            bounces: false,
+            pageParam:cache,
+            reload:true,
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+	}
+	
+	//提交实名认证信息
+	function submitInfo(){
+		esc_function('mine_account_auth_win','mine_account_auth_frm','submitInfo()');
+	}
+	
+	//显示截图工具栏
+	function showTools(){
+		$('#aui-header').addClass('aui-hide');
+		$('#aui-header2').removeClass('aui-hide');
+	}
+	
+	//隐藏截图工具栏
+	function hideTools(){
+		$('#aui-header').removeClass('aui-hide');
+		$('#aui-header2').addClass('aui-hide');
+	}
+	
+	//取消截图
+	function cancelCut(){
+		esc_function('mine_account_auth_win','mine_account_auth_frm','cancelCut()');
+	}
+	
+	//保存截图
+	function getCut(){
+		isSure('温馨提示','是否已把身份证放入框内？','放好了','还没有',function(){
+			sendEvent('getIdCardCut',{});
+		},function(){
+		});
+	}
+	
+	function closeWin(){
+		api.closeWin({
+        });
+	}
+</script>
+</html>

@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>体检结果</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html,body{
+    		background-color: #fff;
+    	}
+    	.item{
+			width: 94%;
+			margin-left: 3%;
+			height: auto;
+			margin-top: 1rem;
+		}
+		.icon{
+			position: relative;
+			width: 100%;
+			height: 4rem;
+			
+		}
+		.itemIcon{
+			position: absolute;
+			width: 13%;
+			height: 4rem;	
+			z-index: 1;
+		}
+		.itemIcon:nth-child(2){
+			left: 21.75%;
+		}
+		.itemIcon:nth-child(3){
+			left: 43.5%;
+		}
+		.itemIcon:nth-child(4){
+			left: 65.25%;
+		}
+		.itemIcon:nth-child(5){
+			left: 87%;
+		}
+		.item1,.item2,.item3,.item4,.item5{
+			position: absolute;
+			width: 1.6rem;
+			height: 1.6rem;
+			left: 50%;
+			margin-left: -0.8rem;
+		}
+		img{
+			width: 100%;
+			height: 100%;
+		}
+		
+		.color,.eye,.ear,.body,.tongguo{
+			position: absolute;
+			top: 2rem;
+			font-size: 0.7rem;
+			width: 100%;
+			text-align: center;
+		}
+		
+		.iconLine{
+			position: absolute;
+			width: 87%;
+			height: 1rem;
+			left: 6.5%;
+			border-top:0.1rem dashed #000000 ;
+			top: 0.8rem;
+		}
+		
+		
+		
+		.itemList{
+			display: flex;
+			flex-flow: row;
+			width: 94%;
+			margin-left: 3%;
+			flex-wrap: wrap;
+			justify-content: space-between;
+		}
+		.itemList1{
+			width: 47%;
+			height: 7rem;
+			background-color: #fff;
+			margin-top: 0.5rem;
+			
+		}
+		.bg1{
+			width: 100%;
+			height: 5rem;
+			border-radius: 0.4rem;
+			position: relative;
+		}
+		.bg1_tl{
+			background: url(../../../icon/student/tijianBg1.png) no-repeat;
+			background-size: 100% 100%;
+		}
+		.bg1_bsl{
+			background: url(../../../icon/student/tijianBg2.png) no-repeat;
+			background-size: 100% 100%;
+		}
+		.bg1_sl{
+			background: url(../../../icon/student/tijianBg3.png) no-repeat;
+			background-size: 100% 100%;
+		}
+		.bg1_sz{
+			background: url(../../../icon/student/tijianBg4.png) no-repeat;
+			background-size: 100% 100%;
+		}
+		.bg1_no{
+			background: url(../../../icon/student/tijianBg_no.png) no-repeat;
+			background-size: 100% 100%;
+		}
+		.bg2{
+			position: absolute;
+			width: 100%;
+			height: 5rem;
+			background: rgba(0,0,0,.5);
+			top: 0;
+			left: 0;
+		}
+		
+		.text1,.text2,.text3,.text4{
+			position: absolute;
+			bottom: 0.3rem;
+			width: 100%;
+			font-size: 0.7rem;
+			color: #fff;
+			left: 0.3rem;
+		}
+		.text1_look{
+			position: absolute;
+			width: 1.2rem;
+			height: 1.2rem;
+			border-radius: 50%;
+			left: 50%;
+			top: 50%;
+			margin-left: -0.6rem;
+			margin-top: -0.6rem;
+			text-align: center;
+		}
+		.top{
+			margin-top: 2rem;
+		}
+		.listBtn1{
+			margin-top: 0.5rem;
+			text-align: center;
+			border: #3F86FF solid 0.05rem;
+			color: #3F86FF;
+			border-radius: 1rem;
+			font-size: 0.7rem;
+			padding: 0.2rem;
+		}
+		
+		.status1,.status2,.status3,.status4{
+			width: 1rem;
+			height: 1rem;
+			border-radius: 0.4rem;
+			position: absolute;
+			bottom: 0;
+			right: 0;
+		}
+		.sub,.ret{
+			width: 94%;
+			margin-left: 3%;
+			text-align: center;
+			margin-top: 3rem;
+			height: 2.25rem;
+			line-height: 2.25rem;
+			border-radius: 1.5rem;
+		}
+		.sub{
+			background-image: linear-gradient(to right, #64ADF6, #3F86FE);
+			color: #fff;
+		}
+		.ret{
+			margin-top: 0.7rem;
+			height: 2.25rem;
+			line-height: 2.25rem;
+			border: #3F86FF solid 0.07rem;
+			color: #3F86FF;
+			margin-top: 2rem;
+		}
+		.red{
+			color: red;
+		}
+		
+		.itemList2{
+			position: relative;
+			width: 100%;
+			height: 14rem;
+			/* background: #00897B; */
+		}
+		.bg3{
+			width: 100%;
+			height: 14rem;
+			background: url(../../../icon/student/tijianBg.png) no-repeat;
+			border-radius: 0.4rem;
+			position: relative;
+			background-size: 100% 100%;
+		}
+		.bg4{
+			position: absolute;
+			width: 100%;
+			height: 14rem;
+			background: rgba(0,0,0,.5);
+			top: 0;
+			left: 0;
+		}
+		.listBtn2{
+			position: absolute;
+			width: 100%;
+			text-align: center;
+			border: #3F86FF solid 0.05rem;
+			color: #3F86FF;
+			border-radius: 1rem;
+			font-size: 0.7rem;
+			padding: 0.2rem;
+			top: 14.5rem;
+		}
+		.itemList2_text1{
+			position: absolute;
+			bottom: 0.3rem;
+			width: 100%;
+			font-size: 1rem;
+			color: #fff;
+			left: 0.3rem;
+		}
+		.itemList2_look{
+			position: absolute;
+			width: 2rem;
+			height: 2rem;
+			border-radius: 50%;
+			left: 50%;
+			top: 50%;
+			margin-left: -1rem;
+			margin-top: -1rem;
+			text-align: center;
+		}
+		.itemList2_status1{
+			width: 1.5rem;
+			height: 1.5rem;
+			border-radius: 0.4rem;
+			position: absolute;
+			bottom: 0;
+			right: 0;
+		}
+    </style>
+	</head>
+	<body>
+		<div class="item" id="iconProgress">
+			<script type="text/template" id="iconProgress_s">
+				{{ if(it.length == 4){ }}
+				<div class="icon">
+					{{ for(var i=0;i<it.length;i++){ }}
+						<div class="itemIcon">
+							<div class="item1">
+							{{ if(it[i].zStatus == 0){ }}
+								{{ if(it[i].status == 0){ }}
+									<img id="item1" src="../../../icon/student/pass.png" alt="">
+								{{ }else if(it[i].status == 1){ }}
+									<img id="item1" src="../../../icon/student/fail.png" alt="">
+								{{ }else{ }}
+									<img id="item1" src="../../../icon/student/help.png" alt="">
+								{{ } }}
+							{{ }else if(it[i].zStatus == 1){ }}
+								<img id="item1" src="../../../icon/student/pass.png" alt="">
+							{{ } }}
+							</div>
+							{{if(it[i].modular == 1){}}
+								<div class="color">听力</div>
+							{{ }else if(it[i].modular == 2){ }}
+								<div class="color">辨色力</div>
+							{{ }else if(it[i].modular == 3){ }}
+								<div class="color">视力</div>
+							{{ }else if(it[i].modular == 4){ }}
+								<div class="color">躯干</div>
+							{{ } }}
+						</div>
+					{{ } }}
+					<div class="itemIcon">
+						<div class="item5">
+							{{ if(it[0].zStatus == 0&&it[1].zStatus == 0&&it[2].zStatus == 0&&it[3].zStatus == 0){ }}
+								{{ if(it[0].status == 0 && it[1].status == 0 && it[2].status == 0 && it[3].status == 0){ }}
+									<img id="item1" src="../../../icon/student/pass.png" alt="">
+								{{ }else if(it[0].status == 0 && it[1].status == 0 && it[2].status == 0 && it[3].status == 0){ }}
+									<img id="item1" src="../../../icon/student/fail.png" alt="">
+								{{ }else{ }}
+									<img id="item1" src="../../../icon/student/help.png" alt="">
+								{{ } }}
+							{{ }else if(it[0].zStatus == 1&&it[1].zStatus == 1&&it[2].zStatus == 1&&it[3].zStatus == 1){ }}
+								<img id="item1" src="../../../icon/student/pass.png" alt="">
+							{{ } }}
+						</div>
+						{{ if(it[0].zStatus == 0&&it[1].zStatus == 0&&it[2].zStatus == 0&&it[3].zStatus == 0){ }}
+							{{ if(it[0].status == 0 && it[1].status == 0 && it[2].status == 0 && it[3].status == 0){ }}
+								<div class="tongguo">通过</div>
+							{{ }else if(it[0].status == 0 && it[1].status == 0 && it[2].status == 0 && it[3].status == 0){ }}
+								<div class="tongguo">结果</div>
+							{{ }else{ }}
+								<div class="tongguo">结果</div>
+							{{ } }}
+						{{ }else if(it[0].zStatus == 1&&it[1].zStatus == 1&&it[2].zStatus == 1&&it[3].zStatus == 1){ }}
+							<div class="tongguo">通过</div>
+						{{ } }}
+					</div>
+					<div class="iconLine">
+					</div>
+			</div>
+			{{ } }}
+			</script>
+		</div>
+		<div id="itemList">
+			<script type="text/template" id="itemList_s">
+				<div class="itemList">
+					{{ for(var i=0;i<it.length;i++){ }}
+					<div class="itemList1">
+						{{if(it[i].modular == 1){}}
+							<div class="bg1 bg1_tl">
+						{{ }else if(it[i].modular == 2){ }}
+							<div class="bg1 bg1_bsl">
+						{{ }else if(it[i].modular == 3){ }}
+							<div class="bg1 bg1_sl">
+						{{ }else if(it[i].modular == 4){ }}
+							<div class="bg1 bg1_sz">
+						{{ } }}
+							<div class="bg2">
+								<div class="text{{=it[i].modular}}">
+									{{if(it[i].modular == 1){}}
+										听力
+									{{ }else if(it[i].modular == 2){ }}
+										辨色力
+									{{ }else if(it[i].modular == 3){ }}
+										视力
+									{{ }else if(it[i].modular == 4){ }}
+										躯干
+									{{ } }}
+									
+									{{if(it[i].hStatus == '014006'){}}
+										审核通过
+									{{ }else{ }}
+										{{ if(it[i].zStatus == 0){ }}
+											{{ if(it[i].status == 0){ }}
+												初审通过
+											{{ }else if(it[i].status == 1){ }}
+												初审不通过
+											{{ }else{ }}
+												初审中
+											{{ } }}
+										{{ }else if(it[i].zStatus == 1){ }}
+											初审通过
+										{{ } }}
+									{{ } }}
+								</div>
+								<div class="text1_look" tapmode onclick="showVideo('{{=it[i].path}}')">
+									<img src="../../../icon/student/play.png" >
+								</div>
+								<div class="status1">
+									{{ if(it[i].status == 0){ }}
+										<img id="status1" src="../../../icon/student/pass2.png" alt="">
+									{{ }else if(it[i].status == 1){ }}
+										<img id="status1" src="../../../icon/student/fail2.png" alt="" tapmode onclick="checkRemark('{{=it[i].reason}}')">
+									{{ }else{}}
+										<!-- <img id="status1" src="../../../icon/student/help2.png" alt=""> -->
+									{{ } }}
+								</div>
+							</div>
+						</div>
+						{{ if(it[i].status == 0){ }}
+							<div class="listBtn1 aui-hide">重测听力</div>
+						{{ }else if(it[i].status == 1 && it[i].isExpire == 1){ }}
+							<div class="listBtn1" tapmode onclick="toTest('{{=it[i].id}}','{{=it[i].modular}}','{{=it[i].licenseType}}')">
+								{{if(it[i].modular == 1){}}
+									重测听力
+								{{ }else if(it[i].modular == 2){ }}
+									重测辨色力
+								{{ }else if(it[i].modular == 3){ }}
+									重测视力
+								{{ }else if(it[i].modular == 4){ }}
+									重测躯干
+								{{ } }}
+							</div>
+							{{ } }}
+					</div>
+					{{ } }}
+					{{ for(var i=0;i<(4- it.length);i++){ }}
+						<div class="itemList1">
+							<div class="bg1 bg1_no">
+								<div class="bg2">
+									<div class="text1">
+										视频未上传
+									</div>
+									<div class="text1_look" tapmode onclick="showVideo()">
+										<!-- <img src="../../../icon/student/play.png" > -->
+									</div>
+									<div class="status1">
+									</div>
+								</div>
+							</div>
+							<div class="listBtn1" tapmode onclick="nowUpload('{{=i}}','{{=it.length}}')">立即上传</div>
+						</div>
+					{{ } }}
+				</div>
+				{{if(it != '' && it != null && it != undefined){ }}
+					{{if(it.length == 4){ }}
+						{{ if(it[0].status == 1 && it[1].status == 1 && it[2].status == 1 &&it[3].status == 1){ }}
+							<div class="ret" tapmode onclick="toAllTest()">重新检测</div>
+						{{ } }}
+					{{ } }}
+				{{ } }}
+			</script>
+			<script type="text/template" id="itemList_s_old">
+				<div class="itemList">
+					<div class="itemList2">
+						<div class="bg3">
+							<div class="bg4">
+								<div class="itemList2_text1">
+									体检
+									{{ if(it[0].statusOne == '014004'){ }}
+										审核中
+									{{ }else if(it[0].statusOne == '014005'){ }}
+										初审不通过
+									{{ }else if(it[0].statusOne == '014003'){ }}
+										视频已上传
+									{{ }else if(it[0].statusOne == '014006'){ }}
+										合格
+									{{ } }}
+								</div>
+								<div class="itemList2_look" tapmode onclick="showVideo('{{=it[0].path}}')">
+									<img src="../../../icon/student/play.png" >
+								</div>
+								<div class="itemList2_status1">
+									{{ if(it[0].status == 0){ }}
+										<img id="status1" src="../../../icon/student/pass2.png" alt="">
+									{{ }else if(it[0].status == 1){ }}
+										<img id="status1" src="../../../icon/student/fail2.png" alt="" tapmode onclick="checkRemark('{{=it[0].reason}}')">
+									{{ }else{}}
+										<!-- <img id="status1" src="../../../icon/student/help2.png" alt=""> -->
+									{{ } }}
+								</div>
+							</div>
+						</div>
+					</div>
+					{{ if(it[0].status == 1){ }}
+						<div class="ret" tapmode onclick="toAllTest()">重新检测</div>
+					{{ } }}
+				</div>
+			</script>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var i = 1;
+		var orderId;
+		var videoBlock;
+		var videoLists;
+		var learnerId;
+		var account;
+		var hospital_data;
+		var systemType;
+		var winName;
+		var fs;
+		apiready = function() {
+			api.parseTapmode();
+			cache = api.pageParam;
+			fs = api.require('fs');
+			/* init(); */
+			log('数据', cache)
+			// account = getAccountInfo();
+			orderId = cache.orderId;
+			videoBlock = cache.videoBlock;
+			videoLists = $api.getStorage('cache_by_account')['videoLists' + cache.orderId];
+			cache.exaId = cache.orderId;
+			systemType = api.systemType;
+			log('数据', videoBlock)
+			log('数据', videoLists)
+			defaultload('获取数据中');
+			lookVideo();
+			if (cache.type) {
+				if (videoBlock == 0) {
+					if (videoLists.length == 4) {
+						if (isLocalHasVideo(orderId, videoBlock)) {
+							getUploadFilePowers(0, videoLists.length, videoBlock, api.winName)
+						} else {
+							alert_msg('本地无上传视频请重新录制')
+						}
+					} else {
+						// alert_msg('你还有未上传的视频，请上传')
+					}
+					// openVideoUpload(0, videoBlock, api.winName);
+					console.log('我进来了')
+				} else if (videoBlock == 1 || videoBlock == 2 || videoBlock == 3 || videoBlock == 4) {
+					if (videoLists.length == 1) {
+						if (isLocalHasVideo(orderId, videoBlock)) {
+							getUploadFilePowers(0, videoLists.length, videoBlock, api.winName)
+						} else {
+							alert_msg('本地无上传视频请重新录制')
+						}
+					} else {
+						// alert_msg('你还有未上传的视频，请上传')
+					}
+				}
+			}
+
+			toEventListener('uploadVideo', function(ret) {
+				log('上传的数据', ret.value)
+				videoLists = ret.value.videoLists;
+				getUploadFilePowers(0, videoLists.length, ret.value.videoBlock, api.winName)
+				// openVideoUpload(0, ret.value.videoBlock, api.winName);
+			})
+			setTimeout(function() {
+				esc_function('physical_examination_video_win', '', 'closeWin();');
+				esc_function('physical_examination_notice_win', '', 'closeWin();');
+				esc_function('physical_examination_pay_for_win', '', 'close();');
+				esc_function('my_student_physical_new_win', '', 'search();');
+			}, 500)
+
+			api.addEventListener({
+				name: 'offline'
+			}, function(ret, err) {
+				// alert('已断开网络');
+				close_load();
+				if (videoLists.length == 1) {
+					openMessage('温馨提示', '已检测到您存在断开网络操作，为保证数据安全请重新上传！', '重新上传', '', 'reUpload()', '', false)
+				} else {
+					openMessage('温馨提示', '已检测到您存在断开网络操作，为保证数据安全请重新上传！', '确定', '', 'reUpload()', '', false)
+				}
+			});
+
+		}
+
+		/**
+		 * 断网重新上传
+		 */
+		function reUpload() {
+			log('fileListPath:', fileListPath)
+			if (videoLists.length == 1) {
+				if (isLocalHasVideo(videoLists[0])) {
+					openVideoUpload(0, videoBlock, winName)
+				} else {
+					alert_msg('本地无上传视频请重新录制')
+				}
+			} else if (videoLists.length > 1) {
+				esc_function('result_win', '', "closeWin()")
+			}
+		}
+
+		//本地是否含有录制视频
+		function isLocalHasVideo(orderId) {
+			var examResult = $api.getStorage('cache_by_account')['videoLists' + orderId];
+			if (examResult == null || examResult == undefined || examResult == '') {
+				return false;
+			} else {
+				if (examResult.length == 4 || (videoBlock != 0 && videoBlock != '' && examResult.length == 1)) {
+					return true;
+				} else{
+					return false;
+				}
+			}
+		}
+
+		var iconProgress_s = $("#iconProgress_s").html();
+		var itemList_s = $('#itemList_s').html();
+		var itemList_s_old = $('#itemList_s_old').html();
+
+		function lookVideo() {
+			url = 'api/examination/selHmExaMediaList';
+			params = {
+				orderId: orderId
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('获取的视频数据', ret)
+				if (ret) {
+					closedefaultload();
+					if (ret.code == 0) {
+						if (ret.isOld == 0) {
+							var list = ret.hList;
+							var videoLists = $api.getStorage('cache_by_account')['videoLists' + orderId];
+							if(ret.hList.length > 0){
+								if (videoLists == '' || videoLists == null || videoLists == undefined) {
+									$('#iconProgress').html(doT.template(iconProgress_s)(ret.hList))
+									$('#itemList').html(doT.template(itemList_s)(ret.hList))
+								} else{
+									for(var i=0;i<list.length;i++){
+										for(var j=0;j<videoLists.length;j++){
+											if(list[i].modular == videoLists[j].split('-')[1]){
+												list.splice(i,1);
+											}
+										}
+									}
+									log('操作之后的数据1',list)
+									log('操作之后的数据2',ret.hList)
+									$('#iconProgress').html(doT.template(iconProgress_s)(list))
+									$('#itemList').html(doT.template(itemList_s)(list))
+								}
+							}else{
+								$('#iconProgress').html(doT.template(iconProgress_s)(ret.hList))
+								$('#itemList').html(doT.template(itemList_s)(ret.hList))
+							}
+						} else {
+							$('#itemList').html(doT.template(itemList_s_old)(ret.hList))
+						}
+
+						if (videoBlock == '') {
+							$('.ret').removeClass('aui-hide');
+							hospital_data = cache.hospital_data;
+						}
+					} else {
+
+					}
+				} else {
+					alert_msg('服务器繁忙，请稍后重试');
+				}
+			});
+		}
+
+		/**
+		 * 获取视频文件上传权限
+		 */
+		var fileListPath; //权限路径
+		function getUploadFilePowers(videoId, fileNum, videoBlock, winName) {
+			isAllowUpload(function(ret){
+				log('',ret)
+				if (ret) {
+					log('videoLists.length:', fileNum)
+					params = {
+						bucketName: AliOssBucket,
+						fileNum: fileNum,
+						fileType: 'coachApp/examination/video'
+					}
+					getUploadFilePower(params, function(ret, err) {
+						log('我他吗的提示', ret)
+						log('我他吗的提示', err)
+						if (ret && ret.code == 0) {
+							// console.log('获取文件上传权限：'+JSON.stringify(ret));
+							fileListPath = ret.fileList;
+							// var path = ret.fileList[0].fileId;
+							openVideoUpload(videoId, videoBlock, winName, fileNum);
+						} else {
+							alert_msg('获取文件上传权限失败');
+						}
+					});
+				} else {
+					openMessage('温馨提示', '你上传次数已达上限，请联系客服增加次数', '确定', '', '', '', null)
+				}
+			})
+			
+		}
+
+
+		/**
+		 * 中途未上传 手动上传
+		 */
+		function nowUpload(num, videoLength) {
+			log('视频长度：', num)
+			log('视频长度：', videoLength)
+			var numbers = Number(videoLength) + Number(num);
+			videoLists = $api.getStorage('cache_by_account')['videoLists' + orderId];
+			log('videoLists视频长度：', videoLists)
+			videoBlock = videoLists[num].split("-")[1]
+			log('视频长度：', videoBlock)
+			getUploadFilePowers(num, 1, videoBlock, api.winName)
+		}
+
+		/**
+		 * 是否允许上传视频
+		 */
+		function isAllowUpload(func) {
+			var isAllowUpload = true;
+			url = 'api/examination/get-hm-examination-by-id-one';
+			params = {
+				orderId: orderId
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('获取次数+++++++++', ret)
+				if (ret) {
+					if (ret.canUpload == 1) {
+						isAllowUpload = true;
+					} else if (ret.canUpload == 2) {
+						isAllowUpload = false;
+					}
+					func(isAllowUpload)
+				} else {
+					alert_msg('服务器繁忙，请稍后重试');
+				}
+			});
+		}
+
+
+		/**
+		 * 上传视频 
+		 * @param {Object} videoId
+		 * @param {Object} winName
+		 */
+		function openVideoUpload(videoId, videoBlock, winName, fileNum) {
+			log('上传显示数据1+++++++', videoId)
+			var videoBlocks = videoBlock == 0 ? Number(videoId) + 1 : videoBlock;
+			uploadVideoExam_i(videoLists[videoId], videoBlocks, videoBlock, winName, fileNum, function(ret) {
+				//esc_function('index','mine','func_init(0)');
+				log('上传显示数据2+++++++', ret)
+				log('上传显示数据3+++++++', videoLists[videoId])
+				log('上传显示数据4+++++++', videoId)
+				log('上传显示数据5+++++++', videoBlock)
+				log('上传显示数据6+++++++', videoBlocks)
+				if (videoBlock == 0) {
+					if (ret.progress == 100 && videoId == 4) {
+						sendEvent('uploadVideoFinish', {});
+						sendEvent('hospital_refresh_list', {});
+						//esc_function('mine_common_win','record_hospital_examintion_list_frm','init()');//调用医院体检订单刷新，可能会报错
+						// closeWin();
+					} else if (ret.progress == 100 && (videoId == 0 || videoId == 1 || videoId == 2)) {
+						openVideoUpload(Number(videoId) + 1, videoBlock, winName, fileNum)
+					}
+				} else {
+					sendEvent('uploadVideoFinish', {});
+					sendEvent('hospital_refresh_list', {});
+				}
+			});
+		}
+
+		/**
+		 * 上传体检视频共通方法
+		 */
+		function uploadVideoExam_i(orderId, videoId, videoBlock, winName, fileNum, jsfun) {
+			log('1：', orderId)
+			log('2：', videoId)
+			log('3：', videoBlock)
+			var videolists = $api.getStorage('cache_by_account')['videoLists' + orderId.split('-')[0]];
+			var examResult = $api.getStorage('cache_by_account')['exam_result' + orderId];
+			log('缓存数据', videolists)
+			log('缓存数据', examResult)
+			if (videolists == null || examResult == null) {
+				alert_msg('当前无视频，请到订单详情录制体检视频');
+			} else {
+				open_load(); //打开上传进度加载
+				setTimeout(function() {
+					console.log('获取得到的上传体检信息' + JSON.stringify(examResult));
+
+					console.log('进入读取视频操作');
+					//获取文件上传权限
+					var filePath = api.fsDir + '/videoRecorder/examVideo' + orderId + '.mp4';
+					console.log('filePath' + filePath);
+					var isloadFlag = 0; //标记位 isload代表是否上传，0代表未上传，1代表捕捉上传，2代表与阿里云建立连接，3代表上传完成
+					fs.exist({
+						path: filePath
+					}, function(ret, err) {
+						log('', ret)
+						if (ret.exist) {
+							// getUploadFilePower(params, function(ret, err) {
+							// 	log('我他吗的提示', ret)
+							// 	log('我他吗的提示', err)
+							// 	if (ret && ret.code == 0) {
+							// console.log('获取文件上传权限：'+JSON.stringify(ret));
+							// var path = ret.fileList[0].fileId;
+							isloadFlag = 1; //标记上传
+							//阿里云上传可能会崩，所以这里定时器：10秒后查询标记位，把isload为2的图片让用户选择上传
+							var judegeCollapse = setTimeout(function() {
+								collapsevideo_i(isloadFlag, examResult, orderId, videoId, videoBlock, winName, jsfun);
+							}, 10000);
+							var signUrl = fileNum == 1 ? fileListPath[0].signUrl : videoLists.length == 4 ? fileListPath[videoId - 1].signUrl :
+								fileListPath[0].signUrl;
+							file_upload(signUrl, 'put', 'json', filePath, {}, function(ret, err) {
+								log('上传videoId：', videoId)
+								if (ret) {
+									log('我他吗的提示ret:', ret)
+									log('我他吗的提示ret.progress:', ret.progress)
+									console.log('打开进度条页面');
+									clearTimeout(judegeCollapse); //清除定时器
+									isloadFlag = 2; //标记与阿里云服务器连接
+									var num = ret.progress;
+									num = num.toFixed(2);
+									// $('.text' + (Number(videoId))).html('视频上传进度：' + num + '%')
+									log('上传videoId：', videoId)
+									var htm = videoId == 1 ? '听力' : videoId == 2 ? '辨色力' : videoId == 3 ? '视力' : videoId == 4 ? '四肢躯干' :
+										'无效';
+									esc_function('result_win', 'common_progress_frm', 'changeTxt("正在上传' + htm + '部分，请勿关闭' + ret.progress +
+										'%")');
+									if (ret.progress == 100 && ret.status == 1) {
+										alert_msg('上传完成');
+										close_load();
+										examResult.path = fileNum == 1 ? fileListPath[0].fileId : videoLists.length == 4 ? fileListPath[videoId -
+											1].fileId : fileListPath[0].fileId;
+										uploadExamResult(orderId, examResult); //上传体检结果信息
+										jsfun(ret);
+									}
+								} else if (err) {
+									//ios一直会返回数据类型错误(目前找不到原因)，但是图片已上传完毕，所以也当success返回
+									log('err.progress', err)
+									log('我他吗的提示err.progress:', err.progress)
+									log('err.progress', systemType)
+									if (systemType == 'ios' && err.progress == 100 && err.code == 3) {
+										// $('.text' + (Number(videoId))).html('视频上传进度：' + num + '%')
+										clearTimeout(judegeCollapse); //清除定时器
+										isloadFlag = 2; //标记与阿里云服务器连接
+										close_load();
+										alert_msg('上传完成');
+										examResult.path = fileNum == 1 ? fileListPath[0].fileId : videoLists.length == 4 ? fileListPath[
+											videoId - 1].fileId : fileListPath[0].fileId;
+										uploadExamResult(orderId, examResult); //上传体检结果信息
+										jsfun(err)
+									}else if (systemType == 'ios' && err.statusCode == 0 && err.status == 2) {
+										clearTimeout(judegeCollapse); //清除定时器
+										close_load()
+										api.confirm({
+											title: '温馨提示',
+											msg: err.msg,
+											buttons: ['重新连接', '取消']
+										}, function(ret, err) {
+											var index = ret.buttonIndex;
+											if (index == 1) {
+												uploadVideoExam_i(orderId, videoId, videoBlock, winName, fileNum, jsfun);
+											}
+											if (index == 2) {
+										
+											}
+										});
+									} else if ((systemType == 'ios' && err.statusCode == 403)) {
+										clearTimeout(judegeCollapse); //清除定时器
+										//网络无法连接或者签名错误就重新上传
+										uploadVideoExam_i(orderId, videoId, videoBlock, winName, fileNum, jsfun);
+									}
+								}
+								/*}else{
+									var cache_by_account = $api.getStorage('cache_by_account');
+									cache_by_account.exam_result = examResult;
+									$api.setStorage('cache_by_account',cache_by_account);//将最近一次体检结果保存在缓存中，视频上传失败或者不传可以选择继续上传
+									api.alert('上传失败，您可以在【我的】中选择继续上传');
+								}*/
+
+							});
+							// 	} else {
+							// 		alert_msg('获取文件上传权限失败');
+							// 	}
+							// });
+						} else {
+							close_load();
+							alert_msg('本地无视频上传');
+						}
+					});
+				}, 600);
+			}
+		}
+
+		/**
+		 * 上传体检信息到服务器
+		 */
+		function uploadExamResult(orderId, examResult) {
+			log('是否有矫正视力', examResult)
+			url = 'api/item-bank/insert-user-answer';
+			ajax_Request(url, 'post', 'json', examResult, function(ret, err) {
+				if (ret) {
+					if (ret.code == 0) {
+						sendUploadSuccessMsg();
+						deleteExamVideo(examResult.videoId, function() {
+							// close_load();
+							// alert_msg('上传成功');
+							var cache_by_account = $api.getStorage('cache_by_account');
+							var videoLists = cache_by_account['videoLists' + examResult.exaId]
+							for (var i = 0; i < videoLists.length; i++) {
+								if (videoLists[i] == examResult.videoId) {
+									cache_by_account['videoLists' + examResult.exaId].splice(i, 1)
+								}
+							}
+							$api.setStorage("cache_by_account", cache_by_account);
+
+							setTimeout(function(){
+								lookVideo();
+							},500)
+							sendEvent('hospital_refresh_list', {})
+							sendEvent('uploadVideoFinish', {})
+						});
+					} else {
+						alert_msg(ret.msg);
+					}
+				} else {
+					alert_msg('服务器繁忙，请稍后重试');
+				}
+			});
+		}
+
+		/**
+		 * 看视频
+		 * @param {Object} path
+		 */
+		function showVideo(path) {
+			log('视频路径', path)
+			api.openWin({
+				name: 'show_video_win',
+				url: '../student_regisyer_examintion_four_block/show_video_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				pageParam: {
+					viodeUrl: path
+				}
+			})
+		}
+
+		function reflashWin() {
+			lookVideo()
+			setTimeout(function() {
+				esc_function('my_student_physical_new_win', '', 'search()')
+			}, 500)
+		}
+
+		/**
+		 * 查看备注 
+		 */
+		function checkRemark(msg) {
+			console.log("---------" + msg)
+			openMessage('医生备注', msg, '确定', '', '', '', null)
+		}
+
+		//打开通用弹出框
+		//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+		function openMessage(title, content, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+			api.openFrame({
+				name: 'common_alert',
+				url: '../../common/common_alert.html',
+				bgColor: 'rgba(0,0,0,0.4)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					title: title,
+					content: content,
+					sureButton: sureButton,
+					sureFunc: sureFunc,
+					cancelButton: cancelButton,
+					cancelFunc: cancelFunc,
+					winName: api.winName,
+					frameName: api.frameName,
+					params: params
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+
+
+
+		/**
+		 * 去单个体检
+		 */
+		function toTest(id, modular, licenseType) {
+			log('体检模块', modular)
+			cache.licenseType = licenseType;
+			cache.videoBlock = modular;
+			isAllowUpload(function(ret){
+			log('是否允许上传',ret)
+				if (ret) {
+					url = 'api/coach-learner/select-media-refund-status-by-id';
+					params = {
+						exaId: orderId
+					}
+					ajax_Request(url, 'get', 'json', params, function(ret, err) {
+						log('是否退款', ret)
+						if (ret) {
+							if (ret.code == 0) {
+								url = 'api/examination/check-examination-info';
+								params = {
+									orderId: orderId
+								}
+								log('', params)
+								ajax_Request(url, 'post', 'json', params, function(ret, err) {
+									log('驳回时间', ret)
+									if (ret) {
+										if (ret.code == 0) {
+											openMessage('温馨提示', '您的体检时间已超过有效期，请重新体检！', '确定', '', 'lookVideo()', '', null)
+										} else if (ret.code == 60114) {
+											toTestPage(modular)
+										} else {
+											openMessage('温馨提示', ret.msg, '确定', '', 'lookVideo()', '', null)
+										}
+									} else {
+										alert_msg('服务器繁忙，请稍后重试');
+									}
+								});
+							} else {
+								openMessage('温馨提示', ret.msg, '确定', '', 'closeWin()', '', null)
+								reflashWin();
+				
+							}
+						} else {
+							alert_msg('服务器繁忙，请稍后重试');
+						}
+					})
+				} else {
+					openMessage('温馨提示', '你上传次数已达上限，请联系客服增加次数', '确定', '', '', '', null)
+				}
+			})
+			
+		}
+
+		function closeWin() {
+			esc_function('result_win', '', 'closeWin()')
+		}
+
+		function toTestPage(modular) {
+			log('单个体检', modular)
+			api.openWin({
+				name: 'physical_examination_video_win',
+				url: '../student_regisyer_examintion_four_block/physical_examination_video_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				pageParam: {
+					data: {
+						cache: cache,
+						videoBlock: modular
+					}
+				}
+			})
+			setTimeout(function() {
+				// api.hideProgress();
+				esc_function('physical_examination_video_win', '', 'startTimeCal()'); //开始倒计时
+				esc_function('physical_examination_video_win', '', 'judgeExamVideo(cache.orderId,"' + modular + '")'); //打开摄像头
+				if (modular == '4') {
+					setTimeout(function() {
+						esc_function('physical_examination_video_win', '', 'setRectAgain()'); //设置全屏
+					}, 500);
+				}
+			}, 1000);
+		}
+
+		/**
+		 * 重新检测全部体检
+		 */
+		function toAllTest() {
+			isAllowUpload(function(ret){
+			log('是否允许上传',ret)
+			if (ret) {
+				url = 'api/hospital-examination-video/check-video-can-upload';
+				params = {
+					id: orderId
+				}
+				ajax_Request(url, 'get', 'json', params, function(ret, err) {
+					api.hideProgress();
+					log("限制出餐+", ret)
+					if (ret) {
+						if (ret.code == 0) {
+							api.openWin({
+								name: 'physical_examination_notice_win',
+								url: '../student_regisyer_examintion_four_block/physical_examination_notice_win.html',
+								slidBackEnabled: 'false',
+								vScrollBarEnabled: 'false',
+								hScrollBarEnabled: 'false',
+								reload: true,
+								pageParam: {
+									data: cache.hospital_data
+								}
+							})
+							setTimeout(function() {
+								esc_function('result_win', '', 'closeWin()')
+								sendEvent('closeResultWin', {})
+							}, 500)
+						} else {
+							alert_msg(ret.msg);
+						}
+					} else {
+						alert_msg('服务器繁忙');
+					}
+				});
+			} else {
+				openMessage('温馨提示', '你上传次数已达上限，请联系客服增加次数', '确定', '', '', '', null)
+			}
+			})
+		}
+
+		/**
+		 * 打开load共通
+		 */
+		function open_load(msg) {
+			api.openFrame({
+				name: 'common_progress_frm',
+				url: '../../common/common_progress_frm.html',
+				bgColor: 'rgba(255,255,255,0.8)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: api.winWidth,
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					msg: msg
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+
+		/**
+		 * 判断是否有图片上传时候与阿里云断开连接
+		 */
+		function collapsevideo_i(isloadFlag, examResult, orderId, videoId, videoBlock, winName, fileNum, jsfun) {
+			close_load();
+			if (isloadFlag == 1) {
+				api.confirm({
+					title: '温馨提示',
+					msg: '上传体检视频与服务器断开连接，是否重连',
+					buttons: ['重新连接', '不上传了']
+				}, function(ret, err) {
+					var index = ret.buttonIndex;
+					if (index == 1) {
+						uploadVideoExam_i(orderId, videoId, videoBlock, winName, fileNum, jsfun);
+					}
+					if (index == 2) {
+
+					}
+				});
+			}
+		}
+	</script>
+</html>

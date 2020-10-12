@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>体检项目-四肢躯干</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html{
+    		background: transparent;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background: transparent;
+    	}
+    	section{
+    		width:100%;
+    		height:50%;
+    		background:#FFF;
+    	}
+    	footer{
+    		width:28%;
+    		height:3rem;
+    		position:fixed;
+    		bottom:0;
+    		right:0rem;
+    		background:#FFF;
+			/* line-height: 1rem !important; */
+			/* border: 1px solid #FF0000; */
+    	}
+    	.option-item{
+    		width:100%;
+    		height:100%;
+    	}
+    	.option-item-menu{
+	        width: 90%;
+		    height: 15%;
+		    left: 5%;
+		    /*background: #F6F6F6;*/
+		    display: flex;
+		    border-radius: 5px;
+		    /*color: #6F6F6F;*/
+		    color: #9D9EA7;
+		    background:#F4F7F7;
+		    border: solid 1px #F6F6F6;
+		    font-size: 0.7rem;
+		    position: absolute;
+		    bottom: 22%;
+    	}
+    	.option-item-menu span{
+    		margin:auto;
+    	}
+		.active {
+		    color: #FFFFFF !important;
+		    /*border: solid 1px #90C3E7 !important;*/
+		    /*background: #DDE9F1 !important;*/
+		    background: linear-gradient(to left, #3F86FE, #64ADF6) !important;
+		}
+		.option-item-explain{
+		    width: 90%;
+		    height: 10%;
+		    margin-left: 5%;
+		    font-size:0.6rem;
+	        color: #6F6F6F;
+            margin-top: 0.2rem;
+		}
+		.option-item-menu-next{
+		    width: 100%;
+		    height: 100%;
+			text-align: center;
+			line-height: 1rem;
+		    /*background: linear-gradient(to left, #03B4F7 , #90DBF7);*/
+		    background: linear-gradient(to left, #3F86FE, #64ADF6) !important;
+		    color: #FFF;
+		    /* display: flex; */
+		    /* border-radius: 5px; */
+		    position: absolute;
+		}
+		.option-item-menu-next span{
+    		margin:auto;
+    	}
+		.option-item-menu-next:active{
+			background:#90DBF7;
+		}
+		.option-item-menu-next div{
+			display: block;
+			width: 5rem;
+			/* height: 2.5rem; */
+			text-align: center;
+			margin-top: 6%;
+			line-height: 1.2rem;
+			/* border: 1px solid #FF0000; */
+		}
+		.content-item{
+	        width: 100%;
+		    height: 90%;
+		    display: flex;
+		}
+		.content-item img{
+		    margin: auto;
+		    max-width: 95%;
+		    height: 95%;
+		}
+		.content-title{
+		    height: 5%;
+		    width: 95%;
+		    margin-left: 2.5%;
+		    font-size:0.85rem;
+		}
+		.videoborder{
+			background-color: #EAEAEA;
+			text-align: center;
+			overflow: hidden;
+			/* width: 100%;
+			height: 100%;
+			opacity: 0; */
+		}
+		.videoS{
+			opacity: 0;
+		}
+		.videoT{
+			opacity: 1;
+		}
+		/* .videoBtnS{
+			width: 1px !important;
+		} */
+		.rightTopTime{
+			position: fixed;
+			right: 0;
+			top: 0;
+			width: 4rem;
+			height: 4rem;
+			font-size: 3rem;
+			text-align: center;
+			color: red;
+		}
+    </style>
+	</head>
+	<body>
+		<div id="topTimes" class="rightTopTime aui-hide"></div>
+		<!-- <section> -->
+		<!-- <div class='content-item'> -->
+		<!-- <img src="../../../image/gif/head_teach_limb.gif" alt="" /> -->
+		<!-- </div> -->
+		<!-- <div class='content-title'>
+			<span>请根据视频提示做出相应身体动作</span>
+		</div> -->
+		<!-- </section> -->
+		<!-- <footer>
+			<div class='option-item'>
+				<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>我已按照图中要求展示</span></div>
+				<div class='option-item-menu-next' tapmode onclick="finish()">
+					<div>确定无误</br>完成体检<div></div>
+					</div>
+		</footer> -->
+		<audio src="" id="fry_audio" autoplay="autoplay"></audio>
+
+		<div id="videobor" class="videoborder videoS">
+
+			<!-- <video controls="false" class="aui-hide" id="videoBtn" src="" autoplay="autoplay" height="100%" width="100%"></video> -->
+
+		</div>
+
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var examResult; //用户在体检过程中产生的答案
+		var connectionType; //当前网络状态
+		// var moviePlayer; //视频实例
+		var systemType;
+		// var audioStreamer;
+		var frWidth;
+		var frHeight;
+		var cache;
+		var videoBlock;
+
+		apiready = function() {
+			api.parseTapmode();
+			systemType = api.systemType;
+			connectionType = api.connectionType;
+			cache = api.pageParam.examResult;
+			videoBlock = api.pageParam.videoBlock;
+			examResult = {
+				exaId: cache.exaId, //体检订单
+				licenseType: cache.licenseType, //准驾类型
+				videoNodeList: [], //视频节点
+				answerList: [], //用户答题记录
+				headerH: cache.headerH,
+				videoId: cache.exaId + '-4',
+				type: '4'
+			}
+			// if(systemType == 'ios'){
+			//初始化ios播放
+			// moviePlayer = api.require('moviePlayer');
+			// audioStreamer = api.require('audioStreamer');
+			frWidth = api.frameWidth * 0.91;
+			frHeight = api.frameHeight
+			// }else{
+			// 	//初始化安卓播放
+			// 	dkplayer = api.require('dkplayer');
+			//     api.addEventListener({
+			//         name : 'pause'
+			//     }, function(ret, err) {
+			//         dkplayer.pause();
+			//     });
+			//     api.addEventListener({
+			//         name : 'resume'
+			//     }, function(ret, err) {
+			//         dkplayer.resume();
+			//     });
+			//     api.addEventListener({
+			//         name : 'viewdisappear'
+			//     }, function(ret, err) {
+			//         dkplayer.pause();
+			//     });
+
+			// }
+			// sug_again();
+			console.log('四肢躯干检测收到的数据' + JSON.stringify(examResult));
+			if (videoBlock == 0) {
+				setTimeout(function() {
+					sendEvent('exam_item_start_block', 4)
+				}, 500)
+			}
+			setTimeout(function() {
+				openMessage_i_second('重点提示', '', 'trunk', '确定', '', 'sug_again()', '', null);
+			},600)
+			// openMessage_i_second('四肢展示','','trunk','确定','','topTime()','',null);
+			// openMessage_i_second('听力信息采集','听力测试请务必佩戴耳机','listen','确定','','init()','',null);
+		}
+
+		function sug_again() {
+			console.log("执行播放=======！！！")
+			playVideo('hm/video_1_1.mp4', '../../../res/voice/audio_1.mp3');
+			// playVideo('cm/video_1.mp4', '');
+			// esc_function('physical_examination_video_win','','openRenKuang()');
+		}
+
+
+
+		function finish() {
+			console.log('下一个');
+			closeVideoPlayer();
+			sendEvent('exam_item_finish', examResult);
+		}
+
+		/**
+		 * 关闭播放器 
+		 */
+		function closeVideoPlayer() {
+			$("#videobor").html("")
+			$("#videobor").addClass("videoS");
+			$("#videobor").removeClass("videoT");
+		}
+
+		//选择选项
+		function selectOption(o) {
+			if ($(o).hasClass('active')) {
+				$(o).removeClass('active');
+			} else {
+				$(o).addClass('active');
+			}
+		}
+
+		//视频控件
+		function playVideo(videoUrl, aduioUrl) {
+			api.setKeepScreenOn({
+				keepOn: true
+			});
+			//隐藏video
+			$("#videobor").addClass("videoS");
+			$("#videobor").removeClass("videoT");
+			$("#videobor").html("<video id='videoBtn' class='videoBtnS' src='" + file_load_url + videoUrl +
+				"' controlsList='nofullscreen nodownload noremote footbar' autoplay='autoplay' height='" + frHeight + "' width='" +
+				frWidth + "' preload='auto' x5-playsinline='' playsinline='' webkit-playsinline='' ></video> ")
+			console.log("22222")
+			//视频开始播放显示video
+			var myVideo = document.getElementById("videoBtn");
+			myVideo.addEventListener('play', function() {
+				$("#videobor").removeClass("videoS");
+				$("#videobor").addClass("videoT");
+				console.log("33333")
+			});
+
+
+			$("#videoBtn").bind("ended", function(e) {
+				console.log("-----结束了-----");
+				$("#videobor").html("");
+				$("#videobor").addClass("videoS");
+				$("#videobor").removeClass("videoT");
+				moviePlayAgain(videoUrl, aduioUrl)
+			});
+		}
+
+		var nextLine = 1;
+		var timeS = 0;
+		var timeInter;
+		var flagPlay = 1;
+
+		function moviePlayAgain(videoUrl, aduioUrl) {
+			//播放音频
+			$('#fry_audio').attr('src', aduioUrl);
+			var fry_audio = $('#fry_audio');
+			fry_audio.paused;
+			nextLine += 1;
+			fry_audio.bind('ended', function() {
+				// alert("播放完成")
+				// $('.voice').removeClass('voice1');
+
+				// timeInter = setInterval(function() {
+				// timeS += 1;
+				// if (timeS == 15) {
+				// clearInterval(timeInter);
+
+				console.log("下一步数值---------" + nextLine);
+				// timeS = 0;
+				// audioStreamer.stop();
+				// videoPlayer.close();
+				if (nextLine == 2) {
+					// flagPlay = 1;
+					playVideo("hm/video_1_2.mp4", "../../../res/voice/audio_2.mp3");
+				} else if (nextLine == 3) {
+					// flagPlay = 1;
+					playVideo("hm/video_1_3.mp4", "../../../res/voice/audio_3.mp3");
+				} else {
+					// openMessage_i('温馨提示','视频录制已结束请上传视频','确定','','finish()','',null);
+					setTimeout(function(){
+						openMessage_i_examination('请现在跟我重复下面这句话','我承诺体检信息采集过程无作弊行为','end','我已重复这句话','','finish()','',null);
+					},3000)
+					
+					// openMessage_i_second('温馨提示','请您重复一遍下面这句话，我承诺体检过程无作弊行为。','end','完成体检','','finish()','',null);
+				}
+
+
+				// }
+				// }, 1000);
+
+			});
+			// flagPlay = 2;
+
+		}
+
+
+		function openMessage_i_second(title, content, type, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+			api.openFrame({
+				name: 'common_alert_second',
+				url: '../../common/common_alert_second.html',
+				bgColor: 'rgba(0,0,0,0.4)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					title: title,
+					content: content,
+					type: type,
+					sureButton: sureButton,
+					sureFunc: sureFunc,
+					cancelButton: cancelButton,
+					cancelFunc: cancelFunc,
+					winName: api.winName,
+					frameName: api.frameName,
+					params: params
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+
+		function openMessage_i_examination(title, content, type, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+			api.openFrame({
+				name: 'common_alert_examination',
+				url: '../../common/common_alert_examination.html',
+				bgColor: 'rgba(0,0,0,0.4)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					title: title,
+					content: content,
+					type: type,
+					sureButton: sureButton,
+					sureFunc: sureFunc,
+					cancelButton: cancelButton,
+					cancelFunc: cancelFunc,
+					winName: api.winName,
+					frameName: api.frameName,
+					params: params
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+	</script>
+</html>

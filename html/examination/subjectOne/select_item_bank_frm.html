@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>题库切换</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html,body{
+    		background:#FFF;
+    	}
+    	.item-totle{
+		    width: 90%;
+    		margin-left: 5%;
+    	}
+    	.item-totle li{
+		    width: 40%;
+    		margin: 5%;
+    		text-align: center;
+    		padding: 1rem 0rem;
+		    line-height: 0.6rem;
+		    float: left;
+		    color:#000;
+			border-radius: 0.5rem;
+    	}
+    	.item-totle span{
+    		font-size:0.7rem;
+    	}
+    	.item-totle img{
+    		width: 3rem;
+    	}
+    	.active{
+    		background:#CADFFF;
+    		color:#3F86FF !important;
+    	}
+    	.item-type{
+    		margin: 1rem 0% 0.8rem 5%;
+    		padding-bottom: 0.3rem;
+    	}
+		.flex{
+			display: flex;
+			flex-flow: column;
+			align-items: center;
+			position: relative;
+		}
+		.checked{
+			position: absolute;
+			right: 0.2rem;
+			top: 0.2rem;
+			width: 1rem !important;
+			height: 1rem !important;
+		}
+		.btn{
+			background-color: #3F86FF;
+			color: #fff;
+			height: 2.25rem;
+			width: 90%;
+			margin-left: 5%;
+			line-height: 2.25rem;
+			text-align: center;
+			border-radius: 1rem;
+			margin-top: 8rem;
+			position: absolute;
+			bottom: 5rem;
+		}
+    </style>
+</head>
+<body>
+	<ul class='item-totle'>
+		<li class="flex" tapmode onclick = 'selectItem(this,"022001","小车（C1/C2/C5）")'>
+			<img src="../../../icon/subject/cartype/bluechecked.png"  class="checked aui-hide" >
+			<img src="../../../icon/subject/cartype/xiaoche.png" alt="" /><br>
+			<span style="margin-bottom: 0.5rem;">小车</span>
+			<span>C1/C2/C5</span>
+		</li>
+		<li class="flex" tapmode onclick = 'selectItem(this,"022002","货车（A2/B2）")'>
+			<img src="../../../icon/subject/cartype/bluechecked.png"  class="checked aui-hide" >
+			<img src="../../../icon/subject/cartype/huoche.png" alt="" /><br>
+			<span style="margin-bottom: 0.5rem;">货车</span>
+			<span>A2/B2</span>
+		</li>
+		<li class="flex" tapmode onclick = 'selectItem(this,"022003","客车（A1/A3/B1）")'>
+			<img src="../../../icon/subject/cartype/bluechecked.png"  class="checked aui-hide" >
+			<img src="../../../icon/subject/cartype/qiche.png" alt="" /><br>
+			<span style="margin-bottom: 0.5rem;">客车</span>
+			<span>A1/A3/B1</span>
+		</li>
+		<li class="flex" tapmode onclick = 'selectItem(this,"022004","摩托车（D/E/F）")'>
+			<img src="../../../icon/subject/cartype/bluechecked.png"  class="checked aui-hide" >
+			<img src="../../../icon/subject/cartype/muotuo.png" alt="" /><br>
+			<span style="margin-bottom: 0.5rem;">摩托车</span>
+			<span>D/E/F</span>
+		</li>
+	</ul>
+	<div class="btn" onclick="choice()">选择题库类型</div>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+		//初始化题库
+		switch(getBankType('036001')){
+			case '022001':
+				$('li').eq(0).addClass('active');
+				$('li').eq(0).children('.checked').removeClass('aui-hide');
+				break;
+			case '022002':
+				$('li').eq(1).addClass('active');
+				$('li').eq(1).children('.checked').removeClass('aui-hide');
+				break;
+			case '022003':
+				$('li').eq(2).addClass('active');
+				$('li').eq(2).children('.checked').removeClass('aui-hide');
+				break;
+			case '022004':
+				$('li').eq(3).addClass('active');
+				$('li').eq(3).children('.checked').removeClass('aui-hide');
+				break;
+		}
+	};
+	
+	/**
+	 * 选择题库 
+	 */
+	function selectItem(e,code,name){
+		var cache_by_app = $api.getStorage('cache_by_app');
+		var item_bank_cache = cache_by_app.item_bank_cache;
+		if(item_bank_cache){
+			item_bank_cache.item_bank_kemu_one = code;
+		}else{
+			item_bank_cache = {
+				item_bank_kemu_one:code
+			}
+		}
+		codeparams = code;
+		nameparams = name;
+		cache_by_app.item_bank_cache = item_bank_cache;
+		$api.setStorage('cache_by_app',cache_by_app);
+		$('li').each(function(index,o){
+			$('li').removeClass('active');
+			$(e).addClass('active');
+			$('.checked').addClass('aui-hide');
+			$(e).children('.checked').removeClass('aui-hide');
+		});
+	}
+	var params;
+	var codeparams;
+	var nameparams;
+	function choice(){
+		params = {
+			code:codeparams,
+			name:nameparams
+		}
+		sendEvent('kemu_one_items_bank',params);
+		setTimeout(function(){
+			api.closeWin({
+		    });
+		},300);
+	}
+</script>
+</html>

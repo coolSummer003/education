@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>已预约学员</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../css/common/common.css" />
+    <style>
+    	html{
+    		background: transparent;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background: transparent;
+    		display:flex;
+    	}
+    	.attention-div{
+    		margin: auto;
+		    position: absolute;
+		    height: 70%;
+			-webkit-transform: scale(0);
+			transform:scale(0);
+			opacity: 0;
+			width: 90%;
+			margin-left:5%;
+		    padding: 0rem 1rem 0rem 1rem;
+	        background: #FFF;
+	        margin-top:25%;
+	        border-radius: 1rem;
+    	}
+    	.shadow{
+    		width:100%;
+    		height:100%;
+    		background:#000;
+    		opacity:0;
+    		position: absolute;
+    	}
+    	.trans {
+            /*transition*/
+            -webkit-transition: 0.3s ease;
+            -moz-transition: 0.3s ease;
+            -ms-transition: 0.3s ease;
+            -o-transition: 0.3s ease;
+            transition: 0.3s ease;
+        }
+        .show{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+        }
+		.attention-txt{
+		    height: 80%;
+	        overflow: auto;
+	        font-size:0.7rem;
+	        -webkit-overflow-scrolling: touch;
+		}
+		.attention-button{
+		    height: 14%;
+	        color: #5D5D5D;
+	        font-size: 0.7rem;
+	        text-align: center;
+	        padding-top: 1rem;
+		}
+		.attention-button input{
+		    margin-top: -0.1rem;
+		}
+		.attention-button font{
+			color:#DC251F;
+		}
+		.attention-title{
+		    text-align: center;
+		    height: 2rem;
+		    line-height: 2rem;
+		    position: relative;
+		    font-size: 0.8rem;
+		    color:#3B79D3;
+		}
+		.attention-title img{
+			width:0.8rem;
+			position:absolute;
+			right: -0.4rem;
+			top: 0.5rem;
+		}
+		.sure{
+	        height: 2rem;
+		    line-height: 2rem;
+		    background: linear-gradient(to left, #03B4F7 , #90DBF7);
+		    color: #FFF;
+		    border-radius: 0.2rem;
+		    position: fixed;
+		    width: 84%;
+		    left: 8%;
+		    bottom: 0.5rem;
+		}
+		.before{
+			height: 2rem;
+		    line-height: 2rem;
+		    border-radius: 1rem;
+		    border:solid 1px #03B4F7;
+		    width: 30%;
+		    color: #03B4F7;
+		    float: left;
+		}
+		.next{
+			height: 2rem;
+		    line-height: 2rem;
+		    border-radius: 1rem;
+		    width: 30%;
+		    background: linear-gradient(to left, #03B4F7 , #90DBF7);
+		    color: #FFF;
+		    float: right;
+		}
+		.in{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+		}
+		.bottom-slide-red {
+		    position: relative;
+		}
+		.bottom-slide-red:after {
+		    content: '';
+		    height: 1px;
+		    background: linear-gradient(to left, #03B4F7 , #90DBF7);
+		    width: 100%;
+		    background-color: #03B4F7;
+		    display: block;
+		    -webkit-transform: scaleY(0.3);
+		    transform: scaleY(0.3);
+		    -webkit-transform-origin: 30% 100%;
+		    transform-origin: 30% 100%;
+		    bottom: 0;
+		    left: 0;
+		    position: absolute;
+		}
+		.img-content{
+			width:100%;
+			height:100%;
+			overflow:scroll;
+		}
+		.img-content img{
+			width:100%;
+		}
+		font{
+			font-weight:bold;
+		    height: 0.5rem;
+    		display: block;
+		}
+		ul{
+		    overflow: auto;
+    		height: 80%;
+		}
+		li{
+    		width: 50%;
+    		height: 10rem;
+    		float:left;
+		}
+		.keng{
+			width: 90%;
+		    height: 9rem;
+		    line-height: 9rem;
+		    text-align: center;
+		    margin: 0.5rem 5%;
+	        border-radius: 0.5rem
+		}
+		.empty{
+		    border: dotted 2px #B4B4B4;
+		    color: #B4B4B4;
+		}
+		.people{
+		    border: dotted 2px #B4B4B4;
+		    height: 7rem;
+		    margin: 0rem 5%;
+		    margin-top: 2.5rem;
+	        position: relative;
+		}
+		.learner{
+			height: 1.5rem;
+		    line-height: 1.5rem;
+		    background: #FFF;
+		    width: 80%;
+		    margin-left: 10%;
+		}
+		.learner img{
+		    width: 1rem;
+    		margin-bottom: -0.25rem;
+		}
+		.learner-idcard{
+			height: 1.5rem;
+		    line-height: 1.5rem;
+		    width: 80%;
+		    margin-left: 10%;
+		}
+		.name{
+			margin-top: -1rem;
+			font-weight: bold;
+			color:#3B79D3;
+		}
+		.idcard{
+			font-size:0.6rem;
+		    margin-top: 1rem;
+		    text-align: left;
+		}
+		.phone{
+			font-size:0.6rem;
+		    margin-top: 0rem;
+		    text-align: left;
+		}
+		.sch-info{
+		}
+		.info-item {
+			height:1.5rem;
+			line-height:1.5rem;
+		    padding-left: 0.5rem;
+		}
+		.info-item span{
+			font-weight:bold;
+		}
+    </style>
+</head>
+<body>
+	<div class='shadow'></div>
+	<!-- 注意事项 -->
+	<div class='attention-div trans' id="attentionItems">
+		<div class='attention-title'>
+			剩余时间：<span id='timeCountDown'>00:00:00</span>
+			<img src="../../../../icon/common/icon_close.png" alt="" tapmode onclick='closeAttention()'/>
+		</div>
+		<ul id='schDetaliInfo'>
+			<!-- <div class='sch-info'>
+				<div class='info-item' style='margin-top: 1rem;'><span>训练日期：</span>2019-11-6</div>
+				<div class='info-item'><span>考试日期：</span>2019-11-6</div>
+				<div class='info-item'><span>考场：</span>上虞海滨考场 </div>
+				<div class='info-item'>
+					<span>区域：</span>A区 &emsp;&emsp;
+					<span>线路：</span>A1A2
+				</div>
+				<div class='info-item'>
+					<span>班次：</span>白班&emsp;&emsp;
+					<span>车型：</span>捷达
+			   </div>
+			</div>
+			<li>
+				<div class='keng people'>
+					<div class='learner name'>赵炜炜</div>
+					<div class='learner idcard'>
+						<img src="../../../../icon/subject/name.png" alt="" style='margin-right: 0.2rem;'/>
+						<span>3306****414</span>
+					</div>
+					<div class='learner phone'>
+						<img src="../../../../icon/subject/telphone.png" alt="" style='margin-right: 0.2rem;'/>
+						<span>188****6691</span>
+					</div>
+					<div class='learner'>
+						<img src="../../../../icon/payfor/icon_success.png" alt="" />
+					</div>
+				</div>
+			</li>
+			<li>
+				<div class='keng empty'>虚位以待</div>
+			</li> -->
+		</ul>
+		<div class='attention-button'>
+			<div class='sure' tapmode onclick="read()">确认</div>
+		</div>
+	</div>
+	<script type="text/template" charset="utf-8" id="schDetailInfoSrc">
+		<div class='sch-info'>
+			<div class='info-item' style='margin-top: 1rem;'><span>训练日期：</span>{{=it.trainingDate.substring(0,10)}}</div>
+			<div class='info-item'><span>考试日期：</span>{{=it.testDate.substring(0,10)}}</div>
+			<div class='info-item'><span>考场：</span>{{=it.testCenter.name}} </div>
+			<div class='info-item'>
+				<span>区域：</span>{{=it.areaName}} &emsp;&emsp;
+				<span>线路：</span>{{=it.lineName}}
+			</div>
+			<div class='info-item'>
+				<span>班次：</span>{{=it.lessonName}} &emsp;&emsp;
+				<span>车型：</span>{{=it.carTypeName}}
+		   </div>
+		</div>
+		{{ for(var i=0;i<it.appointOrderNotVipList.length;i++){ }}
+			<li>
+				<div class='keng people'>
+					<div class='learner name'>{{=it.appointOrderNotVipList[i].learnerName}}</div>
+					<div class='learner idcard'>
+						<img src="../../../../icon/subject/name.png" alt="" style='margin-right: 0.2rem;'/>
+						<span>{{=vagueIdcard(it.appointOrderNotVipList[i].idcardNo)}}</span>
+					</div>
+					<div class='learner phone'>
+						<img src="../../../../icon/subject/telphone.png" alt="" style='margin-right: 0.2rem;'/>
+						<span>{{=vaguePhone(it.appointOrderNotVipList[i].phone)}}</span>
+					</div>
+					<div class='learner'>
+						<img src="../../../../icon/payfor/icon_success.png" alt="" />
+					</div>
+				</div>
+			</li>
+		{{ } }}
+		{{ if(it.maxPeople > it.appointOrderNotVipList.length){ }}
+			{{ for(var i=0;i<(it.maxPeople - it.appointOrderNotVipList.length);i++){ }}
+				<li>
+					<div class='keng empty'>虚位以待</div>
+				</li>
+			{{ } }}
+		{{ } }}
+	</script>
+</body>
+<script type="text/javascript" src="../../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		//log('cache',cache);
+		init(cache.sch_id);
+		$('#attentionItems').addClass('in');
+	}
+	
+	function init(sch_id){
+		params = {
+			id:sch_id,
+			learnerId:getUserId()
+		}
+		
+		url = 'api/appointment/getAppointScheduleDetail';
+		defaultload('获取详情中');
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			log('返回数据',ret);
+			api.hideProgress();
+			if(ret){
+				if(ret.code == 0){
+					var schDetailInfoSrc = $('#schDetailInfoSrc').html();
+					$('#schDetaliInfo').html(doT.template(schDetailInfoSrc)(ret.appointmentScheduleNotVip));
+					//计算目前距离晚上12点还剩余多少时间
+					timeCountDown();
+				}else{
+					alert_msg(ret.msg);
+				}
+			}else{
+				alert_msg('服务器繁忙，请稍后重试');
+			}
+		});
+	}
+	
+	/**
+	 * 计算目前距离晚上12点还剩余多少时间
+	 */
+	var timer;
+	var maxtime;
+	function timeCountDown(){
+		maxtime = calcuTimeValue();
+		setTimeDown();
+		timer = setInterval(setTimeDown, 1000);
+	}
+	
+	//倒计时
+	function setTimeDown(){
+        if (maxtime >= 0) {
+        	hours = Math.floor(maxtime / 3600);
+            minutes = Math.floor(maxtime % 3600/60);
+            seconds = Math.floor(maxtime % 60);
+            msg = time_2(hours) + ":" + time_2(minutes) + ":" + time_2(seconds);
+            $('#timeCountDown').html(msg);
+            if (maxtime == 7200){
+            	//到了剩余2小时的危险时间
+            	
+            };
+            --maxtime;
+        } else {
+        	clearInterval(timer);
+    	}
+	}
+	
+	//处理时间格式
+	function time_2(time){
+		if(time == 0){
+			return "00";
+		}else if(time.toString().length == 1){
+			return "0" + time;
+		}else{
+			return time;
+		}
+	}
+	
+	/**
+	 * 当前距离晚上12点时间
+	 */
+	function calcuTimeValue(){
+		var startTime = new Date();
+		var endTime = startTime.Format('yyyy-MM-dd') + ' 23:59:59';
+		endTime = new Date(endTime.replace(/-/g,"/"));
+		difference = endTime.getTime() - startTime.getTime();//时间差的毫秒数
+		return Math.floor(difference/1000);
+	}
+	
+	/**
+	 * 身份证打码 
+	 */
+	function vagueIdcard(idcardNo){
+		return idcardNo.substring(0,3) + '*****' + idcardNo.substring(idcardNo.length - 3,idcardNo.length);
+	}
+	
+	/**
+	 * 手机号打码 
+	 */
+	function vaguePhone(phone){
+		return phone.substring(0,3) + '*****' + phone.substring(phone.length - 3,phone.length);
+	}
+	
+	//点击我已阅读
+	var swiper_example;
+	function read(){
+		$('#attentionItems').removeClass('in');
+		finish();
+	}
+	
+	//点击完成
+	function finish(){
+		setTimeout(function(){
+			api.closeFrame({
+				name:'exist_appointed_people_frm'
+	        });
+		},300);
+	}
+	
+	//关闭注意事项
+	function closeAttention(){
+		$('#attentionItems').removeClass('in');
+        finish();
+	}
+</script>
+</html>

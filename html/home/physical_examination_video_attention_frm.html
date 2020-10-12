@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>体检注意事项-合约</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background: #FFF;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background: transparent;
+    		display:flex;
+    	}
+    	.attention-div{
+    		margin: auto;
+		    position: absolute;
+		    height: 100%;
+			-webkit-transform: scale(0);
+			transform:scale(0);
+			opacity: 0;
+			width: 100%;
+		    padding: 2rem 1rem 0rem 1rem;
+	        background: #FFF;
+    	}
+    	.shadow{
+    		width:100%;
+    		height:100%;
+    		background:#000;
+    		opacity:0;
+    		position: absolute;
+    	}
+    	.trans {
+            /*transition*/
+            -webkit-transition: 0.3s ease;
+            -moz-transition: 0.3s ease;
+            -ms-transition: 0.3s ease;
+            -o-transition: 0.3s ease;
+            transition: 0.3s ease;
+        }
+        .show{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+        }
+		.attention-txt{
+		    height: 80%;
+	        overflow: auto;
+	        font-size:0.7rem;
+	        -webkit-overflow-scrolling: touch;
+		}
+		.attention-button{
+		    height: 14%;
+	        color: #5D5D5D;
+	        font-size: 0.7rem;
+	        text-align: center;
+	        padding-top: 1rem;
+		}
+		.attention-button input{
+		    margin-top: -0.1rem;
+		}
+		.attention-button font{
+			color:#DC251F;
+		}
+		.attention-title{
+		    font-weight: bold;
+		    text-align: center;
+		    height: 6%;
+		    line-height: 2rem;
+		    position: relative;
+		    font-size: 0.9rem;
+		}
+		.attention-title img{
+			width:1.2rem;
+			position:absolute;
+			right:0;
+			top:0.4rem;
+		}
+		.sure{
+		    height: 2rem;
+		    line-height: 2rem;
+		    background: linear-gradient(to left, #03B4F7 , #90DBF7);
+		    color: #FFF;
+		    border-radius: 0.2rem;
+		}
+		.before{
+			height: 2rem;
+		    line-height: 2rem;
+		    border-radius: 1rem;
+		    border:solid 1px #03B4F7;
+		    width: 30%;
+		    color: #03B4F7;
+		    float: left;
+		}
+		.next{
+			height: 2rem;
+		    line-height: 2rem;
+		    border-radius: 1rem;
+		    width: 30%;
+		    background: linear-gradient(to left, #03B4F7 , #90DBF7);
+		    color: #FFF;
+		    float: right;
+		}
+		.in{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+		}
+		.bottom-slide-red {
+		    position: relative;
+		}
+		.bottom-slide-red:after {
+		    content: '';
+		    height: 1px;
+		    background: linear-gradient(to left, #03B4F7 , #90DBF7);
+		    width: 100%;
+		    background-color: #03B4F7;
+		    display: block;
+		    -webkit-transform: scaleY(0.3);
+		    transform: scaleY(0.3);
+		    -webkit-transform-origin: 30% 100%;
+		    transform-origin: 30% 100%;
+		    bottom: 0;
+		    left: 0;
+		    position: absolute;
+		}
+		.img-content{
+			width:100%;
+			height:100%;
+			overflow:scroll;
+		}
+		.img-content img{
+			width:100%;
+		}
+		font{
+			font-weight:bold;
+		    height: 0.5rem;
+    		display: block;
+		}
+    </style>
+</head>
+<body>
+	<div class='shadow'></div>
+	<!-- 注意事项 -->
+	<div class='attention-div trans' id="attentionItems">
+		<div class='attention-title'>
+			<span>线上体检免责声明</span>
+			<img src="../../icon/common/icon_close.png" alt="" tapmode onclick='closeAttention()'/>
+		</div>
+		<div class='attention-txt'>
+			<span>
+			<br>
+			<font>“驾所通”平台手机APP官网提醒您：</font><br>
+			&emsp;&emsp;1、在您浏览本平台及使用本平台提供的机动车驾驶人身体条件线上体检服务前，请务必仔细阅读并透彻理解本声明。您可以选择不浏览本平台，但如果您浏览本平台，您的使用行为将被视为对本声明全部内容的认可。若您对本声明任何条款有异议的，请停止使用平台线上体检服务。<br>
+			&emsp;&emsp;2、您应该对浏览和使用本平台体检服务的结果自行承担风险及法律责任。本平台不做任何形式的保证，不保证本平台提供的体检服务满足您的要求，不保证本平台提供的体检服务不中断，因网络状况、通讯线路等各种原因导致您不能正常使用本平台提供的线上体检服务，本平台不承担任何法律责任。<br>
+			&emsp;&emsp;3、请您在登录注册时及时、详尽、准确地提供个人资料，在开始体检前请再次确认您的个人信息。所有原始键入的个人资料将作为注册信息。因注册信息不真实而引起的纠纷，由您自行承担相应的法律责任。<br>
+			&emsp;&emsp;4、您的个人资料，请妥善保管，不要将您的个人信息如注册帐号、密码等转让或出借给他人使用，防止个人信息泄露导致您的民事权益受到侵犯。因黑客行为或您的个人原因导致个人信息泄露并致使您的民事权益受到侵犯，本平台不承担任何法律责任。<br>
+			&emsp;&emsp;5、如您发现您的个人信息如注册帐号、密码等遭他人非法使用，请及时向本平台发出书面通知，并提供相应证明文件。本平台接到通知后，将根据相关法律、法规的规定，采取移除相关内容或屏蔽相关链接等必要措施。请注意：如果通知陈述失实，通知提交者将承担因此引发的一切法律责任及后果。<br>
+			&emsp;&emsp;6、本平台尊重并保护所有本平台用户的隐私权等民事权益，您的个人信息如注册帐号、密码、电子邮件地址、体检结果信息等，非经您本人许可或根据相关法律、法规规定，本平台将不以任何方式对外公开或向第三人披露。但是，本平台依据机动车驾驶人申请规定或因遵照您的意愿或按照相关法律、法规规定向第三人披露了您的个人信息，所引发的一切法律后果、风险及法律责任全部由您个人承担。<br>
+			&emsp;&emsp;7、本次平台体检检测项目包括视力、听力、辨色力、上、下肢、躯干、颈部的健全情况，仅为机动车驾驶人申请身体条件检查要求需要的部分检查项目，由于某些项目未检，故本次在线体检不能作为全身病诊断的依据。<br>
+			&emsp;&emsp;8、您在完成线上体检项目规定流程，上传视频、个人信息后即视为你已经完成线上体检，您应在线支付体检费30.00元。体检一旦开始，因您的原因提前结束线上体检的，平台不再提供退款服务。<br>
+			&emsp;&emsp;9、您按照平台语音提示在体检过程中，出现体检项目不合格，平台给予在线复检1次，复检后仍有疑问或对体检结果存有异议的，您可以选择到线下医院复检，平台提供同一医院线下免费复检1次（线上体检后3日内），若您选择其他医院复检，平台不承担您的线下体检费用。<br>
+			&emsp;&emsp;10、您在向平台上传提交个人信息时同意将您的的个人信息向体检医院、报名驾校、公安车管、交通运管部门公开；对于您不当使用本平台内容而引起的民事纠纷、行政纠纷等，本平台不承担任何法律责任。<br>
+			&emsp;&emsp;11、对不遵守本声明或其他违法、恶意使用本平台内容者，本平台保留追究其法律责任的权利。<br>
+			&emsp;&emsp;12、平台根据运营实际需要，有权对制定的规则进行调整，本免责申明的最终解释权归“驾所通”平台所有。<br>
+			</span>
+		</div>
+		<div class='attention-button'>
+			<div class='sure' tapmode onclick="read()">我已阅读并同意以上条款</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var index = 0;//标记轮播到第几张图片
+	apiready = function(){
+		api.parseTapmode();
+		setTimeout(function(){
+			$('#attentionItems').addClass('in');
+		},300);
+	}
+	
+	//点击我已阅读
+	var swiper_example;
+	function read(){
+		$('#attentionItems').removeClass('in');
+		openMessage_countdown('请注意','&emsp;体检全程录像，若其他人的声音或图像出现在视频中，会被认定为信息采集不规范。','countdown','确认','','finish()','',null);
+	}
+	
+	//点击弹框的确定
+	function sure(){
+		console.log('sure');
+	}
+	
+	//点击完成
+	function finish(){
+		setTimeout(function(){
+			esc_function('physical_examination_video_win','','startTimeCal()');//开始倒计时
+			esc_function('physical_examination_video_win','','judgeExamVideo()');//打开摄像头
+		},300);
+		setTimeout(function(){
+			api.closeFrame({
+				name:'physical_examination_video_attention_frm'
+	        });
+		},300);
+	}
+	
+	//关闭注意事项
+	function closeAttention(){
+		$('#attentionItems').removeClass('in');
+        setTimeout(function(){
+			api.closeWin({
+	        });
+        },300);
+	}
+	
+	//倒计时通用弹出框
+	function openMessage_countdown(title,content,type,sureButton,cancelButton,sureFunc,cancelFunc,params){
+		api.openFrame({
+	        name: 'common_alert_countdown',
+	        url: '../common/common_alert_countdown.html',
+	        bgColor: 'rgba(0,0,0,0.4)',
+	        rect: {
+	            x: 0,
+	            y: 0,
+	            w: 'auto',
+	            h: api.winHeight
+	        },
+	        bounces: false,
+	        pageParam:{
+	        	title:title,
+	        	content:content,
+	        	type:type,
+	        	sureButton:sureButton,
+	        	sureFunc:sureFunc,
+	        	cancelButton:cancelButton,
+	        	cancelFunc:cancelFunc,
+	        	winName:api.winName,
+	        	frameName:api.frameName,
+	        	params:params
+	        },
+	        softInputBarEnabled:true,
+	        softInputMode:'resize'
+	    });
+	}
+</script>
+</html>

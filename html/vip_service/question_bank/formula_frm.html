@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <style>
+    	body{
+    		background-color: #fff;
+    	}
+		.ing{
+			margin-top: 2rem;
+			width: 60%;
+			margin-left: 20%;
+			height: auto;
+		}
+		.ing img{
+			width: 100%;
+			height: auto;
+		}
+		.body{
+			width: 80%;
+			margin-left: 10%;
+			margin-top: 2rem;
+		}
+		.body img{
+			width: 100%;
+			height: auto;
+		}
+		.foot{
+			width: 94%;
+			margin-left: 3%;
+			margin-top: 2rem;
+			margin-bottom: 5rem;
+		}
+		.foot img{
+			width: 100%;
+			height: auto;
+		}
+		.btn{
+		    width: 86%;
+		    left: 7%;
+		    height: 2.5rem;
+		    border-radius: 1.5rem;
+		    background-color: #443636;
+		    text-align: center;
+		    color: #FFC696;
+		    line-height: 2.5rem;
+		    margin-top: 4rem;
+		    position: fixed;
+		    bottom: 1rem;
+		}
+		.text{
+			width: 100%;
+			background-color: #00897B;
+			height: 2rem;
+			text-align: center;
+		}
+		
+    </style>
+</head>
+<body>
+	<div class="ing"><img src="../../../icon/vip/question_bank/ing.png" alt=""></div>
+	<div class="body"><img src="../../../icon/vip/question_bank/body.png" alt=""></div>
+	<div class="foot"><img src="../../../icon/vip/question_bank/foot.png" alt=""></div>
+	<div class="btn" tapmode onclick="check()">立即查看</div>
+	
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript" src="../../../script/echo.min.js" charset="utf-8"></script>
+	
+
+<script type="text/javascript">
+	var cache;
+	apiready = function(){
+		cache = api.pageParam;
+		cache_account = $api.getStorage('cache_by_account').cache_account;
+	}
+		
+	function check(){
+		var winUrl = cache.subjectType == 1?'vip_subject_one':'vip_subject_four';
+		params = {
+			type: 'order',
+			isContinue:false
+		}
+		api.openWin({
+			name: 'practice_common_win',
+			url: '../'+winUrl+'/practice_common_win.html',
+			slidBackEnabled: 'false',
+			vScrollBarEnabled: 'false',
+			hScrollBarEnabled: 'false',
+			reload: true,
+			useWKWebView: false,
+			pageParam: {
+				data: params
+			}
+		});
+	}
+</script>
+</body>
+</html>

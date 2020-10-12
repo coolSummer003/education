@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>选择驾照类型</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<style>
+			html,body{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+		footer{
+		    height: 2.5rem;
+		    position: fixed;
+		    bottom: 0;
+		    width: 100%;
+		    z-index: 11;
+    		background: #fff;
+    	}
+    	footer img{
+		    height: 1rem;
+    		margin-bottom: -0.4rem;
+    	}
+    	.b_l_1{
+		    width: 24.8%;
+		    height: 2.5rem;
+		    /*margin-right: 1%;*/
+		    border-right:1px solid #f5f5f5;
+		    text-align: center;	
+		    float: left;
+	        background: #FFFFFF;
+	        color: #717372;
+    	}
+    	.b_l_1 span{
+    		font-size: 0.6rem;
+    	}
+    	.b_l_2{
+    		width: 40%;
+    		height: 2.5rem;
+    		line-height: 2.5rem;
+    		float: left;
+    		border-right:1px solid #f5f5f5;
+    		text-align: center;
+    		background: #FFFFFF;
+    		color: #717372;
+    	}
+    	.b_l_2 span{
+    		font-size: 0.8rem;
+    		color: #323C41;
+    	}
+    	.unable{
+    		width: 90%;
+    		height: 1.7rem;
+    		background: #1E8DD8;
+    		color: #FFF;
+    		font-size: 0.8rem;
+    		line-height: 1.7rem;
+    		text-align: center;
+			border-radius: 1.5625rem;
+			margin-left: 5%;
+			margin-top: 0.4rem;
+    	}
+    	.buy{
+		    background: #1E8DD8;
+    	}
+    	.buy:active{
+    		background:#1E8DD8;
+    	}
+		.license_type{
+			width: 94%;
+			height: auto;
+			margin-left: 3%;
+			background: #fff;
+		}
+		.license_type_title{
+			width: 100%;
+			height: 2rem;
+			line-height: 2rem;
+			font-size: 1rem;
+		}
+		.license_type_view{
+			width: 100%;
+			height: auto;
+			padding: 0.3125rem 0;
+		}
+		.license_type_view_list{
+			position: relative;
+			display: inline-block;
+			min-width: 47%;
+			max-width: 100%;
+			height: 1.7rem;
+			line-height: 1.7rem;
+			margin-bottom: 0.625rem;
+			text-align: center;
+			border-radius: 1.5625rem;
+			background: #F7F8FF;
+			font-size: 0.7rem;
+			padding: 0 0.625rem;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			color: #919DB5;
+			margin-right: 2.5%;
+		}
+		.license_type_view_list_img{
+			position: absolute;
+			width: 0.6rem;
+			height: 0.6rem;
+			top: 0.55rem;
+			right: 0.8rem;
+		}
+		.license_type_view_list_c1c2{
+			background: #FFE6D9;
+			color: #FF7B38;
+		}
+		.license_type_view_list_selected{
+			background: linear-gradient(to right,#64ADF6,#3F86FE);
+			color: #FFFFFF;
+		}
+    </style>
+	</head>
+	<body>
+		<div id="menuPackage">
+			<header class="aui-bar aui-bar-nav aui-border-b tab1 blue-b none-bottom-style" id="aui-header">
+				<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+					<img src="../../../icon/common/icon_header_return.png">
+				</a>
+				<div class="aui-title" id="common_title">
+					选择驾照类型
+				</div>
+				<a class="aui-pull-right aui-btn location">
+				</a>
+			</header>
+		</div>
+		<div class="license_type">
+			<div class="license_type_title">
+				驾照类型
+			</div>
+			<div class="license_type_view">
+				<ul id="license_type_view">
+					<script type="text/template" id="license_type_view_s">
+						{{ for(var i=0;i<it.teachPermitted.length;i++){ }}
+							{{ if(it.carTypeCode != '' && it.carTypeCode != null && it.carTypeCode != undefined ){ }}
+								{{ if(it.teachPermitted[i] == '002006' || it.teachPermitted[i] == '002007'){ }}
+									{{ if(it.carTypeCode == it.teachPermitted[i]){ }}
+										<li class="license_type_view_list license_type_view_list_c1c2 license_type_view_list_selected" data-type="1"tapmode onclick="selectLebel('{{=it.teachPermitted[i]}}','{{=carTypeProcessing(it.teachPermitted[i])}}',this)" >{{=carTypeProcessing(it.teachPermitted[i])}}<img class="license_type_view_list_img" src="../../../icon/coach/licence_hot.png" ></li>
+									{{ }else{ }}
+										<li class="license_type_view_list license_type_view_list_c1c2" data-type="0" tapmode onclick="selectLebel('{{=it.teachPermitted[i]}}','{{=carTypeProcessing(it.teachPermitted[i])}}',this)">{{=carTypeProcessing(it.teachPermitted[i])}}<img class="license_type_view_list_img" src="../../../icon/coach/licence_hot.png" ></li>
+									{{ } }}
+								{{ }else{ }}
+									{{ if(it.carTypeCode == it.teachPermitted[i]){ }}
+										<li class="license_type_view_list license_type_view_list_selected" data-type="1" tapmode onclick="selectLebel('{{=it.teachPermitted[i]}}','{{=carTypeProcessing(it.teachPermitted[i])}}',this)">{{=carTypeProcessing(it.teachPermitted[i])}}</li>
+									{{ }else{ }}
+										<li class="license_type_view_list" data-type="0" tapmode onclick="selectLebel('{{=it.teachPermitted[i]}}','{{=carTypeProcessing(it.teachPermitted[i])}}',this)">{{=carTypeProcessing(it.teachPermitted[i])}}</li>
+									{{ } }}
+								{{ } }}
+							{{ }else{ }}
+								{{ if(it.teachPermitted[i] == '002006' || it.teachPermitted[i] == '002007'){ }}
+								<li class="license_type_view_list license_type_view_list_c1c2" data-type="0" tapmode onclick="selectLebel('{{=it.teachPermitted[i]}}','{{=carTypeProcessing(it.teachPermitted[i])}}',this)">{{=carTypeProcessing(it.teachPermitted[i])}}<img class="license_type_view_list_img" src="../../../icon/coach/licence_hot.png" ></li>
+								{{ }else{ }}
+								<li class="license_type_view_list" data-type="0" tapmode onclick="selectLebel('{{=it.teachPermitted[i]}}','{{=carTypeProcessing(it.teachPermitted[i])}}',this)">{{=carTypeProcessing(it.teachPermitted[i])}}</li>
+								{{ } }}
+							{{ } }}
+						{{ } }}
+					</script>
+				</ul>
+			</div>
+		</div>
+		<footer id="foot">
+			<div class="unable" id="signUp" tapmode onclick="submit_car()"><span>确定</span></div>
+		</footer>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var headerPos;
+		var footPos;
+		var coach_cache = {};
+		var cache_dictionary;
+		var carType; //教练准教车型标签
+		var coachLebelCodeList = [];
+		apiready = function() {
+			api.parseTapmode();
+			//字典表缓存
+			cache_dictionary = $api.getStorage('cache_by_app').cache_dictionary;
+			$api.fixStatusBar($api.byId('menuPackage'));
+			carType = cache_dictionary['002000'].dictionaryList;
+			log('教练准教车型标签', carType)
+			var header = $api.byId('menuPackage');
+			var foot = $api.byId('foot');
+			headerPos = $api.offset(header);
+			footPos = $api.offset(foot);
+			cache = api.pageParam;
+			log('cache:',cache)
+			init();
+		}
+
+		function init(){
+			var license_type_view_s = $("#license_type_view_s").html();
+			$("#license_type_view").html(doT.template(license_type_view_s)(cache))
+			api.parseTapmode();
+			var obj = {};
+			if(cache.carTypeCode != '' && cache.carTypeCode != null && cache.carTypeCode != undefined){
+				for(var i=0;i<cache.teachPermitted.length;i++){
+					if(cache.teachPermitted[i] == cache.carTypeCode){
+						obj = {
+							code:cache.carTypeCode,
+							name:cache.carTypeCodeName
+						}
+					}
+				}
+				coachLebelCodeList.push(obj)
+			}
+		}
+		
+		/**
+		 *  准教车型code处理
+		 */
+		function carTypeProcessing(id){
+			var name;
+			for (var j = 0; j < carType.length; j++) {
+				if (carType[j].code == id) {
+					name = carType[j].name
+				}
+			}
+			return name;
+		}
+		
+		/**
+		 * 点击选择标签
+		 * data-type 0 未选中 1选中
+		 */
+		function selectLebel(code,name, e) {
+			var type = $(e).attr('data-type');
+			var obj = {
+				code:code,
+				name:name
+			}
+			if (type == '0') {
+				if(coachLebelCodeList.length > 0){
+					if(code != coachLebelCodeList[0].code){
+						coachLebelCodeList.splice(0, 1);
+						coachLebelCodeList.push(obj);
+						$(e).siblings().removeClass('license_type_view_list_selected');
+						$(e).siblings().attr('data-type', '0');
+					}
+				}else{
+					coachLebelCodeList.push(obj);
+				}
+				$(e).addClass('license_type_view_list_selected');
+				$(e).attr('data-type', '1');
+			} else if (type == '1') {
+				$(e).removeClass('license_type_view_list_selected');
+				$(e).attr('data-type', '0')
+				for (var i = 0; i < coachLebelCodeList.length; i++) {
+					if (coachLebelCodeList[i].code == code) {
+						coachLebelCodeList.splice(i, 1)
+					}
+				}
+			}
+		}
+
+		/**
+		 * 提交报名教练
+		 */
+		function submit_car() {
+			sendEvent('carType',{carType:coachLebelCodeList})
+			closeWin()
+		}
+
+
+		function closeWin() {
+			api.closeWin({});
+		}
+	</script>
+</html>

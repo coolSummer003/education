@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>通用考试报名</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/mobiscroll/normalize3_0_2_min.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/mobiscroll/mobiscroll.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/mobiscroll/mobiscroll_date.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+		#driver_s_title{
+		    font-weight: normal;
+		}
+		#code{
+			width:70%;
+		}
+		.sendCode{
+	        width: 50%;
+		    height: 1.8rem;
+		    text-align: center;
+		    line-height: 1.8rem;
+		    border: solid 1px #F1F1F1;
+		    border-radius: 1rem;
+		}
+		.block-bottom-style:after{
+			width: 74%;
+		    height: 1px;
+		    background-color: #dddddd;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    top: auto;
+		    right: 0;
+		    bottom: 0;
+		    z-index: 2;
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		    pointer-events: none;
+		}
+		.aui-list .aui-list-item-label, .aui-list .aui-list-item-label-icon {
+		    color: #212121;
+		    width: 35%;
+		    min-width: 1.5rem;
+		    margin: 0;
+		    padding: 0;
+		    padding-right: 0.25rem;
+		    line-height: 2.2rem;
+		    position: relative;
+		    overflow: hidden;
+		    white-space: nowrap;
+		    max-width: 100%;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: inline;
+		    -webkit-align-items: center;
+		    align-items: center;
+		    text-align: right;
+		}
+		.uploadPic{
+		    height: 8rem;
+		    width: 5rem;
+		    position: relative;
+		}
+		.uploadPic img{
+			height: 6rem;
+    		margin: 0 auto;
+    		margin-top: 1rem;
+    		width: 5rem;
+    		object-fit: cover;
+		}
+		.msg{
+			font-size:0.7rem;
+		}
+		.delete{
+		    width: 1.2rem !important;
+		    height: 1.2rem !important;
+		    position: absolute;
+            right: -0.6rem;
+    		top: -0.6rem;
+		    z-index:10;
+		}
+		.bold{
+			font-weight: bold;
+		}
+    </style>
+</head>
+<body>
+	<div class="aui-content aui-margin-b-15">
+	    <ul class="aui-list aui-form-list none-top-style none-bottom-style">
+	    	<li class="aui-list-item">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label bold">
+                		基本信息&emsp;
+	                </div>
+	                <div class="aui-list-item-input">
+	                </div>
+	            </div>
+	        </li>
+	        <li class="aui-list-item none-bottom-style">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		真实姓名：
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <input type="text" value="" id="name" readonly>
+	                </div>
+	            </div>
+	        </li>
+	        <li class="aui-list-item none-bottom-style">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		证&ensp;件&ensp;号：
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <input type="text" value="" id="idCard" readonly>
+	                </div>
+	            </div>
+	        </li>
+	        <li class="aui-list-item none-bottom-style">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		手机号码：
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <input type="phone" maxlength="11"  id="account" readonly>
+	                </div>
+	            </div>
+	        </li>
+            <li class="aui-list-item none-bottom-style">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		申请车型：
+	                </div>
+	                <div class="aui-list-item-input" id="license_type">
+	                	
+	                </div>
+	            </div>
+	        </li>
+	    </ul>
+	 </div>
+	 <div class="aui-content aui-margin-b-15">
+	 	<ul class="aui-list aui-form-list none-top-style none-bottom-style">
+	 		<li class="aui-list-item bold">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		申请信息&emsp;
+	                </div>
+	                <div class="aui-list-item-input">
+	                </div>
+	            </div>
+	        </li>
+	    	<li class="aui-list-item none-bottom-style">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		科&emsp;&emsp;目：
+	                </div>
+	                <div class="aui-list-item-input">
+	                	<input type="text" value="" id="kemuType" readonly>
+	                </div>
+	            </div>
+	        </li>
+	        <li class="aui-list-item none-bottom-style">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		考&emsp;&emsp;场：
+	                </div>
+	                <div class="aui-list-item-input">
+	                	<input type="text" placeholder="请选择考场" id="exam-room" readonly tapmode onclick="selectExamRoom()">
+	                </div>
+	            </div>
+	        </li>
+	        <li class="aui-list-item none-bottom-style">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		预约日期：
+	                </div>
+	                <div class="aui-list-item-input">
+	                	<input type="text" placeholder="请选择预约日期" id="appointment-date" readonly>
+	                </div>
+	            </div>
+	        </li>
+	    </ul>
+	 </div>
+	 <div class="aui-btn aui-btn-info aui-btn-block" id="" tapmode onclick="sign_up()">立刻报名</div>
+	 <script type="text/template" charset="utf-8" id='license_type_src'>
+	 	<select type="select" id="licenseType">
+	 		{{ for(var i=0;i<it.length;i++){ }}
+	        	<option value="{{=it[i].code}}">{{=it[i].name}}</option>
+	 		{{ } }}
+        </select>
+	 </script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/mobiscroll/mobile_select.js"></script> 
+<script type="text/javascript" src="../../script/mobiscroll/mobiscroll_date.js"></script> 
+<script type="text/javascript" src="../../script/mobiscroll/mobiscroll.js"></script> 
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	apiready = function(){
+		cache = api.pageParam;
+		api.parseTapmode();
+		init();
+	}
+	
+	var isload = false;
+	function init(){
+		//获取并更新本地学员信息
+		updateLearnerInfo(function(ret,err){
+			if(ret&&ret.code == 0){
+				loadExamRegistration(ret.learner);
+			}else{
+				alert_msg('请检查您的网络连接');
+				loadExamRegistration($api.getStorage('cache_by_account').cache_account);
+			}
+		});
+		
+		var afterThreeDate = (new Date(new Date().getTime() + 3*24*60*60*1000)).Format('yyyy-MM-dd');//3天后
+		var afterThirteenDate = (new Date(new Date().getTime() + 13*24*60*60*1000)).Format('yyyy-MM-dd');//13天后
+		
+		mobiscrollDate(afterThreeDate,afterThirteenDate,$('#appointment-date'),'最快');//初始化日期组件
+	}
+	
+	//加载报名信息
+	function loadExamRegistration(account){
+		//真实姓名
+		$('#name').val(account.name);
+		//证件号
+		$('#idCard').val(account.idcardNo);
+		//手机号码
+		$('#account').val(account.account);
+		//科目类型
+		if(cache.type == 'one'){
+			$('#kemuType').val('科目一');
+		}else if(cache.type == 'two'){
+			$('#kemuType').val('科目二');
+		}else if(cache.type == 'three'){
+			$('#kemuType').val('科目三');
+		}else if(cache.type == 'four'){
+			$('#kemuType').val('科目四');
+		}
+		//申请车型
+		getDictionaryByCode('002000', function(dictionary){
+			var license_type_src = $('#license_type_src').html();
+			$('#license_type').html(doT.template(license_type_src)(dictionary));
+		});
+		isload = true;
+	}
+	
+	//选择考场
+	function selectExamRoom(){
+		api.openDrawerPane({
+		    type: 'right'
+		});
+	}
+	
+	//点击报名
+	function sign_up(){
+		if(isload){
+			alert_msg('开发中');
+		}else{
+			alert_msg('页面未加载成功，请返回重试');
+		}
+	}
+	
+	//获取考场信息
+	var roomID;
+	function getExamRoom(roomName,roomId){
+		roomID = roomId;
+		$('#exam-room').val(roomName);
+	}
+</script>
+</html>

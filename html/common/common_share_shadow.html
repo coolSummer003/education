@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>打开分享页面</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background: transparent;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background: transparent;
+    		display:flex;
+    	}
+    	.shadow{
+    		width:100%;
+    		height:100%;
+    		background:#000;
+    		opacity:0.3;
+    		position: absolute;
+    	}
+    </style>
+</head>
+<body>
+	<div class='shadow'></div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var path;
+	var shareData;
+	apiready = function(){
+		api.parseTapmode();
+		shareData = api.pageParam;
+		api.openFrame({
+	        name: 'common_share',
+	        url: './common_share.html',
+	        bgColor: 'rgba(0,0,0,0)',
+	        animation:{
+	        	type:"push",                 //动画类型（详见动画类型常量）
+			    subType:"from_bottom",       //动画子类型（详见动画子类型常量）
+			    duration:300
+	        },
+	        rect: {
+	            x: 0,
+	            y: 0,
+	            w: 'auto',
+	            h: api.winHeight
+	        },
+	        bounces: false,
+	        softInputBarEnabled:true,
+	        softInputMode:'resize',
+	        pageParam:shareData
+	    });
+	}
+	function closeWin(){
+		api.closeWin({
+        });
+	}
+	//关闭分享阴影
+	function closeShadow(){
+		api.closeFrame({
+        	name:'common_share_shadow'
+        });
+	}
+</script>
+</html>

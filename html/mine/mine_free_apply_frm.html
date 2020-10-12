@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>免费免单申请</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/mobiscroll/normalize3_0_2_min.css" />
+	    <link rel="stylesheet" type="text/css" href="../../css/mobiscroll/mobiscroll.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/mobiscroll/mobiscroll_date.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<style type="text/css">
+			html,body{
+				
+			}
+			.title{
+				width: 30%;
+				height: 1.5rem;
+				line-height: 1.5rem;
+				text-align: justify;
+				padding: 0 0.2rem;
+			}
+			.title:after{
+				content:"";
+				display:inline-block;
+				width:100%;
+			}
+			.submitBtn{
+				width: 90%;
+				margin-left: 5%;
+				height: 1.6rem;
+				line-height:1.6rem;
+				margin-top: 1rem;
+			}
+			.aui-list textarea {
+			    overflow: auto;
+			    margin: 0.5rem 0;
+			    height: 5rem;
+			    line-height: 1rem;
+			    resize: none;
+			    background: #FAFAFA;
+    			padding: 0.5rem;
+			}
+			.aui-list label {
+			    line-height: 1.3rem;
+			    padding-bottom: 0.5rem;
+			    width:100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="aui-content aui-margin-b-10" style='overflow: hidden;background: #FFFFFF;'>
+			<ul class="aui-list aui-form-list none-bottom-style none-top-style">
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							申&ensp;请&ensp;人：
+						</div>
+						<div class="aui-list-item-input">
+							<input type="text" placeholder="请输入名称" value="" id="applicant">
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							手&ensp;机&ensp;号：
+						</div>
+						<div class="aui-list-item-input">
+							<input type="tel" maxlength="11" placeholder="请输入手机号" value="" id="telPhone">
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							身&ensp;份&ensp;证：
+						</div>
+						<div class="aui-list-item-input">
+							<input type="text" placeholder="请输入身份证号码" value="" id="idCard">
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item aui-list-item-arrow">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							所属驾校：
+						</div>
+						<div class="aui-list-item-input" tapmode onclick="openSelTcmSchool()">
+							<input type="text" value="" id="schoolName" placeholder="请选择教练所属驾校" readonly>
+						</div>
+					</div>
+				</li>
+				<div style="height: 0.4rem;background: #f5f5f5;"></div>
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							考试科目：
+						</div>
+						<div class="aui-list-item-input" id="examSubjects">
+							<label style='padding-bottom: 0rem;'><input class="aui-radio" type="radio" value='2' name="subject" id="subjectTwo">&ensp;科目二&emsp;</label>
+							
+							<label style='padding-bottom: 0rem;'><input class="aui-radio" type="radio" value='3' name="subject" id="subjectThree">&ensp;科目三</label>
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item aui-list-item-arrow">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							选择考场：
+						</div>
+						<div class="aui-list-item-input" tapmode onclick='selTestCenter()'>
+							<input type="text" placeholder="请选择考场" value="" id="testCenterId" readonly>
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item" style="margin-top: 0.5rem;">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							免费原因：
+						</div>
+						<div class="aui-list-item-input" id="freeReason">
+							<!-- <label style="padding: 0.5rem 0;" class='aui-hide'>
+								<input class="aui-radio" type="radio" value='0' name="applyType" id="noPass" readonly>&ensp;两次及以上考试未通过
+							</label>
+							
+							<label style="padding-bottom: 0.5rem;">
+								<input class="aui-radio" type="radio" value='1' name="applyType" id="training" readonly>&ensp;未考试、未训练
+							</label>
+							
+							<label style="padding-bottom: 0.5rem;">
+								<input class="aui-radio" type="radio" value='2' name="applyType" id="uncommitted" readonly>&ensp;未考试、已训练
+							</label> -->
+							<span>请先选择考场</span>
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item aui-hide" id="testDateDiv">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							考试日期：
+						</div>
+						<div class="aui-list-item-input">
+							<input type="text" id="test-date" placeholder="请选择上次考试日期" readonly>
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item none-bottom-style aui-hide" id="reasonDesc">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-input">
+		                	<textarea name="" id="reason" cols="30" rows="20" placeholder="请简单描述您的理由"></textarea>
+		                </div>
+		            </div>
+		        </li>
+			</ul>
+			<div class="aui-btn aui-btn-info aui-btn-block" style="margin-top: 1rem !important;" id="submitBtn" tapmode onclick="submitFree()">提交申请</div>
+		</div>
+		
+		<!-- 申请理由 -->
+		<script type="text/template" charset="utf-8" id="template_apply_free_reason_src">
+			{{ for(var i=0;i<it.length;i++){ }}
+				<label>
+					<input class="aui-radio" type="radio" value='{{=it[i].id}}' tapmode onclick="selReason(this,'{{=it[i].type}}')" name="applyType" readonly>&ensp;{{=it[i].reason}}
+				</label>
+			{{ } }}
+		</script>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/mobiscroll/mobile_select.js"></script> 
+	<script type="text/javascript" src="../../script/mobiscroll/mobiscroll_date.js"></script> 
+	<script type="text/javascript" src="../../script/mobiscroll/mobiscroll.js"></script> 
+	<script type="text/javascript" src="../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var applicant;//申请人
+		var telPhone;//电话
+		var idCard;//身份证
+		var schoolId;//学员所属驾校
+		var subject;//科目
+		var testCenterId;//考场
+		var reason;//原因
+		var applyType;//申请类型：0：2~5次以上考试不通过1：未考试、未训练2：未考试、已训练
+		var type;//点击科目几
+		var isNeedFlag;//标记是否选择了需要考试日期的免费原因
+		apiready = function(){
+			cache = api.pageParam;
+			type = cache.data.type;
+			//log("cache+"+JSON.stringify(cache));
+			var startDate = '2010-01-01';//很早以前
+			var endDate = new Date().Format('yyyy-MM-dd');//4天内
+			
+			mobiscrollDate(startDate,endDate,$('#test-date'),'最近');//初始化日期组件
+			
+			if(type == "two"){
+				$("#subjectThree").parent().css("display","none");
+				$("#subjectTwo").attr('checked', 'checked');
+			}else if(type == "three"){
+				$("#subjectTwo").parent().css("display","none");
+				$("#subjectThree").attr('checked', 'checked');
+			}
+			
+			//监听所属驾校选择事件
+			toEventListener('sel_tcm_school_action',function(ret,err){
+				$('#schoolName').val(ret.value.name);
+				schoolId = ret.value.id;
+			});
+			
+			//监听选择考场后的事件
+			toEventListener('sel_room_apply_free',function(ret){
+				//log('选中的考场数据',ret.value);
+				testCenterId = ret.value.id;
+				$('#testCenterId').val(ret.value.e_room_name);
+				$('#testDateDiv').addClass('aui-hide');
+				$('#reasonDesc').addClass('aui-hide');
+				
+				//根据考场加载申请理由
+				loadApplyFreeReason(testCenterId,type);
+			});
+			
+			init();
+		}
+		
+		/**
+		 * 根据考场加载申请理由 
+		 */
+		function loadApplyFreeReason(testCenterId,type){
+			url = 'api/coupons/getApplyFreeReason';
+			params = {
+				testCenterId:testCenterId,
+				kemu:type == 'two'?2:3
+			}
+			defaultload('获取申请理由中');
+			ajax_Request(url, 'get', 'json', params, function(ret,err){
+				log('考场理由数据',ret);
+				api.hideProgress();
+				if(ret&&ret.code == 0){
+					if(ret.applyFreeReasonList.length > 0){
+						var template_apply_free_reason_src = $('#template_apply_free_reason_src').html();
+						$('#freeReason').html(doT.template(template_apply_free_reason_src)(ret.applyFreeReasonList));
+					}else{
+						$('#freeReason').html('未设置免单');
+					}
+				}else{
+					$('#freeReason').html('获取失败');
+				}
+			});
+		}
+		
+		/**
+		 * 选择免单理由 
+		 */
+		function selReason(e,type){
+			isNeedFlag = type;
+			switch(type){
+				case '0':
+					$('#testDateDiv').addClass('aui-hide');
+					$('#reasonDesc').addClass('aui-hide');
+					break;
+				case '1':
+					$('#testDateDiv').removeClass('aui-hide');
+					$('#reasonDesc').addClass('aui-hide');
+					break;
+				case '2':
+					$('#testDateDiv').addClass('aui-hide');
+					$('#reasonDesc').removeClass('aui-hide');
+					break;
+				default:
+					break;
+			}
+		}
+		
+		function init(){
+			if(isauth()){
+				var user = $api.getStorage('cache_by_account');
+				$("#applicant").val(user.cache_account.name);
+				$("#telPhone").val(user.cache_account.account);
+				$("#idCard").val(user.cache_account.idcardNo);
+			}
+		}
+		
+		function submitFree(){
+			defaultload('提交申请中');
+			
+			applyType = $('input:radio[name="applyType"]:checked').val();//免费原因
+			if(applyType == ''||applyType == null){
+				alert_msg('请选择免费原因');
+				api.hideProgress();
+				return;
+			}
+			
+			if(testCenterId == ''||testCenterId == null){
+				alert_msg('请选择考场');
+				api.hideProgress();
+				return;
+			}
+			
+			applicant = $("#applicant").val();
+			if(applicant == "" || applicant == null || applicant == undefined){
+				alert_msg('请填写申请人');
+				api.hideProgress();
+				return;
+			}
+			telPhone = $("#telPhone").val();
+			if(!isPhoneAvailable(telPhone)){
+				alert_msg('请输入正确的手机号');
+				api.hideProgress();
+				return;
+			}
+			idCard = $("#idCard").val();
+			if(!checkIDCard(idCard)){
+				alert_msg('请填写正确身份证');
+				api.hideProgress();
+				return;
+			}
+			if(schoolId == ''||schoolId == null){
+				alert_msg('请选择学员所属驾校');
+				api.hideProgress();
+				return;
+			}
+			
+			//如果需要选择上次考试日期则校验
+			if(isNeedFlag == 1&&$('#test-date').val() == ''){
+				alert_msg('请选择上次考试日期');
+				api.hideProgress();
+				return;
+			}
+			
+			//如果选择其他原因则需要填入原因
+			if(isNeedFlag == 2&&$('#reason').val() == ''){
+				alert_msg('请简单描述您的理由');
+				api.hideProgress();
+				return;
+			}
+			
+			url = "api/coupons/add/coupons";
+			params = {
+				learnerId:getUserId(),
+				name:applicant,
+				phone:telPhone,
+				idcardNo:idCard,
+				schoolId:schoolId,
+				reasonId:applyType,//免单理由主键
+				testDate:$('#test-date').val(),
+				feeReason:$('#reason').val()
+			}
+			
+			ajax_Request(url,"post","json",params,function(ret,err){
+				api.hideProgress();
+				if(ret){
+					if(ret.code == 0){
+						openMessage("免费券申请","提交申请成功","确定","","openApplyList()","", null);
+					}else{
+						openMessage("免费券申请",ret.msg,"确定","","","", null);
+					}
+				}else{
+					alert_msg("服务器繁忙，请稍后重试");
+				}
+			});
+		}
+		
+		/**
+		 * 打开预约列表 
+		 */
+		function openApplyList(){
+			esc_function('mine_common_win','','openApplyFreeList()');
+		}
+		
+		/**
+		 * 选择考场 
+		 */
+		function selTestCenter(){
+			api.openDrawerPane({
+			    type: 'right'
+			});
+		}
+		
+		/**
+		 * 打开驾校列表
+		 */
+		function openSelTcmSchool(){
+			api.openWin({
+		       name: 'common_select_under_school_win',
+		       url: '../common/common_select_under_school_win.html',
+		       slidBackEnabled:'false',
+		       vScrollBarEnabled:'false',
+		       hScrollBarEnabled:'false',
+		       reload:true,
+		       useWKWebView:false,
+		       pageParam: {
+		           data:null
+		       }
+		    });
+		}
+		
+		function closeWin() {
+			api.closeWin({});
+		}
+	</script>
+</html>

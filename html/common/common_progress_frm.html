@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>进度条</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background: transparent;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background: transparent;
+    		display:flex;
+    	}
+    	.progress{
+    		width:60%;
+    		margin:auto;
+    		position: relative;
+    		text-align: center;
+    	}
+    	.progress img{
+    		width:80%;
+    	}
+		.progress_txt{
+		    font-size: 0.7rem;
+		    position: absolute;
+		    bottom: 1rem;
+		    width: 100%;
+		    text-align: center;
+		}
+    </style>
+</head>
+<body>
+	<div class='progress'>
+		<img src="../../icon/common/icon_common_load.gif" alt="" />
+		<div class='progress_txt'>请求数据中..</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var msg;
+	apiready = function(){
+		api.parseTapmode();
+		msg = api.pageParam.msg;
+		if(msg != undefined){
+			$('.progress_txt').html(msg);
+		}
+	}
+	
+	//进度条
+	function changeTxt(msg){
+		$('.progress_txt').html(msg);
+	}
+	
+	//关闭进度条
+	function closeShadow(){
+		api.closeFrame({
+        	name:'common_progress_frm'
+        });
+	}
+</script>
+</html>

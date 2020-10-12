@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>初始加载页面</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+        label {
+            margin: 10px;
+            font-size: 24px;
+        }
+
+        ul {
+            margin-bottom: 10px;
+        }
+
+        ul li {
+            margin: 5px 10px;
+            padding: 5px;
+            color: #000;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+
+<body>
+     
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+ 	var UIScrollPicture;   //轮播图模块对象
+    var UIButton;          //按钮模块对象
+    var vButtonId;         //按钮模块对象索引对象
+	apiready = function(){
+		//热更新监听
+   		api.addEventListener({
+            name:'smartupdatefinish'
+        }, function(ret, err){   
+            api.rebootApp();
+        });
+        //启动主程序
+	    fnStartMainPage();
+	};
+	
+	function fnStartGuidePage() {
+        //设置页面默认图片;
+        var tData = [
+            'widget://res/grid1.jpg',
+            'widget://res/grid2.jpg',
+            'widget://res/grid3.jpg',
+        ];
+        UIScrollPicture = api.require('UIScrollPicture');
+        UIScrollPicture.open({
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'          //此处用'auto'是为了适应某些机型页面底部虚拟键的显示／隐藏 切换
+            },
+            data: {
+                paths: tData,
+            },
+//          styles: {
+//              indicator: {
+//                  align: 'center',
+//                  color: 'rgba(255,255,255,0.4)',
+//                  activeColor: '#FFFFFF'
+//              }
+//          },
+            contentMode: 'scaleToFill',
+            auto: false,          //禁止自动滚动
+            loop: false,          //禁止循环播放
+        }, function(ret, err) {
+            if (ret) {
+              /*
+                //方法1  点击末页任意位置进入主页面
+                if('click' == ret.eventType){
+                   if(ret.index==3){
+                     //关闭页面，进入主页面
+                     fnStartMainPage();
+                   }
+                }
+              */
+
+                //方法2  点击末页按钮进入主页面（使用前，需在控制台添加UIButton模块）
+                //设计思路：添加一个UIButton模块，在UIScrollPicture页面滑动到末页时显示UIButton模块，其余页面隐藏按钮模块，在按钮模块添加点事件点击模块进入主页面
+
+                //添加末页点击进入主页面方法
+                if ('show' == ret.eventType) {
+                    UIScrollPicture.addEventListener({
+                        name: 'scroll'
+                    }, function(ret, err) {
+                        if (ret.status) {
+                            if (ret.index == (tData.length - 1)) {
+                                //显示进入按钮
+                                fnShowStartBtn();
+                            } else {
+                                //隐藏进入按钮
+                                fnHideStartBtn();
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    //启动程序主页面
+    function fnStartMainPage() {
+	    if(false){
+	        //跳转登录页面
+            api.openWin({
+                name : 'login',
+                url : './html/login.html',
+                slidBackEnabled:false,
+                reload:true,
+                bgColor:"#EEEEF0",
+                animation:{
+	                type:"none",        //动画类型（详见动画类型常量）
+	                subType:"from_right",       //动画子类型（详见动画子类型常量）
+	                duration:0
+	            }
+	        });
+	    }else{
+	        api.openWin({
+                name : 'index',
+                url : './index.html',
+                slidBackEnabled:false,
+                reload:true,
+                animation:{
+	                type:"none",                //动画类型（详见动画类型常量）
+	                subType:"from_right",       //动画子类型（详见动画子类型常量）
+	                duration:0 
+	            }
+    		 });
+	    }
+    }
+    function closeMain(){
+    	api.closeWin({
+    		name:api.winName
+        });
+    }
+</script>
+</html>

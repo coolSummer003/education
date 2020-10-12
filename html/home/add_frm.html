@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>扫码frm</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+	<style>
+		html,
+		body {
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0);
+		}
+
+		#over {
+			box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background-image: url(../../icon/scnner/bgerweima.png);
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-size: cover;
+			z-index: 3;
+		}
+
+		#over .one {
+			margin-top: 370px;
+			color: #A0A0A0;
+			text-align: center;
+			font-size: 12px;
+		}
+
+		#over .two {
+			font-size: 0.53rem;
+			text-align: center;
+			line-height: 1.2rem;
+			color: #fff;
+		}
+
+		#line {
+			height: 4px;
+			background: url(../../icon/scnner/icon-qr-line.png) no-repeat center;
+			background-size: cover;
+			position: absolute;
+			top: 140px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="over">
+		<div class="one">
+		</div>
+		<div class="two">
+			将二维码对准框选位置，即可自动扫描
+		</div>
+		<div id="line"></div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	apiready = function() {
+		//二维码扫描中间的那条线动态效果
+		var line = document.getElementById('line'),
+			h = Math.round(api.frameHeight * 0.17);
+		line.style.cssText = "width: " + api.frameWidth * 0.58 + "px; left: " + api.frameWidth * 0.21 + "px; top: " + api.frameHeight * 0.15 + "px; marginTop: " + api.frameHeight * 0.58 + "px"
+		setInterval(function() {
+			if (h == Math.round(api.frameHeight * 0.51)) {
+				h = Math.round(api.frameHeight * 0.17)
+			} else {
+				h = h + 1;
+			}
+			var hstr = h + 'px';
+			line.style.top = hstr;
+		}, 1000 / 60);
+	};
+</script>
+
+</html>

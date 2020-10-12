@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>驾驶证上传页面</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+    </style>
+</head>
+<body>
+	<!-- 通用头部 -->
+	<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin()">
+            <img src="../../icon/common/icon_header_return.png">
+        </a>
+        <div class="aui-title" id="common_title">
+        	上传驾驶证
+        <a class="aui-pull-right aui-btn aui-hide" tapmode onclick='submitInfo()'>
+           <span>保存</span>
+        </a>
+    </header>
+    <!-- 截图工具 -->
+	<header class="aui-bar aui-bar-nav aui-border-b aui-hide" id="aui-header2">
+		<a class="aui-pull-left aui-btn" tapmode onclick="cancelCut()">
+            <span>取消</span>
+        </a>
+        <div class="aui-title">
+        	请把驾驶证放入框内
+        </div>
+        <a class="aui-pull-right aui-btn" tapmode onclick='getCut()'>
+           <span>截取</span>
+        </a>
+    </header>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var headerPos;
+	var sectionPos;
+	var frameName = 'common_drive_upload_frm';//设置的frame名称
+	var frameUrl = './common_drive_upload_frm.html';//设置的frame
+	var bounces = false;//是否弹动
+	apiready = function(){
+		api.parseTapmode();
+		var header = $api.byId('aui-header');
+		var header2 = $api.byId('aui-header2');
+		$api.fixStatusBar(header);
+		$api.fixStatusBar(header2);
+		cache = api.pageParam;
+		headerPos = $api.offset(header);
+		openFrame(headerPos.h, api.winHeight - headerPos.h,'none',bounces);
+		
+		//监听退出事件
+	    api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err){
+            closeWin();
+        });
+	}
+	function openFrame(y,h,animate,bounces){
+		api.openFrame({
+            name: frameName,
+            url: frameUrl,
+            bgColor:'#efeff4',
+            rect: {
+                x: 0,
+                y: y,
+                w: 'auto',
+                h: h
+            },
+            animation:{
+	        	type:animate,                //动画类型（详见动画类型常量）
+			    subType:"from_right",       //动画子类型（详见动画子类型常量）
+			    duration:300
+	        },
+            bounces: false,
+            pageParam:cache,
+            reload:true,
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+	}
+	
+	//显示截图工具栏
+	function showTools(){
+		$('#aui-header').addClass('aui-hide');
+		$('#aui-header2').removeClass('aui-hide');
+	}
+	
+	//隐藏截图工具栏
+	function hideTools(){
+		$('#aui-header').removeClass('aui-hide');
+		$('#aui-header2').addClass('aui-hide');
+	}
+	
+	//取消截图
+	function cancelCut(){
+		esc_function('common_drive_upload_win','common_drive_upload_frm','cancelCut()');
+	}
+	
+	//保存截图
+	function getCut(){
+		sendEvent('getDriverProveCut',{});
+	}
+	
+	//提交驾驶证
+	function submitInfo(){
+		esc_function('common_drive_upload_win','common_drive_upload_frm','submitInfo()');
+	}
+	
+	function closeWin(){
+		api.closeWin({
+        });
+	}
+</script>
+</html>

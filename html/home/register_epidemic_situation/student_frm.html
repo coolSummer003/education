@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>疫情学员登记</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html,body{
+    		background: linear-gradient(to right, #2A67F8 , #2C66FB) !important;
+    	}
+		.bgImg{
+			width: 100%;
+			height: auto;
+		}
+		.bgImg img{
+			width: 100%;
+		}
+    	.msgView{
+			position: relative;
+			width: 90%;
+			height: auto;
+			background: #EDF1FF;
+			left: 5%;
+			margin-top: -7rem;
+			border-radius: 0.375rem;
+			padding-top: 0.3125rem;
+		}
+		.msgViewTitle{
+			width: 90%;
+			height: 1.875rem;
+			margin-left: 5%;
+		}
+		.msgViewTitle img{
+			width: 70%;
+			height: 26px;
+			margin-left: 15%;
+			margin-top: 0.4375rem;
+		}
+		.msgViewInput{
+			width: 90%;
+			height: auto;
+			margin-left: 5%;
+			margin-top: 1.475rem;
+			padding-bottom: 3rem;
+		}
+		.msgViewInputLi{
+			width: 100%;
+			height: auto;
+			margin-bottom: 0.9375rem;
+		}
+		.msgViewInputLiTitle{
+			height: 1rem;
+			line-height: 1rem;
+			border-left: 4px solid #2A67F8;
+			padding-left: 0.3125rem;
+			color: #27344C;
+			font-weight: 800;
+		}
+		.autograph{
+			border-left-color: #EDF1FF;
+		}
+		.msgViewInputLiInput{
+			height: 2.6rem;
+			margin-top: 0.4rem;
+		}
+		.input{
+			width: 100%;
+			height: 2.6rem !important;
+			border: 1px solid #CFDDFF !important;
+			border-radius: 0.375rem !important;
+			padding: 0.625rem !important;
+			background: #fff !important;
+		}
+		.msgViewInputLiAddresss{
+			width: 100%;
+			height: 7.4rem;
+		}
+		.textarea{
+			width: 100%;
+			height: 5rem !important;
+			border: 1px solid #CFDDFF !important;
+			border-radius: 0.375rem !important;
+			padding: 0.625rem !important;
+			background: #fff !important;
+		}
+		
+		.aui-list-item-arrow:before{
+			top: 100%;
+		}
+		
+		.autographView{
+			width: 100%;
+			height: 5rem;
+			border-radius: 0.375rem;
+			background: #fff;
+			border: 1px solid #CFDDFF;
+		}
+		.time{
+			width: 100%;
+			text-align: right;
+			color: #27344C;
+			font-weight: 800;
+		}
+		.subBtn{
+			position: relative;
+			width: 70%;
+			height: 2.5rem;
+			border-radius: 1.5625rem;
+			background: #FFBB3F;
+			left: 15%;
+			top: -1.25rem;
+		}
+		
+		.subBtn img{
+			width: 40%;
+			margin-left: 30%;
+			height: 1.25rem;
+			margin-top: 0.625rem;
+		}
+		
+		.selectArea{
+			border-top: 1px solid #CBDCFF;
+			margin-top: 0.625rem;
+			padding-top: 0.625rem;
+		}
+		
+		.signImg{
+			width: 100%;
+			height: 5rem;
+		}
+		.bottom-slide:after{
+			height: 0;
+		}
+		
+		/*键盘样式*/
+		ul,ol{
+				list-style: none;
+			}
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			#container{
+				width: 100%;
+				height: 100%;
+				padding-top: 50px;
+			}
+			#carLicenseBox{
+				width: 80%;
+				/*height: 100%;*/
+				border-radius: 10px;
+				margin: 0 auto;
+				padding-bottom: 20px;
+				overflow: hidden;
+				background-color: #ffffff;
+			}
+			#carLicenseBox .carLicenseTitle{
+				width: 100%;
+				height: 70px;
+				background-color: #fff;
+				text-align: center;
+				line-height: 70px;
+				color: black;
+				font-size: 18px;
+			}
+			#carLicenseBox .carLicenseMain{
+				width: 100%;
+				height: 160px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+			}
+			#carLicenseBox .carLicenseMain ul{
+				width: 100%;
+				height: 36px;
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: center;
+			}
+			#carLicenseBox .carLicenseMain ul li{
+				width: 34px;
+				height: 40px;
+				border: 1px solid #cccccc;
+				text-align: center;
+				line-height: 40px;
+				float: left;
+			}
+			#carLicenseBox .carLicenseMain ul li:last-of-type{
+				margin: 0;
+			}
+			#carLicenseBox .carLicenseMain ul li.active{
+				border: 2px solid #f3483e;
+			}
+			#carLicenseBox .carLicenseMain ul li.xinnengyuan{
+				background: url(img/xinnengyuan.png) no-repeat center;
+				background-size: 100% 100%;
+				border: 2px dashed #CCCCCC;
+			}
+			#carLicenseBox .submitBtn{
+				width: 80%;
+				height: 45px;
+				background-color: #f3483e;
+				border: none;
+				border-radius: 6px;
+				text-align: center;
+				line-height: 45px;
+				color: white;
+				font-size: 20px;
+				margin-left: 10%;
+			}
+			#keyboardBox{
+				width: 100%;
+				position: fixed;
+				bottom: 0px;
+				left: 0px;
+				z-index: 999;
+			}
+			#keyboardBox .provienceBox,#keyboardBox .textBox{
+				width: 100%;
+				background-color: #D0D5D9;
+				padding-top: 10px;
+				padding-bottom: 4px;
+			}
+			#keyboardBox .provienceBox ul,#keyboardBox .textBox ul{
+				width: 100%;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-around;
+				align-items: center;
+				margin-top: 10px;
+			}
+			#keyboardBox .provienceBox ul:first-of-type, #keyboardBox .textBox ul:first-of-type{
+				margin-top: 0px;
+			}
+			#keyboardBox .provienceBox ul li,#keyboardBox .textBox ul li{
+				width: 30px;
+				height: 43px;
+				border-radius: 6px;
+				text-align: center;
+				line-height: 43px;
+				float: left;
+				background-color: #ffffff;
+			}
+			#keyboardBox .textBox{
+				display: none;
+			}
+			#keyboardBox .provienceBox ul .changeContentBtn,#keyboardBox .provienceBox ul .deleteBtn,#keyboardBox .textBox ul .changeContentBtn,#keyboardBox .textBox ul .deleteBtn{
+				width: 40px;
+				height: 40px;
+				background-color: #ACB3BB;
+				text-align: center;
+				line-height: 40px;
+			}
+			#keyboardBox .provienceBox ul .deleteBtn img,#keyboardBox .textBox ul .deleteBtn img{
+				width: 23px;
+				height: 16px;
+				margin: 0px;
+				margin-top: 12px;
+			}
+		
+			.img-jpg{
+				width: 80%;
+				margin: 0 auto;
+			}
+			.img-jpg img{
+				width: 100%;
+			}
+			.textBox ul li:click{
+				background: #0088CC;
+			}
+			 @keyframes scaleDraw {  /*定义关键帧、scaleDrew是需要绑定到选择器的关键帧名称*/
+			0%{
+				transform: scale(1);  /*开始为原始大小*/
+			}
+			25%{
+				transform: scale(1.3); /*放大1.1倍*/
+			}
+			50%{
+				transform: scale(1.3);
+			}
+			100%{
+				transform: scale(1);
+			}
+		}
+		.activeKey{
+			background-color: #ACB3BB !important;
+			/*background: #999 !important;*/
+			opacity: 0.8;
+			color: #fff;
+			-webkit-animation-name: scaleDraw; /*关键帧名称*/
+			-webkit-animation-timing-function: ease-in-out; /*动画的速度曲线*/
+			-webkit-animation-duration: 0.2s; /*动画所花费的时间*/
+		}
+		.close{
+			width:1.9rem;
+			height:1.5rem;
+			line-height:1.5rem;
+			
+			position: absolute;
+			border-radius:0.3rem;
+			text-align:center;
+			font-size:0.7rem;
+			right: 0.4rem;
+		}
+		.delete{
+			width:1.9rem;
+			height:1.5rem;
+			line-height:1.5rem;
+			position: absolute;
+			border-radius:0.3rem;
+			text-align:center;
+			font-size:0.7rem;
+			left: 0.4rem;
+		}
+		.car-shadow{
+			width: 100%;
+		    height: 2.5rem;
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		}
+    </style>
+	</head>
+	<body>
+		<div class="bgImg">
+			<img src="../../../image/epidemicSituation/studentBg.png">
+		</div>
+		<div class="msgView">
+			<div class="msgViewTitle">
+				<img src="../../../image/epidemicSituation/stuTitle.png">
+			</div>
+			<div class="msgViewInput">
+				<ul>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							学员姓名
+						</div>
+						<div class="msgViewInputLiInput">
+							<input class="input" type="text" name="" id="name" value="" placeholder="输入您的姓名" onfocus="auiHide()" />
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							身份证号码
+						</div>
+						<div class="msgViewInputLiInput">
+							<input class="input" type="text" name="" id="idCard" value="" placeholder="输入您的身份证号码" onfocus="auiHide()" />
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							学员手机号
+						</div>
+						<div class="msgViewInputLiInput">
+							<input class="input" type="tel" maxlength="11" name="" id="phone" value="" placeholder="输入您的联系方式" onfocus="auiHide()" />
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							教练员
+						</div>
+						<div class="msgViewInputLiInput">
+							<input class="input" type="text" name="" id="coach" value="" placeholder="输入您的教练姓名" onfocus="auiHide()" />
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							教练车牌号
+						</div>
+						<div class="msgViewInputLiInput" style='position: relative;'>
+							<div class='car-shadow' tapmode onclick="popUpKeyboard(1)"></div>
+							<input class="input" type="text" name="" id="coachCarId" value="" placeholder="输入教练车牌号" readonly="readonly" unselectable="on" οnfοcus="this.blur()"/>
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							教练手机号
+						</div>
+						<div class="msgViewInputLiInput">
+							<input class="input" type="tel" maxlength="11" name="" id="coachPhone" value="" placeholder="输入您教练的联系方式" onfocus="auiHide()" />
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							报名驾校
+						</div>
+						<div class="msgViewInputLiInput"   disabled>
+							<input class="input" type="text" name="" id="school" value="" readonly="" placeholder="输入您报名的驾校" onfocus="auiHide()" />
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							学员职业
+						</div>
+						<div class="msgViewInputLiInput">
+							<input class="input" type="text" name="" id="stuOccupation" value="" placeholder="输入您的职业" onfocus="auiHide()" />
+						</div>
+					</li>
+					<li class="msgViewInputLi msgViewInputLiAddresss">
+						<div class="msgViewInputLiTitle">
+							详细居住地址
+						</div>
+						<div class="msgViewInputLiInput aui-list-item-input bottom-slide aui-list-item-arrow" onclick="select_address();">
+							<textarea rows="" cols="" class="textarea" id="address" placeholder="选择您的具体居住地址" readonly=""></textarea>
+						</div>
+					</li>
+					
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							您当前是否在疫情新发地？
+						</div>
+						<div class="msgViewInputLiInput" style="margin-top: 0.75rem;height: 1.5rem;">
+							<label><input class="aui-radio" type="radio" value='1' name="q2" id="y2">&ensp;是</label>
+							&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+							<label><input class="aui-radio" type="radio" value='0' name="q2" id="n2">&ensp;否</label>
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							最近14天是否离开过当前所在地？
+						</div>
+						<div class="msgViewInputLiInput" style="margin-top: 1.5rem;height: auto;">
+							<div id="" onclick="selectAreas();">
+								<label><input class="aui-radio" type="radio" value='1' name="q1" id="yes1">&ensp;是</label>
+								&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+								<label><input class="aui-radio" type="radio" value='0' name="q1" id="no1">&ensp;否</label>
+							</div>
+							<div class="selectArea aui-hide" id="selectArea">
+								<div class="msgViewInputLiInput">
+									<input class="input" type="text" name="" id="area" value="" placeholder="具体地址" onfocus="auiHide()" />
+								</div>
+								
+							</div>
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							是否与医观隔离人员有过接触？
+						</div>
+						<div class="msgViewInputLiInput" style="margin-top: 0.75rem;height: 1.5rem;">
+							<label><input class="aui-radio" type="radio" value='1' name="q3" id="y3">&ensp;是</label>
+							&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+							<label><input class="aui-radio" type="radio" value='0' name="q3" id="n3">&ensp;否</label>
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							您是否有异常临床表现（发热、咳嗽、气促等症状）？
+						</div>
+						<div class="msgViewInputLiInput" style="margin-top: 1.5rem;height: 1.5rem;">
+							<label><input class="aui-radio" type="radio" value='1' name="q4" id="y4">&ensp;是</label>
+							&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+							<label><input class="aui-radio" type="radio" value='0' name="q4" id="n4">&ensp;否</label>
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle">
+							本人承诺
+						</div>
+						<div class="msgViewInputLiInput" style="margin-top: 0.75rem;height: auto;text-align: justify;">
+							本人提供的上述信息均属实，如有虚假信息或隐瞒漏报的，愿承担由此导致的一切责任。
+						</div>
+					</li>
+					<li class="msgViewInputLi">
+						<div class="msgViewInputLiTitle autograph">
+							承诺人（签字）：
+						</div>
+						<div class="msgViewInputLiInput singName" style="margin-top: 0.75rem;height: auto;" onclick="sign();">
+							<div class="autographView" id="autographView">
+							</div>
+						</div>
+					</li>
+					<div class="time" id="time">
+						承诺时间：2020年2月15日
+					</div>
+				</ul>
+			</div>
+		</div>
+		<div class="subBtn" onclick="submitMsg();">
+			<img src="../../../image/epidemicSituation/subBtn.png">
+		</div>
+		<div id="keyboardBox" class="aui-hide">
+			<ul style="width:100%;height: 1.9rem;padding:0.5rem;background:#D0D5D9">
+				<li class="delete" tapmode onclick="auiDel()">清空</li>
+				<li class="close" tapmode onclick="auiHide()">关闭</li>
+			</ul>
+			<div class="provienceBox" id="provienceBox">
+				<ul>
+					<li tapmode onclick='provinceClick(this)'>京</li>
+					<li tapmode onclick='provinceClick(this)'>津</li>
+					<li tapmode onclick='provinceClick(this)'>渝</li>
+					<li tapmode onclick='provinceClick(this)'>沪</li>
+					<li tapmode onclick='provinceClick(this)'>冀</li>
+					<li tapmode onclick='provinceClick(this)'>晋</li>
+					<li tapmode onclick='provinceClick(this)'>辽</li>
+					<li tapmode onclick='provinceClick(this)'>吉</li>
+					<li tapmode onclick='provinceClick(this)'>黑</li>
+					<li tapmode onclick='provinceClick(this)'>苏</li>
+				</ul>
+				<ul>
+					<li tapmode onclick='provinceClick(this)' style="background: #DD524D;color: #FFFFFF;">浙</li>
+					<li tapmode onclick='provinceClick(this)'>皖</li>
+					<li tapmode onclick='provinceClick(this)'>闽</li>
+					<li tapmode onclick='provinceClick(this)'>赣</li>
+					<li tapmode onclick='provinceClick(this)'>鲁</li>
+					<li tapmode onclick='provinceClick(this)'>豫</li>
+					<li tapmode onclick='provinceClick(this)'>鄂</li>
+					<li tapmode onclick='provinceClick(this)'>湘</li>
+					<li tapmode onclick='provinceClick(this)'>粤</li>
+					<li tapmode onclick='provinceClick(this)'>琼</li>
+				</ul>
+				<ul>
+					<li tapmode onclick='provinceClick(this)'>川</li>
+					<li tapmode onclick='provinceClick(this)'>贵</li>
+					<li tapmode onclick='provinceClick(this)'>云</li>
+					<li tapmode onclick='provinceClick(this)'>陕</li>
+					<li tapmode onclick='provinceClick(this)'>甘</li>
+					<li tapmode onclick='provinceClick(this)'>青</li>
+					<li tapmode onclick='provinceClick(this)'>蒙</li>
+					<li tapmode onclick='provinceClick(this)'>桂</li>
+					<li tapmode onclick='provinceClick(this)'>宁</li>
+					<li tapmode onclick='provinceClick(this)'>新</li>
+				</ul>
+				<ul>
+					<li class="changeContentBtn other" tapmode onclick='changeInput(this)'>ABC</li>
+					<li tapmode onclick='provinceClick(this)'>藏</li>
+					<li tapmode onclick='provinceClick(this)'>使</li>
+					<li tapmode onclick='provinceClick(this)'>领</li>
+					<li tapmode onclick='provinceClick(this)'>警</li>
+					<li tapmode onclick='provinceClick(this)' style="background: #DD524D;color: #FFFFFF;">学</li>
+					<li tapmode onclick='provinceClick(this)'>港</li>
+					<li tapmode onclick='provinceClick(this)'>澳</li>
+					<li class="deleteBtn other" tapmode onclick='deleteBtnClick(this)'>删除</li>
+				</ul>
+			</div>
+			<div class="textBox" id="textBox">
+				<ul>
+					<li tapmode onclick='txtClick(this)'>1</li>
+					<li tapmode onclick='txtClick(this)'>2</li>
+					<li tapmode onclick='txtClick(this)'>3</li>
+					<li tapmode onclick='txtClick(this)'>4</li>
+					<li tapmode onclick='txtClick(this)'>5</li>
+					<li tapmode onclick='txtClick(this)'>6</li>
+					<li tapmode onclick='txtClick(this)'>7</li>
+					<li tapmode onclick='txtClick(this)'>8</li>
+					<li tapmode onclick='txtClick(this)'>9</li>
+					<li tapmode onclick='txtClick(this)'>0</li>
+				</ul>
+				<ul>
+					<li tapmode onclick='txtClick(this)'>Q</li>
+					<li tapmode onclick='txtClick(this)'>W</li>
+					<li tapmode onclick='txtClick(this)'>E</li>
+					<li tapmode onclick='txtClick(this)'>R</li>
+					<li tapmode onclick='txtClick(this)'>T</li>
+					<li tapmode onclick='txtClick(this)'>Y</li>
+					<li tapmode onclick='txtClick(this)'>U</li>
+					<li tapmode onclick='txtClick(this)'>I</li>
+					<li tapmode onclick='txtClick(this)'>O</li>
+					<li tapmode onclick='txtClick(this)'>P</li>
+				</ul>
+				<ul>
+					<li tapmode onclick='txtClick(this)'>A</li>
+					<li tapmode onclick='txtClick(this)'>S</li>
+					<li tapmode onclick='txtClick(this)'>D</li>
+					<li tapmode onclick='txtClick(this)'>F</li>
+					<li tapmode onclick='txtClick(this)'>G</li>
+					<li tapmode onclick='txtClick(this)'>H</li>
+					<li tapmode onclick='txtClick(this)'>J</li>
+					<li tapmode onclick='txtClick(this)'>K</li>
+					<li tapmode onclick='txtClick(this)'>L</li>
+				</ul>
+				<ul>
+					<li class="changeContentBtn other" tapmode onclick='changeInput(this)'>返回</li>
+					<li tapmode onclick='txtClick(this)'>Z</li>
+					<li tapmode onclick='txtClick(this)'>X</li>
+					<li tapmode onclick='txtClick(this)'>C</li>
+					<li tapmode onclick='txtClick(this)'>V</li>
+					<li tapmode onclick='txtClick(this)'>B</li>
+					<li tapmode onclick='txtClick(this)'>N</li>
+					<li tapmode onclick='txtClick(this)'>M</li>
+					<li class="deleteBtn other" tapmode onclick='deleteBtnClick(this)'>删除</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/aui/aui_tab.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/swiper/swiper.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var clearance = 25; //间隙
+		var headerPos;
+		var threshold; //定义的阈值
+		var touchStyle;
+		var systemType; //系统类型
+		var cache;
+		var bMap;
+		var fs;
+		var articleId; //驾校详情ID
+		var addressViewCode = '';
+		var postalCode; //邮编
+		var selected_address_id; //选中地址的id
+		var addressDetail;
+		var imageFilter;
+		var schoolId;
+		var signUrl; //签名图片
+		var schoolName;
+		apiready = function() {
+			$api.fixStatusBar($api.byId('aui-header1'));
+			$api.fixStatusBar($api.byId('aui-header2'));
+			fs = api.require('fs');
+			cache = api.pageParam;
+			//log("驾校报名"+JSON.stringify(cache))
+			bMap = api.require('bMap');
+			systemType = api.systemType;
+			touchStyle = systemType == "ios" ? 'touchmove' : 'scroll';
+			scroll();
+			imageFilter = api.require('imageFilter');
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			$('#time').html('承诺时间：' + year + '年' + month + '月' + day + '日')
+			//监听地址选择
+			toEventListener('driver_pre_sign_up', function(ret) {
+				//log('地址',ret.value);
+				var address_info = ret.value;
+				$('#address').val(address_info.district.provinceName + address_info.district.cityName + address_info.district
+					.districtName + '' + address_info.addressDetail);
+				addressViewCode = address_info.districtCd;
+				postalCode = address_info.postalCode;
+				selected_address_id = address_info.id;
+				addressDetail = address_info.addressDetail;
+			});
+		/* 	//监听所属驾校选择事件
+			toEventListener('sel_tcm_school_action', function(ret, err) {
+				var cache_by_account = $api.getStorage('cache_by_account');
+				var coach_info = cache_by_account.coach_info; */
+			/* 	schoolId = ret.value.id;
+				if (coach_info != undefined) {
+					coach_info.selTcmSchool = ret.value;
+				} else {
+					coach_info = {
+						selTcmSchool: ret.value
+					}
+				}
+				cache_by_account.coach_info = coach_info;
+				$api.setStorage('cache_by_account', cache_by_account);
+			}); */
+
+			api.parseTapmode();
+			init();
+			//先打开画板，然后关闭
+			api.openFrame({
+				name: 'common_sign',
+				url: '../../common/common_sign.html',
+				bgColor: 'rgba(0,0,0,0.6)',
+				animation: {
+					type: "none", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300
+				},
+				rect: {
+					x: 0,
+					y: -api.winHeight,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: null,
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+
+			/**
+			 * 签名
+			 * @param {Object} ret
+			 * @param {Object} err 
+			 */
+			toEventListener('showSign', function(ret, err) {
+				log('sd:', signUrl)
+				showSign(ret.value.url)
+			})
+		}
+		/**
+		 * 初始化
+		 */
+		function init() {
+			//加载用户信息
+			load_user_info();
+			get_coach();
+
+		}
+		//加载数据到驾校报名
+		function load_user_info() {
+			licenseTypeMap = $api.getStorage('cache_by_app').licenseTypeMap;
+			//缓存中的字典表数据
+			var cache_dictionary = $api.getStorage('cache_by_app').cache_dictionary;
+			updateLearnerInfo(function(ret, err) {
+				if (ret && ret.code == 0) {
+					console.log('学员信息:' + JSON.stringify(ret));
+
+					$('#name').val(ret.learner.name); //真实姓名
+					$('#idCard').val(ret.learner.idcardNo); //身份证
+					$('#phone').val(ret.learner.account); //手机号码
+
+					//检验标准
+					// checkStandard();
+
+				} else {
+					alert_msg('获取学员信息失败');
+				}
+			});
+		}
+		//学员获取教练
+		function get_coach() {
+			url = 'api/learner/coach-info';
+			params = {
+				learnerId: getUserId() ? getUserId() : ''
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('教练信息:', ret);
+				if (ret) {
+					if (ret.code == 0) {
+						schoolName=ret.coachInfo.schoolName;
+						schoolId=ret.coachInfo.schoolId;
+						$('#school').val(ret.coachInfo.schoolName);
+						$('#coach').val(ret.coachInfo.name);
+						$('#coachPhone').val(ret.coachInfo.mobile);
+
+					} else if (ret.code = 700026) {
+
+					}
+				} else {
+					alert_msg('服务器繁忙，请稍后重试~');
+				}
+			});
+		}
+		/**
+		 * 获取地址
+		 */
+		function selectAreas() {
+			var sex = $('input:radio[name="q1"]:checked').val();
+			log('', sex)
+			if (sex == 1) {
+				$('#selectArea').removeClass('aui-hide');
+			} else {
+				$('#selectArea').addClass('aui-hide');
+			}
+		}
+		var isMsg = false; //标记是否提示过
+		//点击签名
+		function sign() {
+			// esc_function('sign_online_win','common_sign','signOpen()');//打开画板
+			if (!isMsg) {
+				isMsg = true;
+				openMessage_countdown('温馨提示', '&emsp;&emsp;请在签名区域写上完整姓名,然后点击确定按钮。', 'countdown', '确定', '', function() {}, '', null);
+			}
+			api.setFrameAttr({
+				name: 'common_sign',
+				hidden: false
+			});
+		}
+		//显示签名结果
+		function showSign(path) {
+			if (path == undefined || path == null) {
+				alert_msg('签名失败');
+			} else {
+				imageFilter.getAttr({
+					path: path
+				}, function(ret, err) {
+					if (ret.status) {
+						console.log(JSON.stringify(ret));
+					} else {
+						console.log(JSON.stringify(err));
+					}
+				});
+				$('.autographView').html('<img src="' + path + '" class="signImg">');
+				//上传签名图片
+				uploadSignImg();
+			}
+		}
+		//上传签名图片
+		function uploadSignImg() {
+			if ($('.autographView').find('img').length == 0) {
+				alert_msg('您还未签名');
+				return;
+			}
+			defaultload('上传签名...');
+			params = {
+				bucketName: AliOssBucket,
+				fileNum: 1,
+				fileType: 'learnerApp/contract/' + getUserId()
+			}
+			var isloadFlag = 0; //标记位 isload代表是否上传，0代表未上传，1代表捕捉上传，2代表与阿里云建立连接，3代表上传完成
+			getUploadFilePower(params, function(ret, err) {
+				if (ret && ret.code == 0) {
+					//console.log('获取文件上传权限：'+JSON.stringify(ret));
+					var path = ret.fileList[0].fileId;
+					isloadFlag = 1; //标记上传
+					//阿里云上传可能会崩，所以这里定时器：10秒后查询标记位，把isload为2的图片让用户选择上传
+					var judegeCollapse = setTimeout(function() {
+						collapse(isloadFlag);
+					}, 10000);
+					//console.log("签名地址"+ $('.signImg').attr('src'));
+					//var img_srcs = $('.signImg').attr('src').split('?');
+					file_upload(ret.fileList[0].signUrl, 'put', 'json', $('.signImg').attr('src'), {}, function(ret, err) {
+						log('签名上传ret:', ret);
+						log('签名上传err:', err);
+						if (ret) {
+							clearTimeout(judegeCollapse); //清除定时器
+							isloadFlag = 2; //标记与阿里云服务器连接
+							if (ret.progress == 100 && ret.status == 1) {
+								$('#signImgPath').val(path);
+								signUrl = path;
+								closedefaultload();
+							}
+						} else if (err) {
+							//ios一直会返回数据类型错误(目前找不到原因)，但是图片已上传完毕，所以也当success返回
+							if (systemType == 'ios' && err.progress == 100 && err.code == 3) {
+								clearTimeout(judegeCollapse); //清除定时器
+								isloadFlag = 2; //标记与阿里云服务器连接
+								$('#signImgPath').val(path);
+								signUrl = path;
+								closedefaultload();
+							} else if ((systemType == 'ios' && err.statusCode == 0) ||
+								(systemType == 'ios' && err.statusCode == 403)) {
+								//同样的操作，图片上传有几率出现签名错误，这里做一个捕捉该错误并且再次提交的操作，无奈
+								clearTimeout(judegeCollapse); //清除定时器
+								uploadSignImg();
+							}
+						}
+					});
+				} else {
+					closedefaultload();
+					alert_msg('获取文件上传权限失败，请重试');
+				}
+			});
+		}
+		//监听页面滑动控制头部menu样式
+		var scrollPos; //监听上下滚动顶部的距离
+		var percent = 0; //白底header的隐藏属性值
+		var hidepercent = 0; //非白底header的隐藏属性值
+		function scroll() {
+			$(window).on(touchStyle, function(event) {
+				scrollPos = $(window).scrollTop();
+				//安卓做限制滚动
+				if (((scrollPos / threshold).toFixed(2) <= 1) && systemType == 'android') {
+					percent = (scrollPos / threshold).toFixed(2);
+					$('#aui-header2').css("opacity", percent);
+					hidepercent = 1 - percent;
+					$('#aui-header1').css("opacity", hidepercent);
+				} else {
+					percent = (scrollPos / threshold).toFixed(2) > 1 ? 1 : (scrollPos / threshold).toFixed(2);
+					$('#aui-header2').css("opacity", percent);
+					hidepercent = (1 - percent) < 0 ? 0 : (1 - percent);
+					$('#aui-header1').css("opacity", hidepercent);
+				}
+			});
+		}
+		/**
+		 * 打开驾校列表
+		 */
+		/* function openSelTcmSchool() {
+			auiHide();
+			api.openWin({
+				name: 'common_select_under_school_win',
+				url: '../../common/common_select_under_school_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: {
+					data: null
+				}
+			});
+		} */
+		/**
+		 * 打开地址列表
+		 */
+		function select_address() {
+			params = {
+				selected_address_id: selected_address_id, //选中的地址id，可能为空，用来标记
+				isSelect: true, //是否是选择
+				action: 'driver_pre_sign_up' //动作监听name
+			}
+			api.openWin({
+				name: 'common_address_list_win',
+				url: '../../common/learner_address/common_address_list_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: params
+			});
+		}
+		//设置出错页面;
+		function setError(msg) {
+			var error_src = $('#error_src').html();
+			$('#driverschoolDetail').html(doT.template(error_src)({}));
+			alert_msg(msg);
+		}
+		function closeWin() {
+			api.closeWin({});
+		}
+		/**
+		 * 键盘js
+		 * 
+		 */
+		function auiHide() {
+			$("#keyboardBox").addClass('aui-hide');
+
+		}
+		function auiDel() {
+			$('#coachCarId').val('');
+		}
+		var keyBoard_index = 1; //键盘聚焦
+		var num = 7; //需要输入的车牌数
+		function popUpKeyboard(index) {
+			keyBoard_index = index;
+			$('input').blur();
+			$("#keyboardBox").removeClass('aui-hide');
+			//返回车牌号输入
+			$('#textBox').hide();
+			$('#provienceBox').show();
+		}
+		function carIdInput() {
+			//键盘点击动画
+			$(".textBox ul li").each(function() {
+				$(this).click(function() {
+					$(this).addClass("activeKey") //添加动画效果
+					$(this).siblings().removeClass("activeKey") //移除动画效果
+					var interval = setTimeout(function() { //定时器及时清除自身动画效果
+						$(this).removeClass("activeKey")
+						window.clearInterval(interval)
+					}.bind(this), 200);
+				});
+			});
+			api.parseTapmode();
+		}
+		//省份键盘点击事件
+		function provinceClick(e) {
+			$(e).addClass("activeKey") //添加动画效果
+			$(e).siblings().removeClass("activeKey") //移除动画效果
+			var interval = setTimeout(function() { //定时器及时清除自身动画效果
+				$(e).removeClass("activeKey")
+				var self = this;
+				keyboard(num, self);
+				window.clearInterval(interval)
+			}.bind(e), 200);
+		}
+		//文本键盘点击事件
+		function txtClick(e) {
+			$(e).addClass("activeKey") //添加动画效果
+			$(e).siblings().removeClass("activeKey") //移除动画效果
+			var interval = setTimeout(function() { //定时器及时清除自身动画效果
+				$(e).removeClass("activeKey")
+				var self = this;
+				keyboard(num, self);
+				window.clearInterval(interval)
+			}.bind(e), 200);
+		}
+		//回退按钮点击事件
+		function deleteBtnClick() {
+			var leng = $('#coachCarId').val().toString().substring(0, $('#coachCarId').val().length - 1);
+			$('#coachCarId').val(leng);
+			var index = getIndex();
+			if (index == '1') {
+				$('#textBox').hide();
+				$('#provienceBox').show();
+			}
+		}
+		//切换键盘
+		function changeInput(e) {
+			$('li').siblings().removeClass("activeKey")
+			if ($(e).html() == 'ABC') {
+				$('#textBox').show();
+				$('#provienceBox').hide();
+			} else {
+				$('#textBox').hide();
+				$('#provienceBox').show();
+			}
+		}
+		//获取当前车牌数字索引
+		function getIndex() {
+			var index = $('#coachCarId').val();
+			console.log('carNum' + index);
+			if (index.length == 7) {
+				//selCoachInfo(index,shiftsId);
+			}
+			return index.length;
+		}
+		//自定义键盘处理函数
+		function keyboard(num, self) {
+			var content = $('#coachCarId').val() + $(self).html()
+			//console.log('index' + index);
+			$('#coachCarId').val(content);
+			var index = getIndex();
+			if (index <= num) {
+				if (index == num) {
+					$('#coachCarId').val(content);
+				} else {}
+				$('#textBox').show();
+				$('#provienceBox').hide();
+			}
+		}
+		/**
+		 * 增加车辆 ，最多3辆 
+		 */
+		function addCarNum(e) {
+			var existCarNum = $('.car_num').length;
+			if (existCarNum >= 2) {
+				$('#addButton').addClass('aui-hide');
+			}
+			//键盘自动聚焦下一个
+			keyBoard_index = existCarNum - 0 + 1;
+			//键盘返回车牌号输入
+			$('#textBox').hide();
+			$('#provienceBox').show();
+			var template_car_num_src = $('#template_car_num_src').html();
+			$('#idCardNum').before(doT.template(template_car_num_src)(existCarNum - 0 + 1));
+		}
+		/**
+		 * 删除车牌 
+		 */
+		function deleteCarNum(e) {
+			var existCarNum = $('.car_num').length;
+			if (existCarNum <= 2) {
+				$('#addButton').removeClass('aui-hide');
+			}
+			//键盘自动聚焦上一个
+			keyBoard_index = existCarNum - 0 - 1;
+			$(e).parent().remove();
+		}
+		//关闭在线签约
+		// function closeWin(){
+		// 	setTimeout(function(){
+		// 		api.closeWin({
+		//         });
+		// 	},1000);
+		// }
+
+		//倒计时通用弹出框
+		function openMessage_countdown(title, content, type, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+			api.openFrame({
+				name: 'common_alert_countdown',
+				url: '../../common/common_alert_countdown.html',
+				bgColor: 'rgba(0,0,0,0.4)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					title: title,
+					content: content,
+					type: type,
+					sureButton: sureButton,
+					sureFunc: sureFunc,
+					cancelButton: cancelButton,
+					cancelFunc: cancelFunc,
+					winName: api.winName,
+					frameName: api.frameName,
+					params: params
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+
+		/**
+		 * 提交信息
+		 */
+		function submitMsg() {
+			var learnerId = getUserId();
+			var isWorker = 0; //是否是工作人员：0学员 1员工
+			var name = $('#name').val();
+			if (name == null || name == '') {
+				alert_msg('请输入姓名');
+				return;
+			}
+			var phone = $('#phone').val();
+			if (!isPhoneAvailable(phone)) {
+				alert_msg('请输入正确的手机号');
+				return;
+			}
+			var idcardNo = $('#idCard').val();
+			if (!checkIDCard(idcardNo)) {
+				alert_msg('请输入正确的身份证');
+				return;
+			}
+			var coachName = $('#coach').val();
+			if (coachName == null || coachName == '') {
+				alert_msg('请输入教练员姓名');
+				return;
+			}
+			var coachCarNum = $('#coachCarId').val();
+			if (!isVehicleNumber(coachCarNum)) {
+				alert_msg('请输入正确的教练车牌');
+				return;
+			}
+			var coachPhone = $('#coachPhone').val();
+			if (!isPhoneAvailable(coachPhone)) {
+				alert_msg('请输入正确的教练手机号');
+				return;
+			}
+			var belongToSchoolId = schoolId;
+			if (belongToSchoolId == null || belongToSchoolId == '') {
+				alert_msg('请输入所属学校');
+				return;
+			}
+			var occupation = $('#stuOccupation').val();
+			if (occupation == null || occupation == '') {
+				alert_msg('请输入您的职业');
+				return;
+			}
+			var address = addressDetail;
+			if (address == null || address == '') {
+				alert_msg('请选择地址');
+				return;
+			}
+			var districtCd = addressViewCode;
+
+			var isGoDangerAddress = $('input:radio[name="q1"]:checked').val();
+			if (isGoDangerAddress == null || isGoDangerAddress == '') {
+				alert_msg('请选择问题一');
+				return;
+			}
+			if (isGoDangerAddress == 1) {
+				var goneDangerCity = $('#area').val();
+				if (goneDangerCity == null || goneDangerCity == '') {
+					alert_msg('请选择去过的地方');
+					return;
+				}
+			} else if (isGoDangerAddress == 0) {
+				var goneDangerCity = '';
+			}
+			var isGoLocalDangerAddress = $('input:radio[name="q2"]:checked').val();
+			if (isGoLocalDangerAddress == null || isGoLocalDangerAddress == '') {
+				alert_msg('请选择问题二');
+				return;
+			}
+			var isTouchDangerPeople = $('input:radio[name="q3"]:checked').val();
+			if (isTouchDangerPeople == null || isTouchDangerPeople == '') {
+				alert_msg('请选择问题三');
+				return;
+			}
+			var isFever = $('input:radio[name="q4"]:checked').val();
+			if (isFever == null || isFever == '') {
+				alert_msg('请选择问题四');
+				return;
+			}
+			log('tupian123:', signUrl)
+			if (signUrl == null || signUrl == '') {
+				alert_msg('请重新签名');
+				return;
+			}
+			var url = 'api/learneraboutpneumoniainfo/insert-learner-about-pneumonia-info';
+			var params = {
+				learnerId: learnerId,
+				isWorker: isWorker,
+				name: name,
+				phone: phone,
+				idcardNo: idcardNo,
+				coachName: coachName,
+				coachCarNum: coachCarNum,
+				coachPhone: coachPhone,
+				belongToSchoolId: belongToSchoolId,
+				occupation: occupation,
+				address: address,
+				districtCd: districtCd,
+				isGoDangerAddress: isGoDangerAddress,
+				goneDangerCity: goneDangerCity,
+				isGoLocalDangerAddress: isGoLocalDangerAddress,
+				isTouchDangerPeople: isTouchDangerPeople,
+				isFever: isFever,
+				signUrl: signUrl
+			}
+			log('参数', params)
+			defaultload('信息提交中');
+			ajax_Request(url, 'post', 'json', params, function(ret, err) {
+				log('ret:', ret);
+				closedefaultload();
+				if (ret) {
+					if (ret.code == 0) {
+						alert_msg('提交成功!')
+						setTimeout(function() {
+							api.openWin({
+								name: 'body_temperature_records_add',
+								url: './body_temperature_records_add.html',
+								slidBackEnabled: 'false',
+								vScrollBarEnabled: 'false',
+								hScrollBarEnabled: 'false',
+								reload: true,
+								useWKWebView: false,
+								pageParam: {
+									infoId:ret.id,
+									type:0
+								}
+							});
+						}, 1000)
+					} else {
+						alert_msg(ret.msg)
+						// setTimeout(function() {
+						// 	api.openWin({
+						// 		name: 'body_temperature_records_add',
+						// 		url: './body_temperature_records_add.html',
+						// 		slidBackEnabled: 'false',
+						// 		vScrollBarEnabled: 'false',
+						// 		hScrollBarEnabled: 'false',
+						// 		reload: true,
+						// 		useWKWebView: false,
+						// 		pageParam: {
+						// 			infoId:ret.id,
+						// 			type:0
+						// 		}
+						// 	});
+						// }, 1000)
+					}
+				} else {
+					alert_msg('系統异常')
+				}
+			})
+		}
+	</script>
+</html>

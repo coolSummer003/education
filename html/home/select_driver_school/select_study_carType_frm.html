@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>选择报考车型</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+	<style type="text/css">
+		body,html{
+			background:#FFFFFF;
+		}
+		.btn-right {
+			float: right;
+			right: 1.2rem;
+			background: #1e8dd8;
+			color: #fff;
+		}
+
+		.aui-radio {
+			width: 1.5rem !important;
+			height: 1.5rem !important;
+			border-radius: 50% !important;
+			margin-right: 1rem !important;
+		}
+
+		.aui-list label {
+			font-size: 1.2rem !important;
+		}
+
+		.more-img {
+			position: absolute;
+			margin-top: -0.5rem;
+			margin-left: -2rem;
+			width: 0.6rem !important;
+			z-index: 9999;
+		}
+
+		.coach-tag {
+			border-radius: 0.8rem !important;
+			border: solid 1px #E5E5FF !important;
+			height: 1.6rem !important;
+			width: 80% !important;
+			font-size: 0.68rem !important;
+			line-height: 1.2rem!important; 
+		}
+		
+		.aui-grid [class*=aui-col-xs-]:active {
+    		background-color: #FFFFFF;
+		}
+		.coach-tag-noselect {
+			background: #F7F8FF !important;
+			color: #919DB5 !important;
+		}
+
+		.coach-tag-selected {
+			background: #5464FA !important;
+			color: #FFFFFF !important;
+		}
+
+		.bottom-button {
+			margin-bottom: 2rem;
+			text-align: center;
+		}
+		
+		.button_text {
+			height: 1.8rem!important;
+			border-radius: 1.2rem!important;
+			float:left;
+			margin-left:5%;
+		}
+		.submit-button {
+			background: #5358FC !important;
+			border-radius: 0.8rem !important;
+			width: 90%;
+			font-size: 1.2rem;
+			height: 2.5rem;
+			color: #FFFFFF;
+		}
+
+		input::-webkit-input-placeholder {
+			coloc: #919DB5;
+		}
+
+
+		.aui-btn-block {
+		    display: block;
+		    width: 90%;
+		    padding: 0.4rem 0;
+		    font-size: 0.9rem;
+		    margin: 0 auto;
+		    float: left;
+		    margin-left: 5%;
+		}
+		.aui-btn-info {
+		    color: #ffffff !important;
+		    background: linear-gradient(to left, #3F86FE , #64ADF6) !important;
+		    margin-bottom: 1rem !important;
+		    border-radius: 2rem;
+		}
+	</style>
+
+	<body>
+		<div class="aui-content aui-margin-b-5">
+			<div class="aui-card-list" style="padding-left: 0!important;">
+				<div class="aui-content aui-margin-b-15">
+					<section class="aui-grid">
+						<div class="aui-row" id="carType">
+
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+		<footer>
+			<div class="aui-btn aui-btn-info aui-btn-block"  tapmode onclick="affirm_carType()">确认</div>
+		</footer>
+		<!-- <div class=" topImg" style="margin-top: -1.5rem;">
+			<img src="../../image/bottom_img.png">
+		</div> -->
+		<script type="text/template" charset="utf-8" id='income_src'>
+
+			{{ for(var i=0;i<it.dictionarys["002000"].dictionaryList.length;i++){ }}
+			
+			{{? it.dictionarys["002000"].dictionaryList[i].code == "002010"}}
+				<div class="aui-col-xs-6" style="width:85%">
+					<a class="aui-btn coach-tag coach-tag-noselect button_text" id='tag{{=i}}' onclick="change_selected(this.id)" value='{{=i}}'>{{=it.dictionarys["002000"].dictionaryList[i].name}}</a>
+				</div>
+			{{??}}
+				<div class="aui-col-xs-6">
+					<a class="aui-btn coach-tag coach-tag-noselect" id='tag{{=i}}' onclick="change_selected(this.id)" value='{{=i}}'>{{=it.dictionarys["002000"].dictionaryList[i].name}}</a>
+				</div>
+			{{?}}
+		{{ } }}
+	</script>
+	<div id='load_div'>
+	</div>
+	<script type="text/template" charset="utf-8" id='load_src'>
+		<div class="load">
+		<img src="../../../icon/common/loadding.gif" alt="" /><br>
+		<span>加载中...</span>
+	</div>
+	</script>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript">
+	var headerPos;
+	var cache;
+	var carList;
+	var load_src = $('#load_src').html(); //加载src
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		console.log(JSON.stringify(cache))
+		init();
+	}
+		function init(){
+		defaultload();
+			getCarType();
+		}
+		function getCarType() {
+			var dictionaryCode = "002000";
+			getDictionary(dictionaryCode,function(ret,err){
+				if (ret) {
+					var dictionarysList = ret.dictionarys["002000"];
+					carList = ret.dictionarys["002000"].dictionaryList;
+					console.log(JSON.stringify(ret))
+					var income_src = $('#income_src').html();
+					$("#carType").html(doT.template(income_src)(ret));
+					api.parseTapmode();
+				} else {
+					alert_msg("服务器繁忙，请稍后重试")
+				}
+				api.hideProgress();
+			
+			});
+		}
+
+		var selectIndex;
+
+		function change_selected(id) {
+			console.log("选中" + id)
+			var onclickId = id;
+			selectIndex = $("#" + onclickId).attr("value");
+			console.log(selectIndex)
+			$(".coach-tag-selected").attr("class", "aui-btn coach-tag coach-tag-noselect");
+			$("#tag14").attr("class", "aui-btn coach-tag coach-tag-noselect button_text");
+			if(onclickId == "tag14"){
+				$("#" + onclickId).attr("class", "aui-btn coach-tag coach-tag-selected button_text")
+			}else{
+				$("#" + onclickId).attr("class", "aui-btn coach-tag coach-tag-selected")
+			}
+			
+		}
+
+		function affirm_carType() {
+		if(selectIndex == "" || selectIndex == null || selectIndex == undefined){
+			alert_msg("请选择报考车型")
+			return;
+		}else{
+			sendEvent('type',carList[selectIndex]);
+		}
+			api.closeWin({
+		});
+		}
+	</script>
+
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>体检报名支付</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		.pic_unit{
+		    overflow: hidden;
+	    	background: #F3F3F3;
+    	    padding-bottom: 0.5rem;
+    	    /*column-count: 2;
+    		column-gap: 0;*/
+		}
+		.pic_div{
+		    width: 45.5%;
+		    float: left;
+		    margin: 0.5rem 0% 0rem 3%;
+		    background: #FFFFFF;
+		}
+		.pic_div img{
+			width: 100%;
+		}
+		.f_left{
+			float: left;
+		    max-width: 90%;
+		    display: flex;
+		}
+		.f_right{
+			float: right;
+		}
+		.pic_title{
+		    margin: 0.5rem 0.7rem 0.1rem 0.7rem;
+		    font-size: 0.8rem;
+		    height: 2.4rem;
+		}
+		input[type="text"], input[type="password"], input[type="search"], input[type="email"], input[type="tel"], input[type="url"], input[type="date"], input[type="datetime-local"], input[type="time"], input[type="number"], select, textarea {
+		    border: none;
+		    background: none;
+		    border-radius: 0;
+		    box-shadow: none;
+		    display: block;
+		    padding: 0;
+		    margin: 0;
+		    width: 100%;
+		    min-height: 2.7rem;
+		    color: #424242;
+		    font-size: 0.8rem;
+		    font-family: inherit;
+		    box-sizing: border-box;
+		    -webkit-user-select: text;
+		    user-select: text;
+		    -webkit-appearance: none;
+		    appearance: none;
+		    -webkit-appearance: none;
+		}
+		.aui-list textarea {
+		    overflow: auto;
+		    margin: 0.5rem 0;
+		    height: 5rem;
+		    line-height: 1rem;
+		    resize: none;
+		}
+		.aui-list-item-label-fushu{
+		    color: #212121;
+		    width: 35%;
+		    min-width: 1.5rem;
+		    margin: 0;
+		    padding: 0;
+		    padding-right: 0.25rem;
+		    /* line-height: 2.2rem; */
+		    position: relative;
+		    overflow: hidden;
+		    white-space: nowrap;
+		    max-width: 100%;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    height: 5rem;
+    		line-height: 1rem;
+		}
+		.color_red{
+			color:#DC251F !important;
+		}
+		.hetong{
+			min-width: 14.5rem !important;
+    		font-size: 0.7rem !important;
+	        line-height: 1.3rem;
+	        text-align: center;
+	        padding-right: 0.75rem !important;
+		}
+		.aui-switch:checked {
+		    border-color: #DC251F;
+		    background-color: #DC251F;
+		}
+		.aui-list {
+		    padding: 0;
+		    margin: 0;
+		    position: relative;
+		    font-size: 0.8rem;
+		    background: #FFFFFF;
+		    padding-bottom: 1rem;
+	        overflow: hidden;
+		}
+		.aui-btn-info.aui-active, .aui-btn-info:active {
+		    color: #fff !important;
+		    background-color: #DE5A58 !important;
+		}
+		.pd_left{
+			padding-left:0.75rem !important;
+		}
+		.cancel{
+		    margin-top: 1rem;
+		}
+		.aui-radio:checked, .aui-radio.aui-checked, .aui-checkbox:checked, .aui-checkbox.aui-checked {
+		    background-color: #3F86FF !important;
+		    border: solid 1px #3F86FF !important;
+		    text-align: center;
+		    background-clip: padding-box;
+		}
+		.aui-list .aui-list-item {
+		    list-style: none;
+		    margin: 0;
+		    padding: 0;
+		    padding-left: 0.75rem;
+		    color: #212121;
+		    background-color: #ffffff;
+		    position: relative;
+		    min-height: 3.5rem;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		}
+		.danwei{
+			color:#A5A5A5;
+		}
+		.cash{
+		    color: #FB6500;
+		}
+		.ziBig{
+			font-size:1rem;
+		}
+		.zigeneral{
+			font-size: 0.8rem;
+		}
+		.pay_type {
+		    width: 100%;
+		    text-align: center;
+		}
+		.pay_type img {
+		    width: 6rem;
+		    margin-top: 0.3rem;
+		}
+		.pay-icon{
+			float: left;
+			width: 80%;
+    		text-align: left;
+    		margin-left: 0.8rem;
+		}
+		.check-box{
+			float: right;
+		    margin-top: 0.7rem;
+		}
+		.aui-list.aui-form-list .aui-list-item:active {
+		    background-color: #F1F1F1;
+		}
+		.aui-tips {
+		    padding: 0 0.75rem;
+		    width: 100%;
+		    z-index: 99;
+		    height: 1.9rem;
+		    line-height: 1.9rem;
+		    position: relative;
+		    background-color: #D8E7FF;
+		    color: #FF9036;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		    -webkit-align-items: center;
+		    align-items: center;
+		}
+		.aui-list-item-input{
+			text-align: left;
+			padding-right: 1.5rem !important;
+		}
+		.aui-list-item-label{
+			margin-left: 1rem !important;
+			font-weight: 600;
+			font-size: 0.8rem;
+		}
+		
+		.aui-tips-title{
+			color: #3F86FF;
+		}
+		.aui-icon-date{
+			margin-left: 1rem;
+			color: #468AFF;
+		}
+		#m_pay{
+			width: 81.5%;
+			margin-left: 10%;
+			background: linear-gradient(to left, #3F86FE , #64ADF6) !important;
+		}
+		.line_vertical{
+			height: 0.7rem;
+			width: 3px;
+			background: #3F86FF;
+			vertical-align: text-top;
+			/*margin-top: 0.1rem;*/
+			margin-right: 0.4rem;
+		}
+		.aui-list .aui-list-item-label, .aui-list .aui-list-item-label-icon {
+		    color: #212121;
+		    width: 18%;
+		    min-width: 1.5rem;
+		    margin: 0;
+		    padding: 0;
+		    padding-right: 0.25rem;
+		    line-height: 2.2rem;
+		    position: relative;
+		    overflow: hidden;
+		    white-space: nowrap;
+		    max-width: 100%;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-align-items: center;
+		    align-items: center;
+		}
+		.cue{
+			width: 90%;
+			margin-left: 5%;
+			font-size: 0.6rem;
+			text-indent: 2em;
+			color:#C0C0C0;
+			padding-top: 1.5rem;
+		}
+		.cue_img{
+			height: 1rem;
+			width: 1rem;
+			position: absolute;
+		}
+		.cue_img img{
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 4%;
+		}
+    </style>
+</head>
+<body>
+	<div class="aui-content aui-margin-b-15">
+	    <ul class="aui-list aui-form-list none-bottom-style none-top-style">
+	    	<li class="aui-list-item none-bottom-style" style="min-height: 2.5rem;">
+	            <div class="aui-list-item-inner bottom-slide">
+	                <div class="aui-list-item-label">
+                		项目
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <span id="order-title">学员课程包</span>
+	                </div>
+	            </div>
+	        </li>
+	       <!-- <li class="aui-list-item none-bottom-style" style="min-height: 2.5rem;">
+	            <div class="aui-list-item-inner bottom-slide">
+	                <div class="aui-list-item-label">
+                		医院
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <span id="hospitalName">获取中...</span>
+	                </div>
+	            </div>
+	        </li> -->
+	        <!--<li class="aui-list-item none-bottom-style" style="min-height: 2.5rem;">
+	            <div class="aui-list-item-inner bottom-slide">
+	                <div class="aui-list-item-label">
+                		体检时间：
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <span id="time">获取中...</span>
+	                </div>
+	            </div>
+	        </li>-->
+	        <li class="aui-list-item none-bottom-style" style="min-height: 2.5rem;">
+	            <div class="aui-list-item-inner bottom-slide">
+	                <div class="aui-list-item-label">
+                		时间
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <span id="insert_time">获取中...</span>
+	                </div>
+	            </div>
+	        </li>
+	        <!-- <li class="aui-list-item" onclick='openReceipt()'>
+	            <div class="aui-list-item-inner">
+	                <div  class="aui-list-item-label">
+	                        		开具发票
+	                </div>
+	        		            <div class="aui-list-item-input">
+	                    <span class="order-cash" id="entity" style="margin-left: 0rem;color: #FB6500;font-size:0.8rem;">点击开具</span>
+	                </div>
+	                
+	            </div>
+	        </li> -->
+	        <li class="aui-list-item">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		金额
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <span class="cash" id="cash">0.0元 </span>
+	                    <!-- <span class='danwei'>人民币</span> -->
+	                </div>
+	            </div>
+	        </li>
+	        <div class='' id='payType'>
+	            <div class="aui-list-item-inner pd_left" style='border-top:solid 10px #F1F1F1;'>
+	                <div class="aui-list-item-label" style="font-weight: 800;width:30%;">
+	            		选择支付方式
+	                </div>
+	            </div>
+		        <li class="aui-list-item none-bottom-style" style='min-height:2.5rem;'>
+	                <div class="aui-list-item-input pay_method bottom-slide">
+	                	<div class="pay_type zhifubao">
+	                		<div class='pay-icon' tapmode onclick="selPayType(this)">
+	                			<img src="../../../icon/payfor/pay_zhifubao.png" alt="" />
+	                		</div>
+	                		<div class='check-box'>
+	                			<input class="aui-radio" type="radio" name="pay_method" checked value="1">
+	                		</div>
+	                	</div>
+	                </div>
+		        </li>
+		        <li class="aui-list-item none-bottom-style" style='min-height:2.5rem;'>
+    	                <div class="aui-list-item-input pay_method bottom-slide">
+    	       				<div class="pay_type caifutong">
+    	                		<div class='pay-icon' tapmode onclick="selPayType(this)">
+    	                			<img src="../../../icon/payfor/pay_weixin.png" alt="" />
+    	                		</div>
+    	                		<div class='check-box'>
+            						<input class="aui-radio " type="radio" name="pay_method" value="2"></label>
+    	                		</div>
+    	                	</div>
+    	            	</div>
+		        </li>
+		        <!-- <li class="aui-list-item none-bottom-style" style='min-height:2.5rem;'>
+		        	                <div class="aui-list-item-input pay_method bottom-slide">
+		        	                	<div class="pay_type zhifubao">
+		        	                		<div class='pay-icon' tapmode onclick="selPayType(this)">
+		        	                			<img src="../../icon/payfor/pay_zhifubao.png" alt="" />
+		        	                		</div>
+		        	                		<div class='check-box'>
+		        	                			<input class="aui-radio" type="radio" name="pay_method" checked value="3">
+		        	                		</div>
+		        	                	</div>
+		        	                </div>
+		        </li>
+		        <li class="aui-list-item none-bottom-style" style='min-height:2.5rem;'>
+		        	                <div class="aui-list-item-input pay_method bottom-slide">
+		        	       				<div class="pay_type caifutong">
+		        	                		<div class='pay-icon' tapmode onclick="selPayType(this)">
+		        	                			<img src="../../icon/payfor/pay_weixin.png" alt="" />
+		        	                		</div>
+		        	                		<div class='check-box'>
+		                		<input class="aui-radio " type="radio" name="pay_method" value="4"></label>
+		        	                		</div>
+		        	                	</div>
+		        	            	</div>
+		        </li>
+		        <li class="aui-list-item none-bottom-style" style='min-height:2.5rem;'>
+		        	                <div class="aui-list-item-input pay_method">
+		        	       				<div class="pay_type caifutong">
+		        	                		<div class='pay-icon' tapmode onclick="selPayType(this)">
+		        	                			<img src="../../icon/payfor/pay_yunshanfu.png" alt="" />
+		        	                		</div>
+		        	                		<div class='check-box'>
+		                		<input class="aui-radio " type="radio" name="pay_method" value="5"></label>
+		        	                		</div>
+		        	                	</div>
+		        	            	</div>
+		        </li> -->
+				<!-- <div class="cue"><div class="cue_img"><img src="../../../icon/home/cue.png"></div>温馨提示：平台提供同一医院线下免费复检1次（线上体检后3日内），若您选择其他医院复检，平台不承担您的线下体检费用。</div> -->
+			    <div class="aui-btn aui-btn-info aui-btn-block" id="m_pay" tapmode onclick="pay()">确认支付</div>
+	        </div>
+	    </ul>
+	 </div>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var aliPayPlus;//支付宝
+	var wxPayPlus;//微信
+	var invoiceData;//发票回调数据
+	var systemType;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam.data;
+		aliPayPlus = api.require('aliPayPlus');
+		wxPayPlus = api.require('wxPayPlus');
+		systemType = api.systemType;
+		log('传参信息',cache);
+		// defaultload('加载订单中...');
+		$('#insert_time').html(cache.insertDt);
+		$('#cash').html((cache.paymentAmount).toFixed(2)+'元');
+		setTimeout(function(){
+			init();
+		},300);
+		//选择发票action
+		api.addEventListener({
+		    name: 'myEvent'
+		}, function(ret, err) {
+		    invoiceData=ret.value;
+		    if(invoiceData.is_personal){
+			    if(invoiceData.is_personal=='0'){
+			    	$("#entity").text(invoiceData.name);
+			    }else if(invoiceData.is_personal=='1'){
+			    	$("#entity").text(invoiceData.entity_name);
+			    }
+		 	}
+		});
+		
+	}
+	function init(){
+		// params = {
+  //       	orderId:cache.orderId,
+  //   		learnerId:getUserId()
+  //       }
+		// url = 'api/examination';
+		// ajax_Request(url, 'get', 'json', params, function(ret,err){
+  //   		console.log('体检订单详情数据：'+JSON.stringify(ret));
+  //   		api.hideProgress();
+  //       	if(ret&&ret.code == 0&&ret.hospitalExamination.length > 0){
+  //       		cache.hospitalId=ret.hospitalExamination[0].hospital.id;
+  //       		$('#time').html(ret.hospitalExamination[0].hospital.examinationTime + '（线下体检）');
+  //       		$('#insert_time').html(ret.hospitalExamination[0].insertDt);
+  //       		$('.cash').html(cashFormatO(ret.hospitalExamination[0].examinationFee)+"元");
+  //       		cache.to_lat = ret.hospitalExamination[0].hospital.latitude;
+  //       		cache.to_lon = ret.hospitalExamination[0].hospital.longitude;
+  //       		cache.licenseType = ret.hospitalExamination[0].licenseType.code;
+  //       		$('#payType').removeClass('aui-hide');
+  //       	}else{
+  //       		alert_msg('获取订单信息失败');
+  //       	}
+  //       });
+	}
+	//支付
+	var isAllowPay = true;//是否允许去支付
+	function pay(){
+		var channel = $("input:radio[name='pay_method']:checked").val();
+		if(isAllowPay){
+			defaultload('正在支付中');
+			url = 'api/learner-eduction/arousePay';
+			params = {
+				orderId:cache.id,
+				learnerId:getUserId(),
+				channel:channel,
+				totalAmount:cache.paymentAmount
+			}
+			log("支付接口调用返回参数",JSON.stringify(params));
+			ajax_Request(url, 'post', 'json', params, function(ret,err){
+				log('支付接口调用返回',ret);
+				closedefaultload();
+				if(ret){
+					if(ret.code == 0){
+						if(channel == 1){//支付宝
+							AlipPay(ret.aliPayReturn,function(){
+								success_pay();
+							},function(msg){
+								fail_pay(msg);
+							});
+						}else if(channel == 2){//微信支付
+							WechatPay(ret.wechatpayReturn,function(){
+								success_pay();
+							},function(msg){
+								fail_pay(msg);
+							});
+						}else{
+							//银联支付跳转
+							arousePay('支付页面',ret.arousePayUrl,ret.payOrderNo);
+						}
+					}else{
+						fail_pay(ret.msg);
+					}
+				}else{
+					fail_pay('唤起支付失败');
+				}
+			});
+		}else{
+			fail_pay('已完成支付');
+		}
+	}
+	
+	/**
+	 * 选择支付方式 
+	 */
+	function selPayType(e){
+		$(e).parent().find("input[type='radio']").click();
+	}
+	
+	/**
+	 * 银联支付跳转
+	 */
+	function arousePay(name,path,payOrderNo) {
+		params = {
+			name:name,
+			url:path,
+			flag:'hospital-exam', //医院报名flag
+			orderId:cache.orderId,
+			payOrderNo:payOrderNo,
+			winName:api.winName,
+			frmName:api.frameName,
+			channel:$("input:radio[name='pay_method']:checked").val()
+		}
+		api.openWin({
+	       name: 'common_href_win',
+	       url: '../common/common_href_win.html',
+	       slidBackEnabled:'false',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       useWKWebView:false,
+	       pageParam: params
+	   });
+	}
+	
+	//开发票
+	function openReceipt(){
+		api.openFrame({
+	        name: 'common_receipt',
+	        url: '../common/common_receipt.html',
+	        bgColor: 'rgba(0,0,0,0.3)',
+	        rect: {
+	            x: 0,
+	            y: 0,
+	            w: 'auto',
+	            h: api.winHeight
+	        },
+	        pageParam: {
+					data: params
+				},
+	        bounces: false,
+	        softInputBarEnabled:true,
+	        softInputMode:'resize',
+	       
+	    });
+	}
+	//成功处理
+	function success_pay(){
+		api.hideProgress();
+		isAllowPay = false;//支付成功后就不允许再次点击支付
+		sendEvent('student_pay_submit',cache);
+	}
+	
+	//失败处理
+	function fail_pay(msg){
+		alert_msg(msg);
+		api.hideProgress();
+	}
+</script>
+</html>

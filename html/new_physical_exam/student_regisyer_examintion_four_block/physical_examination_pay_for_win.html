@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>体检上传视频付费页面</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<style>
+			html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #DC251F;
+		}
+		header img {
+		    width: 20px;
+		}
+		#p_ex_title{
+		    font-weight: normal;
+		}
+    </style>
+	</head>
+	<body>
+		<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+				<img src="../../../icon/common/icon_header_return.png">
+			</a>
+			<div class="aui-title" id="p_ex_title">
+				上传信息采集视频
+			</div>
+		</header>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var headerPos;
+		var cache;
+		var pay_status = 0; //0代表未缴费 1代表缴费完成
+		var aliPayPlus; //支付宝
+		var wxPayPlus; //微信
+		apiready = function() {
+			api.parseTapmode();
+			cache = api.pageParam.data;
+			var header = $api.byId('aui-header');
+			$api.fixStatusBar(header);
+			headerPos = $api.offset(header);
+			aliPayPlus = api.require('aliPayPlus');
+			wxPayPlus = api.require('wxPayPlus');
+
+			api.addEventListener({
+				name: 'resume'
+			}, function(ret, err) {
+				judgeToPay(cache.orderId);
+			});
+
+			init();
+		}
+
+
+		function init() {
+			api.openFrame({
+				name: 'physical_examination_pay_for_frm',
+				url: './physical_examination_pay_for_frm.html',
+				bgColor: '#efeff4',
+				rect: {
+					x: 0,
+					y: headerPos.h,
+					w: 'auto',
+					h: api.winHeight - headerPos.h
+				},
+				bounces: false,
+				pageParam: cache,
+				reload: true,
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+			toEventListener('hospital_pay_submit', function(ret, err) {
+				log('支付数据', ret.value)
+				pay_for_next(ret.value);
+			});
+		}
+
+
+		//支付完成后的跳转
+		function pay_for_next(data) {
+			log('体检支付传参数据', data);
+			changeMenuTitle('支付通知');
+			pay_status = 1;
+			frameRightOut('physical_examination_pay_for_frm');
+			sendEvent('hospital_refresh_list', {});
+			openFrameFromRight('physical_examination_pay_for_notice_frm', data, headerPos.h, api.winHeight - headerPos.h);
+			//esc_function('index','mine','func_init(0)');//渲染【我的】网上体检
+			//esc_function('mine_common_win','record_hospital_examintion_list_frm','init()');//调用医院体检订单刷新，可能会报错
+		}
+
+		//修改头部名
+		function changeMenuTitle(name) {
+			$('#p_ex_title').html(name);
+		}
+
+		function closeWin() {
+			//已报名就退出则需要询问
+			if (pay_status == 0) { //未付款
+				openMessage('温馨提示', '可在【我的】中继续进行缴费', '我知道了', '取消', 'cw()', '', null)
+				
+			} else {
+				var params = {
+					orderId: cache.orderId,
+					type: 'examination-order'
+				}
+				api.openWin({
+					name: 'record_order_detail_win',
+					url: '../../mine/record_order_detail_win.html',
+					slidBackEnabled: 'false',
+					vScrollBarEnabled: 'false',
+					hScrollBarEnabled: 'false',
+					reload: true,
+					pageParam: {
+						data: params
+					},
+					animation: {
+						type: "none"
+					}
+				});
+				// cw()
+			}
+		}
+		
+		function cw(){
+			
+			setTimeout(function() {
+				var params = {
+					orderId: cache.orderId,
+					type: 'examination-order'
+				}
+				api.openWin({
+					name: 'record_order_detail_win',
+					url: '../../mine/record_order_detail_win.html',
+					slidBackEnabled: 'false',
+					vScrollBarEnabled: 'false',
+					hScrollBarEnabled: 'false',
+					reload: true,
+					pageParam: {
+						data: params
+					},
+					animation: {
+						type: "none"
+					}
+				});
+			}, 300)
+			
+			// api.closeWin({
+			// 	name:'physical_examination_pay_for_win'
+			// })
+		}
+
+		function close() {
+			api.closeWin({
+				name: 'physical_examination_pay_for_win'
+			});
+		}
+
+
+		/**
+		 * 判断是否该录制的视频需要支付 
+		 */
+		function judgeToPay(orderId) {
+			defaultload('检测订单中...');
+			url = 'api/examination/get-pay-status';
+			params = {
+				orderId: orderId //订单id
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				api.hideProgress();
+				log('检测该订单是否需要支付', ret);
+				// sendEvent('hospital_refresh_list',{});
+				//esc_function('index','mine','func_init(0)');//渲染【我的】网上体检
+				//esc_function('mine_common_win','record_hospital_examintion_list_frm','init()');//调用医院体检订单刷新，可能会报错
+				if (ret) {
+					if (ret.code == 0) {
+						pay_for_next(cache);
+						//openMessage('温馨提示','视频录制完毕，是否上传','上传','暂不','openVideoUpload("'+examResult.exaId+'","'+api.winName+'")','closeWin()',null);
+						// openVideoUpload(examResult.exaId,api.winName);
+					} else {
+						//openMessage('视频录制完毕','缴费成功后医院将审核您的体检记录','前去缴费','不要了','openVideoPay("'+examResult.exaId+'")','closeWin()',null);
+						// openVideoPay(examResult.exaId);
+						init();
+					}
+				} else {
+					alert_msg('订单检测失败');
+				}
+			});
+		}
+		
+		//打开通用弹出框
+		//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+		function openMessage(title,content,sureButton,cancelButton,sureFunc,cancelFunc,params){
+			api.openFrame({
+		        name: 'common_alert',
+		        url: '../../common/common_alert.html',
+		        bgColor: 'rgba(0,0,0,0.4)',
+		        rect: {
+		            x: 0,
+		            y: 0,
+		            w: 'auto',
+		            h: api.winHeight
+		        },
+		        bounces: false,
+		        pageParam:{
+		        	title:title,
+		        	content:content,
+		        	sureButton:sureButton,
+		        	sureFunc:sureFunc,
+		        	cancelButton:cancelButton,
+		        	cancelFunc:cancelFunc,
+		        	winName:api.winName,
+		        	frameName:api.frameName,
+		        	params:params
+		        },
+		        softInputBarEnabled:true,
+		        softInputMode:'resize'
+		    });
+		}
+	</script>
+</html>

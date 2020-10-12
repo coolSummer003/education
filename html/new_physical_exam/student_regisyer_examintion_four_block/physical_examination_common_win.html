@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>体检报名</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<style>
+			html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+		a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+		#p_ex_title{
+		    font-weight: normal;
+		}
+    </style>
+	</head>
+	<body>
+		<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+				<img src="../../../icon/common/icon_header_return.png">
+			</a>
+			<div class="aui-title" id="p_ex_title">
+				基本信息采集
+			</div>
+			<!-- <a class="aui-pull-right aui-btn" id="p_ex_button" onclick="next()">
+        	下一步
+        </a> -->
+		</header>
+		<!-- 截图工具 -->
+		<header class="aui-bar aui-bar-nav aui-border-b aui-hide" id="aui-header2">
+			<a class="aui-pull-left aui-btn" tapmode onclick="cancelCut()">
+				<span>取消</span>
+			</a>
+			<div class="aui-title">
+				图片裁剪
+			</div>
+			<a class="aui-pull-right aui-btn" tapmode onclick='getCut()'>
+				<span>截取</span>
+			</a>
+		</header>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var headerPos;
+		var sign_up_status = 0; //状态值 0代表未报名1代表已报名
+		var cache;
+		apiready = function() {
+			api.parseTapmode();
+			cache = api.pageParam.data;
+			log('数据', cache)
+			var header = $api.byId('aui-header');
+			var header2 = $api.byId('aui-header2');
+			$api.fixStatusBar(header);
+			$api.fixStatusBar(header2);
+			headerPos = $api.offset(header);
+			init();
+		}
+
+		function init() {
+			console.log("进来了...")
+			api.openFrame({
+				name: 'physical_examination_sign_up_frm',
+				url: './physical_examination_sign_up_frm.html',
+				bgColor: '#efeff4',
+				rect: {
+					x: 0,
+					y: headerPos.h,
+					w: 'auto',
+					h: api.winHeight - headerPos.h
+				},
+				bounces: false,
+				pageParam: cache,
+				reload: true,
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+			console.log("加载了...")
+			//去报名
+			toEventListener('hospital_sign', function(ret, err) {
+				//console.log('传递的参数'+JSON.stringify(ret));
+				sign_up_next(ret.value);
+			});
+			//未签约
+			toEventListener('no_contract', function(ret, err) {
+				closeWin();
+			});
+		}
+
+		//修改头部名
+		function changeMenuTitle(name) {
+			$('#p_ex_title').html(name);
+		}
+
+		//点击医院报名 提交报名信息
+		function sign_up_next(signData) {
+			//console.log('体检报名传递的参数:'+JSON.stringify(signData));
+			url = 'api/examination';
+			params = {
+				address: signData.addressDetail,
+				districtCd: signData.addressViewCode,
+				height: signData.height,
+				weight: 50,
+				hospitalId: signData.hospitalId,
+				learnerId: signData.id,
+				licenseType: signData.licenseType,
+				picture: signData.picture,
+				applyType: signData.applyType,
+				originalCarType: signData.originalCarType.replace(/\s/g, "")
+			}
+			log('体检报名传参', params);
+			ajax_Request(url, 'post', 'json', params, function(ret, err) {
+				console.log('体检报名接口返回值' + JSON.stringify(ret));
+				if (ret) {
+					if (ret.code == '0') {
+						signData.orderId = ret.hospitalExamination.id; //体检订单id
+						sign_up_status = 1;
+						changeMenuTitle('签约状态');
+
+						//$('#p_ex_button').addClass('aui-hide');
+						frameRightOut('physical_examination_sign_up_frm');
+						sendEvent('hospital_refresh_list', {});
+						sendEvent('hospital_pay_submit', {}); //医院详情刷新
+						//esc_function('index','mine','func_init(0)');//调用[我的]方法渲染体检信息
+						//esc_function('mine_common_win','record_hospital_examintion_list_frm','init()');//调用医院体检订单刷新，可能会报错
+						//esc_function('hospital_detail_win','','loadFinish('+false+',"已报名")'); 
+						//判断是否与该医院签订合约，没有就先签
+						judgeHasContract(signData);
+					} else {
+						alert_msg(ret.msg);
+					}
+				} else {
+					alert_msg('提交体检信息失败');
+				}
+			});
+		}
+
+		//判断该学员与医院有无签订合约
+		function judgeHasContract(signData) {
+			signData.learnerId = cache.learnerId;
+			defaultload('获取订单信息中');
+			url = 'api/sign-contract/get-online-signing-info';
+			params = {
+				contract: {
+					learner: {
+						id: cache.learnerId
+					},
+					organizationId: signData.hospitalId,
+					type: '042002'
+				}
+			}
+			ajax_Request(url, "get", "json", params, function(ret, err) {
+				closedefaultload();
+				if (ret) {
+					if (ret.code == 0) {
+						if (ret.contractList.length > 0) { //存在合约信息就不需要在线签约，直接进入下一步
+							changeMenuTitle('体检视频信息采集');
+							openFrameFromRight('physical_examination_notice_frm', {
+								cache: signData,
+								headerHeight: headerPos.h
+							}, headerPos.h, api.winHeight - headerPos.h);
+						} else {
+							params = {
+								orderId: signData.orderId,
+								hospitalId: signData.hospitalId,
+								flag: 1,
+								learnerId: cache.learnerId
+							}
+							toEventListener('finishContractNext', function(ret, err) {
+								changeMenuTitle('体检视频信息采集');
+								openFrameFromRight('physical_examination_notice_frm', {
+									cache: signData,
+									headerHeight: headerPos.h
+								}, headerPos.h, api.winHeight - headerPos.h);
+							}); //定义完成医院签约后的监听事件
+							openOnlineSign(params); //打开在线签约共通
+						}
+					} else {
+						alert_msg(ret.msg);
+					}
+				} else {
+					alert_msg('服务器故障');
+				}
+			});
+
+		}
+
+		function closeWin() {
+			//已报名就退出则需要询问
+			if (sign_up_status == 1) { //付款完成后未进行体检
+				openMessage('温馨提示', '线上体检可在订单中继续进行', '我知道了', '', 'close_win()', '', null);
+			} else {
+				close_win();
+			}
+		}
+
+		function close_win() {
+			api.closeWin({
+				name: 'physical_examination_common_win'
+			});
+		}
+
+		//显示截图工具栏
+		function showTools() {
+			$('#aui-header').addClass('aui-hide');
+			$('#aui-header2').removeClass('aui-hide');
+		}
+
+		//隐藏截图工具栏
+		function hideTools() {
+			$('#aui-header').removeClass('aui-hide');
+			$('#aui-header2').addClass('aui-hide');
+		}
+
+		//取消截图
+		function cancelCut() {
+			esc_function('physical_examination_common_win', 'physical_examination_sign_up_frm', 'cancelCut()');
+		}
+
+		//保存截图
+		function getCut() {
+			sendEvent('getCut', {});
+		}
+
+		/**
+		 * 打开签约页面共通
+		 */
+		function openOnlineSign(params) {
+			api.openWin({
+				name: 'common_sign_online_win',
+				url: '../../common/common_sign_online_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				pageParam: params
+			});
+		}
+	</script>
+</html>

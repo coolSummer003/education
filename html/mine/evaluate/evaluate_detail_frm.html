@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<style>
+			body,html{
+    		background:#FFF;
+    		left:0;
+    		top:0;
+    		width: 100%;
+    		height:100%;
+    		position:fixed;
+    		overflow:hidden;
+    	}
+    	.evaluate_body{
+    		width:100%; 	
+    		height: 60%;	
+    	}
+    	.shopping_message{
+    		width: 100%;
+    		border-bottom: solid #F0F0F0 0.05rem;
+    	}
+    	.name{
+    		margin-left: 0.6rem;
+    		margin-right: 0.6rem;
+    		color: #000000;
+    		font-size: 1rem;
+    		margin-bottom: 0.2rem;
+    		font-weight: 500;
+    	}
+    	.evaluate_content{
+    		margin-top: 0.7rem;
+    		margin-bottom: 0.5rem;
+    	}
+    	.whole_evaluate{
+    		font-weight: 700;
+    		font-size: 0.8rem;
+    		display: inline-block;
+    	}
+    	.shopping_header{
+    		margin:1rem 0.5rem 0 0.8rem;
+    	}
+    	.shopping_img{
+    		width: 3rem;
+    		height:3rem;
+			float:left;
+			position:relative;		
+    	}
+    	.shopping_title{
+    		height: 0.35rem;
+    		font-weight: 550;
+    	}
+    	.label_detail{
+    		
+    	}
+    	.shopping_evaluate{
+    		margin: 1rem 0.7rem 0.7rem 0.7rem;		
+    	}
+    	.evaluate_text{
+    		font-size: 0.7rem;
+    		height: 6rem;
+    		border: solid #F0F0F0 1px;
+    		margin-bottom: 0.55rem;
+    		padding: 0.3rem 0.3rem 0.3rem 0.3rem;
+    	}
+    	.evaluate_img{
+    		text-align:center;
+    	}
+    	.evaluate_image{
+    		height: 2rem;
+    		margin: auto;
+    	}
+    	.interval{
+    		width: 100%;
+    		height: 100%;
+    		background: #F2F2F2;
+    	}
+  		.score{
+    		height: 100%;
+    		display: inline-block;
+    		margin-left: 0.5rem;
+    		vertical-align: middle;
+    	}
+    	.photo-icon{
+		    width: 4rem;
+		    height: 4rem;
+		    display: flex;
+		    float: left;
+		    margin-right: 0.55rem;
+		    margin-bottom: 0.15rem;
+		    background: #E8EAEB;
+		}
+		.photo-icon img{
+			width:2rem;
+			margin: auto;
+		}
+		.photo-img{
+			position:relative;
+			width: 4rem;
+		    height: 4rem;
+		    float: left;
+		    margin-right: 0.55rem;
+		   /*margin: auto;*/
+		    margin-bottom: 0.55rem;
+		}
+		.photo-img img{
+    		object-fit:cover;
+			width:100%;
+			height:100%;
+		}
+		.delete{
+		    width: 1rem !important;
+		    height: 1rem !important;
+		    position: absolute;
+		    right: -0.4rem;
+		    top: -0.5rem;
+		    z-index:10;
+		}
+		.img_msg{
+			position:absolute;
+			text-align: left;
+			margin-bottom: 0.3rem;
+			left: 0.8rem;
+		}
+		#picGroup{
+			height: 3.8rem;
+		}	
+		.xing{
+			width: 1rem;	
+			margin-left:0.5rem;
+			margin-top: 0.1rem;
+		}	
+		.school_name{
+			display: inline-block;
+    		width: 82%;
+		}
+		.address{
+			margin-left: 0.6rem;
+			font-size: 0.7rem;
+			color: #757575;
+		}
+		.school_address{
+			width: 82%;
+			display: inline-block;
+		}
+		.evaluate_grade{
+			font-size: 0.7rem;
+			color:#757575;
+			margin-left: 0.5rem;
+			vertical-align: top;
+			display: inline-block;
+			margin-top: 0.1rem;
+		}
+		.aui-btn-info {
+		    color: #ffffff !important;
+		    background: linear-gradient(to left, #03B4F7 , #90DBF7) !important;
+		    margin-top: 1rem !important;
+		    border-radius: 2rem;
+		}
+		.input-warn{
+			font-size: 0.6rem;
+		    color: #999999;
+		    height: 2rem;
+		    background: #FFF;
+		    text-align: right;
+		    padding: 0rem 0.75rem;
+		}
+		.lebelIcon{
+			margin:1rem 0.5rem 0 0.8rem;
+		}
+		.lebelIconS{
+			display: inline-block;
+			padding: 0.1rem 0.2rem;
+			background: #eee;
+			border-radius: 1.5625rem;
+			font-size: 0.6rem;
+			margin-left: 0.5rem;
+			margin-bottom: 0.3rem;
+		}
+		.lebelIconS2{
+			background: #03B4F7;
+			color: #fff;
+		}
+    </style>
+	</head>
+	<body>
+		<div class="evaluate_body">
+			<div class="shopping_message">
+				<div class="shopping_header">
+					<img src="" alt="" class="shopping_img" onerror="javascript:this.src='../../../icon/mine/icon_mine_head_hui.png'" />
+					<div class="school_name aui-ellipsis-1">
+						<span class="name">上虞海滨驾校</span>
+					</div>
+					<div class="school_address aui-ellipsis-1">
+						<span class="address">浙江省绍兴市上虞区</span>
+					</div>
+					<div class="evaluate_content">
+						<div class="whole_evaluate">整体评价</div>
+						<div class="score">
+							<img src="../../../icon/common/evaluate_star_dark.png" class="xing" />
+							<img src="../../../icon/common/evaluate_star_dark.png" class="xing" />
+							<img src="../../../icon/common/evaluate_star_dark.png" class="xing" />
+							<img src="../../../icon/common/evaluate_star_dark.png" class="xing" />
+							<img src="../../../icon/common/evaluate_star_dark.png" class="xing" />
+							<span class="evaluate_grade"></span>
+						</div>
+					</div>
+				</div>
+				<div class="lebelIcon">
+					<ul id="lebels">
+						<script type="text/template" id="lebelsList">
+							{{ for(var i=0;i<it.length;i++){ }}
+							<li class="lebelIconS" data-type="0" onclick="selectLebel('{{=it[i].id}}','{{=it[i].code}}',this)">{{=it[i].name}}</li>
+							{{ } }}
+						</script>
+					</ul>
+				</div>
+			</div>
+			<div class="label_detail">
+				<div class="shopping_evaluate">
+					<textarea placeholder="写出你的感受，可以帮助更多小伙伴哦~" class="evaluate_text" id="content" cols="30" rows="10" maxlength="100"></textarea>
+					<div class='input-warn'>还能输入<span>0</span>字</div>
+					<div class="evaluate_img">
+						<div class="aui-list-item-input" id='picGroup'>
+							<div class='photo-icon' onclick="uploadPic()">
+								<img src="../../../icon/common/icon_upload_pic_new.png" class="evaluate_image" />
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+				<div class="img_msg">
+					<!--<p>添加合规的图片/视频即可获得<span style="color:red">20</span>积分</p>		-->
+				</div>
+				<div class="aui-btn aui-btn-info aui-btn-block" tapmode onclick="submitComments()" style="top: 1.5rem;z-index: 9999;width: 80%;margin: auto;padding: 0.4rem 0;margin-bottom: 2rem;"
+				 id='appointment_btn'>提交评论</div>
+
+			</div>
+			<div class="interval"></div>
+		</div>
+		<script type="text/template" charset="utf-8" id='pic_list_src'>
+			<div class='photo-img'>
+				<input type="hidden" value='{{=it.fileId}}' />
+				<img src="../../../icon/common/icon_delete_blacker.png" alt="" class='delete' tapmode onclick="deletePic(this)"/>
+				<img src="{{=it.img_path}}" alt="" tapmode onclick="openPic('{{=it.img_path}}')"/>
+			</div>
+		</script>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var limit_txt = 100 //限定字数
+		var limit_pic_num = 3; //限定图片上传数
+		var score = 0; //评分
+		var cache;
+		var coachId;
+		var orderId;
+		var businessType;
+		var classificationCode;
+		var coachLebelCodeList = []; //选择的教练标签
+		apiready = function() {
+			//商品评分
+			cache = api.pageParam.data;
+			log('cache123', cache);
+			coachId = cache.coachId;
+			orderId = cache.orderId;
+			businessType = cache.businessType;
+			classificationCode = cache.classificationCode;
+			$('.xing').each(function(index) {
+				var star = '../../../icon/common/evaluate_star_dark.png'; //普通灰色星星图片的存储路径
+				var starRed = '../../../icon/common/evaluate_star_light.png'; //红色星星图片存储路径
+				prompt_score = ['1', '2', '3', '4', '5']; //评分
+
+				var prompt = ['非常差', '差', '一般', '好', '非常好']; //评价提示语
+				this.id = index; //遍历img元素，设置单独的id
+				$(this).on("mouseover click", function() { //设置鼠标滑动和点击都会触发事件
+					$('.xing').attr('src', star); //当“回滚”、“改变主意”时，先复位所有图片为木有打星的图片颜色
+					$(this).attr('src', starRed); //设置鼠标当前所在图片为打星颜色图
+					$(this).prevAll().attr('src', starRed); //设置鼠标当前的前面星星图片为打星颜色图
+					$(this).siblings('span').text(prompt[this.id]); //根据id的索引值作为数组的索引值
+					score = prompt_score[this.id];
+
+				});
+			});
+
+			init();
+			getCoach();
+			getCoachLebel();
+		};
+
+		/**
+		 * 获取教练信息
+		 */
+		function getCoach() {
+			var url = 'api/coach/coach-info-list';
+			var params = {
+				coachId: coachId
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('', ret)
+				if (ret) {
+					if (ret.code == 0) {
+						var img_path = file_load_url + ret.returnValue[0].photo;
+						$('.shopping_img').attr("src", img_path);
+						$('.name').html(ret.returnValue[0].name);
+						$('.address').html(ret.returnValue[0].schoolName);
+					} else {
+						alert_msg('该教练不存在！');
+					}
+				} else {
+					alert_msg('服务器繁忙,请稍后重试！');
+				}
+
+			});
+		}
+
+		/**
+		 * 获取教练标签
+		 */
+		function getCoachLebel() {
+			var url = 'api/coach/coach-tags';
+			var params = {}
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('标签：', ret)
+				if (ret) {
+					if (ret.code == 0) {
+						var lebelsList = $('#lebelsList').html();
+						$("#lebels").html(doT.template(lebelsList)(ret.returnValue));
+					} else {
+						alert_msg('无任何标签！');
+					}
+				} else {
+					alert_msg('服务器繁忙,请稍后重试！');
+				}
+
+			});
+		}
+
+		/**
+		 * 点击选择标签
+		 * data-type 0 未选中 1选中
+		 */
+		function selectLebel(id, code, e) {
+			var type = $(e).attr('data-type');
+			log('', type)
+			if (coachLebelCodeList.length > 2) {
+				alert_msg('标签最多选择3个')
+			} else {
+				if (type == '0') {
+					$(e).addClass('lebelIconS2')
+					$(e).attr('data-type', '1')
+					coachLebelCodeList.push(code)
+				} else if (type == '1') {
+					$(e).removeClass('lebelIconS2')
+					$(e).attr('data-type', '0')
+					for (var i = 0; i < coachLebelCodeList.length; i++) {
+						if (coachLebelCodeList[i] == code) {
+							coachLebelCodeList.splice(i, 1)
+						}
+					}
+				}
+			}
+		}
+
+		/**
+		 * 点击上传图片 
+		 */
+		function uploadPic() {
+			// log("点击了相机")
+			opWithPermission('camera', function () {
+				api.actionSheet({
+					title: '上传说明图',
+					cancelTitle: '取消',
+					buttons: ['拍照', '从相册中选择']
+				}, function(ret, err) {
+					if (ret) {
+						if (ret.buttonIndex == 1 || ret.buttonIndex == 2) {
+							var sourceType = ret.buttonIndex == 1 ? 'camera' : 'library';
+							getPicture(sourceType);
+						}
+					}
+				});
+			});
+		}
+		//拍照或打开相机 sourceType：从相册选还是拍照 faceType代表
+		function getPicture(sourceType) {
+			api.getPicture({
+				sourceType: sourceType,
+				encodingType: 'jpg',
+				mediaValue: 'pic',
+				destinationType: 'url',
+				allowEdit: false,
+				quality: 50, //1-100图片质量
+				saveToPhotoAlbum: false
+			}, function(ret, err) {
+				if (ret && ret.data != '') {
+					uploadImg(ret.data);
+				} else {
+					console.log('系统故障或者未选中照片');
+				};
+			});
+		}
+
+		//监听textarea输入字数
+		function init() {
+			$('.input-warn').find('span').html(limit_txt);
+			$('#content').bind('input propertychange', function() {
+				$('.input-warn').find('span').html(limit_txt - $(this).val().length);
+				if ((limit_txt - $(this).val().length) < 20) {
+					$('.input-warn').find('span').css("color", "#DC251F");
+				} else {
+					$('.input-warn').find('span').css("color", "#999999");
+					console.log(($(this).val().length))
+					//					console.log(limit_txt)
+
+				}
+				if ((limit_txt - $(this).val().length) == 0) {
+					//						alert_msg("评论字数已经达到"+limit_txt+"个字!");
+
+				}
+			});
+		}
+
+		/**
+		 * 上传图片 
+		 */
+		function uploadImg(img_path) {
+			params = {
+				bucketName: AliOssBucket,
+				fileNum: 1,
+				fileType: 'learnerApp/evaluate/' + getUserId()
+			}
+			defaultload('上传中...');
+			var isloadFlag = 0; //标记位 isload代表是否上传，0代表未上传，1代表捕捉上传，2代表与阿里云建立连接，3代表上传完成
+			getUploadFilePower(params, function(ret, err) {
+				if (ret && ret.code == 0) {
+					isloadFlag = 1; //标记上传
+					//阿里云上传可能会崩，所以这里定时器：10秒后查询标记位，把isload为2的图片让用户选择上传
+					var judegeCollapseAlone = setTimeout(function() {
+						collapse_alone(isloadFlag, img_path);
+					}, 10000);
+					var fileList = ret.fileList;
+					file_upload(ret.fileList[0].signUrl, 'put', 'json', img_path, {}, function(ret, err) {
+						if (ret) {
+							clearTimeout(judegeCollapseAlone); //清除定时器
+							isloadFlag = 2; //标记与阿里云服务器连接
+							if (ret.progress == 100 && ret.status == 1) {
+								loaddingPic(img_path, fileList[0].fileId);
+							}
+						} else if (err) {
+							//ios一直会返回数据类型错误(目前找不到原因)，但是图片已上传完毕，所以也当success返回
+							if (systemType == 'ios' && err.progress == 100 && err.code == 3) {
+								clearTimeout(judegeCollapseAlone); //清除定时器
+								isloadFlag = 2; //标记与阿里云服务器连接
+
+								loaddingPic(img_path, fileList[0].fileId);
+							} else if ((systemType == 'ios' && err.statusCode == 0) ||
+								(systemType == 'ios' && err.statusCode == 403)) {
+								//网络无法连接或者签名错误就重新上传
+								clearTimeout(judegeCollapseAlone); //清除定时器
+								uploadImg(img_path);
+							}
+						}
+					});
+				} else {
+					api.hideProgress();
+					alert_msg('获取文件上传权限失败');
+				}
+			});
+		}
+
+		//判断是否有图片上传时候与阿里云断开连接
+		function collapse(isloadFlag, img_path) {
+			api.hideProgress();
+			if (isloadFlag == 1) {
+				api.confirm({
+					title: '温馨提示',
+					msg: '上传与服务器断开连接，是否重连',
+					buttons: ['重新连接', '不上传了']
+				}, function(ret, err) {
+					var index = ret.buttonIndex;
+					if (index == 1) {
+						uploadImg(img_path);
+					}
+				});
+			}
+		}
+
+		/**
+		 * 加载图片 
+		 */
+		var pic_list_src = $('#pic_list_src').html();
+
+		function loaddingPic(img_path, fileId) {
+			//超过最大上传张数
+			var exist = $('#picGroup').find('.photo-img').length;
+			$('#picGroup').prepend(doT.template(pic_list_src)({
+				img_path: img_path,
+				fileId: fileId
+			}));
+			if (exist >= (limit_pic_num - 1)) {
+				$('.photo-icon').addClass('aui-hide');
+			}
+			api.hideProgress();
+		}
+
+		//删除上传图片
+		function deletePic(e) {
+			$(e).parent().remove();
+			$('.photo-icon').removeClass('aui-hide');
+		}
+		//查看图片详情
+		function openPic(path) {
+			console.log('path:' + path);
+			param = {
+				path: path
+			}
+			api.openFrame({
+				name: 'common_pic_detail_frm',
+				url: '../../common/common_pic_detail_frm.html',
+				bgColor: 'rgba(0,0,0,0.6)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				scaleEnabled: true,
+				pageParam: param,
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+		//提交按钮监听
+		var content = '';
+		function submitComments() {
+			content = $('#content').val();
+			
+			//已上传数量
+			var exist_num = $('#picGroup').find('.photo-img').length;
+			submit_comments(exist_num);
+		}
+
+		/**
+		 * 提交评分
+		 */
+		function submit_comments(exist_num) {
+			if(score == 0){
+				alert_msg('请对教练进行评价');
+				return;
+			}
+			if(coachLebelCodeList.length == 0){
+				alert_msg('请选择标签');
+				return;
+			}
+			if (content == '' || content == null) {
+				alert_msg('请输入评价内容');
+				return;
+			}
+			
+			url = 'api/coach/feedback/insert-feedback';
+			params = {
+				learnerId: getUserId(),
+				orderId: orderId,
+				level: score,
+				businessType: businessType,
+				coachId: coachId,
+				content: content,
+				classificationCode:classificationCode,
+				tags: coachLebelCodeList.join(',')
+			}
+			
+			var image_paths = '';
+			$('.photo-img').find('input').each(function(index, e) {
+				image_paths = image_paths + $(e).val() + ',';
+			});
+			image_paths = image_paths.substring(0, image_paths.length - 1);
+			params.imgUrls = image_paths;
+			log('传参', params);
+
+			defaultload('提交中...');
+			ajax_Request(url, 'post', 'json', params, function(ret, err) {
+				closedefaultload();
+				log('上传意见反馈信息返回：', ret);
+				if (ret) {
+					if (ret.code == 0) {
+						openMessage('温馨提示', '感谢您的评价！', '确认', '', 'closeWin()', '', null);
+					} else {
+						alert_msg(ret.msg);
+					}
+				} else {
+					alert_msg('服务器繁忙，请稍后重试');
+				}
+			});
+		}
+		//打开通用弹出框
+		//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+		function openMessage(title, content, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+			api.openFrame({
+				name: 'common_alert',
+				url: '../../common/common_alert.html',
+				bgColor: 'rgba(0,0,0,0.4)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					title: title,
+					content: content,
+					sureButton: sureButton,
+					sureFunc: sureFunc,
+					cancelButton: cancelButton,
+					cancelFunc: cancelFunc,
+					winName: api.winName,
+					frameName: api.frameName,
+					params: params
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+
+		function closeWin() {
+			api.closeWin({});
+		}
+	</script>
+</html>

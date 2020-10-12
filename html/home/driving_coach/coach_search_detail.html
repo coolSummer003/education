@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>教練列表</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/mobiscroll/normalize3_0_2_min.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/mobiscroll/mobiscroll.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/mobiscroll/mobiscroll_date.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html,body{
+    		background-color: transparent;
+    		margin:0;
+    		height: 100%;
+    	}
+		.daoh{
+		    height: 1.5rem;
+    		margin: 0 auto;
+    	}
+    	.aui-grid [class*=aui-col-xs-]:active {
+		    background-color: #FFF;
+		}
+		.menu{
+		    position: fixed;
+		    height: 3rem;
+		    width: 85%;
+		    bottom: 0;
+		    right: 0;
+		    z-index: 999;
+    	}
+    	.menuButton{
+    		height:2rem;
+	        line-height:2rem;
+	        
+		    width: 45%;
+		    float: right;
+		    text-align: center;
+		    font-size: 0.9rem;
+		   
+    	}
+    	.reset{
+	        
+	        background-color: #fff;
+	        
+			color: #4289FD;
+			border: 1px solid #3F86FE;
+			border-radius: 1rem 0 0 1rem;
+    	}
+    	.select{
+		    margin-right:5%;
+    		color: #FFFFFF;
+	       
+	        background-image: linear-gradient(270deg, #3F86FE 0%, #64ADF6 99%);
+	        
+	        border-radius:0 1rem  1rem 0;
+    	}
+    	.reset:active{
+    		background-color: #F1F1F1;
+    	}
+    	.select:active{
+    		background-color: #DE5A58;
+    	}
+    	.shadow{
+		    width: 100%;
+		    height: 100%;
+		    background: #000000;
+		    opacity: 0;
+		    position: fixed;
+		    z-index: 100;
+    	}
+    	.aui-grid {
+		    width: 85%;
+		    background-color: #ffffff;
+		    display: table;
+		    table-layout: fixed;
+		    float:right;
+		    z-index:101;
+		    height:100%;
+	        padding-top: 2.3rem;
+	        touch-action: auto;
+		}
+		.select_simulator_title{
+			border-bottom: solid 1px #F1F1F1;
+    		padding: 0rem 0.5rem 0.2rem 0.5rem;
+		    font-weight: bold;
+		}
+		#appointment-date{
+			padding:0rem 0.5rem;
+		}
+		.aui-row {
+		    overflow: auto;
+		    margin: 0;
+		    padding-bottom:0rem;
+		}
+		.colorStyle{
+			padding-right:0.3rem;
+			padding-left:0.3rem;
+			float:left;
+			height:1.5rem;
+			margin:0.4rem;
+			line-height:1.5rem;
+			background: #FFFFFF;
+			color: #939393;
+			border:1px solid #F2F2F2;
+			font-size:0.7rem;
+			text-align:center; 
+			border-radius:0.75rem;
+		}
+		.colorStyleActive{
+			background-image: linear-gradient(270deg, #3F86FE 0%, #64ADF6 99%);
+		    
+		    color: #ffffff;
+		}
+		.tese{
+			width:30%;
+			display:inline-block;
+			float: left;
+		}
+		.tese div{
+			width:90%;
+			
+		}
+    </style>
+	</head>
+	<body>
+		<div class="shadow" tapmode onclick="closeSelect()"></div>
+		<section class="aui-grid ">
+			<div class="select_simulator_title" style="position:fixed;top:0rem;padding-top:2rem;z-index:999;background: #FFFFFF;width:100%;">驾照类型</div>
+			<div class="aui-row" style="margin-top:1.5rem;" id="car-list">
+				<!-- <div class="aui-col-xs-3" tapmode onclick="checkSimulator()">
+                <img src="../../icon/subject/icon_simulator.png" class="daoh cache"/>
+                <div class="aui-grid-label mt">模拟器一</div>
+            </div> -->
+			</div>
+			<div class="select_simulator_title" style="margin-top: 1rem;">服务特色</div>
+			<div class="aui-row" style=" padding-bottom:3rem;" id="simulator-list">
+				<!-- <div class="aui-col-xs-3" tapmode onclick="checkSimulator()">
+                <img src="../../icon/subject/icon_simulator.png" class="daoh cache"/>
+                <div class="aui-grid-label mt">模拟器一</div>
+            </div> -->
+			</div>
+			<script type="text/template" charset="utf-8" id='simulator_list_src'>
+				{{ for(var i=0;i<it.dictionaryList.length;i++){ }}
+        	<div class="tese " tapmode onclick="checkSimulator(this,'{{=it.dictionaryList[i].code}}')">
+        		<div class="aui-grid-label {{=listInt(this,it.dictionaryList[i].code)}} colorStyle " id = "arr{{=it.dictionaryList[i].code}}">{{=it.dictionaryList[i].name}}</div>
+		 	</div>
+            {{ } }}
+        </script>
+			<script type="text/template" charset="utf-8" id='car_list_src'>
+				{{ for(var i=0;i<it.dictionaryList.length;i++){ }}
+        	<div class="carName" tapmode onclick="checkCarName(this,'{{=it.dictionaryList[i].code}}')">
+	        	<div class="aui-grid-label {{=carlistInt(this,it.dictionaryList[i].code)}} colorStyle " id = "carArr{{=it.dictionaryList[i].code}}">{{=it.dictionaryList[i].name}}</div>
+		 	</div>
+            {{ } }}
+        </script>
+		</section>
+		<div class="menu">
+			<div class="menuButton select" tapmode onclick="selectSimulator()">确定</div>
+			<div class="menuButton reset" tapmode onclick="closeSelect()">取消</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript" src="../../../script/mobiscroll/mobile_select.js"></script>
+	<script type="text/javascript" src="../../../script/mobiscroll/mobiscroll_date.js"></script>
+	<script type="text/javascript" src="../../../script/mobiscroll/mobiscroll.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var headerPos;
+		var cache_dictionary;
+		var params = {};
+		var arr = [];
+		var carArr = [];
+		apiready = function() {
+			api.parseTapmode();
+			//字典表缓存
+			cache_dictionary = $api.getStorage('cache_by_app').cache_dictionary;
+
+			cache = api.pageParam;
+			log('cache123456:', cache);
+			toEventListener('coachpageParam', function(ret, err) {
+				log('ret', ret)
+				cache = ret.value
+				if (cache.arr!= undefined && cache.arr.length != 0) {
+					for (var i = 0; i < cache.arr.length; i++) {
+						$("#arr"+cache.arr[i]).addClass('colorStyleActive');
+						$("#carArr"+cache.arr[i]).addClass('colorStyleActive');
+					}
+				} 
+				if (cache.carArr!= undefined && cache.carArr.length != 0) {
+					for (var i = 0; i < cache.carArr.length; i++) {
+						$("#carArr"+cache.carArr[i]).addClass('colorStyleActive');
+					}
+				} 
+			})
+			if (cache.arr) {
+				arr = cache.arr;
+			}
+			if (cache.carArr) {
+				carArr = cache.carArr;
+			}
+			api.setFrameAttr({
+				name: 'coach_search_detail',
+				hidden: true
+			});
+			init();
+		}
+
+		function listInt(e, code) {
+			if (arr.length != 0) {
+				for (var i = 0; i < arr.length; i++) {
+					if (arr[i] == code && !$(e).hasClass('colorStyleActive')) {
+						return 'colorStyleActive'
+					}
+				}
+			} else {
+				return;
+			}
+		}
+
+		function carlistInt(e, code) {
+			if (carArr.length != 0) {
+				for (var i = 0; i < carArr.length; i++) {
+					if (carArr[i] == code && !$(e).hasClass('colorStyleActive')) {
+						return 'colorStyleActive'
+					}
+				}
+			} else {
+				return;
+			}
+		}
+		//标签加载
+		function getLabelList(tags) {
+			var menu = "";
+			log('tagss', tags)
+			if (tags != '' && tags != undefined && tags != null) {
+				var tagList = tags.split(',');
+				log('tagList++', tagList);
+				for (var i = 0; i < (tagList.length > 3 ? 3 : tagList.length); i++) {
+					log('tagList', tagList[i]);
+					menu += "<li class='tag-style" + i + "'><span>" + getLabelNames(tagList[i]) + "</span></li>";
+				}
+			}
+			return menu;
+		}
+
+		function init() {
+			setTimeout(function() {
+				var simulator_list_src = $('#simulator_list_src').html();
+				var car_list_src = $('#car_list_src').html();
+				$("#simulator-list").html(doT.template(simulator_list_src)(cache_dictionary['001004']));
+				$("#car-list").html(doT.template(car_list_src)(cache_dictionary['002000']));
+
+			}, 500);
+		}
+
+		function checkSimulator(o, code) {
+			$('.tese').each(function(index, e) {
+				if ($(e).is($(o))) {
+					if ($(e).find('div').hasClass('colorStyleActive')) {
+						$(e).find('div').removeClass('colorStyleActive');
+						arr.splice($.inArray(code, arr), 1);
+					} else {
+						$(e).find('div').addClass('colorStyleActive');
+						arr.push(code);
+					}
+				}
+			});
+		}
+
+		function checkCarName(o, code) {
+			$('.carName').each(function(index, e) {
+				if ($(e).is($(o))) {
+					if ($(e).find('div').hasClass('colorStyleActive')) {
+						$(e).find('div').removeClass('colorStyleActive');
+						carArr.splice($.inArray(code, carArr), 1);
+					} else {
+						$(e).find('div').addClass('colorStyleActive');
+						carArr.push(code);
+
+					}
+				}
+			});
+		}
+		//选择好模拟器
+		function selectSimulator() {
+			log('carArr', carArr);
+			log('arr', arr)
+			params.carArr = carArr;
+			params.arr = arr;
+			log('params', params);
+			sendEvent('coach', params);
+			log('ssss');
+			setTimeout(function() {
+				// esc_function('','coach_search_detail','closeSelectShadow()');
+				esc_function('simulator_appointment_detail_win', 'simulator_appointment_detail_frm', 'showSelectBtn()'); //刷新列表																										   
+				api.setFrameAttr({
+					name: 'coach_search_detail',
+					hidden: true
+				});
+			}, 500)
+
+		}
+		//关闭选择框
+		function closeSelect() {
+			log('我疯了：', cache)
+			log('我疯了：', params)
+			sendEvent('coach', cache);
+			params.carArr = cache.carArr;
+			params.arr = cache.arr;
+			log('我疯了：', cache)
+			// if (cache.carArr.length == 0 && cache.arr.length == 0) {
+			$('.colorStyle').removeClass('colorStyleActive');
+			// }
+			// esc_function('','coach_search_detail','closeSelectShadow()');
+			api.setFrameAttr({
+				name: 'coach_search_detail',
+				hidden: true
+			});
+
+		}
+	</script>
+</html>

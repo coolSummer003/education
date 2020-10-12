@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>积分获取</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/comment.css" />
+		<style>
+			html,body{
+    		background: rgba(0, 0, 0, 0.2);
+			height:100%;
+			padding:0rem;
+    	}
+		.HeartAnimation {
+			/* position: absolute; */
+			height: 100%;
+			width:100%;
+		}
+
+		img{
+			position:relative;
+			top:15%;	
+			margin-left:10%;
+			width:80%;
+			height:auto;
+		}
+		
+		#xclose{
+			width: 1.5rem;
+			height:1.5rem;
+			position:absolute;
+			/* top:80%; */
+			margin-top: 120%;
+			left: 36%;
+		}
+		.share{
+			position: absolute;
+			color: #FFF; 
+			width: 60%;
+			/* top: 66%; */
+			margin-top: 8%;
+			left: 20%;
+			text-align: center;
+			font-size: 1rem;
+			background: #0062CC;
+			border-radius:25px;
+			padding: 0.2rem;
+			background-image: linear-gradient(180deg, #4C3C3C 0%, #302523 100%);
+		}
+
+    </style>
+	</head>
+	<body>
+		<div class="HeartAnimation">
+			<img src="../../image/background/img_question_share.png" />
+			<!-- <p class="font">有效阅读资讯一篇</p>
+			<p class="HeartI" style="">+2积分</p> -->
+			<!-- <div class="btn" tapmode onclick="integralShop()">
+				立即查看
+			</div> -->
+			<div class="share" onclick="share()" >立即前往</div>
+			<img src="../../icon/common/X.png" id="xclose" tapmode onclick="closeFrm()" />
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var learnerId;
+		var policyCode;
+		var systemType;
+		var information;
+		apiready = function() {
+			// cache = api.pageParam.data;
+			// information = api.pageParam.information;
+			// systemType = api.systemType;
+		}
+
+		function closeFrm() {
+			api.closeFrame({
+				name: 'common_question_share'
+			});
+		}
+		
+		function share(){
+			setGlobalData("is_question_share",true)
+			if (islogin()) {
+			    api.openDrawerLayout({
+			        name: 'examination_question_share_win',
+			        url: '../examination/question_share/examination_question_share_win.html',
+					// name: 'performance_ranking_win',
+					// url: '../examination/common/performance_ranking_win.html',
+			        slidBackEnabled: 'true',
+			        vScrollBarEnabled: 'false',
+			        hScrollBarEnabled: 'false',
+			        reload: true,
+			        pageParam: {
+			            data: {
+			                type: 'selected_topic'
+			            }
+			        }
+			    });
+			} else {
+			    openLoginHtml();
+			}
+			closeFrm();
+		}
+		
+	</script>
+</html>

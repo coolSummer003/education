@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>模拟考试说明</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+   <style>
+     	html,body{
+     		background-color: #F6FCFF;
+     	}
+     	.explain-head{
+     		width: 100%;
+ 		    height: 4rem;
+ 			padding-left: 1.5rem;
+ 			display: flex;
+ 			flex-flow: row;
+ 			align-items: center;
+ 		    
+     	}
+     	.explain-head img{
+     		width: 2.5rem;
+ 		    height: 2.5rem;
+ 			margin-top: 1rem;
+ 		    border-radius: 100%;
+ 		    object-fit: cover;
+     	}
+     	.explain-head span{
+ 			margin-left: 1.9rem;
+ 			margin-top: 1rem;
+     	}
+     	.explain-content{
+     		font-size:0.7rem;
+ 		    width: 80%;
+     		margin: 0 auto;
+     	}
+     	.explain-content li{
+     		width: 100%;
+ 		    height: 2rem;
+ 		    line-height: 2rem;
+     	}
+     	.explain-content-left{
+     		width: 32%;
+ 		    float: left;
+ 		    text-align: left;
+ 		    color:#61636D;
+     	}
+     	.explain-content-right{
+ 		    width: 68%;
+     		float: right;
+     		height: 2rem;
+     	}
+ 		.explain-button{
+     		margin-top:2rem;
+     	}
+     	.button-item{
+ 		    width: 88%;
+ 		    margin: 0 auto;
+ 		    height: 2rem;
+ 		    line-height: 2rem;
+ 		    text-align: center;
+ 		    border-radius: 3px;
+ 		    margin-bottom: 0.6rem;
+     	}
+     	.w_red{
+     		background-image: linear-gradient(to right, #64ADF6, #3F86FE);
+ 			border-radius: 1rem;
+ 			color: #fff;
+ 			
+     	}
+     	.attention{
+ 		    font-size: 0.6rem;
+ 		    min-height:1rem !important;
+ 		    height: 1rem !important;
+ 		    display: inline !important;
+ 		}
+ 		.attention img{
+ 			width:0.6rem;
+ 			margin-bottom: -0.1rem;
+ 		}
+ 		.information{
+ 			margin-top: 4rem;
+ 			background-color: #fff;
+ 			width: 90%;
+ 			margin-left: 5%;
+ 			border-radius: 0.8rem;
+ 			box-shadow: 0px 0px 10px #E4E7ED;
+ 			padding-bottom: 2.5rem;
+ 		}
+ 		.font_color{
+ 			color:#B9B9B9;
+ 			font-size: 0.6rem;
+ 			line-height: 1rem !important;
+ 		}
+ 		.check{
+ 			display: flex;
+ 			flex-flow: row;
+ 			margin-top: 2rem;
+ 		}
+ 		.radio_text1{
+ 			margin-top: -0.3rem;
+ 			margin-left: 0.5rem;
+ 			font-size: 0.7rem;
+ 		
+ 		}
+ 		.radio_text2{
+ 			margin-left: 0.5rem;
+ 			color: #999999;
+ 			
+ 		
+ 		}
+			.opin_outer{
+			margin-top: 2rem;
+			display: flex;
+			flex-flow: row;
+			align-items: center;
+		}
+		.opin{
+			width: 0.8rem;
+			height: 0.8rem;
+			margin-right: 0.5rem;
+			
+		}
+		.opin img{
+			width: 100%;
+			height: auto;
+		}
+     </style>
+ </head>
+ <body>
+ 	<div class="information">
+ 	<div class='explain-head'>
+ 		<img src="../../../icon/mine/icon_mine_head_hui.png" alt="" class='cache' onerror="javascript:this.src='../../../icon/mine/icon_mine_head.png'"/><br>
+ 		<span>获取中...</span>
+ 	</div>
+ 	<ul class='explain-content'>
+ 		<li>
+ 			<div class='explain-content-left'>考试科目</div>
+ 			<div class='explain-content-right' id='licenseType'></div>
+ 		</li>
+ 		<li>
+ 			<div class='explain-content-left'>考试时间</div>
+ 			<div class='explain-content-right' id='limitTime'>45分钟</div>
+ 		</li>
+ 		<li>
+ 			<div class='explain-content-left'>合格标准</div>
+ 			<div class='explain-content-right'>90分</div>
+ 		</li>
+ 		<li>
+ 			<div class='explain-content-left'>出题规则</div>
+ 			<div class='explain-content-right'>根据交管局出题规则</div>
+ 		</li>
+ 		<li class="font_color">
+ 			计分规则：<br>模拟考试下不能修改答案，每错一题扣2分
+ 		</li>
+ 	</ul>
+ 	</div>
+ 	<div class='explain-button'>
+ 		<div class='button-item w_red' tapmode onclick="openExam('real')">模拟考试</div>
+ 	</div>
+ 	<!-- <li class="aui-list-item" style='padding-left: 15%;'>
+ 	         <div class="aui-list-item-inner attention none-bottom-style">
+ 	         	 <div class="aui-list-item-input check">
+ 	                 <label><input class="aui-radio" type="checkbox" ></label>
+ 	             <div>
+ 			 <div class="radio_text1">优先做未做题</div>
+ 					 <div class="radio_text2" >勾选后，优先选取未做的题目进行组卷</div>
+ 					 </div>
+ 	             </div>
+ 	         </div>
+ 	     </li> -->
+ </body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache_account;//账户信息
+	var item_bank_kemu_four;
+	apiready = function(){
+		item_bank_kemu_four = getBankType('036004');
+		api.parseTapmode();
+		init();
+	}
+	function init(){
+		//获取当前题库选择的题库类型
+		//var bankType = getBankType('036004');
+		var bankType = '022001';
+		if(bankType == '022004'){
+			//如果是摩托车的话，科目四模拟考试只有30分钟
+			$('#limitTime').html('30分钟');
+		}
+	
+		//log('缓存用户信息',cache_account);
+		var questionBankTypeMap = $api.getStorage('cache_by_app').questionBankTypeMap;
+		if(islogin()){
+			cache_account = $api.getStorage('cache_by_account').cache_account;
+			getHeadImg(cache_account,function(smallerPath){
+				$('.explain-head').find('img').attr('src',smallerPath);
+			});
+			if(cache_account.name!=null){
+				$('.explain-head').find('span').html(cache_account.name);
+			}else{
+				$('.explain-head').find('span').html(cache_account.account);
+			}
+		}else{
+			$('.explain-head').find('span').html('游客');
+		}
+		//获取题库的驾考类型
+		//$('#licenseType').html(questionBankTypeMap[getBankType('036004')]);
+		$('#licenseType').html(questionBankTypeMap['022001']);
+	}
+	//打开模拟考试页面
+	function openExam(flag){
+		param = {
+			type:flag,
+			item_bank:$('#licenseType').val()
+		}
+		commonOpenWin('exam_simulation_win',param);
+	}
+</script>
+</html>

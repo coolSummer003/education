@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>消息详细内容</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <style>
+    	html,body{
+    		
+    	}
+    	
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #FFFFFF;
+    	}
+        .aui-pull-left img{
+        	width:20px;
+        }
+    	.aui-pull-right img{
+    		width:20px;
+    	}
+    	.title{
+	        font-size: 17px;
+	        color: #404040;
+	    }
+	    .article-title{
+		    margin-top: 0.5rem;
+		    font-size: 1rem;
+		    font-weight: bold;
+    	}
+    	.article-auther{
+    		height: 1.4rem;
+    		font-size: 0.7rem;
+    	}
+    	.item-left{
+    		float: left;
+		    display: flex;
+		    height: 1rem;
+			padding: 0.2rem 0;
+    	}
+    	.item-left span{
+		    margin: auto;
+    		margin-left: 0rem;
+    	}
+    	.item-left img{
+		    width: 1.5rem;
+    		margin: auto;
+		    border-radius: 100%;
+    	}
+    	.item-right span{
+    		margin: auto;
+    	}
+    	.item-right{
+    		float: right;
+		    height: 3rem;
+		    display: flex;
+    	}
+    	.content img{
+    		width:100%;
+    		margin:1.5rem 0rem;
+    	}
+
+    	footer{
+    		height: 2.5rem;
+		    position: fixed;
+		    bottom: 0;
+		    width: 100%;
+		    font-size: 0.7rem;
+		    left: 0;
+		    background: #FFF;
+    	}
+		.footer-input{
+			float: left;
+		    height: 2.5rem;
+		    width: 70%;
+		    padding-left: 0.5rem;
+		}
+		.footer-input input{
+		    min-height: 1.7rem;
+		    background: #F1F1F1;
+		    padding: 0 0.5rem;
+		    margin-top: 0.4rem;
+		    border-radius: 1rem;
+		    line-height: 1.7rem;
+		}
+		.footer-send{
+			width:13%;
+			float:right;
+			margin-right: 2%;
+			height: 2.5rem;
+			display: flex;
+		}
+		.footer-opinion{
+			width:15%;
+			float:right;
+			height: 2.5rem;
+			display: flex;
+		  position: relative;
+		}
+		.footer-opinion img{
+			width: 1.3rem;
+    		margin: auto;
+		}
+		.footer-send img{
+			width: 1.3rem;
+    	margin: auto;
+		}
+		.send{
+			width: 3rem;
+			height: 1.6rem;
+			margin-top: 0.4rem;
+			line-height: 1.6rem;
+			padding: 0rem;
+			background: #1E8DD8;
+			color: #fff;
+			padding-top: 0.1rem;
+		}
+		.opinion-num{
+			position: absolute;
+		    background: #F45454;
+		    color: #FFF;
+		    padding: 0rem 0.2rem;
+		    border-radius: 0.5rem;
+		    font-size: 0.5rem;
+		    right: 0.1rem;
+		    top: 0.3rem;
+		    height: 0.8rem;
+    		line-height: 0.8rem;
+		}
+		.content{
+		}
+		.mian-content{
+		    background-color: #ffffff;
+			height:100%;
+			padding:1rem;
+		}
+		#aui-header{
+			position:fixed;
+			top:0;
+		}
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+            <img src="../../icon/common/icon_header_return.png">
+        </a>
+        <div class="aui-title title" id="y_title"></div>
+	 	<a class="aui-pull-right aui-btn">
+            
+        </a>
+    </header>
+    <div class='mian-content' style="margin-top:2.25rem;" id="content_dicv">
+		<div id='content'>
+			<div class='article-title'>
+				<!-- 绍兴海滨考场《科目三8月2日考试学员》 -->
+			</div>
+			<!-- <div class='article-auther'>
+				<div class="item-left">
+					<span id="time"></span>
+				</div>
+			</div> -->
+			<div class='content' style="margin-bottom:2.5rem">
+				<!-- <p style="text-align: center;"><img src="https://system.mohan-tech.com/cmBack/public/ueditor/upload/image/20190801/1564639628342045239.png" title="1564639628342045239.png" alt="1 (1).png"/></p> -->
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	apiready = function(){
+		var header = $api.byId('aui-header');
+        $api.fixStatusBar(header);
+		var contentDiv = $api.byId('content_dicv');
+        $api.fixStatusBar(contentDiv);
+		cache = api.pageParam;
+		$('#y_title').html(cache.title);
+		$('.article-title').html(cache.title);
+		//$('#time').html(cache.insertDt);
+		$('.content').html(cache.content);
+		
+		//先将img放入list
+		var objs = document.getElementsByTagName("img");
+		var img_path = '';
+		for(var i=0;i<objs.length;i++){
+			img_path = objs[i].src;
+			if(img_path.indexOf('https') != -1){
+				addClickEvent(objs[i],img_path);
+			}
+		}
+
+		api.parseTapmode();
+	};
+	
+	/**
+	 * 给对象添加点击事件
+	 */
+	function addClickEvent(o,imgPath){
+		o.onclick = function(){
+			openPic(imgPath);
+		}
+	}
+	
+    function closeWin(){
+    	api.closeWin();
+    }
+</script>
+</html>

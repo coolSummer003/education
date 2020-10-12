@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>通过率</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/circliful/jquery.circliful.css"/>
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style type="text/css">
+			html,body{
+				background: #fff;
+			}
+			.title{
+				position: relative;
+				width: 100%;
+				height: 14rem;
+			}
+			.title_bg {
+				position: absolute;
+				width: 100%;
+				height: auto;
+			}
+			.title_rate{
+				position: absolute;
+				width: 6.25rem;
+				height: 6.25rem;
+				top: 1.5rem;
+				left: 50%;
+				margin-left: -3.125rem;
+			}
+			#practice-circles{
+				position:absolute;
+				width:150%;
+				height:150%;
+				top: 0;
+				left: -1.5625rem;
+				top: -1.5625rem;
+			}
+			.member_tips{
+				position: relative;
+				width: 94%;
+				height: 6rem;
+				border-radius: 0.625rem;
+				box-shadow: 0 1px 8px rgba(219,183,145,0.4);
+				background: #fff;
+				margin-left: 3%;
+				top: 10.5rem;
+			}
+			.member_tips_title{
+				position: absolute;
+				width: 100%;
+				height: 2rem;
+				line-height: 2rem;
+				text-align: center;
+				font-size: 0.9rem;
+				font-weight: 700;
+				top: 0.5rem;
+			}
+			.member_tips_content{
+				position: absolute;
+				width: 90%;
+				height: 3rem;
+				text-align: justify;
+				font-size: 0.7rem;
+				color: #2C282A;
+				top: 3rem;
+				left: 5%;
+			}
+			.leak_filling{
+				position: absolute;
+				width: 94%;
+				height: auto;
+				margin-left: 3%;
+				top: 17.5rem;
+			}
+			.leak_filling_title{
+				width: 100%;
+				height: 2rem;
+				line-height: 2rem;
+				text-align: center;
+				color: #2C282A;
+				font-size: 0.9rem;
+				font-weight: 700;
+			}
+			.leak_filling_error_prone{
+				width: 100%;
+				height: auto;
+				border-radius: 10px;
+				box-shadow: 0 1px 8px rgba(219,183,145,0.4);
+				margin-top: 0.5rem;
+			}
+			.leak_filling_error_prone_no{
+				margin-top: 1rem;
+				margin-bottom: 1rem;
+			}
+			.leak_filling_error_prone_title{
+				width: 94%;
+				height: 2.5rem;
+				margin-left: 3%;
+			}
+			.leak_filling_error_prone_title_o,.leak_filling_error_prone_title_t{
+				width: 50%;
+				height: 2.5rem;
+				line-height: 2.5rem;
+				text-align: left;
+				color: #9A9A9A;
+				font-size: 0.8rem;
+			}
+			.leak_filling_error_prone_title_t{
+				text-align: right;
+				margin-left: 50%;
+				margin-top: -2.5rem;
+			}
+			.leak_filling_error_prone_list{
+				position: relative;
+				width: 94%;
+				margin-left: 3%;
+				height: 2.5rem;
+			}
+			.leak_filling_error_prone_list_order{
+				position: absolute;
+				width: 10%;
+				height: 2.5rem;
+			}
+			.leak_filling_error_prone_list_order_s{
+				position: absolute;
+				width: 1rem;
+				height: 1rem;
+				border-radius: 25px;
+				background: linear-gradient(to right, #D8AD85,#A77A43);
+				text-align: center;
+				line-height: 1rem;
+				color: #fff;
+				font-size: 0.7rem;
+				top: 0.75rem;
+			}
+			.leak_filling_error_prone_list_name{
+				position: absolute;
+				width: 60%;
+				height: 2.5rem;
+				line-height: 2.5rem;
+				left: 10%;
+				font-size: 0.8rem;
+				font-weight: 500;
+			}
+			.leak_filling_error_prone_list_num{
+				position: absolute;
+				width: 30%;
+				height: 2.5rem;
+				left: 70%;
+			}
+			.leak_filling_error_prone_list_num_s{
+				position: absolute;
+				width: auto;
+				height: 2.5rem;
+				line-height: 2.5rem;
+				font-size: 0.8rem;
+				font-weight: 500;
+				right: 1rem;
+			}
+			.leak_filling_error_prone_list_num img{
+				position: absolute;
+				width: 0.4rem;
+				height: 0.6rem;
+				right: 0.2rem;
+				top: 0.95rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="title">
+			<img src="../../../icon/vip/question_bank/requirement_bg.png" class="title_bg">
+			<div class="title_rate">
+				<div id="practice-circles">
+			</div>
+		</div>
+		<div class="member_tips">
+			<div class="member_tips_title">
+				尊敬的会员您好
+			</div>
+			<div class="member_tips_content">
+				综合您当前的顺序练习和模拟考试成绩，预测您的考试通过率为88%，还请继续努力！
+			</div>
+		</div>
+		<div class="leak_filling">
+			<div class="leak_filling_title">
+				需要查缺补漏的考点
+			</div>
+			<div class="leak_filling_error_prone">
+				<div class="leak_filling_error_prone_title bottom-slide">
+					<div class="leak_filling_error_prone_title_o">
+						易错考点
+					</div>
+					<div class="leak_filling_error_prone_title_t">
+						错题数
+					</div>
+				</div>
+				<ul id="">
+					<li class="leak_filling_error_prone_list">
+						<div class="leak_filling_error_prone_list_order">
+							<div class="leak_filling_error_prone_list_order_s">
+								1
+							</div>
+						</div>
+						<div class="leak_filling_error_prone_list_name">
+							文明驾驶
+						</div>
+						<div class="leak_filling_error_prone_list_num">
+							<div class="leak_filling_error_prone_list_num_s">
+								888
+							</div>
+							<img src="../../../icon/vip/question_bank/icon_more.png" >
+						</div>
+					</li>
+					<li class="leak_filling_error_prone_list">
+						<div class="leak_filling_error_prone_list_order">
+							<div class="leak_filling_error_prone_list_order_s">
+								2
+							</div>
+						</div>
+						<div class="leak_filling_error_prone_list_name">
+							山区
+						</div>
+						<div class="leak_filling_error_prone_list_num">
+							<div class="leak_filling_error_prone_list_num_s">
+								78
+							</div>
+							<img src="../../../icon/vip/question_bank/icon_more.png" >
+						</div>
+					</li>
+					<li class="leak_filling_error_prone_list">
+						<div class="leak_filling_error_prone_list_order">
+							<div class="leak_filling_error_prone_list_order_s">
+								3
+							</div>
+						</div>
+						<div class="leak_filling_error_prone_list_name">
+							警告标示
+						</div>
+						<div class="leak_filling_error_prone_list_num">
+							<div class="leak_filling_error_prone_list_num_s">
+								248
+							</div>
+							<img src="../../../icon/vip/question_bank/icon_more.png" >
+						</div>
+					</li>
+					<li class="leak_filling_error_prone_list">
+						<div class="leak_filling_error_prone_list_order">
+							<div class="leak_filling_error_prone_list_order_s">
+								4
+							</div>
+						</div>
+						<div class="leak_filling_error_prone_list_name">
+							超车
+						</div>
+						<div class="leak_filling_error_prone_list_num">
+							<div class="leak_filling_error_prone_list_num_s">
+								37
+							</div>
+							<img src="../../../icon/vip/question_bank/icon_more.png" >
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="leak_filling_error_prone leak_filling_error_prone_no">
+				<div class="leak_filling_error_prone_title bottom-slide">
+					<div class="leak_filling_error_prone_title_o">
+						未做考点
+					</div>
+					<div class="leak_filling_error_prone_title_t">
+						未做题数
+					</div>
+				</div>
+				<ul id="">
+					<li class="leak_filling_error_prone_list">
+						<div class="leak_filling_error_prone_list_order">
+							<div class="leak_filling_error_prone_list_order_s">
+								1
+							</div>
+						</div>
+						<div class="leak_filling_error_prone_list_name">
+							文明驾驶
+						</div>
+						<div class="leak_filling_error_prone_list_num">
+							<div class="leak_filling_error_prone_list_num_s">
+								888
+							</div>
+							<img src="../../../icon/vip/question_bank/icon_more.png" >
+						</div>
+					</li>
+					<li class="leak_filling_error_prone_list">
+						<div class="leak_filling_error_prone_list_order">
+							<div class="leak_filling_error_prone_list_order_s">
+								2
+							</div>
+						</div>
+						<div class="leak_filling_error_prone_list_name">
+							山区
+						</div>
+						<div class="leak_filling_error_prone_list_num">
+							<div class="leak_filling_error_prone_list_num_s">
+								78
+							</div>
+							<img src="../../../icon/vip/question_bank/icon_more.png" >
+						</div>
+					</li>
+					<li class="leak_filling_error_prone_list">
+						<div class="leak_filling_error_prone_list_order">
+							<div class="leak_filling_error_prone_list_order_s">
+								3
+							</div>
+						</div>
+						<div class="leak_filling_error_prone_list_name">
+							警告标示
+						</div>
+						<div class="leak_filling_error_prone_list_num">
+							<div class="leak_filling_error_prone_list_num_s">
+								248
+							</div>
+							<img src="../../../icon/vip/question_bank/icon_more.png" >
+						</div>
+					</li>
+					<li class="leak_filling_error_prone_list">
+						<div class="leak_filling_error_prone_list_order">
+							<div class="leak_filling_error_prone_list_order_s">
+								4
+							</div>
+						</div>
+						<div class="leak_filling_error_prone_list_name">
+							超车
+						</div>
+						<div class="leak_filling_error_prone_list_num">
+							<div class="leak_filling_error_prone_list_num_s">
+								37
+							</div>
+							<img src="../../../icon/vip/question_bank/icon_more.png" >
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="../../../script/api.js"></script>
+		<script type="text/javascript" src="../../../script/aui/aui_tab.js"></script>
+		<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+		<script src="../../../script/swiper/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../../script/circliful/jquery.circliful.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../../script/common/common.js"></script>
+		<script type="text/javascript">
+			var cache;
+			apiready = function() {
+				api.parseTapmode();
+				cache = api.pageParam;
+				loadCircle(75)
+			}
+			function loadCircle(percent){
+				$("#practice-circles").circliful({
+					foregroundBorderWidth:4,//进度条粗细
+					backgroundBorderWidth:2,//内圈进度条粗细
+					fontColor: '#FFF3E0',//圈内字体颜色
+					percent: percent,//数据
+					percentageTextSize:24,
+					percentageX: 100,
+					percentageY: 100,
+					foregroundColor: "#F8D092",//进度条颜色
+					backgroundColor: "rgba(255,255,255,0)",//背景进度条颜色
+					text:'考试通过率',
+					textStyle: 'font-size:12px;',
+					textColor: '#FFF3E0',
+					textY: 120,
+					textX: 100,
+					animationStep:10
+				});
+			}
+		</script>
+	</body>
+</html>

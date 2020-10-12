@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>发票页面</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<style>
+			html{
+    		background: transparent;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background: transparent;
+    	}
+    	
+    	.aui-grid{
+    	position:absolute;
+    	bottom:0;
+    	width: 100%;
+    	height:76%;
+    	border-radius: 3% 3% 0% 0%;
+    	padding-top: 0.4rem;
+    	}
+    	.aui-grid [class*=aui-col-] {
+		    display: table-cell;
+		    position: relative;
+		    text-align: center;
+		    vertical-align: middle;
+		    padding: 0.5rem 0;
+		}
+		.shadow{
+		    position: absolute;
+		    bottom: 0rem;
+		    top: 0rem;
+		    width: 100%;
+		}
+		.aui-grid [class*=aui-col-xs-]:active {
+		    background-color: #FFFFFF;
+		}
+		.explain-header{
+			height: 2rem;
+		    line-height: 2rem;
+		    text-align: center;
+		    background:#FFF;
+	        margin-bottom: 0.5px;
+	       
+		}
+		.explain-header:after{
+			content: '';
+		    height: 1px;
+		    background-color: #dddddd;
+		    display: block;
+		    -webkit-transform: scaleY(0.5);
+		    transform: scaleY(0.5);
+		    -webkit-transform-origin: 50% 100%;
+    		transform-origin: 50% 100%;
+		}
+		.aui-card-list-header{
+		font-size:0.9rem;
+		font-weight: bold;
+		
+		white-space:nowrap;
+		}
+		.aui-tips-title{
+		line-height:0.9rem;
+		}
+		footer{
+    		height: 2.5rem;
+		    position:fixed;
+		    bottom: 0;
+		    width: 100%;
+		    font-size: 0.8rem;
+		    left: 0;
+		    background: #ffffff;
+    	}
+		.footer-input{
+
+		    height: 3rem;
+		    width: 100%;
+			padding-left:1rem;
+			padding-right:1rem;
+		
+		}
+		.footer-input div{
+		    min-height: 1.7rem;
+			background: linear-gradient(to right, #78D6FA , #05B4F7); 
+		    padding: 0 0.5rem;
+		    margin-top: 0.4rem;
+		    border-radius: 1rem;
+		    line-height: 1.7rem;
+		}
+		.aui-content{
+			position: absolute;
+			top: 16%;
+			right: 0rem;
+			left: 0rem;
+			background:#FFFFFF;
+			bottom: 2.5rem;
+			overflow-y: auto;
+			overflow-x: hidden;
+			overflow-y: scroll;
+			-webkit-overflow-scrolling: touch;
+		}
+
+
+	.wrapper{
+	
+		height:1.5rem;
+		float:left;
+	
+	}
+	.wrapper1 {
+		display: inline;
+		height:1.5rem;
+		float:left;
+		margin-right:1rem;
+	}
+	.box {
+		display: inline;
+		float:left;
+		width: 100%;
+		height:100%;
+		position: relative;
+		vertical-align: middle;
+		border-radius: 100%;
+		text-align: center;
+	}
+	.box input {
+		display:none;
+	}
+	
+	.box label { 
+	  display: block;
+	  width: 3.5rem;
+	  height: 1.45rem;
+	 
+	  background: #fff;
+	  
+	  z-index:1;
+	  border-radius:0.725rem;
+	  border:1px solid #FFFFFF;
+	  font-size:0.55rem;
+	  line-height: 1.45rem;
+	  font-weight:750;
+	 
+	   
+	}
+	
+	
+	input[type="radio"] + label {
+		background: #F2F2F2;
+		color: #939393;
+		border:1px solid #F2F2F2;
+	
+	}
+	input[type="radio"]:checked + label {
+	    background:#DDEBFF;
+	    border:1px solid #79ADCD;
+	    color: #79ADCD;
+	}
+	.aui-list-item-label{
+		height:2rem;
+		font-size:0.6rem;
+		line-height:2rem;
+	}
+	span{
+		font-size: 0.55rem;
+		color: #767676;
+		width:85%;
+		margin-top:0.25rem;
+	}
+	.inputs::-webkit-input-placeholder{
+	        color:red;
+	        }
+	#unit{
+	        display:none;
+	        }
+	#unit1{
+	         display:block;
+	        }
+	        #tips-1{
+
+	        }	
+       
+    </style>
+	</head>
+	<body>
+		<div class="shadow" tapmode onclick="closeShadow()"></div>
+		<div class='share' style="">
+
+			<section class="aui-grid">
+				<div class="aui-card-list-header">
+					发票
+					<i class="aui-iconfont aui-icon-close" style="font-size:0.7rem;" tapmode onclick="closeShadow()"></i>
+				</div>
+				<div class="aui-tips aui-margin-b-15" id="tips-1"  style="border-radius: 0 1rem 1rem 0;width:97%; background:#FDF9D6;margin:0.1rem;">
+					<i class="aui-iconfont aui-icon-info" style="margin-right: 0.3rem;color:#DA974C;font-size: 0.9rem"></i>
+					<div class="aui-tips-title" style="color:#DA974C;font-size: 0.6rem">启用电子普通发票，订单付款后一个月内开具，点击“我的订单”查看和下载</div>
+					<i class="aui-iconfont aui-icon-close" style="color:#DA974C;font-size: 0.8rem" tapmode onclick="closeDiv()"></i>
+				</div>
+				<div class="aui-content">
+					<ul class="aui-list aui-select-list" id="ul">
+						<li class="aui-list-item">
+							<div class="aui-list-item-inner">
+								<div class="aui-card-list-header" style="font-size:0.7rem;">
+									发票类型
+								</div>
+								<div class="aui-list-item-inner">
+									<div id="radio">
+
+										<div class="wrapper1">
+											<div class="box">
+												<input type="radio" checked="checked" id="boy" name="1" />
+												<label for="boy" style="width:5rem;">电子普通发票</label>
+											</div>
+
+										</div>
+
+										<!--<div class="wrapper">
+											<div class="box">
+												<input type="radio" id="girl" name="1" />
+												<label for="girl" style="width:5rem;">增值税专用发票</label>
+											</div>
+
+										</div>-->
+
+									</div>
+
+								</div>
+								<span>电子普通发票与纸质普通发票具备同等法律效力，可支持报销入账。<span>
+							</div>
+
+						</li>
+						<li class="aui-list-item">
+							<div class="aui-list-item-inner">
+								<div class="aui-card-list-header" style="font-size:0.7rem;">
+									发票抬头
+								</div>
+								<div class="aui-list-item-inner">
+									<div id="radio1">
+
+										<div class="wrapper1">
+											<div class="box">
+												<input type="radio" id="is_personal" name="2" />
+												<label for="is_personal">个人</label>
+											</div>
+
+										</div>
+
+										<div class="wrapper">
+											<div class="box">
+												<input type="radio" id="is_personal1" name="2" />
+												<label for="is_personal1">单位</label>
+											</div>
+
+										</div>
+
+									</div>
+
+
+
+								</div>
+								<div id="unit">
+									<div class="aui-list-item-label">
+										单位名称
+										<input type="text" id="entity_name" class="entity_name input" placeholder="请填写单位名称" style="margin-left:2.15rem;font-size:0.6rem;">
+									</div>
+									<div class="aui-list-item-label">
+										纳税人识别号
+										<input type="text" id="input" class="inputs input" placeholder="请在此填写纳税人识别号" style="margin-left:1rem;margin-right:1rem;font-size:0.6rem;width:60%;">
+
+									</div>
+								</div>
+								<div id="unit1">
+									<div class="aui-list-item-label">
+										开票抬头
+										<input type="text" id="name" class="name input" placeholder="请填写开票人姓名" style="margin-left:2.15rem;font-size:0.6rem;">
+									</div>
+
+									<div>
+
+									</div>
+
+						</li>
+						<li class="aui-list-item">
+							<div class="aui-list-item-inner">
+								<div class="aui-card-list-header" style="font-size:0.7rem;">
+									收票人信息
+								</div>
+
+								<div class="aui-list-item-label">
+									收票人手机*
+									<!--<p style="color:#000000;margin-left:1rem; font-size: 0.6rem;">158****6349</p>-->
+									<input type="tel" id="phone" class="phone input" placeholder="用来联系用户，必填" maxlength="11" style="margin-left:1rem;font-size:0.6rem;">
+								</div>
+								<div class="aui-list-item-label">
+									收票人邮箱*
+									<input type="email" id="email" class="email input" placeholder="用来接收电子发票邮箱，必填" style="margin-left:1rem;font-size:0.6rem;">
+								</div>
+
+
+							</div>
+						</li>
+						<!--<li class="aui-list-item">
+							<div class="aui-list-item-inner">
+								<div class="aui-card-list-header" style="font-size:0.7rem;width:100%;">
+									发票内容<span style="margin-left: 0.5rem;height:0.9rem;">发票内容选项已根据税法调整,具体请以展示为准</span>
+								</div>
+								<div class="aui-list-item-inner">
+									<div id="radio1">
+
+										<div class="wrapper1">
+											<div class="box">
+												<input type="radio" checked="checked" id="boy2" name="3" />
+												<label for="boy2">商品明细</label>
+											</div>
+
+										</div>
+
+										<div class="wrapper">
+											<div class="box">
+												<input type="radio" id="girl2" name="3" />
+												<label for="girl2">商品类别</label>
+											</div>
+
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+
+						</li>-->
+
+					</ul>
+
+				</div>
+
+				<footer id="footer">
+					<div class='footer-input'>
+					
+						<div type="text" value="" id='newComments'  tapmode style="text-align: center;color: #FFFFFF;" tapmode onclick="closeFrm()">确定</div>
+					</div>
+
+				</footer>
+			</section>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var path;
+		var cache;
+		var shareData;
+		var session;
+		var timeline;
+		var forumId; //社区详情ID
+		var type; //类型
+		var contentUrl;
+		var systemType;
+
+		var is_personal; //发票抬头
+		var name; //收票人姓名
+		var phone; //电话
+		var mail; //邮箱
+		var entity_name; //单位名称	
+		var ein; //税号
+		var cache;
+		apiready = function() {
+			api.parseTapmode();
+			cache = api.pageParam;
+			systemType = api.systemType;
+			log("lalal", cache)
+			//title标题 content内容 sureButton确认按钮文字 cancelButton取消按钮文字 sureFunc确定方法 cancelFunc取消方法  params额外参数，没有必须传null
+			//openMessage(title, content, sureButton, cancelButton, sureFunc, cancelFunc, params)
+			openMessage('温馨提示', '&emsp;&emsp;启用电子普通发票，订单付款后一个月内开具，点击“我的订单”查看和下载', '好的,我知道了', '', 'init()', '', null);
+		}
+		function init(){
+			
+			//进入时判断之前是否有更改保存发票信息，有的话显示保存退出的数据
+		 
+			if (cache.data.is_personal == 1) {
+				$('#is_personal').attr("checked", "");
+				$('#is_personal1').attr("checked", "checked");
+				$('.entity_name').val(cache.data.entity_name);
+				$('.inputs').val(cache.data.ein);
+				$('#unit1').attr("style", "display:none;");
+				$('#unit').attr("style", "display:block;");
+				name = $('.name').val("");
+				is_personal = '1';
+			} else {
+				$('#is_personal').attr("checked1", "");
+				$('#is_personal').attr("checked", "checked");
+				$('.name').val(cache.data.name);
+
+				$('#unit').attr("style", "display:none;");
+				$('#unit1').attr("style", "display:block;");
+				is_personal = '0';
+				ein = $('.inputs').val("");
+				entity_name = $('.entity_name').val("");
+			}
+			
+			
+			$('.phone').val(cache.data.phone);
+			$('.email').val(cache.data.mail);
+			//获取发票参数
+			is_personal = '0';
+			name = $('.name').val();
+			phone = $('.phone').val();
+			mail = $('.email').val();
+			ein = $('.inputs').val();
+			entity_name = $('.entity_name').val();
+			
+			//软键盘弹出时隐藏确定按钮，调整页面
+			if (systemType == 'ios') {
+				$('.input').bind('focus', function() {
+					$('#footer').css('position', 'static');
+					$('.aui-content').css({
+						'height': '84%'
+					});
+				}).bind('blur', function() {
+					$('#footer').css({
+						'position': 'fixed',
+						'bottom': '0'
+					});
+					$('.aui-content').css({
+							'height': '75%'
+						});
+				});
+
+			} else {
+				var winHeight = $(window).height(); //获取当前页面高度
+				$(window).resize(function() {
+					var thisHeight = $(this).height();
+					if (winHeight - thisHeight > 100) {
+						$('#footer').css('position', 'static'); //键盘弹出
+						$('.aui-content').css({
+							'height': '84%'
+						});
+						if ($(".email").is(":focus")) {
+							document.getElementById('email').scrollIntoView({
+								block: "start",
+								behavior: "smooth"
+							});
+						}
+						if ($(".phone").is(":focus")) {
+							document.getElementById('phone').scrollIntoView({
+								block: "start",
+								behavior: "smooth"
+							});
+						}
+						if ($(".inputs").is(":focus")) {
+							document.getElementById('input').scrollIntoView({
+								block: "start",
+								behavior: "smooth"
+							});
+						}
+					} else {
+						$('#footer').css({
+							'position': 'fixed',
+							'bottom': '0'
+						}); //键盘收起
+						$('.aui-content').css({
+							'height': '75%'
+						});
+
+					}
+				})
+
+			}
+			//发票抬头切换时改变div
+			$("input[name=2]").click(function() {
+				var name = $(this).attr("id");
+
+				if (name == 'is_personal') {
+
+					$('#unit').attr("style", "display:none;");
+					$('#unit1').attr("style", "display:block;");
+					is_personal = '0';
+					ein = $('.inputs').val("");
+					entity_name = $('.entity_name').val("");
+				} else {
+					$('#unit1').attr("style", "display:none;");
+					$('#unit').attr("style", "display:block;");
+					name = $('.name').val("");
+					is_personal = '1';
+				}
+			});
+		
+		
+		}
+		//关闭信息提示条
+		function closeDiv() {
+			$('#tips-1').attr("style", "display:none;");
+			$('.aui-content').attr("style", "top:10%");
+
+		}
+		//按确定按钮，保存信息
+		function closeFrm() {
+			var title;
+			name = $('.name').val();
+			phone = $('.phone').val();
+			mail = $('.email').val();
+			ein = $('.inputs').val();
+			entity_name = $('.entity_name').val();
+			if ((ein != '' && entity_name != '') || name != '' && phone != '' && mail != '') {
+				if (isPhoneAvailable(phone)) {
+					params = {
+						is_personal: is_personal,
+						name: name,
+						phone: phone,
+						mail: mail,
+						ein: ein,
+						entity_name: entity_name
+					}
+					log('params::', JSON.stringify(params));
+					api.sendEvent({
+						name: 'myEvent',
+						extra: params
+					});
+					api.closeFrame({
+						name: 'common_receipt'
+					});
+				} else {
+					alert('请输入正确的手机号');
+				}
+
+			} else {
+
+				if (is_personal == '0') {
+					if (name == '') {
+						title = '姓名不能为空！'
+					}
+				} else {
+					if (ein == '') {
+						title = '单位税号不能为空！'
+					}
+					if (entity_name == '') {
+						title = '单位名称不能为空！'
+					}
+
+				}
+				if (phone == '') {
+					title = '电话不能为空！'
+				}
+				if (mail == '') {
+					title = '邮箱不能为空！'
+				}
+
+				alert(title);
+			}
+
+
+
+		}
+		//点击阴影关闭，不保存信息
+		function closeShadow() {
+			api.closeFrame({
+				name: 'common_receipt'
+			});
+		}
+	</script>
+</html>

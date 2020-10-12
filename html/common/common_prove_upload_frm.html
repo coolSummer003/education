@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>证明上传</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html,body{
+    		background-color: #ffffff;
+    	}
+    	.upload-pic{
+    		width: 100%;
+		    overflow: hidden;
+		    background: #FFF;
+		    position:relative;
+    	}
+    	.pic-item{
+    		height: 6rem;
+		    width: 9rem;
+		    float: left;
+		    display: flex;
+		    margin-left: 3.3333%;
+		    position: relative;
+    	}
+    	.photo_pic{
+    		width:100%;
+    		height:90%;
+		    margin: auto;
+    	}
+    	.h_other{
+    		height: 9.5rem;
+    	}
+    	.msg{
+    		font-size: 0.6rem;
+    		padding: 0 2.5%;
+    		margin-bottom:1rem;
+    	}
+    	.dividing_line{
+    		height:0.5rem;
+    		background:#f5f5f5;
+    	}
+    	.aui-tips .aui-tips-title {
+		    padding: 0 0.5rem;
+		    font-size: 0.7rem;
+		    position: relative;
+		    width: 100%;
+		    text-align: center;
+		}
+		.delete{
+		    width: 1.2rem !important;
+		    height: 1.2rem !important;
+		    position: absolute;
+	        right: -0.5rem;
+    		top: 0rem;
+		    z-index:10;
+		}
+		.example{
+		    position: absolute;
+		    right: 3.6rem;
+		    top: 1.7rem;
+		    color: #03B4F7;
+		}
+    </style>
+</head>
+<body>
+	<div class="aui-tips" id="tips-1" style="position: fixed;top: 0;">
+	    <i class="aui-iconfont aui-icon-info"></i>
+	    <div class="aui-tips-title">外来人员必须上传以下信息</div>
+	</div>
+	<div class="aui-content aui-margin-b-10" style="margin-top:1.9rem;">
+	    <ul class="aui-list aui-form-list none-bottom-style">
+	    	<li class="aui-list-item none-bottom-style">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label" style="width:100%;">
+                		流动人口居住登记证明：
+	                </div>
+	            </div>
+	         </li>
+	        <div class='upload-pic'>
+			 	<div class='pic-item'>
+			 		<img src="../../image/background/addphoto.png" class='photo_pic' alt="" onclick='getPhoto(0)' id='pic0' onerror="javascript:this.src='../../image/background/addphoto.png'"/>
+			 		<!-- 身份证正面fileId -->
+			 		<input type="hidden" value='' id="img0" style='width: 3rem;'/>
+			 		<img src="../../icon/common/icon_delete_blacker.png" alt="" class='delete aui-hide' tapmode onclick="deletePic(this,0)"/>
+			 	</div>
+		 		<div class='example' tapmode onclick="openPic('../../image/data/demo_prove.jpg')">
+		 			<span>查看</span><br>
+		 			<span>示例</span>
+		 		</div>
+			 </div>
+			 <li class="aui-list-item none-bottom-style">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label" style="width:100%;">
+                		白底一寸照（可不拍）：
+	                </div>
+	            </div>
+	         </li>
+			 <div class='upload-pic'>
+			 	<div class='pic-item' style="height:14rem;">
+			 		<img src="../../image/background/add_photo_3.png" class='photo_pic' alt="" onclick='getPhoto(1)' id='pic1' onerror="javascript:this.src='../../image/background/addphoto.png'"/>
+			 		<!-- 身份证反面fileId -->
+			 		<input type="hidden" value='' id="img1" style='width: 3rem;'/>
+			 		<img src="../../icon/common/icon_delete_blacker.png" alt="" class='delete aui-hide' tapmode onclick="deletePic(this,1)"/>
+			 	</div>
+		 		<div class='example' style="top:5.7rem;" tapmode onclick="getHelp()">
+		 			<span>查看</span><br>
+		 			<span>帮助</span>
+		 		</div>
+			 </div>
+	     </ul>
+	 </div>
+	 <div class="aui-btn aui-btn-info aui-btn-block fixed-b" tapmode onclick="submitInfo()">提交</div>
+	 </script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var FNImageClip;
+	var imageFilter;
+	var systemType;
+	var cache;
+	apiready = function(){
+		api.parseTapmode();
+		imageFilter = api.require('imageFilter');//图片压缩
+		FNImageClip = api.require('FNImageClip');//图片裁剪
+		systemType = api.systemType;
+		cache = api.pageParam;
+		info_init();//身份信息初始化
+	}
+	//身份信息初始化
+	var cache_account;//账户缓存信息
+	function info_init(){
+		defaultload('获取证明材料中...');
+		
+		//账号，也是手机号码
+		cache_account = $api.getStorage('cache_by_account').cache_account;
+		
+		if(cache_account.floatingPeopleCert != undefined
+			&&cache_account.floatingPeopleCert != ''
+			&&cache_account.floatingPeopleCert != null){
+			//流动人口居住登记证明
+			returnSmallerPic(file_load_url + cache_account.floatingPeopleCert,function(smallerImg){
+				$('#pic0').attr('src',smallerImg);
+			});
+			$('#img0').val(cache_account.floatingPeopleCert);//流动人口居住登记证明服务器地址
+		}
+		console.log('cache_account.oneInchPhoto'+cache_account.oneInchPhoto);
+		if(cache_account.oneInchPhoto != undefined
+			&&cache_account.oneInchPhoto != ''
+			&&cache_account.oneInchPhoto != null){
+			//白底一寸照
+			returnSmallerPic(file_load_url + cache_account.oneInchPhoto,function(smallerImg){
+				$('#pic1').attr('src',smallerImg);
+			});
+			$('#img1').val(cache_account.oneInchPhoto);//白底一寸照服务器地址
+		}
+		
+		api.hideProgress();
+	}
+	
+	//点击上传图片
+	var sourceType;
+	var title;
+	function getPhoto(index){
+		if(index == 0){
+			title = '流动人口居住登记证明';
+		}else if(index == 1){
+			title = '白底一寸照';
+		}
+		opWithPermission('camera', function () {
+			api.actionSheet({
+	            title : '上传' + title,
+	            cancelTitle : '取消',
+	            buttons : ['拍照', '从相册中选择']
+	        }, function(ret, err) {
+	            if (ret) {
+	            	if(ret.buttonIndex == 1||ret.buttonIndex == 2){
+	            		sourceType = ret.buttonIndex == 1?'camera':'library'
+	                    getPicture(sourceType,index);
+	            	}
+	            }
+	        });
+		});
+	}
+	
+	var change_img = '';
+	function deletePic(e,index){
+		document.getElementById('pic'+index).onclick = '';
+		change_img = index == 1?'../../image/background/add_photo_3.png':'../../image/background/addphoto.png';
+		$('#pic'+index).attr('src',change_img);
+		$(e).addClass('aui-hide');
+		setTimeout(function(){
+			document.getElementById('pic'+index).onclick = function(){
+				getPhoto(index);
+			};
+			api.parseTapmode();
+		},500);
+	}
+	
+	//提交证明材料
+	function uploadImg(index,img_path){
+		params = {
+			bucketName:AliOssBucket,
+			fileNum:1,
+			fileType:'learnerApp/prove/' + getUserId()
+		}
+		defaultload('上传中...');
+		//循环上传比较操蛋，因为是异步所以不能根据循环定位到哪张图片，只能通过标记去定位
+		var isloadFlag = 0;//标记位 isload代表是否上传，0代表未上传，1代表捕捉上传，2代表与阿里云建立连接，3代表上传完成
+		getUploadFilePower(params,function(ret,err){
+			if(ret&&ret.code == 0){
+				isloadFlag = 1;//标记上传
+				//阿里云上传可能会崩，所以这里定时器：10秒后查询标记位，把isload为2的图片让用户选择上传
+				var judegeCollapse = setTimeout(function(){
+					collapse(isloadFlag,img_path,index);
+				},10000);
+				var filePath = ret.fileList[0].fileId;
+				file_upload(ret.fileList[0].signUrl, 'put', 'json', img_path, params, function(ret,err,param){
+					if(ret){
+						clearTimeout(judegeCollapse);//清除定时器
+						isloadFlag = 2;//标记与阿里云服务器连接
+						if(ret.progress == 100&&ret.status == 1){
+							loaddingPic(index,img_path,filePath);
+						}
+					}else if(err){
+						//ios一直会返回数据类型错误(目前找不到原因)，但是图片已上传完毕，所以也当success返回
+						if(systemType == 'ios'&&err.progress == 100&&err.code == 3){
+							clearTimeout(judegeCollapse);//清除定时器
+							isloadFlag = 2;//标记与阿里云服务器连接
+							
+							loaddingPic(index,img_path,filePath);
+						}else if((systemType == 'ios'&&err.statusCode == 0)
+									||(systemType == 'ios'&&err.statusCode == 403)){
+							clearTimeout(judegeCollapse);//清除定时器
+							//网络无法连接或者签名错误就重新上传
+							uploadImg(index,img_path);
+						}
+					}
+				});
+			}else{
+				alert_msg('获取上传文件权限失败');
+			}
+		});
+	}
+	
+	//判断是否有图片上传时候与阿里云断开连接
+	function collapse(isloadFlag,img_path,index){
+    	api.hideProgress();
+		if(isloadFlag == 1){
+			api.confirm({
+			    title: '温馨提示',
+			    msg: '上传与服务器断开连接，是否重连',
+			    buttons: ['重新连接', '不上传了']
+			}, function(ret, err) {
+			    var index = ret.buttonIndex;
+			    if(index == 1){
+			    	uploadImg(index,img_path);
+			    }
+			});
+		}
+	}
+	
+	//拍照或打开相机 sourceType：从相册选还是拍照 faceType代表
+    function getPicture(sourceType,index) {
+		api.getPicture({
+		    sourceType: sourceType,
+		    encodingType: 'jpg',
+		    mediaValue: 'pic',
+		    destinationType: 'url',
+		    allowEdit: false,
+		    quality: 50, //1-100图片质量
+		    saveToPhotoAlbum: false
+		}, function(ret, err) {
+			//console.log('选择图片：'+JSON.stringify(ret));
+		    if (ret&&ret.data != '') {
+		    	if(index == 1){//白底一寸照需要裁剪
+		    		photo_cat(index,ret.data);
+		    	}else{
+					uploadImg(index,ret.data);
+		    	}
+            } else {
+                console.log('系统故障或者未选中照片');
+            };
+		});
+	}
+	
+	//一寸照裁剪
+	function photo_cat(index,img_path){
+		var viewP = api.screenWidth/api.winWidth;
+		FNImageClip.open({
+		    rect: {
+		        x: 0,
+		        y: 0,
+		        w: api.winWidth,
+		        h: api.winHeight
+		    },
+		    srcPath: img_path,
+		    isHideGrid:true,
+		    isMinWidth:true,
+		    isMinHeight:true,
+		    style: {
+		        mask: 'rgba(0,0,0,0.6)',
+		        clip: {
+		            w: 295,
+		            h: 413,
+		            x: (api.winWidth - 295)/2,
+		            y: (api.frameHeight - 413)/2,
+		            borderColor: '#03B4F7',
+		            borderWidth: 1,
+		            appearance: 'rectangle'
+		        }
+		    },
+		    mode:'image',
+		    fixedOn: api.frameName
+		}, function(ret, err) {
+		    if (ret) {
+		    	esc_function('common_prove_upload_win','','showTools()');
+		    	//监听保存截图事件
+		    	toEventListener('getCut',function(ret,err){
+		    		getCut(index);
+		    	});
+		    } else {
+		        alert_msg('打开截图失败',err);
+		    }
+		});
+	}
+	
+	//取消截图
+	function cancelCut(){
+		FNImageClip.close();
+		esc_function('common_prove_upload_win','','hideTools()');
+	}
+	
+	//保存截图
+	function getCut(index){
+		var dest_path = 'fs://imageClip/result'+Math.floor(Math.random()*1000000)+'.png';
+		defaultload('处理中...');
+		FNImageClip.save({
+		    destPath: dest_path,
+		    copyToAlbum: false,
+		    quality: 1
+		}, function(ret, err) {
+			log('ret',ret);
+		    if (ret) {
+		        uploadImg(index,ret.destPath);
+		        cancelCut();
+		    } else {
+		        alert_msg('截取失败，请重试');
+		    }
+		});
+	}
+	
+	//加载照片显示
+	function loaddingPic(index,img_path,uploadImgPath){
+		$('#img'+index).val(uploadImgPath);
+		$('#pic'+index).attr('src',img_path);
+		$('#pic'+index).parent().parent().find('.delete').removeClass('aui-hide');
+		document.getElementById('pic' + index).onclick = function(){
+			openPic(img_path);
+		};
+		api.hideProgress();
+		api.parseTapmode();
+	}
+	
+	//上传实名认证信息到云端
+	function submitInfo(){
+		defaultload('正在提交证明材料');
+		var floatingPeopleCert = $('#img0').val();
+		if(floatingPeopleCert == ''||floatingPeopleCert == null){
+			api.hideProgress();
+			alert_msg('居住登记证明上传失败，请重新上传');
+			return;
+		}
+		var oneInchPhoto = $('#img1').val();
+		if(oneInchPhoto == ''||oneInchPhoto == null){
+			//api.hideProgress();
+			//alert_msg('白底一寸照上传失败，请重新上传');
+			//return;
+		}
+		params = {
+			learner:{
+				id:getUserId(),
+				oneInchPhoto:oneInchPhoto,
+				floatingPeopleCert:floatingPeopleCert
+			}
+		}
+		url = 'api/learner/update';
+		log('登记材料最后传参:',params);
+		ajax_Request(url, 'put', 'json', params, function(ret,err){
+			api.hideProgress();
+			log('上传证明材料信息返回：',ret);
+			if(ret){
+				if(ret.code == 0){
+					var cache_by_account = $api.getStorage('cache_by_account');
+					cache_by_account.cache_account.floatingPeopleCert = floatingPeopleCert;//实名认证信息缓存中加入居住证明材料
+					cache_by_account.cache_account.oneInchPhoto = oneInchPhoto;//实名认证信息缓存中加入白底一寸照
+					$api.setStorage('cache_by_account',cache_by_account);//加入缓存中
+					alert_msg('已提交证明材料');
+					setTimeout(function(){
+						api.closeWin({
+							name:'common_prove_upload_win'
+	                    });
+					},300);
+				}else{
+					alert_msg(ret.msg);
+				}
+			}else{
+				alert_msg('系统出错，请稍后再试');
+			}
+		});
+	}
+	
+	//查看帮助
+	function getHelp(){
+		openMessage('温馨提示','&emsp;&emsp;在一块白色背景前进行自拍，然后截取生成电子1寸照即可','好的','','','',null);
+	}
+</script>
+</html>

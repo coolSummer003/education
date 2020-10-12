@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>视频播放win</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css"/>
+    <style>
+        html, body {
+            background-color: #fff;
+            padding: 0;
+            margin: 0;
+        }
+
+        #aui-header {
+            color: #333;
+        }
+
+        #aui-header:after {
+            height: 0;
+        }
+
+        #aui-header img {
+            width: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 头部 -->
+<header class="aui-bar aui-bar-nav aui-border-b" id="aui-header">
+    <div id="header_top" style="height: 2.25rem;">
+        <a class="aui-pull-left aui-btn" tapmode onclick="closeWin()">
+            <img src="../../../icon/common/icon_header_return.png" alt="">
+        </a>
+        <div class="aui-title">
+            视频播放
+        </div>
+    </div>
+</header>
+
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+    var cache;
+    apiready = function () {
+        api.parseTapmode();
+        $api.setStorage('vip_video_play_open', true);
+        cache = api.pageParam.data;
+        log('cache: ', cache);
+        $api.fixStatusBar($api.byId('aui-header'));
+        var h = $api.byId('aui-header').offsetHeight;
+        if (cache.tryToSeeFlag) {
+            $('.aui-title').html('视频试看-1分钟');
+        }
+        toEventListener('keyback', function (ret, err) {
+            closeWin();
+        });
+        cache.headerHeight = h;
+        openFrameCommon('video_play_frm', cache, h, api.winHeight - h, false);
+        // openFrameCommon('video_play_frm', {}, 0, api.winHeight, false);
+    };
+
+
+    function closeWin() {
+        sendEvent('close_player');
+        api.closeWin({});
+    }
+</script>
+</html>

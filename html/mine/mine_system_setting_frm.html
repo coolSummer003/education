@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>系统设置</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	body{
+    		
+    	}
+    	.aui-list:before {
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    right: auto;
+		    bottom: auto;
+		    width: 100%;
+		    z-index: 2;
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		    pointer-events: none;
+		}
+    	.aui-list .aui-list-item-inner {
+		    position: relative;
+		    min-height: 2.6rem;
+		    padding-right: 0.75rem;
+		    width: 100%;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-flex: 1;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		    -webkit-box-align: center;
+		    -webkit-align-items: center;
+		    align-items: center;
+		}
+    </style>
+</head>
+<body>
+	<ul class="aui-list aui-list-in aui-margin-b-10 aui-margin-t-10" >
+        <!--<li class="aui-list-item aui-list-item-middle">
+            <div class="aui-list-item-inner aui-list-item-arrow" tapmode onclick="openSetAccount()">
+             	 <span>账户设置</span>
+            </div>
+        </li>-->
+        
+        <li class="aui-list-item aui-list-item-middle">
+            <div class="aui-list-item-inner aui-list-item-arrow" tapmode onclick="findPassword()">
+             	 <span>重置密码</span>
+            </div>
+        </li>
+        <li class="aui-list-item aui-list-item-middle">
+            <div class="aui-list-item-inner">
+             	 <div class="aui-list-item-title">版本号</div>
+                 <div class="aui-list-item-right" id="w_version"></div>
+            </div>
+        </li>
+        <li class="aui-list-item aui-list-item-middle" tapmode onclick="clearCache()">
+            <div class="aui-list-item-inner">
+             	 <div class="aui-list-item-title">清理缓存</div>
+                 <div class="aui-list-item-right" id="w_cache"></div>
+            </div>
+        </li>
+    </ul>
+    <ul class="aui-list aui-list-in fen">
+        <li class="aui-list-item aui-list-item-middle" tapmode onclick="exit()">
+            <div class="aui-list-item-inner">
+             	 <span>去登录</span>
+            </div>
+        </li>
+    </ul>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var appVersion;
+	apiready = function(){
+		appVersion = api.appVersion;
+		$api.html($api.byId('w_version'), 'V' + appVersion);
+		
+		//重新加载页面
+        toEventListener('refresh_my_index', function (ret, err) {
+            init();
+        });
+		
+		init();
+	};
+		
+	//初始化页面
+	function init(){
+		$('.fen').find('span').html(islogin()?'退出登录':'去登录');
+		getCache();//取得缓存
+	}
+	
+	//账户设置
+	function openSetAccount(){
+		onEvent('mine141','账户设置');
+		if(islogin()){
+			commonOpenWin('mine_account_setting_win',null);
+		}else{
+			openLoginHtml();
+		}
+	}
+	
+	//清理缓存
+	function clearCache(){
+		isSure('提示','是否清理缓存？','是','否',function(){
+			api.clearCache(function() {
+			    api.toast({
+			        msg: '清除完成'
+			    });
+			    getCache();
+			});
+		});
+	}
+	//取得缓存
+	function getCache(){
+		//缓存数据 异步返回结果：
+		api.getCacheSize(function(ret) {
+			$api.html($api.byId('w_cache'), bytesToSize(ret.size));
+		});
+	}
+	
+	function bytesToSize(bytes) {  
+       if (bytes === 0) return '0 B';  
+        var k = 1024;  
+        sizes = ['B','KB', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
+        i = Math.floor(Math.log(bytes) / Math.log(k)); 
+	    return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];   
+	    //toPrecision(3) 后面保留一位小数，如1.0GB                                                                                                                  //return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];  
+	}
+	//找回密码
+    function findPassword(){
+    	onEvent('mine142','重置密码');
+	   api.openWin({
+	      name: 'forgetPassword',
+	      url: '../forgetPassword.html',
+	      slidBackEnabled:'true',
+	      vScrollBarEnabled:'false',
+	      hScrollBarEnabled:'false',
+	      reload:true,
+	      pageParam: {
+	         data:null
+	      }
+	    });
+    }
+    
+    //退出登录
+    function exit(){
+    	if(islogin()){
+	    	isSure('','确定退出吗？','确定退出','取消',function(){
+	    		$api.setStorage('cache_by_account','');//清除与账户相关的缓存
+	    		$api.setStorage('islogin',false);
+	    		esc_function('index','','bindJpush()');//清除极光推送账号
+	    		esc_function('index','','aliPush_init()');//绑定阿里推送账号
+	    		api.closeWin({
+	            	name:'mine_common_win'
+	            });
+	            sendEvent('exit_action');
+	    	});
+    	}else{
+    		openLoginHtml();
+    	}
+    }
+</script>
+</html>

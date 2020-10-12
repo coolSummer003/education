@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>普通考场预约-信息确认页面</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/swiper/swiper.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html{
+    		background: transparent;
+    	}
+    	body{
+    		width: 100%;
+    		background: transparent;
+    	}
+    	.uploadPic img {
+		    height: 6rem;
+		    margin: 0 auto;
+		    margin-top: 1rem;
+		    width: 5rem;
+		    object-fit: cover;
+		}
+    	.aui-list .aui-list-item-label, .aui-list .aui-list-item-label-icon {
+		    color: #212121;
+		    width: 35%;
+		    min-width: 1.5rem;
+		    margin: 0;
+		    padding: 0;
+		    padding-right: 0.25rem;
+		    line-height: 2.2rem;
+		    position: relative;
+		    overflow: hidden;
+		    white-space: nowrap;
+		    max-width: 100%;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: inline;
+		    -webkit-align-items: center;
+		    align-items: center;
+		    text-align: right;
+		}
+    	.info-detail{
+    		margin: auto;
+		    position: absolute;
+		    height: 93%;
+		    display: flex;
+			-webkit-transform: scale(0);
+			transform:scale(0);
+			opacity: 0;
+		    width: 95%;
+    		margin: 1rem 2.5%;
+    	}
+    	.shadow{
+    		width:100%;
+    		height:100%;
+    		background:#000;
+    		opacity:0;
+    		position: absolute;
+    	}
+    	.trans {
+            /*transition*/
+            -webkit-transition: 0.3s ease;
+            -moz-transition: 0.3s ease;
+            -ms-transition: 0.3s ease;
+            -o-transition: 0.3s ease;
+            transition: 0.3s ease;
+        }
+        .show{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+        }
+        .in{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+		}
+		.body-style{
+			width: 100%;
+		    margin: auto;
+		    background: #FFF;
+		    padding-bottom: 1rem;
+		    border-radius: 0.5rem;
+		}
+		.marTop{
+		    margin-top: 1rem !important;
+		}
+		.mar_left{
+			width: 42.5%;
+    		float: left;
+		}
+		.cross-bar{
+			height:0.5rem;
+			background:#EFEFF4;
+		}
+		.nav {
+	        height: 100%;
+	        overflow-x: scroll;
+	        overflow-y: hidden;
+	        background-color: #FFFFFF;
+	        /*解决ios上滑动不流畅*/
+	        -webkit-overflow-scrolling: touch;
+	    }
+	    .con {
+	        height: 100%;
+		    display: -webkit-box;
+		    align-items: center;
+	        position: relative;
+	    }
+	    .con>li {
+            text-align: center;
+		    font-size: 0.8rem;
+		    min-width: 3rem;
+		    list-style: none;
+		    margin-top: 0.3rem;
+		    margin-left: 0.5rem;
+		    margin-bottom: 0.3rem;
+	    }
+	    .container {
+            height: 2.5rem;
+		    line-height: 2.5rem;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    overflow: hidden;
+	    }
+	    .container ::-webkit-scrollbar {
+	        display: none;
+	    }
+	    .lump{
+		    float: left;
+		    padding: 0rem 0.7rem;
+		    font-size: 0.8rem;
+		    color: #6F6F6F;
+		    height: 1.5rem;
+		    border-radius: 5px;
+		    border: solid 1px #F1F1F1;
+		    line-height: 1.5rem;
+	    }
+	    .lump-active {
+		    color: #72A8C9 !important;
+		    border: solid 1px #72A8C9 !important;
+		    background: #DDEBFF !important;
+		}
+    </style>
+</head>
+<body>
+	<div class='shadow'></div>
+	<div class='info-detail trans'>
+		<div class="aui-content body-style">
+		    <ul class="aui-list aui-form-list none-top-style none-bottom-style">
+		    	<li class="aui-list-item" style="border-radius: 0.5rem;">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label" style="font-weight: bold;">
+	                		确认信息&emsp;
+		                </div>
+		                <div class="aui-list-item-input">
+                    		(非常重要)
+		                </div>
+		            </div>
+		        </li>
+		    </ul>
+		    <div id='sure-content'>	
+		    
+		    </div>
+	    </div>
+	</div>
+	
+	<script type="text/template" charset="utf-8" id="infoTemplate">
+		<ul class="aui-list aui-form-list none-bottom-style">
+			<li class="aui-list-item" style="min-height: 2.5rem;">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label">
+						教练姓名：
+					</div>
+					<div class="aui-list-item-input">
+						<input type="text" value="{{=it.coachName}}" id="coachName" placeholder="姓名" readonly>
+					</div>
+				</div>
+			</li>
+			<li class="aui-list-item" style="min-height: 2.5rem;">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label">
+						联系方式：
+					</div>
+					<div class="aui-list-item-input">
+						<input type="number" value="{{=it.coachPhone}}" id="coachPhone" placeholder="手机号" readonly>
+					</div>
+				</div>
+			</li>
+			<li class="aui-list-item" style="min-height: 2.5rem;">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label">
+						车牌号码：
+					</div>
+					<div class="aui-list-item-input">
+						<input type="text" value="{{=it.carId}}" id="carId" placeholder="教练车牌号" readonly>
+					</div>
+				</div>
+			</li>
+			<!-- <li class="aui-list-item" style="min-height: 2.5rem;">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label">
+						身份证号：
+					</div>
+					<div class="aui-list-item-input">
+						<input type="text" value="{{=it.idCard}}" id="idCard" placeholder="教练身份证" readonly>
+					</div>
+				</div>
+			</li> -->
+			<li class="aui-list-item" style="min-height: 2.5rem;">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label">
+						所属驾校：
+					</div>
+					<div class="aui-list-item-input">
+						<input type="text" value="{{=it.schoolName}}" id="schoolId" placeholder="所属驾校" readonly>
+					</div>
+				</div>
+			</li>
+		</ul>
+		<div class='cross-bar'></div>
+		<nav class="nav" id="button_nav" style='margin-top:0.5rem;'>
+            <ul class="con">
+	            {{ for(var i=0;i<it.appointmentOrderList.length;i++){ }}
+	       			<li class="menuLi margin-top-0-5">
+	            	{{ if(i == 0){ }}
+		            	<div class='lump lump-active' tapmode onclick="selectbutton(this,({{=i}}))">
+	            	{{ }else{ }}
+		            	<div class='lump' tapmode onclick="selectbutton(this,({{=i}}))">
+	            	{{ } }}
+		            		<span>学员{{=(i - 0 + 1)}}</span>
+		            	</div>
+		            </li>
+	            {{ } }}
+	  		</ul>
+		</nav>
+		<div class="swiper-container">
+		    <div class="swiper-wrapper">
+		    	{{ for(var i=0;i<it.appointmentOrderList.length;i++){ }}
+			    	<div class="swiper-slide">
+			    		<ul class="aui-list aui-form-list none-bottom-style student-list">
+							<li class="aui-list-item" style="min-height: 2.5rem;">
+								<div class="aui-list-item-inner">
+									<div class="aui-list-item-label">
+										学员：
+									</div>
+									<div class="aui-list-item-input">
+										<input type="text" value="{{=it.appointmentOrderList[i].learnerName}}" placeholder="学员姓名" readonly>
+									</div>
+								</div>
+							</li>
+							<li class="aui-list-item" style="min-height: 2.5rem;">
+								<div class="aui-list-item-inner">
+									<div class="aui-list-item-label">
+										联系方式：
+									</div>
+									<div class="aui-list-item-input">
+										<input type="number" value="{{=it.appointmentOrderList[i].phone}}" placeholder="学员手机号" readonly>
+									</div>
+								</div>
+							</li>
+							<li class="aui-list-item" style="min-height: 2.5rem;">
+								<div class="aui-list-item-inner">
+									<div class="aui-list-item-label">
+										身份证：
+									</div>
+									<div class="aui-list-item-input">
+										<input type="text" value="{{=it.appointmentOrderList[i].idcardNo}}" placeholder="学员身份证" readonly>
+									</div>
+								</div>
+							</li>
+						</ul>
+			    	</div>
+		    	{{ } }}
+		    </div>
+		</div>
+        <div class="aui-btn aui-btn-block aui-btn-info marTop mar_left" id="sureButton">确认无误</div>
+    	<div class="aui-btn aui-btn-block aui-btn-danger aui-btn-outlined marTop mar_left" id='cancelButton'>返回修改</div>
+	</script>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/swiper/swiper.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var systemType;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		console.log('确认页面收到的参数'+JSON.stringify(cache));
+		init();
+	}
+	
+	function init(){
+		var infoTemplate = $('#infoTemplate').html();
+		$('#sure-content').html(doT.template(infoTemplate)(cache));
+		$('.info-detail').addClass('in');
+		loadSwiper();
+		setTimeout(function(){
+			document.getElementById('sureButton').onclick = function(){
+				sure();
+			}
+			document.getElementById('cancelButton').onclick = function(){
+				returnChange();
+			}
+		},500);
+		api.parseTapmode();
+	}
+	
+	//点击确认
+	function sure(){
+		$('.info-detail').removeClass('in');
+		setTimeout(function(){
+			sendEvent('submit_coach_info',cache);
+			closeFrame();
+		},300);
+	}
+	
+	//初始化轮播
+	var mySwiper;
+	function loadSwiper(){
+		mySwiper = new Swiper(".swiper-container", {
+			onSlideChangeEnd:function(swiper){
+		       fildeStyle($('.lump').eq(swiper.activeIndex));
+		    },
+		});
+	}
+	
+	/**
+	 * 返回 
+	 */
+	function returnChange(){
+		$('.info-detail').removeClass('in');
+		esc_function('appoint_before_exam_detail_win','appoint_exam_role_coach_frm','continue_timer()');
+		setTimeout(function(){
+			closeFrame();
+		},300);
+	}
+	
+	//选择预览
+	function selectbutton(o,index){
+		fildeStyle(o);
+		mySwiper.slideTo(index, 500, false);
+	}
+	
+	//移动样式
+	function fildeStyle(o){
+		$('#button_nav').find('.lump').each(function(index,e){
+			if($(e).is($(o))){
+				$(e).addClass('lump-active');
+			}else{
+				$(e).removeClass('lump-active');
+			}
+		});
+		$("#button_nav").animate({scrollLeft: $(o).position().left - 130 + 'px'}, 500);
+	}
+	
+	function closeFrame(){
+		api.closeFrame({
+			name:'appoint_before_exam_sure_frm'
+        });
+	}
+</script>
+</html>

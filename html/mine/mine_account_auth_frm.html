@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>实名认证</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<style>
+			html,body{
+    		background-color: #ffffff;
+    	}
+    	.upload-pic{
+    		width: 100%;
+    		height: 6rem;
+		    background: #FFF;
+		    position:relative;
+    	}
+    	.pic-item{
+    		height: 6rem;
+		    width: 45%;
+		    float: left;
+		    display: flex;
+		    margin-left: 3.3333%;
+		    position: relative;
+    	}
+    	.photo_pic{
+    		width:100%;
+    		height:90%;
+		    margin: auto;
+    	}
+    	.h_other{
+    		height: 12.5rem;
+    	}
+    	.msg{
+    		font-size: 0.6rem;
+    		padding: 0 2.5%;
+    		margin-bottom:1rem;
+    	}
+    	.dividing_line{
+    		height: 1rem;
+		    background: #f5f5f5;
+		    line-height: 1rem;
+		    padding-left: 0.75rem;
+		    font-size: 0.6rem;
+	        color: #DC251F;
+    	}
+    	.aui-tips .aui-tips-title {
+		    padding: 0 0.5rem;
+		    font-size: 0.7rem;
+		    position: relative;
+		    width: 100%;
+		    text-align: center;
+		}
+		.delete{
+		    width: 1.2rem !important;
+		    height: 1.2rem !important;
+		    position: absolute;
+            right: 0.1rem;
+    		top: -0.3rem;
+		    z-index:10;
+		}
+		.id-card-head-img{
+		    position: absolute;
+		    right: 0.3rem;
+		    top: 17.38rem;
+		    z-index: 9;
+		    background: #FFF;
+		    /* border-radius: 100%; */
+		   	/* border: solid 1px #E0E0E0; */
+		    width: 4.7rem;
+		}
+		.id-card-head-img span{
+		    font-size:0.6rem;
+		    text-align: center;
+		    width: 100%;
+		    color:#DC251F;
+		    line-height: 0.7rem;
+		}
+		.id-card-head-img img{
+		    width: 4.7rem;
+    		height: 4.7rem;
+    		object-fit: contain;
+		}
+    </style>
+	</head>
+	<body>
+		<div class="aui-tips" id="tips-1" style="position: fixed;top: 0;">
+			<i class="aui-iconfont aui-icon-info"></i>
+			<div class="aui-tips-title">请正确上传自己的身份证、照片信息</div>
+		</div>
+		<div class="aui-content aui-margin-b-10" style="margin-top:1.9rem;">
+			<ul class="aui-list aui-form-list none-bottom-style">
+				<li class="aui-list-item none-bottom-style" style='position: relative;'>
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							身份证正面：
+						</div>
+					</div>
+				</li>
+				<div class='upload-pic'>
+					<div class='pic-item'>
+						<img src="../../image/background/zheng.png" class='photo_pic' alt="" />
+					</div>
+					<div class='pic-item'>
+						<img src="../../image/background/addphoto.png" class='photo_pic' alt="" tapmode onclick='takePhone(0)' id='pic0'
+						 onerror="javascript:this.src='../../image/background/addphoto.png'" />
+						<!-- 身份证正面fileId -->
+						<input type="hidden" value='' id="img0" style='width: 3rem;' />
+					</div>
+					<img src="../../icon/common/icon_delete_blacker.png" alt="" class='delete aui-hide' tapmode onclick="deletePic(this,0)" />
+				</div>
+				<li class="aui-list-item none-bottom-style">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							身份证反面：
+						</div>
+					</div>
+				</li>
+				<div class='upload-pic'>
+					<div class='pic-item'>
+						<img src="../../image/background/fan.png" class='photo_pic' alt="" />
+					</div>
+					<div class='pic-item'>
+						<img src="../../image/background/addphoto.png" class='photo_pic' alt="" tapmode onclick='takePhone(1)' id='pic1'
+						 onerror="javascript:this.src='../../image/background/addphoto.png'" />
+						<!-- 身份证反面fileId -->
+						<input type="hidden" value='' id="img1" style='width: 3rem;' />
+					</div>
+					<img src="../../icon/common/icon_delete_blacker.png" alt="" class='delete aui-hide' tapmode onclick="deletePic(this,1)" />
+				</div>
+				<div class='dividing_line'>
+
+				</div>
+				<div class='id-card-head-img'>
+					<img src="../../icon/mine/icon_mine_head_hui_jie.png" alt="" id='pic3' />
+					<input type="hidden" value='' id="img3" style='width: 3rem;' /><br>
+					<span>*上传身份证保证<br>头像竖直、完整</span>
+				</div>
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							真实姓名：
+						</div>
+						<div class="aui-list-item-input">
+							<input type="text" placeholder="可通过上传身份证识别" value="" id="realName">
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							性&emsp;&emsp;别：
+						</div>
+						<div class="aui-list-item-input" id="sex_option">
+							<!-- <label><input class="aui-radio" type="radio" value='1' name="sex" id="man">&ensp;男</label>
+                        &emsp;
+                        <label><input class="aui-radio" type="radio" value='2' name="sex" id="woman">&ensp;女</label> -->
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							国&emsp;&emsp;籍：
+						</div>
+						<div class="aui-list-item-input" id="country_type">
+
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							身份证：
+						</div>
+						<div class="aui-list-item-input">
+							<input type="text" placeholder="可通过上传身份证识别" value="" id="idcardNo" readonly="">
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							户籍地址：
+						</div>
+						<div class="aui-list-item-input">
+							<input type="text" placeholder="可通过上传身份证识别" value="" id="permanentAddress">
+							<input type="hidden" placeholder="可通过上传身份证识别" value="" id="startDate">
+							<input type="hidden" placeholder="可通过上传身份证识别" value="" id="endDate">
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							手机号码：
+						</div>
+						<div class="aui-list-item-input">
+							<input type="phone" maxlength="11" value='' placeholder="请输入手机号码" id="account" readonly>
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item none-bottom-style">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							手持证件照：
+						</div>
+					</div>
+				</li>
+				<div class='upload-pic h_other'>
+					<div class='pic-item h_other'>
+						<img src="../../image/background/person.png" class='photo_pic' />
+					</div>
+					<div class='pic-item h_other'>
+						<img src="../../image/background/add_photo_3.png" class='photo_pic' alt="" tapmode onclick='getPhoto(2,this)' id='pic2' onerror="javascript:this.src='../../image/background/add_photo_2.png'" />
+						<!-- 手持证件照fileId -->
+						<input type="hidden" value='' id="img2" style='width: 3rem;' />
+					</div>
+					<img src="../../icon/common/icon_delete_blacker.png" alt="" class='delete aui-hide' tapmode onclick="deletePic(this,2)" />
+				</div>
+				<input type="hidden" value='' id="img4" style='width: 3rem;' />
+				<input type="hidden" value='' id="similarityDegree" style='width: 3rem;' />
+			</ul>
+		</div>
+		<!-- 性别 -->
+		<script type="text/template" charset="utf-8" id='sex_src'>
+			{{ for(var i=0;i<it.length;i++){ }}
+	 		{{ if(it.selected == it[i].code){ }}
+		 		<label><input class="aui-radio" type="radio" value='{{=it[i].code}}' name="sex" checked>&ensp;{{=it[i].name}}</label>&emsp;
+	 		{{ }else{ }}
+		 		<label><input class="aui-radio" type="radio" value='{{=it[i].code}}' name="sex">&ensp;{{=it[i].name}}</label>&emsp;
+	 		{{ } }}
+	 	{{ } }}
+	 </script>
+		<!-- 国籍 -->
+		<script type="text/template" charset="utf-8" id='country_src'>
+			<select type="select" id="nationality">
+	 		{{ for(var i=0;i<it.dictionaryList.length;i++){ }}
+	        	{{ if(i == 0){ }}
+		        	<option value="{{=it.dictionaryList[i].code}}" selected>{{=it.dictionaryList[i].name}}</option>
+	 			{{ }else{ }}
+		        	<option value="{{=it.dictionaryList[i].code}}">{{=it.dictionaryList[i].name}}</option>
+	 			{{ } }}
+	 		{{ } }}
+        </select>
+	 </script>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var FNImageClip;
+		var imageFilter;
+		var systemType;
+		var cache;
+		var trans;
+		var takePicCutOut;
+		var FNPhotograph;
+		apiready = function() {
+			api.parseTapmode();
+			imageFilter = api.require('imageFilter'); //图片压缩
+			FNImageClip = api.require('FNImageClip'); //图片裁剪
+			takePicCutOut = api.require('takePicCutOut');
+			FNPhotograph = api.require('FNPhotograph');
+
+			trans = api.require('trans'); //格式转换
+			systemType = api.systemType;
+			cache = api.pageParam;
+			info_init(); //身份信息初始化
+
+			//监听提示框回调
+			toEventListener('auth_submit', function(ret) {
+				submitInfoNext(ret.value);
+			});
+
+			//初始化人脸识别模块
+			getBaiduFaceAccessToken();
+		}
+		//身份信息初始化
+		var cache_account; //账户缓存信息
+		function info_init() {
+			defaultload('正在获取实名认证状态...');
+
+			updateLearnerInfo(function(ret, err) {
+
+				//缓存中的字典表数据
+				var cache_dictionary = $api.getStorage('cache_by_app').cache_dictionary;
+
+				//账号，也是手机号码
+				cache_account = $api.getStorage('cache_by_account').cache_account;
+				$('#account').val(cache_account.account);
+
+				//国籍
+				var country_src = $('#country_src').html();
+				$('#country_type').html(doT.template(country_src)(cache_dictionary['003000']));
+
+				//性别
+				var sex_src = $('#sex_src').html();
+				$('#sex_option').html(doT.template(sex_src)(cache_dictionary['006000'].dictionaryList));
+
+				if (isauth()) { //已提交认证，则加载全部实名认证信息（包含认证中和认证通过）
+					//console.log('身份信息：'+JSON.stringify(cache_account));
+					$('#realName').val(cache_account.name); //真实姓名
+					cache_dictionary['006000'].dictionaryList.selected = cache_account.sex;
+					$('#sex_option').html(doT.template(sex_src)(cache_dictionary['006000'].dictionaryList)); //性别
+					$('#idcardNo').val(cache_account.idcardNo); //证件号码，目前是身份证
+
+					//身份证有效期开始时间
+					if (cache_account.idcardStartDate != undefined) {
+						$('#startDate').val(cache_account.idcardStartDate.substring(0, 10));
+					}
+
+					//身份证有效期结束时间
+					if (cache_account.idcardEndDate != undefined) {
+						$('#endDate').val(cache_account.idcardEndDate.substring(0, 10));
+					}
+
+					//身份证户籍地址
+					$('#permanentAddress').val(cache_account.permanentAddress);
+
+					//身份证正面小图
+					returnSmallerPic(file_load_url + cache_account.img1, function(smallerImg) {
+						$('#pic0').attr('src', smallerImg);
+					});
+					$('#img0').val(cache_account.img1); //身份证正面服务器地址
+					if(cache_account.identification == 1){
+						//如果是不是认证成功，那么还可以修改
+						$('#pic0').parent().parent().find('.delete').removeClass('aui-hide');
+					}
+
+					//身份证反面小图
+					returnSmallerPic(file_load_url + cache_account.img2, function(smallerImg) {
+						$('#pic1').attr('src', smallerImg);
+					});
+					$('#img1').val(cache_account.img2); //身份证反面服务器地址
+					if(cache_account.identification == 1){
+						//如果是不是认证成功，那么还可以修改
+						$('#pic1').parent().parent().find('.delete').removeClass('aui-hide');
+					}
+
+					//手持证件照小图
+					returnSmallerPic(file_load_url + cache_account.img3, function(smallerImg) {
+						$('#pic2').attr('src', smallerImg);
+					});
+					$('#img2').val(cache_account.img3); //手持证件照服务器地址
+					if(cache_account.identification == 1){
+						//如果是不是认证成功，那么还可以修改
+						$('#pic2').parent().parent().find('.delete').removeClass('aui-hide');
+					}
+
+
+					//身份证头像识别图
+					returnSmallerPic(file_load_url + cache_account.img4, function(smallerImg) {
+						$('#pic3').attr('src', smallerImg);
+					});
+
+					//身份证正面照头像识别地址
+					$('#img3').val(cache_account.img4);
+
+					//身份证合成照服务器地址
+					$('#img4').val(cache_account.img5);
+
+					if (cache_account.similarityDegree != undefined &&
+						cache_account.similarityDegree != '0.0' &&
+						cache_account.similarityDegree != '0' &&
+						cache_account.similarityDegree != 0) {
+						$('#similarityDegree').val(cache_account.similarityDegree); //人脸对比相似度
+					}
+				}
+
+				esc_function('mine_account_auth_win', '', 'changeButton()');
+			});
+
+			api.hideProgress();
+		}
+
+		/**
+		 * 获取百度人脸识别access_token
+		 */
+		function getBaiduFaceAccessToken() {
+			url = third_url + "api/common/face/detect";
+			api.ajax({
+				url: url,
+				method: 'get',
+				tag: url, //为方便，全部统一
+				timeout: 30,
+				dataType: 'json'
+			}, function(ret, err) {
+				log('access_token', ret);
+				if (ret && ret.code == 0) {
+					$api.setStorage('access_token', ret.access_token);
+				} else {
+					alert_msg('初始化人脸识别模块失败');
+				}
+			});
+		}
+		
+		/**
+		 * 身份证正反面 
+		 */
+		function takePhone(index){
+			var pic_url = $('#img'+index).val();
+			if (pic_url != '') {
+				openPic(file_load_url + pic_url);
+			}else{
+				api.openFrame({
+			        name: 'common_alert_txt_img',
+			        url: '../common/common_alert/common_alert_txt_img.html',
+			        bgColor: 'rgba(0,0,0,0.4)',
+			        rect: {
+			            x: 0,
+			            y: 0,
+			            w: 'auto',
+			            h: api.winHeight
+			        },
+			        bounces: false,
+			        pageParam: {
+			           content:'&emsp;&emsp;拍摄时，请将证件置于框内，并与边框留有一点的空隙，以避免身份证件被截取',
+			           img_url:'../../../icon/mine/icon_auth_example.png',
+			           sureButton:'我知道了',
+			           sureFunc:'getPhoto('+index+')',
+			           winName:api.winName,
+			           frameName:api.frameName
+			        },
+			        softInputBarEnabled:true,
+			        softInputMode:'resize'
+			    });
+			}
+		}
+
+		//点击上传图片
+		var sourceType;
+		var title;
+		function getPhoto(index) {
+			if (index == 0||index == 1) {
+				title = index == 0?'身份证正面':'身份证反面';
+				opWithPermission('camera',function(){
+					takePicCutOut.openCardCut({
+						isAlbumImport: true
+					}, function(ret, err) {
+						// alert(JSON.stringify(ret));
+						if (ret.status && ret.filePath) {
+							renderingPic(index, ret.filePath)
+						}
+					});
+				});
+			} else {
+				title = '手持证件照';
+				var pic2 = $('#img2').val();
+				if (pic2 != '') {
+					openPic(file_load_url+pic2);
+				} else {
+					opWithPermission('camera',function(){
+						FNPhotograph.open({
+							path: 'fs://FNPhotographPhotos',
+						    album: false ,
+						    qualityValue: 50
+						}, function(ret){
+						    if(ret&&ret.eventType == 'takePhoto'){
+						    	FNPhotograph.close();
+								
+								renderingPic(index, ret.imagePath)
+						    }
+						});
+					});
+				
+//					opWithPermission('camera',function(){
+//						takePicCutOut.openCustomCut({
+//							isCardFront: true
+//						}, function(ret, err) {
+//							// alert(JSON.stringify(ret));
+//							if (ret.status && ret.filePath) {
+//								renderingPic(index, ret.filePath)
+//							}
+//						});
+//					});
+				}
+			}
+		}
+
+		var change_img = '';
+
+		function deletePic(e, index) {
+			// document.getElementById('pic' + index).onclick = '';
+			change_img = index == 2 ? '../../image/background/add_photo_2.png' : '../../image/background/addphoto.png';
+			$('#pic' + index).attr('src', change_img);
+			$('#img' + index).val('');
+			$(e).addClass('aui-hide');
+			// setTimeout(function() {
+			// 	document.getElementById('pic' + index).onclick = function() {
+			// 		getPhoto(index);
+			// 	};
+			// }, 500);
+			api.parseTapmode();
+		}
+
+		//提交实名认证信息 
+		function submitInfo() {
+
+			//开始校验
+			var realName = $('#realName').val(); //真实姓名
+			if (realName == null || realName == '') {
+				alert_msg('请填写您的真实姓名');
+				return;
+			}
+
+			var sex = $('input:radio[name="sex"]:checked').val(); //性别
+			if (sex == '' || sex == null) {
+				alert_msg('请选择性别');
+				return;
+			}
+
+			var nationality = $('#nationality').val();
+			if (nationality == '' || nationality == null) {
+				alert_msg('请选择国籍');
+				return;
+			}
+
+			var idcardNo = $('#idcardNo').val();
+			if (!checkIDCard(idcardNo)) {
+				alert_msg('你填写的身份证不符合规范');
+				return;
+			}
+
+			var permanentAddress = $('#permanentAddress').val();
+			if (permanentAddress == '' || permanentAddress == null) {
+				alert_msg('户籍地址为空');
+				return;
+			}
+
+			var startDate = $('#startDate').val();
+			var endDate = $('#endDate').val();
+
+			var pic0 = $('#pic0').attr('src');
+			if (pic0 == '' || pic0 == '../../image/background/addphoto.png') {
+				alert_msg('未上传身份证正面');
+				return;
+			}
+
+			var pic1 = $('#pic1').attr('src');
+			if (pic1 == '' || pic1 == '../../image/background/addphoto.png') {
+				alert_msg('未上传身份证反面');
+				return;
+			}
+
+			var pic2 = $('#pic2').attr('src');
+			if (pic2 == '' || pic2 == '../../image/background/add_photo_2.png') {
+				alert_msg('未上传手持证件照');
+				return;
+			}
+
+			var img0 = $('#img0').val();
+			if (img0 == '' || img0 == null) {
+				alert_msg('未上传身份证正面');
+				return;
+			}
+
+			var img1 = $('#img1').val();
+			if (img1 == '' || img1 == null) {
+				alert_msg('未上传身份证反面');
+				return;
+			}
+
+			var img2 = $('#img2').val();
+			if (img2 == '' || img2 == null) {
+				alert_msg('未上传手持证件照');
+				return;
+			}
+
+			var img3 = $('#img3').val();
+			if (img3 == '' || img3 == null) {
+				alert_msg('未识别身份证头像，请重新上传身份证正面');
+				return;
+			}
+
+			var account = $('#account').val(); //手机号，默认账号
+
+			//出生年月
+			var birthday = getBirthdayFromIdCard(idcardNo);
+			params = {
+				learner: {
+					id: getUserId(),
+					name: realName,
+					sex: sex,
+					idCardStartDate: startDate,
+					idCardEndDate: endDate,
+					permanentAddress: permanentAddress,
+					nationality: nationality,
+					idcardType: '004001', //身份类型，目前先写死
+					idcardNo: idcardNo,
+					birthday: birthday,
+					idcardStartDate: startDate,
+					idcardEndDate: endDate,
+					img1: img0,
+					img2: img1,
+					img3: img2,
+					img4: img3
+				}
+			}
+
+			var auth_params = {
+				send_event_name: 'auth_submit',
+				isAllowClose: true,
+				data: params
+			}
+
+			//让用户确认户籍地址是否正确
+			openMessage_i('确认信息[非常重要]', '[真实姓名]：' + realName + '<br>[身份证]：' + idcardNo + '<br><br>[户籍地址]：<br>' +
+				permanentAddress, '对的', '不对，我改下', '', '', auth_params);
+		}
+
+		/**
+		 * 实名认证提交下一步 
+		 */
+		function submitInfoNext(auth_data) {
+			//未合成身份证正反面照片
+			if ($('#img4').val() == '') {
+				//先去合成身份证
+				composeIdCard(auth_data);
+			} else if ($('#similarityDegree').val() == '') {
+				//未对比，先去对比
+				auth_data.learner.img5 = $('#img4').val();
+				comparePhoto(auth_data);
+			} else {
+				//提交认证信息到服务器
+				auth_data.learner.img5 = $('#img4').val();
+				auth_data.learner.similarityDegree = $('#similarityDegree').val();
+				auth_identify(auth_data);
+			}
+		}
+
+		//判断是否有图片上传时候与阿里云断开连接-单独
+		function collapse_alone(isload, index) {
+			if (isload == 1) {
+				api.confirm({
+					title: '温馨提示',
+					msg: '上传与服务器断开连接，是否重连',
+					buttons: ['重新连接', '不上传了']
+				}, function(ret, err) {
+					if (ret.buttonIndex == 1) {
+						uploadPic(index);
+					}
+				});
+			}
+		}
+
+		//拍照或打开相机 sourceType：从相册选还是拍照 faceType代表
+		function getPicture(sourceType, index) {
+			api.getPicture({
+				sourceType: sourceType,
+				encodingType: 'jpg',
+				mediaValue: 'pic',
+				destinationType: 'url',
+				allowEdit: false,
+				quality: 40, //1-100图片质量
+				saveToPhotoAlbum: false
+			}, function(ret, err) {
+				//alert('选择图片：'+JSON.stringify(ret));
+				if (ret && ret.data != '') {
+					//$('#pic'+index).attr('src',ret.data);
+					//$('#pic'+index).parent().parent().find('.delete').removeClass('aui-hide');
+					picImageFilter(ret.data, function(smaller_path) {
+						if (smaller_path != '') {
+							if (index == 0 || index == 1) {
+								//如果是身份证的话需要把照片中的身份证正反面放到框内
+								cutIdCardFrontAndBack(index, smaller_path);
+							} else {
+								//渲染选择图片后的操作 
+								renderingPic(index, smaller_path);
+							}
+						} else {
+							alert_msg('图片压缩失败，改为原图');
+							if (index == 0 || index == 1) {
+								//如果是身份证的话需要把照片中的身份证正反面放到框内
+								cutIdCardFrontAndBack(index, ret.data);
+							} else {
+								//渲染选择图片后的操作 
+								renderingPic(index, ret.data);
+							}
+						}
+					});
+				} else {
+					console.log('系统故障或者未选中照片');
+				};
+			});
+		}
+
+		/**
+		 * 截取身份证正反面 
+		 */
+		function cutIdCardFrontAndBack(index, img_path) {
+			var viewP = api.screenWidth / api.winWidth;
+			var FNImageClipData = {
+				rect: {
+					x: 0,
+					y: 0,
+					w: api.winWidth,
+					h: api.winHeight
+				},
+				srcPath: img_path,
+				isHideGrid: true,
+				isMinWidth: true,
+				isMinHeight: true,
+				style: {
+					mask: 'rgba(0,0,0,0.6)',
+					clip: {
+						w: api.winWidth * 1,
+						h: api.winWidth * 1 / 1.5851,
+						x: (api.winWidth * 0) / 2,
+						y: (api.frameHeight - api.winWidth * 1 / 1.5851) / 2,
+						borderColor: '#03B4F7',
+						borderWidth: 1,
+						appearance: 'rectangle'
+					}
+				},
+				mode: 'image',
+				fixedOn: api.frameName
+			}
+			if (systemType == 'ios') {
+				FNImageClipData.highDefinition = true;
+			}
+			FNImageClip.open(FNImageClipData, function(ret, err) {
+				if (ret) {
+					esc_function('mine_account_auth_win', '', 'showTools()');
+					//监听保存截图事件
+					toEventListener('getIdCardCut', function(ret, err) {
+						getCut(index);
+					});
+				} else {
+					alert_msg('打开截图失败', err);
+				}
+			});
+		}
+
+		/**
+		 * 取消截图
+		 */
+		function cancelCut() {
+			FNImageClip.close();
+			esc_function('mine_account_auth_win', '', 'hideTools()');
+		}
+
+		/**
+		 * 保存截图
+		 */
+		function getCut(index) {
+			var imgName = 'result' + Math.floor(Math.random() * 1000000) + '.png';
+			defaultload('截取身份证中');
+			FNImageClip.save({
+				destPath: 'fs://imageClip/' + imgName,
+				copyToAlbum: false,
+				quality: 1
+			}, function(ret, err) {
+				if (ret) {
+					//渲染选择图片后的操作
+					var dest_path = api.fsDir + '/imageClip/' + imgName;
+					renderingPic(index, dest_path);
+					cancelCut();
+				} else {
+					alert_msg('截取失败，请重试');
+				}
+			});
+		}
+
+		/**
+		 * 渲染选择图片后的操作 
+		 */
+		function renderingPic(index, pic_path) {
+			$('#pic' + index).attr('src', pic_path);
+			$('#pic' + index).parent().parent().find('.delete').removeClass('aui-hide');
+			$('#img' + index).val(''); //修改图片后清空隐藏域中的地址字段
+			if (index == 0 || index == 1) {
+				//身份证正反面任何一个改变，合成照都需要清空重新合成
+				$('#img4').val('');
+				if (index == 0) {
+					//如果身份证正面重新拍，识别的头像也清空，并进行身份证正面识别，人脸对比也要重新对比
+					$('#img3').val('');
+					$('#similarityDegree').val('');
+				} else if (index == 1) {
+					//如果身份证反面重新拍，身份证开始时间和结束时间得清空
+					$('#startDate').val('');
+					$('#endDate').val('');
+				}
+			} else if (index == 2) {
+				//生活照如果重新拍摄，那么也需要重新进行人脸对比
+				$('#similarityDegree').val('');
+			}
+			//上传照片
+			uploadPic(index);
+			// document.getElementById('pic'+index).onclick = function(){
+			// 	openPic(pic_path);
+			// };
+			api.parseTapmode();
+		}
+
+		/**
+		 * 上传图片 
+		 */
+		var judegeCollapseAlone;
+
+		function uploadPic(index) {
+			defaultload('上传照片中...');
+			params = {
+				bucketName: AliOssBucket,
+				fileNum: 1,
+				fileType: 'learnerApp/auth/' + getUserId()
+			}
+			var isloadFlag = 0; //标记位 isload代表是否上传，0代表未上传，1代表捕捉上传，2代表与阿里云建立连接，3代表上传完成
+			getUploadFilePower(params, function(ret, err) {
+				if (ret && ret.code == 0) {
+					isloadFlag = 1; //标记上传
+					//阿里云上传可能会崩，所以这里定时器：10秒后查询标记位，把isload为2的图片让用户选择上传
+					judegeCollapseAlone = setTimeout(function() {
+						collapse_alone(isloadFlag, index);
+					}, 10000);
+					var fileList = ret.fileList;
+					file_upload(ret.fileList[0].signUrl, 'put', 'json', $('#pic' + index).attr('src'), {}, function(ret, err) {
+						if (ret) {
+							clearTimeout(judegeCollapseAlone); //清除定时器
+							isloadFlag = 2; //标记与阿里云服务器连接
+							if (ret.progress == 100 && ret.status == 1) {
+								$('#img' + index).val(fileList[0].fileId);
+								if (index == 0) {
+									//身份证正面识别
+									getIdCard(1, index);
+								} else if (index == 1) {
+									//身份证反面识别
+									getIdCard(2, index);
+								} else {
+									//其余不识别
+									api.hideProgress();
+								}
+							}
+						} else if (err) {
+							//ios一直会返回数据类型错误(目前找不到原因)，但是图片已上传完毕，所以也当success返回
+							if (systemType == 'ios' && err.progress == 100 && err.code == 3) {
+								clearTimeout(judegeCollapseAlone); //清除定时器
+								isloadFlag = 2; //标记与阿里云服务器连接
+
+								$('#img' + index).val(fileList[0].fileId);
+								if (index == 0) {
+									//身份证正面识别
+									getIdCard(1, index);
+								} else if (index == 1) {
+									//身份证反面识别
+									getIdCard(2, index);
+								} else {
+									//其余不识别
+									api.hideProgress();
+								}
+							} else if ((systemType == 'ios' && err.statusCode == 0) ||
+								(systemType == 'ios' && err.statusCode == 403)) {
+								//网络无法连接或者签名错误就重新上传
+								clearTimeout(judegeCollapseAlone); //清除定时器
+								uploadPic(index);
+							}
+						}
+					});
+				} else {
+					api.hideProgress();
+					alert_msg('获取文件上传权限失败');
+				}
+			});
+		}
+
+		/**
+		 * 身份证识别  1正面2反面
+		 */
+		function getIdCard(type, index) {
+			defaultload('身份证识别中...');
+			url = third_url + 'api/common/get-idCard-headImg-info';
+			params = {
+				imagePath:  file_load_url + $('#img' + index).val()
+			}
+			api.ajax({
+				url: url,
+				method: 'post',
+				tag: url, //为方便，全部统一
+				timeout: 30,
+				dataType: 'json',
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded"
+				},
+				data: {
+					values: params
+				}
+			}, function(ret, err) {
+				log('身份证识别返回', ret);
+				if (ret && ret.code == 0) {
+					if (type == 1) {
+						//一旦用户提交了实名认证，那就不允许修改身份证号，不管有没有认证通过，如果需要更换身份证得联系客服
+						if (isauth() || isauthpass()) {
+							var originalIdCard = $api.getStorage('cache_by_account').cache_account.idcardNo;
+							if (originalIdCard != ret.idCardInfoResponse.idCardNo) {
+								//新传的身份证不等于原先的，那么不允许
+								api.hideProgress();
+								returnSmallerPic(file_load_url + cache_account.img1, function(smallerImg) {
+									$('#pic0').attr('src', smallerImg);
+								});
+
+								$('#img0').val(cache_account.img1); //身份证正面服务器地址
+								$('#img3').val(cache_account.img4); //身份证正面照头像识别地址
+								openMessage_i('温馨提示', '您的原身份证号为' + originalIdCard + '，已不允许更改，如有疑问请联系客服', '知道了', '', '', '', null);
+								return;
+							}
+						}
+						//如果身份证识别不对，那么直接驳回
+						if(!checkIDCard(ret.idCardInfoResponse.idCardNo)){
+							api.hideProgress();
+							deletePic($('.delete').eq(0),0);//删除身份证正面拍摄后的渲染
+							openMessage('温馨提示', '未能识别您的身份证，请重新上传', '重新上传', '取消', 'getPhoto('+index+')', '', null);
+							return;
+						}
+						
+						//真实姓名
+						$('#realName').val(ret.idCardInfoResponse.idCardName);
+						//身份证号码
+						$('#idcardNo').val(ret.idCardInfoResponse.idCardNo);
+						//户籍所在地
+						$('#permanentAddress').val(ret.idCardInfoResponse.permanentAddress);
+						
+						$('#pic0').attr('src', "data:image/png;base64," + ret.idCardInfoResponse.idCardImg);
+						
+						//身份证识别头像
+						$('#pic3').attr('src', "data:image/png;base64," + ret.idCardInfoResponse.portrait);
+						//性别
+						if (ret.idCardInfoResponse.sex == '男') {
+							$('input[name="sex"]:eq(0)').attr('checked', 'true');
+						} else if (ret.idCardInfoResponse.sex == '女') {
+							$('input[name="sex"]:eq(1)').attr('checked', 'true');
+						}
+						//身份证头像漂白，调用百度接口
+						idcardHeadImgChangeBg(ret.idCardInfoResponse.portrait);
+					} else {
+						
+						var validDate = ret.idCardInfoResponse.validDate;
+						var str = validDate.replaceAll('-','');
+						var str2 = str.replaceAll(/\./g,'');
+						var timeStart = str2.substring(0,8)
+						var start_date = timeStart.substring(0, 4) +
+							'-' + timeStart.substring(4, 6) +
+							'-' + timeStart.substring(6, 8);
+						//身份证有效期开始时间
+						$('#startDate').val(start_date);
+						var timeEnd;
+						if(str2.length == 16){
+							timeEnd = str2.substring(8,16);
+							var end_date = timeEnd.substring(0, 4) +
+								'-' + timeEnd.substring(4, 6) +
+								'-' + timeEnd.substring(6, 8);
+							//身份证有效期结束时间
+							$('#endDate').val(end_date);
+						}else if(str2.length == 10){
+							// 长期
+							var end_add_date = (parseInt(timeStart.substring(0, 4)) + 100) +
+								'-' + timeStart.substring(4, 6) +
+								'-' + timeStart.substring(6, 8);
+							$('#endDate').val(end_add_date);
+						}
+						api.hideProgress();
+					}
+				} else {
+					api.hideProgress();
+					deletePic($('.delete').eq(index),index);//删除身份证正面拍摄后的渲染
+					if(ret.msg == null || ret.msg == '' || ret.msg == undefined){
+						openMessage('温馨提示', '未能识别您的身份证，请重新上传', '重新上传', '取消', 'getPhoto(' + index+')', '', null);
+					}else{
+						openMessage('温馨提示', ret.msg, '重新上传', '取消', 'getPhoto('+index+')', '', null);
+					}
+				}
+			});
+		}
+
+		/**
+		 * 身份识别头像的漂白 
+		 */
+		function idcardHeadImgChangeBg(idCardHeadImg) {
+			defaultload('头像转码中');
+			var access_token = $api.getStorage('access_token_for_body_analysis');
+			var timeout_msg = setTimeout(function() {
+				alert_msg('可能时间较长，请等待~');
+			}, 5000);
+			var repeatSubmit = setTimeout(function() {
+				submitRepeat(idCardHeadImg);
+			}, 12000);
+			//console.log('imgBase64:'+imgBase64.replace('data:image/png;base64,',''));
+			defaultload('处理头像中');
+			api.ajax({
+				url: 'https://aip.baidubce.com/rest/2.0/image-classify/v1/body_seg?access_token=' + access_token,
+				method: 'post',
+				tag: url,
+				timeout: 30,
+				dataType: 'json',
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded"
+				},
+				data: {
+					values: {
+						image: idCardHeadImg,
+						type: 'foreground'
+					}
+				}
+			}, function(ret, err) {
+				log('头像漂白', ret);
+				clearTimeout(timeout_msg);
+				clearTimeout(repeatSubmit);
+				//console.log('人脸识别结束时间'+(new Date()).Format('HH:mm:ss:S'));
+				if (ret && ret.foreground != undefined) {
+					//base64存到本地
+					var imageName = 'idCardHead' + Math.floor(Math.random() * 1000000) + '.png';
+					trans.saveImage({
+						base64Str: ret.foreground,
+						imgPath: "fs://auth/img/",
+						imgName: imageName
+					}, function(ret, err) {
+						if (ret.status) {
+							//身份证识别头像
+							$('#pic3').attr('src', api.fsDir + '/auth/img/' + imageName);
+							/*document.getElementById('pic3').onclick = function(){
+								openPic(api.fsDir + '/auth/img/idCardHead.png');
+							};
+							api.parseTapmode();*/
+							uploadPic(3);
+						} else {
+							alert_msg('人像优化失败，请重试');
+						}
+					});
+				} else {
+					alert_msg(ret.error_msg);
+				}
+			});
+		}
+
+		/**
+		 * 重新提交身份证漂白 
+		 */
+		function submitRepeat(idCardHeadImg) {
+			api.hideProgress();
+			api.confirm({
+				title: '温馨提示',
+				msg: '转码检测到时间过长，是否重新提交',
+				buttons: ['重新提交', '取消']
+			}, function(ret, err) {
+				if (ret.buttonIndex == 1) {
+					idcardHeadImgChangeBg(idCardHeadImg);
+				}
+			});
+		}
+
+		/**
+		 * 合成身份证正反面 
+		 */
+		function composeIdCard(auth_params) {
+			/*defaultload('身份证合成中');
+		
+			url = third_url + 'api/picture-synthesis/synthesis-save';
+		
+			params = {
+				image1:$('#img0').val(),
+				image2:$('#img1').val(),
+				bucketName:AliOssBucket,
+				fileType:'learnerApp/auth/' + getUserId()
+			}
+		
+			api.ajax({
+				url : url + '?params=' + Base64.encode(JSON.stringify(params)),
+				method : 'get',
+				tag:url,//为方便，全部统一
+				timeout:30,
+				dataType : 'json'
+			}, function(ret, err) {
+				log('合成照片返回',ret);
+				if(ret.code == 0){
+					$('#img4').val(ret.imageUrl);
+					//合成照
+					auth_params.learner.img5 = ret.imageUrl;*/
+			//判断是否对比过身份证和自拍照，没有的话就提交对比
+			if ($('#similarityDegree').val() == '') {
+				comparePhoto(auth_params);
+			} else {
+				auth_params.learner.similarityDegree = $('#similarityDegree').val();
+				auth_identify(auth_params);
+			}
+			/*}else{
+				api.hideProgress();
+				alert_msg('合成身份证失败，请重新提交');
+			}
+		});*/
+		}
+
+		/**
+		 * 对比证件照和自拍照相似度 
+		 */
+		function comparePhoto(auth_params) {
+			defaultload('身份证对比中');
+			var access_token = $api.getStorage('access_token');
+			url = 'https://aip.baidubce.com/rest/2.0/face/v3/match?access_token=' + access_token;
+			params = [{
+					image_type: "BASE64",
+					face_type: "LIVE"
+				},
+				{
+					image_type: "BASE64",
+					face_type: "CERT"
+				}
+			]
+			picToBase64(file_load_url + auth_params.learner.img3, function(img3Base64) {
+				params[0].image = img3Base64.replace('data:image/png;base64,', '');
+				picToBase64(file_load_url + auth_params.learner.img1, function(img1Base64) {
+					params[1].image = img1Base64.replace('data:image/png;base64,', '');
+					api.ajax({
+						url: url,
+						method: 'post',
+						tag: url, //为方便，全部统一
+						timeout: 20,
+						dataType: 'json',
+						headers: {
+							"Content-Type": "application/json"
+						},
+						data: {
+							body: params
+						}
+					}, function(ret, err) {
+						log('人脸对比', ret);
+						if (ret) {
+							if (ret.error_msg == 'SUCCESS') {
+								$('#similarityDegree').val(parseFloat(ret.result.score).toFixed(2));
+								auth_params.learner.similarityDegree = parseFloat(ret.result.score).toFixed(2);
+								auth_identify(auth_params);
+							} else {
+								api.hideProgress();
+								//alert_msg(ret.error_msg);
+								alert_msg('自拍照未能识别人脸，请重试');
+							}
+						} else {
+							api.hideProgress();
+							alert_msg('您的图片可能过大');
+							sendErrorLog('学员app-实名认证人脸对比失败', JSON.stringify(err));
+						}
+					});
+				});
+			});
+		}
+
+		//上传实名认证信息到云端
+		function auth_identify(auth_params) {
+			defaultload('正在提交实名认证信息');
+
+			url = 'api/learner/perfect';
+			log('实名认证最后传参:', auth_params);
+			ajax_Request(url, 'put', 'json', auth_params, function(ret, err) {
+				api.hideProgress();
+				log('上传实名认证信息返回：', ret);
+				if (ret) {
+					if (ret.code == 0) {
+						var cache_by_account = $api.getStorage('cache_by_account');
+						cache_by_account.cache_account.name = auth_params.learner.name; //实名认证信息缓存中加入姓名
+						cache_by_account.cache_account.sex = auth_params.learner.sex; //实名认证信息缓存中加入性别
+						cache_by_account.cache_account.idcardNo = auth_params.learner.idcardNo; //实名认证信息缓存中加入身份证
+						cache_by_account.cache_account.birthday = auth_params.learner.birthday; //实名认证信息缓存中加入出生年月
+						cache_by_account.cache_account.idCardStartDate = auth_params.learner.idCardStartDate; //实名认证信息缓存中加入身份证开始时间
+						cache_by_account.cache_account.idCardEndDate = auth_params.learner.idCardEndDate; //实名认证信息缓存中加入身份证结束时间
+						cache_by_account.cache_account.permanentAddress = auth_params.learner.permanentAddress; //实名认证信息缓存中加入户籍地址
+						cache_by_account.cache_account.img1 = auth_params.learner.img1; //实名认证信息缓存中加入身份证正面
+						cache_by_account.cache_account.img2 = auth_params.learner.img2; //实名认证信息缓存中加入身份证反面
+						cache_by_account.cache_account.img3 = auth_params.learner.img3; //实名认证信息缓存中加入手持证件照
+						cache_by_account.cache_account.img4 = auth_params.learner.img4; //实名认证信息缓存中加入身份证正面识别头像照
+						cache_by_account.cache_account.img5 = auth_params.learner.img5; //实名认证信息缓存中加入身份证正反面合成照
+						cache_by_account.cache_account.similarityDegree = auth_params.learner.similarityDegree; //实名认证信息缓存中加入人脸对比度
+						if (auth_params.learner.similarityDegree >= 80) {
+							cache_by_account.cache_account.identification = 2; //相似度大于80的实名认证状态是已认证
+						} else {
+							cache_by_account.cache_account.identification = 1; //否则认证中
+						}
+						$api.setStorage('cache_by_account', cache_by_account); //加入缓存中
+						esc_function('mine_account_setting_win', 'mine_account_setting_frm', 'loadUserInfo()'); //认证成功后修改账户信息
+						esc_function('mine_account_auth_win', '', 'changeButton()'); //认证成功后不需要提交按钮
+						//esc_function('index','mine','addFinishAuthStyle()');//我的首页增加已认证标识 
+						sendEvent('refresh_my_index', {}); //刷新个人页面
+						alert_msg('已提交实名认证');
+						setTimeout(function() {
+							if (cache.event_action != undefined) {
+								sendEvent(cache.event_action, 'auth_finish');
+							}
+							api.closeWin({
+								name: 'mine_account_auth_win'
+							});
+						}, 1000);
+					} else if (ret.code == '200027' || ret.code == 200027) {
+						//身份证识别失败
+						alert_msg('身份证识别失败，请重新上传');
+					} else {
+						alert_msg(ret.msg);
+					}
+				} else {
+					alert_msg('系统出错，请稍后再试');
+				}
+			});
+		}
+
+		//打开通用弹出框
+		//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+		function openMessage_i(title, content, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+			api.openFrame({
+				name: 'common_message',
+				url: '../common/common_message.html',
+				bgColor: 'rgba(0,0,0,0.4)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					title: title,
+					content: content,
+					sureButton: sureButton,
+					sureFunc: sureFunc,
+					cancelButton: cancelButton,
+					cancelFunc: cancelFunc,
+					winName: api.winName,
+					frameName: api.frameName,
+					params: params
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+	</script>
+</html>

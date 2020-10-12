@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>题库正确率和排行榜</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+    	#exam_time{
+    		font-weight:normal;
+    	}
+    	.tag-view-change{
+    		width: 4rem;
+		    float: left;
+		    color: #3F86FF;
+		    border: solid 1px #3F86FF;
+		    height: 1.5rem;
+		    line-height: 1.5rem;
+		    font-weight: normal;
+		    margin-top: 0.375rem;
+		    font-size: 0.7rem;
+    	}
+    	.active{
+    		background:#3F86FF;
+    		color:#FFF;
+    	}
+    	.left{
+    		border-radius:15px 0px 0px 15px;
+    	}
+    	.right{
+    		border-radius:0px 15px 15px 0px;
+    	}
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+            <img src="../../../icon/common/icon_header_return.png">
+        </a>
+        <div class="aui-title">
+        	<div class='tag-view-change left' tapmode onclick='changeView(this,0)'>成绩</div>
+        	<div class='tag-view-change right' tapmode onclick='changeView(this,1)'>排行</div>
+        </div>
+    </header>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var headHieght;//顶部高度
+	apiready = function(){
+		$api.fixStatusBar($api.byId('aui-header'));
+		headHieght = $api.byId('aui-header').offsetHeight;
+		cache = api.pageParam.data;
+		$('.tag-view-change').eq(cache.sel_index).addClass('active');
+		openFrameGroup();
+	};
+	
+	//加载home的group
+    function openFrameGroup(){
+    	api.openFrameGroup({
+		    name: 'ranking_recode_group',
+		    scrollEnabled:false,
+		    index:cache.sel_index,
+		    preload:0,
+		    rect: {
+		        x: 0,
+		        y: headHieght,
+		        w: 'auto',
+		        h: api.winHeight - headHieght
+		    },
+		    frames: [{
+		        name: 'learner_achievement_frm',//成绩
+		        url: './learner_achievement_frm.html',
+		        bgColor: '#EFEFF4',
+		        bounces: true,
+		        scrollToTop:true,
+		        overScrollMode:'scrolls',
+		        pageParam: {
+		           data:cache
+		        }
+			},{
+		        name: 'performance_ranking_frm',//排行榜
+		        url: './performance_ranking_frm.html',
+		        bgColor: '#EFEFF4',
+		        bounces: true,
+		        scrollToTop:true,
+		        pageParam: {
+		           data:cache
+		        }
+			}]
+		}, function(ret, err) {
+		    var index = ret.index;
+		});
+    }
+    
+    //设置frameGroup可见frame
+    function setViewFrame(index){
+    	console.log('index'+index);
+    	api.setFrameGroupIndex({
+		    name: 'ranking_recode_group',
+		    scroll: true,
+		    index: index
+		});
+    }
+	
+	function changeView(e,index){
+		logAppBuryingPoint({},index == 0?'学习成绩':'排行榜','切换',cache.kemu == '036001'?'科一':'科四','学车考试');
+		setViewFrame(index);
+		$('.tag-view-change').removeClass('active');
+		$('.tag-view-change').each(function(index,o){
+			if($(o).is($(e))){
+				$(e).addClass('active');
+			}
+		});
+	}
+	
+	function closeWin(){
+		api.closeWin({
+        });
+	}
+</script>
+</html>

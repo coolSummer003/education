@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>驾校图片列表</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+		#common_title{
+    		font-weight:normal;
+    		color:#2E2E2E;
+    	}
+    	footer{
+    		height: 2.5rem;
+		    position: absolute;
+		    bottom: 0;
+		    width: 100%;
+		    font-size: 0.7rem;
+    	}
+    	.aui-bar-nav {
+		    top: 0;
+		    line-height: 2.25rem;
+		    background-color: #FFF;
+		    color: #000;
+		    border-bottom: solid 1px #FFFFFF;
+		}
+		.footer-input{
+			float: left;
+		    height: 2.5rem;
+		    width: 70%;
+		    padding-left: 0.5rem;
+		}
+		.footer-input input{
+		    min-height: 1.7rem;
+		    background: #F1F1F1;
+		    padding: 0 0.5rem;
+		    margin-top: 0.4rem;
+		    border-radius: 1rem;
+		    line-height: 1.7rem;
+		}
+		.footer-send{
+			width:15%;
+			float:right;
+			height: 2.5rem;
+			display: flex;
+		}
+		.footer-opinion{
+			width:15%;
+			float:right;
+			height: 2.5rem;
+			display: flex;
+		    position: relative;
+		}
+		.footer-opinion img{
+			width: 1.3rem;
+    		margin: auto;
+		}
+		.footer-send img{
+			width: 1.3rem;
+    		margin: auto;
+		}
+		.opinion-num{
+			position: absolute;
+		    background: #F45454;
+		    color: #FFF;
+		    padding: 0rem 0.2rem;
+		    border-radius: 0.5rem;
+		    font-size: 0.5rem;
+		    right: 0.1rem;
+		    top: 0.3rem;
+		    height: 0.8rem;
+    		line-height: 0.8rem;
+		}
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+            <img src="../../icon/common/icon_header_return.png">
+        </a>
+        <div class="aui-title" id="common_title">
+        	 驾校图片
+        </div>
+        <a class="aui-pull-right aui-btn">
+            
+        </a>
+    </header>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var headerPos;
+	var frmName = 'driver_school_pic_frm';
+	apiready = function(){
+		api.parseTapmode();
+		var header = $api.byId('aui-header');
+		$api.fixStatusBar(header);
+		headerPos = $api.offset(header);
+		cache = api.pageParam.data;
+		openFrame(frmName,headerPos.h, api.winHeight - headerPos.h,'none');
+	}
+	function openFrame(frameName,y,h,animate){
+		api.openFrame({
+            name: frameName,
+            url: './'+frameName+'.html',
+            bgColor:'#efeff4',
+            rect: {
+                x: 0,
+                y: y,
+                w: 'auto',
+                h: h
+            },
+            animation:{
+	        	type:animate,                //动画类型（详见动画类型常量）
+			    subType:"from_right",       //动画子类型（详见动画子类型常量）
+			    duration:300
+	        },
+            bounces: false,
+            pageParam:cache,
+            reload:true,
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+	}
+	function closeWin(){
+		api.closeWin({
+        });
+	}
+</script>
+</html>

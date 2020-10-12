@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<link rel="stylesheet" type="text/css" href="../../../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../../../css/aui/aui_2_0.css" />
+	<link rel="stylesheet" type="text/css" href="../../../../css/common/common.css" />
+
+	<body>
+		<div style="display: none;">
+			<form id="urlData" action="http://jstwydl.welldriver.cn:26598/jstapplogin" method="post" enctype="application/json">
+				<input name="areacode" id="areacode" value="">
+				<input name="dt" id="dt" value="">
+				<input name="is" id="is" value="">
+				<input name="v" id="v" value="">
+				<input name="ts" id="ts" value="">
+				<input name="sign" id="sign" value="">
+				<input name="user" id="user" value="">
+				<input name="inscode" id="inscode" value="">
+				<input name="stunum" id="stunum" value="">
+				<input type="submit" value="提交">
+			</form>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			init();
+		}
+		function init(){
+		//访问第三方接口获取学员信息
+			url = 'api/weier/get-weier-redirect-info';
+			params = {
+				learnerId: getUserId()
+			};
+			log('params',params);
+			ajax_Request(url, "get", "json", params, function(ret, err) {
+					log('ret',ret);
+				if(ret) {
+					console.log(JSON.stringify(ret));
+					if(ret.code == 0) {
+						$('#areacode').val(ret.areacode);
+						$('#dt').val(ret.dt);
+						$('#is').val(ret.is);
+						$('#v').val(ret.v);
+						$('#ts').val(ret.ts);
+						$('#sign').val(ret.sign);
+						$('#user').val(ret.user);
+						$('#inscode').val(ret.inscode);
+						$('#stunum').val(ret.stunum);
+						$('#urlData').submit();
+					} else {
+						//学员无注册
+						alert_msg('服务器繁忙，请稍后重试~');
+					}
+				} else {
+					alert_msg('服务器繁忙，请稍后重试~');
+				}
+			});
+		
+		
+		}
+	
+	</script>
+
+</html>

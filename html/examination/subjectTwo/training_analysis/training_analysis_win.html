@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>训练分析</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../css/common/common.css" />
+    <style>
+    	html,body{
+    		background-color: #FBFBFF;
+    		overflow-x:hidden;
+    		overflow-y:auto;
+    	}
+    	.box{
+    		border: 0px solid #FBFBFF;
+		    background: #FBFBFF;
+		   	height:100%;
+		    width: 100%;
+		    border-radius: 1rem 1rem 0 0;    
+		    z-index: 999;
+		    overflow: auto;
+    	}
+    	.train{
+    		font-size: 0.8rem;
+    		position: relative;
+    		margin-left: 1rem;
+    		margin-top:1rem;
+    	}
+    	.success{
+		    float: right;
+		    font-size: 0.6rem;
+		    margin-right: -2.1rem;
+		    margin-top: 1.35rem;
+		    color:#8E8E8E;
+    	}
+    	.defeat{
+    		float: right;
+		    font-size: 0.6rem;
+		    margin-right: -5.5rem;
+		    margin-top: 1.35rem;
+		    color: #8E8E8E;
+    	}
+    	.green_cube{
+		    background-color: #47B579;
+		    border-radius: 9%;
+		    width: 0.6rem;
+		    height: 0.6rem;
+		    float: right;
+		    margin-right: 6.5rem;
+		    margin-top: 1.5rem;
+    	}
+    	.yellow_cube{
+    		background-color: #FAD961;
+		    border-radius: 9%;
+		    width: 0.6rem;
+		    height: 0.6rem;
+		    float: right;
+		    margin-right: -4rem;
+		    margin-top: 1.5rem;
+    	}
+    	.top_cube{
+    		border:0px solid #FFFFFF;
+    		background:#FFFFFF;
+			height:1.8rem;
+			width:95%;
+			border-radius:0.4rem 0.4rem 0.4rem 0.4rem;
+			box-shadow: 4px 4px 5px #EDEDF1;
+			margin:0 auto;
+			margin-top:0.65rem;	
+    	}
+    	.aui-dot {
+    		display: inline-block;
+		    width: 0.3rem;
+		    height: 0.3rem;
+		    background: #ff2600;
+		    border-radius: 0.5rem;
+		    /* position: absolute; */
+		   	position: static;
+		    top: 0.3rem;
+		    right: 20%;
+		    z-index: 99;
+    		margin-left:1rem;
+    		margin-top:0.7rem;
+    	}
+    	.top_word{
+	    	color: #8E8E8E;
+	    	font-size: 0.75rem;
+	    	position: relative;
+	    	bottom: 1.55rem;
+	    	left: 2rem;
+    	}
+    	.content_cube_second{
+    		border:0px solid #FFFFFF;
+    		background:#FFFFFF;
+			height:9rem;
+			width:95%;
+			border-radius:0.4rem 0.4rem 0.4rem 0.4rem;
+			box-shadow: 4px 4px 5px #EDEDF1;
+			margin:0 auto;
+			margin-top:-0.5rem;	
+    	}
+    	.image_ellipsis{
+    		width: 1.3rem;
+    		position:absolute;
+    		margin-left: 12.5rem;
+    		margin-top: 0.4rem;
+    	}
+    	.aui-hr{
+    		bottom:5.5rem; 
+    		width:90%;
+    		margin:auto;	
+    	}
+    	.train_report{
+    		font-size: 0.8rem;
+    		position: relative;
+    		margin-left: 0.5rem;
+    		margin-top:0.5rem;
+    	}
+    	.image_check{
+    		width: 1.1rem;
+    		float:left;
+    		margin-left: 1.0rem;
+    		margin-top: -4.5rem;
+    	}
+    	.history_number{
+    		position:absolute;
+		    font-size: 0.75rem;
+		    margin-left:2.5rem;
+		    margin-top:-4.5rem;
+    	}
+    	.image_good{
+    		float:left;
+    		width: 1.1rem;
+    		margin-top:-2.93rem;
+    		margin-left:1.0rem;
+    	}
+    	.success_rate{
+    		position: absolute;
+		    font-size: 0.75rem;
+		    margin-left:2.5rem;
+		    margin-top:-2.93rem;
+    	}
+    	.btn{
+    		float:right;
+		    right: 1rem;
+		    top: -6rem;
+    	}
+    	.aui-btn-info{
+		    color: #03B4F7 !important;
+		    border: 1px solid #03B4F7;
+		    margin-top: 2rem !important;
+		    border-radius: 0.2rem !important;
+		   	background:#ffffff !important;
+		    margin-bottom: 1rem !important;
+    	}
+    	#aui-header1{
+			opacity: 1;
+			z-index:12;
+		}
+		#aui-header2{
+			opacity: 0;
+			background:#FFF !important;
+			z-index:12;
+		}
+		.aui-bar-nav {
+			top: 0;
+			line-height: 2.25rem;
+			background-color: #FFF;
+			color: #000;
+			border-bottom: none;
+		}
+		.aui-bar-nav,.aui-bar-tab{
+			background-color: #ffffff;
+		}
+		.aui-bar-nav{
+			color: #2c2c2c;
+			position: fixed;
+			top: 0;
+			left: 0;
+			opacity: 1;
+		}
+		a.aui-pull-left, a.aui-pull-right {
+			color: #35A7FF;
+		}
+		header img {
+			width: 20px;
+		}
+		.cube{
+			position:absolute;
+			margin-top: 0rem;
+			margin-left: 14rem;
+		}
+		.msg{
+			background: #FFFFFF;
+			height: 20rem;
+			width:95%;
+			border-radius:0.4rem 0.4rem 0.4rem 0.4rem;
+			box-shadow: 4px 4px 5px #EDEDF1;
+			text-align: center;
+			font-size:0.7rem;
+			margin:0 auto;
+		}
+		.msg img{
+			width:8rem;
+			margin-top: 9rem;
+		}
+		.jiazai{
+			font-size: 0.7rem;
+			background: #FFFFFF;
+			color: #666565;
+			padding-bottom: 0.3rem;
+			text-align: center;
+			padding-top: 0.3rem;
+		}
+		.jiazai img{
+			width: 1.5rem;
+		}
+		.startDate{
+			font-size:0.6rem;
+			color:#8E8E8E;
+			position: absolute;
+			margin-top: 2rem;
+			margin-left: -3.1rem;
+		}
+		.endDate{
+			font-size:0.6rem;
+			color:#8E8E8E;
+			position: absolute;
+			margin-top: 2rem;
+			margin-left: 6.5rem;
+		}
+		.color_cube{
+			font-size:0.7rem;
+			position:absolute;
+			margin-top:1.5rem;
+			margin-left:0.6rem;
+		}
+		.drive{
+			position:absolute;
+			width:65%;
+			top: 3.4rem;
+			left:1.1rem;
+		}
+    </style>
+</head>
+<body>
+		<header class="aui-bar aui-bar-nav none-bottom-style" id="aui-header1" style="background: none;">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+				<img src="../../../../icon/common/icon_header_return_white.png">
+			</a>
+			<div class="aui-title">
+
+			</div>
+		</header>
+		<header class="aui-bar aui-bar-nav" id="aui-header2" style="background: none;">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+				<img src="../../../../icon/common/icon_header_return.png">
+			</a>
+			<div class="aui-title" id="driver_s_title">
+				训练分析
+			</div>
+		</header>
+		<img src="../../../../image/background/bg_user.png">
+		<div class="box">
+			<div>
+				<span class="train">
+					训练分析报告
+				</span>	
+				<div class="green_cube"></div>
+				<span class="success">
+					成功
+				</span>
+				<div class="yellow_cube"></div>
+				<span class="defeat">
+					失败
+				</span>
+				<div class="top_cube">
+					<span class="aui-dot"></span>	
+				</div>
+				<span class="top_word">训练分析报告数据真实，通过率<span style="color: red;font-size:0.75rem ">仅供参考</span></span>
+			</div>
+			<div id="contents">
+					
+			</div>
+		</div>
+<!--		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin()">
+            <img src="../../../icon/common/icon_header_return.png">
+        </a>-->
+        <script type="text/template" charset="utf-8" id='train_content'>
+		 
+			{{ for(var i=0;i < it.returnVal.length;i++){ }}
+			<section>
+				<div class="content_cube_second" style="margin-bottom: 1rem;" >
+					<span class="train_report" >
+						{{=it.returnVal[i].itemName}}
+					</span>		
+						<!--<img src="../../../../icon/subject/icon_ellipsis.png" class="image_ellipsis"/>-->
+					<div class="cube">
+						<img src="../../../../icon/subject/icon_star.png" style="width: 0.8rem;"/>
+						<span style="font-size: 1rem;margin-left: 0.35rem">{{=it.returnVal[i].curMarks}}.0</span>
+						<p>驾能指数</p>
+					</div>
+					<span class="startDate">{{=setData(it.returnVal[i].startDate)}}</span>
+					<span class="endDate">{{=setData(it.returnVal[i].endDate)}}</span>
+					<div  class="drive">
+					{{ for( var j=0;j<it.returnVal[i].result.length;j++ ) }}
+					{{ if(it.returnVal[i].result[j]=='1'){ }}
+					<div style="width: {{=getLabelWidth(it.returnVal[i].result.length)}}%;height: 0.5rem;background:#47B579;float:left;"></div>
+					{{ }else{ }}
+					<div style="width: {{=getLabelWidth(it.returnVal[i].result.length)}}%;height: 0.5rem;background:#FAD961;float:left;"></div>
+					{{ } }}	
+					</div>						
+				</div>	
+					<div class="aui-hr"></div>
+					<img src="../../../../icon/subject/icon_check.png" class="image_check" />
+					<span class="history_number">历史次数:{{=it.returnVal[i].totalCount}}</span>
+					<img src="../../../../icon/subject/icon_sort.png" class="image_good"/>
+					<span class="success_rate">最近成功率:{{=it.returnVal[i].successRate}}%</span>	
+					<div class="aui-btn aui-btn-info btn" tapmode onclick="sceneReappear('{{=it.returnVal[i].id}}')">情景再现</div>						
+			</section>	 
+		{{ } }}
+		   
+	</script>
+	<div id='load_div'></div>
+	<script type="text/template" charset="utf-8" id='msg_src'>
+		<div class="msg">
+			<img src="../../../../icon/common/empty.png" alt="" /><br>
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+	<script type="text/template" charset="utf-8" id='more_src'>
+		<div class="jiazai">
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+</body>
+<script type="text/javascript" src="../../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../../script/common/common.js"></script>
+<script type="text/javascript" src="../../../../script/doT_min.js"></script>
+<script type="text/javascript">
+	var cache;	
+	var headerPos;
+	var statusCode = 0;//为0时为关闭状态
+	var percent = 0; //白底header的隐藏属性值
+	var hidepercent = 0; //非白底header的隐藏属性值
+	var fs;
+	var systemType;
+	var msg_src = $('#msg_src').html(); //消息提示src
+	var more_src = $('#more_src').html(); //更多src
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam.data;
+		init();		
+		$api.fixStatusBar($api.byId('aui-header1'));
+		$api.fixStatusBar($api.byId('aui-header2'));
+		headerPos = $api.offset($api.byId('aui-header1'));
+		threshold = headerPos.h;
+		fs = api.require('fs');
+		systemType = api.systemType;
+		touchStyle = systemType == "ios" ? 'touchmove' : 'scroll';
+		scroll();
+	}
+	
+	//色块按百分比显示
+	function getLabelWidth(question_length){
+    	return 100/question_length;
+  	}
+  	function setData(data){
+	  	var str;
+	  	str=data.slice(0,4)+'/'+data[4]+data[5]+'/'+data.slice(6);
+	  	return str; 	
+  	}
+  	//头部下拉隐藏
+	function scroll() {
+			$(window).on(touchStyle, function(event) {
+				scrollPos = $(window).scrollTop();
+				//安卓做限制滚动
+				if (((scrollPos / threshold).toFixed(2) <= 1) && systemType == 'android') {
+					percent = (scrollPos / threshold).toFixed(2) > 1 ? 1 : (scrollPos / threshold).toFixed(2);
+					$('#aui-header2').css("opacity", percent);
+					hidepercent = (1 - percent) < 0 ? 0 : (1 - percent);
+					$('#aui-header1').css("opacity", hidepercent);
+
+				} else {
+					percent = (scrollPos / threshold).toFixed(2);
+					$('#aui-header2').css("opacity", percent);
+					hidepercent = 1 - percent;
+					$('#aui-header1').css("opacity", hidepercent);
+				}
+			});
+		}
+	
+	//打开情景再现页面
+	function sceneReappear(id){	
+		api.parseTapmode();
+		api.openWin({
+				name: 'track_playback_win',
+				url: './track_playback_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				pageParam:{
+					pId:id
+				}
+			});
+	}
+	
+	//获取训练分析数据
+	function init() {
+			url = 'api/robot/practice-analysis/list';
+			params = {
+				learnerId: 3308
+			}
+			//log('params:', JSON.stringify(params));
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('=======', ret);
+				if (ret) {
+					if(ret.returnVal[0].result == "" || ret.returnVal[0].result == null || ret.returnVal[0].result == undefined){
+						setMsg('暂无训练分析');
+					}
+					if (ret.code == 0 && ret.returnVal.length > 0) {
+							var train_content = $('#train_content').html();
+							$("#contents").html(doT.template(train_content)(ret));
+						}else{
+							setMsg('暂无训练分析');
+						}
+				} else {
+					setMsg('服务器繁忙，请稍后再试');
+				}
+			})
+			setTimeout(function() {
+				api.refreshHeaderLoadDone();
+			}, 500);
+		}
+	
+	//设置页面提示信息
+	function setMsg(msg) {
+		if ($('section').find('div').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+				setTimeout(function() {
+					$("#contents").html(doT.template(msg_src)({
+						'msg': msg
+					}));
+				}, 500);
+		}else{ //原先已经有数据的情况下
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': msg,
+						'img': ''
+					}));
+				}, 500);
+		}
+	}
+		
+	function closeWin(){
+		api.closeWin({
+        });
+	}
+</script>
+</html>

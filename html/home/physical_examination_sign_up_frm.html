@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>体检报名</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<style>
+			html,body{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+		#driver_s_title{
+		    font-weight: normal;
+		}
+		.uploadPic{
+		    height: 11rem;
+		    /*width: 5rem;*/
+		    position: relative;
+		}
+		.picMor{
+			height: 11rem;
+		    /*width: 5rem;*/
+		    position: relative;
+		}
+		.picMor img{
+			height: 10.05rem;
+    		margin: 0 auto;
+    		margin-top: 0.5rem;
+    		width: 7.5rem;
+    		object-fit: cover;
+    		border-radius: 0.5rem;
+		}
+		.uploadPic img{
+			height: 10.05rem;
+    		margin: 0 auto;
+    		margin-top: 0.5rem;
+    		width: 7.5rem;
+    		object-fit: cover;
+		}
+		.company{
+			width: 30%;
+    		height: 2.2rem;
+		    /* border-left: solid 1px #F1F1F1; */
+		    text-align: left;
+		    line-height: 2.2rem;
+		}
+		.aui-list .aui-list-item-label, .aui-list .aui-list-item-label-icon {
+		    color: #212121;
+		    width: 35%;
+		    min-width: 1.5rem;
+		    margin: 0;
+		    padding: 0;
+		    padding-right: 0.25rem;
+		    line-height: 2.2rem;
+		    position: relative;
+		    overflow: hidden;
+		    white-space: nowrap;
+		    max-width: 100%;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: inline;
+		    -webkit-align-items: center;
+		    align-items: center;
+		    text-align: left;
+		}
+		.delete{
+		    width: 1.2rem !important;
+		    height: 1.2rem !important;
+		    position: absolute;
+            right: 0.5rem;
+    		top: -0.6rem;
+		    z-index:10;
+		}
+		.margin-auto{
+			margin: 0.5rem 5% !important; 
+		}
+		.check-style{
+		    font-size: 0.7rem;
+		    color: #03B4F7;
+		    /*text-align: right;*/
+		    position: absolute;
+		    top: 3.2rem;
+		    right: -5rem;
+		}
+		.p1{
+			color: #000000;
+			float: left;
+			font-size:0.8rem;
+		}
+		/*.aui-list-item-input{
+			text-align: right;
+		}*/
+		/*input{
+			text-align: right;
+		}*/
+		/*select{
+			direction:rtl;
+		}*/
+		/*.aui-radio{
+			width: 0.98rem !important;
+			height: 1rem !important;
+			border-radius: 30px;
+			background:#64ADF6;
+		}*/
+		.look-exp{
+			color: #3F86FF;
+			/*text-align: right;*/
+		}
+		.pic-foot{
+			background: #fff;
+			width: 49.2%;
+			display: inline-block;
+			text-align: center;
+		}
+		.aui-btn-info{
+			background: linear-gradient(to left, #3F86FE, #64ADF6) !important;
+		}
+		.aui-list:after{
+			height: 0;
+		}
+		.picLeft{
+			padding-left: 15%;
+		}
+		.picRight{
+			padding-right: 15%;
+		}
+		.important{
+			font-weight:bold;
+			color:#03B4F7;
+		}
+		.quit_tips{
+			width: 92%;
+		    height: 2.2rem;
+		    position: absolute;
+		    margin-left: 4%;
+		    background: #404040;
+		    z-index: 9;
+		    opacity: 0.8;
+		    border-radius: 8px;
+		}
+		.quit_tips-txt{
+	        width: 85%;
+		    float: left;
+		    height: 2.2rem;
+		    font-size: 0.6rem;
+		    color: #FFF;
+		    padding: 0.2rem 0.5rem;
+		}
+		.quit_tips-img{
+			width: 15%;
+		    float: right;
+		    height: 2.2rem;
+	        display: flex;
+		}
+		.quit_tips-img img{
+			width: 0.8rem;
+			margin: auto;
+		}
+		.jian{
+	        width: 0;
+		    height: 0;
+		    border-width: 0.5rem 0.5rem;
+		    border-style: solid;
+		    border-color: transparent transparent #404040;
+		    position: absolute;
+		    margin-top: 2rem;
+		    margin-left: 2rem;
+		    transform: rotate(180deg);
+		}
+		.radio-new{
+			width: 0.8rem !important;
+			height: 0.8rem !important;
+		}
+		.redio-name{
+			vertical-align: top !important;
+			  margin-top: -3%;
+		}
+    </style>
+	</head>
+	<body>
+		<div class="aui-content aui-margin-b-15" id="user_msg">
+
+		</div>
+		<script type="text/template" id="user_msgs">
+			<ul class="aui-list aui-form-list none-top-style">
+					<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							报名医院
+						</div>
+						<div class="aui-list-item-input">
+							<input type="text" placeholder="获取医院名称中..." value="{{=it.hospitalName}}" id="hospitalName" readonly>
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							姓&ensp;&ensp;&ensp;&ensp;名
+						</div>
+						<div class="aui-list-item-input">
+							<input type="text" placeholder="获取姓名中..." value="{{=it.name}}" id="name" readonly>
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item aui-hide">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							性&ensp;&ensp;&ensp;&ensp;别
+						</div>
+						<div class="aui-list-item-input" id="sex_option">
+						{{ for(var i=0;i<it.sex_option.dictionaryList.length;i++){ }}
+							{{ if(it.sex_option.selected == it.sex_option.dictionaryList[i].code){ }}
+								<label><input class="aui-radio" type="radio" value='{{=it.sex_option.dictionaryList[i].code}}' name="sex" checked>&ensp;<span>{{=it.sex_option.dictionaryList[i].name}}</span></label>
+							{{ }else{ }}
+								<label><input class="aui-radio" type="radio" value='{{=it.sex_option.dictionaryList[i].code}}' name="sex">&ensp;<span>{{=it.sex_option.dictionaryList[i].name}}</span></label>
+							{{ } }}
+						{{ } }}
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							身&ensp;&ensp;&ensp;&ensp;高
+						</div>
+						<div class="aui-list-item-input" style='display: inherit;'>
+							<input type="tel" maxlength="3" id="height" placeholder="厘米" value="{{=it.height}}">
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							手机号码
+						</div>
+						<div class="aui-list-item-input">
+							<input type="text" placeholder="读取中..." value="{{=it.account}}" id="account" readonly>
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item aui-list-item-arrow aui-hide">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							证件类型
+						</div>
+						<div class="aui-list-item-input" id="document_type">
+							<select type="select" id="documentType">
+								{{ for(var i=0;i<it.document_type.dictionaryList.length;i++){ }}
+									{{ if(i == 0){ }}
+							        	<option value="{{=it.document_type.dictionaryList[i].code}}" selected>{{=it.document_type.dictionaryList[i].name}}</option>
+									{{ }else{ }}
+							        	<option value="{{=it.document_type.dictionaryList[i].code}}">{{=it.document_type.dictionaryList[i].name}}</option>
+									{{ } }}
+								{{ } }}
+							</select>
+						</div>
+					</div>
+				</li>
+				<div class='quit_tips'>
+					<div class='jian'></div>
+					<div class='quit_tips-txt'>本地人员邮寄地址请与户籍一致，外地人员请与暂住证地址一致</div>
+					<div class='quit_tips-img' tapmode onclick='closeTips()'><img src="../../icon/common/icon_close_white.png" alt="" /></div>
+				</div>
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							身&ensp;份&ensp;证
+						</div>
+						<div class="aui-list-item-input">
+							<input type="text" placeholder="读取中..." value="{{=it.idCardNo}}" id="idCardNo" readonly>
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item none-bottom-style">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							邮寄地址
+						</div>
+						<div class="aui-list-item-input aui-list-item-arrow" tapmode onclick='select_address()'>
+							<input style="padding-right: 0.8rem;" type="text" value="{{=it.addressView?it.addressView:''}}" placeholder="请选择邮寄地址" id="addressView" readonly>
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+
+						</div>
+						<div class="aui-list-item-input">
+							<input type="text" placeholder="详细地址" value="{{=it.addressDetail?it.addressDetail:''}}" id="addressDetail">
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item  none-bottom-style important">
+					<div class="aui-list-item-inner" style='padding-top: 0.4rem;padding-bottom: 0.4rem;'>
+						<div class="aui-list-item-label" style='color:#59A1F9;'>
+							申请业务
+						</div>
+						<div class="aui-list-item-input" style='color:#59A1F9;'>
+							{{ for(var i=0;i<it.apply_type.dictionaryList.length;i++){ }}
+								{{ if(it.apply_type.dictionaryList[i].code == '028001'){ }}
+									<label for="a{{=it.apply_type.dictionaryList[i].code}}" onclick="selectApplyType({{=it.apply_type.dictionaryList[i].code}})"><input id="a{{=it.apply_type.dictionaryList[i].code}}" class="aui-radio radio-new" type="radio" value='{{=it.apply_type.dictionaryList[i].code}}' name="apply_type" checked>&ensp;<span class="redio-name">{{=it.apply_type.dictionaryList[i].name}}</span></label>
+									</br>
+								{{ }else{ }}
+									<label for="b{{=it.apply_type.dictionaryList[i].code}}" onclick="selectApplyType({{=it.apply_type.dictionaryList[i].code}})"><input id="b{{=it.apply_type.dictionaryList[i].code}}" class="aui-radio radio-new" type="radio" value='{{=it.apply_type.dictionaryList[i].code}}' name="apply_type">&ensp;<span class="redio-name">{{=it.apply_type.dictionaryList[i].name}}</span></label>&ensp;
+									</br>
+								{{ } }}
+							{{ } }}
+							
+							
+							<!-- <select type="select" id="apply_type" onchange="selectApplyType()" style='color:#59A1F9;'>
+						        {{ for(var i=0;i<it.apply_type.dictionaryList.length;i++){ }}
+						        	{{ if(it.apply_type.dictionaryList[i].code == '028001'){ }}
+						        		<option value="{{=it.apply_type.dictionaryList[i].code}}" selected>{{=it.apply_type.dictionaryList[i].name}}</option>
+							        {{ }else{ }}
+						        		<option value="{{=it.apply_type.dictionaryList[i].code}}">{{=it.apply_type.dictionaryList[i].name}}</option>
+							        {{ } }}
+						        {{ } }}
+						    </select> -->
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item aui-list-item-arrow none-bottom-style aui-hide" id='orignialCarType'>
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							
+						</div>
+						<div class="aui-list-item-input" tapmode onclick='selOrignialCarType()'>
+							<input type="text" placeholder="请选择已拥有车型" value="" id='haveCarType' readonly>
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item aui-list-item-arrow important">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label" style='color:#59A1F9;'>
+							准驾车型
+						</div>
+						<div class="aui-list-item-input" style='display: inherit;' id="license_type">
+							<select type="select" id="licenseType" onchange="checkStandard()" style='color:#59A1F9;'>
+								<option value="">请选择车型</option>
+								{{ for(var i=0;i<it.license_type.dictionaryList.length;i++){ }}
+									{{ if(it.license_type.dictionaryList[i].code == '002006'){ }}
+							        	<option value="{{=it.license_type.dictionaryList[i].code}}" selected>{{=it.license_type.dictionaryList[i].name}}&#x200E</option>
+									{{ }else if(it.license_type.dictionaryList[i].code == '002007'){ }}
+							        	<option value="{{=it.license_type.dictionaryList[i].code}}">{{=it.license_type.dictionaryList[i].name}}&#x200E</option>
+									{{ } }}
+								{{ } }}
+							</select>
+						</div>
+					</div>
+				</li>
+				
+				
+				<li class="aui-list-item none-bottom-style" id="picture_sfz">
+					<div class="aui-list-item-inner top-slide">
+						<div class="aui-list-item-label">
+							<p class="p1">自&ensp;拍&ensp;照</p>
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item none-bottom-style" style="padding: 0;">
+					<div class="pic-foot">
+						<div class="picMor picLeft">
+							<img id="examplePic" src="{{=it.examplePic}}" tapmode onclick='checkExample(this)' alt="" onerror="javascript:this.src='../../icon/common/icon_upload_pic_new_bg.png'" />
+						</div>
+					</div>
+					<div class="pic-foot">
+						<div class="uploadPic picRight">
+							<img src="../../icon/common/icon_up_pic_customer.png" tapmode onclick='uploadPic()' alt="" id="photo" onerror="javascript:this.src='../../icon/common/icon_upload_pic_new_bg.png'" />
+							<input type="hidden" id='picture' value='' />
+							<img src="../../icon/common/icon_delete_blacker.png" alt="" class='delete aui-hide' tapmode onclick="deletePic()" />
+						</div>
+					</div>
+				</li>
+				
+			</ul>
+			<div class="aui-btn aui-btn-block aui-btn-info margin-auto" tapmode onclick="sign_up()">下一步</div>
+		</script>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var headerPos;
+		var addressView;
+		var isload = false; //是否已经加载成功的标识
+		var cache;
+		var addressViewCode = '';
+		var imageFilter;
+		var FNImageClip;
+		var takePicCutOut;
+		var selected_address_id; //选中地址的id
+		var addressDetail;
+		var image_path;
+		var winWidth;
+		var winHeight;
+		var localmsg = {};
+		var haveCarType = '';//已选择的增驾车型
+		var FNPhotograph;
+		apiready = function() {
+			api.parseTapmode();
+			cache = api.pageParam;
+			imageFilter = api.require('imageFilter'); //图片压缩
+			FNImageClip = api.require('FNImageClip'); //图片裁剪
+			takePicCutOut = api.require('takePicCutOut');
+			FNPhotograph = api.require('FNPhotograph');
+			// $('#hospitalName').val(cache.name);
+			localmsg.hospitalName = cache.name;
+			//监听地址选择
+			toEventListener('hospital_sign_up', function(ret) {
+				//log('地址',ret.value);
+				var address_info = ret.value;
+				$('#addressView').val(address_info.district.provinceName + address_info.district.cityName + address_info.district
+					.districtName);
+				$('#addressDetail').val(address_info.addressDetail);
+				addressViewCode = address_info.districtCd;
+				selected_address_id = address_info.id;
+			});
+
+			//监听原始准驾车型选择
+			toEventListener('sel_car_num_action', function(ret) {
+				$('#haveCarType').val('');
+				haveCarType = '';
+				if($('#licenseType').find('option:selected').val() == ''){
+					alert_msg('请先选择准驾车型');return;
+				}
+				if (ret.value.indexOf($('#licenseType').find('option:selected').val()) != -1) {
+					//原有车型不能包含当前申请车型
+					alert_msg('不能包含' + $('#licenseType').find('option:selected').text());
+					return;
+				}
+				$('#haveCarType').val(getCarTypeShortName(ret.value));
+				haveCarType = ret.value
+			});
+
+			winWidth = api.winWidth;
+			winHeight = api.winHeight;
+			inits();
+		}
+
+		/**
+		 * 根据codelist显示车型 
+		 */
+		function getCarTypeShortName(licenTypeTags) {
+			var cache_dictionary = $api.getStorage('cache_by_app').cache_dictionary;
+			licenseTypeMap = $api.getStorage('cache_by_app').licenseTypeMap;
+			var car_menu = '';
+			for (var i = 0; i < licenTypeTags.split(',').length; i++) {
+				car_menu += licenseTypeMap[licenTypeTags.split(',')[i]].name.split('（')[0] + ' ';
+			}
+			return car_menu;
+		}
+
+		//示例的图片
+		function picOther(type) {
+			if ($('#licenseType').find('option:selected').val() == '002001' ||
+				$('#licenseType').find('option:selected').val() == '002002' ||
+				$('#licenseType').find('option:selected').val() == '002003' ||
+				$('#licenseType').find('option:selected').val() == '002004' ||
+				$('#licenseType').find('option:selected').val() == '002005' ||
+				$('#licenseType').find('option:selected').val() == '002015') {
+				$(".p1").html('手持身份证');
+				if (type == 0) {
+					localmsg.examplePic = '../../image/data/demo_new_two.jpg';
+				} else {
+					$('#examplePic').attr('src', '../../image/data/demo_new_two.jpg');
+				}
+
+			} else {
+				$(".p1").html('自&ensp;拍&ensp;照');
+				if (type == 0) {
+					localmsg.examplePic = '../../image/data/demo_new_one.jpg';
+				} else {
+					$('#examplePic').attr('src', '../../image/data/demo_new_one.jpg');
+				}
+			}
+		}
+
+		//检验标准
+		var min_age = 0;
+		var max_age = 100;
+		var min_height = 0;
+
+		function checkStandard() {
+			//根据准驾车型切换示例图片
+			var code = $('#licenseType').find('option:selected').val();
+			log('code1', code)
+			console.log(haveCarType)
+			if(haveCarType != '' && haveCarType.indexOf($('#licenseType').find('option:selected').val()) != -1){
+				//原有车型不能包含当前申请车型
+				alert_msg('不能包含' + $('#licenseType').find('option:selected').text());
+				$('#haveCarType').val('');
+				haveCarType = '';
+				return;
+			}
+			
+			picOther(1);
+			if(code){
+				min_age = licenseTypeMap[code].min_age;
+				max_age = licenseTypeMap[code].max_age;
+				min_height = licenseTypeMap[code].min_height;
+			}
+			log('min_height', min_height);
+		}
+
+		var licenseTypeMap;
+
+		function init() {
+			//缓存中的字典表数据
+			var cache_dictionary = $api.getStorage('cache_by_app').cache_dictionary;
+			licenseTypeMap = $api.getStorage('cache_by_app').licenseTypeMap;
+
+			var license_type_src = $('#license_type_src').html();
+			console.log("准驾车型数据" + JSON.stringify(cache_dictionary['002000']))
+			// $('#license_type').html(doT.template(license_type_src)(cache_dictionary['002000'])); //准驾车型
+			localmsg.license_type = cache_dictionary['002000'];
+			var document_type_src = $('#document_type_src').html();
+			// $('#document_type').html(doT.template(document_type_src)(cache_dictionary['004000'])); //证件类型
+			load_user_info(cache_dictionary['006000']);
+			localmsg.document_type = cache_dictionary['004000'];
+			//申请业务种类
+			localmsg.apply_type = cache_dictionary['028000'];
+
+			//根据准驾车型切换示例图片
+			picOther(0);
+		}
+
+		/**
+		 * 关闭提示 
+		 */
+		function closeTips() {
+			$('.quit_tips').addClass('aui-hide');
+		}
+
+		/**
+		 * 申请业务切换 
+		 */
+		function selectApplyType(code) {
+			var apply_type = code;
+			if (apply_type == '028002') {
+				//如果是增驾
+				$('#orignialCarType').removeClass('aui-hide');
+			} else {
+				$('#haveCarType').val('');
+				$('#orignialCarType').addClass('aui-hide');
+			}
+		}
+
+		/**
+		 * 选择拥有驾考类型
+		 */
+		function selOrignialCarType() {
+			api.openWin({
+				name: 'common_lincense_select_win',
+				url: '../common/lincense_type_select/common_lincense_select_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: {
+					limit_select: 2 //最多可选的准驾车型
+				}
+			});
+		}
+
+		function inits() {
+			defaultload();
+			url = "api/learner/address-list";
+			params = {
+				learnerId: getUserId()
+			}
+			ajax_Request(url, "get", "json", params, function(ret, err) {
+				log("地址数据：", ret);
+				if (ret) {
+					if (ret.code == 0) {
+						if (ret.learnerAddressList.length > 0) {
+							if (ret.learnerAddressList.length == 1) {
+								addressViewCode = ret.learnerAddressList[0].districtCd;
+								localmsg.addressView = ret.learnerAddressList[0].district.provinceName + ret.learnerAddressList[0].district.cityName +
+									ret.learnerAddressList[0].district.districtName;
+								localmsg.addressDetail = ret.learnerAddressList[0].addressDetail;
+							} else {
+								for (var i = 0; i < ret.learnerAddressList.length; i++) {
+									if (ret.learnerAddressList[i].isDefault == "1") { //取默认地址
+										addressViewCode = ret.learnerAddressList[i].districtCd;
+										localmsg.addressView = ret.learnerAddressList[i].district.provinceName + ret.learnerAddressList[i].district
+											.cityName + ret.learnerAddressList[i].district.districtName;
+										localmsg.addressDetail = ret.learnerAddressList[i].addressDetail;
+									}
+								}
+							}
+							init();
+						} else {
+							localmsg.addressView = "";
+							localmsg.addressDetail = "";
+							init();
+						}
+
+					} else {
+						setMsg(ret.msg);
+					}
+				} else {
+					alert_msg("服务器繁忙，请稍后再试");
+				}
+			})
+		}
+
+		/**
+		 * 选择省市区 
+		 */
+		function select_address() {
+			closeTips(); //清除提示
+			params = {
+				selected_address_id: selected_address_id, //选中的地址id，可能为空，用来标记
+				isSelect: true, //是否是选择
+				action: 'hospital_sign_up' //动作监听name
+			}
+			api.openWin({
+				name: 'common_address_list_win',
+				url: '../common/learner_address/common_address_list_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: params
+			});
+		}
+
+		//加载数据到体检报名
+		function load_user_info(sexData) {
+			//获取并更新本地学员缓存
+			updateLearnerInfo(function(ret, err) {
+				if (ret && ret.code == 0) {
+					console.log('学员信息:' + JSON.stringify(ret));
+					var sex_src = $('#sex_src').html();
+					sexData.selected = ret.learner.sex;
+					localmsg.sex_option = sexData;
+					localmsg.name = ret.learner.name;
+					localmsg.idCardNo = ret.learner.idcardNo;
+					localmsg.account = ret.learner.account;
+					if (ret.learner.height != undefined) {
+						localmsg.height = ret.learner.height;
+					} else {
+						localmsg.height = "";
+					}
+
+					var user_msgs = $('#user_msgs').html();
+					$('#user_msg').html(doT.template(user_msgs)(localmsg));
+					console.log('内容' + (doT.template(user_msgs)(localmsg)));
+					closedefaultload();
+					api.parseTapmode();
+					//取消报名自拍照为手持身份证照
+					/*if(ret.learner.img3 != null&&ret.learner.img3 != ''){
+						var imgPath = file_load_url + ret.learner.img3;
+						$('#photo').attr('src',imgPath);//正面自拍照物理地址
+						$('#picture').val(ret.learner.img3);//正面自拍照网络地址
+						$('.delete').removeClass('aui-hide');
+						document.getElementById('photo').onclick = function(){
+							openPic(imgPath);
+						};
+					}*/
+
+					// 自拍照显示
+					if (ret.learner.personImg) {
+					    var personImg = ret.learner.personImg;
+						$('#picture').val(personImg);
+						$('#photo').attr('src', file_load_url + personImg);
+						$('.delete').removeClass('aui-hide');
+					}
+
+					isload = true;
+				} else {
+					alert_msg('获取学员信息失败');
+				}
+			});
+		}
+
+		//点击报名 在win中调用
+		function sign_up() {
+			if (isload) { //页面加载成功
+				var code = $('#licenseType').find('option:selected').val();
+				var cache_account = $api.getStorage('cache_by_account').cache_account;
+
+				var height = $('#height').val(); //身高
+				if (height == null || height == '') {
+					alert_msg('请填写您的身高');
+					return;
+				}
+				var licenseType = $('#licenseType').find('option:selected').val(); //详细地址
+				if (licenseType == null || licenseType == '') {
+					alert_msg('请选择准驾车型');
+					return;
+				}
+
+				//根据缓存拿证件类型+年龄
+				if (cache_account.idcardType == '004001') { //如果是身份证则验证年龄
+					var age = getAgeByIdCard(cache_account.idcardNo, licenseTypeMap[code].addDay);
+					if (age >= max_age || age < min_age) {
+						alert_msg('报考' + licenseTypeMap[code].name + '您的年龄需在' + min_age + '岁和' + max_age + '岁之间');
+						return;
+					}
+				}
+
+				if (height < min_height) {
+					alert_msg('报考' + licenseTypeMap[code].name + '您的身高需在' + min_height + 'cm以上');
+					return;
+				}
+
+				var addressView = $('#addressView').val(); //省市区
+				if (addressView == null || addressView == '') {
+					alert_msg('请填写省市区');
+					return;
+				}
+				var addressDetail = $('#addressDetail').val(); //详细地址
+				if (addressDetail == null || addressDetail == '') {
+					alert_msg('请填写详细地址');
+					return;
+				}
+
+				//申请业务
+				var applyType = $('input:radio[name="apply_type"]:checked').val();
+				//拥有的准驾车型
+				var haveCarType = $('#haveCarType').val().trim();
+				if (applyType == '028002' && haveCarType == '') {
+					alert_msg('请选择已拥有车型');
+					return;
+				}
+
+				if ($('#photo').attr('src') == '../../icon/common/icon_up_pic_customer.png') {
+					alert_msg('请上传驾校报名照片');
+					return;
+				}
+				$('input').blur(); //使input框失去焦点
+				params = {
+					id: getUserId(), //用户id
+					hospitalId: cache.id, //医院id
+					hospitalName: $('#hospitalName').val(), //医院名称
+					onoffLine: cache.onoffLine, //是否线上线下
+					name: $('#name').val(), //name
+					sex: $('input:radio[name="sex"]:checked').parent().find('span').html(), //性别
+					height: $('#height').val(), //身高
+					weight: 50, //体重
+					countryCode: $('#country').val(), //国籍代码
+					countryName: $('#country').find('option:selected').text(), //国籍名称
+					idCardNo: $('#idCardNo').val(), //身份证id
+					account: $('#account').val(), //账号
+					addressView: addressView, //省市区name
+					addressViewCode: addressViewCode, //省市区code
+					addressDetail: addressDetail, //详细地址
+					licenseType: licenseType, //准驾车型code
+					licenseName: $('#licenseType').find('option:selected').text(), //准驾车型name
+					photo: $('#photo').attr('src'), //正面自拍照
+					// applyType: applyType,//申请业务种类code
+					applyType: $('input:radio[name="apply_type"]:checked').val(), //申请业务种类code
+					// applyTypeName: $('#apply_type').find('option:selected').text(),//申请业务种类
+					applyTypeName: $('input:radio[name="apply_type"]:checked').parent().find('span').html(), //申请业务种类
+					originalCarType: haveCarType, //已拥有车型
+					picture: $('#picture').val(), //正面自拍照隐藏域地址
+					photo_txt: $('.p1').html()
+				}
+				//log('报名参数', params)
+				
+				logAppBuryingPoint({id:cache.id,name:$('#hospitalName').val()},'提交报名','立刻报名','医院列表','首页');
+				
+				setTimeout(function() {
+					openFrameAlert('physical_examination_sign_up_sure_frm', params, 0, api.winHeight);
+				}, 300);
+			} else {
+				alert_msg('页面未加载成功，请返回重试');
+			}
+		}
+
+		//点击删除图片
+		function deletePic() {
+			$('.delete').addClass('aui-hide');
+			$('#picture').val('');
+			$('#photo').attr('src', '../../icon/common/icon_up_pic_customer.png');
+			// $("#photo").on('click',function(){
+			// 	uploadPic();
+			// })
+			api.parseTapmode();
+		}
+
+		//上传图片
+		var sourceType;
+
+		function uploadPic() {
+			var imgUrl = $('#photo').attr('src');
+			// log('imgUrl',imgUrl)
+			if (imgUrl == '../../icon/common/icon_up_pic_customer.png') {
+				opWithPermission('camera',function(){
+					FNPhotograph.open({
+						path: 'fs://FNPhotographPhotos',
+					    album: false ,
+					    qualityValue: 50
+					}, function(ret){
+						log('ret',ret);
+					    if(ret&&ret.eventType == 'takePhoto'){
+					    	FNPhotograph.close();
+					    	$('.delete').removeClass('aui-hide');
+							$('#photo').attr('src', ret.imagePath);
+					    }
+					});
+				});
+//				opWithPermission('camera',function(){
+//					takePicCutOut.openCustomCut({
+//						isCardFront: true,
+//					}, function(ret, err) {
+//						// alert('获取的图片路径'+JSON.stringify(ret));
+//						if (ret && ret.filePath != undefined) {
+//							picImageFilters(ret.filePath, function(ret, err) {
+//								$('.delete').removeClass('aui-hide');
+//								$('#photo').attr('src', ret);
+//							})
+//						} else {
+//							console.log('系统故障或者未选中照片');
+//						}
+//					});
+//				});
+			} else {
+				openPic(imgUrl);
+			}
+
+		}
+
+		//拍照或打开相机 sourceType：从相册选还是拍照 faceType代表
+		function getPicture(sourceType) {
+			opWithPermission('camera',function(){
+				api.getPicture({
+					sourceType: sourceType,
+					encodingType: 'jpg',
+					direction: 'front',
+					mediaValue: 'pic',
+					destinationType: 'url',
+					allowEdit: false,
+					quality: 20, //1-100图片质量
+					saveToPhotoAlbum: false
+				}, function(ret, err) {
+					console.log('选择图片：' + JSON.stringify(ret));
+					if (ret && ret.data != '') {
+						$('.delete').removeClass('aui-hide');
+						$('#photo').attr('src', ret.data);
+						//				picImageFilters(ret.data,function(smaller_path){
+						//					if(smaller_path != ''){
+						//						photo_cat(smaller_path);
+						//					}else{
+						//						photo_cat(ret.data);
+						//						alert_msg('图片压缩失败，改为原图');
+						//					}
+						//				});
+					} else {
+						console.log('系统故障或者未选中照片');
+					};
+				});
+			});
+		}
+
+		/**
+		 * 压缩图片
+		 */
+		function picImageFilters(img_path, func) {
+			var path_img = img_path.split("/");
+			log('path_img+', path_img)
+			var img_name = path_img[path_img.length - 1];
+			log('img_name+', img_name)
+			imageFilter.compress({
+				img: img_path,
+				quality: 0.5,
+				size: {
+					w: winWidth,
+					h: winHeight
+				},
+				save: {
+					album: false, //(可选项)布尔值，是否保存到系统相册，默认false
+					imgPath: 'fs://smallerPictrue', //(可选项)保存的文件路径,字符串类型，无默认值,不传或传空则不保存，若路径不存在文件夹则创建此目录
+					imgName: img_name //(可选项)保存的图片名字，支持png和jpg格式，若不指定格式，则默认png，字符串类型，无默认值,不传或传空则不保存
+				},
+			}, function(ret, err) {
+				log('ret', ret)
+				log('err', err)
+				if (ret.status) {
+					func(api.fsDir + '/smallerPictrue/' + img_name);
+				} else {
+					func(img_path);
+				}
+			});
+		}
+
+		//照片裁剪
+		function photo_cat(img_path) {
+			FNImageClip.open({
+				rect: {
+					x: 0,
+					y: 0,
+					w: api.winWidth,
+					h: api.winHeight
+				},
+				srcPath: img_path,
+				isHideGrid: true,
+				isMinWidth: true,
+				isMinHeight: true,
+				style: {
+					mask: 'rgba(0,0,0,0.6)',
+					clip: {
+						w: 360,
+						h: 500,
+						x: (api.winWidth - 360) / 2,
+						y: (api.frameHeight - 500) / 2,
+						borderColor: '#03B4F7',
+						borderWidth: 1,
+						appearance: 'rectangle'
+					}
+				},
+				mode: 'image',
+				fixedOn: api.frameName
+			}, function(ret, err) {
+				if (ret) {
+					esc_function('physical_examination_common_win', '', 'showTools()');
+					//监听保存截图事件
+					if ($('#examplePic').attr('src') == '../../image/data/demo_new_two.jpg') {
+						//如果是手持身份证照片，那么显示红框
+						openFrm();
+					}
+					toEventListener('getCut', function(ret, err) {
+						getCut();
+					});
+				} else {
+					log('打开截图失败', err);
+				}
+			});
+		}
+
+		function openFrm() {
+			openMessage('提示', '请将身份证紧贴胸口，并将身份证对准框内', '确定', '', 'openExamplePic()', '', null);
+		}
+
+		function openExamplePic() {
+			api.openFrame({
+				name: 'FNImage_clip_frm',
+				url: './FNImage_clip_frm.html',
+				bgColor: 'rgba(0,0,0,0)',
+				rect: {
+					x: api.winWidth / 2,
+					y: api.winHeight * 12.4 / 32,
+					w: 30,
+					h: 20
+				},
+				bounces: false,
+				softInputBarEnabled: true,
+				softInputMode: 'resize',
+				pageParam: {}
+			});
+		}
+
+		//查看示范
+		function checkExample(o) {
+			openPic($(o).attr('src'));
+		}
+
+		function calculated(image_path) {
+			url = 'https://api-cn.faceplusplus.com/humanbodypp/v1/detect'
+			params = {
+				api_key: 'ozamMctRXJBuSXWSr3_MoZl6WGQzKlIn',
+				api_secret: 'w0G-oPw4c8jGWTBr2xuIvEZd-WnJRtpC',
+			}
+			picToBase64(image_path, function(imgBase64) {
+				params.image_base64 = imgBase64;
+				$.ajax({
+					url: "https://api-cn.faceplusplus.com/humanbodypp/v1/detect",
+					type: "POST",
+					dataType: "json",
+					data: {
+						"api_key": "ozamMctRXJBuSXWSr3_MoZl6WGQzKlIn",
+						"api_secret": "w0G-oPw4c8jGWTBr2xuIvEZd-WnJRtpC",
+						"image_base64": imgBase64
+					},
+					success: function(data) {
+						//log('身高wwwww',data);
+						if (data.humanbodies[0]) {
+							if ((data.humanbodies[0].humanbody_rectangle.height / 16.2 * 5.4) < 155) {
+								//openMessage('提示','你的身高不符合线上体检要求，请到线下医院进行体检','确定','','','',null);	
+							}
+						} else {
+							openMessage('提示', '未检测到人体信息，请重新拍照', '确定', '', 'deletePic()', '', null);
+						}
+					}
+				});
+			});
+		}
+
+		//取消截图
+		function cancelCut() {
+			FNImageClip.close();
+			esc_function('physical_examination_common_win', '', 'hideTools()');
+			esc_function('', 'FNImage_clip_frm', 'closeFrm()');
+		}
+
+		//保存截图
+		function getCut() {
+			var file_name = 'imageClip/result' + Math.floor(Math.random() * 1000000) + '.png';
+			var dest_path = 'fs://' + file_name;
+			defaultload('处理中...');
+			FNImageClip.save({
+				destPath: dest_path,
+				copyToAlbum: false,
+				quality: 1
+			}, function(ret, err) {
+				if (ret) {
+					loaddingPic(file_name);
+					image_path = ret.destPath;
+					if ($('#examplePic').attr('src') == '../../image/data/demo_new_two.jpg') {
+						//如果是手持身份证照片，计算身高
+						picImageFilters(image_path, function(smaller_path) {
+							if (smaller_path != '') {
+								calculated(image_path);
+							} else {
+								alert_msg('图片压缩失败，改为原图');
+							}
+							cancelCut();
+						});
+					} else {
+						cancelCut();
+					}
+				} else {
+					api.hideProgress();
+					alert_msg('截取失败，请重试');
+				}
+			});
+		}
+
+		//加载图片
+		function loaddingPic(dest_path) {
+			$('.delete').removeClass('aui-hide');
+			$('#photo').attr('src', api.fsDir + '/' + dest_path);
+			$('#picture').val(''); //修改图片后清空隐藏域中的地址字段
+			// $("#photo").on('click',function(){
+			// 	openPic(api.fsDir + '/' + dest_path);
+			// })
+			api.hideProgress();
+			api.parseTapmode();
+		}
+
+		function picToBase64(url, callback) {
+			var canvas = document.createElement('CANVAS'),
+				ctx = canvas.getContext('2d'),
+				img = new Image;
+			img.crossOrigin = 'Anonymous';
+			img.onload = function() {
+				var scale = img.width / img.height;
+				//压缩到800px等比例
+				if (winWidth > 400) {
+					$(canvas).attr({
+						width: winWidth,
+						height: winWidth / scale * 0.88
+					});
+				} else {
+					$(canvas).attr({
+						width: winWidth,
+						height: winWidth / scale
+					});
+				}
+				ctx.drawImage(img, 0, 0, winWidth, winWidth / scale);
+				var dataURL = canvas.toDataURL('image/png', 0.8 || 0.8);
+				callback(dataURL);
+				canvas = null;
+			};
+			img.src = url;
+		}
+	</script>
+</html>

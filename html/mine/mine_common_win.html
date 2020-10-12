@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>我的通用头部</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+    	#common_title{
+    		font-weight:normal;
+    	}
+    	footer{
+    		height: 2rem;
+		    position: absolute;
+		    bottom: 0;
+		    width: 100%;
+	        padding-top: 0.4rem;
+            border-top: solid 1px #F1F1F1;
+            font-size: 0.7rem;
+    	}
+    	footer img{
+    		height:0.8rem;
+    		margin-bottom: -0.15rem;
+    	}
+    	.order li{
+            float: left;
+		    font-size: 0.7rem;
+	        width: 33.33%;
+    		text-align: center;
+	    }
+	    .order{
+		    height: 2rem;
+		    line-height: 2rem;
+		    position: relative;
+	        background: #FFFFFF;
+		}
+	    .order img{
+		    width: 0.4rem;
+   			margin-bottom: 1px;
+   			-webkit-transition: 0.3s ease;
+		}
+		.active{
+	    	color: #FF9138;
+    		/* border-bottom: solid 2px; */
+	    }
+	    #section2{
+    	    background: #FFF;
+    		padding: 0.5rem;
+    		text-align: right;
+	    }
+	    .aui-radio, .aui-checkbox {
+		    width: 1rem;
+		    height: 1rem;
+		    background-color: #ffffff;
+		    border: solid 1px #dddddd;
+		    -webkit-border-radius: 0.6rem;
+		    border-radius: 0.6rem;
+		    font-size: 0.8rem;
+		    margin: 0;
+		    padding: 0;
+		    position: relative;
+		    display: inline-block;
+		    vertical-align: top;
+		    cursor: default;
+		    -webkit-appearance: none;
+		    -webkit-user-select: none;
+		    user-select: none;
+		    -webkit-transition: background-color ease 0.1s;
+		    transition: background-color ease 0.1s;
+		    margin-top: 0.1rem;
+		}
+		.sel-class{
+			height: 2.2rem;
+		    line-height: 2.2rem;
+		    text-align: right;
+		    background: #FFF;
+		    padding: 0 0.5rem;
+		}
+		.sel-class img{
+			-webkit-transform: rotate(270deg);
+			width:0.8rem;
+		    margin-bottom: -0.15rem;
+		}
+		.sel-b3{
+			width: 33.33%;
+    		float: left;
+		    height: 2.2rem;
+		    text-align: center;
+		    line-height: 2.2rem;
+		}
+		.a-active{
+			color:#03B4F7;
+		}
+		.notice-container {
+		  align-items: center;
+		  color: #DC251F;
+		  background: #F5D3D3;
+		  opacity: 0.8;
+		  font-size:0.8rem;
+		  margin: 0 auto;
+		  display: flex;
+		  padding-right:0.5rem;
+		  padding-left:0.5rem;
+		  flex-direction: row;
+		  flex: 1;
+		}
+		.notice-container .header-notice-marquee {
+		  position: relative;
+		  width: 100%;
+		  overflow: hidden;
+		  height: 2rem;
+		  line-height: 2rem;
+		  animation: marquee 10s linear infinite;
+		}
+		.notice-container .header-notice-marquee:hover {
+		  animation-play-state: paused;
+		}
+		.notice-container .header-notice-marquee .header-marquee-item {
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  white-space: nowrap;
+		}
+		/* Make it move */
+		@keyframes marquee {
+		  0% {
+			text-indent: 25em;
+		  }
+		  100% {
+			text-indent: -25em;
+		  }
+		}
+
+    </style>
+</head>
+<body>
+	<!-- 通用头部 -->
+	<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+            <img src="../../icon/common/icon_header_return.png">
+        </a>
+        <div class="aui-title" id="common_title">
+        	通用头部
+        </div>
+        <!-- 意见反馈提交按钮 -->
+        <a class="aui-pull-right aui-btn aui-hide" id="opinion_submit" tapmode onclick="option_submit()">
+           <span>提交 </span>
+        </a>
+        <!-- 第二通道按钮 -->
+        <a class="aui-pull-right aui-btn aui-hide" id="appointment_before_exam" tapmode onclick="openSecondChannelOrderList()">
+           <span>第二通道</span>
+        </a>
+        <!-- 优惠券申请列表 -->
+        <a class="aui-pull-right aui-btn aui-hide" id="apply_free_list" tapmode onclick="openApplyFreeList()">
+           <span>申请记录</span>
+        </a>
+        <!-- 积分商城订单列表 -->
+        <a class="aui-pull-right aui-btn aui-hide" id="integral_order_list" tapmode onclick="openIntegralOrder()">
+           <span>订单记录</span>
+        </a>
+    </header>
+    <!-- 排序栏 需要筛选记录的会用到，先隐藏 -->
+    <section id="section">
+    	<div class="order aui-hide">
+	    	<ul>
+	    		<li class="active" tapmode onclick="examinationRoomSort(this,0)">
+	    			<span>推荐</span>
+	    		</li>
+	    		<li tapmode onclick="examinationRoomSort(this,1)">
+	    			<span>距离</span>
+	    			<img src="../../icon/common/icon_order.png" alt="" class='arrow'/>
+	    		</li>
+	    		<li tapmode onclick="examinationRoomSort(this,2)">
+	    			<span>价格</span>
+	    			<img src="../../icon/common/icon_order.png" alt="" class='arrow'/>
+	    		</li>
+	    	</ul>
+	    </div>
+    </section>
+
+    <!-- 优惠券列表筛选需要，先隐藏 -->
+    <section id="section2" class='aui-hide'>
+    	<!-- <input class="aui-radio" type="radio" value='1' name="sex" id="man">&ensp;全部
+    	<label><input class="aui-radio" type="radio" value='1' name="sex">&ensp;审核中</label>
+    	<label><input class="aui-radio" type="radio" value='1' name="sex">&ensp;可使用</label><br>
+    	<label><input class="aui-radio" type="radio" value='1' name="sex">&ensp;已使用</label>
+    	<label><input class="aui-radio" type="radio" value='1' name="sex">&ensp;被拒绝</label> -->
+    </section>
+    <!-- 科目二考前训练预约记录 -->
+    <section id="section3" class='aui-hide'>
+    	<div style="overflow: hidden;background:#FFF;">
+	    	<div class="sel-b3" tapmode onclick='changeMenu(0,this,"")'>普通预约</div>
+	    	<div class="sel-b3" tapmode onclick='changeMenu(1,this,"")'>普通vip</div>
+	    	<div class="sel-b3" tapmode onclick='changeMenu(2,this,"")'>高级vip</div>
+    	</div>
+    	<div class="list_bar" id="slideSpan">
+	        <div class="list_bar_inner"></div>
+	    </div>
+    </section>
+    <!-- 科目三考前训练预约记录 -->
+    <section id="section4" class='aui-hide'>
+    	<div style="overflow: hidden;background:#FFF;">
+	    	<div class="sel-b3 b2" style="width:50%;" tapmode onclick='changeMenu(0,this,2)'>普通预约</div>
+	    	<div class="sel-b3" style="width:50%;" tapmode onclick='changeMenu(1,this,2)'>vip</div>
+    	</div>
+    	<div class="list_bar" id="slideSpan2">
+	        <div class="list_bar_inner"></div>
+	    </div>
+    </section>
+    
+    <section id="section5" class='aui-hide'>
+	    <div class="aui-bar aui-bar-btn aui-bar-btn-full">
+			<div class="notice-container">
+				<div class="header-notice-marquee" id="notice-marquee">
+					<span class="header-marquee-item">在课堂学习期间，严禁任何线上学习，否则学时无效。</span>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section id="section6" class='aui-hide'>
+	    <div class="aui-bar aui-bar-btn aui-bar-btn-full">
+			<div class="notice-container">
+				<div class="header-notice-marquee" id="notice-marquee">
+					<span class="header-marquee-item">在模拟器练习期间，严禁任何线上学习，否则学时无效。</span>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var headerPos;
+	var sectionPos;
+	var sectionPos2;
+	var sectionPos3;
+	var sectionPos4;
+	var title = '';
+	var frameName = '';//设置的frame名称
+	var frameUrl = '';//设置的frame资源所在未知
+	var bounces = false;//是否弹动
+
+	var flag_i;
+	var clearance = 40;
+	apiready = function(){
+		api.parseTapmode();
+		var header = $api.byId('aui-header');
+		$api.fixStatusBar(header);
+		cache = api.pageParam.data;
+		switch(cache.type){
+			case 'driving_pay':
+				title = '驾校报名支付';
+				frameName = 'driver_school_pay_for_frm';
+				frameUrl = './driver_school_pay_for_frm.html';
+				$('#sign_up').removeClass('aui-hide');
+				break;
+			case 'more-examination-order':
+				title = '医院体检订单';
+				frameName = 'record_hospital_examintion_list_frm';
+				frameUrl = './record_hospital_examintion_list_frm.html';
+				break;
+			case 'more-register-order':
+				title = '线上报名订单';
+				frameName = 'record_school_register_list_frm';
+				frameUrl = './record_school_register_list_frm.html';
+				break;
+			case 'record_scene_subject_one':
+				title = '现场培训预约';
+				frameName = 'record_scene_subject_one';
+				frameUrl = './record_scene_subject_one.html';
+				$('#section5').removeClass('aui-hide');
+				cache.kemu=cache.kemu;
+				break;
+			case 'record_study_subject_one':
+				title = '科目一学习记录';
+				frameName = 'record_study_subject_one_frm';
+				frameUrl = './record_study_subject_one_frm.html';
+				break;
+			case 'record_exam_subject_one':
+				title = '科目一模考记录';
+				frameName = 'record_exam_subject_one_frm';
+				frameUrl = './record_mock_exam_list_frm.html';
+				bounces = true;
+				break;
+			case 'record_mistake_subject_one':
+				title = '科目一错题记录';
+				frameName = 'record_mistake_subject_one_frm';
+				frameUrl = '../examination/subjectOne/practice_mistake_frm.html';
+				break;
+			case 'select_exam_room_subject_two':
+				title = '科目二-选择考场';
+				frameName = 'common_exam_room_list_win';
+				frameUrl = '../common/common_exam_room_list_win.html';
+				cache.type = 'two';
+				cache.from = 'before_exam';
+				$('.order').removeClass('aui-hide');
+				break;
+			case 'record_operation_subject_two':
+				title = '科目二实操记录';
+				frameName = 'record_practical_operation_subject_two_frm';
+				frameUrl = './record_practical_operation_subject_two_frm.html';
+				break;
+				
+			case 'record_practice_subject_two':
+				title = '科目二训练记录';
+				frameName = 'record_appontment_before_exam_list_frm';
+				frameUrl = './record_appontment_before_exam_list_frm.html';
+				$('#appointment_before_exam').removeClass('aui-hide');
+				$('#section3').removeClass('aui-hide');
+				cache.type = 'two';
+				if(cache.index == undefined){
+					//默认显示第一栏记录
+					changeMenu(0,$('#section3').find('.sel-b3').eq(0),'');
+				}else{
+					changeMenu(cache.index,$('#section3').find('.sel-b3').eq(cache.index),'');
+				}
+				bounces = true;
+				break;
+			case 'free_apply_two':
+				title = '免费券申请';
+				frameName = 'mine_free_apply_frm';
+				frameUrl = './mine_free_apply_frm.html';
+				$('#apply_free_list').removeClass('aui-hide');
+				cache.type = 'two';
+				//免费券申请列表特殊处理，不需要管
+				flag_i = cache.type;
+				break;
+			case 'record_scene_subject_two_simulator':
+				title = '科目二-模拟器训练记录';
+				frameName = 'record_scene_subject_two_simulator';
+				frameUrl = './record_scene_subject_two_simulator.html';
+				$('#section6').removeClass('aui-hide');
+				break;
+			case 'record_scene_subject_two_operation':
+				title = '科目二-实操训练记录';
+				frameName = 'record_scene_subject_two_operation';
+				frameUrl = './record_scene_subject_two_operation.html';
+				break;
+			case 'select_exam_room_subject_three':
+				title = '科目三-选择考场';
+				frameName = 'common_exam_room_list_win';
+				frameUrl = '../common/common_exam_room_list_win.html';
+				cache.type = 'three';
+				cache.from = 'before_exam';
+				$('.order').removeClass('aui-hide');
+				break;
+			case 'record_practice_subject_three':
+				title = '科目三训练记录';
+				frameName = 'record_appontment_before_exam_list_frm';
+				frameUrl = './record_appontment_before_exam_list_frm.html';
+				$('#section4').removeClass('aui-hide');
+				$('#appointment_before_exam').removeClass('aui-hide');
+				cache.type = 'three';
+				if(cache.index == undefined){
+					//默认显示第一栏记录
+					changeMenu(0,$('#section4').find('.sel-b3').eq(0),2);
+				}else{
+					changeMenu(cache.index,$('#section4').find('.sel-b3').eq(cache.index),2);
+				}
+				break;
+			case 'record_scene_subject_three_appointment':
+				title = '科目三-训练预约记录';
+				frameName = 'record_scene_subject_three_appointment';
+				frameUrl = './record_scene_subject_three_appointment.html';
+				break;
+			case 'free_apply_three':
+				title = '免费券申请';
+				frameName = 'mine_free_apply_frm';
+				frameUrl = './mine_free_apply_frm.html';
+				$('#apply_free_list').removeClass('aui-hide');
+				cache.type = 'three';
+				//免费券申请列表特殊处理，不需要管
+				flag_i = cache.type;
+				break;
+			case 'record_study_subject_four':
+				title = '科目四学习记录';
+				frameName = 'record_study_subject_four_frm';
+				frameUrl = './record_study_subject_four_frm.html';
+				break;
+			case 'record_exam_subject_four':
+				title = '科目四模考记录';
+				frameName = 'record_exam_subject_four_frm';
+				frameUrl = './record_mock_exam_list_frm.html';
+				bounces = true;
+				break;
+			case 'record_mistake_subject_four':
+				title = '科目四错题记录';
+				frameName = 'record_mistake_subject_four_frm';
+				frameUrl = '../examination/subjectOne/practice_mistake_frm.html';
+				break;
+			case 'myPost':
+				title = '我的帖子';
+				frameName = 'mine_my_post_frm';
+				frameUrl = './mine_my_post_frm.html';
+				break;
+			case 'setting':
+				title = '系统设置';
+				frameName = 'mine_system_setting_frm';
+				frameUrl = './mine_system_setting_frm.html';
+				break;
+			case 'opinion':
+				title = '意见反馈';
+				frameName = 'mine_opinion_feedback_frm';
+				frameUrl = './mine_opinion_feedback_frm.html';
+				$('#opinion_submit').removeClass('aui-hide');
+				break;
+			case 'integral_shop':
+				title = '积分商城';
+				frameName = 'integral_shop_list_frm';
+				frameUrl = './integral_shop_list_frm.html';
+				$("#integral_order_list").removeClass("aui-hide")
+				break;
+
+			case 'aboutUs':
+				title = '关于我们';
+				frameName = 'mine_about_us_frm';
+				frameUrl = './mine_about_us_frm.html';
+				break;
+			case 'record_apply_free_list':
+				title = '优惠券申请列表';
+				frameName = 'record_apply_free_list_frm';
+				frameUrl = './record_apply_free_list_frm.html';
+				break;
+			case 'accountSwitching':
+				title = '账号切换';
+				frameName = 'account_switch_frm';
+				frameUrl = './account_switch_frm.html';
+				break;
+			default:
+				title = '未知';
+		}
+		headerPos = $api.offset(header);
+		sectionPos = $api.offset($api.byId('section'));
+		sectionPos2 = $api.offset($api.byId('section2'));
+		sectionPos3 = $api.offset($api.byId('section3'));
+		sectionPos4 = $api.offset($api.byId('section4'));
+		sectionPos5 = $api.offset($api.byId('section5'));
+		sectionPos6 = $api.offset($api.byId('section6'));
+		$('#common_title').html(title);
+		openFrame(headerPos.h + sectionPos.h + sectionPos2.h + sectionPos3.h + sectionPos4.h+sectionPos5.h+sectionPos6.h, api.winHeight - headerPos.h - sectionPos.h - sectionPos2.h - sectionPos3.h - sectionPos4.h-sectionPos5.h-sectionPos6.h,'none',bounces);
+	}
+	function openFrame(y,h,animate,bounces){
+		api.openFrame({
+            name: frameName,
+            url: frameUrl,
+            bgColor:'#efeff4',
+            rect: {
+                x: 0,
+                y: y,
+                w: 'auto',
+                h: h
+            },
+            animation:{
+	        	type:animate,                //动画类型（详见动画类型常量）
+			    subType:"from_right",       //动画子类型（详见动画子类型常量）
+			    duration:300
+	        },
+            bounces: bounces?true:false,
+            pageParam:{
+            	data:cache
+            },
+            reload:true,
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+	}
+
+	//支付完成
+	function finishPay(frameName,nextFrameName){
+		setTimeout(function(){
+			frameRightOut(frameName);//向右滑动关闭指定frame
+		},500);
+		$('#common_title').html("报名信息已提交");
+		openFrameCommon(nextFrameName,null,headerPos.h,api.winHeight - headerPos.h,false);
+	}
+
+	//排序
+	var examRoomArray = [0,0,0];
+	function examinationRoomSort(it,i){
+		$('.order li').each(function(index,e){
+			if($(e).is($(it))){
+				if($(it).hasClass('active')){
+					if(examRoomArray[i] == 0){
+						$(it).find('img').addClass('styleDeg90P');
+						examRoomArray[i] = 1;
+					}else{
+						$(it).find('img').removeClass('styleDeg90P');
+						examRoomArray[i] = 0;
+					}
+				}else{
+					$(it).addClass('active');
+					$(it).find('.arrow').attr('src','../../icon/common/icon_order_active.png');
+				}
+			}else{
+				$(e).removeClass('active');
+				$(e).find('.arrow').attr('src','../../icon/common/icon_order.png');
+			}
+		})
+		sort(i,examRoomArray[i]);
+	}
+
+	//L1距离正序，   L2距离倒序，M1价格正续，M2价格倒叙
+	var descType;
+	function sort(index,value){
+		if(index == 1&&value == 0){
+			descType = 'L1';
+		}else if(index == 1&&value == 1){
+			descType = 'L2';
+		}else if(index == 2&&value == 0){
+			descType = 'M1';
+		}else if(index == 2&&value == 1){
+			descType = 'M2';
+		}
+		esc_function('mine_common_win','select_exam_room_list_frm','init()');
+	}
+
+	//打开预约
+	function openSecondChannelOrderList(){
+		api.openWin({
+	       name: 'recode_appoint_second_channel_order_win',
+	       url: './appointBeforeExamSecondChannel/recode_appoint_second_channel_order_win.html',
+	       slidBackEnabled:'true',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       pageParam: {}
+	    });
+	}
+
+	/**
+	 * 打开优惠券申请记录列表
+	 */
+	function openApplyFreeList(){
+		cache.flag = flag_i;
+		cache.type = 'record_apply_free_list';
+		api.openWin({
+	       name: 'record_apply_free_list_win',
+	       url: './mine_common_win.html',
+	       slidBackEnabled:'true',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       pageParam: {
+	          data:cache
+	       }
+	    });
+	}
+
+	function closeWin(){
+		api.closeWin({
+        });
+}
+
+	//click样式
+	function changeMenu(index,o,slide_index){
+		f_slide($(o).parent().find('.sel-b3').eq(index),slide_index);
+		esc_function('mine_common_win','record_appontment_before_exam_list_frm','init('+index+',"from_menu")');
+	}
+
+	//滑块加载事件
+	function f_slide(e,slide_index){
+		$('.sel-b3').removeClass('a-active');
+		$(e).addClass('a-active');
+		$('.list_bar').css('width',($('.a-active').width() - clearance*2)+'px');
+		$('.list_bar_inner').css('width',($('.a-active').width() - clearance*2)+'px');
+		document.getElementById('slideSpan'+slide_index).style.webkitTransform = 'translateX('+($(e).position().left + clearance)+'px)';
+	}
+
+	//意见反馈提交
+	function option_submit(){
+		api.closeToWin({
+	    	name: 'examination_course_reservation_detailed_win'
+		});	
+		esc_function('mine_common_win','mine_opinion_feedback_frm','option_submit()');
+	}
+	
+	//积分商城订单
+	function openIntegralOrder(){
+	       params = {
+                learnerId : getUserId(),
+            }
+            //console.log(JSON.stringify(params));
+            api.openWin({
+                name : 'order_list_win',
+                url : '../mine/order_list_win.html',
+                slidBackEnabled : 'false',
+                vScrollBarEnabled : 'false',
+                hScrollBarEnabled : 'false',
+                reload : true,
+                pageParam : {
+                    data : params
+                }
+            });
+            api.parseTapmode();
+	}
+</script>
+</html>

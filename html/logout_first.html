@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>账户注销</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../css/common/common.css" />
+    <style>
+    	html{
+    		background:#FFF;
+    		height: 100%;
+    		display:flex;
+    	}
+    	body{
+    		background:#FFF;
+			margin:auto;
+    	}
+
+		.aui-btn-block {
+		    display: block;
+		    width: 90%;
+		    padding: 0.4rem 0;
+		    font-size: 0.9rem;
+		    margin: 0 auto;
+		    float: left;
+		    margin-left: 5%;
+		}
+		.aui-btn-info {
+		    color: #ffffff !important;
+		    background: linear-gradient(to left, #3F86FE , #64ADF6) !important;
+		    margin-top: 2rem !important;
+		    border-radius: 2rem;
+		}
+
+		.logout-head{
+		   	text-align:center;
+		    font-size: 1.2rem;
+    		font-family: 微软雅黑;
+    		color:#646464;
+    		padding-bottom: 1rem;
+    		font-weight: bold;
+		}
+
+		footer{
+		    overflow: hidden;
+    		padding-bottom: 2rem;
+		}
+
+		.aui-btn:active {
+	        color: #90DBF7;
+		    background-color: #FFF;
+		}
+
+		.agreement{
+			padding: 0 1.5rem 0 1.5rem;
+		}
+		.title{
+			font-size: 0.8rem;
+			font-weight: bold;
+			padding-bottom: 0.5rem;
+		}
+
+		.text{
+			font-size: 0.7rem;
+		}
+		.block{
+			width: 0.4rem;
+			height: 0.8rem;
+			border-radius: 0.1rem;
+			background-color: #3F86FF;
+		}
+    </style>
+</head>
+<body>
+	<div align="center" style="padding-top: 0.25rem">
+		<img src="../icon/remind.png" alt="" class="icon" />
+		<div class="logout-head" id="logout-head">申请注销驾所通账户</div>
+	</div>
+	
+	<div class="agreement">
+	    <span class="title">“驾所通”学员版账户注销后，您将放弃以下权益：</span><br />
+	    <span class="text">1.账户注销后将无法在“驾所通”学员版继续使用账户，且不可恢复。</span><br />
+	    <span class="text">2.账户所绑定的手机号，将不能再次用于注册“驾所通”账户。</span>
+	    <span class="text">3.账户信息、商城积分、会员权益、等将被清空，且无法恢复。</span><br />
+	    <span class="text">4.账户注销后，“驾所通”有权不再为用户提供任何与账户有关的服务。</span>
+	    <span class="text">5.因账户注销所带来的不便或不利后果，由用户自行承担，与“驾所通”无关。</span>
+	</div>
+	<footer>
+		<div class="aui-btn aui-btn-info aui-btn-block" style='margin-top:1rem !important;' tapmode onclick='next()'>下一步</div>
+	</footer>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var phone;
+	apiready = function(){
+		api.parseTapmode();
+		var header = $api.byId('logout-head');
+		$api.fixStatusBar(header);
+		cache = api.pageParam;
+		
+		if(islogin()){
+			$('#account').val($api.getStorage('cache_by_account').cache_account.account);
+		}else{
+			$('#account').val(cache.data.phone);
+			$("#account").removeAttr("readonly");
+		}
+	};
+
+	//返回
+	function back(){
+		api.closeWin({});
+	}
+	
+	//退出登录
+    function next(){
+		onEvent('mine158','账户注销');
+		api.openWin({
+			name: 'logout_top2',
+			url: 'logout_top2.html',
+			slidBackEnabled:'true',
+			vScrollBarEnabled:'false',
+			hScrollBarEnabled:'false',
+			reload:true,
+			pageParam: {
+				data:null
+			}
+		});
+    }
+</script>
+</html>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>密码登录页面</title>
+		<link rel="stylesheet" type="text/css" href="../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../css/common/common.css" />
+		<style>
+			html{
+    		background:#FFF;
+    		height: 100%;
+    		display:flex;
+    	}
+    	body{
+    		background:#FFF;
+			margin:auto;
+    	}
+    	.aui-list .aui-list-item-title {
+		    font-size: 0.8rem;
+		    position: relative;
+		    width: 70%;
+		    color: #212121;
+		}
+		input::-webkit-input-placeholder{
+			font-size:0.7rem;
+			font-family:微软雅黑
+		}
+		.aui-list .aui-list-item-right, .aui-list-item-title-row em {
+		    max-width: 50%;
+		    position: relative;
+		    color: #3F86FE;
+		    margin-left: 0.25rem;
+		    font-size: 0.7rem;
+		}
+		.aui-list .aui-list-item:active {
+		    background-color: #FFF;
+		}
+		.aui-btn-block {
+		    display: block;
+		    width: 90%;
+		    padding: 0.4rem 0;
+		    font-size: 0.9rem;
+		    margin: 0 auto;
+		    float: left;
+		    margin-left: 5%;
+		}
+		.aui-btn-info {
+		    color: #ffffff !important;
+		    background: linear-gradient(to left, #3F86FE , #64ADF6) !important;
+		    margin-top: 1rem !important;
+		    border-radius: 2rem;
+		}
+		.aui-radio:checked, .aui-radio.aui-checked, .aui-checkbox:checked, .aui-checkbox.aui-checked {
+		    background-color: #03B4F7;
+		    border: solid 1px #03B4F7;
+		    text-align: center;
+		    background-clip: padding-box;
+		}
+		.aui-list.aui-list-in .aui-list-item:last-child > .aui-list-item-inner:after {
+		    height: 1px;
+		}
+		.login-head{
+		    height: 3rem;
+		    line-height: 3rem;
+		    padding-left: 0.8rem;
+		    font-size: 1.8rem;
+    		font-family: 微软雅黑;
+    		color:#646464;
+		    margin-left: -80%;
+		    margin-bottom:4rem;
+		}
+		.aui-list:before {
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    right: auto;
+		    bottom: auto;
+		    width: 100%;
+		    z-index: 2;
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		    pointer-events: none;
+		}
+		.aui-list .aui-list-item-inner {
+		    position: relative;
+		    min-height: 3rem;
+		    padding-right: 0.75rem;
+		    width: 100%;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-flex: 1;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		    -webkit-box-align: center;
+		    -webkit-align-items: center;
+		    align-items: center;
+		}
+		.aui-list:after {
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    right: auto;
+		    bottom: auto;
+		    width: 100%;
+		    z-index: 2;
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		    pointer-events: none;
+		}
+		.aui-list-item-title span{
+			font-size:0.7rem;
+		}
+		footer{
+		    overflow: hidden;
+    		padding-bottom: 1rem;
+		}
+		.aui-list .aui-list-item-label-icon {
+		    width: 1.5rem;
+		    padding-right: 0rem;
+		}
+		.aui-list-item-label-icon input{
+		}
+		input::-webkit-input-placeholder{
+			font-size:1rem;
+			font-family:微软雅黑;
+			color:#D5D5D5;
+		}
+		input{
+			font-size:1rem !important;
+		}
+		.aui-btn-register{
+		    border-radius: 2rem;
+		    background: #FFF;
+		    border: solid 1px #3F86FE;
+		    margin-top: 0.5rem;
+		    color: #3F86FE;
+		}
+		.aui-btn:active {
+	        color: #90DBF7;
+		    background-color: #FFF;
+		}
+		.back-img{
+			position: absolute;
+		    width: 1.5rem;
+		    top: 2rem;
+		    left: 0.8rem;
+		}
+		.top{
+			width: 50%;
+			margin-left: 25%;
+			color: #3F86FF;
+			text-align: center;
+		}
+		#clearPhone{
+			opacity: 0;
+		}
+		.clearPhone{
+			position: absolute;
+			width: 1rem;
+			min-height: 1rem;
+			height: 1rem;
+			right: 0.5rem;
+		}
+		.jqFocus{
+			background-color:#1E8DD8 !important;
+		}
+		.shebeima{
+			/* position: fixed; */
+		    text-align: center;
+		    font-size: 0.7rem;
+		    color: #9a9494;
+		    margin: 0.3rem;
+		    bottom: 0.5rem;
+		    right: 0;
+		}
+		.attention{
+		    font-size: 0.6rem;
+		    min-height:1rem !important;
+		    height: 1rem !important;
+		    display: inline !important;
+		}
+		.attention img{
+			width:0.6rem;
+			margin-bottom: -0.1rem;
+		}
+		.aui-radio, .aui-checkbox{
+			position: absolute;
+			top: 0rem;
+			left: -1.3rem;
+		}
+		.unclick{
+			background-color: #ccc !important;
+			color: #ffffff !important;
+			margin-top: 1rem !important;
+			border-radius: 2rem;
+		}
+		.click{
+			background-image: linear-gradient( to right, #64ADF6, #3F86FE);
+			color: #ffffff !important;
+			margin-top: 1rem !important;
+			border-radius: 2rem;
+		}
+    </style>
+	</head>
+	<body>
+		<img src="../icon/common/icon_back_home.png" alt="" class="back-img" tapmode onclick='back()' />
+		<div class="login-head" id="login-head">密码登录</div>
+		<div class="aui-content aui-margin-b-15">
+			<ul class="aui-list aui-list-in">
+				<li class="aui-list-item" style="margin-bottom: 1rem;" id="tel">
+					<div class="aui-list-item-label-icon">
+						<i class="aui-iconfont aui-icon-mobile"></i>
+					</div>
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-title">
+							<input type="tel" maxlength="11" placeholder="请输入手机号" id="account" />
+						</div>
+					</div>
+					<div class="aui-list-item-label-icon" id="clearPhone" onclick="clickClear()">
+						<img class="clearPhone" src="../icon/common/icon_delete_blacker.png">
+					</div>
+				</li>
+				<li class="aui-list-item" style="margin-bottom: 0.5rem;" id="pwd">
+					<div class="aui-list-item-label-icon">
+						<i class="aui-iconfont aui-icon-lock"></i>
+					</div>
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-title">
+							<input type="password" maxlength="12" placeholder="请输入密码" id="password" />
+						</div>
+						<div class="aui-list-item-right" tapmode onclick="findPassword()">
+							<span>忘记密码？</span>
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item none-bottom-style">
+					<div class="aui-list-item-inner none-bottom-style" style='min-height: 1rem;'>
+						<div class="aui-list-item-title" style='width:80%;margin-left: 1.5rem;'>
+							<label onclick="btnchange()"><input class="aui-radio" type="checkbox" checked="true" name="demo1"></label>
+							<span>请仔细阅读</span>
+							<span style='color:#3F86FE;' tapmode onclick="openPrivacyPolicy()">《隐私政策》</span>
+							<span>与</span>
+							<span style='color:#3F86FE;' tapmode onclick="openContract()">《用户协议》</span>
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item aui-hide">
+					<div class="aui-list-item-inner attention none-bottom-style">
+						<img src="../icon/payfor/icon_tan.png" alt="" class="icon" />
+						<span>一台手机最多只能登录两个手机号，请慎重登录</span>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<footer>
+			<div class="aui-btn unclick aui-btn-block" id="login">登录</div>
+			<!-- <div class="aui-btn aui-btn-register aui-btn-block" id="register" tapmode onclick="register()">快速注册</div> -->
+		</footer>
+		<div class="top" tapmode onclick='unpasswordlogin()'>验证码登录</div>
+
+
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/aui/aui_tab.js"></script>
+	<script type="text/javascript" src="../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var status = 0;
+		apiready = function() {
+			api.parseTapmode();
+			var header = $api.byId('login-head');
+			$api.fixStatusBar(header);
+			cache = api.pageParam;
+			$('.shebeima').text('设备码：' + api.deviceId);
+			//监听注册动作
+			toEventListener('send_register_info', function(ret, err) {
+				setTimeout(function() {
+					login_auto(ret.value);
+				}, 300);
+			});
+			btnstatus();
+		};
+		setTimeout(function() {
+			$("#login-head").animate({
+				marginLeft: "0%"
+			}, 500);
+		}, 300);
+		//显示清除按钮
+		function showClearLogo() {
+			var phoneNuM = $("#account").val();
+			if (phoneNuM != "") {
+				$("#clearPhone").removeClass('aui-hide');
+			} else {
+				$("#clearPhone").addClass('aui-hide');
+			}
+		}
+		//input 聚焦失焦
+		$telhtml = $("<style>#tel::after{background-color:#1E8DD8;}</style>");
+		$pwdhtml = $("<style>#pwd::after{background-color:#1E8DD8;}</style>");
+		$tel = $("<style>#tel::after{background-color:#ff0000;}</style>");
+		$pwd = $("<style>#pwd::after{background-color:#ff0000;}</style>");
+		$("#account").focus(function() {
+			$(this).parent().parent().parent().append($telhtml);
+		}).blur(function() {
+			$telhtml.remove();
+		})
+		$("#password").focus(function() {
+			$(this).parent().parent().parent().append($pwdhtml);
+		}).blur(function() {
+			$pwdhtml.remove();
+		});
+
+		//按钮能否点击
+		function btnchange() {
+			console.log("aaaa");
+			console.log(typeof(status));
+			btnstatus();
+		}
+		//按钮状态
+		function btnstatus() {
+			if (status == 0) {
+				$("#login").attr("onclick", "login();");
+				$("#login").removeClass('unclick');
+				$("#login").addClass('click');
+				status = 1;
+				console.log('增加点击事件');
+			} else {
+				$("#login").removeAttr("onclick", "login();");
+				$("#login").addClass('unclick');
+				$("#login").removeClass('click');
+				status = 0;
+				console.log('移除点击事件');
+			}
+		}
+		//点击清除按钮
+		function clickClear() {
+			$("#account").val("");
+			$("#clearPhone").addClass('aui-hide');
+		}
+		//免密登录
+		var tel;
+
+		function unpasswordlogin() {
+			sendEvent('account', $("#account").val());
+			api.closeWin({});
+		}
+		//自动登录
+		function login_auto(data) {
+			$('#account').val(data.learner.account);
+			$('#password').val(data.learner.password);
+			login();
+		}
+
+		//点击登录
+		function login() {
+			if (!isPhoneAvailable($('#account').val())) {
+				alert_msg('请输入有效的手机号');
+				$("#tel").append($tel);
+				return;
+			}
+			if (!isPasswordAvailable($('#password').val())) {
+				alert_msg('请输入有效的密码');
+				$("#pwd").append($pwd);
+				return;
+			}
+			open_load_up();
+			url = "api/learner/login";
+			params = {
+				learner: {
+					account: $('#account').val(),
+					password: $('#password').val(),
+					phoneMac: api.deviceId
+				}
+			}
+			log('params', params)
+			ajax_Request(url, 'post', 'json', params, function(ret, err) {
+				console.log("登录" + JSON.stringify(ret));
+				if (ret) {
+					if (ret.code == 0) {
+						var cache_by_account = {
+							cache_account: ret.learner
+						}
+						$api.setStorage('islogin', true); //标记是否登录
+						$api.setStorage('cache_by_account', cache_by_account); //账户退出后会被清除的app缓存
+						sendEvent('refresh_my_index', {}); //初始化我的页面、系统设置页面
+						//esc_function('index','','bindJpush()');//绑定极光推送账号
+						esc_function('index', '', 'aliPush_init()'); //绑定阿里推送账号
+						esc_function('index', '', 'alertToAuth()'); //判断是否实名认证
+						setTimeout(function() {
+							if (cache != undefined && cache.event_action != undefined) {
+								//发送回调函数
+								sendEvent(cache.event_action, 'login_finish');
+							}
+							close_load();
+							api.closeWin({
+								name: 'unpassword_login'
+							});
+							api.closeWin({
+								name: 'login'
+							});
+						}, 700);
+					} else if (ret.code == 100013 || ret.code == '100013') {
+						alert_msg('该账号未注册');
+						setTimeout(register, 1000);
+						close_load();
+					} else {
+						alert_msg(ret.msg);
+						close_load();
+					}
+				} else {
+					alert_msg("登录失败" + JSON.stringify(err));
+					close_load();
+					$tel.remove();
+					$pwd.remove();
+				}
+			});
+		}
+
+		function alert_msg(msg) {
+			api.toast({
+				msg: msg,
+				duration: 3000,
+				location: 'middle'
+			});
+		}
+
+		/**
+		 * 阅读隐私政策 
+		 */
+		function openPrivacyPolicy() {
+			openFrameCommon('privacy_policy', null, 0, api.winHeight, false);
+		}
+
+		/**
+		 * 打开注册协议
+		 */
+		function openContract() {
+			openFrameCommon('register_contract', null, 0, api.winHeight, false);
+		}
+
+		//点击注册
+		function register() {
+			var phone = $('#account').val();
+			commonOpenWin('register', {
+				phone: phone
+			});
+		}
+
+		//找回密码
+		function findPassword() {
+			var phone = $('#account').val();
+			commonOpenWin('forgetPassword', {
+				phone: phone
+			});
+		}
+
+		//返回
+		function back() {
+			api.closeWin({
+				name: 'unpassword_login'
+			});
+			api.closeWin({});
+		}
+	</script>
+</html>

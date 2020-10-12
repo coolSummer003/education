@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>专项练习-题目练习</title>
+    <!-- <link rel="stylesheet" type="text/css" href="../../../css/api.css"/> -->
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    		height:100%;
+    	}
+    	.practice{
+    		background: #FFF;
+    		padding: 0rem 0.5rem;
+    	}
+    	.practice-title{
+    		margin-bottom: 0.9rem;
+    	}
+    	.practice-title font{
+    		color:#DC251F;
+    		font-weight:bold;
+    	}
+    	.practice-title i{
+    		font-size:0.7rem;
+    		color:#7A7A7A;
+    	}
+    	.practice-type{
+    		font-size: 0.8rem;
+		    background: linear-gradient(to left, #67D3F7 , #0876F5);
+		    color: #FFF;
+		    margin-bottom: 0.2rem;
+		    border-radius: 0rem 0rem 0.5rem 0.5rem;
+		    width:3rem;
+    		text-align: center;
+    		margin: 0rem auto 1rem auto;
+    	}
+    	.practice-img{
+    	}
+    	.practice-img img{
+    		width: 100%;
+    		height:8rem;
+    		object-fit:contain;
+    	}
+    	.practice-option{
+    		overflow: hidden;
+    	}
+    	.practice-option li{
+		    overflow: hidden;
+		    min-height: 2.5rem;
+		    padding: 0.55rem 0.6rem 0rem 0.6rem;
+    	}
+    	.practice-option li:active{
+		    background:#EAEAEA;
+    	}
+    	.practice-option img{
+    		width: 1.2rem;
+		    border-radius: 100%;
+		    margin-bottom: -0.3rem;
+		    margin-right:0.5rem;
+    	}
+    	.option_order{
+		    float: left;
+		    width: 1.4rem;
+		    height: 1.4rem;
+		    margin-right: 0.5rem;
+    	}
+    	.option-txt{
+    		float: left;
+		    width: 80%;
+		    font-size: 0.9rem;
+		    padding-top: 0.1rem;
+    	}
+    	.practice-answer{
+    		padding: 0.5rem;
+		    overflow: hidden;
+		    background: #FFF;
+    	}
+    	.practice-ansewer-title{
+    		overflow: hidden;
+    	}
+    	.practice-ansewer-title div{
+    		width:33.3%;
+    		float: left;
+		    text-align: center;
+    		font-size: 0.9rem;
+    	}
+    	.transverse{
+    		height: 1px;
+    		background: #F1F1F1;
+    		margin-top: 0.45rem;
+    	}
+    	.practice-answer-content{
+		    margin-top: 1rem;
+		    font-size: 0.9rem;
+		    border-radius: 5px;
+    	}
+    	.blue{
+    		color:#1296DB;
+    	}
+    	.red{
+    		color:#F23C3C;
+    	}
+    	.aui-btn-info {
+		    color: #ffffff !important;
+		    background: linear-gradient(to left, #03B4F7 , #90DBF7) !important;
+		    margin-top: 2rem !important;
+		    margin-bottom:1rem !important;
+		    border-radius: 2rem;
+		}
+		.aui-btn-block {
+		    display: block;
+		    width: 90%;
+		    padding: 0.4rem 0;
+		    font-size: 0.9rem;
+		    margin: 0 auto;
+		    float: left;
+		    margin-left: 5%;
+		}
+		.option_a{
+			background:url(../../../icon/subject/option/icon_option_A.png) no-repeat center;
+			background-size: contain;
+		}
+		.option_b{
+			background:url(../../../icon/subject/option/icon_option_B.png) no-repeat center;
+			background-size: contain;
+		}
+		.option_c{
+			background:url(../../../icon/subject/option/icon_option_C.png) no-repeat center;
+			background-size: contain;
+		}
+		.option_d{
+			background:url(../../../icon/subject/option/icon_option_D.png) no-repeat center;
+			background-size: contain;
+		}
+		.active .option_a{
+			background:url(../../../icon/subject/option/icon_option_selected_A.png) no-repeat center;
+			background-size: contain;
+		}
+		.active .option_b{
+			background:url(../../../icon/subject/option/icon_option_selected_B.png) no-repeat center;
+			background-size: contain;
+		}
+		.active .option_c{
+			background:url(../../../icon/subject/option/icon_option_selected_C.png) no-repeat center;
+			background-size: contain;
+		}
+		.active .option_d{
+			background:url(../../../icon/subject/option/icon_option_selected_D.png) no-repeat center;
+			background-size: contain;
+		}
+		.right-active .option_a{
+			background:url(../../../icon/subject/option/icon_option_right_selected_A.png) no-repeat center;
+			background-size: contain;
+		}
+		.right-active .option_b{
+			background:url(../../../icon/subject/option/icon_option_right_selected_B.png) no-repeat center;
+			background-size: contain;
+		}
+		.right-active .option_c{
+			background:url(../../../icon/subject/option/icon_option_right_selected_C.png) no-repeat center;
+			background-size: contain;
+		}
+		.right-active .option_d{
+			background:url(../../../icon/subject/option/icon_option_right_selected_D.png) no-repeat center;
+			background-size: contain;
+		}
+		.right{
+			background:url(../../../icon/subject/option/icon_option_right.png) no-repeat center !important;
+			background-size: contain !important;
+		}
+		.error{
+			background:url(../../../icon/subject/option/icon_option_error.png) no-repeat center !important;
+			background-size: contain !important;
+		}
+		.tag{
+		    font-size: 0.6rem;
+		    color: #FFF;
+		    padding: 0rem 0.2rem;
+		    transform: skew(0,-8deg);
+		    transform-origin: left top;
+		    display: inline-block;
+		    border-radius:5px 0px 5px 0px;
+		}
+		.bg-yellow{
+			background:#FF8F2A;
+		}
+		.bg-red{
+			background:#DC251F;
+		}
+		.bg-green{
+			background:#6BC72E;
+		}
+		.practice-answer-vip {
+		    padding: 0.5rem;
+		    overflow: hidden;
+		    background: #FFF;
+		}
+		.right_answer{
+	        height: 2rem;
+		    line-height: 2rem;
+		    background: #F5F5F5;
+		    font-weight: bold;
+		    padding-left: 5%;
+		    float: left;
+		    width: 100%;
+		    position:relative;
+		}
+		#vipDesc{
+			background:url(../../../icon/subject/subjectOne/icon_vip_bg.png) center no-repeat;
+			background-size:cover;
+		}
+		.question-difficult{
+		    height: 2rem;
+		    line-height: 2rem;
+		    float: left;
+		    width: 100%;
+		    font-size: 0.7rem;
+		}
+		.question-difficult img{
+			width: 0.5rem;
+		    margin-bottom: 0rem;
+		    margin-right: 0rem;
+		    margin-left: 0.2rem;
+		}
+		#vipDesc p{
+			font-size:0.9rem !important;
+		}
+		#normalDesc p{
+			font-size:0.9rem !important;
+		}
+		#title{
+			font-size:0.9rem;
+		}
+		.vip-play-btn{
+		    position: absolute;
+		    right: 0.5rem;
+		    top: 0;
+		    font-size: 0.7rem;
+		    font-weight: normal;
+		    color: #ffffff !important;
+		    background: linear-gradient(to left, #3F86FE , #64ADF6) !important;
+		    height: 1.5rem;
+		    line-height: 1.5rem;
+		    margin-top: 0.25rem;
+		    padding: 0rem 0.5rem;
+		    border-radius: 1rem;
+		}
+		.vip-play-btn:active{
+			background: #64ADF6 !important;
+		}
+		.desc-src{
+		    background: #F5F6F8;
+    		padding: 0.5rem 5%;
+		}
+		.vip-play-btn-img{
+			width: 2rem !important;
+		    border-radius: 0 !important;
+		    position: absolute;
+		    right: 0rem;
+		    top: -0.3rem;
+		    margin: auto !important;
+		}
+		
+		.aui-list-item-input .aui-range{
+					width: 80%;
+				}
+				.aui-margin-b-15{
+					text-align: center;
+				}
+				.aui-list:before{
+					height: 0;
+				}
+				.aui-list:after{
+					height: 0;
+				}
+				.aui-form-list{
+					background: #fff; 
+				}
+				.small{
+					font-size: 0.6rem;
+					/* width: 1rem; */
+					float: left;
+					margin-left: 0.5rem;
+					line-height: 1.2rem;
+				}
+				.big{
+					font-size: 0.6rem;
+					/* width: 1rem; */
+					float: right;
+					margin-right: 0.5rem;
+					line-height: 1.2rem;
+				}
+				.aui-list-item-input span:nth-child(1){
+					/* width: 0.5rem; */
+					font-size: 0.5rem;
+					font-weight: 400;
+				}
+				.aui-list-item-input span:nth-child(3){
+					/* width: 0.5rem; */
+					font-size: 0.9rem;
+					font-weight: 700;
+				}
+				.aui-margin-b-15{
+					margin-bottom: 0 !important;
+				}
+				.font-bottom-style{
+					position: fixed;
+					width: 100%;
+					/* height: 4rem; */
+					bottom: 0;
+					z-index: 101;
+				}
+				.icon-upper-bor{
+					width: 100%;
+					text-align: center;
+				}
+				.icon-upper-bor img{
+					width: 1rem;
+				}
+				.bottom-line-bor{
+					height: 4rem;
+					background: #fff;
+					display: none;
+				}
+				.test-normal{
+					 transform: rotate(0deg);
+		            -webkit-transform: rotate(0deg);
+		            transition: transform .5s;
+				}
+				.test-inverse{
+					transform: rotate(180deg);
+		            -webkit-transform: rotate(180deg);
+		            transition: transform .5s;
+				}
+				.mask{
+					position: fixed;
+					top: 0;
+					left: 0;
+					background-color: #000000;
+					opacity: 0.5;
+					width: 100%;
+					height: 100%;
+					z-index: 100;
+				}
+				.maskW{
+					display: none;
+				}
+				.setUpFont{
+					font-size: 0.5rem;
+				}
+				
+				.voice-txt{
+				    width: 100%;
+				    min-height: 2rem;
+				    text-align: center;
+				    font-size: 0.7rem;
+				    -webkit-transform: scale(0);
+				    transform: scale(0);
+				    /* opacity: 0; */
+				    background: #FFF;
+				    /* position: fixed; */
+				    /* bottom: 0; */
+				    /* left: 0; */
+				}
+				.voice-txt-title{
+					width: 100%;
+				    height: 2.5rem;
+				    line-height: 2.5rem;
+				    border-radius: 0.5rem 0.5rem 0rem 0rem;
+					border-bottom: none;
+					font-weight: bold;
+					color:#4D4D4D;
+					font-size:0.9rem;
+				}
+				.voice-txt-content{
+				    width: 100%;
+				    height: 4rem;
+				    text-align: left;
+				    display: flex;
+				    line-height: 1.3rem;
+				    color:#4D4D4D;
+				    padding: 0 0.5rem ;
+				}
+				.voice-txt-content span{
+					margin:auto;
+					padding: 0 0.3rem;
+				    font-size: 0.8rem;
+				}
+				.voice-txt-button{
+				    width: 86%;
+				    height: 2rem;
+				    line-height: 2rem;
+				    background: linear-gradient(to left, #03B4F7 , #90DBF7);
+				    color: #fff;
+				    border-radius: 1rem;
+				    margin-left: 7%;
+				}
+				.voice-txt-button:active{
+					background:#90DBF7;
+				}
+				.in{
+					-webkit-transform: scale(1);
+					transform:scale(1);
+					opacity: 1;
+				}
+				.vip-voice-title{
+				    height: 2rem;
+				    line-height: 2rem;
+				    font-size: 0.8rem;
+				    font-weight: bold;
+				    width: 90%;
+				    margin-left: 5%;
+				    text-align: left;
+				}
+				.vip-voice-title img{
+					width: 1.8rem;
+					margin-left: 0.25rem;
+				}
+				.exist-time{
+				    color: #A3B1C9;
+					font-weight: normal;
+					font-size: 0.7rem;
+					position: absolute;
+					top: 0;
+					width: 7rem;
+					left: 6rem;
+					height: 1.5rem;
+					line-height: 1.5rem;
+				}
+				.exist-time font{
+					color:#3F86FF;
+				}
+				.voice-play-icon{
+				    width: 6rem;
+				    margin-left: 5%;
+				    text-align: left;
+				    margin-top: 0.8rem;
+				    background: #E2EDFF;
+				    color: #3F86FF;
+				    border: solid #8EB8FF 1px;
+				    border-radius: 1rem;
+				    padding: 0.2rem 1rem;
+				    position: relative;
+				}
+				.voice-play-icon img{
+					height: 0.8rem;
+				}
+				.voice-txt-desc{
+				    width: 90%;
+				    margin: 1rem 5%;
+				    text-align: left;
+				    font-size: 0.9rem !important;
+				    /* background: #F5F6F8; */
+				 	padding: 0.4rem;
+					position: relative;
+				}
+				.voice-txt-desc p{
+				    font-size: 0.9rem !important;
+				}
+				.voice-txt-desc-one-line{
+					white-space: nowrap;
+					-o-text-overflow:ellipsis;
+					text-overflow: ellipsis;
+					overflow:hidden;
+				}
+				.aui-btn-block-buy{
+					width: 8rem;
+					background: linear-gradient(to left, #A77A43 , #D8AD85) !important;
+					position: absolute;
+					margin-top: 0 !important;
+					top: 15%;
+					right: 0;
+				}
+				.vip-mask{
+					width: 5rem;
+					z-index: 9999;
+					height: 1rem;
+				}
+				.vip-mask img{
+					width: 80%;
+					height:1.5rem;
+					position: absolute;
+					top: 10%;
+					right: 0;
+				}
+    </style>
+</head>
+<body>
+	<div class="mask maskW" id="maskT" tapmode onclick="upper()">
+		
+	</div>
+	
+	
+	<div class="practice">
+		<div class="practice-type" id="questionType"></div>
+		<div class="practice-title">
+			<span class='tag' id='questionOfType'></span>
+			<span id='title'></span>
+		</div>
+		<div class="practice-img aui-hide">
+			<img src="" alt="" id="questionImg"/>
+		</div>
+		<ul class="practice-option">
+			<!-- <li tapmode onclick="selectAnswer(this)">
+				<div class="option_order option_a"></div>
+				<div class="option-txt">
+					<span>在非机动车道停车在非机动车道停车在非机动车道停车在非机动车道停车在非机动车道停车在非机动车道停车</span>
+				</div>
+			</li>
+			<li tapmode onclick="selectAnswer(this)">
+				<div class="option_order option_b"></div>
+				<div class="option-txt">
+					<span>停车占用机用车道</span>
+				</div>
+			</li>
+			<li tapmode onclick="selectAnswer(this,'right')">
+				<div class="option_order option_c"></div>
+				<div class="option-txt">
+					<span>距离路边超过30厘米</span>
+				</div>
+			</li>
+			<li tapmode onclick="selectAnswer(this)">
+				<div class="option_order option_d"></div>
+				<div class="option-txt">
+					<span>在有禁停标线路段停车</span>
+				</div>
+			</li>
+			<div class="aui-btn aui-btn-info aui-btn-block" onclick="sureAnswer()" id="sureButton">确认选项</div>
+			<div class='right_answer'>
+				<span>正确答案：A</span>
+				<div class='vip-play-btn'><span>答题攻略</span></div>
+				<img src="../../../icon/vip/video/icon_vip_zhuan.png" class='vip-play-btn-img'/>
+			</div> -->
+		</ul>
+		
+		<div id="voice-txt-bor" class='voice-txt trans in aui-hide'>
+			
+		</div>
+	</div>
+	<div class="font-bottom-style">
+		<div class="aui-content aui-margin-b-15 bottom-line-bor" id="upperBor">
+			<ul class="aui-list aui-form-list">
+				<div>
+					<span class="small">小号</span>
+					<span>标准</span>
+					<span class="big">大号</span>
+				</div>
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-input">
+							<span>
+								A-
+							</span>
+							<div class="aui-range">
+								<input type="range" class="aui-range" value="50" max="60" min="40" step="1" id="range" onchange="upperRange()" />
+							</div>
+							<span>
+								A+
+							</span>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	
+	<script type="text/template" charset="utf-8" id='option_src'>
+		{{ for(var i=0;i<it.length;i++){ }}
+			<li tapmode onclick="selectAnswer(this,'{{=it[0].question_type}}')">
+				{{ if(i == 0){ }}
+					<div class="option_order option_a"></div>
+				{{ } }}
+				{{ if(i == 1){ }}
+					<div class="option_order option_b"></div>
+				{{ } }}
+				{{ if(i == 2){ }}
+					<div class="option_order option_c"></div>
+				{{ } }}
+				{{ if(i == 3){ }}
+					<div class="option_order option_d"></div>
+				{{ } }}
+				<div class="option-txt">
+					<span>{{=it[i].option_name}}</span>
+				</div>
+				<input type='hidden' value='{{=it[i].is_right}}' class='isRight'>
+				<input type='hidden' value='{{=it[i].option_code}}' class='optionCode'>
+			</li>
+		{{ } }}
+		<div class="aui-btn aui-btn-info aui-btn-block" onclick="sureAnswer()" id="sureButton">确认选项</div>
+		<div class='right_answer aui-hide'>正确答案：
+			{{ for(var i=0;i<it.length;i++){ }}
+				{{ if(it[i].is_right == '013002'){ }}
+					{{=optionName(i)}}
+				{{ } }}
+			{{ } }}
+			<!-- {{ if(it[0].vip_description != 'undefined'){ }}
+				<div class='vip-play-btn' id='practice-answer-vip' tapmode onclick='showVipVoiceView("{{=Base64.encode(it[0].vip_description)}}","{{=it[0].is_example}}","{{=it[0].voice_url}}")'>答题攻略</div>
+				<img src="../../../icon/vip/video/icon_vip_zhuan.png" class='vip-play-btn-img'/>
+			{{ } }} -->
+		</div>
+	</script>
+	
+	
+	<script type="text/template" charset="utf-8" id='voice_play_src'>
+		{{ if(it.vip_description != 'undefined'){ }}
+		<div class='vip-voice-title bottom-slide'>
+			<span>答题攻略</span>
+			<img src="../../../icon/subject/subjectOne/icon_vip_power.png" alt=""/>
+		</div>
+			
+			{{ if(it.is_example == 1){ }}
+			<!-- 示例题样式 -->
+			<div class='voice-play-icon' tapmode onclick='stop_start_voice(this)'>
+				<span id='voiceTxt'>语音技巧</span>
+				<!-- <img src="../../../icon/vip/video/icon_voice_play.gif" alt="" /> -->
+				<img src="../../../icon/vip/video/icon_voice_play.png" alt="" style='margin-bottom: -0.15rem;margin-left: 0.25rem;'/>
+				
+				{{ if(!it.is_vip){ }}
+					<!-- 如果不是vip的话 -->
+					<div class='exist-time'>&emsp;本题为体验题</div>
+				{{ } }}
+			</div>
+			<div class='voice-txt-desc'>
+				<span>{{=Base64.decode(it.vip_description)}}</span>
+			</div>
+			{{ }else{ }}
+			<!-- vip例题样式 -->
+				{{ if(!it.is_vip){ }}
+					<div class='voice-play-icon' tapmode onclick='openVipCheck()'>
+				{{ }else{ }}
+					<div class='voice-play-icon' tapmode onclick='stop_start_voice(this)'>
+				{{ } }}
+					<span id='voiceTxt'>语音技巧</span>
+					<!-- <img src="../../../icon/vip/video/icon_voice_play.gif" alt="" /> -->
+					<img src="../../../icon/vip/video/icon_voice_play.png" alt="" style='margin-bottom: -0.15rem;margin-left: 0.25rem;'/>
+				</div>
+				<!-- 是否需要解锁全部技巧 -->
+				{{ if(!it.is_vip){ }}
+					<div class='voice-txt-desc voice-txt-desc-one-line'>
+						<span>{{=Base64.decode(it.vip_description)}}</span>
+						<div class="vip-mask" tapmode onclick="buy_vip()"><img src="../../../icon/vip/img-vip-mask.png" ></div>
+						<!-- <div class="aui-btn aui-btn-info aui-btn-block-buy" tapmode onclick="buy_vip()">解锁全部技巧</div> -->
+					</div>
+				{{ }else{ }}
+					<div class='voice-txt-desc'>
+						<span>{{=Base64.decode(it.vip_description)}}</span>
+					</div>
+				{{ } }}
+			{{ } }}
+		{{ } }}
+	</script>
+	
+	<div class="practice-answer aui-hide">
+		<div class="practice-ansewer-title">
+			<div class="transverse"></div>
+			<div><span>试题详解</span></div>
+			<div class="transverse"></div>
+		</div>
+		<div class="practice-answer-content" id='normalDesc'>
+		</div>
+		<script type="text/template" charset="utf-8" id='description_src'>
+			<div class='desc-src'>
+				<strong>官方解读：</strong>
+				<div class='question-difficult'>
+					<span>难度</span>
+					{{ try{ }}
+						{{ for(var i=0;i<parseInt(it[0].difficulty.substring(5,6));i++){ }}
+							<img src="../../../icon/subject/icon_star.png" alt="" />
+						{{ } }}
+					{{ }catch(err){ }}
+					{{ } }}
+				</div>
+				<div><span>{{=Base64.decode(it[0].description)}}</span></div>
+			</div>
+		</script>
+	</div>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var questionIdList;
+	var db;
+	var num;//第几题
+	var learnerId = '';
+	var is_close_book = 'no';//无痕模式，默认否
+	var is_back_question = 'no';//背题模式，默认否
+	var audioStreamer;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam.data;
+		questionIdList = api.pageParam.questionIdList;
+		num = api.pageParam.num;
+		db = api.require('db');
+		audioStreamer = api.require('audioStreamer');
+		log('cache:',cache);
+		is_close_book = getGlobalData('is_close_book') == undefined?'no':getGlobalData('is_close_book');//缓存中的无痕模式
+		is_back_question = getGlobalData('is_back_question') == undefined?'no':getGlobalData('is_back_question');//缓存中的无痕模式
+		init(questionIdList[num]);
+		if(islogin()){
+			learnerId = getUserId();
+		}
+		
+		//监听题库模式切换-无痕
+		toEventListener('change_question_model',function(ret){
+			//如果不是背题模式，无痕模式开关才能起作用
+			if(is_back_question != 'yes'){
+				is_close_book = ret.value;
+				isAllowSelect = ret.value == 'no'?false:true;
+				init(questionIdList[num]);
+			}
+		});
+		//监听题库模式切换-背题
+		toEventListener('change_question_back_model',function(ret){
+			//如果是背题模式，那么不允许做题，解析、关键词显示
+			is_back_question = ret.value;
+			//无痕模式开&&背题模式未开，那么允许做题
+			isAllowSelect = ret.value == 'no'&&is_close_book == 'yes'?true:false;
+			init(questionIdList[num]);
+		});
+		
+		//监听vip题库购买成功
+		toEventListener('openPaySuccess',function(ret,err){
+			if(ret.value.params.isContainKemuOne == 1){
+				api.pageParam.is_vip = true;
+				esc_function(api.winName,'','changeVipStatus('+true+')');
+			}
+		});
+		
+		//监听左滑动
+		api.addEventListener({
+		   name:'swipeleft'
+		}, function(ret, err){        
+		   esc_function(api.winName,'','openNext()');
+		});
+		//监听右滑动
+		api.addEventListener({
+		   name:'swiperight'
+		}, function(ret, err){
+		   esc_function(api.winName,'','openPrevious()');
+		});
+		
+		
+		var fons = getGlobalData("fontSize");
+		var fontWidth = getGlobalData("fontWidth");
+		
+		setTimeout(function() {
+			cssfontSize = $(".option-txt").css('font-size');
+			optionOrder = $(".option_order").css('width');
+		}, 100);
+		
+		if (fons != null && fons != undefined && fontWidth != null && fontWidth != undefined) {
+			$("#range").val(fons * 50 / 18);
+			setTimeout(function() {
+				$(".option-txt").css("font-size", fons + "px");
+				$("#title").css("font-size", fons + "px");
+				$(".right_answer").css("font-size", fons + "px");
+				$(".option_order").css('width', fontWidth + "px");
+				$(".option_order").css('height', fontWidth + "px");
+		
+			}, 100)
+		}
+		
+		toEventListener('upperFont', function(ret, err) {
+			upper();
+		});
+		
+		
+	}
+	
+	//显示隐藏功能
+	function upper() {
+		if ($("#upperBor").css("display") == "none") {
+			$("#maskT").removeClass("maskW");
+			$("#upperImg").removeClass("test-normal");
+			$("#upperImg").addClass("test-inverse");
+			$(".setUpFont").css("color", "#fff");
+		} else {
+			$("#maskT").addClass("maskW");
+			$("#upperImg").addClass("test-normal");
+			$("#upperImg").removeClass("test-inverse");
+			$(".setUpFont").css("color", "#000");
+		}
+		$("#upperBor").slideToggle("fast");
+	}
+	//字体变大变小
+	function upperRange() {
+		var num = $("#range").val();
+		var optionOrderWidth = parseFloat(optionOrder);
+		var fontSize = parseFloat(cssfontSize);
+		$(".option-txt").css("font-size", fontSize * num / 50 + "px");
+		$("#title").css("font-size", fontSize * num / 50 + "px");
+		$(".right_answer").css("font-size", fontSize * num / 50 + "px");
+		$(".option_order").css('width', optionOrderWidth * num / 50 + "px");
+		$(".option_order").css('height', optionOrderWidth * num / 50 + "px");
+		setGlobalData("fontSize", fontSize * num / 50);
+		setGlobalData("fontWidth", optionOrderWidth * num / 50);
+	}
+	
+	
+	var sql;
+	var isAllowSelect = true;//是否允许选择
+	var key_words;//关键词
+	var title;//题目标题
+	function init(questionIdMap){
+		sql = 'SELECT * FROM cm_question WHERE question_id = ' + questionIdMap.question_id;
+		db.selectSql({
+	        name:'drivingApp',
+	        sql:sql
+        },function(ret,err){
+        	log('题目详情',ret);
+        	if(ret&&ret.status){
+        		$api.html($api.byId('questionType'), checkQuestionType(ret.data[0].type));
+        		$api.html($api.byId('questionOfType'), checkQuestionOfType(ret.data[0].question_type));
+        		if(ret.data[0].question_type == '057002'){
+        			//多选题标红
+        			$('#questionOfType').addClass('bg-red');
+        		}else{
+        			$('#questionOfType').addClass('bg-yellow');
+        		}
+        		if(ret.data[0].image != undefined &&ret.data[0].image != ''&&ret.data[0].image != 'undefined'){
+	        		$api.attr($api.byId('questionImg'), 'src', file_load_url + ret.data[0].image + '&style=image/resize,w_500');
+	        		$('.practice-img').removeClass('aui-hide');
+	        		document.getElementById('questionImg').onclick = function(){
+	        			openPic_i(file_load_url + ret.data[0].image);
+	        		}
+        		}
+        		//获取当前题库所属地区
+				var tag = getLocalQuestionName(ret);
+				
+				$('#title').html(ret.data[0].title + tag);
+				title = ret.data[0].title + tag;
+        		var option_src = $('#option_src').html();
+        		$('.practice-option').html(doT.template(option_src)(ret.data));
+        		var description_src = $('#description_src').html();
+        		$('#normalDesc').html(doT.template(description_src)(ret.data));
+        		key_words = ret.data[0].key_words;
+				
+				showVipVoice(ret.data[0].vip_description, ret.data[0].is_example, ret.data[0].voice_url);
+				
+				if(ret.data[0].voice_url != null
+					&&ret.data[0].voice_url != undefined
+					&&ret.data[0].voice_url != ''
+					&&ret.data[0].voice_url != 'undefined'){
+					//有语音数据则初始化播放器并自动播放
+					init_voice_player(file_load_url + ret.data[0].voice_url,true);
+				}else{
+					//没有语音的话直接隐藏
+					$('.voice-play-icon').addClass('aui-hide');
+				}
+        		api.parseTapmode();
+        		
+        		if(is_back_question == 'yes'||(is_close_book == 'no'&&is_back_question == 'no')){
+	        		//显示做题记录只有以下两种情况
+	        		//1.背题模式开，加上做题痕迹（用户做题记录优先显示，其次才是正确答案）
+	        		//2.背题模式未开&&无痕模式未开，加上做题痕迹（有用户做题记录才显示）
+	        		detectionIsDo(questionIdMap.question_id);
+        		}else if(is_back_question == 'no'&&is_close_book == 'yes'){
+        			//1.背题模式未开&&无痕模式开，解析等必须隐藏
+        			hiddenAnalysisContent();
+        		}
+        		if(api.pageParam.stunum != ''){
+	        		//如果15分钟不动的话开启防作弊校验，前提是这个学员需要计时（stunum存在的情况下）
+	        		openVerification();
+        		}
+        	}else{
+        		alert('获取题目失败，请返回重试');
+        	}
+        });
+	}
+	
+	/**
+	 * 获取当前题库所属地区
+	 */
+	function getLocalQuestionName(ret){
+		var tag = '';
+		//获取当前定位缓存
+		var location_city = $api.getStorage('cache_by_app').location_city;
+		if(location_city&&location_city.city_level2_Name&&ret.data[0].province){
+			//如果是本地题库
+			tag = '<i>（' + location_city.city_level2_Name + '考题）</i>';
+		}
+		return tag;
+	}
+	
+	/**
+	 * 开启防作弊校验 
+	 */
+	function openVerification(){
+		setTimeout(function(){
+			console.log('关闭计时器');
+			//先关闭计时器
+			esc_function(api.winName,'','clearCountDown()');
+			//打开校验作弊验证
+			esc_function(api.winName,'','openVerification()');
+		},15*60*1000);
+	}
+	
+	/**
+	 * 检测是否做过该题目 
+	 */
+	function detectionIsDo(questionId){
+		sql = 'SELECT * FROM cm_question_recode WHERE learner_id = "'+ learnerId +'" AND question_id = ' + questionId + ' ORDER BY insert_dt DESC';
+		db.selectSql({
+	        name:'drivingApp',
+	        sql:sql
+        },function(ret,err){
+        	if(ret&&ret.status){
+        		log('做题记录',ret);
+        		if(ret.data.length > 0){
+	        		var learner_option_codes = ret.data[0].learner_option_code.split(',');
+	        		for(var i=0;i<learner_option_codes.length;i++){
+	        			switch(learner_option_codes[i]){
+	        				case '018001':
+	        					//选项A
+	        					$('.option_order').eq(0).parent().addClass('active');
+	        					break;
+	        				case '018002':
+	        					//选项B
+	        					$('.option_order').eq(1).parent().addClass('active');
+	        					break;
+	        				case '018003':
+	        					//选项C
+	        					$('.option_order').eq(2).parent().addClass('active');
+	        					break;
+	        				case '018004':
+	        					//选项D
+	        					$('.option_order').eq(3).parent().addClass('active');
+	        					break;
+	        			}
+	        		}
+	        		//查看的提交，不记录
+	        		sureAnswer('no-recode');
+        		}else{
+        			if(is_back_question == 'yes'){
+	        			//如果是背题模式，用户也没有做题，那么显示正确答案
+        				sql = 'SELECT * FROM cm_question WHERE question_id = ' + questionId + ' AND is_right = "013002"';
+						db.selectSql({
+					        name:'drivingApp',
+					        sql:sql
+				        },function(ret,err){
+				        	if(ret&&ret.status){
+				        		if(ret.data.length > 0){
+				        			for(var i=0;i<ret.data.length;i++){
+				        				switch(ret.data[i].option_code){
+					        				case '018001':
+					        					//选项A
+					        					$('.option_order').eq(0).parent().addClass('active');
+					        					break;
+					        				case '018002':
+					        					//选项B
+					        					$('.option_order').eq(1).parent().addClass('active');
+					        					break;
+					        				case '018003':
+					        					//选项C
+					        					$('.option_order').eq(2).parent().addClass('active');
+					        					break;
+					        				case '018004':
+					        					//选项D
+					        					$('.option_order').eq(3).parent().addClass('active');
+					        					break;
+					        			}
+				        			}
+				        			//提交，不记录
+	        						sureAnswer('no-recode');
+				        		}else{
+				        			alert_msg('无正确答案');
+				        		}
+				        	}else{
+				        		log('获取题目详情失败',err);
+				        	}
+				        });
+        			}else{
+        				//如果不是背题模式，用户也没有做题，那么隐藏解析等项目，不管是不是无痕模式，都允许做题
+        				isAllowSelect = true;
+        				hiddenAnalysisContent();
+        			}
+        		}
+        	}else{
+        		console.log('获取做题记录失败' + JSON.stringify(err));
+        	}
+        });
+	}
+	
+	function closeWin(){
+		api.closeWin({
+        });
+	}
+	
+	//显示选项
+	var optionMap = ['A','B','C','D'];
+	function optionName(index){
+		return optionMap[index];
+	}
+	
+	//选中选项
+	function selectAnswer(e,type){
+		console.log('isAllowSelect'+isAllowSelect);
+		if(isAllowSelect){
+			if($(e).hasClass('active')){
+				$(e).removeClass('active');
+			}else{
+				if(type != '057002'){//不是多选题，那只能选择一个并且自动提交结果
+					$('.practice-option').find('li').removeClass('active');
+					$(e).addClass('active');
+					sureAnswer();
+				}else{
+					$(e).addClass('active');
+				}
+			}
+		}
+	}
+	//确认答案
+	var isTrue = true;
+	var sql;
+	var learnerOptionCode = '';//用户选择答案
+	var rightOptionCode = '';//正确答案
+	function sureAnswer(flag){
+		if(!$('.practice-option li').hasClass('active')&&flag != 'no-recode'){
+			alert_msg('请选择正确答案');
+			return;
+		}
+		isAllowSelect = false;//不允许再次选择
+		learnerOptionCode = '';rightOptionCode = '';
+		$('.practice-option li').each(function(index,e){
+			if($(e).hasClass('active')){
+				learnerOptionCode += $(e).find('.optionCode').val() + ',';
+			}
+			if($(e).find('.isRight').val() == '013002'){
+				rightOptionCode += $(e).find('.optionCode').val() + ',';
+			}
+			if(($(e).find('.isRight').val() == '013002')&&$(e).hasClass('active')){//选中了正确答案，添加正确样式
+				$(e).find('.option_order').addClass('right');
+				$(e).find('.option-txt').addClass('blue');
+			}else if(($(e).find('.isRight').val() == '013002')&&!$(e).hasClass('active')){//有正确答案未选中，添加正确答案的自动选中
+				$(e).addClass('right-active');
+				$(e).find('.option-txt').addClass('blue');
+				isTrue = false;
+			}else if(($(e).find('.isRight').val() == '013001')&&$(e).hasClass('active')){//错误答案选中，添加错误样式
+				$(e).find('.option_order').addClass('error');
+				$(e).find('.option-txt').addClass('red');
+				isTrue = false;
+			}else{//错误答案也没选中，不做操作
+			}
+		});
+		if(isTrue){//做题正确
+			if(is_back_question == 'yes'){
+				//做题正确模式是不显示解析，除非开了背题模式
+				showAnalysisContent();
+			}
+		
+			document.getElementById('sureButton').onclick = '';
+			//主动提交
+			if(flag != 'no-recode'){
+				esc_function(api.winName,'','changeNum('+true+')');
+			}
+			if(num == questionIdList.length - 1){//是最后一题
+				addFinishStyle();
+			}else{
+				
+				if(flag != 'no-recode'){
+					//主动提交						
+					setTimeout(function(){jump_next();},500);
+				}else{
+					$('#sureButton').html('下一题');
+					//显示解析等模块
+					showAnalysisContent();
+					document.getElementById('sureButton').onclick = function(){jump_next();};
+				}
+			}
+		}else{
+			//显示解析等模块
+			showAnalysisContent();
+			//主动提交
+			if(flag != 'no-recode'){
+				esc_function(api.winName,'','changeNum('+false+')');
+				window.location.hash = "#sureButton";
+				// $('html,body').animate({scrollTop: $(document).height()-$(window).height()+'px'}, 300);
+			}
+			if(num == questionIdList.length - 1){//是最后一题
+				addFinishStyle();
+			}else{
+				$('#sureButton').html('下一题');
+				document.getElementById('sureButton').onclick = function(){jump_next();};
+				api.parseTapmode();
+			}
+		}
+		
+		//主动提交
+		if(flag != 'no-recode'){
+			var belongBankType = getBankType('036001');
+			learnerOptionCode = learnerOptionCode.substr(0,learnerOptionCode.length - 1);
+			rightOptionCode = rightOptionCode.substr(0,rightOptionCode.length - 1);
+			sql = "INSERT INTO cm_recode(learner_id,question_id,belong_bank_type,learner_option_code,right_option_code,is_right,insert_dt) ";
+			sql += "VALUES ('" + learnerId + "','"+questionIdList[num].question_id+"','" + belongBankType + "','"+learnerOptionCode+"','"+rightOptionCode+"','"+(isTrue?1:2)+"',strftime('%s','now'))";
+			//插入做题记录和学员与题目关系记录
+			db.executeSql({
+		        name:'drivingApp',
+		        sql:sql
+	        },function(ret,err){
+	        	if(ret&&ret.status){
+	        		sql = "SELECT right_num, wrong_num, local_version, version FROM cm_question_recode WHERE learner_id = '"+learnerId+"' AND question_id = " + questionIdList[num].question_id;
+	        		db.selectSql({
+	                    name:'drivingApp',
+	                    sql:sql
+                    },function(ret,err){
+                    	if(ret&&ret.status){
+                    		var right_num = 0;//正确数
+                    		var wrong_num = 0;//错误数
+                    		var local_version = 0;//本地版本号
+                    		var version = 0;//云端版本号
+                    		if(ret.data.length > 0){
+                    			right_num = ret.data[0].right_num;
+                    			wrong_num = ret.data[0].wrong_num;
+                    			local_version = ret.data[0].local_version;
+                    			version = ret.data[0].version;
+                    			console.log('version'+version);
+                    		}
+                    		if(isTrue){
+                    			right_num = parseInt(right_num) - 0 + 1;
+                    		}else{
+                    			wrong_num = parseInt(wrong_num) - 0 + 1;
+                    		}
+                    		local_version = parseInt(local_version) - 0 + 1;
+                    		version = parseInt(version);
+					        sql = "REPLACE INTO cm_question_recode(learner_id,question_id,belong_bank_type,right_num,wrong_num,is_right,learner_option_code,insert_dt,update_dt,local_version,version) ";
+					        sql += "VALUES ('" + learnerId + "','"+questionIdList[num].question_id+"','" + belongBankType + "',"+right_num+","+wrong_num+",'"+(isTrue?1:2)+"','"+learnerOptionCode+"',strftime('%s','now'),strftime('%s','now'),"+local_version+","+version+")";
+					        db.executeSql({
+				                name:'drivingApp',
+				                sql:sql
+			                },function(ret,err){
+			                	if(ret&&ret.status){
+	                        		log('记录做题正确数成功',ret);
+	                        	}else{
+	                        		log('记录做题正确数失败',err);
+	                        	}
+			                });
+                    	}else{
+                    		alert_msg('记录做题关系失败');
+                    	}
+                    });
+	        	}else{
+	        		log('记录做题记录失败',err);
+	        	}
+	        });
+		}
+	}
+	
+	/**
+	 * 显示做题解析等分析模块 
+	 */
+	function showAnalysisContent(){
+		//显示正确答案
+		$('.right_answer').removeClass('aui-hide');
+		//显示普通解析
+		$('.practice-answer').removeClass('aui-hide');
+		
+		$('#voice-txt-bor').removeClass('aui-hide');
+		if(api.pageParam.is_vip){
+			//显示vip解析
+			$('#practice-answer-vip').removeClass('aui-hide');
+		}
+		if(key_words){
+			//突出关键词
+			$('#title').html(displayKeyWord(title,key_words));
+		}
+	}
+	
+	/**
+	 * 隐藏做题解析等分析模块 
+	 */
+	function hiddenAnalysisContent(){
+		//隐藏正确答案
+		$('.right_answer').addClass('aui-hide');
+		//隐藏普通解析
+		$('.practice-answer').addClass('aui-hide');
+		
+		$('#voice-txt-bor').addClass('aui-hide');
+		if(api.pageParam.is_vip){
+			//隐藏vip解析
+			$('#practice-answer-vip').addClass('aui-hide');
+		}
+		//隐藏关键词
+		$('#title').html(title);
+	}
+	
+	/**
+	 * 突出关键词 
+	 */
+	function displayKeyWord(title,key_words){
+		var key_ws = key_words.split(',');
+		var change_title = title;
+		for(var i=0;i<key_ws.length;i++){
+			change_title = change_title.replaceAll(key_ws[i],'<font>' + key_ws[i] + '</font>');
+		}
+		return change_title;
+	}
+	
+	//跳过
+	function jump_next(){
+		esc_function(api.winName,'','openNext()');
+	}
+	
+	//添加完成样式
+	function addFinishStyle(){
+		var sureButton = $api.byId('sureButton');
+		$api.html(sureButton, '完成训练');
+		document.getElementById('sureButton').onclick = function(){
+   			esc_function(api.winName,'','closeWin()');
+		};
+		api.parseTapmode();
+	}
+	//查看图片详情
+	function openPic_i(path){
+		param = {
+			path:path
+		}
+		api.openFrame({
+	        name: 'common_pic_detail_frm',
+	        url: '../../common/common_pic_detail_frm.html',
+	        bgColor: 'rgba(0,0,0,0.6)',
+	        rect: {
+	            x: 0,
+	            y: 0,
+	            w: 'auto',
+	            h: api.winHeight
+	        },
+	        bounces: false,
+	        scaleEnabled:true,
+	        pageParam:param,
+	        softInputBarEnabled:true,
+	        softInputMode:'resize'
+	    });
+	}
+	//加载vip解析
+	function showVipVoice(vip_description, is_example, voice_url) {
+		console.log("-----是否示例---" + is_example)
+		cache = {
+			num: num,
+			is_vip: api.pageParam.is_vip,
+			vip_description: vip_description,
+			exist_time: 10, //剩余体验次数，如果不是vip的话
+			voice_path: voice_url,
+			is_example: is_example
+		}
+		var voice_play_src = $('#voice_play_src').html();
+		$('.voice-txt').html(doT.template(voice_play_src)(cache));
+	}
+	
+	
+	/**
+	 * 初始化音频播放  真尼玛操蛋的模块，只能用两个flag来控制音频播放
+	 */
+	var audioStreamer_is_init = false;//标记是否加载过音频
+	var audioStreamer_add_eventlistener_is_init = false;//标记是否初始化监听过
+	function init_voice_player(path,is_init){
+		if(!audioStreamer_is_init||!is_init){
+			console.log('----------开始播放：' + path);
+			//如果未初始化视频或者已初始化过但又手动点开的
+			audioStreamer.openPlayer({
+			    path: path
+			}, function(ret) {
+		    	log('初始化音频',ret);
+			    if (ret.status) {
+			    	audioStreamer_is_init = true;
+			    	if(is_init){
+			    		voice_prepare();
+						pauseVioce();
+			    	}
+			    }else{
+			    	alert_msg('初始化音频出错');
+			    }
+			});
+		}else{
+			voice_prepare();
+		}
+	}
+	
+	/**
+	 * 音频准备 
+	 */
+	function voice_prepare(){
+		//如果是初始化音频
+		audioStreamer.getVolume(function(ret) {
+		    if(ret&&ret.volume < 0.6){
+	    		audioStreamer.setVolume({volume: 0.6});//设置音量
+		    }
+		});
+		if(!audioStreamer_add_eventlistener_is_init){
+    		audioStreamer.addEventListener({
+			}, function(ret) {
+			    log('播放监听',ret.state);
+			   	switch(ret.state){
+			   		case 'prepare':
+			   			//准备完成
+			   			//removeVoicePlayStyle();
+			   			break;
+			   		case 'finished':
+			   			//播放完成
+			   			removeVoicePlayStyle();
+			   			break;
+			   		case 'buffering':
+			   			//正在缓冲
+			   			//$('#voiceTxt').html('缓冲中...');
+			   			break;
+			   		case 'pause':
+			   			//暂停
+			   			removeVoicePlayStyle();
+			   			break;
+			   		case 'resume':
+			   			//恢复播放
+			   			addVoicePlayStyle();
+			   			break;
+			   	}
+			});
+			audioStreamer_add_eventlistener_is_init = true;
+		}
+		//如果已初始化&&再次重新加载
+		removeVoicePlayStyle();
+	}
+	
+	
+	/**
+	 *  播放音频样式
+	 */
+	function addVoicePlayStyle() {
+		$('#voiceTxt').html('&nbsp;播放中&nbsp;');
+		$('.voice-play-icon').find('img').attr('src', '../../../icon/vip/video/icon_voice_play.gif');
+	}
+	
+	/**
+	 * 播放/停止音频 
+	 */
+	function stop_start_voice(e) {
+		if ($(e).find('img').attr('src') == '../../../icon/vip/video/icon_voice_play.png') {
+			//播放
+			if (api.systemType == 'ios') {
+				audioStreamer.seekToTime({
+					time: 0
+				});
+				audioStreamer.resume();
+			} else {
+				init_voice_player(cache.voice_path);
+			}
+			addVoicePlayStyle();
+		} else {
+			//停止
+			audioStreamer.pause();
+		}
+	}
+	
+	/**
+	 * 播放暂停
+	 */
+	function pauseVioce() {
+		audioStreamer.pause();
+	}
+	/**
+	 *  停止音频样式
+	 */
+	function removeVoicePlayStyle() {
+		$('#voiceTxt').html('语音技巧');
+		$('.voice-play-icon').find('img').attr('src', '../../../icon/vip/video/icon_voice_play.png');
+	}
+	
+	/**
+	 * 去开通vip 
+	 */
+	function buy_vip() {
+		api.openWin({
+			name: 'curriculum_service_win',
+			url: 'widget://html/vip_service/question_bank/question_bank_buy_index_new.html',
+			slidBackEnabled: 'false',
+			vScrollBarEnabled: 'false',
+			hScrollBarEnabled: 'false',
+			reload: true,
+			useWKWebView: false,
+			pageParam: {
+				kemu: '036001'
+			}
+		});
+	}
+	
+	function openVipCheck() {
+		alert_msg("请先解锁全部技巧");
+	}
+	
+	
+	/**
+	 * 点击显示vip音频 
+	 */
+	// function showVipVoiceView(vip_description,is_example,voice_url){
+	// 	if(api.pageParam.is_vip||(!api.pageParam.is_vip&&is_example == 1)){
+	// 		//1vip用户直接进入语音，2不是vip但该题目为示范题目，那么也可进入语音
+	// 	    api.openFrame({
+	// 	        name: 'question_voice_view_frm',
+	// 	        url: '../../common/question/question_voice_view_frm.html',
+	// 	        bgColor:'rgba(0,0,0,0.4)',
+	// 	        animation:{
+	// 	        	type:"none",                //动画类型（详见动画类型常量）
+	// 			    subType:"from_right",       //动画子类型（详见动画子类型常量）
+	// 			    duration:300
+	// 	        },
+	// 	        rect: {
+	// 	            x: 0,
+	// 	            y: 0,
+	// 	            w: 'auto',
+	// 	            h: api.winHeight
+	// 	        },
+	// 	        bounces: false,
+	// 	        pageParam:{
+	// 	        	num:num,
+	// 	        	is_vip:api.pageParam.is_vip,
+	// 	        	vip_description:vip_description,
+	// 	        	exist_time:10,//剩余体验次数，如果不是vip的话
+	// 	        	voice_path:voice_url
+	// 	        },
+	// 	        softInputBarEnabled:true,
+	// 	        softInputMode:'resize'
+	// 	    });
+	// 	}else{
+	// 		//不满足上述情况时，则需要直接开通vip
+	// 		api.openWin({
+	// 			name: 'curriculum_service_win',
+	// 			url: 'widget://html/vip_service/question_bank/question_bank_buy_index_new.html',
+	// 			slidBackEnabled: 'false',
+	// 			vScrollBarEnabled: 'false',
+	// 			hScrollBarEnabled: 'false',
+	// 			reload: true,
+	// 			useWKWebView: false,
+	// 			pageParam: {
+	// 				kemu:'036001'
+	// 			}
+	// 		});
+	// 	}
+	// }
+</script>
+</html>

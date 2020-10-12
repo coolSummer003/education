@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>题库切换</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html,body{
+    		background:#FFF;
+    	}
+    	.item-totle{
+		    width: 90%;
+    		margin-left: 5%;
+    	}
+    	.item-totle li{
+		    width: 45%;
+    		margin: 2.5%;
+    		text-align: center;
+    		padding: 0.7rem 0rem;
+		    line-height: 0.6rem;
+		    float: left;
+		    color:#818181;
+    	}
+    	.item-totle span{
+    		font-size:0.7rem;
+    	}
+    	.item-totle img{
+    		width: 3rem;
+    	}
+    	.active{
+    		background:#D3F0FA;
+    		color:#2EC1FA !important;
+    	}
+    	.item-type{
+    		margin: 1rem 0% 0.8rem 5%;
+    		padding-bottom: 0.3rem;
+    	}
+    </style>
+	</head>
+	<body>
+		<div class='item-type bottom-slide'><span>题库类型</span></div>
+		<ul class='item-totle'>
+			<li tapmode onclick='selectItem(this,"022001","小车（C1/C2/C5）")'>
+				<img src="../../../icon/subject/cartype/icon_1.png" alt="" /><br>
+				<span>小车（C1/C2/C5）</span>
+			</li>
+			<li tapmode onclick='selectItem(this,"022002","货车（A2/B2）")'>
+				<img src="../../../icon/subject/cartype/icon_2.png" alt="" /><br>
+				<span>货车（A2/B2）</span>
+			</li>
+			<li tapmode onclick='selectItem(this,"022003","客车（A1/A3/B1）")'>
+				<img src="../../../icon/subject/cartype/icon_3.png" alt="" /><br>
+				<span>客车（A1/A3/B1）</span>
+			</li>
+			<li tapmode onclick='selectItem(this,"022004","摩托车（D/E/F）")'>
+				<img src="../../../icon/subject/cartype/icon_4.png" alt="" /><br>
+				<span>摩托车（D/E/F）</span>
+			</li>
+		</ul>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var subjectType;
+		apiready = function() {
+			cache = api.pageParam;
+			log('', cache)
+			subjectType = cache.subjectType;
+			cache_by_app = $api.getStorage('cache_by_app');
+			item_bank_cache = cache_by_app.item_bank_cache;
+			//log('item_bank_cache',item_bank_cache);
+			
+			//初始化题库
+			switch(getBankType(subjectType == 1?'036001':'036004')){
+				case '022001':
+					$('li').eq(0).addClass('active');	
+					break;
+				case '022002':
+					$('li').eq(1).addClass('active');	
+					break;
+				case '022003':
+					$('li').eq(2).addClass('active');	
+					break;
+				case '022004':
+					$('li').eq(3).addClass('active');	
+					break;
+			}
+		};
+
+		/**
+		 * 选择题库 
+		 */
+		function selectItem(e, code, name) {
+			var cache_by_app = $api.getStorage('cache_by_app');
+			var item_bank_cache = cache_by_app.item_bank_cache
+			item_bank_cache[subjectType == 1?'item_bank_kemu_one':'item_bank_kemu_four'] = code;
+			cache_by_app.item_bank_cache = item_bank_cache;
+			$api.setStorage('cache_by_app', cache_by_app);
+			
+			$('li').each(function(index, o) {
+				$('li').removeClass('active');
+				$(e).addClass('active');
+			});
+			params = {
+				code: code,
+				name: name
+			}
+			sendEvent(subjectType == 1?'kemu_one_items_bank':'kemu_four_items_bank', params);
+
+			setTimeout(function() {
+				api.closeWin({});
+			}, 300);
+		}
+	</script>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>去支付</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #DC251F;
+		}
+		header img {
+		    width: 20px;
+		}
+		#p_ex_title{
+		    font-weight: normal;
+		}
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin()">
+            <img src="../../../icon/common/icon_header_return.png">
+        </a>
+        <div class="aui-title" id="p_ex_title">
+        	学员课程购买
+        </div>
+    </header>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var headerPos;
+	var sign_up_status = 1;//状态值 0代表未报名1代表已报名2代表已支付
+	var cache;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam.data;
+		var header = $api.byId('aui-header');
+		$api.fixStatusBar(header);
+		headerPos = $api.offset(header);
+		init();
+	}
+	function init(){
+        toEventListener('student_pay_submit',function(ret,err){
+        	pay_for_next(ret.value);
+        });
+        api.openFrame({
+            name: 'student_pay_frm',
+            url: './student_pay_frm.html',
+            bgColor:'#efeff4',
+            rect: {
+                x: 0,
+                y: headerPos.h,
+                w: 'auto',
+                h: api.winHeight - headerPos.h
+            },
+            bounces: false,
+            pageParam:{
+				data:cache
+			},
+            reload:true,
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+	}
+	
+	//修改头部名
+	function changeMenuTitle(name){
+		$('#p_ex_title').html(name);
+	}
+	
+	//报名支付后下一步 orderId未为体检订单id
+	function pay_for_next(signPayData){
+		sign_up_status = 2;
+		changeMenuTitle('支付通知');
+		sendEvent('student_refresh_list',{});
+		//esc_function('index','mine','func_init(0)');//渲染【我的】网上体检
+		//esc_function('mine_common_win','record_hospital_examintion_list_frm','init()');//调用医院体检订单刷新，可能会报错
+		api.openFrame({
+	        name: 'pay_for_notice_frm',
+	        url: './pay_for_notice_frm.html',
+	        bgColor:'#efeff4',
+	        animation:{
+	        	type:"none",                //动画类型（详见动画类型常量）
+			    subType:"from_right",       //动画子类型（详见动画子类型常量）
+			    duration:300
+	        },
+	        rect: {
+	            x: 0,
+	            y: headerPos.h,
+	            w: 'auto',
+	            h: api.winHeight - headerPos.h
+	        },
+	        bounces: false,
+	        pageParam:{},
+	        softInputBarEnabled:true,
+	        softInputMode:'resize'
+	    });
+	}
+	
+	function closeWin(){
+		api.closeWin({
+			
+        });
+	}
+</script>
+</html>

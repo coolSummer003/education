@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>驾校预报名信息确认页面</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background: transparent;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background: transparent;
+    		display:flex;
+    	}
+    	.uploadPic img {
+		    height: 6rem;
+		    margin: 0 auto;
+		    margin-top: 1rem;
+		    width: 5rem;
+		    object-fit: cover;
+		}
+    	.aui-list .aui-list-item-label, .aui-list .aui-list-item-label-icon {
+		    color: #212121;
+		    width: 35%;
+		    min-width: 1.5rem;
+		    margin: 0;
+		    padding: 0;
+		    padding-right: 0.25rem;
+		    line-height: 2.2rem;
+		    position: relative;
+		    overflow: hidden;
+		    white-space: nowrap;
+		    max-width: 100%;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: inline;
+		    -webkit-align-items: center;
+		    align-items: center;
+		    text-align: right;
+		}
+    	.info-detail{
+    		margin: auto;
+		    position: absolute;
+		    height: 100%;
+		    display: flex;
+			-webkit-transform: scale(0);
+			transform:scale(0);
+			opacity: 0;
+			width: 100%;
+    	}
+    	.shadow{
+    		width:100%;
+    		height:100%;
+    		background:#000;
+    		opacity:0;
+    		position: absolute;
+    	}
+    	.trans {
+            /*transition*/
+            -webkit-transition: 0.3s ease;
+            -moz-transition: 0.3s ease;
+            -ms-transition: 0.3s ease;
+            -o-transition: 0.3s ease;
+            transition: 0.3s ease;
+        }
+        .show{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+        }
+        .in{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+		}
+		.body-style{
+			width: 100%;
+		    margin: auto;
+		    background: #FFF;
+		    padding-bottom: 1rem;
+	        border-radius: 0.5rem;
+		}
+		.marTop{
+		    margin-top: 1rem !important;
+		}
+		.mar_left{
+			width: 42.5%;
+    		float: left;
+		}
+    </style>
+</head>
+<body>
+	<div class='shadow'></div>
+	<div class='info-detail trans'>
+		<div class="aui-content body-style">
+		    <ul class="aui-list aui-form-list none-top-style none-bottom-style">
+		    	<li class="aui-list-item" style="border-radius: 0.5rem;">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label" style="font-weight: bold;">
+	                		确认信息：
+		                </div>
+		                <div class="aui-list-item-input">
+		                    
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item none-bottom-style">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label">
+	                		驾&emsp;&emsp;校：
+		                </div>
+		                <div class="aui-list-item-input">
+		                    <input type="text" placeholder="驾校信息" value="" id="schoolName" readonly>
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item none-bottom-style">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label">
+	                		姓&emsp;&emsp;名：
+		                </div>
+		                <div class="aui-list-item-input">
+		                    <input type="text" placeholder="请输入姓名" value="" id="name" readonly>
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item none-bottom-style">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label">
+	                		身&ensp;份&ensp;证：
+		                </div>
+		                <div class="aui-list-item-input">
+		                    <input type="text" placeholder="请输入身份证号码" value="" id="idCardNo" readonly> 
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item none-bottom-style">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label">
+	                		手机号码：
+		                </div>
+		                <div class="aui-list-item-input">
+		                    <input type="phone" maxlength="11" placeholder="请输入手机号码" id="account" readonly>
+		                </div>
+		            </div>
+		        </li>
+		         <li class="aui-list-item none-bottom-style drill">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label">
+	                		我的教练：
+		                </div>
+		                <div class="aui-list-item-input">
+		                    <input type="phone" maxlength="11" placeholder="" id="accountDrill" readonly>
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item none-bottom-style">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label">
+	                		省&ensp;市&ensp;区：
+		                </div>
+		                <div class="aui-list-item-input">
+		                    <input type="text" placeholder="请选择省市区" id="addressView" readonly>
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item none-bottom-style">
+	                <div class="aui-list-item-inner">
+	                    <div class="aui-list-item-label">
+	                       	
+	                    </div>
+	                    <div class="aui-list-item-input">
+		                    <input type="text" placeholder="请输入详细地址" id="addressDetail" readonly>
+		                </div>
+	                </div>
+	            </li>
+	            <li class="aui-list-item none-bottom-style">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label">
+	                		准驾车型：
+		                </div>
+		                <div class="aui-list-item-input">
+		                	<input type="text" placeholder="" id="license_type" readonly>
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item none-bottom-style">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label">
+	                		购买套餐：
+		                </div>
+		                <div class="aui-list-item-input">
+		                	<input type="text" placeholder="" id="learn_plan" readonly>
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label">
+	                		申请业务：
+		                </div>
+		                <div class="aui-list-item-input">
+		                	<input type="text" placeholder="" id="business_level1_cd" readonly>
+		                </div>
+		            </div>
+		        </li>
+	            <li class="aui-list-item none-bottom-style">
+	                <div class="aui-list-item-inner">
+	                    <div class="aui-list-item-label">
+	                       	自&ensp;拍&ensp;照：
+	                    </div>
+	                    <div class="aui-list-item-input">
+		                    <div class="uploadPic">
+		                    	<img src="../../icon/common/icon_upload_pic.png" alt="" id="photo" onerror=this.src='../../icon/common/icon_upload_pic.png'/>
+		                    </div>
+		                </div>
+	                </div>
+	            </li>
+	            <div class="aui-btn aui-btn-block aui-btn-info marTop mar_left" id='sureButton'>确认无误</div>
+		    	<div class="aui-btn aui-btn-block aui-btn-danger aui-btn-outlined marTop mar_left" id="cancelButton">返回修改</div>
+		    </ul>
+	    </div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var systemType;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		systemType = api.systemType;
+		init();
+	}
+	
+	function init(){
+		$('#schoolName').val(cache.schoolName);
+		$('#name').val(cache.name);
+		$('#idCardNo').val(cache.idCardNo);
+		$('#account').val(cache.account);
+		$('#addressView').val(cache.addressView);
+		$('#addressDetail').val(cache.addressDetail);
+		$('#license_type').val(cache.licenseName);
+		$('#learn_plan').val(cache.learnPlanName);
+		$('#business_level1_cd').val(cache.businessLevel1Name);
+		$('#photo').attr('src',cache.photo);
+		log('cache.coach_name',cache.coach_name);
+		if(cache.coach_name!=''){
+			$('#accountDrill').val(cache.coach_name);
+		}else{
+			$('.drill').addClass('aui-hide');
+		}
+		$('.info-detail').addClass('in');
+		setTimeout(function(){
+			document.getElementById('sureButton').onclick=function(){
+				sure();
+			}
+			document.getElementById('cancelButton').onclick=function(){
+				returnChange();
+			}
+			api.parseTapmode();
+		},500);
+	}
+	
+	//点击确认
+	function sure(){
+		open_load();
+		binding_coach();
+		if(cache.picture == ''||cache.picture == null){//更换了图片
+			params = {
+				bucketName:AliOssBucket,
+				fileNum:1,
+				fileType:'learnerApp/registration/' + getUserId()
+			}
+			var isloadFlag = 0;//标记位 isload代表是否上传，0代表未上传，1代表捕捉上传，2代表与阿里云建立连接，3代表上传完成
+			getUploadFilePower(params,function(ret,err){
+				if(ret&&ret.code == 0){
+					console.log('获取文件上传权限：'+JSON.stringify(ret));
+					var path = ret.fileList[0].fileId;
+					isloadFlag = 1;//标记上传
+					//阿里云上传可能会崩，所以这里定时器：10秒后查询标记位，把isload为2的图片让用户选择上传
+					var judegeCollapse = setTimeout(function(){
+						collapse(isloadFlag);
+					},10000);
+					file_upload(ret.fileList[0].signUrl, 'put', 'json', cache.photo, {}, function(ret,err){
+						if(ret){
+							clearTimeout(judegeCollapse);//清除定时器
+							isloadFlag = 2;//标记与阿里云服务器连接
+							esc_function('physical_examination_video_win','common_progress_frm','changeTxt("正在上传驾校报名自拍照，请勿关闭  '+ret.progress+'%")');
+							if(ret.progress == 100&&ret.status == 1){
+								cache.picture = path;
+								submitInfo();
+							}
+						}else if(err){
+							//ios一直会返回数据类型错误(目前找不到原因)，但是图片已上传完毕，所以也当success返回
+							if(systemType == 'ios'&&err.progress == 100&&err.code == 3){
+								clearTimeout(judegeCollapse);//清除定时器
+								isloadFlag = 2;//标记与阿里云服务器连接
+								
+								cache.picture = path;
+								submitInfo();
+							}else if((systemType == 'ios'&&err.statusCode == 0)
+									||(systemType == 'ios'&&err.statusCode == 403)){
+								//网络无法连接或者签名错误就重新上传
+								clearTimeout(judegeCollapse);//清除定时器
+								sure();
+							}
+						}
+					});
+				}else{
+					alert_msg('获取文件上传权限失败');
+				}
+			});
+		}else{
+			submitInfo();
+		}
+	}
+	//学员绑定教练
+	function binding_coach(){
+		url = 'api/learner/bind-learner-coach';
+		params = {
+			learnerId:getUserId(),
+			coachId:cache.coach_id//教练id
+		}
+		ajax_Request(url, 'put', 'json', params, function(ret,err){
+		log('ret======',ret);
+			if(ret){
+				if(ret.code==0){
+				}
+			}else{
+				alert_msg('服务器繁忙，请稍后重试~');
+			}
+		});
+	}
+	//提交报名信息
+	function submitInfo(){
+		close_load();
+		$('.info-detail').removeClass('in');
+		
+		setTimeout(function(){
+			sendEvent('driverschool_sign',cache);
+			closeFrame();
+		},300);
+	}
+	
+	//判断是否有图片上传时候与阿里云断开连接
+	function collapse(isloadFlag){
+    	close_load();
+		if(isloadFlag == 1){
+			api.confirm({
+			    title: '温馨提示',
+			    msg: '上传照片服务器断开连接，是否重连',
+			    buttons: ['重新连接', '取消']
+			}, function(ret, err) {
+			    var index = ret.buttonIndex;
+			    if(index == 1){
+			    	sure();
+			    }
+			});
+		}
+	}
+	
+	function returnChange(){
+		$('.info-detail').removeClass('in');
+		setTimeout(function(){
+			closeFrame();
+		},300);
+	}
+	function closeFrame(){
+		api.closeFrame({
+			name:'driver_school_pre_sign_up_sure_frm'
+        });
+	}
+</script>
+</html>

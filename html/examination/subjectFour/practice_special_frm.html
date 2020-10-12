@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>专项练习</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html,body{
+    		background-color: #ffffff;
+    	}
+    	.liw{
+		    width: 50%;
+    		float: left;
+    	}
+    	.aui-list-item-label-icon span{
+    		width: 1.56rem;
+		    height: 1.2rem;
+		    
+		    border-radius: 100%;
+		    line-height: 0.9rem;
+		    text-align: center;
+		    font-size: 0.5rem;
+		    color: #FFF;
+		    border: solid 0.15rem #B2E3FA;
+    	}
+    	.aui-badge {
+		    display: inline-block;
+		    width: auto;
+		    text-align: center;
+		    min-width: 0.8rem;
+		    height: 0.8rem;
+		    line-height: 0.8rem;
+		    padding: 0 0.2rem;
+		    font-size: 0.6rem;
+	        color: #C6DBFF;
+    		background-color: #FFF;
+		    border-radius: 0.4rem;
+		    position: absolute;
+		    top: 0.2rem;
+		    left: 60%;
+		    z-index: 99;
+		    position: relative;
+		    top: 0;
+		    left: 0;
+		}
+		.aui-grid {
+		    width: 100%;
+		    background-color: #ffffff;
+		    display: table;
+		    table-layout: fixed;
+		    margin-top:0.5rem;
+		}
+		.aui-col-xs-4 img{
+			width: 2rem;
+		}
+		.aui-list-item-label-icon img{
+			width:1rem;
+		}
+		.separate{
+			height:0.5rem;
+			width:100%;
+			
+		}
+		.shadow{
+			box-shadow: 0px 0px 10px #E4E7ED;
+		}
+		.border_bottom{
+			border-bottom: 0.1rem solid #F5F5F5;
+		}
+		.outer{
+			display: flex;
+			width: 90%;
+			flex-flow: row;
+			flex-wrap: wrap;
+			margin-left: 5%;
+			justify-content: space-between;
+			padding-bottom: 0.5rem;
+		}
+		.lists{
+			width: 47%;
+			height: 2rem;
+			margin-top: 0.5rem;
+			border-radius: 0.3rem;
+			display: flex;
+			flex-flow: row;
+			padding-left: 0.5rem;
+		}
+		.type{
+		    width: 75%;
+		    height: 2rem;
+		    line-height: 2rem;
+		}
+		.num{
+			color: #C6DBFF;
+    		float: right;
+		}
+		.border_list1{
+			width: 0.8rem;
+			height: 0.8rem;
+			border-radius: 50%;
+			margin-top: 0.55rem;
+			margin-right: 0.5rem;
+			line-height: 0.8rem;
+			text-align: center;
+			background-color: #3F86FF;
+			color: #fff;
+			font-size: 0.4rem;
+		}
+		.wid{
+			width: 90%;
+			margin-left: 2%;
+		}
+		.left{
+			left: 80% !important;
+		}
+		.priticeitem{
+			margin-top: 0.5rem;
+			width: 90%;
+			margin-left: 5%;
+			height: 4.5rem;
+			display: flex;
+			flex-flow: row;
+			justify-content: space-between;
+		}
+		.item1, .item2,.item3{
+			height: 100%;
+			width: 30%;
+		}
+		.item1{
+			background: url(../../../image/background/practice1.png) no-repeat;
+			background-size: 100% 100%;
+		}
+		.item2{
+			background: url(../../../image/background/practice2.png) no-repeat;
+			background-size: 100% 100%;
+		}
+		.item3{
+			background: url(../../../image/background/practice3.png) no-repeat;
+			background-size: 100% 100%;
+		}
+		.itemname{
+			color: #fff;
+			font-size: 0.7rem;
+			margin-top: 1.7rem;
+			margin-left: 0.4rem;
+		}
+	
+    </style>
+</head>
+<body>
+	<div class="priticeitem">
+		<div class="item1" tapmode onclick='openLocalQuestion()'>
+			<div class="itemname">本地题库</div>
+		</div>
+		<div class="item2" tapmode onclick='openPractice()'>
+			<div class="itemname">顺序练习</div>
+		</div>
+		<div class="item3" tapmode onclick='openExam()'>
+			<div class="itemname">模拟考试</div>
+		</div>
+	</div>
+	<div class='separate'></div>
+	<div class="aui-content" style="overflow: hidden;">
+	    <ul class="aui-list aui-list-in none-top-style none-bottom-style " id="bySort" style='background: #FFF;'>
+	        <li class="aui-list-item none-bottom-style">
+	            <div class="aui-list-item-label-icon">
+	                <img src="../../../icon/subject/icon_sort.png" alt="" />
+	            </div>
+	            <div class="aui-list-item-inner none-bottom-style">
+                 	<span>按题型</span>
+	            </div>
+	        </li>
+	        <!-- <li class="aui-list-item liw" tapmode onclick="openSort('{{=it[i].name}}')">
+	            <div class="aui-list-item-label-icon">
+	                <img src="../../../icon/subject/icon_sort_son.png" alt="" />
+	            </div>
+	            <div class="aui-list-item-inner none-bottom-style">
+	                <span>文字题</span>
+	                <div class="aui-badge">11</div>
+	            </div>
+	        </li> -->
+	    </ul>
+	    <script type="text/template" charset="utf-8" id='sort_src'>
+			<div class="outer">
+	    	{{ for(var i=0;i<it.length;i++){ }}
+				{{ if(it[i].num != 0){ }}
+	    		<li class="lists  shadow" tapmode onclick="openSort('{{=questionTypeKeMuFourMap[it[i].code]}}','{{=it[i].code}}','{{=it[i].num}}','byType')">
+		            <div class="border_list1">
+		                {{=i}}
+		            </div>
+		            <div class="type">
+		                <span>{{=questionTypeKeMuFourMap[it[i].code]}}</span>
+		                <div class="num">{{=it[i].num}}</div>
+		            </div>
+		        </li>
+				{{ } }}
+	    	{{ } }}
+			</div>
+	    </script>
+	</div>
+	<div class='separate'></div>
+	<div class="aui-content" style="overflow: hidden;">
+	    <ul class="aui-list aui-list-in none-top-style none-bottom-style" id="byChapter" style='background: #FFF;'>
+	        <li class="aui-list-item bottom-slide none-bottom-style">
+	            <div class="aui-list-item-label-icon">
+	                <img src="../../../icon/subject/page.png" alt="" />
+	            </div>
+	            <div class="aui-list-item-inner none-bottom-style">
+                 	<span>按章节</span>
+	            </div>
+	        </li>
+	        <!-- <li class="aui-list-item none-bottom-style" tapmode onclick="openSort('{{=it[i].name}}')">
+	            <div class="aui-list-item-label-icon">
+	                <span style='width:1.34rem;'>1</span>
+	            </div>
+	            <div class="aui-list-item-inner none-bottom-style">
+	                <span>文字题</span>
+	                <div class="aui-badge">11</div>
+	            </div>
+	        </li>
+	        <li class="aui-list-item none-bottom-style" tapmode onclick="openSort('{{=it[i].name}}')">
+	            <div class="aui-list-item-label-icon">
+	                <span style='width:1.34rem;'>2</span>
+	            </div>
+	            <div class="aui-list-item-inner none-bottom-style">
+	                <span>文字题</span>
+	                <div class="aui-badge">11</div>
+	            </div>
+	        </li> -->
+	    </ul>
+	    <script type="text/template" charset="utf-8" id='chapter_src'>
+	    	{{ for(var i=0;i<it.length;i++){ }}
+				{{ if(it[i].num != 0){ }}
+	    		<li class="aui-list-item bottom-slide" tapmode onclick="openSort('{{=chapterKuMuFourMap[it[i].code]}}','{{=it[i].code}}','{{=it[i].num}}','byChapter')">
+		            <div class="aui-list-item-inner none-bottom-style wid">
+		                <span>{{=chapterKuMuFourMap[it[i].code]}}</span>
+		                <div class="aui-badge">{{=it[i].num}}题</div>
+		            </div>
+		        </li>
+				{{ } }}
+	    	{{ } }}
+	    </script>
+	</div>
+	<div class='separate'></div>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var db;
+	var sql;
+	var item_bank_kemu_four;
+	var bMap;
+	apiready = function(){
+		db = api.require('db');
+		bMap = api.require('bMap');
+		api.parseTapmode();
+		item_bank_kemu_four = getBankType('036004');
+		questionTypeKeMuFourMap = $api.getStorage('cache_by_app').questionTypeKeMuFourMap;
+		chapterKuMuFourMap = $api.getStorage('cache_by_app').chapterKuMuFourMap;
+		
+		toEventListener('local_question',function(ret,err){
+			//监听选择地区
+			log('ret',ret);
+			esc_function(api.winName,'','showLocationInfo("' + ret.value.cityName + '")');
+	        getLocalCityQuestion(ret.value.city_level2_Code,ret.value.city_level2_Name,ret.value.city_level1_Code,ret.value.city_level1_Name);
+		});
+		init();
+	}
+	
+	function init(){
+		loadLocalQuestion();//加载本地题库
+		loadByType();
+		loadByChapter();
+	}
+	
+	/**
+	 * 加载本地题库 
+	 */
+	function loadLocalQuestion(){
+		var location_city = $api.getStorage('cache_by_app').location_city;
+		if(location_city){
+			//如果有定位缓存那么优先显示缓存中的定位
+			esc_function(api.winName,'','showLocationInfo("' + location_city.cityName + '")');
+			getLocalCityQuestion(location_city.city_level2_Code,location_city.city_level2_Name,location_city.city_level1_Code,location_city.city_level1_Name);
+		}else{
+			mylocation(function(location_result){
+				if (location_result.status) {
+					//有定位权限
+					bMap.getNameFromCoords({
+					    lon: location_result.lon,
+					    lat: location_result.lat
+					}, function(ret, err) {
+					    if (ret.status) {
+					        log('定位信息',ret);
+					        esc_function(api.winName,'','showLocationInfo("' + ret.district + '")');
+					        getLocalCityQuestion(ret.adCode.toString().substring(0,4) + '00000',ret.city,ret.adCode.toString().substring(0,2) + '0000000',ret.provice);
+					    }
+					});
+				}else{
+					esc_function(api.winName,'','showLocationInfo("选择地区")');
+			    	$('.item1').find('.itemname').html('本地题库<br>请选择地区');
+				}
+			})
+		}
+	}
+	
+	/**
+	 * 获取本地题库 
+	 */
+	var localQuestionNum = 0;
+	var city_code;
+	var city_name;
+	var province_code;
+	var province_name;
+	function getLocalCityQuestion(cityCode,cityName,provinceCode,provinceName){
+		sql = 'SELECT COUNT(DISTINCT question_id) local_num FROM cm_question WHERE kemu = "036004" AND bank_type like "%'+item_bank_kemu_four+'%" ';
+		sql += 'AND (city = "' + cityCode + '" OR (province = "' + provinceCode + '" AND (city = "" OR city IS NULL)))';
+		db.selectSql({
+	        name:'drivingApp',
+	        sql:sql
+        },function(ret,err){
+        	if(ret&&ret.status){
+        		city_code = cityCode;
+        		city_name = cityName;
+        		province_code = provinceCode;
+        		province_name = provinceName;
+        		localQuestionNum = ret.data[0].local_num;
+        		$('.item1').find('.itemname').html(cityName+'题库<br>'+ret.data[0].local_num + '题');
+        	}else{
+        		$('.item1').find('.itemname').html(cityName+'题库<br>0题');
+        	}
+        });
+	}
+	
+	/**
+	 * 打开本地题库 
+	 */
+	function openLocalQuestion(){
+		if(localQuestionNum > 0){
+			//如果存在本地题库，那么直接做题
+			logAppBuryingPoint({},'本地题库','专项练习','科四','学车考试');
+			param = {
+				title: city_name + '题库',
+				type: 'local_question',
+				isMistake: false,
+				cityCode:city_code,
+				provinceCode:province_code
+			}
+			commonOpenWin('practice_special_detail_win', param);
+		}else{
+			alert_msg('该地区无本地题库');
+		}
+	}
+	
+	//加载类型题目
+	var questionTypeList = [];
+	var questionType = {};
+	function loadByType(){
+		sql = "SELECT ";
+		$.each(questionTypeKeMuFourMap,function(key,values){
+			sql += "COUNT( DISTINCT CASE WHEN type = '"+key+"' THEN question_id ELSE NULL END ) '"+key+"',";
+		});
+		sql = sql.substring(0,sql.length - 1);
+		sql += 'FROM cm_question WHERE kemu = "036004" AND bank_type like "%'+item_bank_kemu_four+'%"';
+		console.log('sql'+sql);
+		db.selectSql({
+	        name:'drivingApp',
+	        sql:sql
+        },function(ret,err){
+        	if(ret&&ret.status){
+        		$.each(ret.data[0],function(key,values){
+        			questionType = {
+        				code:key,
+        				num:values
+        			}
+        			questionTypeList.push(questionType);
+        		});
+				var sort_src = $('#sort_src').html();
+				$("#bySort").append(doT.template( sort_src )( questionTypeList ));
+				api.parseTapmode();
+        	}else{
+        		console.log('获取题目分类失败');
+        	}
+        });
+	}
+	
+	//加载章节题目
+	var questionChapterList = [];
+	var questionChapter = {};
+	function loadByChapter(){
+		sql = 'SELECT ';
+		$.each(chapterKuMuFourMap,function(key,values){
+			sql += "COUNT( DISTINCT CASE WHEN chapter = '"+key+"' THEN question_id ELSE NULL END ) '"+key+"',";
+		});
+		sql = sql.substring(0,sql.length - 1);
+		sql += 'FROM cm_question WHERE kemu = "036004" AND bank_type like "%'+item_bank_kemu_four+'%"';
+		//console.log(sql);
+		db.selectSql({
+	        name:'drivingApp',
+	        sql:sql
+        },function(ret,err){
+        	if(ret&&ret.status){
+        		$.each(ret.data[0],function(key,values){
+        			questionChapter = {
+        				code:key,
+        				num:values
+        			}
+        			questionChapterList.push(questionChapter);
+        		});
+        		var chapter_src = $('#chapter_src').html();
+        		$("#byChapter").append(doT.template( chapter_src )( sort(questionChapterList) ));
+        		api.parseTapmode();
+        	}else{
+        		alert_msg('获取错题集-章节失败');
+        	}
+        });
+	}
+	
+	//排序
+	function sort(ready_list){
+		for(var i=0;i<ready_list.length;i++){
+			for(var j=0;j<ready_list.length-1-i;j++){
+				if(parseInt(ready_list[j].code) > parseInt(ready_list[j+1].code)){
+					var temp = ready_list[j];
+					ready_list[j] = ready_list[j+1];
+					ready_list[j+1] = temp;
+				}
+			}
+		}
+		ready_list.unshift(ready_list[ready_list.length - 1]);
+		ready_list.splice(-1,1);
+		
+		return ready_list;
+	}
+	
+	//打开分类 name代表分类名称，code代表分类code，type代表以什么分类
+	function openSort(name,code,num,type){
+		if(num == 0){
+			alert_msg('该分类无题库');
+			return;
+		}
+		
+		logAppBuryingPoint({id:code,name:name},type == 'byType'?'按题型':'按章节','专项练习','科四','学车考试');
+		param = {
+			title:name,
+			code:code,
+			type:type
+		}
+		commonOpenWin('practice_special_detail_win',param);
+	}
+	
+	function openPractice(){
+		param = {
+			type:'order'
+		}
+		var normal_order_recode = getGlobalData('normal_order_recode');//用户普通做题记录
+		if(normal_order_recode != undefined
+			&&normal_order_recode != null
+			&&normal_order_recode.kemu_four_order != undefined){
+			isSure('温馨提示','是否继续上次答题','重新开始','继续答题',function(){
+				param.isContinue = false;
+				openPracticeCommonWin(param);
+			},function(){
+				param.isContinue = true;
+				param.order_num = normal_order_recode.kemu_four_order;
+				openPracticeCommonWin(param);
+			});
+		}else{
+			param.isContinue = false;
+			openPracticeCommonWin(param);
+		}
+	}
+	
+	function openPracticeCommonWin(params){
+		api.openWin({
+	       name: 'practice_common_from_special_win',
+	       url: './practice_common_win.html',
+	       slidBackEnabled:'true',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       pageParam: {
+	          data:params
+	       }
+	    });
+	}
+	
+	function openExam(){
+		params = {
+			type:'simulation_explain'
+		}
+		api.openWin({
+	       name: 'practice_common_from_special_win',
+	       url: './practice_common_win.html',
+	       slidBackEnabled:'true',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       pageParam: {
+	          data:params
+	       }
+	    });
+	}
+	
+	//打开标识大全
+	function openLogoTotle(){
+		param = {
+			type:'logo'
+		}
+		commonOpenWin('practice_common_win',param);
+	}
+	//打开识别标识
+	function openLogoRecognition(name){
+		param = {
+	 		title:name
+	 	}
+		commonOpenWin('logo_recognition_win',param);
+	}
+	function closeWin(){
+		api.closeWin({
+        });
+	}
+	
+</script>
+</html>

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>体检项目-辨色</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/swiper/swiper.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html{
+    		background: transparent;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background: transparent;
+    	}
+    	section{
+    		width:100%;
+    		height:50%;
+    		background:#FFF;
+    	}
+    	footer{
+    		width:50%;
+    		height:50%;
+    		position:fixed;
+    		bottom:0;
+    		right:0;
+    		background:#FFF;
+    	}
+    	.option-item{
+    		width:100%;
+    		height:100%;
+    	}
+    	.option-item-menu{
+    		width: 90%;
+    		height:20%;
+    		margin-left:5%;
+    		margin-bottom:5%;
+    		/*background:#F6F6F6;*/
+    		background:#F4F7F7;
+    		display: flex;
+    		border-radius:5px;
+		    /*color: #6F6F6F;*/
+		    color: #9D9EA7;
+    		border: solid 1px #F6F6F6;
+    	}
+    	.option-item-menu span{
+    		margin:auto;
+    	}
+		.active {
+		    color: #FFFFFF !important;
+		    /*border: solid 1px #90C3E7 !important;*/
+		    /*background: #DDE9F1 !important;*/
+		    background: linear-gradient(to left, #3F86FE, #64ADF6) !important;
+		}
+		.option-item-menu-next{
+		    width: 90%;
+		    height: 15%;
+		    left: 5%;
+		    bottom: 5%;
+		    /*background: linear-gradient(to left, #03B4F7 , #90DBF7);*/
+		    background: linear-gradient(to left, #3F86FE, #64ADF6) !important;
+		    color: #FFF;
+		    display: flex;
+		    border-radius: 5px;
+		    position: absolute;
+		}
+		.option-item-menu-next span{
+    		margin:auto;
+    	}
+		.option-item-menu-next:active{
+			background:#90DBF7;
+		}
+		.content-item{
+		    width: 100%;
+			overflow: hidden;
+		    /* height: 90%; */
+    		/* margin: 2.5%; */
+		}
+		.content-item img{
+			height: 100%;
+		    width: 100%;
+		    object-fit: contain;
+		}
+		.content-title{
+		    height: 15%;
+		    width: 95%;
+		    margin-left: 2.5%;
+		    font-size:0.85rem;
+		}
+		.option-item-menus{
+			height:100%;
+		}
+		.time-down{
+		    width: 3.5rem;
+		    background: #FFFFFF;
+		    height: 3.5rem;
+		    line-height: 3.5rem;
+		    text-align: center;
+		    border-radius: 100%;
+		    position: absolute;
+		    top: 0rem;
+		    z-index: 999;
+		    left: 0rem;
+		    border: solid #DC251F 1px;
+		}
+		.time-down span{
+			font-size:1rem;
+		}
+		.aui-tips {
+		    padding: 0 0.75rem;
+		    width: 100%;
+		    z-index: 99;
+		    height: 1.9rem;
+		    line-height: 1.9rem;
+		    position: relative;
+		    background-color: rgba(0,0,0,.5);
+		    color: #ffffff;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		    -webkit-align-items: center;
+		    align-items: center;
+		    position: absolute;
+		}
+		.aui-tips-title{
+			color: #fff;
+			background-color: #3F86FE;
+			display: inline-block;
+			width: 4rem;
+			text-align: right;
+			padding: 0.2rem;
+			border-top-left-radius: 25px;
+			border-bottom-left-radius: 25px;
+			position: absolute;
+			z-index: 999;
+			font-size: 0.7rem;
+			right: 0;
+			/* top: 0.2rem; */
+		}
+    </style>
+	</head>
+	<body>
+		<!-- <div class="aui-tips" style="background:#D8E7FF;"> -->
+		<!-- <i ></i> -->
+		<div class="aui-tips-title">倒计时</div>
+		<!-- <i ></i> -->
+		<!-- </div> -->
+		<section>
+			<div class="swiper-container" style="height:100%;" id="swiper_question">
+				<div class="swiper-wrapper" id="question_list">
+					<!-- <div class="swiper-slide swiper-no-swiping">
+		    		<div class='content-item'>
+		    				    		<img src="../../../image/demo/physicalexam/1.png" alt="" />
+		    		</div>
+		    		<div class='content-title'>
+		    			<span>问题：请问上图中的数字是多少？</span>
+		    		</div>
+		    	</div> -->
+					<!-- <div class="swiper-slide swiper-no-swiping">
+					<div class='content-item'>
+						<img src="../../../image/accountAuth/view_cases_bank.png" alt="" />
+					</div>
+					<div class='content-title'>
+						<span>666</span>
+					</div>
+				</div> -->
+				</div>
+			</div>
+		</section>
+
+		<footer>
+			<div class='option-item' id='option_items_list'>
+				<!-- <div class="swiper-container" style="height:80%;" id="swiper_answer">
+		    	<div class="swiper-wrapper" id="">
+		    		<div class="swiper-slide swiper-no-swiping">
+							<div class='option-item-menus'>
+								<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项A：</span><span>28</span></div>
+								<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项B：</span><span>18</span></div>
+								<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项C：</span><span>38</span></div>
+								<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项D：</span><span>48</span></div>
+							</div>
+						</div>
+		    	</div>
+		    </div>
+			<div class='option-item-menu-next' tapmode onclick="clickNext()"><span>确定无误，下一题</span></div> -->
+				<!-- <img src="../../../icon/default/icon_default_big_pic.png" data-echo="../image/consult/consult_one.jpg" /> -->
+			</div>
+		</footer>
+
+		<!-- <img src="{{=file_load_url + it[i].image}}"
+	     onerror="javascript:this.src='../../../icon/default/icon_default_big_pic.png'"
+	     data-echo="{{=file_load_url + it[i].image}}"/> -->
+		<!-- <img src="{{=file_load_url + it[i].image}}" alt="" /> -->
+		<!-- <img src="../../../icon/default/icon_default_big_pic.png" data-echo="../image/consult/consult_one.jpg" /> -->
+		<!-- <div class='content-title'> -->
+		<!--<span>{{=it[i].subject}}</span>-->
+		<!--</div> -->
+		<script type="text/template" charset="utf-8" id='question_list_src'>
+			{{ for(var i=0;i<it.length;i++){ }}
+			<div class="swiper-slide swiper-no-swiping">
+	    		<div class='content-item'>
+				<img src="{{=file_load_url + it[i].image}}"
+				     onerror="javascript:this.src='../../../icon/default/icon_default_big_pic_two.png'"
+				     data-echo="{{=file_load_url + it[i].image}}"/>
+	    		
+				</div>
+				
+	    	</div>
+		{{ } }}
+	</script>
+		<script type="text/template" charset="utf-8" id='options_src'>
+			<div class="swiper-container" style="height:80%;" id="swiper_answer">
+	    	<div class="swiper-wrapper" id="">
+				{{ for(var i=0;i<it.length;i++){ }}
+					<div class="swiper-slide swiper-no-swiping">
+						<div class='option-item-menus' id="answer_options{{=(i - 0 + 1)}}">
+							<!-- 题目ID -->
+							<div class='question-id aui-hide'>{{=it[i].id}}</div>
+							<!-- 正确答案 -->
+							<div class='right-answer aui-hide'>{{=it[i].answerRight}}</div>
+							<!-- 题目类型 -->
+							<div class='question-type aui-hide'>{{=it[i].type}}</div>
+							{{ if(it[i].answerA != ''){ }}
+								<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项A：</span><span><font>{{=it[i].answerA}}</font></span></div>
+							{{ } }}
+							{{ if(it[i].answerB != ''){ }}
+								<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项B：</span><span><font>{{=it[i].answerB}}</font></span></div>
+							{{ } }}
+							{{ if(it[i].answerC != ''){ }}
+								<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项C：</span><span><font>{{=it[i].answerC}}</font></span></div>
+							{{ } }}
+							<!--{{ if(it[i].answerD != ''){ }}
+								<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项D：</span><span><font>{{=it[i].answerD}}</font></span></div>
+							{{ } }}-->
+						</div>
+		    		</div>
+				{{ } }}
+			</div>
+	    </div>
+		<div class='option-item-menu-next' onclick="clickNext({{=it.length}})"><span>确定，下一题</span></div>
+	</script>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/swiper/swiper.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script src="../../../script/echo.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var swiper_question;
+		var swiper_answer;
+		var cache;
+		var examResult; //用户在体检过程中产生的答案
+		var timeout = 15; //设定倒计时为15秒
+		var videoBlock;
+		apiready = function() {
+			api.parseTapmode();
+			// cache = api.pageParam;
+			cache = api.pageParam.examResult;
+			videoBlock = api.pageParam.videoBlock;
+			console.log("辨色力入参牛皮" + JSON.stringify(cache))
+			console.log("辨色力入参牛皮" + videoBlock)
+			examResult = {
+				exaId: cache.exaId, //体检订单
+				licenseType: cache.licenseType, //准驾类型
+				videoNodeList: [], //视频节点
+				answerList: [], //用户答题记录
+				headerH: cache.headerH,
+				videoId: cache.exaId + '-2',
+				type: '2'
+			}
+			// esc_function('physical_examination_video_win','','openVideoRecorder("1")')
+			if(videoBlock == '0'){
+				setTimeout(function() {
+					sendEvent('exam_item_start_block', 2)
+				}, 500)
+			}
+			examResult.videoNodeList.push('00:00'); //初始视力先写死
+			esc_function('physical_examination_video_win','','openFaceKuang()');
+			//console.log('初始用户数据'+JSON.stringify(cache));
+			// openMessage_i('请注意','每道题有'+timeout+'秒回答时间！','好的','','init()','',null);
+			setTimeout(function() {
+				openMessage_i_second('辨色力信息采集', '请模仿视频中的动作，将手机向左、向右各转动一次，转动角度不小于30度。请确保视频拍摄范围内没有他人出现，否则将导致辨色力信息采集无效。', 'colorflip', '已完成', '', 'next()', '', null);
+			}, 600)
+			// init();
+			// setTimeout(function(){
+			// 	finish();
+			// },15000)
+		}
+		
+		//下一步
+		function next(){
+		   setTimeout(function(){
+		        openMessage_i_second('辨色力信息采集','','color','确定','','init()','',null);
+		    },100)
+		}
+		var setTimeout;
+		var question_list_src = $('#question_list_src').html();
+		var options_src = $('#options_src').html();
+
+		function init() {
+			//获取辨色力接口
+			open_load_lower();
+			url = 'api/item-bank/list-item-bank-for-color-blind-random';
+			params = {
+				listSize: 5
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				console.log('获取辨色力题' + JSON.stringify(ret));
+				if (ret && ret.code == 0) {
+					if (ret.listData.length == 0) {
+						isSure('温馨提示', '未找到辨色力题库，请重试', '重试', '取消', function() {
+							init();
+						}, function() {});
+					} else {
+						// sendEvent('startRecorderOpen',{});
+						// esc_function('physical_examination_video_win','','startRecorder()');
+
+						$('#question_list').html(doT.template(question_list_src)(ret.listData));
+
+						$('#option_items_list').html(doT.template(options_src)(ret.listData));
+						setTimeout = setInterval(function() {
+							echoInit();
+							setTimeDown(ret.listData.length);
+						}, 1000);
+						api.parseTapmode();
+						loadSwiper();
+
+					}
+
+				} else {
+					alert_msg('获取色盲图失败');
+				}
+				close_load();
+			});
+		}
+
+		//倒计时
+		function setTimeDown(questionListLength) {
+			$('.aui-tips-title').html('剩余 ' + timeout + ' 秒');
+			if (timeout > 0) {
+				--timeout;
+			} else {
+				clickNext(questionListLength);
+			}
+		}
+
+		//初始化轮播
+		function loadSwiper() {
+			swiper_question = new Swiper("#swiper_question", {});
+			swiper_answer = new Swiper("#swiper_answer", {});
+		}
+		var i = 1;
+		var answerResult;
+
+		function clickNext(questionListLength) {
+			defaultload('获取信息中');
+			var active_answer_options = $('#answer_options' + i).find('.option-item-menu.active');
+			if (active_answer_options.length == 0 && timeout != 0) {
+				closedefaultload()
+				alert_msg('请选择答案');
+				return;
+			}
+			clearInterval(setTimeout);
+			answerResult = {
+				answer: $('#answer_options' + i).find('.right-answer').html(),
+				exaQuestionsId: $('#answer_options' + i).find('.question-id').html(),
+				type: 1, //1辨色力 2视力 3听力
+				isImportant: $('#answer_options' + i).find('.question-type').html(), //是否是红绿色盲题目 1不是2是
+				userAnswer: active_answer_options.find('font').html() == undefined ? '' : active_answer_options.find('font').html()
+			}
+			//		if(answerResult.type == 1
+			//			&&answerResult.isImportant == 2
+			//			&&(answerResult.answer != answerResult.userAnswer)){
+			//			//红绿色盲题目只要做错一题，直接结束
+			//			openMessage_i('请注意','&emsp;色盲信息采集未通过,信息采集自动终止,如有需要,请重新进行体检。','好的','','shutDownExamination()','',null);return;
+			////			alert('您未能做对红绿色盲题目，视频体检提前结束');shutDownExamination();return;
+			//		}
+			//console.log('一条用户产生的数据:'+JSON.stringify(answerResult));
+			examResult.answerList.push(answerResult);
+
+			if (i == (questionListLength - 1)) {
+				$('.option-item-menu-next').find('span').html('确定，完成');
+			} else if (i == questionListLength) {
+				console.log('辨色力项目产生的数据:' + JSON.stringify(examResult));
+				// sendEvent('exam_item_result',examResult);
+				closedefaultload()
+				if(videoBlock == 0){
+					sendEvent('exam_item_finish_block', examResult);
+				}else{
+					sendEvent('exam_item_finish', examResult);
+				}
+
+				return;
+			}
+			//继续倒计时
+			timeout = 15;
+			setTimeout = setInterval(function() {
+				setTimeDown(questionListLength);
+			}, 1000);
+			swiper_question.slideTo(i, 500, false);
+			swiper_answer.slideTo(i, 500, false);
+			i++;
+			closedefaultload()
+		}
+
+		//选择选项
+		function selectOption(o) {
+			$('.option-item-menu').each(function(index, e) {
+				if ($(o).is($(e))) {
+					$(e).addClass('active');
+				} else {
+					$(e).removeClass('active');
+				}
+			});
+		}
+
+		/**
+		 * 结束在线体检 
+		 */
+		// function shutDownExamination(){
+		// 	esc_function('physical_examination_video_win','','closeVideoRecode()');
+		// }
+
+
+
+		// function finish() {
+		// 	console.log('下一个');
+		// 	// closeVideoPlayer();
+		// 	sendEvent('exam_item_finish', examResult);
+		// }
+
+		//打开通用弹出框
+		//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数
+		function openMessage_i(title, content, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+			api.openFrame({
+				name: 'common_alert',
+				url: '../../common/common_alert.html',
+				bgColor: 'rgba(0,0,0,0.4)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					title: title,
+					content: content,
+					sureButton: sureButton,
+					sureFunc: sureFunc,
+					cancelButton: cancelButton,
+					cancelFunc: cancelFunc,
+					winName: api.winName,
+					frameName: api.frameName,
+					params: params
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+
+		function openMessage_i_second(title, content, type, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+			api.openFrame({
+				name: 'common_alert_second',
+				url: '../../common/common_alert_second.html',
+				bgColor: 'rgba(0,0,0,0.4)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					title: title,
+					content: content,
+					type: type,
+					sureButton: sureButton,
+					sureFunc: sureFunc,
+					cancelButton: cancelButton,
+					cancelFunc: cancelFunc,
+					winName: api.winName,
+					frameName: api.frameName,
+					params: params
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+	</script>
+</html>

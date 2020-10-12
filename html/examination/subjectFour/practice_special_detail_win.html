@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>专项练习通用头部</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+    	#common_title{
+    		font-weight:normal;
+    	}
+    	footer{
+    		height: 3.8rem;
+		    position: fixed;
+		    bottom: 0;
+		    width: 100%;
+		    padding-top: 0.2rem;
+		    border-top: solid 1px #F1F1F1;
+		    font-size: 0.7rem;
+    	}
+    	footer img{
+    		height:0.8rem;
+    		margin-bottom: -0.15rem;
+    	}
+    	.totle{
+    		width: 40%;
+   		 	float: left;
+   		 	padding-left: 5%;
+    	}
+    	.mistake{
+		    width: 20%;
+		    float: right;
+		    text-align: right;
+		    margin-right: 5%;
+    	}
+    	.right{
+        	width: 20%;
+		    float: right;
+		    text-align: right;
+    	}
+    	#warning-t{
+    		height:2.2rem;
+    		line-height:2.2rem;
+    		background:#FFF;
+    		font-size:0.7rem;
+    		padding-left:0.5rem;
+    		color: #DC251F;
+		    background: #F5D3D3;
+    	}
+    	#warning-t img{
+    		width:0.8rem;
+    		margin-bottom:-0.1rem;
+    	}
+    	.cumulative{
+		   	float: left;
+    		padding-left: 5%;
+		    width: 35%;
+    		text-align: left;
+    	}
+    	.setting-menu{
+		    width: 100%;
+		    height: 1.8rem;
+		    text-align: right;
+		    padding-top: 0.3rem;
+		    margin-bottom: 0.2rem;
+    	}
+    	.model{
+    		float:right;
+		    margin-right: 0.5rem;
+    	}
+		.aui-pull-right{
+			font-size: 0.6rem !important;
+			color: #000000 !important;
+		}
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+            <img src="../../../icon/common/icon_header_return.png">
+            <span style='color:#797979;' id='return-msg'></span>
+        </a>
+        <div class="aui-title" id="common_title">
+        	
+        </div>
+       <!-- <a class="aui-pull-right aui-btn aui-hide" onclick="openNext()">
+        	<span>下一题</span>
+        </a> -->
+		<a class="aui-pull-right aui-btn">
+		    <span tapmode onclick="arouseFont()">
+		    	<img src="../../../icon/subject/icon-font-two.png" >
+		    	字体大小
+		    </span>                        
+		</a>
+    </header>
+	<section id='warning-t' class='aui-hide'>
+		<img src="../../../icon/payfor/icon_tan.png" alt="" />
+    	<span>您正在进行在线计时培训，退出前请点击【结束】</span>
+    </section>
+    <footer class="" id="footer">
+    	<div class='setting-menu' id='settingMenu'>
+    		<div class="cumulative">
+	    		<img src="../../../icon/hospital/icon_clock_new.png" alt="" />
+	    		<span id='cumulative-time'>累计0秒</span>
+	    	</div>
+	    	<div class="aui-list-item-input model">
+	        	<span>背题模式</span>
+	            <input type="checkbox" name='is_back_question' class="aui-switch" style='margin-top: -0.1rem;margin-left: 0.1rem;' onchange='changeIsBackModel()'>
+	        </div>
+	        <div class="aui-list-item-input model">
+	        	<span>无痕模式</span>
+	            <input type="checkbox" name='is_close_book' class="aui-switch" style='margin-top: -0.1rem;margin-left: 0.1rem;' onchange='changeModel()'>
+	        </div>
+	    </div>
+	    <div style='width: 100%;overflow: hidden;height: 1.5rem;'>
+	    	<div class="totle">
+	    		<img src="../../../icon/subject/icon_totle.png" alt="" />
+	    		<span>0</span>
+	    	</div>
+	    	<div class="mistake">
+	    		<img src="../../../icon/subject/icon_mistake_practice.png" alt="" />
+	    		<span>0</span>
+	    	</div>
+	    	<div class="right">
+	    		<img src="../../../icon/subject/icon_right_practice.png" alt="" />
+	    		<span>0</span>
+	    	</div>
+	    </div>
+    </footer>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var headerPos;
+	var footerPos;
+	var sectionPos;
+	var title = '';
+	var num = 0;
+	var isAllowed = true;//是否允许打开下一步
+	var sql = '';
+	var db;
+	var strartTime;
+	var kemu = '036004';
+	var learnerId = '';
+	var questionIdList;
+	var frameName = 'practice_special_detail_frm';
+	var sectioner;
+	apiready = function(){
+		api.parseTapmode();
+		var header = $api.byId('aui-header');
+		var footer = $api.byId('footer');
+		sectioner = $api.byId('warning-t');
+		sectionPos = $api.offset(sectioner);
+		$api.fixStatusBar(header);
+		cache = api.pageParam.data;
+		db = api.require('db');
+		strartTime = new Date().Format('yyyy-MM-dd HH:mm:ss');//开始时间
+		//log("现在时间"+strartTime);
+		if(islogin()){
+			learnerId = getUserId();
+		}
+		//监听物理返回键
+        api.addEventListener({
+	    	name: 'keyback'
+		}, function(ret, err) {
+		    closeWin();
+		});
+		
+		toEventListener('special-verification-action',function(ret,err){
+			//监听计时器继续
+			startAccunmulation();
+			esc_function(api.winName,frameName + '' +(num == undefined?'':num),'openVerification()');
+		});
+		
+		//无痕模式初始赋值
+		if(getGlobalData('is_close_book') != 'no'&&getGlobalData('is_close_book') != 'yes'){setGlobalData('is_close_book','no');}
+		
+		//背题模式初始赋值
+		if(getGlobalData('is_back_question') != 'no'&&getGlobalData('is_back_question') != 'yes'){setGlobalData('is_back_question','no');}
+		
+		headerPos = $api.offset(header);
+		footerPos = $api.offset(footer);
+		$('#common_title').html(cache.title);
+		init();
+	}
+	//字体大小
+	function arouseFont(){
+		sendEvent("upperFont",{})
+	}
+	var is_vip = false;//是否为vip
+	function init(){
+		//题库
+		var item_bank_kemu_four = getBankType('036004');
+		var resoureTable = cache.isMistake?'cm_question_recode':'cm_question';
+		
+		//检测是否是题库vip(为了用户体验，接口不能影响用户做题的流畅性，就算接口爆炸也要保证用户能做题)
+		url = 'api/questionviporder/get-question-vip-order-info-is-buy';
+		params = {
+			learnerId: getUserId()
+		}
+		ajax_Request(url, 'post', 'json', params, function(ret, err) {
+			log('购买vip套餐', ret);
+			if (ret&&ret.code == 0&&ret.isBuy == 0) {
+				//如果是vip，那么赋予看答题攻略的权限
+				if(ret.questionVipOrderInfo != undefined&&ret.questionVipOrderInfo.isOverdue == 0){
+					//未到期   
+					is_vip = true;
+				}
+			}
+			switch(cache.isMistake){
+				case true://错题集
+					$('.mistake').addClass('aui-hide');
+					$('.right').addClass('aui-hide');
+					sql = 'SELECT DISTINCT cm_question_recode.question_id question_id FROM cm_question_recode ';
+					sql += 'LEFT OUTER JOIN cm_question ON cm_question.question_id = cm_question_recode.question_id ';
+					if(cache.type == 'byType'){//根据题型
+						sql += 'WHERE type = "'+cache.code+'" AND cm_question_recode.is_right = 2 AND cm_question.kemu = "'+ kemu +'" AND bank_type like "%'+item_bank_kemu_four+'%" ORDER BY random()';
+					}else if(cache.type == 'byChapter'){//根据章节
+						sql += 'WHERE chapter = "'+cache.code+'" AND cm_question_recode.is_right = 2 AND cm_question.kemu = "'+ kemu +'" AND bank_type like "%'+item_bank_kemu_four+'%" ORDER BY random()';
+					}else if(cache.type == 'all'){
+						sql += 'WHERE cm_question_recode.is_right = 2 AND cm_question.kemu = "'+ kemu +'" AND bank_type like "%'+item_bank_kemu_four+'%" ORDER BY random()';
+					}
+					break;
+				default://不是错题集
+					//获取对错题数
+					getRightNumAndErrNum(item_bank_kemu_four);
+					sql = 'SELECT DISTINCT question_id FROM cm_question ';
+					if(cache.type == 'byType'){//根据题型
+						sql += 'WHERE type = "'+cache.code+'" AND bank_type like "%'+item_bank_kemu_four+'%" AND cm_question.kemu = "'+ kemu +'" ORDER BY random()';
+					}else if(cache.type == 'byChapter'){//根据章节
+						sql += 'WHERE chapter = "'+cache.code+'" AND bank_type like "%'+item_bank_kemu_four+'%" AND cm_question.kemu = "'+ kemu +'" ORDER BY random()';
+					}else if(cache.type == 'local_question'){//本地题库
+						sql += 'WHERE (city = "' + cache.cityCode + '" OR (province = "' + cache.provinceCode + '" AND (city = "" OR city IS NULL))) AND bank_type like "%'+item_bank_kemu_four+'%" AND cm_question.kemu = "'+ kemu +'" ORDER BY random()';
+					}
+			}
+			db.selectSql({
+		        name:'drivingApp',
+		        sql:sql
+	        },function(ret,err){
+	        	if(ret&&ret.status){
+	        		questionIdList = ret.data;
+					if(getGlobalData('is_close_book') == 'yes'){
+						//如果是无痕模式
+						$('input[name="is_close_book"]').prop("checked","checked");
+					}
+					if(getGlobalData('is_back_question') == 'yes'){
+						//如果是背题模式
+						$('input[name="is_back_question"]').prop("checked","checked");
+					}
+	        		$('.totle').find('span').html((num - 0 + 1)+'/'+questionIdList.length);//未做题总数
+					//学时累计方法
+	        		accunmulationStart();
+	        		//openFrame(frameName,headerPos.h, api.winHeight - headerPos.h - footerPos.h,'none',questionIdList,num,'from_right');
+	        	}else{
+	        		alert_msg('获取题库失败');
+	        	}
+	        });
+		});
+	}
+	
+	/**
+	 * 切换模式-无痕
+	 */
+	function changeModel(){
+		var is_close_book = $('input[name="is_close_book"]').prop("checked");
+		setGlobalData('is_close_book',is_close_book?'yes':'no');
+		sendEvent('change_question_model',is_close_book?'yes':'no');//发送题库切换事件
+		if(getGlobalData('is_back_question') == 'yes'&&is_close_book){alert_msg('背题模式下，无痕模式无效');}
+	}
+	
+	/**
+	 * 切换模式-背题
+	 */
+	function changeIsBackModel(){
+		var is_back_question = $('input[name="is_back_question"]').prop("checked");
+		setGlobalData('is_back_question',is_back_question?'yes':'no');
+		sendEvent('change_question_back_model',is_back_question?'yes':'no');//发送题库切换事件
+	}
+	
+	/**
+	 * 学时累计逻辑
+	 */
+	var stunum = '';//全国统一编号
+	var accumulatedSeconds = 0;//此页面累计学时
+	var countDown;//计时器对象
+	var learnerLessonPlanList = [];//学员的线下课程预约订单列表
+	var learnerSimulatorList = [];//学员的线下课程预约订单列表
+	function accunmulationStart(){
+		//判断是否有stunum，如果有的话累计学时（需要判断是否存在冲突的线下预约课程），没有的话那么不做操作
+		//如果有stunum，提示学员正在线上计时，请勿直接关闭app或者异常退出
+		//调用后台接口获取stunum
+		if(isauth()){
+			//只有认证过的账号才能去拿stunum，未认证的账号默认不在线计时培训
+			url = 'api/learner-register-info/check-learner-stunum-info';
+			params = {
+				learnerId:getUserId(),
+				isCheck:1
+			}
+			defaultload('获取有效信息中...');
+			ajax_Request(url, 'get', 'json', params, function(ret,err){
+				log('运管返回值',ret);
+				api.hideProgress();
+				if(ret){
+					if(ret.code == '0'||ret.code == '400245'){
+						//400245代表插入数据库失败
+						if(ret.dlaRegisterInfoList.length > 0){
+							stunum = ret.dlaRegisterInfoList[0].stunum;
+						}
+						if(ret.learnerLessonPlanList.length > 0){
+							learnerLessonPlanList = ret.learnerLessonPlanList;
+						}
+						if(ret.learnerSimulatorList.length > 0){
+							learnerSimulatorList = ret.learnerSimulatorList;
+						}
+					}
+				}
+				//判断该学员是否预约了 课程、并且不在当前时间的范围内
+				var checkIsExistOrder = checkExistOrder(learnerLessonPlanList,learnerSimulatorList);
+				
+				if(!checkIsExistOrder){
+					alert('与其他课程时间冲突，不计时');
+				}
+				
+				if(stunum != ''&&stunum != undefined&&isallowCalcuTime()&&checkIsExistOrder){
+					//如果有stunum，那么进行在线计时培训，改变样式
+					$('#warning-t').removeClass('aui-hide');
+					$('#return-msg').html('结束');
+					$('.cumulative').removeClass('aui-hide');
+					$('.totle').css('width','29%');
+					//重新计算高度
+					sectionPos = $api.offset(sectioner);
+				}
+				//重新计算高度
+				openFrame(frameName,headerPos.h + sectionPos.h, api.winHeight - headerPos.h - footerPos.h - sectionPos.h,'none',questionIdList,num,'from_right');
+				startAccunmulation();
+			});
+		}else{
+			openFrame(frameName,headerPos.h + sectionPos.h, api.winHeight - headerPos.h - footerPos.h - sectionPos.h,'none',questionIdList,num,'from_right');
+			startAccunmulation();
+		}
+	}
+	function startAccunmulation(){
+		if(isallowCalcuTime()){
+			console.log('开始计时');
+			countDown = setInterval(function(){
+				accumulatedSeconds++;
+				$('#cumulative-time').html(formateTime(accumulatedSeconds));
+			},1000);
+		}
+	}
+	
+	/**
+	 * 判断该学员是否预约了 课程、并且不在当前时间的范围内
+	 */
+	function checkExistOrder(learnerLessonPlanList,learnerSimulatorList){
+		var nowTime = new Date();
+		if(learnerLessonPlanList.length > 0){
+			//存在线下预约课程订单
+			var beginTime = learnerLessonPlanList[0].beginTime;
+			var endTime = calcuEndTimeMax(learnerLessonPlanList);
+			if(nowTime.getTime() >= new Date(beginTime.replace(/-/g,"/")).getTime()
+				&&nowTime.getTime() <= new Date(endTime.replace(/-/g,"/")).getTime()){
+				//在课程预约的时间范围内，不允许计时
+				return false;
+			}
+		}
+		
+		if(learnerSimulatorList.length > 0){
+			//存在模拟器预约，直接不允许，因为模拟器的时间格式坑太大
+			return false;
+		}
+		
+		//通过以上校验，那么返回允许
+		return true;
+	}
+	
+	/**
+	 * 根据一个列表计算最晚时间
+	 */
+	function calcuEndTimeMax(timelist){
+		if(timelist.length == 1){
+			return timelist[0].endTime;
+		}
+		for(var i = 0;i<timelist.length;i++){
+			for(var j = 0; j < timelist.length - 1 - i; j++){
+				if(new Date(timelist[j].endTime.replace(/-/g,"/")).getTime() < new Date(timelist[j + 1].endTime.replace(/-/g,"/")).getTime()){
+					var endTimeList = timelist[j];
+		            timelist[j] = timelist[j+1];
+		            timelist[j+1] = endTimeList;
+				}
+			}
+		}
+		return timelist[0].endTime;
+	}
+	
+	/**
+	 * 是否允许计时boolean
+	 */
+	function isallowCalcuTime(){
+		return true;
+	}
+	/**
+	 * 格式化累计时间 
+	 */
+	function formateTime(accumulatedSeconds){
+		if(accumulatedSeconds/3600 > 1){
+			return '累计' + parseInt(accumulatedSeconds/3600) + '小时';
+		}else if(accumulatedSeconds/60 > 1){
+			return '累计' + parseInt(accumulatedSeconds/60) + '分钟';
+		}else{
+			return '累计' + (accumulatedSeconds > 0?accumulatedSeconds:0) + '秒';
+		}
+	}
+	/**
+	 * 清除定时器
+	 */
+	function clearCountDown(){
+		clearInterval(countDown);
+	}
+	/**
+	 * 打开校验作弊验证
+	 */
+	function openVerification(){
+		api.openFrame({
+	        name: 'common_verification',
+	        url: '../../common/common_verification.html',
+	        bgColor: 'rgba(0,0,0,0.4)',
+	        rect: {
+	            x: 0,
+	            y: 0,
+	            w: 'auto',
+	            h: api.winHeight
+	        },
+	        bounces: false,
+	        pageParam:{
+	        	action:'special-verification-action'
+	        },
+	        softInputBarEnabled:true,
+	        softInputMode:'resize'
+	    });
+	}
+	
+	function openFrame(frameName,y,h,animate,questionIdList,num,subType){
+		api.openFrame({
+            name: frameName + '' +(num == undefined?'':num),
+            url: './'+frameName+'.html',
+            bgColor:'#efeff4',
+            rect: {
+                x: 0,
+                y: y,
+                w: 'auto',
+                h: h
+            },
+            animation:{
+	        	type:animate,                //动画类型（详见动画类型常量）
+			    subType:subType,       //动画子类型（详见动画子类型常量）
+			    duration:300
+	        },
+            bounces: false,
+            pageParam:{
+            	data:cache,
+            	questionIdList:questionIdList,
+            	num:num,
+            	stunum:stunum,
+            	is_vip:is_vip
+            },
+            reload:true,
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+	}
+	/**
+	 * 根据开始时间和有效时长计算结束时间
+	 */
+	function calcuEndTime(strartTime,accumulatedSeconds){
+		var endTime = new Date(new Date(strartTime.replace(/-/g,"/")).getTime() + accumulatedSeconds*1000);
+		return endTime;
+	}
+	//下一题
+	function openNext(){
+		if(isAllowed&&num < questionIdList.length - 1){
+			isAllowed = false;
+			num++;
+			$('.totle').find('span').html((num - 0 + 1)+'/'+questionIdList.length);//总题数
+			frameLeft(frameName + '' +(num - 0 - 1));
+			if(num == questionIdList.length - 1){
+				setTimeout(function(){$('.aui-pull-right.aui-btn').addClass('aui-hide');isAllowed = true;},300);
+			}else{
+				setTimeout(function(){$('.aui-pull-right.aui-btn').removeClass('aui-hide');isAllowed = true;},300);//因为动画效果300ms
+			}
+			openFrame(frameName,headerPos.h + sectionPos.h, api.winHeight - headerPos.h - footerPos.h - sectionPos.h,'push',questionIdList,num,'from_right');
+		}
+	}
+	
+	//上一题
+	function openPrevious(){
+		if(isAllowed&&num > 0){
+			isAllowed = false;
+			num--;
+			$('.totle').find('span').html((num - 0 + 1)+'/'+questionIdList.length);//总题数
+			frameLeft(frameName + '' +(num - 0 + 1));
+			if(num == 0){
+				//$('.aui-pull-right.aui-btn').addClass('aui-hide');
+				setTimeout(function(){isAllowed = true;},300);
+			}else{
+				setTimeout(function(){$('.aui-pull-right.aui-btn').removeClass('aui-hide');isAllowed = true;},300);//因为动画效果300ms
+			}
+			openFrame(frameName,headerPos.h + sectionPos.h, api.winHeight - headerPos.h - footerPos.h - sectionPos.h,'push',questionIdList,num,'from_left');
+		}
+	}
+	
+	//frame左移动滑出
+	function frameLeft(frmName){
+		setTimeout(function(){
+			api.closeFrame({
+				name:frmName,
+				animation:{
+					type:"fade",                //动画类型（详见动画类型常量）
+				    duration:300 
+				}
+	        });
+		},200);
+	}
+	
+	//获取错误与正确题数
+	function getRightNumAndErrNum(item_bank_kemu_four){
+		var right_span = $('.right').find('span');
+		var err_span = $('.mistake').find('span');
+		sql = 'SELECT count(*) right_num FROM ';
+		sql += '(SELECT count( * ) FROM cm_question_recode ';
+		sql += 'LEFT JOIN cm_question ON cm_question.question_id = cm_question_recode.question_id ';
+		sql += 'WHERE cm_question_recode.learner_id = "'+ learnerId +'" AND cm_question_recode.is_right = 1 AND kemu = "' + kemu + '" AND bank_type like "%'+item_bank_kemu_four+'%" ';
+		if(cache.type == 'byType'){//根据题型
+			sql += 'AND type = "'+cache.code+'" ';
+		}else if(cache.type == 'byChapter'){//根据章节
+			sql += 'AND chapter = "'+cache.code+'" ';
+		}else if(cache.type == 'local_question'){//本地题库
+			sql += 'AND (city = "' + cache.cityCode + '" OR (province = "' + cache.provinceCode + '" AND (city = "" OR city IS NULL))) ';
+		}
+		sql += 'GROUP BY cm_question.question_id)';
+		db.selectSql({
+	        name:'drivingApp',
+	        sql:sql
+        },function(ret,err){
+        	if(ret&&ret.status){
+        		log('做对的',ret.data);
+        		right_span.html(ret.data[0].right_num);
+        	}else{
+        		alert_msg('获取做对题目数失败');
+        	}
+        });
+        
+        sql = 'SELECT count(*) error_num FROM ';
+		sql += '(SELECT count( * ) FROM cm_question_recode ';
+		sql += 'LEFT JOIN cm_question ON cm_question.question_id = cm_question_recode.question_id ';
+		sql += 'WHERE cm_question_recode.learner_id = "'+ learnerId +'" AND cm_question_recode.is_right = 2 AND kemu = "' + kemu + '" AND bank_type like "%'+item_bank_kemu_four+'%" ';
+		if(cache.type == 'byType'){//根据题型
+			sql += 'AND type = "'+cache.code+'" ';
+		}else if(cache.type == 'byChapter'){//根据章节
+			sql += 'AND chapter = "'+cache.code+'" ';
+		}else if(cache.type == 'local_question'){//本地题库
+			sql += 'AND (city = "' + cache.cityCode + '" OR (province = "' + cache.provinceCode + '" AND (city = "" OR city IS NULL))) ';
+		}
+		sql += 'GROUP BY cm_question.question_id)';
+		db.selectSql({
+	        name:'drivingApp',
+	        sql:sql
+        },function(ret,err){
+        	if(ret&&ret.status){
+        		log('做错的',ret.data);
+        		err_span.html(ret.data[0].error_num);
+        	}else{
+        		alert_msg('获取做错题目数失败');
+        	}
+        });
+	}
+	
+	//记录错误与正确题数
+	function changeNum(isTrue){
+		var right_span = $('.right').find('span');
+		var err_span = $('.mistake').find('span');
+		if(isTrue){
+			right_span.html(right_span.html() - 0 + 1);
+		}else{
+			err_span.html(err_span.html() - 0 + 1);
+		}
+	}
+	
+	var isAllowUpload = true;//是否允许上传学时
+	function closeWin(){
+		if(isAllowUpload){
+			sendEvent('refresh_item',{});
+			isAllowUpload = false;//只要点击一次就不允许
+			if (strartTime!="" && strartTime != null && islogin()){
+			    var url = 'api/learningRecord/insertLearningRecord';
+				var endTime = calcuEndTime(strartTime,accumulatedSeconds);
+				
+				var isTime = 0;//默认不需要上传到运管
+				var checkIsExistOrder = checkExistOrder(learnerLessonPlanList,learnerSimulatorList);
+				
+				if(!checkIsExistOrder){
+					alert('与课程时间重叠，计时无效');
+				}
+				
+				if(stunum != ''&&stunum != undefined&&isallowCalcuTime()&&checkIsExistOrder){
+					isTime = 1;
+				}
+				if(accumulatedSeconds >= 60){
+					defaultload('上传学时中...');
+					var params = {
+						learnerId:getUserId(),
+						kemuStatus:4,
+						beginDt:yformat(strartTime),
+						endDt:endTime.Format("yyyy-MM-dd HH:mm:ss"),
+						studySeconds:accumulatedSeconds,
+						isTime:isTime//是否需要上传到运管:0不上传1需要上传
+					}
+					log('时间传参',params);
+					ajax_Request(url, 'post', 'json', params, function(ret,err){
+						log('科目四学习记录添加',ret);
+						api.closeWin({});
+						api.hideProgress();
+						if(ret){
+							
+						}else{
+							console.log("科目四学习记录添加-cuowu");
+						}
+					});
+				}else{
+					api.closeWin({});
+				}
+		    }else{
+		    	alert('未登录或未获取您的开始时间，学时累计无效');
+				api.closeWin({});
+		    }
+		}else{
+			console.log('不允许二次提交');
+		}
+	}
+	
+	//更新vip状态
+	function changeVipStatus(isVip){
+		is_vip = isVip;
+	}
+	
+	function yformat(shijianchuo){
+		//shijianchuo是整数，否则要parseInt转换
+		var time = new Date(shijianchuo.replace(/-/g,"/"));
+		var y = time.getFullYear();
+		var m = time.getMonth()+1;
+		var d = time.getDate();
+		var h = time.getHours();
+		var mm = time.getMinutes();
+		var s = time.getSeconds();
+		return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
+	}
+	function add0(m){return m<10?'0'+m:m }
+</script>
+</html>

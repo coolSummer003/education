@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>题库首页 无理赔</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html, body {
+            background-color: #fff;
+            padding: 0;
+            margin: 0;
+        }
+
+        #aui-header {
+			position: fixed;
+            color: #fff;
+			background: rgba(0,0,0,0);
+			top: 0;
+        }
+		#aui-header1{
+			position: fixed;
+			color: #fff;
+			top: 0;
+			opacity: 0;
+		}
+
+        #aui-header:after,#aui-header1::after {
+            height: 0;
+        }
+
+        #aui-header img,#aui-header1 img {
+            width: 1rem;
+        }
+		.vip_title{
+			width: 100%;
+			height: auto;
+		}
+		.vip_title img{
+			width: 100%;
+		}
+
+        main {
+            padding: 1rem 5%;
+			margin-bottom: 3rem;
+        }
+
+        .package {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            height: 7.5rem;
+            width: 47.5%;
+            background: url(../../../icon/vip/question_bank/package_bg.png) 0 0/100% 100% no-repeat;
+            overflow: hidden;
+        }
+		.package:nth-child(2n) {
+		    margin-right: 5%;
+		}
+		.packageOne{
+			height: 6rem;
+            width: 100%;
+			background: url(../../../icon/vip/question_bank/package_bg1.png) 0 0/100% 100% no-repeat !important;
+			overflow: hidden;
+		}
+        .package-active {
+            background: url(../../../icon/vip/question_bank/package_selected_bg.png) 0 0/100% 100% no-repeat!important;
+        }
+		.packageOne-active{
+			background: url(../../../icon/vip/question_bank/package_bg1.png) 0 0/100% 100% no-repeat !important;
+		}
+        .package-price {
+            height: 1.6rem;
+            line-height: 1.6rem;
+            width: 100%;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #EAA271;
+            text-align: center;
+        }
+
+        .package-price > img {
+            display: block;
+            margin: 0 auto;
+            width: 3.6rem;
+            height: 100%;
+        }
+
+        .package-duration {
+            height: 2.7rem;
+            line-height: 2.7rem;
+            width: 100%;
+            font-size: 0.8rem;
+            color: #EAA271;
+            text-align: center;
+        }
+
+        .package-brief {
+            padding: 0 18%;
+            height: 2.2rem;
+            /*line-height: 2.2rem;*/
+            width: 100%;
+            font-size: 0.7rem;
+            color: #333;
+			text-align: center;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+        }
+
+        .package-brief > p {
+            height: 1rem;
+            line-height: 1rem;
+            color: #333;
+        }
+		
+		.packageOne-price{
+			width: 100%;
+			height: 3.5rem;
+			text-align: center;
+			color: #EAA271;
+			line-height: 3.5rem;
+			margin-top: 0.5rem;
+			
+		}
+		.packageOne-duration{
+			width: 100%;
+			height: 1rem;
+			line-height: 1rem;
+			text-decoration: line-through;
+			text-align: center;
+			color: #C3C3C3;
+		}
+		.packageOne-price span{
+			font-size: 2rem;
+		}
+		
+		.packageOne-brief,.packageOne-brief1{
+			position: relative;
+			width: 95%;
+			height: 2.5rem;
+			font-size: 1rem;
+			color: #EAA271;
+			margin-top: 0.5rem;
+			margin-left: 5%;
+		}
+		.packageOne-brief-1{
+			position: absolute;
+			bottom: 0;
+		}
+		.packageOne-brief1{
+			margin-top: 0.5rem;
+			color: #7C7C7C;
+			font-size: 0.8rem;
+		}
+
+        .package-select-btn {
+            margin-top: 1rem;
+            width: 100%;
+            height: 2.5rem;
+            line-height: 2.5rem;
+            background: #443636;
+            border-radius: 1.25rem;
+            color: #FFC696;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .course-feature {
+            padding: 1rem 0 0;
+        }
+
+        .course-feature-title {
+            height: 3rem;
+            line-height: 3rem;
+            color: #333;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .course-feature-menu {
+            padding: 0.5rem 0;
+        }
+
+        .course-feature-menu img {
+            display: block;
+            height: 2.2rem;
+            width: 2.2rem;
+            margin: 0 auto;
+        }
+
+        .course-feature-menu p {
+            height: 2rem;
+            line-height: 2rem;
+            text-align: center;
+            color: #333;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .course-feature-item .aui-col-xs-6 {
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            width: 47.5%;
+            height: 4rem;
+            border: 1px solid #FFE4C7;
+            box-shadow: 0 0.1rem 0.4rem 0 rgba(215, 215, 215, 0.51);
+            border-radius: 0.5rem;
+        }
+
+        .course-feature-item .aui-col-xs-6:nth-child(odd) {
+            margin-right: 5%;
+        }
+
+        .course-feature-item .aui-grid-label {
+            margin-top: 0;
+            height: 100%;
+        }
+
+        .course-feature-item-content img {
+            display: block;
+            height: 1.5rem;
+            width: 1.5rem;
+            margin-top: 0.675rem;
+        }
+
+        .course-feature-item-content > [class*=aui-col-] {
+            padding: 0;
+        }
+
+        .course-feature-item-text {
+            padding: 0.2rem 0!important;
+        }
+
+        .course-feature-item-text > p:not(:first-child) {
+            height: 0.75rem;
+            line-height: 0.75rem;
+            color: #666;
+            font-size: 0.5rem;
+            text-align: left;
+        }
+
+        .course-feature-item-text > p:first-child {
+            height: 1.1rem;
+            line-height: 1.1rem;
+            font-weight: bold;
+            color: #333;
+            font-size: 0.7rem;
+            text-align: left;
+        }
+
+        .rights-protection {
+            padding: 0 2.5%;
+        }
+
+        .rights-protection-title {
+            height: 3rem;
+            line-height: 3rem;
+            color: #333;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .rights-protection-banner {
+            padding: 0.5rem 0.75rem;
+            height: 5rem;
+            background: url(../../../icon/vip/question_bank/rights_protect_banner_bg.png) 0 0/100% 100% no-repeat;
+        }
+
+        .rights-protection-banner > div {
+            height: 100%;
+        }
+
+        .compensation-icon {
+            height: 3.3rem;
+            width: 3.3rem;
+            display: block;
+            margin: 0.3rem auto;
+        }
+
+        .rights-protection-banner-text {
+            padding: 0.75rem 0 0.75rem;
+            font-weight: bold;
+        }
+
+        .rights-protection-banner-text > p:first-child {
+            height: 1.4rem;
+            line-height: 1.4rem;
+            text-align: left;
+            color: #593C25;
+            font-size: 0.9rem;
+        }
+
+        .rights-protection-banner-text > p:last-child {
+            height: 1.1rem;
+            line-height: 1.1rem;
+            text-align: left;
+            color: #C49373;
+            font-size: 0.7rem;
+        }
+
+        .rights-protection-menu {
+            padding: 1rem 0;
+        }
+
+        .rights-protection-menu img {
+            display: block;
+            height: 3rem;
+            width: 3rem;
+            margin: 0 auto;
+        }
+
+        .rights-protection-menu p {
+            height: 2rem;
+            line-height: 2rem;
+            text-align: center;
+            color: #333;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .common-problem {
+            margin: 0 2.5%;
+            padding: 0 0.5rem;
+            height: auto;
+            border: 1px solid #FFE4C7;
+            box-shadow: 0 0.1rem 0.4rem 0 rgba(215, 215, 215, 0.51);
+            border-radius: 0.4rem;
+        }
+
+        .common-problem-title {
+            margin: 0 auto 1.5rem;
+            width: 80%;
+            height: 1.6rem;
+            line-height: 1.6rem;
+            background-image: linear-gradient(270deg, #FFE9D5 0%, #E7CFB1 100%);
+            border-radius: 0 0 0.8rem 0.8rem;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #593C25;
+        }
+
+        .common-problem-content {
+            color: #443636;
+        }
+
+        .common-problem-content-question {
+            height: 1.2rem;
+            line-height: 1.2rem;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .common-problem-content .aui-col-xs-2 {
+            width: 12.5%;
+            height: 1.2rem;
+        }
+
+        .common-problem-content .aui-col-xs-10 {
+            width: 87.5%;
+        }
+
+        .common-problem-content-question img {
+            display: block;
+            height: 1.2rem;
+            width: 1.2rem;
+        }
+
+        .common-problem-content-answer {
+            margin: 0.5rem 0 1rem;
+            font-size: 0.6rem;
+        }
+
+        footer {
+			position: fixed;
+			width: 100%;
+            height: 2.75rem;
+			bottom: 0;
+        }
+		.footImg{
+			position: absolute;
+			width: 100%;
+		}
+
+        .footer-price {
+            position: absolute;
+            left: 5%;
+            height: 2.75rem;
+            line-height: 3rem;
+            width: 2.6rem;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #443636;
+            font-weight: bold;
+        }
+
+        footer > button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 32%;
+            background-color: transparent;
+        }
+        .question-try{
+        	width:100%;
+            -webkit-transition: 0.3s ease;
+            -moz-transition: 0.3s ease;
+            -ms-transition: 0.3s ease;
+            -o-transition: 0.3s ease;
+            transition: 0.3s ease;
+        }
+        .question-try:active{
+        	width:96%;
+        	margin-left:2%;
+        }
+    </style>
+	</head>
+	<body>
+
+		<!-- 头部 -->
+		<header class="aui-bar aui-bar-nav aui-border-b" id="aui-header">
+			<div id="header_top" style="height: 2.25rem;">
+				<a class="aui-pull-left aui-btn" tapmode onclick="closeThis()">
+					<img src="../../../icon/common/icon_header_return_white.png" alt="">
+				</a>
+				<div class="aui-title">
+				</div>
+			</div>
+		</header>
+		<header class="aui-bar aui-bar-nav aui-border-b" id="aui-header1">
+			<div id="header_top" style="height: 2.25rem;">
+				<a class="aui-pull-left aui-btn" tapmode onclick="closeThis()">
+					<img src="../../../icon/common/icon_header_return.png" alt="">
+				</a>
+				<div class="aui-title" style="color: #000;">
+					vip课程
+				</div>
+			</div>
+		</header>
+
+		<div class="vip_title">
+			<img src="../../../icon/vip/question_bank/header_bg_new.png">
+		</div>
+
+		<!-- 中部 -->
+		<main>
+			<!--套餐选择-->
+			<div class="package-select">
+				<div class="aui-row package-list">
+
+				</div>
+				<!-- <div class="package-select-btn" tapmode onclick="tryOutVip()">
+					抢先免费体验
+				</div> -->
+				<img src="../../../icon/vip/video/icon_question_try.png" alt="" class='question-try' tapmode onclick="tryOutVip()"/>
+			</div>
+			<!--课程特色-->
+			<div class="course-feature">
+				<div class="course-feature-title">
+					课程特色
+				</div>
+				<div class="aui-row course-feature-menu">
+					<div class="aui-col-xs-4">
+						<img src="../../../icon/vip/question_bank/course_feature_menu1.png" alt="">
+						<p>速记练习</p>
+					</div>
+					<div class="aui-col-xs-4">
+						<img src="../../../icon/vip/question_bank/course_feature_menu2.png" alt="">
+						<p>错题巩固</p>
+					</div>
+					<div class="aui-col-xs-4">
+						<img src="../../../icon/vip/question_bank/course_feature_menu4.png" alt="">
+						<p>考前模拟</p>
+					</div>
+				</div>
+				<div class="aui-grid course-feature-item">
+					<div class="aui-row">
+						<div class="aui-col-xs-6">
+							<div class="aui-grid-label aui-row course-feature-item-content">
+								<div class="aui-col-xs-4">
+									<img src="../../../icon/vip/question_bank/course_feature_item1.png" alt="">
+								</div>
+								<div class="aui-col-xs-8 course-feature-item-text">
+									<p>精选500题</p>
+									<p>覆盖必考知识点</p>
+									<p>精选热门常考题目</p>
+								</div>
+							</div>
+						</div>
+						<div class="aui-col-xs-6">
+							<div class="aui-grid-label aui-row course-feature-item-content">
+								<div class="aui-col-xs-4">
+									<img src="../../../icon/vip/question_bank/course_feature_item2.png" alt="">
+								</div>
+								<div class="aui-col-xs-8 course-feature-item-text">
+									<p>答题攻略</p>
+									<p>顺口溜，关联记忆</p>
+									<p>无需死记硬背</p>
+								</div>
+							</div>
+						</div>
+						<div class="aui-col-xs-6">
+							<div class="aui-grid-label aui-row course-feature-item-content">
+								<div class="aui-col-xs-4">
+									<img src="../../../icon/vip/question_bank/course_feature_item3.png" alt="">
+								</div>
+								<div class="aui-col-xs-8 course-feature-item-text">
+									<p>易错题集</p>
+									<p>易错考题TOP100</p>
+									<p>智能定制易错题</p>
+								</div>
+							</div>
+						</div>
+						<div class="aui-col-xs-6">
+							<div class="aui-grid-label aui-row course-feature-item-content">
+								<div class="aui-col-xs-4">
+									<img src="../../../icon/vip/question_bank/course_feature_item4.png" alt="">
+								</div>
+								<div class="aui-col-xs-8 course-feature-item-text">
+									<p>难题攻克</p>
+									<p>准确把握考试难点</p>
+									<p>精心挑选难题突破</p>
+								</div>
+							</div>
+						</div>
+						<div class="aui-col-xs-6">
+							<div class="aui-grid-label aui-row course-feature-item-content">
+								<div class="aui-col-xs-4">
+									<img src="../../../icon/vip/question_bank/course_feature_item5.png" alt="">
+								</div>
+								<div class="aui-col-xs-8 course-feature-item-text">
+									<p>考前巩固</p>
+									<p>高频、易考、易错</p>
+									<p>巩固练习</p>
+								</div>
+							</div>
+						</div>
+						<div class="aui-col-xs-6">
+							<div class="aui-grid-label aui-row course-feature-item-content">
+								<div class="aui-col-xs-4">
+									<img src="../../../icon/vip/question_bank/zhe.png" alt="">
+								</div>
+								<div class="aui-col-xs-8 course-feature-item-text">
+									<p>浙江题库</p>
+									<p>针对省内考情</p>
+									<p>专属题库</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--权益保障-->
+			<div class="rights-protection">
+				<div class="aui-row rights-protection-menu">
+					<div class="aui-col-xs-4">
+						<img src="../../../icon/vip/question_bank/rights_protection_menu1.png" alt="">
+						<p>免广告打扰</p>
+					</div>
+					<div class="aui-col-xs-4">
+						<img src="../../../icon/vip/question_bank/rights_protection_menu2.png" alt="">
+						<p>多设备播放</p>
+					</div>
+					<div class="aui-col-xs-4">
+						<img src="../../../icon/vip/question_bank/rights_protection_menu3.png" alt="">
+						<p>更新优先享</p>
+					</div>
+				</div>
+			</div>
+			<!--常见问题-->
+			<div class="common-problem">
+				<div class="common-problem-title">
+					常见问题
+				</div>
+				<div class="common-problem-content">
+					<div class="aui-row common-problem-content-question">
+						<div class="aui-col-xs-2">
+							<img src="../../../icon/vip/question_bank/Q.png" alt="">
+						</div>
+						<div class="aui-col-xs-10">
+							VIP题库包适合哪些学员购买？
+						</div>
+					</div>
+					<div class="aui-row common-problem-content-answer">
+						<div class="aui-col-xs-2">
+						</div>
+						<div class="aui-col-xs-10">
+							适用于小车、货车、客车学员，祝您快速通过考试
+						</div>
+					</div>
+					<div class="aui-row common-problem-content-question">
+						<div class="aui-col-xs-2">
+							<img src="../../../icon/vip/question_bank/Q.png" alt="">
+						</div>
+						<div class="aui-col-xs-10">
+							有效期从什么时候开始算？
+						</div>
+					</div>
+					<div class="aui-row common-problem-content-answer">
+						<div class="aui-col-xs-2">
+						</div>
+						<div class="aui-col-xs-10">
+							Vip题库包自购买之日起算有效期，单次支付开通时长为6个月。<br>
+							众志成城，抗击疫情！官方宣布疫情结束前，自动延长有效期1个月。即自购买之日起，有效期时长为7个月。
+						</div>
+					</div>
+					<div class="aui-row common-problem-content-question">
+						<div class="aui-col-xs-2">
+							<img src="../../../icon/vip/question_bank/Q.png" alt="">
+						</div>
+						<div class="aui-col-xs-10">
+							我刚开通VIP为什么消失或者未生效？
+						</div>
+					</div>
+					<div class="aui-row common-problem-content-answer">
+						<div class="aui-col-xs-2">
+						</div>
+						<div class="aui-col-xs-10">
+							请检查是否已登陆您的账号，同一VIP账号只支持3台设备使用。如有疑问，请咨询平台客服。
+						</div>
+					</div>
+
+					<div class="aui-row common-problem-content-question">
+						<div class="aui-col-xs-2">
+							<img src="../../../icon/vip/question_bank/Q.png" alt="">
+						</div>
+						<div class="aui-col-xs-10">
+							VIP购买后可以退款吗？
+						</div>
+					</div>
+					<div class="aui-row common-problem-content-answer">
+						<div class="aui-col-xs-2">
+						</div>
+						<div class="aui-col-xs-10">
+							VIP是虚拟商品,不支持退款哦。
+						</div>
+					</div>
+					<div class="aui-row common-problem-content-question">
+						<div class="aui-col-xs-2">
+							<img src="../../../icon/vip/question_bank/Q.png" alt="">
+						</div>
+						<div class="aui-col-xs-10">
+							其他问题及注意事项
+						</div>
+					</div>
+					<div class="aui-row common-problem-content-answer">
+						<div class="aui-col-xs-2">
+						</div>
+						<div class="aui-col-xs-10">
+							如有疑问,请咨询在线客服或拨打客服电话0575-82202000,我们会及时为您解答。
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<!-- 底部 -->
+		<footer>
+			<img src="../../../icon/vip/question_bank/footer_bg.png" class="footImg">
+			<p class="footer-price"></p>
+			<button tapmode onclick="buyVip()"></button>
+		</footer>
+
+
+		<!--模板-->
+		<script type="text/template" charset="utf-8" id="package_list_tpl">
+			{{ if(it.length > 1){ }}
+				{{ for(var i=0;i< it.length;i++){ }}
+				<div class="aui-col-xs-5 package-{{=i}} package" tapmode onclick="changePackage(this, '{{=(it[i].payServiceFee)}}')">
+					<div class="package-price">
+						￥{{=(it[i].payServiceFee)}}
+					</div>
+					<div class="package-duration">
+						{{=it[i].serviceLimitTime}}天
+					</div>
+					<div class="package-brief">
+						{{=it[i].payServiceName}}
+					</div>
+				</div>
+				{{ } }}
+			{{ }else{ }}
+				<div class="aui-col-xs-12 package-0 packageOne" tapmode onclick="changePackage(this, '{{=(it[0].payServiceFee)}}')">
+					<div class="aui-col-xs-4">
+						<div class="packageOne-price">
+							￥<span id="" class="packageOne-price-a">
+								{{=(it[0].payServiceFee)}}
+							</span>
+						</div>
+						<div class="packageOne-duration">
+							原价¥58
+						</div>
+					</div>
+					<div class="aui-col-xs-8">
+						<div class="packageOne-brief">
+							<div class="packageOne-brief-1">
+								{{=it[0].payServiceName}}
+							</div>
+						</div>
+						<div class="packageOne-brief1">
+							<div class="packageOne-brief1-1">
+								低至0.2元一天  快速拿本首选
+							</div>
+						</div>
+					</div>
+				</div>
+			{{ } }}
+		</script>
+
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var packageType = 0;
+		var packageList;
+		var headerPos;
+		var threshold; //定义的阈值
+		var touchStyle;
+		var systemType; //系统类型
+		apiready = function() {
+			api.parseTapmode();
+			$api.fixStatusBar($api.byId('aui-header'));
+			$api.fixStatusBar($api.byId('aui-header1'));
+			headerPos = $api.offset($api.byId('aui-header'));
+			threshold = headerPos.h;
+			systemType = api.systemType;
+			touchStyle = systemType == "ios" ? 'touchmove' : 'scroll';
+			scroll();
+			defaultload();
+			init();
+			toEventListener('closeVipO', function(ret, err) {
+				console.log('我进来了，我要关闭1')
+				setTimeout(function() {
+					closeThis();
+				}, 500)
+			})
+			var cache_account = $api.getStorage('cache_by_account').cache_account;
+
+			if (cache_account.coachId == '' || cache_account.coachId == null || cache_account.coachId == undefined) {
+				openMessage('温馨提示', '你尚未绑定教练，是否继续购买', '绑定教练', '跳过', 'openAddCoachPage()', '', null)
+			}
+
+			toEventListener('coach_list_select', function(ret, err) {
+				log('绑定教练信息', ret)
+				var cache_by_account = $api.getStorage('cache_by_account');
+				cache_by_account.cache_account.coachId = ret.value.id;
+				$api.setStorage("cache_by_account", cache_by_account);
+
+				binding_coach(ret.value)
+			})
+		};
+
+		// 页面初始化方法
+		function init() {
+			url = 'api/question-bank-vip/list-package';
+			ajax_Request(url, 'get', 'json', {}, function(ret, err) {
+				log('题库vip套餐列表出参：', ret);
+				if (ret) {
+					closedefaultload();
+					if (ret.code === 0 && ret.packageList.length > 0) {
+						packageList = ret.packageList;
+						var packageListTpl = $('#package_list_tpl').html();
+						$(".package-list").html(doT.template(packageListTpl)(ret.packageList));
+						changePackage($('.package-0'), (packageList[0].payServiceFee).toFixed(2)); // 设置默认选中套餐
+						closedefaultload();
+					} else {
+						alert_msg('无套餐');
+					}
+				} else {
+					alert_msg('服务器繁忙，请稍后重试');
+				}
+			});
+		}
+
+		//监听页面滑动控制头部menu样式
+		var scrollPos; //监听上下滚动顶部的距离
+		var percent = 0; //白底header的隐藏属性值
+		var hidepercent = 0; //非白底header的隐藏属性值
+		function scroll() {
+			$(window).on(touchStyle, function(event) {
+				scrollPos = $(window).scrollTop();
+				//安卓做限制滚动
+				if (((scrollPos / threshold).toFixed(2) <= 1) && systemType == 'android') {
+					percent = (scrollPos / threshold).toFixed(2);
+					$('#aui-header1').css("opacity", percent);
+					hidepercent = 1 - percent;
+					$('#aui-header0').css("opacity", hidepercent);
+				} else {
+					percent = (scrollPos / threshold).toFixed(2) > 1 ? 1 : (scrollPos / threshold).toFixed(2);
+					$('#aui-header1').css("opacity", percent);
+					hidepercent = (1 - percent) < 0 ? 0 : (1 - percent);
+					$('#aui-header0').css("opacity", hidepercent);
+				}
+			});
+		}
+
+		// 切换VIP套餐
+		function changePackage(e, price) {
+			if(packageList.length == 1){
+				$(e).addClass('packageOne-active');
+			}else{
+				$(e).addClass('package-active');
+				$(e).siblings().removeClass('package-active');
+			}
+			packageType = $(e).index();
+			$('.footer-price').html('￥' + price);
+		}
+
+		// 购买VIP套餐
+		function buyVip() {
+			if (islogin()) {
+				// if (isauth()) {
+				url = 'api/questionviporder/add-question-vip-service-order';
+				params = {
+					learnerId: getUserId(),
+					bindMac: api.deviceId,
+					phoneModel: api.systemType,
+					pId: packageList[packageType].id
+				};
+				log('驾校报名订单详情数据：', params);
+				ajax_Request(url, 'post', 'json', params, function(ret, err) {
+					api.hideProgress();
+					log('驾校报名订单详情数据：', ret);
+					if (ret) {
+						if (ret.code == 0) {
+							// 打开下单页面
+							commonOpenWin('question_bank_pay_win', {
+								packageBought: packageList[packageType],
+								orderId: ret.qId,
+								orderInsertDt: ret.orderInsertDt,
+								isContainKemuOne:packageList[packageType].isContainKemuOne,
+								isContainKemuFour:packageList[packageType].isContainKemuFour
+							});
+						} else {
+							alert_msg(ret.msg)
+						}
+					} else {
+						alert_msg('服务器异常，请稍后重试');
+					}
+				});
+				// } else {
+				// 	openMessage('温馨提示', '你尚未实名，请先进行实名', '确定', '取消', 'toAuth()', '', null)
+				// }
+			} else {
+				openMessage('温馨提示', '你尚未登录，请登录', '确定', '取消', 'toLogin()', '', null)
+			}
+		}
+
+		function toLogin() {
+			api.openWin({
+				name: 'login',
+				url: '../../login.html',
+				slidBackEnabled: 'true',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				pageParam: {}
+			});
+		}
+
+		function toAuth() {
+			api.openWin({
+				name: 'mine_account_auth_win',
+				url: '../../mine/mine_account_auth_win.html',
+				slidBackEnabled: 'true',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				pageParam: {}
+			});
+		}
+
+		//打开通用弹出框
+		//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+		function openMessage(title, content, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+			api.openFrame({
+				name: 'common_alert',
+				url: '../../common/common_alert.html',
+				bgColor: 'rgba(0,0,0,0.4)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					title: title,
+					content: content,
+					sureButton: sureButton,
+					sureFunc: sureFunc,
+					cancelButton: cancelButton,
+					cancelFunc: cancelFunc,
+					winName: api.winName,
+					frameName: api.frameName,
+					params: params
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+
+
+		// 打开添加教练页面
+		function openAddCoachPage() {
+			api.openDrawerLayout({
+				name: 'coach_select_under_school_win',
+				url: '../../common/select_coach/coach_select_under_school_win.html',
+				slidBackEnabled: 'true',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				slidToOpenPane: false,
+				slidToClosePane: false,
+				pageParam: {
+					data: params
+				},
+				animation: {
+					type: 'push',
+					subType: "from_right",
+					duration: 300
+				},
+				rightPane: {
+					name: 'driving_coach_win',
+					url: '../../common/select_coach/driving_coach_win.html',
+					vScrollBarEnabled: false,
+					hScrollBarEnabled: false,
+					bounces: false,
+					pageParam: {
+						data: params
+					}
+				}
+			});
+		}
+
+		// 学员绑定教练
+		function binding_coach(cache) {
+			url = 'api/learner/bind-learner-coach';
+			params = {
+				learnerId: getUserId(),
+				coachId: cache.id //教练id
+			};
+			ajax_Request(url, 'put', 'json', params, function(ret, err) {
+				log('ret======', ret);
+				if (ret) {
+					if (ret.code == 0) {
+						alert_msg('绑定教练成功');
+					}
+				} else {
+					alert_msg('服务器繁忙，请稍后重试');
+				}
+			});
+		}
+		
+		/**
+		 * 免费体验vip入口
+		 */
+		function tryOutVip(){
+			params = {
+				isContinue:false,
+				type: 'random'
+			}
+			api.openWin({
+				name: 'try_practice_common_win',
+				url: '../vip_question_try/try_practice_common_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: {
+					data: params
+				}
+			});
+		}
+
+		function closeThis() {
+			api.closeWin({});
+		}
+	</script>
+</html>

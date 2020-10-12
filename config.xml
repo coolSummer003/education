@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<widget id="A6097799277566" version="0.0.1"> 
+  <name>新驾考</name>  
+  <description>Example For APICloud.</description>  
+  <author email="developer@apicloud.com" href="http://www.apicloud.com">Developer</author>  
+  <content src="main.html"/>  
+  <preference name="pageBounce" value="false"/>  
+  <preference name="appBackground" value="rgba(0,0,0,0.0)"/>  
+  <preference name="windowBackground" value="rgba(0,0,0,0.0)"/>  
+  <preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)"/>  
+  <preference name="hScrollBarEnabled" value="false"/>  
+  <preference name="vScrollBarEnabled" value="false"/>  
+  <preference name="autoLaunch" value="true"/>  
+  <preference name="fullScreen" value="false"/>  
+  <preference name="customRefreshHeader" value="UIPullRefreshFlash"/>  
+  <preference name="autoUpdate" value="true"/>  
+  <preference name="smartUpdate" value="true"/>  
+  <preference name="softInputMode" value="resize"/>  
+  <preference name="softInputBarEnabled" value="true"/>  
+  <preference name="debug" value="true"/>  
+  <preference name="statusBarAppearance" value="true"/>  
+  <preference name="querySchemes" value="baidumap,iosamap,comgooglemaps"/>  
+  <meta-data name="com.huawei.hms.client.appid" value="101207215"/>  
+  <meta-data name="com.vivo.push.api_key" value="6520ee09-99a8-4f78-bda0-393f443f2fca"/>  
+  <meta-data name="com.vivo.push.app_id" value="16437"/>  
+  <permission name="camera"/>  
+  <permission name="record"/>  
+  <permission name="location"/>  
+  <permission name="fileSystem"/>  
+  <permission name="internet"/>  
+  <permission name="bootCompleted"/>  
+  <permission name="hardware"/>  
+  <access origin="*"/>  
+  <!-- <feature name="bMap"> 
+    <param name="android_api_key" value="Qu3uoGgGyCfGsEuBv8w7eLIGHBE2gl05"/>  
+    <param name="ios_api_key" value="Twwid6TpALZTK8g3PvP9zOnDA5FpzGCm"/> 
+  </feature>  
+  <feature name="aliPayPlus"> 
+    <param name="urlScheme" value="AliPayPlusA6097799277566"/> 
+  </feature>  
+  <feature name="wxPayPlus"> 
+    <param name="urlScheme" value="wx7791feb5b9c0b84e"/>  
+    <param name="apiKey" value="wx7791feb5b9c0b84e"/>  
+    <param name="apiSecret" value="4faa4b2c324a05b557344df04172b72c"/>  
+    <param name="universalLink" value="https://www.mohan-tech.com/drivingThrough/index.html/"/> 
+  </feature>  
+  <feature name="wxPlus"> 
+    <param name="urlScheme" value="wx7791feb5b9c0b84e"/>  
+    <param name="apiKey" value="wx7791feb5b9c0b84e"/>  
+    <param name="apiSecret" value="4faa4b2c324a05b557344df04172b72c"/>  
+    <param name="universalLink" value="https://www.mohan-tech.com/drivingThrough/index.html/"/> 
+  </feature>  
+  <feature name="pdBot"> 
+    <param name="AccessKey" value="MTA1NDAjMjUwZmQ5ZGYtN2NkOS00MmEwLTllZmItYWU4NDYzMjJhMWE0I2RkZjhkNjk2LTc4NjMtNDc2MC1iMWI2LTIxZTI1NjYzYTc2YSNlMTliNGM3ZWFkNDI3MGI5M2QwMjcwYTU3M2NmNmU5OQ=="/> 
+  </feature>   -->
+  <!-- <feature name="aliPushNoUtdId"> 
+    <param name="AppKey_iOS" value="28091920"/>  
+    <param name="AppSecret_iOS" value="b119ab069764bffbb9cb1a663309d89b"/>  
+    <param name="AppKey_Android" value="28105884"/>  
+    <param name="AppSecret_Android" value="865bfa463d9b20171e9923722e0fdada"/>  
+    <param name="XmAppID" value="2882303761518187460"/>  
+    <param name="XmAppKey" value="5961818742460"/>  
+    <param name="OppoAppKey" value="7bd51b72eebb44e4930420907e705bb1"/>  
+    <param name="OppoAppSecret" value="a015fd8700b34a18b5ee3e006ebd17e5"/>  
+    <param name="MeizuAppId" value="125657"/>  
+    <param name="MeizuAppKey" value="8e977bf03f3448c4ac029c34c15dc028"/>  
+    <param name="channelId" value="driverhome"/>  
+    <param name="channelName" value="driverhome"/>  
+    <param name="channelDes" value="apicloud"/>  
+    <param name="enableLights" value="true"/>  
+    <param name="enableVibration" value="true"/> 
+  </feature>  -->
+</widget>

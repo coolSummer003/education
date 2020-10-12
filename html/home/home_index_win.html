@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>首页-win</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css"/>
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            background-color: #fff;
+        }
+
+        #aui-header {
+            color: #333 !important;
+            background-color: #fff;
+            font-size: 0.8rem;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .aui-bar-nav:after {
+            height: 0;
+        }
+
+        #header_top {
+            height: 2.25rem;
+            padding: 0.25rem 5%;
+            overflow: hidden;
+            line-height: 1.75rem;
+        }
+
+        #location_div {
+            height: 1.75rem;
+        }
+
+        #location_div > div:first-child {
+            float: left;
+            margin-right: 0.15rem;
+            width: 1rem;
+        }
+
+        #location_div > div:last-child {
+            height: 1.75rem;
+            float: left;
+            width: calc(100% - 1.15rem);
+            line-height: 1.85rem;
+        }
+
+        #address-city {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            text-align: left;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-size: 0.75rem;
+        }
+
+        .header-icon {
+            width: 0.9rem;
+            vertical-align: middle;
+        }
+
+
+        #search_div {
+            padding: 0 0.5rem;
+            height: 1.5rem;
+            line-height: 1.55rem;
+            width: 100%;
+            background-color: #f5f5f5;
+            text-align: left;
+            color: #888;
+            font-size: 0.7rem;
+            border-radius: 0.8rem;
+        }
+
+        #search_icon {
+            display: block;
+            margin-top: 0.35rem;
+            float: left;
+            vertical-align: middle;
+            height: 0.7rem;
+        }
+
+        #search_div > div {
+            float: left;
+            margin-left: 0.35rem;
+        }
+
+        #messageNum {
+            position: absolute;
+            width: 0.9rem;
+            height: 0.9rem;
+            line-height: 1rem;
+            z-index: 999;
+            top: -0.2rem;
+            text-align: center;
+            background: #DC251F;
+            border-radius: 100%;
+            right: -0.5rem;
+            color:#FFF;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- 头部 -->
+<header class="aui-bar aui-bar-nav aui-border-b" id="aui-header">
+    <div class="aui-row" id="header_top">
+        <div id="location_div" class="aui-col-xs-3" style="width: 25%;" tapmode onclick='showCitySel()'>
+            <div>
+                <img src="../../icon/home/location_black.png" alt="" class="header-icon"/>
+            </div>
+            <div>
+                <span id='address-city'>定位中</span>
+            </div>
+        </div>
+        <div class="aui-col-xs-6" style="width: 55%; padding: 0.125rem 0;">
+            <div id="search_div" tapmode onclick="openSearch()">
+                <img src="../../icon/home/search.png" alt="" id="search_icon">
+                <div>请输入搜索内容</div>
+            </div>
+        </div>
+        <div class="aui-col-xs-3" style="width: 16%; margin-left: 4%;">
+            <div style="float: left;width:50%;text-align: left;" taomode onclick="openScanner()">
+                <img src="../../icon/home/scanner_black.png" class="header-icon" alt=""/>
+            </div>
+            <div style="float: right;width:50%;text-align: right;position: relative;" tapmode onclick="messageCenter()">
+                <img src="../../icon/home/message_black.png" alt="" class="header-icon"/>
+                <div class="aui-hide" id="messageNum"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+    var footHeight; // 底部高度
+    var headHeight; // 头部高度
+    var statusBarHeight; // 沉浸栏高度
+    var bMap;
+    var systemType;
+    var message;
+    var FNScanner;
+    apiready = function () {
+        api.parseTapmode();
+        systemType = api.systemType;
+        var height = $api.byId('aui-header').offsetHeight;
+        $api.fixStatusBar($api.byId('aui-header'));
+        headHeight = $api.byId('aui-header').offsetHeight;
+        statusBarHeight = headHeight - height; // 计算沉浸栏高度
+        footHeight = api.pageParam.footHeight;
+        bMap = api.require('bMap');
+        FNScanner = api.require('FNScanner');
+        //监听选择定位地区的事件
+        toEventListener('home_index_action', function (ret) {
+            $('#address-city').html(ret.value.cityName);
+            // sendEvent("school_filter", {
+            //     cityName: ret.value.cityName,
+            //     cityCode: ret.value.cityCode
+            // });
+        });
+        init();
+    };
+
+    function init() {
+        api.openFrame({
+            name: 'home_index_frm',
+            url: './home_index_frm.html',
+            bgColor: '#FFFFFF',
+            rect: {
+                x: 0,
+                y: headHeight + 10,
+                w: 'auto',
+                h: api.winHeight - headHeight - footHeight - 10
+            },
+            bounces: true,
+            pageParam: {
+                height: $api.byId('aui-header').offsetHeight,
+                footHeight: footHeight
+            },
+            reload: true,
+            softInputBarEnabled: true,
+            softInputMode: 'resize'
+        });
+        //获取当前定位
+        getLocation();
+        //打开城市选择，再隐藏
+        openCitySelect();
+    }
+
+    /**
+     * 扫一扫
+     */
+    function openScanner() {
+        if (islogin()) {
+            api.openWin({
+                name: 'fnscanner_frm',
+                url: './fnscanner_frm.html',
+                slidBackEnabled: 'false',
+                vScrollBarEnabled: 'false',
+                hScrollBarEnabled: 'false',
+                reload: true,
+                delay: 300
+
+            });
+        } else {
+            openLoginHtml();
+        }
+    }
+
+    /**
+     * 获取当前定位
+     */
+    function getLocation() {
+        bMap.getLocationServices(function (ret, err) {
+            if (systemType == 'ios') {
+                //当开发者尚未调用 open 接口，直接调用 getLocation、getCoordsFromName、getNameFromCoords、getDistance 以及搜索类接口时，
+                //需要首先调用此接口初始化地图引擎，然后在本接口的回调内调用检索相关接口（getLocation、getCoordsFromName、getNameFromCoords、getDistance 以及搜索类），以提高检索成功率。
+                //android平台不需要初始化
+                console.log('ret.authorizationStatus:'+ret.authorizationStatus);
+                var condition = ret.enable && (ret.authorizationStatus == 'always' || ret.authorizationStatus == 'whenInUse');
+                if (condition) {
+                	console.log('进入定位初始化逻辑');
+                	var getAddressTime = setTimeout(function(){
+                		getCurrentAddress_ios();
+                	},1500);
+                    getCurrentAddress_ios(getAddressTime);
+                } else {
+                    $('#address-city').html('无权限');
+                }
+            } else {
+                var condition = ret.enable;
+                if (condition) {
+                    getCurrentAddress();
+                } else {
+                    $('#address-city').html('无权限');
+                }
+            }
+        });
+    }
+
+	/**
+     *  获取当前地址-ios
+     */
+	function getCurrentAddress_ios(getAddressTime){
+		console.log('继续开始');
+		bMap.initMapSDK(function (ret, err) {
+			if(getAddressTime){clearTimeout(getAddressTime);}
+        	log('获取当前定位',ret)
+        	log('获取当前定位',err)
+            if (ret.status) {
+                getCurrentAddress();
+            } else {
+                $('#address-city').html('定位失败');
+            }
+        });
+	}
+
+    /**
+     *  获取当前地址
+     */
+    function getCurrentAddress() {
+        mylocation(function (ret) {
+            if (ret.status) {
+                //有定位权限
+                bMap.getNameFromCoords({
+                    lon: ret.lon,
+                    lat: ret.lat
+                }, function (ret, err) {
+                	log('获取当前地址',ret)
+                    if (ret && ret.status) {
+
+                        var cache_by_app = $api.getStorage('cache_by_app');
+                        if(!cache_by_app){
+                        	cache_by_app = {};
+                        }
+                        cache_by_app.location_city = {
+                            cityName: ret.district,
+                            cityCode: ret.adCode + '000',
+                            city_level2_Name:ret.city,
+							city_level2_Code:ret.adCode.toString().substring(0,4) + '00000',
+							city_level1_Name:ret.province,
+							city_level1_Code:ret.adCode.toString().substring(0,2) + '0000000'
+                        };
+                        $api.setStorage('cache_by_app', cache_by_app);
+                        $('#address-city').html(ret.district);
+                        /*if(cache_by_app.location_city != undefined){
+                            //有缓存，则读取缓存中的地址信息
+                            $('#address-city').html(cache_by_app.location_city.cityName);
+                        }else{*/
+                        //无缓存，则把当前定位的城市放入缓存，并显示当前定位的城市
+                    } else {
+                        $('#address-city').html('定位失败');
+                    }
+                });
+            } else {
+                //无定位权限
+                $('#address-city').html(ret.msg);
+            }
+        });
+    }
+
+    /**
+     * 打开城市选择列表（先隐藏）
+     */
+    function openCitySelect() {
+        api.openFrame({
+            name: 'common_select_location_city',
+            url: '../common/common_select_location_city.html',
+            bgColor: 'rgba(0,0,0,0.6)',
+            animation: {
+                type: "none",                //动画类型（详见动画类型常量）
+                subType: "from_right",       //动画子类型（详见动画子类型常量）
+                duration: 300
+            },
+            rect: {
+                x: 0,
+                y: -api.winHeight,
+                w: 'auto',
+                h: api.winHeight
+            },
+            bounces: false,
+            pageParam: {
+                action: 'home_index_action'
+            },
+            softInputBarEnabled: true,
+            softInputMode: 'resize'
+        });
+    }
+
+    /**
+     * 显示城市选择
+     */
+    function showCitySel() {
+        api.setFrameAttr({
+            name: 'common_select_location_city',
+            hidden: false,
+            rect: {
+                x: 0,
+                y: statusBarHeight,
+                w: 'auto',
+                h: api.winHeight - statusBarHeight
+            },
+        });
+    }
+
+    //让消息数字消失
+    function messageCenterHide() {
+        $("#messageNum").addClass('aui-hide');
+    }
+
+    //打开搜索框
+    function openSearch() {
+    	logAppBuryingPoint({},'搜索','首页');
+        commonOpenWin('select_by_type', null);
+    }
+
+    //让消息数字出现
+    function messageCenterNotHide() {
+        message = $api.getStorage('message');
+        $('#messageNum').text(message);
+        $('#messageNum').removeClass("aui-hide");
+    }
+
+    //打开消息中心
+    function messageCenter() {
+        logAppBuryingPoint({},'消息中心','首页');
+        $('#messageNum').addClass("aui-hide");
+        $api.setStorage('message', '');
+        api.openWin({
+            name: 'message_details_win',
+            url: './message_center_item/message_details_win.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            useWKWebView: false,
+            pageParam: {}
+        });
+    }
+</script>
+</html>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>学员课堂学习</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/swiper/swiper.css">
+		<style>
+			html,
+			body {
+				background-color: #fff;
+			}
+			
+			main {
+				width: 96%;
+				margin: auto;
+				margin-top: 0.5rem;
+			}
+			
+			.list {
+				width: 100%;
+				position: relative;
+				height: 13rem;
+				margin-bottom: 0.8rem;
+				box-shadow: 0px 2px 10px 1px #D7D7D7;
+				border-radius: 0.5rem;
+				padding-top: 0.8rem;
+				padding-left: 0.4rem;
+				padding-bottom: 0.8rem;
+				padding-right: 0.4rem;
+				background-color: #fff;
+			}
+			
+			.title {
+				font-weight: 650;
+				font-size: 0.8rem;
+				width: 100%;
+				overflow: hidden;
+				text-overflow:ellipsis;
+				white-space: nowrap;
+			}
+			.money{
+				color: #FF4A4F;
+				font-size: 0.8rem;
+			}
+			
+			.right {
+				margin-left: 0.5rem;
+				font-size: 0.5rem;
+				font-weight: 600;
+				color: #3F86FF;
+				width: 1.8rem;
+				height: 0.9rem;
+				border-radius: 0.5rem;
+				background-color: #DBE8FF;
+				text-align: center;
+				line-height: 0.9rem;
+				vertical-align: text-top;
+				margin-top: 0.05rem;
+			}
+			
+			.img {
+				width: 100%;
+				height: 10rem;
+				position: relative;
+			}
+			
+			.img img {
+				width: 100%;
+				height: 10rem;
+				margin-top: 0.3rem;
+			}
+			
+			.tv {
+				width: 1rem;
+				height: 1rem;
+				margin-right: 0.5rem;
+			}
+			
+			.tv img {
+				width: 1rem;
+				height: 1rem;
+			}
+			
+			.time {
+				color: #fff;
+				font-size: 0.6rem;
+				z-index: 100;
+				top: 0.8rem;
+				left: 0.4rem;
+				position: absolute;
+			}
+			
+			.state {
+				position: absolute;
+				top: 0.8rem;
+				right: 0.4rem;
+				color: #fff;
+				font-size: 0.6rem;
+				height: 1rem;
+				line-height: 1rem;
+				width: 2.5rem;
+				background-color: #FF7272;
+				text-align: center;
+				border-radius: 0.5rem;
+			}
+			
+			.list_line {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				width: 100%;
+			}
+			
+			.msg {
+				background: #FFFFFF;
+				height: 20rem;
+				text-align: center;
+				font-size: 0.8rem;
+			}
+			
+			.msg img {
+				width: 8rem;
+				margin-top: 6rem;
+			}
+			
+			.loading {
+				font-size: 0.7rem;
+				background: #FFFFFF;
+				color: #7D7D7D;
+				padding-bottom: 0.3rem;
+				text-align: center;
+				padding-top: 0.3rem;
+			}
+			
+			.load {
+				color: #7D7D7D;
+			}
+			
+			.load img {
+				width: 1.6rem;
+				height: 1.6rem;
+				margin-top: 10rem;
+			}
+			
+			.stateEnd {
+				background-color: #CCCCCC !important;
+			}
+			
+			.stateStrat {
+				background-color: #FFC15E !important;
+			}
+			/*.educationTitle{
+				overflow: hidden;
+				text-overflow:ellipsis;
+				white-space: nowrap;
+			}*/
+		</style>
+	</head>
+
+	<body>
+		<main>
+			<ul id="list_all">
+			</ul>
+			<div id='load_div'>
+			</div>
+		</main>
+	</body>
+
+	<script type="text/template" charset="utf-8" id='list_src'>
+		{{ for(var i=0;i<it.length;i++){ }} 
+		<li tapmode onclick="open_continue_trian('{{=it[i].educationStartDate}}','{{=it[i].educationStartDate}}','{{=it[i].id}}','{{=it[i].educationBg}}','{{=it[i].flagStatus}}','{{=it[i].isSpecial}}','{{=it[i].educationTotlePrice}}','{{=it[i].version}}')">
+					<div class="list">
+						<div class="list_line">
+							<div class="tv"><img src="../../../icon/education/tv.png"> </div>
+							<div class="title">{{=it[i].isNeed==1?"<span class='right'>必学</span>":""}} {{=it[i].educationTitle}}</div>
+<!--							<div class="money">￥{{=it[i].educationTotlePrice.toFixed(2)}}</div>-->
+						</div>
+						<div class="img">
+							<!--<img src="http://47.111.145.197:8480/fileCenter/api/file/getFileAuth?bucketName=jiakaozhijia&fileName=learnerApp/headImg/9/2BA9DF3CFE757123FE04D330845EBF69"/>-->
+							<!--<img src="../../../../icon/education/bg1.png"/>-->
+							<img src="{{=file_load_url + it[i].educationBg + '&style=image/resize,m_fill,w_400'}}" alt="" onerror="javascript:this.src='../../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url + it[i].educationBg + '&style=image/resize,m_fill,w_400'}}" />
+							<div class="time">{{=it[i].educationStartDate}}-{{=it[i].educationEndDate}}截止</div>
+							<!-- {{if(it[i].flagStatus == 0){}}
+							<div class="state">进行中</div>
+							{{}else if(it[i].flagStatus == 2){}}
+							<div class="state stateEnd">已结束</div>
+							{{}else{}}
+							<div class="state stateStrat">未开始</div>
+							{{}}} -->
+						</div>
+					</div>
+				</li>
+				{{ } }}
+	</script>
+
+	<script type="text/template" charset="utf-8" id='msg_src'>
+		<div class="msg">
+			<img src="../../../icon/common/empty.png" alt="" /><br>
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+	<script type="text/template" charset="utf-8" id='load_src'>
+		<div class="load">
+			<img src="../../../icon/common/icon_loadding.gif" alt="" /><br>
+			<span>加载中...</span>
+		</div>
+	</script>
+	<script type="text/template" charset="utf-8" id='more_src'>
+		<div class="loading">
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var page = 1;
+		var limit = 10;
+		var load_src = $('#load_src').html(); //加载src
+		var msg_src = $('#msg_src').html(); //加载src
+		var more_src = $('#more_src').html(); //更多src
+		var refresh = true;
+		var cahce;
+		apiready = function() {
+			cache = api.pageParam;
+			log('cache', cache)
+			init();
+
+			goRefrash(40, '#FFFFFF', null, null, function() {
+				refreshList();
+			});
+			goLoad(function(ret, err) {
+				loadList();
+			});
+			toEventListener('refreshEduList', function(ret, err) {
+				refreshList();
+			})
+		};
+
+		var list_src = $('#list_src').html();
+
+		function init() {
+			defaultload('获取学员课堂信息中');
+			var url = "api/learner-eduction/findAll"
+			params = {
+				page: page,
+				limit: 10,
+				learnerId:getUserId() 
+			};
+			log('我的值',params)
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('获取课程信息中出参', ret);
+				if (ret) {
+					if (ret.code == 0 && ret.returnVal.length > 0) {
+						var local = ret.returnVal;
+						for (var i = 0; i < local.length; i++) {
+							local[i].educationStartDate = local[i].educationStartDate.split(' ')[0];
+							local[i].educationEndDate = local[i].educationEndDate.split(' ')[0];
+						}
+						if (refresh || $('#list_all').find('li').length === 0) {
+							$('#list_all').html(doT.template(list_src)(local));
+						} else {
+							$('#list_all').append(doT.template(list_src)(local));
+						}
+						closedefaultload();
+					} else {
+						setMsg(refresh ? '暂无课程信息' : '暂无更多课程信息');
+						if (page > 1) {
+							page--;
+						}
+						closedefaultload();
+					}
+				} else {
+					alert_msg('服务器繁忙，请稍后再试');
+				}
+			});
+			setTimeout(function() {
+				api.refreshHeaderLoadDone();
+			}, 300);
+		}
+
+		//列表刷新
+		function refreshList() {
+			page = 1;
+			refresh = true;
+			setLoad();
+			init();
+		}
+
+		//列表上拉
+		function loadList() {
+			page++;
+			refresh = false;
+			setLoad();
+			init();
+		}
+
+		// 设置页面加载的画面
+		function setLoad() {
+			if (refresh || $('#list_all').find('li').length === 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+				$('#load_div').html('');
+				$("#listDiv").html(load_src);
+			} else {
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': '加载更多中...',
+						'img': '../../../icon/common/jiazai.gif'
+					}));
+				}, 300);
+			}
+		}
+		//设置页面提示信息
+		function setMsg(msg) {
+			if (refresh || $('#list_all').find('li').length === 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+				setTimeout(function() {
+					$("#list_all").html(doT.template(msg_src)({
+						'msg': msg
+					}));
+				}, 300);
+			} else { //原先已经有数据的情况下
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': msg,
+						'img': ''
+					}));
+				}, 300);
+			}
+		}
+
+		/**
+		 * @param {Object}
+		 */
+		function open_continue_trian(educationStartDate, educationEndDate, id, educationBg, flagStatus, isSpecial,educationTotlePrice,version) {
+			console.log(version)
+			url = 'api/learner-eduction/check-version';
+			params = {
+				eductionId: id,
+				version:version
+			}
+			ajax_Request(url,'get','json',params,function(ret,err){
+				log('是否被修改过信息',ret)
+				if (ret) {
+					if (ret.code == 0) {
+						if (isSpecial == 0) {
+							open_education_list(educationStartDate, educationEndDate, id, educationBg, flagStatus);
+						} else if (isSpecial == 1){
+							url = 'api/learner-eduction/check';
+							params = {
+								learnerEductionId: id,
+								learnerId: getUserId()
+							}
+							ajax_Request(url,'get','json',params,function(ret,err){
+								log('是否购买当前课堂学习包',ret)
+								if (ret) {
+									if (ret.code == 7000) {
+										openMessages('温馨提示',ret.msg,'去购买','取消','toBuy('+id+','+educationTotlePrice+')','',null)
+									} else if (ret.code == 0){
+										open_education_list(educationStartDate, educationEndDate, id, educationBg, flagStatus);
+									}else {
+										alert(ret.msg)
+									}
+								} else{
+									alert('服务器繁忙请稍后重试')
+								}
+							})
+						}
+					} else if(ret.code == 60111){
+						openMessages('温馨提示',ret.msg,'确定','','refreshList()','',null)
+					}
+				} else{
+					alert('服务器繁忙请稍后重试')
+				}
+			})
+		}
+		
+		function toBuy(id,educationTotlePrice){
+			log('课程价格',id)
+			log('课程价格',educationTotlePrice)
+			url = 'api/learner-eduction/insert-learner-education-pay-order';
+			params = {
+				educationId: id,
+				learnerId: getUserId(),
+				paymentAmount:educationTotlePrice
+			}
+			ajax_Request(url,'post','json',params,function(ret,err){
+				log('购买当前课堂学习包',ret)
+				if (ret) {
+					if (ret.code == 0) {
+						api.openWin({
+							name: 'student_pay_win',
+							url: './student_pay_win.html',
+							slidBackEnabled: 'false',
+							vScrollBarEnabled: 'false',
+							hScrollBarEnabled: 'false',
+							reload: true,
+							pageParam: {
+								data:ret.returnT
+							}
+						});
+					} else{
+						alert_msg(ret.msg)
+					}
+				} else{
+					alert_msg('服务器繁忙请稍后重试')
+				}
+			})
+			
+		}
+		
+		function toAuth() {
+			openWin('mine_account_auth_win', '../../../mine/account_auth/mine_account_auth_win');
+		}
+		//打开列表
+		function open_education_list(educationStartDate, educationEndDate, id, educationBg, flagStatus, allowId) {
+			param = {
+				educationStartDate: educationStartDate,
+				educationEndDate: educationEndDate,
+				id: id,
+				educationBg: educationBg,
+				flagStatus: flagStatus,
+				allowId: allowId
+			}
+			console.log("6666----------" + id);
+			commonOpenWin("course_catalogue_win", param)
+		}
+
+		//打开承诺书
+		function open_continue_education(params) {
+			api.openWin({
+				name: 'coach_information_win',
+				url: '../coach_information/coach_information_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				pageParam: {
+					data: params
+				}
+			});
+		}
+		
+		//打开通用弹出框
+		//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+		function openMessages(title,content,sureButton,cancelButton,sureFunc,cancelFunc,params){
+			api.openFrame({
+		        name: 'common_alert',
+		        url: '../../common/common_alert.html',
+		        bgColor: 'rgba(0,0,0,0.4)',
+		        rect: {
+		            x: 0,
+		            y: 0,
+		            w: 'auto',
+		            h: api.winHeight
+		        },
+		        bounces: false,
+		        pageParam:{
+		        	title:title,
+		        	content:content,
+		        	sureButton:sureButton,
+		        	sureFunc:sureFunc,
+		        	cancelButton:cancelButton,
+		        	cancelFunc:cancelFunc,
+		        	winName:api.winName,
+		        	frameName:api.frameName,
+		        	params:params
+		        },
+		        softInputBarEnabled:true,
+		        softInputMode:'resize'
+		    });
+		}
+	</script>
+
+</html>

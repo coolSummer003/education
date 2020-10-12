@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>学员课堂学习</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/swiper/swiper_min.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style type="text/css">
+			html,
+			body {
+				background: #fff;
+			}
+
+			.article-title {
+				font-size: 0.9rem;
+				font-weight: bold;
+				padding: 0rem 0.5rem;
+				padding-top: 9rem;
+				background: #F1F1F1;
+			}
+
+			.tab_title {
+				position: fixed;
+				background: #fff;
+				z-index: 99;
+			}
+
+			.tab_content {
+				width: 100%;
+				background-color: #fff;
+			}
+
+			#video_msg {
+				width: 94%;
+				margin-left: 3%;
+				padding-top: 0.5rem;
+				overflow-y: scroll;
+			}
+			
+			#video_msg_title,#video_msg_intro,#video_msg_content{
+				width: 100%;
+				height: auto;
+				padding-top: 0.5rem;
+				text-align: justify;
+			}
+			
+
+			/*列表*/
+
+			.list {
+				background-color: #fff;
+				height: 5.5rem;
+				width: 100%;
+				padding-top: 0.7rem;
+				padding-left: 0.7rem;
+				padding-bottom: 0.7rem;
+				/*margin-bottom: 0.5rem;*/
+				display: flex;
+				flex-flow: row;
+				position: relative;
+			}
+
+			.img {
+				height: 100%;
+				width: 35%;
+				/*background-color: red;*/
+				border-radius: 0.8rem;
+				overflow: hidden;
+			}
+
+			.img img {
+				width: 100%;
+				height: 100%;
+			}
+
+			.line_wid {
+				width: 60%;
+			}
+
+			.text1 {
+				font-size: 0.8rem;
+				height: 2rem;
+				margin-left: 0.5rem;
+				font-weight: 650;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+
+			.text2 {
+				font-size: 0.6rem;
+				margin-left: 0.5rem;
+				color: #666666;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 2;
+				overflow: hidden;
+			}
+
+			.state {
+				position: absolute;
+				width: 3rem;
+				height: 3rem;
+				top: 0;
+				right: 0;
+			}
+
+			.state img {
+				width: 100%;
+				height: 100%;
+			}
+
+			.msg {
+				background: #FFFFFF;
+				height: 20rem;
+				text-align: center;
+				font-size: 0.8rem;
+			}
+
+			.msg img {
+				width: 8rem;
+				margin-top: 6rem;
+			}
+
+			.loading {
+				font-size: 0.7rem;
+				background: #FFFFFF;
+				color: #7D7D7D;
+				padding-bottom: 0.3rem;
+				text-align: center;
+				padding-top: 0.3rem;
+			}
+
+			.load {
+				color: #7D7D7D;
+			}
+
+			.load img {
+				width: 1.6rem;
+				height: 1.6rem;
+				margin-top: 10rem;
+			}
+
+			.grey {
+				width: 100%;
+				height: 0.5rem;
+				background: #f5f5f5;
+			}
+
+			/*题目*/
+			.list_q {
+				background-color: #fff;
+				width: 100%;
+				padding-top: 0.7rem;
+				padding-left: 0.7rem;
+				padding-bottom: 0.7rem;
+				padding-right: 0.7rem;
+			}
+
+			.text1_q {
+				font-size: 0.8rem;
+				margin-left: 0.5rem;
+				font-weight: 650;
+				width: 98%;
+				word-wrap: break-word;
+				word-break: break-all;
+				overflow: hidden;
+			}
+
+			.text2_q {
+				font-size: 0.7rem;
+				margin-left: 0.5rem;
+				margin-top: 0.7rem;
+				color: #666666;
+				/*flex-direction: row;*/
+			}
+
+			.text2_q div {
+				/*flex: 1;*/
+				text-align: left;
+				min-height: 1.8rem;
+				line-height: 1.8rem;
+				padding-left: 0.5rem;
+			}
+
+			.item_d {
+				background-color: #8EB2FC;
+				border-radius: 5px;
+				/*text-align: center;*/
+				color: #fff;
+			}
+
+			.item_sp {
+				width: 90%;
+				text-align: justify;
+				vertical-align: top;
+				margin-left: 3%;
+			}
+
+			.btn {
+				width: 90%;
+				margin: auto;
+				margin-bottom: 1.5rem;
+			}
+
+			.submit_btn {
+				width: 100%;
+				height: 2rem;
+				background: #3F86FF;
+				color: #fff;
+				line-height: 2rem;
+				border-radius: 25px;
+				text-align: center;
+			}
+
+			.list_line_a {
+				display: block !important;
+			}
+
+			#line_p {
+				position: fixed;
+				z-index: 99999;
+				width: 92%;
+				height: 2rem;
+			}
+
+			#line_p p {
+				display: inline-block;
+			}
+
+			#p_text {
+				font-size: 0.7rem;
+				margin-left: 1rem;
+				color: #3F86FF;
+			}
+
+			.aui-progress-bar {
+				background-color: #3F86FF !important;
+			}
+
+			.aui-bar-btn-item {
+				color: #3F86FF !important;
+			}
+
+			.aui-progress-xxs {
+				margin-top: 0.3rem;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="videoControls">
+			<div class='article-title'>
+				<div style="opacity: 0;">{{=it.title}}</div>
+			</div>
+			<script type="text/template" charset="UTF-8" id="video">
+				<div class='article-title'>
+					<div style="opacity: 0;">{{=it.title}}</div>
+				</div>
+			</script>
+		</div>
+
+		<div class="aui-content-padded" id="line_p">
+			<p>学习进度</p><span id="p_text"></span>
+			<div class="aui-progress aui-progress-xxs">
+				<div class="aui-progress-bar" id="line_P"></div>
+			</div>
+			<div class="" style="position:absolute;right: 0;top: 0;color: #f00;">
+				观看视频不能小于2分钟
+			</div>
+		</div>
+
+
+		<div class="tab_title" id="tab_title">
+			<div class="aui-bar aui-bar-btn aui-bar-btn-full" id="menu">
+				<div class="aui-bar-btn-item aui-active">课程简介</div>
+				<div class="aui-bar-btn-item">课程目录</div>
+			</div>
+			<li class="list_bar" id="slideSpan">
+				<div class="list_bar_inner"></div>
+			</li>
+		</div>
+		<div class="tab_content" style="overflow: hidden;">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+
+					<div class="swiper-slide">
+						<div id="video_msg" style='overflow-y: scroll;'>
+							<div id="video_msg_title">
+								
+							</div>
+							<div id="video_msg_intro">
+								
+							</div>
+							<div id="video_msg_content">
+								
+							</div>
+							<script type="text/template" charset="utf-8" id='msg_src'>
+								<div class="msg">
+									<img src="../../../icon/student/empty.png" alt="" /><br>
+									<span>{{=it.msg}}</span>
+								</div>
+							</script>
+						</div>
+					</div>
+
+					<div class="swiper-slide">
+						<div id="list_all_s" style='overflow-y: scroll;'>
+							<ul id="list_all">
+								<script type="text/template" charset="utf-8" id='list_src'>
+									{{ for(var i=0;i<it.length;i++){ }} 
+									<li tapmode onclick="open_continue_trian('{{=it[i].id}}','{{=it[i].videoTitle}}','{{=it[i].videoUrl}}','{{=it[i].videoTime}}')">
+										<div class="list">
+											<div class="img">
+												<!--<img src="../../../icon/education/list_img.png">-->
+												<img src="{{=file_load_url + it[i].videoImg + '&style=image/resize,m_fill,w_400'}}" alt="" onerror="javascript:this.src='../../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url + it[i].videoImg + '&style=image/resize,m_fill,w_400'}}"/>
+											</div>
+											<div class="line_wid">
+												<div class="text1">[{{=it[i].kemu == '036001'? '科目一':it[i].kemu == '036004'?'科目四':''}}] {{=it[i].videoTitle}}</div>
+												<div class="text2">{{=it[i].videoAbstract}}</div>
+											</div>
+											<div class="state">
+												{{if(it[i].isFinish == 1){}}
+												<img src="../../../icon/education/learn.png" alt=""> {{ } }}
+											</div>
+							
+										</div>
+										<div class="grey {{=it.length > 1?'':'aui-hide'}}"></div>
+										</li>
+										{{ } }}
+								</script>
+							</ul>
+							<div id='load_div'>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/template" charset="utf-8" id='msg_src'>
+			<div class="msg">
+				<img src="../../../icon/common/empty.png" alt="" /><br>
+				<span>{{=it.msg}}</span>
+			</div>
+		</script>
+		<script type="text/template" charset="utf-8" id='load_src'>
+			<div class="load">
+				<img src="../../../icon/common/icon_loadding.gif" alt="" /><br>
+				<span>加载中...</span>
+			</div>
+		</script>
+		<script type="text/template" charset="utf-8" id='more_src'>
+			<div class="loading">
+				<span>{{=it.msg}}</span>
+			</div>
+		</script>
+		<script type="text/javascript" src="../../../script/api.js"></script>
+		<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+		<script type="text/javascript" src="../../../script/aui/aui_tab.js"></script>
+		<script src="../../../script/swiper/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../../script/doT_min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../../script/common/common.js"></script>
+		<script type="text/javascript">
+			var cache;
+			var clearance = 0; //间隙
+			var tabIndex;
+			var tabClick = false;
+			var moviePlayer; //视频实例
+			var dkplayer; //视频实例
+			var systemType;
+			var header_height;
+			var isFinish; //是否完成
+			var videoTime; //视频总时长
+			var studyTime; //学习时长
+			var int;
+			var timeS = 0;
+			var timeFlag = true;
+			var videoId;
+			var eductionId;
+			var mySwiper; //滑块
+			var page = 1;
+			var limit = 10000;
+			var load_src = $('#load_src').html(); //加载src
+			var msg_src = $('#msg_src').html(); //加载src
+			var more_src = $('#more_src').html(); //更多src
+			var systemType; //系统判断
+			var refresh = true;
+			var ques_leth = 0;
+			var ans_leth = 0;
+			var list = []; //答题数组
+			var frmHeight; //剩余高度
+			var tabHeight; //tab高度
+			var videoHeight; //视频高度
+			var line_p; //进度条高度
+			var intTime; //第二个定时
+			var startDate; //视频开始时间
+			var endDate; //视频结束时间
+			var timer;
+			var systemType;
+			var kemu;
+			apiready = function() {
+				api.parseTapmode();
+				cache = api.pageParam;
+				log("视频id777777777", cache)
+				systemType = api.systemType;
+				videoId = cache.cache.data.videoId;
+				eductionId = cache.cache.data.id;
+				kemu = cache.cache.data.kemu
+				header_height = cache.header_height;
+				frmHeight = cache.frmHeight;
+				tabHeight = $api.byId('tab_title').offsetHeight;
+				videoHeight = parseInt(api.frameWidth / 16 * 9);
+				line_p = $api.byId('line_p').offsetHeight;
+				startDate = Number(new Date());
+				var n = 0;
+				timer = setInterval(function() {
+					n++;
+					// console.log(n)
+					endDate = startDate + 1000 * n;
+					// console.log(endDate)
+				}, 1000)
+				$("#line_p").css('top', videoHeight + 'px');
+
+				$("#tab_title").css('top', videoHeight + line_p + 'px');
+				$(".swiper-container").css('height', frmHeight - videoHeight - tabHeight + 'px !important');
+				$(".swiper-slide").css('height', frmHeight - videoHeight - tabHeight + 'px !important');
+				$(".tab_content").css('height', frmHeight - videoHeight - tabHeight + 'px').css('margin-top', tabHeight + line_p +
+					'px');
+				$("#video_msg").css('height', frmHeight - videoHeight - 2 * tabHeight + 'px');
+				$("#question_title").css('height', frmHeight - videoHeight - tabHeight + 'px');
+				$("#list_all_s").css('height', frmHeight - videoHeight - tabHeight + 'px');
+				// 切换menu初始化
+				var tabwork = new auiTab({
+					element: document.getElementById("menu"),
+					index: 1,
+					repeatClick: true
+				}, function(ret) {
+					tabIndex = ret.index;
+					if (ret) {
+						f_slide($(ret.dom));
+						if (ret.dom.clicker != undefined) {
+							mySwiper.slideTo(ret.index - 1, 500, false);
+						} else {
+							mySwiper.slideTo(0, 500, false);
+						}
+					}
+				});
+				$('.aui-active').click();
+				moviePlayer = api.require('moviePlayer');
+				defaultload('获取详情中');
+				init(videoId);
+				videoNum(videoId);
+				intr(videoId);
+				videoList(eductionId);
+
+				goLoad(function(ret, err) {
+					if (tabIndex == 2) {
+						loadList();
+					}
+				});
+				api.addEventListener({
+					name: 'pause'
+				}, function(ret, err) {
+					// alert('应用进入后台');
+					if(systemType == 'android'){
+						moviePlayer.onPause();
+					}
+					clearInterval(timer)
+					clearInterval(int)
+				});
+				api.addEventListener({
+					name: 'resume'
+				}, function(ret, err) {
+					// alert('应用回到后台');
+					if (systemType == 'android') {
+						moviePlayer.onResume();
+						setTimeout(function(){
+							moviePlayer.play();
+							studyTimeLeft();
+						},1000)
+					} else{
+						studyTimeLeft();
+					}
+					
+					timer = setInterval(function() {
+						endDate += 1000;
+					// console.log(endDate)
+					}, 1000)
+					
+				});
+				
+				api.addEventListener({
+				    name:'offline'
+				}, function(ret, err){
+					alert('您的网络已断开，请检查网络!')
+					closedefaultload();
+					moviePlayer.pause();
+					clearInterval(int);
+				});
+				
+				api.addEventListener({
+				    name:'online'
+				}, function(ret, err){        
+				    // alert('已连接到网络');
+					moviePlayer.play();
+					studyTimeLeft();
+				});
+				
+				setTimeout(function(){
+					closedefaultload();
+				},3000)
+			};
+			mySwiper = new Swiper('.swiper-container', {
+				onSlideChangeEnd: function(swiper) {
+					var j = mySwiper.activeIndex;
+					tabIndex = j + 1;
+					f_slide($('.aui-bar-btn-item').eq(j))
+				}
+			})
+
+
+			// 滑块加载事件
+			function f_slide(e) {
+				$('.aui-bar-btn-item').removeClass('aui-active');
+				$(e).addClass('aui-active');
+				$('.list_bar').css('width', ($('.aui-active').width() - clearance * 3) + 'px');
+				$('.list_bar_inner').css('width', ($('.aui-active').width() - clearance * 3) + 'px');
+				document.getElementById('slideSpan').style.webkitTransform = 'translateX(' + ($(e).position().left + clearance) +
+					'px)';
+			}
+
+			/**
+			 * 初始化
+			 * 获取数据
+			 * @param {Object} videoId 视频ID
+			 */
+			function init(videoId) {
+				log("视频id111111111------------", videoId)
+				api.hideProgress();
+				//获取视频详情
+				var url = "api/learner-eduction/video-deatail"
+				params = {
+					videoId: videoId,
+					learnerId: getUserId()
+				};
+				ajax_Request(url, 'get', 'json', params, function(ret, err) {
+					log('初始化出参----------', ret);
+					closedefaultload();
+					if (ret) {
+						if (ret.code == 0) {
+							playVideo(ret.returnT.videoUrl);
+							isFinish = ret.returnT.learnerEducationVideoStudyProgress.isFinish; //是否完成
+							videoTime = ret.returnT.videoTime; //视频总时长
+							studyTime = ret.returnT.learnerEducationVideoStudyProgress.studyTime; //学习时长
+							if (ret.returnT.videoDesc == "" || ret.returnT.videoDesc == null || ret.returnT.videoDesc == undefined) {
+								$("#video_msg").html(doT.template(msg_src)({
+									'msg': "暂无简介"
+								}));
+							} else {
+								var videoDesc = ret.returnT.videoDesc;
+								var simg = '<img style="width:100%;height:auto;"';
+								ret.returnT.videoDesc = videoDesc.replace(/<img /, simg);
+								log('简介', ret.returnT.videoDesc)
+								$("#video_msg_content").html(ret.returnT.videoDesc)
+								$("#video_msg_intro").html(ret.returnT.videoAbstract)
+								$("#video_msg_title").html(ret.returnT.videoTitle)
+							}
+
+							closedefaultload();
+						} else {
+							alert_msg('暂无视频信息');
+						}
+					} else {
+						closedefaultload();
+						if(systemType == 'ios'){
+							setTimeout(function(){
+								alert_msg('服务器繁忙，请稍后再试');
+							},3000)
+						}else{
+							alert_msg('服务器繁忙，请稍后再试');
+						}
+					}
+				});
+			}
+
+			/**
+			 * 进入页面 播放量加1
+			 */
+			function videoNum(videoId) {
+				url = 'api/learner-eduction/update-video-play-num';
+				params = {
+					id: videoId
+				}
+				ajax_Request(url, 'post', 'json', params, function(ret, err) {
+					if (ret) {
+						if (ret.code) {
+
+						} else {
+
+						}
+					} else {
+
+					}
+				})
+			}
+
+			/**
+			 * 简介数据
+			 * @param {Object} videoId
+			 */
+			function intr(videoId) {
+				//渲染简介
+				var url = "api/coach-eduction/find-video"
+				// params = {
+				// 	eductionVideoId: videoId,
+				// 	coachId: getCoachId()
+				// };
+				// ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				// 	log('简介出参', ret);
+				// 	api.hideProgress();
+				// 	if (ret) {
+				// 		if (ret.code == 0) {
+				// 			if (ret.returnT.videoDesc == "" || ret.returnT.videoDesc == null || ret.returnT.videoDesc == undefined) {
+				// 				$("#video_msg").html(doT.template(msg_src)({
+				// 					'msg': "暂无简介"
+				// 				}));
+				// 			} else {
+				// 				var videoDesc = ret.returnT.videoDesc;
+				// 				var simg = '<img style="width:100%;height:auto;"';
+				// 				ret.returnT.videoDesc = videoDesc.replace(/<img /, simg);
+				// 				log('简介', ret.returnT.videoDesc)
+				// 				$("#video_msg").html(ret.returnT.videoDesc)
+				// 			}
+
+				// 		} else {
+				// 			$("#video_msg").html(doT.template(msg_src)({
+				// 				'msg': "暂无简介"
+				// 			}));
+				// 		}
+				// 	} else {
+				// 		alert_msg('服务器繁忙，请稍后再试');
+				// 	}
+				// });
+			}
+
+			//列表刷新
+			function refreshList() {
+				page = 1;
+				refresh = true;
+				setLoad();
+				videoList();
+			}
+
+			//列表上拉
+			function loadList() {
+				console.log("我下拉了一下");
+				page++;
+				refresh = false;
+				setLoad();
+				videoList();
+			}
+
+			/**
+			 * 教育视频列表
+			 * @param {Object} eductionId
+			 */
+			var list_src = $('#list_src').html();
+
+			function videoList() {
+				defaultload('获取内容中');
+				var url = "api/learner-eduction/video-list-menu"
+				params = {
+					eductionId: eductionId,
+					learnerId: getUserId(),
+					page: page,
+					limit: 10,
+				};
+				ajax_Request(url, 'get', 'json', params, function(ret, err) {
+					log('视频列表出参', ret);
+					closedefaultload()
+					if (ret) {
+						if (ret.code == 0 && ret.returnVal.length > 0) {
+
+							if (refresh || $('#list_all').find('li').length === 0) {
+								$('#list_all').html(doT.template(list_src)(ret.returnVal));
+							} else {
+								$('#list_all').append(doT.template(list_src)(ret.returnVal));
+							}
+							closedefaultload();
+						} else {
+							setMsg(refresh ? '暂无课程信息' : '暂无课程信息')
+							if (page > 1) {
+								page--
+							}
+							closedefaultload();
+						}
+					} else {
+						if(systemType == 'ios'){
+							setTimeout(function(){
+								alert_msg('服务器繁忙，请稍后再试');
+							},3000)
+						}else{
+							alert_msg('服务器繁忙，请稍后再试');
+						}
+					}
+				});
+			}
+
+			//跟新学习时间
+			function studyTimeS(playTimes,isback) {
+				clearInterval(timer);
+				defaultload('上传学时中');
+				var url = "api/learner-eduction/update-video-study-progress";
+				params = {
+					educationVideoId: videoId,
+					learnerId: getUserId(),
+					studyTime: playTimes,
+					startDate: startDate,
+					endDate: startDate + playTimes*1000,
+					subject:kemu
+				}
+				log('', params);
+				ajax_Request(url, 'post', 'json', params, function(ret, err) {
+					log('', ret)
+					api.hideProgress();
+					if (ret) {
+						if (ret.code == 0) {
+							if(isback == 'yes'){
+								//如果是点退出上传学时的
+								api.closeWin({});
+							}
+						} else {
+							alert_msg(ret.msg);
+							if(isback == 'yes'){
+								setTimeout(function(){
+									//如果是点退出上传学时的
+									api.closeWin({});
+								},1000);
+							}
+						}
+					}else{
+						alert_msg("服务器繁忙");
+						if(isback == 'yes'){
+							setTimeout(function(){
+								//如果是点退出上传学时的
+								api.closeWin({});
+							},1000);
+						}
+					}
+				})
+			}
+			
+			/**
+			 * 根据开始时间得到结束时间 
+			 */
+			function calculationEndTime(startTime,seconds){
+				
+			}
+
+			//视频控件
+			function playVideo(videoUrl) {
+				console.log("播放视频" + file_load_url + videoUrl)
+				moviePlayer.open({
+					rect: {
+						x: 0,
+						y: header_height,
+						w: api.frameWidth,
+						h: parseInt(api.frameWidth / 16 * 9)
+					},
+					coverImg: '',	
+					//					coverImg: file_load_url + coverImg,
+					styles: {
+						head: {
+							height: 0,
+							y: 10,
+							backSize: 0
+						},
+						foot: {
+							bg: 'rgba(0,0,0,0)',
+							height: 44,
+							palyBtn: {
+								size: 25,
+								playImg: 'widget://res/icon_play.png', //（可选项）字符串类型；底部播放按钮的背景图片，要求本地路径（widget://、fs://）；默认：播放按钮图标
+								pauseImg: 'widget://res/icon_stop.png', //（可选项）字符串类型；底部暂停按钮的背景图片，要求本地路径（widget://、fs://）；默认：暂停按钮图标 
+								marginLeft: 10
+							},
+							currentTimeLabel: {
+								textSize: 12,
+								textColor: "#FFF",
+								textWidth: 43,
+								marginLeft: 5
+							},
+							seekBar: {
+								sliderW: 15,
+								sliderH: 15,
+								progressColor: '#696969',
+								progressSelected: '#76EE00',
+								marginLeft: 10,
+								marginRight: 10
+							},
+							totalTimeLabel: {
+								textSize: 14,
+								textColor: "#FFF",
+								textWidth: 43,
+								marginRight: 5
+							},
+							fullscreenBtn: {
+								size: 0,
+							}
+						}
+					},
+					path: file_load_url + videoUrl,
+					//					path: videoUrl,
+					autoPlay: true,
+					seekBarDragable: true,
+					isShowControlView: true,
+					autorotation: false,
+					useGestureControl:systemType == 'ios'?true:false
+				}, function(ret, err) {
+					console.log(JSON.stringify(ret));
+					if (ret) {
+						moviePlayer.setShowOrHideControlView({
+							isShow: true
+						});
+
+						moviePlayer.addEventListener(function(ret) {
+							log('视频状态',ret)
+							if (ret && ret.eventType == 'prepared') {
+								studyTimeLeft()
+							}
+							if (ret && ret.eventType == 'pause') {
+								clearInterval(int)
+							}
+							if (ret && ret.eventType == 'play') {
+								studyTimeLeft()
+							}
+						});
+
+					}
+				});
+
+			}
+			
+			function studyTimeLeft(){
+				if (isFinish == 0) {
+					int = setInterval(function() {
+						timeS += 1
+						studyTime += 1;
+						// console.log("时间1" + studyTime);
+				
+						if (studyTime > videoTime) {
+							// int = clearInterval(int);
+							if (timeFlag == true) {
+								// studyTimeS(timeS);
+								timeFlag = false
+							}
+						} else {
+							var bi = parseInt(studyTime / videoTime * 100);
+							$("#line_P").css("width", bi + "%")
+							$("#p_text").html(bi + "%")
+						}
+						sendEvent("playTimes", timeS);
+					}, 1000);
+				} else {
+					$("#line_P").css("width", "100%")
+					$("#p_text").html("100%")
+				}
+			}
+
+			// 设置页面加载的画面
+			function setLoad() {
+				if (refresh || $('#list_all').find('li').length === 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+					$('#load_div').html('');
+					$("#listDiv").html(load_src);
+				} else {
+					setTimeout(function() {
+						$('#load_div').html(doT.template(more_src)({
+							'msg': '加载更多中...',
+							'img': '../../icon/common/jiazai.gif'
+						}));
+					}, 300);
+				}
+			}
+			//设置页面提示信息
+			function setMsg(msg) {
+				if (refresh || $('#list_all').find('li').length === 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+					setTimeout(function() {
+						$("#list_all").html(doT.template(msg_src)({
+							'msg': msg
+						}));
+					}, 300);
+				} else { //原先已经有数据的情况下
+					setTimeout(function() {
+						$('#load_div').html(doT.template(more_src)({
+							'msg': msg,
+							'img': ''
+						}));
+					}, 300);
+				}
+			}
+
+			/**
+			 * 切换视频源
+			 */
+			function open_continue_trian(id, title, url, videoTime) {
+				defaultload('获取详情中');
+				clearInterval(int);
+				studyTimeS(timeS);
+				startDate = Number(new Date());
+				endDate = '';
+				timer = setInterval(function() {
+					endDate = startDate + 1000;
+				}, 1000)
+				timeS = 0;
+				init(id)
+				intr(id);
+				videoNum(id)
+				page = 1;
+				refresh = true;
+				ques_leth = 0; //题目长度清空
+				ans_leth = 0; //回答题目长度清空
+				list = []; //答题清空
+				$('#list_all').html('')
+				videoList(id);
+				moviePlayer.replay({
+					title: title,
+					path: file_load_url + url
+				});
+				timeFlag = true
+				videoId = id;
+			}
+		</script>
+	</body>
+
+</html>

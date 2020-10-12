@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>发现</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<style>
+			body{
+			background:#FFFFFF
+    	}
+    	#menu{
+			font-size:0.7rem;
+		}
+		#menuPackage{
+			position: relative;
+			background:#FFF;
+		}
+		.aui-active{
+			font-weight: bold;
+			/*font-size:0.8rem;*/
+		}
+		#Information_message{
+			display:none;
+			left: 80%;
+			top: 1.1rem;
+		}
+		#examination_room_notice{
+			display:none;
+			left: 80%;
+			top: 1.1rem;
+		}
+		#community_message{
+			display:none;
+			left:80%;
+			top: 1.1rem;
+		}
+		.aui-bar-btn-item{
+			color: #333;
+			font-size: 0.8rem;
+		}
+		.aui-bar-btn-item.aui-active{
+			color: #3F86FF;
+			font-size: 0.8rem;
+		}
+    </style>
+	</head>
+	<body>
+		<div id="menuPackage">
+			<div class="aui-bar aui-bar-btn aui-bar-btn-full" id="menu">		
+				<div class="aui-bar-btn-item aui-active">驾考资讯<div class="aui-badge" id="Information_message"></div></div>
+				<div class="aui-bar-btn-item">考场通知<div class="aui-badge" id="examination_room_notice"></div></div>
+				<!-- <div class="aui-bar-btn-item">考友社区<div class="aui-badge" id="community_message"></div></div> -->
+			</div>
+			<li class="list_bar" id="slideSpan">
+				<div class="list_bar_inner" style="background-color: #FFCE02;">
+				</div>
+			</li>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var footHeight; //底部高度
+		var headHieght; //头部高度
+		var clearance = 75; //间隙
+		var target_index = 0; //menu标记
+		var count;
+		var type;
+		var channel;
+		var appVersion;
+		var systemType;
+		apiready = function() {
+			channel = api.channel;
+	        systemType = api.systemType;
+	        appVersion = api.appVersion;
+			api.setFrameAttr({
+				bounces: false
+			});
+			$api.fixStatusBar($api.byId('menuPackage'));
+			headHieght = $api.byId('menuPackage').offsetHeight;
+			footHeight = api.pageParam.footHeight;
+			openFrameGroup();
+			//切换menu初始化
+			var tabwork = new auiTab({
+				element: document.getElementById("menu"),
+				repeatClick: true
+			}, function(ret) {
+				if (ret) {
+					f_slide($(ret.dom));
+					setViewFrame(ret.index - 1);
+				}
+			});
+			// $('.aui-active').click();
+			//给第一个menu添加样式
+			f_slide($(".aui-bar-btn-item").eq(0));
+			inits();
+			
+			//监听退出action：执行消除红点操作
+			toEventListener('exit_action',function(ret,err){
+				$(".aui-badge").addClass('aui-hide');
+			});
+			
+			//监听页面刷新时，重新初始化加载
+	        toEventListener('refresh',function(ret,err){
+				inits();
+			});
+			
+			//监听进入新消息时，重新初始化加载
+			toEventListener('inits_second',function(ret,err){
+				inits();
+			});
+
+		};
+
+		//滑块加载事件
+		function f_slide(e,type) {
+			$('.aui-bar-btn-item').removeClass('aui-active');
+			$(e).addClass('aui-active');
+			$('.list_bar').css('width', ($('.aui-active').width() - clearance * 2) + 'px');
+			$('.list_bar_inner').css('width', ($('.aui-active').width() - clearance * 2) + 'px');
+			document.getElementById('slideSpan').style.webkitTransform = 'translateX(' + ($(e).position().left + clearance) +
+				'px)';
+		}
+
+		//设置frameGroup可见frame
+		function setViewFrame(index) {
+			logAppBuryingPoint({},index == 0?'驾校资讯':'考场通知','发现');
+			api.setFrameGroupIndex({
+				name: 'discovery_group',
+				index: index
+			});
+		}
+
+		//加载home的group
+		function openFrameGroup() {
+			api.openFrameGroup({
+				name: 'discovery_group',
+				scrollEnabled: true,
+				preload: 0,
+				rect: {
+					x: 0,
+					y: headHieght,
+					w: 'auto',
+					h: api.winHeight - headHieght - footHeight
+				},
+				frames: [{
+					name: 'news', //资讯
+					url: './discovery_index_news.html',
+					bgColor: '#EFEFF4',
+					bounces: true,
+					scrollToTop: true,
+					pageParam: {
+						type: "063001"
+					}
+				}, {
+					name: 'news', //通知
+					url: './discovery_index_news.html',
+					bgColor: '#EFEFF4',
+					bounces: true,
+					scrollToTop: true,
+					pageParam: {
+						type: "063002"
+					}
+				}, {
+					name: 'community', //社区
+					bounces: true,
+					url: './discovery_index_community.html',
+					bgColor: '#EFEFF4',
+					scrollToTop: true
+				}]
+			}, function(ret, err) {
+				var index = ret.index;
+				if(index == 0){
+					onEvent('find0','资讯');
+				}
+				if(index == 1){
+					onEvent('find1','考场通知');
+				}
+				if(index == 2){
+					onEvent('find2','社区');
+				}
+				f_slide($('.aui-bar-btn-item').eq(index));			
+			});
+		}
+		
+		//登录情况下请求消息通知
+		function news(type){
+			if(islogin()){
+				url = 'api/information/getCount';		
+					params = {
+						learnerId:getUserId(),
+						type:type				
+					}
+				ajax_Request(url, 'get', 'json', params, function(ret, err) {
+					if (ret.code == 0) {
+						if(type=='063001'){
+							$("#Information_message").css({
+								'display':'block'
+							});
+							console.log("==============进入资讯=============");
+							if(ret.count == 0){
+								$("#Information_message").remove();
+							}else{
+								$("#Information_message").text(ret.count);
+							}
+						}
+						
+						if(type=='063002'){
+							$("#examination_room_notice").css({
+								'display':'block'
+							});
+							console.log("==============进入考场=============");
+							if(ret.count == 0){
+								$("#examination_room_notice").remove();
+							}else{
+								$("#examination_room_notice").text(ret.count);
+							}
+						}
+						
+						if(type=='063003'){
+							$("#community_message").css({
+								'display':'block'
+							});
+							console.log("==============进入社区=============");
+							if(ret.count == 0){
+								$("#community_message").remove();
+							}else{
+								$("#community_message").text(ret.count);
+							}
+						}
+
+					}
+				})
+			}
+		}
+
+		//登录情况下，同时加载三个头部
+		function inits(){
+			news('063001');
+			news('063002');
+			news('063003');
+		}
+	</script>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>选择所属驾校</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+		.aui-list .aui-list-item {
+		    list-style: none;
+		    margin: 0;
+		    padding: 0;
+		    padding-left: 0.75rem;
+		    color: #212121;
+		    background-color: #ffffff;
+		    position: relative;
+		    min-height: 3rem;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		}
+    </style>
+</head>
+<body>
+	<!-- 通用头部 -->
+	<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin()">
+            <img src="../../icon/common/icon_header_return.png">
+        </a>
+        <div class="aui-title" id="common_title">
+        	所属驾校
+        </div>
+        <!-- <a class="aui-pull-right aui-btn" tapmode onclick='submitInfo()'>
+           <span>保存</span>
+        </a> -->
+    </header>
+    <section id="section">
+    	<div class="aui-content aui-margin-b-15">
+	    	<ul class="aui-list aui-form-list none-top-style none-bottom-style">
+	    		<li class="aui-list-item none-bottom-style">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label">
+	                		请选择
+		                </div>
+		                <div class="aui-list-item-input aui-list-item-arrow">
+		                    <input type="text" placeholder="驾校所在省市区" id="provinceAndCity" readonly>
+		                </div>
+		            </div>
+		        </li>
+	    	</ul>
+	    </div>
+    </section>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var headerPos;
+	var sectionPos;
+	var frameName = 'common_select_under_school_frm';//设置的frame名称
+	var frameUrl = './common_select_under_school_frm.html';//设置的frame
+	var bounces = true;//是否弹动
+	var dirId;//选择的区域code
+	var addressView;
+	apiready = function(){
+		api.parseTapmode();
+		var header = $api.byId('aui-header');
+		var section = $api.byId('section');
+		$api.fixStatusBar(header);
+		//$api.fixStatusBar(section);
+		cache = api.pageParam;
+		headerPos = $api.offset(header);
+		sectionPos = $api.offset(section);
+		
+		var coach_info = $api.getStorage('cache_by_account').coach_info;
+		log('教练信息---',coach_info);
+		if(coach_info != undefined){
+			loadAddress(coach_info.district);
+		}else{
+			loadAddress(null);
+		}
+		
+		openFrame(headerPos.h + sectionPos.h, api.winHeight - headerPos.h - sectionPos.h,'none',bounces);
+	}
+	
+	//加载省市区
+	function loadAddress(district){
+		var juageNull = (district == null||district == undefined || district.areaCd == undefined);
+		addressView = api.require('addressView');//省市区
+		addressView.open({
+			file_addr: 'widget://res/district.txt',
+			selected_color: '#ff0000',
+			pro_id: juageNull?330000:district.provinceCd.toString().substring(0,6), //省id
+			city_id : juageNull?330600:district.cityCd.toString().substring(0,6), //市id
+			dir_id : juageNull?330682:district.areaCd.toString().substring(0,6)//区id  这几个必须传
+		});
+		$api.addEvt($api.byId("provinceAndCity"), 'click', function() {
+			addressView.show({}, function(ret, err) {
+				if (ret.status) {
+					//log("地区：",ret)
+					$('#provinceAndCity').val(ret.data[0].name + ' '+ ret.data[1].name + ' ' + ret.data[2].name);
+					dirId = ret.data[2].id + "000";//区code
+					var cache_by_account = $api.getStorage('cache_by_account');
+					var coach_info = cache_by_account.coach_info;
+					if(coach_info != undefined){
+						coach_info.district = {
+							provinceCd:ret.data[0].id+"000",
+							cityCd:ret.data[1].id+"000",
+							areaCd:ret.data[2].id+"000",
+							provinceName:ret.data[0].name,
+							cityName:ret.data[1].name,
+							areaName:ret.data[2].name
+						};
+					}else{
+						coach_info = {
+							district:{
+								provinceCd:ret.data[0].id+"000",
+								cityCd:ret.data[1].id+"000",
+								areaCd:ret.data[2].id+"000",
+								provinceName:ret.data[0].name,
+								cityName:ret.data[1].name,
+								areaName:ret.data[2].name
+							}
+						}
+					}
+					cache_by_account.coach_info = coach_info;
+					$api.setStorage('cache_by_account',cache_by_account);
+					getTcmDriverSchoolList(dirId);
+				}else{
+					alert_msg('加载省市区出错');
+				}
+			});
+		});
+		
+		if(juageNull){
+			setTimeout(function(){
+				$('#provinceAndCity').click();
+			},300);
+		}else{
+			//有省市区选中的缓存，自动加载列表
+			$('#provinceAndCity').val(district.provinceName + ' '+ district.cityName + ' ' + district.areaName);
+			setTimeout(function(){
+				getTcmDriverSchoolList(district.areaCd);
+			},500);
+		}
+	}
+	
+	/**
+	 * 获取驾校列表
+	 */
+	function getTcmDriverSchoolList(dirId){
+		console.log('dirId'+dirId);
+		esc_function('common_select_under_school_win','common_select_under_school_frm','getTcmDriverSchoolList("'+dirId+'")');
+	}
+	
+	function openFrame(y,h,animate,bounces){
+		api.openFrame({
+            name: frameName,
+            url: frameUrl,
+            bgColor:'#efeff4',
+            rect: {
+                x: 0,
+                y: y,
+                w: 'auto',
+                h: h
+            },
+            animation:{
+	        	type:animate,                //动画类型（详见动画类型常量）
+			    subType:"from_right",       //动画子类型（详见动画子类型常量）
+			    duration:300
+	        },
+            bounces: bounces,
+            pageParam:cache,
+            reload:true,
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+	}
+	
+	function closeWin(){
+		api.closeWin({
+        });
+	}
+</script>
+</html>

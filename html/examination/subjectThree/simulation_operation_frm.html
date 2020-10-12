@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>我的</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/swiper/swiper.css">
+    <style>
+    	html,body{
+    		background:#FFF;
+    	}
+    	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		.mine-img-div{
+		    width: 100%;
+    		height: 6rem;
+    		background: #FFF;
+		}
+		.mine-img{
+		    width: 30%;
+		    height: 6rem;
+		    float: left;
+	        text-align: center;
+		}
+		.mine-img img{
+		    height: 3rem;
+    		margin-top: 1.5rem;
+		}
+		.mine-name {
+	        width: 70%;
+		    height: 6rem;
+		    line-height: 6rem;
+		    font-size: 1.1rem;
+		    float: left;
+		    color: #8A8A8A;
+		}
+		.aui-swipe-handle{
+			width:100%;
+		}
+		.aui-list .aui-list-item {
+		    list-style: none;
+		    margin: 0;
+		    padding: 0 0.75rem;
+		    color: #212121;
+		    background-color: #ffffff;
+		    position: relative;
+		    min-height: 2.5rem;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		}
+		.nav {
+	        height: 100%;
+	        overflow-x: scroll;
+	        overflow-y: hidden;
+	        background-color: #FFFFFF;
+	        /*解决ios上滑动不流畅*/
+	        -webkit-overflow-scrolling: touch;
+	    }
+	    .con {
+	        height: 100%;
+		    display: -webkit-box;
+		    align-items: center;
+	        position: relative;
+	    }
+	    .con>li {
+	        text-align: center;
+		    font-size: 0.8rem;
+		    min-width: 3rem;
+		    list-style: none;
+		    margin: 0.5rem 0.5rem 0rem 0.5rem;
+	    }
+	    .container ::-webkit-scrollbar {
+	        display: none;
+	    }
+	    .menuLi img{
+	    	width:1.5rem;
+	    }
+	    .menuLi span{
+	    	margin-bottom:0.5rem;
+	    	font-size:0.7rem;
+	    }
+	    .blue1.active{
+	    	color: #D4237A !important;
+	    }
+	    .green.active{
+	    	color: #65C3C7 !important;
+	    }
+	    .blue2.active{
+	    	color: #1296DB !important;
+	    }
+	    .orange.active{
+	    	color: #FFBC65 !important;
+	    }
+	    .black.active{
+	    	color: #666666 !important;
+	    }
+	    .red.active{
+	    	color: #DC3823 !important;
+	    }
+	    .list_bar .list_bar_inner{
+		    position: absolute;
+		    min-width: 0rem;
+		    height: 100%;
+		    top: 0;
+		    left: 50%;
+		    background-color: #FFF;
+		    -webkit-transform: translateX(-50%);
+		    transform: translateX(-50%);
+		    -webkit-transition: 0.3s ease;
+		}
+		font{
+			color:#FFBC65;
+		}
+		.check-exam{
+			font-size: 0.6rem;
+		    background: #1296DB;
+		    color: #FFF;
+		    padding: 0rem 0.3rem;
+		    border-radius: 1rem;
+		}
+		.col-x-img{
+		    width: 1.5rem;
+		}
+		.status-flag{
+		    position: absolute;
+		    z-index: 2;
+		    right: 1rem;
+		    top: 1rem;
+		    font-size: 0.6rem;
+		}
+		.status-flag span{
+			color:#707070;
+		}
+		.status-flag img{
+		    width: 2rem;
+		}
+		.con:after{
+			background: #F1F1F1;
+			height:1px;
+			width:100%;
+		    -webkit-transform: scaleY(0.5);
+		    transform: scaleY(0.5);
+		}
+		.view-content{
+			width:100%;
+    		background: #FFF;
+		    position: relative;
+	        padding: 0.5rem;
+	        font-size: 0.7rem;
+		}
+		.explain-title{
+		}
+		.explain-answer{
+		    margin: 0.5rem 0.8rem;
+    		color: #DC251F;
+		}
+		.explain{
+		    padding: 0rem 0.8rem;
+    		color: #898989;
+		}
+		.title{
+    		padding: 0.75rem;
+    		border-bottom: solid 1px #F1F1F1;
+    		height: 3rem;
+    		display: flex;
+    		position: relative;
+    	}
+    	.title img{
+		    width: 1rem;
+    		margin: auto 0;
+    	}
+    	.title span{
+    		margin: auto 0.3rem;
+    	}
+    	.title input{
+		    position: absolute;
+		    right: 0.5rem;
+		    top: 0.85rem;
+    	}
+    	.explain-pic img{
+    		width:100%;
+		    margin-top: 0.5rem;
+    	}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="nav">
+            <ul class="con">
+            </ul>
+        </nav>
+        <script type="text/template" charset="utf-8" id='light_menu_src'>
+        	{{ for(var i=0;i<it.length;i++){ }}
+	        	<li class="menuLi" tapmode onclick="slideOnclick(this,{{=i}})">
+	            	<img src="../../../icon/subject/icon_voice_unselected.png" alt="" /><br>
+	            	<span>{{=it[i].name}}</span>
+	            </li>
+            {{ } }}
+        </script>
+    </div>
+    <div class="title">
+    	<img src="../../../icon/subject/icon_law.png" alt="" />
+    	<span>详解</span>
+    	<input type="checkbox" class="aui-switch" onclick="isOpenExplain()" checked>
+    </div>
+    <div class="swiper-container">
+	    <div class="swiper-wrapper">
+	    </div>
+	</div>
+	<script type="text/template" charset="utf-8" id='light_explain_src'>
+		{{ for(var i=0;i<it.length;i++){ }}
+			<div class="swiper-slide swiper-no-swiping">
+	    		<div class="view-content">
+	    			<div class='explain-title'>{{=it[i].title}}</div>
+	    			<div class='explain-pic'><img src="../../../image/demo/subject/2_8.png" alt="" /></div>
+	    			<div class='explain-answer'>答案：{{=it[i].answer}}</div>
+	    			<div class='explain'>{{=(it[i].explain == ''?'':'详解：' + it[i].explain)}}</div>
+	    		</div>
+	    	</div>
+		{{ } }}
+	</script>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/swiper/swiper.js"></script>
+<script type="text/javascript">
+	var mySwiper;
+	var demoJson = [
+		{"name":"灯光一","title":"1.请开启前照灯","answer":"开启大灯，注意是近光","explain":""},
+		{"name":"灯光二","title":"2.夜间在没有路灯、照明不良的道路上行驶","answer":"远光灯","explain":"往车头方向拨动控制杆打开远光灯"},
+		{"name":"灯光三","title":"3.同方向近距离跟车行驶","answer":"近光灯","explain":"往驾驶员方向拨动控制杆使之复位"},
+		{"name":"灯光四","title":"4.与机动车回车","answer":"近光灯","explain":"往驾驶员方向拨动控制杆使之复位"},
+		{"name":"灯光五","title":"5.在有路灯。照明良好的道路上行驶","answer":"近光灯","explain":"往驾驶员方向拨动控制杆使之复位"},
+		{"name":"灯光六","title":"6.夜间超越前方车辆","answer":"交替使用远近光灯","explain":"往驾驶员方向拨动控制杆使之复位往驾驶员方向拨动控制杆使之复位"},
+		{"name":"灯光七","title":"7.模拟夜间考试完成，请关闭所有灯光","answer":"将灯组开关往后拧一档","explain":""}
+	]
+	var cache;
+	apiready = function(){
+		cache = api.pageParam;
+	};
+	init();
+	
+	function init(){
+		//初始化灯光列表menu
+		var light_menu_src = $('#light_menu_src').html();
+		$(".con").html(doT.template( light_menu_src )( demoJson ));
+		//初始化灯光解释
+		var light_explain_src = $('#light_explain_src').html();
+		$(".swiper-wrapper").html(doT.template( light_explain_src )( demoJson ));
+		loadSwiper();
+	}
+	//初始化轮播
+	function loadSwiper(){
+		mySwiper = new Swiper(".swiper-container", {
+			autoHeight: true, //高度随内容变化
+		});
+		slideOnclick($('.menuLi').eq(0),0);
+	}
+	//二级菜单点击事件
+	function slideOnclick(e,i){
+		$('li').removeClass('active');
+		$("nav").animate({
+			scrollLeft: $(e).position().left-130+'px'
+		}, 300);
+		mySwiper.slideTo(i, 500, false);
+	}
+	//是否打开详解
+	function isOpenExplain(){
+		console.log($("input[type='checkbox']").is(':checked'));
+		if($("input[type='checkbox']").is(':checked')){
+			$('.swiper-container').removeClass('aui-hide');
+		}else{
+			$('.swiper-container').addClass('aui-hide');
+		}
+	}
+</script>
+</html>

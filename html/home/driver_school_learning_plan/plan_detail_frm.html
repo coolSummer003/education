@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>套餐详情</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	.learn-plan-list{
+	        background: #FFF;
+		    width: 100%;
+	        font-size: 0.7rem;
+	        margin-bottom: 5rem;
+	    }
+	    .learn-plan-list li{
+	    	height:2.5rem;
+	    	line-height:2.5rem;
+	    }
+	    .learn-plan-list-item{
+	    	height:2.5rem;
+	    	padding: 0rem 0.5rem;
+	    }
+	    .learn-plan-list-item-param{
+    	    float: left;
+    		height:2.5rem;
+	    }
+	    .learn-plan-list-item-param input{
+	        margin-top: 0.6rem;
+	    }
+	    .c-btn{
+	    	width:10%;
+	    	-webkit-transition: 0.3s ease;
+	    	text-align: left;
+	    }
+	    .dark{
+	    	background:#FAFAFA;
+	    }
+	    .appointment-button{
+	    	
+	    }
+	    .appointment-button span{
+		    color: #0595F2;
+		    padding: 0.2rem 0rem;
+		    border-radius: 0.5rem;
+		    font-weight:bold;
+	    }
+	    .other-item{
+	    	width:100%;
+	    	overflow:hidden;
+    	    -webkit-transition: 0.3s ease;
+    	    float: right;
+	    }
+	    .empty-img{
+			width: 2rem;
+    		margin-bottom: -0.35rem;
+		}
+		.load-src{
+			width: 100%;
+    		display: flex;
+    		height: 8rem;
+		}
+		.load-src img{
+		    width: 5rem;
+    		margin: auto;
+		}
+		.msg-src{
+			width: 100%;
+			text-align:center;
+			padding-bottom: 3rem;
+		}
+		.msg-src img{
+			width: 4rem;
+    		margin-top: 3rem;
+		}
+		.msg-src span{
+			font-size:0.7rem;
+			color:#767676;
+		}
+		.text-c{
+			padding-left:1rem;
+		}
+		.select_practical_title{
+		    font-weight: bold;
+		    text-align: left;
+		    height: 1.7rem;
+		    line-height: 1.7rem;
+		    padding-left: 4%;
+		}
+		.font-weight{
+			font-weight: bold;
+		}
+		.text-r{
+			text-align:right;
+			padding-right: 0.5rem;
+		}
+		.fixed-b{
+			position: fixed;
+		    bottom: 0.5rem;
+		}
+		.icon{
+			width:1rem;
+		    margin: auto;
+		}
+		.totle-cash{
+			font-size:1rem;
+		}
+		.support-license{
+		}
+		.learn-plan-list-item:active{
+			background:#FAFAFA;
+		}
+    </style>
+</head>
+<body>
+	<div id='studyPlanDetail'></div>
+	<script type="text/template" charset="utf-8" id='study_plan_detail_src'>
+		<div class='learn-plan-list' style='margin-bottom:0.5rem;'>
+	    	<ul>
+	    		<li class='bottom-slide font-weight'>
+	    			<div class="learn-plan-list-item">
+	    				<div class='other-item bottom-slide w-90'>
+		    				<div class="learn-plan-list-item-param text-c" style="width:25%;">服务项目</div>
+		    				<div class="learn-plan-list-item-param text-r" style="width:35%;">详细</div>
+		    				<div class="learn-plan-list-item-param text-c" style="width:22%;">价值</div>
+		    				<div class="learn-plan-list-item-param text-c" style="width:18%;">有/无</div>
+	    				</div>
+	    			</div>
+	    		</li>
+	    		<li class='bottom-slide aui-hide' tapmode onclick='showHiddenPlanList(this)' id='more-div'>
+	    			<div class="learn-plan-list-item">
+	    				<div class='other-item bottom-slide w-90'>
+		    				<div class="learn-plan-list-item-param" style="width:100%;text-align: center;">点击展开详情</div>
+	    				</div>
+	    			</div>
+	    		</li>
+	    		<div id='planList'>
+			    	<li>
+		    			<div class="learn-plan-list-item dark">
+		    				<div class='other-item w-90'>
+			    				<div class="learn-plan-list-item-param text-c" style="width:25%;">报名费</div>
+			    				<div class="learn-plan-list-item-param text-r" style="width:35%;">驾校报名</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:22%;">￥{{=cashFormatO(it[0].entryFee)}}</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:18%;display: flex;">
+			    					 {{ if(it[0].entryFee != 0){ }}
+			    					 <img src="../../../icon/payfor/icon_success.png" alt="" class="icon" />
+			    					 {{ } }}
+			    				</div>
+		    				</div>
+		    			</div>
+		    		</li>
+		    		<li>
+		    			<div class="learn-plan-list-item">
+		    				<div class='other-item w-90'>
+			    				<div class="learn-plan-list-item-param text-c" style="width:25%;">制卡费</div>
+			    				<div class="learn-plan-list-item-param text-r" style="width:35%;"></div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:22%;">￥{{=cashFormatO(it[0].cardFee)}}</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:18%;display: flex;">
+			    					{{ if(it[0].cardFee != 0){ }}
+			    					 <img src="../../../icon/payfor/icon_success.png" alt="" class="icon" />
+			    					{{ } }}
+			    				</div>
+		    				</div>
+		    			</div>
+		    		</li>
+		    		<li>
+		    			<div class="learn-plan-list-item dark">
+		    				<div class='other-item w-90'>
+			    				<div class="learn-plan-list-item-param text-c" style="width:25%;">保险费</div>
+			    				<div class="learn-plan-list-item-param text-r" style="width:35%;"></div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:22%;">￥{{=cashFormatO(it[0].insurance)}}</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:18%;display: flex;">
+			    					{{ if(it[0].insurance != 0){ }}
+			    					 <img src="../../../icon/payfor/icon_success.png" alt="" class="icon" />
+			    					{{ } }}
+			    				</div>
+		    				</div>
+		    			</div>
+		    		</li>
+		    		<li>
+		    			<div class="learn-plan-list-item">
+		    				<div class='other-item w-90'>
+			    				<div class="learn-plan-list-item-param text-c" style="width:25%;">科目一</div>
+			    				<div class="learn-plan-list-item-param text-r" style="width:35%;">线上理论：{{=it[0].kemu1OnlineHour}}学时</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:22%;">￥{{=cashFormatO(it[0].kemu1OnlinePrice)}}</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:18%;display: flex;">
+			    					{{ if(it[0].kemu1OnlinePrice != 0){ }}
+			    					<img src="../../../icon/payfor/icon_success.png" alt="" class="icon" />
+			    					{{ } }}
+			    				</div>
+		    				</div>
+		    			</div>
+		    		</li>
+		    		<li>
+		    			<div class="learn-plan-list-item">
+		    				<div class='other-item w-90'>
+			    				<div class="learn-plan-list-item-param text-c" style="width:25%;"></div>
+			    				<div class="learn-plan-list-item-param text-r" style="width:35%;">线下理论：{{=it[0].kemu1OfflineHour}}学时</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:22%;">￥{{=cashFormatO(it[0].kemu1OfflinePrice)}}</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:18%;display: flex;">
+			    					{{ if(it[0].kemu1OfflinePrice != 0){ }}
+			    					<img src="../../../icon/payfor/icon_success.png" alt="" class="icon" />
+			    					{{ } }}
+			    				</div>
+		    				</div>
+		    			</div>
+		    		</li>
+		    		<li>
+		    			<div class="learn-plan-list-item dark">
+		    				<div class='other-item w-90'>
+			    				<div class="learn-plan-list-item-param text-c" style="width:25%;">科目二</div>
+			    				<div class="learn-plan-list-item-param text-r" style="width:35%;">模拟器：{{=it[0].kemu2SimulatorHour}}学时</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:22%;">￥{{=cashFormatO(it[0].kemu2SimulatorPrice)}}</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:18%;display: flex;">
+			    					{{ if(it[0].kemu2SimulatorPrice != 0){ }}
+			    					<img src="../../../icon/payfor/icon_success.png" alt="" class="icon" />
+			    					{{ } }}
+			    				</div>
+		    				</div>
+		    			</div>
+		    		</li>
+		    		<li>
+		    			<div class="learn-plan-list-item dark">
+		    				<div class='other-item w-90'>
+			    				<div class="learn-plan-list-item-param text-c" style="width:25%;"></div>
+			    				<div class="learn-plan-list-item-param text-r" style="width:35%;">机器人：{{=it[0].kemu2Hour}}学时</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:22%;">￥{{=cashFormatO(it[0].kemu2Price)}}</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:18%;display: flex;">
+			    					{{ if(it[0].kemu2Price != 0){ }}
+			    					<img src="../../../icon/payfor/icon_success.png" alt="" class="icon" />
+			    					{{ } }}
+			    				</div>
+		    				</div>
+		    			</div>
+		    		</li>
+		    		<li>
+		    			<div class="learn-plan-list-item dark">
+		    				<div class='other-item w-90'>
+			    				<div class="learn-plan-list-item-param text-c" style="width:25%;"></div>
+			    				<div class="learn-plan-list-item-param text-r" style="width:35%;">考前训练：{{=it[0].kemu2Hour}}次</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:22%;">￥{{=cashFormatO(it[0].kemu2Price)}}</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:18%;display: flex;">
+			    					{{ if(it[0].kemu2Price != 0){ }}
+			    					<img src="../../../icon/payfor/icon_success.png" alt="" class="icon" />
+			    					{{ } }}
+			    				</div>
+		    				</div>
+		    			</div>
+		    		</li>
+		    		<li>
+		    			<div class="learn-plan-list-item">
+		    				<div class='other-item w-90'>
+			    				<div class="learn-plan-list-item-param text-c" style="width:25%;">科目三</div>
+			    				<div class="learn-plan-list-item-param text-r" style="width:35%;">课时：{{=it[0].kemu3Hour}}学时</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:22%;">￥{{=cashFormatO(it[0].kemu3Price)}}</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:18%;display: flex;">
+			    					{{ if(it[0].kemu3TrainingPrice != 0){ }}
+			    					<img src="../../../icon/payfor/icon_success.png" alt="" class="icon" />
+			    					{{ } }}
+			    				</div>
+		    				</div>
+		    			</div>
+		    		</li>
+		    		<li>
+		    			<div class="learn-plan-list-item">
+		    				<div class='other-item w-90'>
+			    				<div class="learn-plan-list-item-param text-c" style="width:25%;"></div>
+			    				<div class="learn-plan-list-item-param text-r" style="width:35%;">考前训练：{{=it[0].kemu3TrainingTimes}}次</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:22%;">￥{{=cashFormatO(it[0].kemu3TrainingPrice)}}</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:18%;display: flex;">
+			    					{{ if(it[0].kemu3TrainingPrice != 0){ }}
+			    					<img src="../../../icon/payfor/icon_success.png" alt="" class="icon" />
+			    					{{ } }}
+			    				</div>
+		    				</div>
+		    			</div>
+		    		</li>
+		    		<li>
+		    			<div class="learn-plan-list-item dark">
+		    				<div class='other-item w-90'>
+			    				<div class="learn-plan-list-item-param text-c" style="width:25%;">科目四</div>
+			    				<div class="learn-plan-list-item-param text-r" style="width:35%;">理论课时：{{=it[0].kemu4Hour}}学时</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:22%;">￥{{=cashFormatO(it[0].kemu4Price)}}</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:18%;display: flex;">
+			    					{{ if(it[0].kemu4Price != 0){ }}
+			    					<img src="../../../icon/payfor/icon_success.png" alt="" class="icon" />
+			    					{{ } }}
+			    				</div>
+		    				</div>
+		    			</div>
+		    		</li>
+		    		<li>
+		    			<div class="learn-plan-list-item dark">
+		    				<div class='other-item w-90'>
+			    				<div class="learn-plan-list-item-param text-c" style="width:25%;"></div>
+			    				<div class="learn-plan-list-item-param text-r" style="width:35%;">考试：1次</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:22%;">￥{{=cashFormatO(it[0].examinationFee)}}</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:18%;display: flex;">
+			    					{{ if(it[0].examinationFee != 0){ }}
+			    					<img src="../../../icon/payfor/icon_success.png" alt="" class="icon" />
+			    					{{ } }}
+			    				</div>
+		    				</div>
+		    			</div>
+		    		</li>
+		    		<li>
+		    			<div class="learn-plan-list-item">
+		    				<div class='other-item w-90'>
+			    				<div class="learn-plan-list-item-param text-c" style="width:25%;">合计费用</div>
+			    				<div class="learn-plan-list-item-param text-r" style="width:35%;"></div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:22%;">￥{{=cashFormatO(it[0].realPrice)}}</div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:18%;display: flex;"></div>
+		    				</div>
+		    			</div>
+		    		</li>
+		    		<li>
+		    			<div class="learn-plan-list-item">
+		    				<div class='other-item w-90'>
+			    				<div class="learn-plan-list-item-param text-c" style="width:25%;">套餐价</div>
+			    				<div class="learn-plan-list-item-param text-r" style="width:35%;"></div>
+			    				<div class="learn-plan-list-item-param text-c" style="width:40%;color:#FC9B48;">￥<span class='totle-cash'>{{=cashFormatO(it[0].planPrice)}}</span></div>
+		    				</div>
+		    			</div>
+		    		</li>
+	    		</div>
+	    	</ul>
+	    </div>
+	    <div class='learn-plan-list'>
+	    	<ul>
+	    		<li class='bottom-slide font-weight'>
+	    			<div class="learn-plan-list-item">
+	    				<div class='other-item w-90'>
+		    				<div class="learn-plan-list-item-param text-c" style="width:75%;">报考准驾车型</div>
+		    				<div class="learn-plan-list-item-param text-r" style="width:25%;">选择</div>
+	    				</div>
+	    			</div>
+	    		</li>
+	    		{{ for(var i=0;i<it[0].licenseType.split(',').length;i++){ }}
+		    		<li class='bottom-slide' tapmode onclick='selLicenseType(this)'>
+		    			<div class="learn-plan-list-item">
+		    				<div class='other-item w-90'>
+			    				<div class="learn-plan-list-item-param text-c" style="width:80%;">{{=getLicenseTypeName(it[0].licenseType.split(',')[i])}}</div>
+			    				<div class="learn-plan-list-item-param text-r" style="width:20%;">
+			    					<input class="aui-radio" type="radio" name="plan_license" value="{{=it[0].licenseType.split(',')[i]}}">
+			    				</div>
+		    				</div>
+		    			</div>
+		    		</li>
+	    		{{ } }}
+	    	</ul>
+	    </div>
+		<div class="aui-btn aui-btn-info aui-btn-block fixed-b" tapmode onclick="buyLearnPlan()">立即报名</div>
+	</script>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var licenseType = '';//选择的准驾类型code
+	var licenseTypeName = '';//选择的准驾类型name
+	var licenseTypeMap;//驾考类型缓存
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam.data;
+		log('cache',cache);
+		licenseTypeMap = $api.getStorage('cache_by_app').licenseTypeMap;
+		
+		init();
+	}
+	
+	function init(){
+		defaultload('获取套餐中...');
+		
+		url = 'api/study-plan/get-plan-info';
+		params = {
+			id:cache.planId
+		}
+		
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			log('学习套餐',ret);
+			api.hideProgress();
+			if(ret){
+				if(ret.code == 0){
+					if(ret.learningPlanList.length == 1){
+						var study_plan_detail_src = $('#study_plan_detail_src').html();
+						$('#studyPlanDetail').html(doT.template(study_plan_detail_src)(ret.learningPlanList));
+						if(cache.from == 'register'){
+							//如果是从报名页面进来那么就不能选择套餐
+							$('.aui-btn').addClass('aui-hide');
+						}
+						api.parseTapmode();
+					}else{
+						alert_msg('无效的套餐');
+					}
+				}else{
+					alert_msg(ret.msg);
+				}
+			}else{
+				alert_msg('服务器繁忙，请稍后再试');
+			}
+		});
+	}
+	
+	/**
+	 * 显示或者隐藏套餐 
+	 */
+	function showHiddenPlanList(e){
+		if($('#planList').css('display') == 'none'){
+			$(e).addClass('aui-hide');
+			$('#planList').slideDown(300);
+		}else{
+			setTimeout(function(){$(e).removeClass('aui-hide')},300);
+			$('#planList').slideUp(300);
+		}
+	}
+	
+	/**
+	 * 选择驾考类型 
+	 */
+	function selLicenseType(e){
+		$(e).find("input[type='radio']").click();
+	}
+	
+	/**
+	 * 点击购买 
+	 */
+	function buyLearnPlan(){
+		if(islogin()){
+			licenseType = $('input[type="radio"]:checked').val();
+			
+			//未选择驾考类型则提示
+			if(licenseType == ''||licenseType == null){
+				if($('#planList').css('display') != 'none'){
+					setTimeout(function(){$('#more-div').removeClass('aui-hide')},300);
+					$('#planList').slideUp(300);
+				}else{
+					alert_msg('您还未选择准驾类型');
+				}
+				return;
+			}
+			
+			licenseTypeName = getLicenseTypeName($('input[type="radio"]:checked').val());
+			
+			openMessage_i('您当前选择的','套餐名称：' + cache.plan_name + '<br>准驾车型：' + licenseTypeName,'确认','重新选择','checkInfo()','',null);
+		}else{
+			openLoginHtml_i();
+		}
+	}
+	
+	/**
+	 * 对选择的套餐和驾考类型进行校验，购买过的套餐且未退款的无法再次购买
+	 */
+	
+	function checkInfo(){
+		defaultload('校验中...');
+		url = 'api/study-plan/check-buy-power';
+		params = {
+			licenseType:licenseType,
+			id:cache.planId,
+			learnerId:getUserId()
+		}
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			log('获取权限',ret);
+			api.hideProgress();
+			if(ret){
+				if(ret.code == 0){
+					if(ret.learnerBuyPlanList.length > 0){
+						alert_msg('您已购买过该套餐');
+					}else{
+						//执行报名操作
+						sendEvent('learn_plan_sel',params);
+						api.closeWin({
+                        });
+					}
+				}else{
+					alert_msg(ret.msg);
+				}
+			}else{
+				alert_msg('服务器繁忙，请稍后再试');
+			}
+		});
+	}
+	
+	/**
+	 * 返回驾培类型名称 
+	 */
+	function getLicenseTypeName(code){
+		return licenseTypeMap[code].name;
+	}
+	
+	//打开通用弹出框
+	//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+	function openMessage_i(title,content,sureButton,cancelButton,sureFunc,cancelFunc,params){
+		api.openFrame({
+	        name: 'common_message',
+	        url: '../../common/common_message.html',
+	        bgColor: 'rgba(0,0,0,0.4)',
+	        rect: {
+	            x: 0,
+	            y: 0,
+	            w: 'auto',
+	            h: api.winHeight
+	        },
+	        bounces: false,
+	        pageParam:{
+	        	title:title,
+	        	content:content,
+	        	sureButton:sureButton,
+	        	sureFunc:sureFunc,
+	        	cancelButton:cancelButton,
+	        	cancelFunc:cancelFunc,
+	        	winName:api.winName,
+	        	frameName:api.frameName,
+	        	params:params
+	        },
+	        softInputBarEnabled:true,
+	        softInputMode:'resize'
+	    });
+	}
+	
+	/**
+	 * 打开登录 
+	 */
+	function openLoginHtml_i(data){
+		api.openWin({
+	       name: 'unpassword_login',
+	       url: '../../unpassword_login.html',
+	       slidBackEnabled:'true',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       pageParam: data
+	   });
+	}
+</script>
+</html>

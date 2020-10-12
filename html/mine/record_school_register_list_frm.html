@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>驾校报名订单</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_list_swipe.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html,body{
+    		background:#F5F5F5;
+    	}
+		.msg{
+			background: #F5F5F5;
+		    height: 20rem;
+		    text-align: center;
+		    font-size:0.7rem;
+		}
+		.msg img{
+			width:8rem;
+			margin-top: 9rem;
+		}
+		.jiazai{
+    	    font-size: 0.7rem;
+		    background: #F5F5F5;
+		    color: #666565;
+		    padding-bottom: 0.3rem;
+		    text-align: center;
+		    padding-top: 0.3rem;
+	    }
+	    .jiazai img{
+	    	width: 1.5rem;
+	    }
+		.pre_load_msg{
+            background: #FFFFFF;
+            height: 40rem;
+            text-align: center;
+            font-size: 0.8rem;
+        } 
+        .pre_load_msg img{
+             width: 10rem;
+             margin-top: 7rem;
+        }
+	    .list-examination{
+	    }
+	    .list-examination li{
+    	    width: 95%;
+		    margin-left: 2.5%;
+		    margin-top: 1rem;
+	    }
+	    .order-date{
+	        font-size: 0.6rem;
+		    margin: 0.2rem 0rem;
+		    background: #ADE5FA;
+		    width: 22%;
+		    color: #FFF;
+		    border-radius: 0.5rem;
+		    text-align: center;
+	    }
+	    .order-content{
+	    	overflow: hidden;
+	    }
+	    .hospital-headImg{
+	    	width: 10%;
+			float: left;
+			text-align: center;
+			margin-top: 0.7rem;
+	    }
+	    .hospital-headImg img{
+	    	width:1rem;
+	    }
+	    .hospital-content{
+	    	width: 70%;
+    		float: left;
+    		padding: 0.5rem 0rem;
+	    }
+	    .order-cash{
+    	    width: 20%;
+		    float: left;
+		    padding: 0.5rem 0rem;
+		    padding-right: 0.5rem;
+		    text-align: right;
+	    }
+	    .hospital-name{
+	    	font-size: 0.9rem;
+	    }
+	    .hospital-address{
+	    	font-size:0.7rem;
+	    	color:#A7A7A7;
+    	    margin-top: 0.3rem;
+	    }
+	    .hospital-address span{
+	    	width: 3rem;
+	    	color:#000;
+	    }
+	    .hospital-license{
+	    	font-size:0.7rem;
+	    	color:#A7A7A7;
+    	    margin-top: 0.1rem;
+	    }
+	    .cash{
+    	    color: #F9611D;
+	    }
+	    .cash span{
+	    	font-size:0.6rem;
+	    }
+	    .pay-status{
+    	    font-size: 0.7rem;
+	    	color:#898989;
+	    }
+	    .order-button{
+    		overflow: hidden;
+		    padding-bottom: 0.5rem;
+	    }
+	    .op-button{
+	    	color: #535860;
+		    font-size: 0.7rem;
+		    text-align: center;
+		    border-radius: 1rem;
+		    float: right;
+		    margin-right: 0.5rem;
+		    background: #F1F2F4;
+	        padding: 0.1rem 0.6rem;
+	    }
+	    .left{
+	    	float: left;
+	    	margin-left: 0.5rem;
+	    }
+	    .order-detail{
+	    	background: #FFF;
+		    border-radius: 0.5rem;
+	    }
+	    .payed{
+	    	color: #F9611D;
+	    }
+	    .hui{
+	    	color:#909090;
+	    }
+	    .order-button-detail{
+	    	color:#03A9F4;
+	    	background:#E8F7FA;
+	    }
+    </style>
+</head>
+<body>
+	<ul class='list-examination'>
+		<!-- <li>
+			<div class='order-date'>2019-5-15</div>
+			<div class='order-detail'>
+				<div class='order-content'>
+					<div class='hospital-headImg'>
+						<img src="../../icon/hospital/icon_driver_school_list.png" alt="" />
+					</div>
+					<div class="hospital-content">
+						<div class='hospital-name'>上虞第三医院</div>
+						<div class='hospital-address'>百官街道斯卡哈徐爱华擦</div>
+						<div class='hospital-license'>状态：线上体检</div>
+						<div class='hospital-license'>C1（小型汽车和C2、C3）</div>
+					</div>
+					<div class='order-cash'>
+						<div class='cash'><span>￥</span>255.0</div>
+						<div class='pay-status'>未支付</div>
+					</div>
+				</div>
+				<div class='order-button'>
+					<span class='op-button'>上传视频</span>
+				</div>
+			</div>
+		</li> -->
+	</ul>
+	<div id='load_div'>
+    </div>
+    <script type="text/template" charset="utf-8" id='load_src'>
+    	<div class="load">
+			<img src="../../icon/common/loadding.gif" alt="" /><br>
+        	<span>加载中...</span>
+		</div>
+    </script>
+    <script type="text/template" charset="utf-8" id='msg_src'>
+    	<div class="msg">
+			<img src="../../icon/common/empty.png" alt="" /><br>
+        	<span>{{=it.msg}}</span>
+		</div>
+    </script>
+    <script type="text/template" charset="utf-8" id='more_src'>
+    	<div class="jiazai">
+	    	<span>{{=it.msg}}</span>
+	    </div>
+    </script>
+	<script type="text/template" charset="utf-8" id='pre_load_src'>
+        <div class="pre_load_msg">
+            <img src="../../image/background/preloading.gif" alt=""/><br>
+        </div>
+    </script>
+	<script type="text/template" charset="utf-8" id='recode_hospital_examination_src'>
+		{{ for(var i=0;i<it.length;i++){ }}
+			<li>
+				<div class='order-date'>{{=it[i].insertDt.substring(0,10)}}</div>
+				<div class='order-detail'>
+					<div class='order-content'>
+						<div class='hospital-headImg'>
+							<img src="../../icon/hospital/icon_driver_school_list.png" alt="" />
+						</div>
+						<div class="hospital-content">
+							<div class='hospital-name'>{{=it[i].driverSchool.name}}</div>
+							<div class='hospital-address'>{{=it[i].driverSchool.district.areaName}} {{=it[i].driverSchool.address}}</div>
+							<div class='hospital-license'>{{=it[i].licenseType.name}}</div>
+						</div>
+						<div class='order-cash'>
+							<div class='cash'><span style="display: inline;">￥</span>{{=cashFormatO(it[i].entryFee)}}</div>
+							<div class='pay-status'>
+								{{ if(it[i].paymentStatus == 1){ }}
+									<span class='payed'>已支付</span>
+								{{ }else if(it[i].paymentStatus == 0){ }}
+									<span>未付款</span>
+								{{ }else{ }}
+									<span>支付失败</span>
+								{{ } }}
+							</div>
+						</div>
+					</div>
+					<div class='order-button'>
+						<!-- 一大堆逻辑开始 -->
+						<!-- 订单没取消且没付款的情况下才能去支付 -->
+	    				{{ if(it[i].paymentStatus == 0&&it[i].status.code != '005005'){ }}
+		    				<span class="op-button" tapmode onclick="judgeHasContract('{{=it[i].id}}','{{=it[i].driverSchool.id}}',2)">
+		    					去缴费
+			    			</span>
+			    		<!-- 已支付且状态是预报名成功 -->
+			    		{{ }else if(it[i].paymentStatus == 1&&it[i].status.code == '005002'){ }}
+			    			<span class='op-button hui'>审核中</span>
+			    		<!-- 已支付且状态已是报名成功 -->
+			    		{{ }else if(it[i].paymentStatus == 1&&it[i].status.code == '005003'){ }}
+			    			<span class='op-button hui'>报名成功</span>
+			    		<!-- 未支付，状态为成功，则显示报名失败，不可能出现 -->
+			    		{{ }else if(it[i].paymentStatus == 0&&it[i].status.code == '005003'){ }}
+			    			<span class='op-button hui'>未付款-报名成功</span>
+			    		<!-- 状态为失败，则显示报名失败 -->
+			    		{{ }else if(it[i].status.code == '005004'){ }}
+		    				<span class='op-button hui'>报名失败</span>
+		    			<!-- 状态为取消，则显示订单取消 -->
+			    		{{ }else if(it[i].status.code == '005005'){ }}
+		    				<span class='op-button hui'>订单已取消</span>
+		    			{{ } }}
+		    			
+		    			<!-- 只有在未付款的情况下才能取消订单，已付款再去取消订单会有时间差问题，如果这时候报名结果没下来但是工作人员已经把他信息已提交到车管所审核了呢，过了怎么办？ -->
+						<!-- 不是付款订单且订单状态不是已取消才能取消 -->
+						{{ if(it[i].statusCode != '005005'&&it[i].paymentStatus != 1){ }}
+							<span class='op-button left' tapmode onclick='cancelOrder("{{=it[i].id}}")'>取消订单</span>
+						{{ } }}
+						
+		    			<span class='op-button' tapmode onclick='openDetail("{{=it[i].id}}")'>详情</span>
+		    			{{ if(it[i].paymentStatus == 1){ }}
+		    					
+		    				{{ if(it[i].invoiceId){ }}
+		    				
+			    			<span class='op-button order-button-detail' tapmode onclick='openReceipt("{{=it[i].invoiceId.id}}")'>查看发票</span>
+							
+							{{ }else{ }}
+							
+							<span class='op-button ' tapmode onclick='openApplicationReceipt("{{=it[i].id}}","{{=it[i].driverSchool.id}}")'>申请开票</span>
+							
+							{{ } }}
+		    			{{}}}
+					</div>
+				</div>
+			</li>
+		{{ } }}
+	</script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var limit = 10,page = 1;
+	var load_src = $('#load_src').html();//加载src
+	var msg_src = $('#msg_src').html();//消息提示src
+	var more_src = $('#more_src').html();//更多src
+	var pre_load_src = $('#pre_load_src').html(); //预加载src	 
+	var refresh = true;//标记是否是刷新操作
+	apiready = function(){
+		cache = api.pageParam.data;
+		goRefrash(40,'#F5F5F5',null,null,function(){
+			refreshList();
+		});
+		goLoad(function(ret,err){
+			loadList();
+		});
+		
+		//监听支付成功回调
+		toEventListener('register_pay_sucesss',function(ret){
+		    setPreLoading()
+			refreshList();
+		});
+		
+		api.addEventListener({
+		    name: 'closeWinInv'
+		}, function(ret, err) {
+			if(ret.value.key1=='1'){			
+				init();	
+				log('监听了哈哈哈')
+			}
+		    setPreLoading() 
+		});
+		init();
+	};
+	function init(){
+		//console.log('传入模考记录类型'+cache.type);
+		url = 'api/driving-school-registration/select-user-registration-info';
+		params = {
+			learnerId:getUserId(),
+			limit:limit,
+			page:page
+		}
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			log('驾校报名记录',ret);
+			if(ret){
+				if(ret.code == 0&&ret.driverSchoolRegistration.length > 0){
+					var recode_hospital_examination_src = $('#recode_hospital_examination_src').html();
+					if(refresh||$('.list-examination').find('li').length == 0){
+						$('.list-examination').html(doT.template( recode_hospital_examination_src )( ret.driverSchoolRegistration ));
+					}else{
+						$('.list-examination').append(doT.template( recode_hospital_examination_src )( ret.driverSchoolRegistration ));
+					}
+				}else{
+					setMsg(refresh?'无报名记录':'暂无更多');
+				}
+				setTimeout(function(){
+					api.refreshHeaderLoadDone();
+				},300);
+			}else{
+				setMsg('服务器故障');
+			}
+		});
+	}
+	
+	//设置页面加载的画面
+	function setLoad(){
+		if(refresh||$('.list-examination').find('li').length == 0){//如果是刷新或者之前无数据的下拉刷新，全屏提示
+			$('#load_div').html('');
+			//$(".list-examination").html(doT.template( load_src )( null ));
+		}else{
+			setTimeout(function(){
+				$('#load_div').html(doT.template( more_src )( {'msg':'加载更多中...','img':'../../icon/common/jiazai.gif'} ));
+			},500);
+		}
+	}
+	//申请发票
+	function openApplicationReceipt(ordId,schoolId){
+	 	api.openWin({
+			name: 'common_application_receipt_status',
+			url: '../common/common_application_receipt_status.html',
+			slidBackEnabled: 'false',
+			vScrollBarEnabled: 'false',
+			hScrollBarEnabled: 'false',
+			reload: true,
+			pageParam: {
+				organizationType:'2',
+				ordId:ordId,
+				schoolId:schoolId
+			}
+			});
+		}
+	//设置页面提示信息
+	function setMsg(msg){
+		if(refresh||$('.list-examination').find('li').length == 0){//如果是刷新或者之前无数据的上拉加载，全屏提示
+			setTimeout(function(){
+				$(".list-examination").html(doT.template( msg_src )( {'msg':msg} ));
+			},500);
+		}else{//原先已经有数据的情况下
+			setTimeout(function(){
+			    $('#load_div').html(doT.template( more_src )( {'msg':msg,'img':''} ));
+			},500);
+		}
+	}
+	
+	//预加载
+    function setPreLoading(){
+            $(".list-examination").html(doT.template(pre_load_src)({
+                'msg': ''
+            }));
+        }
+	//列表刷新
+	function refreshList(){
+		page = 1;refresh = true;
+		setLoad();
+		init();
+	}
+	//列表上拉
+	function loadList(){
+		page++;refresh = false;
+		setLoad();
+		init();
+	}
+		
+	//发票详情
+	function openReceipt(orderId){
+		log('ID',orderId)
+		api.openWin({
+			name: 'common_receipt_status',
+			url: '../common/common_receipt_status.html',
+			slidBackEnabled: 'false',
+			vScrollBarEnabled: 'false',
+			hScrollBarEnabled: 'false',
+			reload: true,
+			pageParam: {
+			organizationType:'2',
+				orderId:orderId
+			}
+		});
+	}
+	
+	//获取用时时长
+	function calCuTime(seconds){
+		return 	Math.floor(seconds/60) + '分' + seconds%60 + '秒';
+	}
+	
+	//打开地图
+	function openMap(hospitalName,latitude,longitude){
+		params = {
+			to_lon:longitude,
+			latitude:latitude,
+			to_name:hospitalName
+		}
+		api.openWin({
+	       name: 'common_map_loaction_win',
+	       url: '../common/common_map_loaction_win.html',
+	       slidBackEnabled:'true',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       pageParam: {
+	           data:params
+	       }
+	   });
+	}
+	
+	//去支付前先查询该学员有无与该驾校/医院/考场签订合约    医院不会出现未签约的情况，其实可以舍去
+	function judgeHasContract(orderId,organizationId,type,licenseType){
+		params = {
+			orderId:orderId,
+			schoolId:organizationId,
+			flag:type
+		}
+		
+		openWin('driving_pay',params);
+	}
+	
+	//打开通用页面
+	function openWin(type,params){
+		if(params != undefined&&params != null){
+			params.type = type;
+		}else{
+			params = {
+				type:type
+			}
+		}
+		commonOpenWin('mine_common_win',params);
+	}
+	
+	//取消订单
+	function cancelOrder(orderId){
+		openMessage('温馨提示','是否取消该订单','是','否','deleteOrder("'+orderId+'")',null,null);
+	}
+	
+	function deleteOrder(orderId){
+		defaultload('取消订单中');
+		url = 'api/driving-school-registration/cancel-registration';
+		params = {
+			id:orderId
+		}
+		ajax_Request(url, 'put', 'json', params, function(ret,err){
+			api.hideProgress();
+			if(ret){
+				if(ret.code == 0){
+					alert_msg('取消成功');
+					refreshList();
+					//重新渲染我的
+					//esc_function('index','mine','func_init(1)');
+				}else{
+					alert_msg(ret.msg);
+				}
+			}else{
+				alert_msg('网络出错');
+			}
+		});
+	}
+	
+	/**
+	 * 查看详情 
+	 */
+	function openDetail(orderId){
+		params = {
+			orderId:orderId,
+			type:'register-order'
+		}
+		commonOpenWin('record_order_detail_win',params);
+	}
+</script>
+</html>

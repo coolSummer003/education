@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>操作演示</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+		html{
+			background-color: #fff;
+		}
+		.videoItem{
+			width: 94%;
+			margin-left: 3%;
+			background-color: #000000;
+			height: 5rem;
+			border-radius: 0.5rem;
+			margin-top: 0.5rem;
+		}
+		.signUpBgc{
+			background: url(../../../image/background/signUpBgc.png) no-repeat;
+			background-size: 100% 100%;
+		}
+		.physicalExaminationBgc{
+			background: url(../../../image/background/physicalExaminationBgc.png) no-repeat;
+			background-size: 100% 100%;
+		}
+		.centralizedTrainingBgc{
+			background: url(../../../image/background/centralizedTrainingBgc.png) no-repeat;
+			background-size: 100% 100%;
+		}
+		.onlineBookingBgc{
+			background: url(../../../image/background/onlineBookingBgc.png) no-repeat;
+			background-size: 100% 100%;
+		}
+		.timingTrainingBgc{
+			background: url(../../../image/background/timingTrainingBgc.png) no-repeat;
+			background-size: 100% 100%;
+		}
+    </style>
+	</head>
+	<body>
+		<div class="videoItem signUpBgc" tapmode onclick="openVideo(0)"></div>
+		<div class="videoItem physicalExaminationBgc" tapmode onclick="openVideo(1)"></div>
+		<div class="videoItem centralizedTrainingBgc" tapmode onclick="openVideo(2)"></div>
+		<!--<div class="videoItem onlineBookingBgc" tapmode onclick="openVideo(3)"></div>-->
+		<div class="videoItem timingTrainingBgc" tapmode onclick="openVideo(4)"></div>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var params;
+		apiready = function() {
+			api.parseTapmode();
+			init();
+		}
+		function init() {
+			
+			
+		}
+		function openVideo(index){
+			if(index === 0){
+				params = {
+					name: '在线报名操作演示',
+					videoUrl: 'operation_show/sign_up.mp4'
+				}
+			}else if(index === 1){
+				params = {
+					name: '在线体检操作演示',
+					videoUrl: 'operation_show/online_examination.mp4'
+				}
+			}else if(index === 2){
+				params = {
+					name: '集中培训操作演示',
+					videoUrl: 'operation_show/online_training.mp4'
+				}
+			}else if(index === 3){
+				params = {
+					name: '在线预约操作演示',
+					videoUrl: 'operation_show/online_appoint.mp4'
+				}
+			}else if(index === 4){
+				params = {
+					name: '计时培训操作演示',
+					videoUrl: 'operation_show/timing_training.mp4'
+				}
+			}
+			api.openWin({
+			    name: 'video_play_win',
+			    url: './video_play/video_play_win.html',
+			    slidBackEnabled: 'false',
+			    vScrollBarEnabled: 'false',
+			    hScrollBarEnabled: 'false',
+			    reload: true,
+			    useWKWebView: false,
+			    pageParam: params
+			});
+			
+			
+		}
+
+	</script>
+</html>

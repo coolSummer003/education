@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>关于我们</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <style>
+    	html {
+		    background: #FFF;
+		    height: 100%;
+		    display: flex;
+		}
+		body {
+		    background: #FFF;
+		    margin: auto;
+		}
+    	.about-head{
+	        margin: auto;
+    		text-align: center;
+    	}
+    	.about-head img{
+    		width:3rem;
+		    border-radius: 0.5rem;
+    	}
+    	.about-info{
+    		text-align:center;
+    		font-size:0.7rem;
+    	}
+    </style>
+</head>
+<body>
+	<div class="about-head">
+		<img src="../../icon/app/app_logo.png" alt=""/>
+		<div class='about-info'>
+			<div>驾所通</div>
+			<div id="systemVersion"></div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+		$('#systemVersion').html('版本号：'+api.appVersion);
+	};
+</script>
+</html>

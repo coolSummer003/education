@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>准驾车型</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css"/>
+    <style>
+        html,
+        body {
+            background-color: #f2f2f2;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .aui-list-item-media img {
+            width: 100%;
+            height: 100%;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        #container {
+            width: 100%;
+            height: 100%;
+            padding-top: 50px;
+        }
+
+        #carLicenseBox {
+            width: 80%;
+            /*height: 100%;*/
+            border-radius: 10px;
+            margin: 0 auto;
+            padding-bottom: 20px;
+            overflow: hidden;
+            background-color: #ffffff;
+        }
+
+        #carLicenseBox .carLicenseTitle {
+            width: 100%;
+            height: 70px;
+            background-color: #fff;
+            text-align: center;
+            line-height: 70px;
+            color: black;
+            font-size: 18px;
+        }
+
+        #carLicenseBox .carLicenseMain {
+            width: 100%;
+            height: 160px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #carLicenseBox .carLicenseMain ul {
+            width: 100%;
+            height: 36px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #carLicenseBox .carLicenseMain ul li {
+            width: 34px;
+            height: 40px;
+            border: 1px solid #cccccc;
+            text-align: center;
+            line-height: 40px;
+            float: left;
+        }
+
+        #carLicenseBox .carLicenseMain ul li:last-of-type {
+            margin: 0;
+        }
+
+        #carLicenseBox .carLicenseMain ul li.active {
+            border: 2px solid #f3483e;
+        }
+
+        #carLicenseBox .carLicenseMain ul li.xinnengyuan {
+            background: url(img/xinnengyuan.png) no-repeat center;
+            background-size: 100% 100%;
+            border: 2px dashed #CCCCCC;
+        }
+
+        #carLicenseBox .submitBtn {
+            width: 80%;
+            height: 45px;
+            background-color: #f3483e;
+            border: none;
+            border-radius: 6px;
+            text-align: center;
+            line-height: 45px;
+            color: white;
+            font-size: 20px;
+            margin-left: 10%;
+        }
+
+        /*----------*/
+
+
+        .msg_c {
+            text-align: center;
+            height: 20rem;
+            background: transparent;
+            color: #7D7D7D;
+        }
+
+        .msg_c img {
+            width: 8rem;
+            margin-top: 9rem;
+        }
+
+        .aui-btn-block {
+            display: block;
+            width: 100%;
+            padding: 0.4rem 0;
+            font-size: 0.9rem;
+            margin: 0 auto;
+            float: left;
+            position: fixed;
+            bottom: 0;
+            margin-bottom: 0 !important;
+            border-radius: 0px;
+            background: #3F86FF !important;
+            height: 2.5rem;
+            line-height: 1.75rem;
+            z-index:999;
+        }
+
+        .b-left {
+            width: 65%;
+            left: 0;
+            margin-left: 0;
+        }
+
+        .b-right {
+            width: 35%;
+            right: 0;
+            margin-left: 0;
+            background: #FFF !important;
+            color: #3F86FF !important;
+        }
+
+        .b-left:active {
+            background-color: #3F86FF !important;
+        }
+
+        #addCarNum:active {
+            color: #3F86FF !important;
+            background-color: #FFF !important;
+        }
+        .aui-btn-info.aui-active, .aui-btn-info:active {
+		    color: #fff !important;
+		    background-color: #A7D8FA !important;
+		}
+
+    </style>
+</head>
+<body>
+	<section class="" style="padding:0.3rem 0.3rem 0rem 0.3rem">
+	    <div class="aui-content">
+	        <ul class="aui-list aui-media-list" id="dataList">
+	            <!-- <li class="aui-list-item aui-list-item-middle" tapmode onclick="checkBoxTure(this)">
+	                <div class="aui-media-list-item-inner">
+	                    <div class="aui-list-item-media" style="width: 3rem;">
+	                        <img src="../../../icon/mine/icon_road.png" class="aui-img-round aui-list-img-sm">
+	                    </div>
+	                    <div class="aui-list-item-inner">
+	                       	<span>浙DZ7E29</span>
+	                    </div>
+	                    <div class="aui-list-item-media" style="width: 2rem;">
+	                        <img src="../../../icon/subject/icon_delete.png" class="aui-img-round aui-list-img-sm del-b aui-hide" tapmode onclick="delCarNum('{{=it[i].carNum}}')">
+	                        <input class="aui-radio" type="checkbox" name="checkbox" value="{{=it[i].carNum}}" id="check{{=i}}">
+	                    </div>
+	                </div>
+	            </li> -->
+	        </ul>
+	        <div id="empty"></div>
+	    </div>
+	</section>
+	<div class="aui-btn aui-btn-info aui-btn-block" tapmode onclick="check()" id=selCarNum>确认</div>
+</body>
+<script type="text/template" charset="utf-8" id="carnum_list">
+    {{ for(var i=0;i<it.dictionaryList.length;i++){ }}
+	    <li class="aui-list-item aui-list-item-middle" tapmode onclick="checkBoxTure(this)">
+	        <div class="aui-media-list-item-inner">
+	            <div class="aui-list-item-media" style="width: 3rem;">
+	                <img src="../../../icon/mine/icon_road.png" class="aui-img-round aui-list-img-sm">
+	            </div>
+	            <div class="aui-list-item-inner">
+	                {{=it.dictionaryList[i].name}}
+	            </div>
+	            <div class="aui-list-item-media" style="width: 2rem;">
+	                <input class="aui-radio sel-b" type="checkbox" name="checkbox" value="{{=it.dictionaryList[i].code}}" disabled="">
+	            </div>
+	        </div>
+	    </li>
+    {{ } }}
+</script>
+<script type="text/template" charset="utf-8" id="msg_src">
+    <div class='msg_c'>
+        <img src="../../../icon/common/empty.png" alt=""/><br>
+        <span>{{=it}}</span>
+    </div>
+</script>
+
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript">
+    var isAllowSel = true;
+    var limit_select = 1;//最多可选准驾车型，默认1
+    var cache;
+    var msg_src = $('#msg_src').html();
+    apiready = function () {
+        cache = api.pageParam;
+        getLicenseType();
+        if (cache.limit_select != undefined) {
+            limit_select = cache.limit_select;
+        }
+    };
+
+    //获取准驾车型
+    function getLicenseType() {
+    	var licenseTypeCache = $api.getStorage('cache_by_app').cache_dictionary['002000'];
+    	var list_src = $('#carnum_list').html();
+    	$('#dataList').html(doT.template(list_src)(licenseTypeCache));
+        $('#dataList').show();
+        api.parseTapmode();
+    }
+
+    //查找页面上勾选的checkbox
+    function getCheckbox(name) {
+        var result = new Array();
+        $("[name='" + name + "']:checkbox").each(function () {
+            if ($(this).is(":checked")) {
+                result.push($(this).attr("value"));
+            }
+        });
+        return result.join(",");
+    };
+
+    //显示删除按钮
+    function deleteShow() {
+        isAllowSel = false;//不允许选择
+        $('.del-b').removeClass('aui-hide');
+        $('.sel-b').addClass('aui-hide');
+    }
+
+    //完成编辑
+    function finishShow() {
+        isAllowSel = true;//允许选择
+        $('.sel-b').removeClass('aui-hide');
+        $('.del-b').addClass('aui-hide');
+    }
+
+    //确认
+    function check() {
+        var tags = getCheckbox("checkbox");
+        if (tags.length == 0) {
+            alert_msg('请选择准驾车型');
+            return;
+        }
+        if (tags.split(',').length > limit_select) {
+            alert_msg('准驾车型请勿超过' + limit_select + '个');
+            return;
+        }
+
+        //tages是车牌号逗号分隔
+        sendEvent('sel_car_num_action', tags);
+        api.closeWin({});
+    }
+
+    //点击空白处监听
+    function checkBoxTure(e) {
+        if (isAllowSel) {
+            //在允许选择的情况下
+            if ($(e).find('input[type="checkbox"]').prop("checked") == false) {
+                var sel_car_nums = getCheckbox('checkbox');
+                if (sel_car_nums != '' && sel_car_nums.split(',').length >= limit_select) {
+                    alert_msg('最多只可选择' + limit_select + '种准驾车型');
+                    return;
+                }
+                $(e).find('input[type="checkbox"]').prop("checked", true);
+            } else {
+                $(e).find('input[type="checkbox"]').prop("checked", false);
+            }
+        }
+    }
+
+    // 隐藏编辑取消
+    function hideOperation() {
+        esc_function('', '', 'hideOperation()');
+    }
+
+</script>
+
+</html>

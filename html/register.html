@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>注册页面</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../css/common/common.css" />
+    <style>
+    	html{
+    		background:#FFF;
+    		height: 100%;
+    		display:flex;
+    	}
+    	body{
+    		background:#FFF;
+			margin:auto;
+    	}
+    	.aui-list .aui-list-item-title {
+		    font-size: 0.8rem;
+		    position: relative;
+		    width: 70%;
+		    color: #212121;
+		}
+		input::-webkit-input-placeholder{
+			font-size:0.7rem;
+			font-family:微软雅黑
+		}
+		.aui-list .aui-list-item-right, .aui-list-item-title-row em {
+		    max-width: 50%;
+		    position: relative;
+		    color: #3F86FE;
+		    margin-left: 0.25rem;
+		    font-size: 0.7rem;
+		}
+		.aui-list .aui-list-item:active {
+		    background-color: #FFF;
+		}
+		.aui-btn-block {
+		    display: block;
+		    width: 90%;
+		    padding: 0.4rem 0;
+		    font-size: 0.9rem;
+		    margin: 0 auto;
+		    float: left;
+		    margin-left: 5%;
+		}
+		.aui-btn-info {
+		    color: #ffffff !important;
+		    background: linear-gradient(to left, #3F86FE , #64ADF6) !important;
+		    margin-top: 2rem !important;
+		    border-radius: 2rem;
+		}
+		.aui-radio:checked, .aui-radio.aui-checked, .aui-checkbox:checked, .aui-checkbox.aui-checked {
+		    background-color: #03B4F7;
+		    border: solid 1px #03B4F7;
+		    text-align: center;
+		    background-clip: padding-box;
+		}
+		.login-head{
+		    height: 3rem;
+		    line-height: 3rem;
+		    padding-left: 0.8rem;
+		    font-size: 1.8rem;
+    		font-family: 微软雅黑;
+    		color:#646464;
+		    margin-left: -80%;
+		    margin-bottom:4rem;
+		}
+		.aui-list:before {
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    right: auto;
+		    bottom: auto;
+		    width: 100%;
+		    z-index: 2;
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		    pointer-events: none;
+		}
+		.aui-list .aui-list-item-inner {
+		    position: relative;
+		    min-height: 3rem;
+		    padding-right: 0.75rem;
+		    width: 100%;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-flex: 1;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		    -webkit-box-align: center;
+		    -webkit-align-items: center;
+		    align-items: center;
+		}
+		.aui-list:after {
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    right: auto;
+		    bottom: auto;
+		    width: 100%;
+		    z-index: 2;
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		    pointer-events: none;
+		}
+		.aui-list-item-title span{
+			font-size:0.7rem;
+		}
+		footer{
+		    overflow: hidden;
+    		padding-bottom: 1rem;
+		}
+		.aui-list .aui-list-item-label-icon {
+		    width: 1.5rem;
+		    padding-right: 0rem;
+		}
+		.aui-list-item-label-icon input{
+		}
+		input::-webkit-input-placeholder{
+			font-size:1rem;
+			font-family:微软雅黑;
+			color:#D5D5D5;
+		}
+		input{
+			font-size:1rem !important;
+		}
+		.aui-btn-register{
+		    border-radius: 2rem;
+		    background: #FFF;
+		    border: solid 1px #90DBF7;
+		    margin-top: 0.5rem;
+	        color: #90DBF7;
+		}
+		#cn{
+			font-size:0.9rem;
+		}
+		.back-img{
+			position: absolute;
+		    width: 1.5rem;
+		    top: 2rem;
+		    left: 0.8rem;
+		}
+		#clearPhone{
+			opacity: 0;
+		}
+		.clearPhone{
+			position: absolute;
+			width: 1rem;
+			min-height: 1rem;
+			height: 1rem;
+			right: 0.5rem;
+		}
+    </style>
+</head>
+<body>
+	<img src="../icon/common/icon_back_home.png" alt="" class="back-img" tapmode onclick='back()'/>
+	<div class="login-head" id="login-head">亲，请注册</div>
+	<div class="aui-content aui-margin-b-15">
+	    <ul class="aui-list aui-list-in">
+	        <li class="aui-list-item" id="tel">
+	            <div class="aui-list-item-label-icon">
+	                <i class="aui-iconfont aui-icon-mobile"></i>
+	            </div>
+	            <div class="aui-list-item-inner">
+	            	<div class="aui-list-item-title">
+		                <input type="tel" maxlength="11" placeholder="请输入手机号" id="account"/>
+	            	</div>
+	            </div>
+				<div class="aui-list-item-label-icon" id="clearPhone" onclick="clickClear()">
+					<img class="clearPhone" src="../icon/common/icon_delete_blacker.png" >
+				</div>
+	        </li>
+	        <li class="aui-list-item" id="pcd">
+	            <div class="aui-list-item-label-icon">
+	                <i class="aui-iconfont aui-icon-mail"></i>
+	            </div>
+	            <div class="aui-list-item-inner">
+	            	<div class="aui-list-item-title">
+		                <input type="tel" maxlength="6" placeholder="六位验证码" id="postcode"/>		
+	            	</div>
+	                <div class="aui-list-item-right">
+	                    <span id="cn" onclick="getMessage()">点击发送</span>
+	                </div>
+	            </div>
+	        </li>
+	        <li class="aui-list-item" id="pwd">
+	            <div class="aui-list-item-label-icon">
+	                <i class="aui-iconfont aui-icon-lock"></i>
+	            </div>
+	            <div class="aui-list-item-inner">
+	            	<div class="aui-list-item-title">
+		                <input type="password" maxlength="12" placeholder="请输入密码，包含6-12位数字或字母" id="password"/>
+	            	</div>
+	            </div>
+	        </li>
+	        <li class="aui-list-item" id="rpwd">
+	            <div class="aui-list-item-label-icon">
+	                <i class="aui-iconfont aui-icon-lock"></i>
+	            </div>
+	            <div class="aui-list-item-inner">
+	            	<div class="aui-list-item-title">
+		                <input type="password" maxlength="12" placeholder="请确认密码" id="password_sure"/>		
+	            	</div>
+	            </div>
+	        </li>
+	        <li class="aui-list-item">
+	            <div class="aui-list-item-label-icon">
+	                <input type="checkbox" class="aui-radio" id="isAgree">
+	            </div>
+	            <div class="aui-list-item-inner">
+	            	<div class="aui-list-item-title">
+		               	<span>同意</span>
+		               	<span style='color:#3F86FE;' tapmode onclick="openContract()">驾所通平台注册协议</span>	
+	            	</div>
+	            </div>
+	        </li>
+	       			
+		</ul>
+	</div>
+	<footer>
+		<div class="aui-btn aui-btn-info aui-btn-block" id="login" tapmode onclick="register()">注册</div>
+	</footer>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam.data;
+		var header = $api.byId('login-head');
+		$api.fixStatusBar(header);
+		$('#account').val(cache.phone);
+		//openMessage_i('温馨提示','&emsp;&emsp;非浙江省内移动号码，可能无法正常接收车管所短信通知，影响后续使用','好的','','','',null);
+	};
+	//显示清除按钮
+	function showClearLogo(){
+		var phoneNuM = $("#account").val();
+		if(phoneNuM != ""){
+			$("#clearPhone").removeClass('aui-hide');
+		}else{
+			$("#clearPhone").addClass('aui-hide');
+		}
+	}
+	
+	//input 聚焦失焦
+	$telhtml = $("<style>#tel::after{background-color:#1E8DD8;}</style>");
+	$pcdhtml = $("<style>#pcd::after{background-color:#1E8DD8;}</style>");
+	$pwdhtml = $("<style>#pwd::after{background-color:#1E8DD8;}</style>");
+	$rpwdhtml = $("<style>#rpwd::after{background-color:#1E8DD8;}</style>");
+	$tel = $("<style>#tel::after{background-color:#ff0000;}</style>");
+	$pcd = $("<style>#pcd::after{background-color:#ff0000;}</style>");
+	$pwd = $("<style>#pwd::after{background-color:#ff0000;}</style>");
+	$rpwd = $("<style>#rpwd::after{background-color:#ff0000;}</style>");
+	$("#account").focus(function () {
+		$(this).parent().parent().parent().append($telhtml);
+	}).blur(function () { 
+		$telhtml.remove();
+	})
+	$("#postcode").focus(function () {
+		$(this).parent().parent().parent().append($pcdhtml);
+	}).blur(function () { 
+		$pcdhtml.remove();
+	})
+	$("#password").focus(function () {
+		$(this).parent().parent().parent().append($pwdhtml);
+	}).blur(function () {
+		$pwdhtml.remove();
+	})
+	$("#password_sure").focus(function () {
+		$(this).parent().parent().parent().append($rpwdhtml);
+	}).blur(function () {
+		$rpwdhtml.remove();
+	})
+	
+	//点击清除按钮
+	function clickClear(){
+		$("#account").val("");
+		$("#clearPhone").addClass('aui-hide');
+	}
+	//点击发送验证码
+	function getMessage(){
+		if(!isPhoneAvailable($('#account').val())){
+			alert_msg('请输入正确的手机号');
+			$("#tel").append($tel);
+			return;
+		}
+		params = {
+			telephone:$('#account').val(),
+			type:'register'
+		}
+		open_load_up();
+		sendMessage(params, function(ret,err){
+			//console.log("发送验证码"+JSON.stringify(ret));
+			close_load();
+			if(ret){
+				if(ret.code == 0){
+					timedCount('点击发送');
+					alert_msg('发送成功');
+				}else{
+					alert_msg(ret.msg);
+				}
+				$tel.remove();
+			}else{
+				alert_msg("服务器繁忙，请稍后再试");
+			}
+		});
+	}
+	
+	setTimeout(function(){
+	    $("#login-head").animate({marginLeft:"0%"},500);
+	},300);
+	
+    //点击注册
+    function register(){
+    	open_load_up();
+    	if(!isPhoneAvailable($('#account').val())){
+			alert_msg('请输入正确的手机号');
+			$("#tel").append($tel);
+			close_load();
+			return;
+		}
+    	if(!isCodeAvailable($('#postcode').val())){
+			alert_msg('请输入正确的验证码');
+			$("#pcd").append($pcd);
+			close_load();
+			return;
+		}
+		if(!$('#password').val()){
+			alert_msg('请输入密码');
+			$("#pwd").append($pwd);
+			close_load();
+			return;
+		}
+    	if(!/^[a-zA-Z0-9]{6,12}$/.test($('#password').val())){
+			alert_msg('密码格式不正确，请输入6-12位数字或字母');
+			$("#pwd").append($pwd);
+			close_load();
+			return;
+		}
+		if(!$('#password_sure').val()){
+			alert_msg('请确认密码');
+			$("#pwd").append($pwd);
+			close_load();
+			return;
+		}
+    	if($('#password').val() != $('#password_sure').val()){
+			alert_msg('两次密码输入不一致');
+			$("#rpwd").append($rpwd);
+			close_load();
+			return;
+		}
+		if(!$("input[type='checkbox']").prop('checked')){
+			alert_msg('请勾选同意用户协议');
+			close_load();
+			return;
+		}
+		
+		url = 'api/learner/register';
+		params = {
+			learner:{
+				account:$('#account').val(),
+				password:$('#password').val()
+			},
+			verificationCode:$('#postcode').val()
+		}
+		ajax_Request(url, 'post', 'json', params, function(ret,err){
+			//console.log("注册"+JSON.stringify(ret));
+			close_load();
+			if(ret){
+				if(ret.code == 0){
+					setTimeout(function(){
+						sendEvent('send_register_info',params);
+						api.closeWin({
+							name:'register'
+                        });
+					},1500);
+				}
+				alert_msg(ret.msg);
+			}else{
+				alert_msg("注册失败"+JSON.stringify(err));
+				$tel.remove();
+				$pcd.remove();
+				$pwd.remove();
+				$rpwd.remove();
+			}
+		});
+    }
+    
+    /**
+     * 打开注册协议
+     */
+    function openContract(){
+    	openFrameCommon('register_contract',null,0,api.winHeight,false);
+    }
+    
+    //返回
+	function back(){
+		api.closeWin({
+        });
+	}
+	//打开通用弹出框
+	//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+	function openMessage_i(title,content,sureButton,cancelButton,sureFunc,cancelFunc,params){
+		api.openFrame({
+	        name: 'common_message',
+	        url: './common/common_message.html',
+	        bgColor: 'rgba(0,0,0,0.4)',
+	        rect: {
+	            x: 0,
+	            y: 0,
+	            w: 'auto',
+	            h: api.winHeight
+	        },
+	        bounces: false,
+	        pageParam:{
+	        	title:title,
+	        	content:content,
+	        	sureButton:sureButton,
+	        	sureFunc:sureFunc,
+	        	cancelButton:cancelButton,
+	        	cancelFunc:cancelFunc,
+	        	winName:api.winName,
+	        	frameName:api.frameName,
+	        	params:params
+	        },
+	        softInputBarEnabled:true,
+	        softInputMode:'resize'
+	    });
+	}
+</script>
+</html>

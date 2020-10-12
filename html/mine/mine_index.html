@@ -1,0 +1,2139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>我的</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/swiper/swiper.css">
+    <style>
+        html, body {
+            background-color: #ffffff;
+        }
+
+        #aui-header {
+            color: #fff !important;
+            background-image: linear-gradient(-10deg, #84C1FE 0%, #3F86FE 99%);
+        }
+
+        .aui-bar-nav:after {
+            height: 0;
+        }
+
+        header img {
+            width: 1rem;
+        }
+
+        #aui-header1 {
+            position: fixed;
+            top: 0;
+            opacity: 0;
+            background-color: #fff;
+            z-index: 999;
+        }
+
+        #aui-header1.aui-bar-nav:after {
+            height: 1px;
+        }
+
+        .mainImage {
+            display: block;
+            float: left;
+            width: 3.6rem;
+            height: 3.6rem;
+            border-radius: 100%;
+            object-fit: cover;
+        }
+
+        .aui-bar-btn-item {
+            padding-top: 0;
+        }
+
+        .aui-bar-btn-item div:first-child {
+            height: 2.4rem;
+        }
+
+        .aui-bar-btn-item img {
+            height: 2.4rem;
+            width: 2.4rem;
+        }
+
+        #common_title {
+            font-size: 0.8rem;
+        }
+
+
+        #header_bottom {
+            height: 7.2rem;
+            padding: 0.8rem 1.2rem 2.4rem
+        }
+
+        #account_name_div {
+            float: left;
+            line-height: 1.6rem;
+            margin-right: 0.5rem;
+        }
+
+        #account_name {
+            font-size: 0.9rem;
+        }
+
+        #auth_div {
+            float: left;
+            line-height: 1.6rem;
+            text-align: left;
+        }
+
+        .auth-btn {
+            width: 3.5rem;
+            height: 1rem;
+            line-height: 1rem;
+            padding: 0;
+            border-radius: 0.5rem;
+            font-size: 0.6rem;
+            text-align: center;
+        }
+
+        .coach-btn {
+            width: 5rem;
+            height: 1.6rem;
+            line-height: 1.6rem;
+            padding: 0;
+            background-color: #fff;
+            box-shadow: 0 2px 8px 0 #498FFE;
+            border-radius: 0 1rem 1rem 1rem;
+            color: #666;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        #loginBtn {
+            float: left;
+            margin-top: 0.8rem;
+            width: 5rem;
+            height: 1.6rem;
+            padding: 0;
+            line-height: 1.6rem;
+            font-size: 0.8rem;
+            background-color: #fff;
+            box-shadow: 0 2px 8px 0 #498FFE;
+            border-radius: 1rem;
+            color: #666;
+        }
+
+        #banner {
+            position: relative;
+            height: 2rem;
+            width: 100%;
+            background: #FFFFFF;
+            z-index: 998;
+        }
+
+        #banner-content {
+            position: absolute;
+            top: -1.5rem;
+            left: 5%;
+            height: 3rem;
+            width: 90%;
+            padding: 0.5rem;
+            background: #FFFFFF;
+            box-shadow: 0 2px 6px 0 rgba(187, 187, 187, 0.50);
+            border-radius: 12.5px;
+            z-index: 999;
+            color: #666;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        #banner-content > .aui-col-xs-6:first-child {
+            height: 100%;
+            width: 49%;
+            padding-left: 6.5%;
+            overflow: hidden;
+        }
+
+        #banner-content > .aui-col-xs-6:last-child {
+            height: 100%;
+            width: 49%;
+            padding-left: calc(6.5% + 0.5rem);
+            overflow: hidden;
+        }
+
+        #banner-content img {
+            height: 2rem;
+            width: 2rem;
+            margin-right: 0.25rem;
+        }
+
+        .vertical-separator {
+            float: left;
+            background: #F5F5F5;
+            height: 2rem;
+            width: 1px;
+        }
+
+        #kemu-menus {
+            background-color: #fff;
+            color: #7D7D7D;
+            position: relative;
+            padding: 0.25rem 0.3rem;
+        }
+
+        #tab-content {
+            background-color: #fff;
+            color: #7D7D7D;
+            position: relative;
+            padding: 0 5%;
+        }
+
+        .swiper-slide {
+            /*display: none;*/
+            margin-top: 0.25rem;
+        }
+
+        .study-time-btn {
+            float: right;
+            height: 1.4rem;
+            width: 3.6rem;
+            text-align: center;
+            line-height: 1.4rem;
+            padding: 0 0.3rem;
+            /*border: 1px solid #C2C2C2 !important;*/
+            border-radius: 0.6rem;
+            margin-left: 4%;
+            font-size: 0.6rem;
+            color: #5494FF !important;
+            background-color: #EDF6FF !important;
+        }
+
+        .mine-info-load {
+            width: 100%;
+            height: 7rem;
+            text-align: center;
+        }
+
+        .mine-info-load img {
+            height: 10rem;
+            margin-top: -1rem;
+        }
+
+        .font-title {
+            text-align: left;
+            position: relative;
+            height: 1.4rem;
+            padding-top: 0.2rem;
+            color: #666;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .col-x-img {
+            height: 1.6rem;
+            width: 1.6rem;
+        }
+
+        .aui-list:before {
+            height: 0;
+        }
+
+        .aui-list:after {
+            height: 0;
+        }
+
+        .content-item {
+            padding: 0.4rem 0.6rem;
+            box-shadow: 0 2px 6px 0 rgba(187, 187, 187, 0.50);
+            border-radius: 10px;
+            margin-bottom: 0.8rem;
+        }
+
+        .fontColor {
+            color: #323744;
+            font-size: 0.7rem;
+        }
+
+        ul li {
+            padding-left: 0 !important;
+        }
+
+        .aui-swipe-handle .aui-info:nth-child(1) {
+            padding: 0.25rem 0;
+        }
+
+        .aui-swipe-handle .aui-info:nth-child(2) {
+            padding: 0 0 0.25rem;
+        }
+
+        .aui-swipe-handle .aui-info:nth-child(3) {
+            padding: 0 0 0.25rem;
+        }
+
+        #study-time-not-login-div {
+            height: 4rem;
+            padding: 1.25rem 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        #study-time-not-login-btn {
+            color: #fff;
+            background: linear-gradient(to left, #03B4F7, #79D6FA);
+            margin: 0 auto;
+            padding: 0;
+            height: 1.5rem;
+            line-height: 1.5rem;
+            width: 4rem;
+            font-size: 0.8rem;
+            border-radius: 0.8rem;
+        }
+
+        #mine-menus {
+            position: relative;
+            padding-top: 0.25rem;
+            padding-bottom: 0.5rem;
+        }
+
+        #mine-menus img {
+            width: 2rem;
+            height: 2rem;
+        }
+
+        .aui-grid [class*=aui-col-] {
+            padding: 0.25rem 0;
+        }
+
+        .aui-active {
+            color: #3F86FF !important;
+        }
+
+        .status {
+            position: absolute;
+            right: 2rem;
+            top: 1rem;
+            width: 4rem;
+            height: 4rem;
+            z-index: 998;
+        }
+
+        .status img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 头部 -->
+<header class="aui-bar aui-bar-nav aui-border-b" id="aui-header">
+    <div id="header_top" style="height: 2.25rem;">
+        <!--        <a class="aui-pull-left aui-btn" tapmode onclick="closeWin()">
+                    <img src="../../icon/common/icon_header_return_white.png">
+                </a>-->
+        <div class="aui-title" id="common_title">
+            我的
+        </div>
+    </div>
+    <div id="header_bottom">
+        <div class="aui-row" style="height: 4rem;">
+            <div class='aui-col-xs-9 aui-hide' id="login_show">
+                <div style="overflow: hidden; height: 1.6rem;">
+                    <div id="account_name_div">
+                        <span id="account_name"></span>
+                    </div>
+                    <div id="auth_div">
+                        <button id="isAuth" class="auth-btn aui-hide" style="background-color: #FFC436;">
+                            已实名认证
+                        </button>
+                        <button id="notAuth" class="auth-btn aui-hide" style="background-color: #1CC5D9; color: #fff;"
+                                tapmode onclick="openAuthInfoPage()">
+                            去认证
+                        </button>
+                    </div>
+                </div>
+                <div style="height: 1.6rem; text-align: left;">
+                    <button id="addCoachBtn" tapmode onclick="openAddCoachPage()" class="coach-btn aui-hide">
+                        绑定教练
+                    </button>
+                    <button id="myCoachBtn" tapmode onclick="openMyCoachInfoPage()" class="coach-btn aui-hide">
+                        我的教练
+                    </button>
+                </div>
+            </div>
+            <div class="aui-col-xs-9 aui-hide" id="not_login_show">
+                <div style="height: 3.2rem; overflow: hidden;"
+                     id="account_info_top">
+                    <button id="loginBtn"
+                            tapmode onclick="openLoginHtml()">点击登录
+                    </button>
+                </div>
+            </div>
+            <div class="aui-col-xs-3" style="float: right; overflow: hidden; margin-top: 0.1rem;">
+                <img id="avatar" src="../../icon/common/icon_users.png" class="mainImage" alt=""
+                     onerror="javascript:this.src='../../icon/common/icon_users.png'" tapmode
+                     onclick="openSetAccount()"/>
+            </div>
+        </div>
+    </div>
+</header>
+
+<header class="aui-bar aui-bar-nav aui-border-b" id="aui-header1">
+    <div id="header_top1" style="height: 2.25rem;">
+        <div class="aui-title" style="color: #000; font-weight: bold;">
+            我的
+        </div>
+    </div>
+</header>
+
+<!-- 报名、体检 -->
+<div id="banner">
+    <div class="aui-row" id="banner-content">
+        <div class="aui-col-xs-6" tapmode
+             onclick="openMySignPage()">
+            <div style="float: left; height: 100%;">
+                <img src="../../icon/mine1/my_sign.png" alt="">
+            </div>
+            <div style="float: left; height: 100%; line-height: 2rem;">
+                <span>我的报名</span>
+            </div>
+        </div>
+        <div class="vertical-separator"></div>
+        <div class="aui-col-xs-6" tapmode onclick="openMyPePage()">
+            <div style="float: left; height: 100%;">
+                <img src="../../icon/mine1/my_pe.png" alt="">
+            </div>
+            <div style="float: left; height: 100%; line-height: 2rem;">
+                <span>我的体检</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 科目菜单栏 -->
+<div class="aui-row" id="kemu-menus">
+    <div class="aui-col-xs-12">
+        <ul class="aui-bar aui-bar-btn aui-bar-btn-full" id="tab">
+            <li class="aui-bar-btn-item">
+                <div><img src="../../icon/mine1/k1.png" alt=""/></div>
+                <div><span>科目一</span></div>
+            </li>
+            <li class="aui-bar-btn-item">
+                <div><img src="../../icon/mine1/k2.png" alt=""/></div>
+                <div><span>科目二</span></div>
+            </li>
+            <li class="aui-bar-btn-item">
+                <div><img src="../../icon/mine1/k3.png" alt=""/></div>
+                <div><span>科目三</span></div>
+            </li>
+            <li class="aui-bar-btn-item">
+                <div><img src="../../icon/mine1/k4.png" alt=""/></div>
+                <div><span>科目四</span></div>
+            </li>
+        </ul>
+        <div class="list_bar" id="slideSpan">
+            <div class="list_bar_inner"></div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 科目学时内容 -->
+<div id="tab-content" class="swiper-container" style="min-height: 9rem;">
+    <div class="swiper-wrapper">
+        <!-- 科目一 -->
+        <div class="swiper-slide">
+            <div class="view-content">
+                <div class='mine-info-load'>
+                    <img src="../../image/background/preloading.gif" alt=""/>
+                </div>
+            </div>
+        </div>
+        <script type="text/template" charset="utf-8" id='order_list_src1'>
+            <div class="aui-content" style="height: auto;">
+                {{ if(time_format(it.onlineStudyTime-it.onlineEffectiveTime) == '0分' && time_format(it.onlineEffectiveTime) != '0分'){ }}
+                <div class="status">
+                    <img src="../../icon/mine/finish.png" alt="">
+                </div>
+                {{ } }}
+
+                {{ if(time_format(it.onlineStudyTime-it.onlineEffectiveTime) != '0分'){ }}
+                <!--      <div class="status">
+                          <img src="../../icon/mine/unfinish.png" alt="">
+                      </div>-->
+                {{ } }}
+                <div class="content-item">
+                    {{ if(it.dataBean != undefined && calErrorTime(it.dataBean.array,4) > 0){ }}
+                    <div class="aui-list font-title aui-list-item-arrow" tapmode onclick=checkErrorDetail(4)>
+                        <span>远程教育</span>
+                        <div class="aui-list-item-right error-time">
+                            <span class="" style="">异常学时：查看</span>
+                        </div>
+                    </div>
+                    {{ }else{ }}
+                    <div class="aui-list font-title">
+                        <span>远程教育</span>
+                    </div>
+                    {{ } }}
+                    <ul class="aui-list aui-media-list none-top-style none-bottom-style xianshang">
+                        <li class="aui-list-item none-top-style none-bottom-style" style='width:100%; padding-left: 0;'>
+                            <div class="aui-swipe-handle">
+                                <div class="aui-info">
+                                    <div class="aui-info-item" style="width: 50%;z-index: 999;">
+                                        <span class=" fontColor">累计学习：</span>
+                                        <span>{{=second_format(it.studyTimeCounts)}}</span>
+                                    </div>
+                                    <div class="aui-info-item" style="width: 50%;z-index: 999;">
+                                        <span class="fontColor">上传学时：</span>
+                                        <span>{{=time_format(it.onlineUploadTime)}}</span>
+                                    </div>
+                                </div>
+                                <div class="aui-info">
+                                    <div class="aui-info-item" style="width: 50%;z-index: 999;">
+                                        <span class=" fontColor">有效学时：</span>
+                                        <span>{{=time_format(it.onlineEffectiveTime)}}</span>
+                                    </div>
+                                    <div class="aui-info-item" style="width: 50%;z-index: 999;">
+                                        <span class=" fontColor">剩余应学：</span>
+                                        <span>{{=time_format(it.onlineStudyTime-it.onlineEffectiveTime)}}</span>
+                                    </div>
+                                </div>
+                                <div class="aui-info">
+                                    <div class="aui-info-item" style="width: 50%;z-index: 999;">
+                                        <span class="fontColor">模考次数：</span>
+                                        <span>{{=it.mockCounts}}次</span>
+                                    </div>
+                                    <div class="aui-info-item" style="width: 50%;z-index: 999;">
+                                        <span class="fontColor">及格次数：</span>
+                                        <span>{{=it.mockPassCounts}}次</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <div style="height: 1.6rem;">
+                            <div class="study-time-btn" tapmode onclick="openWin('record_study_subject_one')">
+                                学习记录
+                            </div>
+                            <div class="study-time-btn" tapmode onclick="openWin('record_exam_subject_one')">
+                                模考记录
+                            </div>
+                            <div class="study-time-btn" tapmode onclick="to_step_exam('0')">
+                                去学习
+                            </div>
+                        </div>
+                    </ul>
+                    <!--  {{ if(it.dataBean != undefined&&calErrorTime(it.dataBean.array,2) > 0){ }}
+                      <div class="aui-list none-bottom-style font-title aui-list-item-arrow" tapmode
+                           onclick=checkErrorDetail(2)>
+                          <span>课堂教学</span>
+                          <div class="aui-list-item-right error-time">
+                              <span class="" style="">异常学时：查看</span>
+                          </div>
+                      </div>
+                      {{ }else{ }}
+                      <div class="aui-list none-bottom-style font-title">
+                          <span>课堂教学</span>
+                      </div>
+                      {{ } }}
+                      <ul class="aui-list aui-media-list none-top-style jizhong">
+                          <li class="aui-list-item none-bottom-style" style='width:100%; padding-left: 0;'>
+                              <div class="aui-swipe-handle">
+                                  <div class="aui-info">
+                                      <div class="aui-info-item">
+                                          <span class="fontColor">累计学习：</span>
+                                          <span>{{=time_format(it.offlineAccumulatedTime)}}</span>
+                                      </div>
+                                      <div class="aui-info-item" style="width: 45%;">
+                                          <span class="fontColor">上传学时：</span>
+                                          <span>{{=time_format(it.offlineUploadTime)}}</span>
+                                      </div>
+                                  </div>
+                                  <div class="aui-info">
+                                      <div class="aui-info-item">
+                                          <span class=" fontColor">有效学时：</span>
+                                          <span>{{=time_format(it.offlineEffectiveTime)}}</span>
+                                          {{ if(it.dataBean != undefined&&it.dataBean.isNeedReview == '1'){ }}
+                                          <font style='color:#DC251F;font-size:0.6rem;'>（审）</font>
+                                          {{ } }}
+                                      </div>
+                                      <div class="aui-info-item" style="width: 45%;">
+                                          <span class="fontColor">剩余应学：</span>
+                                          <span>{{=time_format(240-it.offlineEffectiveTime)}}</span>
+                                      </div>
+                                  </div>
+                              </div>
+                          </li>
+                          <div style="height: 1.6rem">
+                              <div class="study-time-btn" tapmode onclick="openWin('record_scene_subject_one')">
+                                  培训记录
+                              </div>
+                              <div class="study-time-btn" tapmode onclick="openSimulatorAppointment('examinationCourse')">
+                                  预约
+                              </div>
+                              &lt;!&ndash;如果远程教学和课堂教学剩余应学都小于0那么代表学时足够，可以报审&ndash;&gt;
+                              {{ if(240-it.offlineEffectiveTime <=0&&it.onlineStudyTime-it.onlineEffectiveTime <=0&&
+                              it.dataBean != undefined){ }}
+                              <div class='study-time-btn' tapmode onclick="reachLearnerTime()">学时已达标，未上报？</div>
+                              {{ } }}
+                          </div>
+                      </ul>-->
+                </div>
+            </div>
+        </script>
+
+        <!-- 科目二 -->
+        <div class="swiper-slide">
+            <div class="view-content">
+                <div class='mine-info-load'>
+                    <img src="../../image/background/preloading.gif" alt=""/>
+                </div>
+            </div>
+        </div>
+        <script type="text/template" charset="utf-8" id='order_list_src2'>
+            <div class="aui-content">
+                {{ if(time_format(240-it.simulatorEffectiveTime) == '0分' && time_format(it.simulatorAccumulatedTime) != '0分'){ }}
+                <div class="status">
+                    <img src="../../icon/mine/finish.png" alt="">
+                </div>
+                {{ } }}
+
+                {{ if(time_format(240-it.simulatorEffectiveTime) != '0分'){ }}
+                <!--   <div class="status">
+                       <img src="../../icon/mine/unfinish.png" alt="">
+                   </div>-->
+                {{ } }}
+                <div class="content-item">
+                    {{ if(it.dataBean != undefined&&calErrorTime(it.dataBean.array,3) > 0){ }}
+                    <div class="font-title aui-list-item-arrow aui-list none-bottom-style" tapmode
+                         onclick=checkErrorDetail(3)>
+                        <span>模拟器</span>
+                        <div class="aui-list-item-right error-time">
+                            <span class="" style="">异常学时：查看</span>
+                        </div>
+                    </div>
+                    {{ }else{ }}
+                    <div class="font-title aui-list none-bottom-style">
+                        <span>模拟器</span>
+                    </div>
+                    {{ } }}
+                    <ul class="aui-list aui-media-list none-top-style moni">
+                        <li class="aui-list-item none-bottom-style" style='width:100%; padding-left: 0;'>
+                            <div class="aui-swipe-handle">
+                                <div class="aui-info">
+                                    <div class="aui-info-item">
+                                        <span class="fontColor">累计学习：</span>
+                                        <span>{{=time_format(it.simulatorAccumulatedTime)}}</span>
+                                    </div>
+                                    <div class="aui-info-item" style="width: 45%;">
+                                        <span class="fontColor">上传学时：</span>
+                                        <span>{{=time_format(it.simulatorUploadTime)}}</span>
+                                    </div>
+                                </div>
+                                <div class="aui-info">
+                                    <div class="aui-info-item">
+                                        <span class="fontColor">有效学时：</span>
+                                        <span>{{=time_format(it.simulatorEffectiveTime)}}</span>
+                                        {{ if(it.dataBean != undefined&&it.dataBean.isNeedReview == '1'){ }}
+                                        <font style='color:#DC251F;font-size:0.6rem;'>（审）</font>
+                                        {{ } }}
+                                    </div>
+                                    <div class="aui-info-item" style="width: 45%;">
+                                        <span class=" fontColor">剩余应学：</span>
+                                        <span>{{=time_format(240-it.simulatorEffectiveTime)}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <div style="height: 1.6rem;">
+                            <div class="study-time-btn" tapmode onclick="openWin('record_scene_subject_two_simulator')">
+                                培训记录
+                            </div>
+                            <div class="study-time-btn" tapmode onclick="openSimulatorAppointment('simulator')">
+                                预约
+                            </div>
+                        </div>
+                    </ul>
+                    <div class="s_content content-item" style="margin-top: 1rem; box-shadow: none;">
+                        <div class="container">
+                            <nav class="aui-grid">
+                                <ul class="aui-row">
+                                    <li class="aui-col-xs-4" tapmode onclick="openPracticeBefore('two')">
+                                        <img src="../../icon/mine/icon_appoint_before.png" class="col-x-img"/>
+                                        <div class="aui-grid-label mt">考前训练预约</div>
+                                    </li>
+                                    <li class="aui-col-xs-4" tapmode onclick="openWin('record_practice_subject_two')">
+                                        <img src="../../icon/mine/icon_study.png" class="col-x-img"/>
+                                        <div class="aui-grid-label mt">训练记录</div>
+                                    </li>
+                                    <li class="aui-col-xs-4" tapmode
+                                        onclick="openWin('record_scene_subject_two_simulator')">
+                                        <img src="../../icon/mine/icon_study.png" class="col-x-img"/>
+                                        <div class="aui-grid-label mt">模拟器记录</div>
+                                    </li>
+                                    <!-- <li class="text-col" tapmode  onclick="openWin('record_scene_subject_two_operation')">
+                                        <img src="../../icon/mine/icon_study.png" class="col-x-img"/>
+                                                                            <div class="aui-grid-label mt">实操记录</div>
+                                    </li> -->
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <!-- 科目三 -->
+        <div class="swiper-slide">
+            <div class="view-content">
+                <div class='mine-info-load'>
+                    <img src="../../image/background/preloading.gif" alt=""/>
+                </div>
+            </div>
+        </div>
+        <script type="text/template" charset="utf-8" id='order_list_src3'>
+            <div class="aui-content">
+                <div class="content-item">
+                    <ul class="aui-list aui-media-list">
+                        <li class="aui-list-item" style="padding-left: 0;">
+                            <div class="aui-swipe-handle">
+                                <div class="aui-info" style="padding: 0.5rem 0 0;">
+                                    <div class="aui-info-item">
+                                        <span class="fontColor">累计训练时间：</span>
+                                        <span>0小时</span>
+                                    </div>
+                                    <div class="aui-info-item" style="width: 45%;">
+                                        <span class="fontColor">累计训练次数：</span>
+                                        <span>0次</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <section class="aui-grid content-item" style="margin-top: 1rem; box-shadow: none;">
+                        <div class="aui-row" id="simulator-list">
+                            <div class="aui-col-xs-4" tapmode onclick="openPracticeBefore('three')">
+                                <img src="../../icon/mine/icon_appoint_before.png" class="col-x-img"/>
+                                <div class="aui-grid-label mt">考前训练预约</div>
+                            </div>
+                            <div class="aui-col-xs-4" tapmode onclick="openWin('record_practice_subject_three')">
+                                <img src="../../icon/mine/icon_study.png" class="col-x-img"/>
+                                <div class="aui-grid-label mt">训练记录</div>
+                            </div>
+                            <div class="aui-col-xs-4" tapmode
+                                 onclick="openWin('record_scene_subject_three_appointment')">
+                                <img src="../../icon/mine/icon_study.png" class="col-x-img"/>
+                                <div class="aui-grid-label mt">训练预约记录</div>
+                            </div>
+                            <!-- <div class="aui-col-xs-4" tapmode onclick="openExamRegistraction('three')">
+                                                            <img src="../../icon/mine/icon_sign.png" class="col-x-img"/>
+                                                            <div class="aui-grid-label mt">考试报名</div>
+                                                        </div> -->
+                            <!-- <div class="aui-col-xs-4" tapmode onclick="openApplyFree('free_apply_three')">
+                                {{ if(it.couponApplyCounts > 0){ }}
+                                                                <div class="aui-badge">{{=it.couponApplyCounts}}</div>
+                                {{ } }}
+                                <img src="../../icon/subject/icon_free_apply_empty.png" class="col-x-img"/>
+                                <div class="aui-grid-label mt">免单申请</div>
+                            </div> -->
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </script>
+
+        <!-- 科目四 -->
+        <div class="swiper-slide">
+            <div class="view-content">
+                <div class='mine-info-load'>
+                    <img src="../../image/background/preloading.gif" alt=""/>
+                </div>
+            </div>
+        </div>
+        <script type="text/template" charset="utf-8" id='order_list_src4'>
+            <div class="aui-content">
+                {{ if(time_format(it.onlineStudyTime-it.onlineEffectiveTime) == '0分' && time_format(it.onlineEffectiveTime) != '0分'){ }}
+                <div class="status">
+                    <img src="../../icon/mine/finish.png" alt="">
+                </div>
+                {{ } }}
+
+                {{ if(time_format(it.onlineStudyTime-it.onlineEffectiveTime) != '0分'){ }}
+                <!--              <div class="status">
+                                  <img src="../../icon/mine/unfinish.png" alt="">
+                              </div>-->
+                {{ } }}
+                <div class="content-item">
+                    {{ if(it.dataBean != undefined&&calErrorTime(it.dataBean.array,4) > 0){ }}
+                    <div class="font-title aui-list-item-arrow aui-list none-bottom-style" tapmode
+                         onclick=checkErrorDetail(4)>
+                        <span>远程教育</span>
+                        <div class="aui-list-item-right error-time">
+                            <span class="" style="">异常学时：查看</span>
+                        </div>
+                    </div>
+                    {{ }else{ }}
+                    <div class="font-title aui-list none-bottom-style">
+                        <span>远程教育</span>
+                    </div>
+                    {{ } }}
+                    <ul class="aui-list aui-media-list none-top-style xianshang">
+                        <li class="aui-list-item none-top-style none-bottom-style " style='width:100%;'>
+                            <div class="aui-swipe-handle">
+                                <div class="aui-info" style="padding-top:0.5rem;">
+                                    <div class="aui-info-item">
+                                        <span class=" fontColor">累计学习：</span>
+                                        <span>{{=second_format(it.studyTimeCounts)}}</span>
+                                    </div>
+                                    <div class="aui-info-item" style="width: 45%;">
+                                        <span class="fontColor">上传学时：</span>
+                                        <span>{{=time_format(it.onlineUploadTime)}}</span>
+                                    </div>
+                                </div>
+                                <div class="aui-info" style="padding-top:0rem;">
+                                    <div class="aui-info-item">
+                                        <span class=" fontColor">有效学时：</span>
+                                        <span>{{=time_format(it.onlineEffectiveTime)}}</span>
+                                    </div>
+                                    <div class="aui-info-item" style="width: 45%;">
+                                        <span class="fontColor">剩余应学：</span>
+                                        <span>{{=time_format(it.onlineStudyTime-it.onlineEffectiveTime)}}</span>
+                                    </div>
+                                </div>
+                                <div class="aui-info" style="padding-top:0rem;">
+                                    <div class="aui-info-item">
+                                        <span class=" fontColor">模考次数：</span>
+                                        <span>{{=it.mockCounts}}次</span>
+                                    </div>
+                                    <div class="aui-info-item" style="width: 45%;">
+                                        <span class=" fontColor">及格次数：</span>
+                                        <span>{{=it.mockPassCounts}}次</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <div class="" style="height: 1.6rem;">
+                            <div class="study-time-btn" tapmode onclick="openWin('record_study_subject_four')">
+                                学习记录
+                            </div>
+                            <div class="study-time-btn" tapmode onclick="openWin('record_exam_subject_four')">
+                                模考记录
+                            </div>
+                            <div class="study-time-btn" tapmode onclick="to_step_exam('3')">
+                                去学习
+                            </div>
+                        </div>
+                    </ul>
+                    <!--{{ if(it.dataBean != undefined&&calErrorTime(it.dataBean.array,2) > 0){ }}
+                    <div class="font-title aui-list-item-arrow" tapmode onclick=checkErrorDetail(2)>
+                        <span>课堂学习</span>
+                        <div class="aui-list-item-right error-time">
+                            <span class="" style="">异常学时：查看</span>
+                        </div>
+                    </div>
+                    {{ }else{ }}
+                    <div class="font-title">
+                        <span>课堂学习</span>
+                    </div>
+                    {{ } }}
+                    <ul class="aui-list aui-media-list none-top-style jizhong">
+                        <li class="aui-list-item none-bottom-style" style='width:100%;'>
+                            <div class="aui-swipe-handle">
+                                <div class="aui-info" style="padding-top:0.5rem;">
+                                    <div class="aui-info-item">
+                                        <span class=" fontColor">累计学习：</span>
+                                        <span>{{=time_format(it.offlineAccumulatedTime)}}</span>
+                                    </div>
+                                    <div class="aui-info-item" style="width: 45%;">
+                                        <span class=" fontColor">上传学时：</span>
+                                        <span>{{=time_format(it.offlineUploadTime)}}</span>
+                                    </div>
+                                </div>
+                                <div class="aui-info" style="padding-top:0rem;">
+                                    <div class="aui-info-item">
+                                        <span class=" fontColor">有效学时：</span>
+                                        <span>{{=time_format(it.offlineEffectiveTime)}}</span>
+                                    </div>
+                                    <div class="aui-info-item" style="width: 45%;">
+                                        <span class=" fontColor">剩余应学：</span>
+                                        <span>{{=time_format(120-it.offlineEffectiveTime)}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </li>
+                        <div style="height: 1.6rem;">
+                            <div class="study-time-btn" tapmode onclick="openWin('record_scene_subject_one',4)">
+                                培训记录
+                            </div>
+                            <div class="study-time-btn" tapmode onclick="openSimulatorAppointment('examinationCourse')">
+                                预约
+                            </div>
+                        </div>
+                    </ul>-->
+                </div>
+            </div>
+        </script>
+    </div>
+</div>
+
+
+<!--我的菜单栏-->
+<div id="mine-menus">
+    <hr class="aui-hr">
+    <div class="aui-grid aui-margin-t-10">
+        <div class="aui-row">
+            <div class="aui-col-xs-3" tapmode onclick="invoiceManagement()">
+                <div class="aui-list-item-label-icon">
+                    <img src="../../icon/mine1/invoice.png" alt=""/>
+                </div>
+                <div class="aui-grid-label">发票管理</div>
+            </div>
+            <div class="aui-col-xs-3" tapmode onclick="agreementManagement()">
+                <div class="aui-list-item-label-icon">
+                    <img src="../../icon/mine1/contract.png" alt=""/>
+                </div>
+                <div class="aui-grid-label">合同管理</div>
+            </div>
+            <div class="aui-col-xs-3" tapmode onclick="addressManagement()">
+                <div class="aui-list-item-label-icon">
+                    <img src="../../icon/mine1/address.png" alt=""/>
+                </div>
+                <div class="aui-grid-label">地址管理</div>
+            </div>
+            <div class="aui-col-xs-3" tapmode onclick="openWin('myPost')">
+                <div class="aui-list-item-label-icon">
+                    <div class="aui-badge aui-hide"></div>
+                    <img src="../../icon/mine1/post.png" alt=""/>
+                </div>
+                <div class="aui-grid-label"><span>我的帖子</span></div>
+            </div>
+             <div class="aui-col-xs-3" tapmode onclick="openIntegralShop('integral_shop')">
+                <div class="aui-list-item-label-icon">
+                    <img src="../../icon/mine1/integral.png" alt=""/>
+                </div>
+                <div class="aui-grid-label"><span>积分商城</span></div>
+            </div> 
+            <div class="aui-col-xs-3" tapmode onclick="openMineCoupon('mine_coupon')">
+                <div class="aui-list-item-label-icon">
+                    <img src="../../icon/mine1/mine_coupon.png" alt=""/>
+                </div>
+                <div class="aui-grid-label"><span>我的优惠券</span></div>
+            </div> 
+            <div class="aui-col-xs-3" tapmode onclick="openSetAccount()">
+                <div class="aui-list-item-label-icon">
+                    <img src="../../icon/mine1/account_setting.png" alt=""/>
+                </div>
+                <div class="aui-grid-label"><span>账户设置</span></div>
+            </div>
+
+            <div class="aui-col-xs-3" tapmode onclick="openKefu()">
+                <div class="aui-list-item-label-icon">
+                    <img src="../../icon/mine1/smart_cs.png" alt=""/>
+                </div>
+                <div class="aui-grid-label"><span>智能客服</span></div>
+            </div>
+            <div class="aui-col-xs-3" tapmode onclick="openWin('setting')">
+                <div class="aui-list-item-label-icon">
+                    <img src="../../icon/mine1/setting.png" alt=""/>
+                </div>
+                <div class="aui-grid-label"><span>系统设置</span></div>
+            </div>
+            <div class="aui-col-xs-3" tapmode onclick="openShareWindow()">
+                <div class="aui-list-item-label-icon">
+                    <img src="../../icon/mine1/share.png" alt="" style='border-radius: 2px;'/>
+                </div>
+                <div class="aui-grid-label"><span>分享应用</span></div>
+            </div>
+            <!-- <div class="aui-col-xs-3" tapmode onclick="scorePrint()">
+                 <div class="aui-list-item-label-icon">
+                     <img src="../../icon/mine_new/apply.png" alt="" style='border-radius: 2px;'/>
+                 </div>
+                 <div class="aui-grid-label"  ><span>成绩申请</span></div>
+             </div>-->
+            <div class="aui-col-xs-3" tapmode onclick="artificial_kefu()">
+                <div class="aui-list-item-label-icon">
+                    <img src="../../icon/mine1/human_cs.png" alt="" style='border-radius: 2px;'/>
+                </div>
+                <div class="aui-grid-label"><span>人工客服</span></div>
+            </div>
+            <div class="aui-col-xs-3" tapmode onclick="openWin('opinion')">
+                <div class="aui-list-item-label-icon">
+                    <img src="../../icon/mine1/response.png" alt=""/>
+                </div>
+                <div class="aui-grid-label"><span>意见反馈</span></div>
+            </div>
+            <div class="aui-col-xs-3 aui-hide" id='accountSwitching' tapmode onclick="openWin('accountSwitching')">
+                <div class="aui-list-item-label-icon">
+                    <img src="../../icon/common/icon_goTo_sign_up.png" alt=""/>
+                </div>
+                <div class="aui-grid-label"><span>账号切换</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 提示语句 code = 0代表未登录 1代表无数据 9代表出错 index代表序号-->
+<script type="text/template" charset="utf-8" id='msg_src'>
+    {{ if(it.code == 9){ }}
+    <div class='mine-info-msg'>
+        <img src="../../icon/common/empty.png" alt="" style='width: 5rem; height: 1.8rem;'/><br>
+        <span>{{=it.msg}}</span>
+    </div>
+    {{ }else if(it.code == 0){ }}
+    <div id="study-time-not-login-div">
+        <button id="study-time-not-login-btn"
+                tapmode onclick="openLoginHtml()">去登录
+        </button>
+    </div>
+    {{ } }}
+</script>
+<!-- 加载条 -->
+<script type="text/template" charset="utf-8" id='loadding_src'>
+    <div class='mine-info-load'>
+        <img src="../../icon/common/icon_common_load.gif" alt=""/>
+    </div>
+</script>
+
+
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/swiper/swiper.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+    var loadding_src = doT.template($("#loadding_src").html())(null); // 加载条
+    var msg_src = $('#msg_src').html();
+    var fs;
+    var pdBot;
+    var dataBean; // 报审所需数据
+    var clearance = 25; // 间隙
+    var tabIndex = 1; // 当前tab索引
+    var kemu; // 科目
+    var accountInfo;
+    var mySwiper;
+
+    var headerPos;
+    var threshold;//定义的阈值
+    var touchStyle;
+    var systemType;//系统类型
+    apiready = function () {
+        api.parseTapmode();
+        $api.fixStatusBar($api.byId('aui-header'));
+        $api.fixStatusBar($api.byId('aui-header1'));
+        headerPos = $api.offset($api.byId('aui-header1'));
+        threshold = headerPos.h;
+        systemType = api.systemType;
+        touchStyle = systemType === "ios" ? 'touchmove' : 'scroll';
+        fs = api.require('fs');
+        pdBot = api.require('pdBot');
+        //监听选择教练
+        toEventListener('coach_list_select', function (ret, err) {
+            var cache_by_account = $api.getStorage('cache_by_account');
+            cache_by_account.cache_account.coachId = ret.value.id;
+            $api.setStorage("cache_by_account", cache_by_account);
+
+            binding_coach(ret.value);
+        });
+
+        //监听进入新消息时，重新初始化加载
+        toEventListener('post_disappear', function (ret, err) {
+            my_post();
+        });
+
+        //监听刷新个人页面
+        toEventListener('refresh_my_index', function (ret, err) {
+            init();
+        });
+
+        //监听退出action：执行消除红点操作
+        toEventListener('exit_action', function (ret, err) {
+            init();
+        });
+
+        //监听注销时，重新初始化加载
+        toEventListener('post_cancel', function (ret, err) {
+        });
+        // $('.swiper-slide').eq(0).show();
+        mySwiper = new Swiper(".swiper-container", {
+            autoHeight: true, //高度随内容变化
+            slidesPerView: 1,
+            spaceBetween: 20,
+            onSlideChangeStart: function (swiper) {
+                console.log('改变了，activeIndex为' + swiper.activeIndex);
+                f_slide($('.aui-bar-btn-item').eq(swiper.activeIndex));
+            },
+            onSlideChangeEnd: function (swiper) {
+                console.log('改变了，activeIndex为' + swiper.activeIndex);
+                renderStudyTimeInfo(swiper.activeIndex + 1);
+            }
+        });
+        new auiTab({
+            element: document.getElementById("tab"),
+            repeatClick: true
+        }, function (ret) {
+            if (ret) {
+                tabIndex = ret.index;
+                switch (tabIndex) {
+                   case 1:
+                       logAppBuryingPoint({},'科目一','我的');
+                       break;
+                   case 2:
+                       logAppBuryingPoint({},'科目二','我的');
+                       break;
+                   case 3:
+                       logAppBuryingPoint({},'科目三','我的');
+                       break;
+                   case 4:
+                       logAppBuryingPoint({},'科目四','我的');
+                       break;
+                }
+                // var currentTab = $('.swiper-slide').eq(ret.index - 1);
+                // currentTab.show();
+                // currentTab.siblings().hide();
+                mySwiper ? mySwiper.slideTo(tabIndex - 1, 1000) : '';
+                // f_slide($(ret.dom));
+            }
+        });
+        // $('.aui-active').click();
+        f_slide($('.aui-active'));
+        console.log('加载学时中...');
+        defaultload('加载学时中...');
+        init();    // 页面初始化
+        scroll();
+        //InterValSelAbnormal(); // 查看学时有效无效问题，批量
+    };
+
+    //监听页面滑动控制头部menu样式
+    var scrollPos;//监听上下滚动顶部的距离
+    var percent = 0;//白底header的隐藏属性值
+    var hidepercent = 0;//非白底header的隐藏属性值
+    function scroll() {
+        $(window).on(touchStyle, function (event) {
+            scrollPos = $(window).scrollTop();
+            //安卓做限制滚动
+            if (((scrollPos / threshold).toFixed(2) <= 1) && systemType == 'android') {
+                percent = (scrollPos / threshold).toFixed(2);
+                $('#aui-header1').css("opacity", percent);
+                hidepercent = 1 - percent;
+                // $('#aui-header').css("opacity", hidepercent);
+            } else {
+                percent = (scrollPos / threshold).toFixed(2) > 1 ? 1 : (scrollPos / threshold).toFixed(2);
+                $('#aui-header1').css("opacity", percent);
+                hidepercent = (1 - percent) < 0 ? 0 : (1 - percent);
+                // $('#aui-header').css("opacity", hidepercent);
+            }
+        });
+    }
+
+    /**----------------------------------查看学时有效无效问题开始---------------------------------------------*/
+    // 循环调用学时 测试使用，平常不要使用
+    function InterValSelAbnormal() {
+        url = 'api/yunguan/selRegisInfo';
+        params = {
+            date: '2020-01-22'
+        };
+        ajax_Request(url, 'get', 'json', params, function (ret, err) {
+            log('ret', ret);
+            if (ret && ret.code == 0) {
+                var registerDetailInfo = ret.registerInfoDetailList;
+                var index = 0;
+                console.log('一共有' + registerDetailInfo.length + '条记录');
+                var selAbnoraml = setInterval(function () {
+                    abnormalTime(index, registerDetailInfo);
+                    index++;
+                    if (index >= registerDetailInfo.length) {
+                        console.log('执行完毕');
+                        clearInterval(selAbnoraml);
+                    }
+                }, 1500);
+            } else {
+                alert_msg('查询出错');
+            }
+        });
+    }
+
+    // 异常学时排查
+    function abnormalTime(index, registerDetailInfo) {
+        url = 'http://47.99.174.109:84/thirdBack/api/yunguan/query-abnormal-school-hours';
+        params = {
+            recnum: registerDetailInfo[index].uploadNum,
+            stunum: registerDetailInfo[index].stunum
+        };
+        api.ajax({
+            url: url,
+            method: 'post',
+            tag: url,//为方便，全部统一
+            timeout: 30,
+            dataType: 'json',
+            data: {
+                values: params
+            }
+        }, function (ret, err) {
+            if (index % 10 == 0) {
+                console.log('执行第' + index + '条');
+            }
+            var result = JSON.parse(ret.result);
+            if (result.data.abnormals.length > 0) {
+                console.log('查到异常学时，id为' + registerDetailInfo[index].id + '---' + JSON.stringify(result.data));
+            }
+        });
+    }
+
+    /**----------------------------------查看学时有效无效问题结束---------------------------------------------*/
+
+    // 页面初始化
+    function init() {
+        // 请求消息通知
+        my_post();
+        // 渲染个人信息
+        renderAccountInfo();
+        // 渲染学时信息
+        renderStudyTimeInfo();
+        // 查看设备号是否是vip
+        deviceIdIsVip();
+    }
+
+    // 滑块加载事件
+    function f_slide(e) {
+        $('.aui-bar-btn-item').removeClass('aui-active');
+        $(e).addClass('aui-active');
+        $('.list_bar').css('width', ($('.aui-active').width() - clearance * 2) + 'px');
+        $('.list_bar_inner').css('width', ($('.aui-active').width() - clearance * 2) + 'px');
+        document.getElementById('slideSpan').style.webkitTransform = 'translateX(' + ($(e).position().left + clearance) + 'px)';
+    }
+
+    /**----------------------------------个人信息开始---------------------------------------------*/
+    // 登录情况下请求消息通知
+    function my_post() {
+        if (islogin()) {
+            url = 'api/forum/get/PostCount';
+            params = {
+                learnerId: getUserId(),
+            };
+            ajax_Request(url, 'get', 'json', params, function (ret, err) {
+                if (ret.code == 0) {
+                    if (ret.count > 0) {
+                        $(".aui-badge").removeClass('aui-hide');
+                        $(".aui-badge").text(ret.count);
+                    }
+                }
+            });
+        }
+    }
+
+    // 渲染个人信息
+    function renderAccountInfo() {
+        if (islogin()) {
+            updateLearnerInfo(function (ret, err) {
+                if (ret && ret.code == 0) {
+                    $('#login_show').removeClass('aui-hide');
+                    $('#not_login_show').addClass('aui-hide');
+                    accountInfo = $api.getStorage('cache_by_account').cache_account;
+                    log('accountInfo', accountInfo);
+                    getHeadImg(accountInfo, function (smallerPath) {
+                        onEvent('mine0', '头像');
+                        $('#avatar').attr('src', smallerPath);
+                    });
+                    $('#account_name').html(getAccount(accountInfo));
+                    if (isauthpass()) {
+                        $('#isAuth').removeClass('aui-hide');
+                        $('#notAuth').addClass('aui-hide');
+                    } else {
+                        if (isauth()) {
+                            $('#notAuth').html('认证中');
+                        } else {
+                            $('#notAuth').html('去认证');
+                        }
+                        $('#isAuth').addClass('aui-hide');
+                        $('#notAuth').removeClass('aui-hide');
+                    }
+                    if (accountInfo.coachId) {
+                        $('#addCoachBtn').addClass('aui-hide');
+                        $('#myCoachBtn').removeClass('aui-hide');
+                    } else {
+                        $('#addCoachBtn').removeClass('aui-hide');
+                        $('#myCoachBtn').addClass('aui-hide');
+                    }
+                } else {
+                    alert_msg('获取学员信息失败');
+                }
+            });
+        } else {
+            $('#login_show').addClass('aui-hide');
+            $('#not_login_show').removeClass('aui-hide');
+            $('#avatar').attr('src', '../../icon/common/icon_users.png');
+        }
+        api.parseTapmode();
+    }
+
+    // 打开认证信息页面
+    function openAuthInfoPage() {
+        logAppBuryingPoint({},'去认证','我的');
+        if (islogin()) {
+            commonOpenWin('mine_account_auth_win', null);
+        } else {
+            isSure('提示', '还未登录，是否选择去登录', '是', '否', function () {
+                openLoginHtml();
+            });
+        }
+    }
+
+    // 打开添加教练页面
+    function openAddCoachPage() {
+    	logAppBuryingPoint({},'绑定教练','我的');
+        api.openDrawerLayout({
+            name: 'coach_select_under_school_win',
+            url: '../common/select_coach/coach_select_under_school_win.html',
+            slidBackEnabled: 'true',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            slidToOpenPane: false,
+            slidToClosePane: false,
+            pageParam: {
+                data: params
+            },
+            animation: {
+                type: 'push',
+                subType: "from_right",
+                duration: 300
+            },
+            rightPane: {
+                name: 'driving_coach_win',
+                url: '../common/select_coach/driving_coach_win.html',
+                vScrollBarEnabled: false,
+                hScrollBarEnabled: false,
+                bounces: false,
+                pageParam: {
+                    data: params
+                }
+            }
+        });
+    }
+
+    // 打开我的教练信息页面
+    function openMyCoachInfoPage() {
+        // commonOpenWin('../home/driving_coach/coach_detail_new_win',{id: accountInfo.coachId});
+        var cache_account = $api.getStorage('cache_by_account').cache_account;
+        logAppBuryingPoint({},'我的教练','我的');
+        log('缓存信息', cache_account);
+        api.openWin({
+            name: 'coach_detail_new_win',
+            url: './../home/driving_coach/coach_detail_new_win.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            useWKWebView: false,
+            pageParam: {
+                data: {
+                    id: cache_account.coachId
+                }
+            }
+        })
+    }
+
+    // 学员绑定教练
+    function binding_coach(cache) {
+        renderAccountInfo();
+        alert_msg('绑定教练成功');
+    }
+
+    /**----------------------------------个人信息结束---------------------------------------------*/
+
+
+    /**----------------------------------体检报名开始---------------------------------------------*/
+    // 打开通用win
+    function openCommonWin(winName, winUrl, data) {
+        api.openWin({
+            name: winName,
+            url: winUrl + '.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            useWKWebView: false,
+            pageParam: {
+                data: data
+            }
+        });
+    }
+
+
+    // 打开我的报名页面
+    function openMySignPage() {
+        if (islogin()) {
+            logAppBuryingPoint({},'我的报名','我的');
+            params = {
+                type: 'more-register-order'
+            }
+            commonOpenWin('record_order_list_win', params);
+        } else {
+            openLoginHtml();
+        }
+    }
+
+    // 打开我的体检页面
+    function openMyPePage() {
+        if (islogin()) {
+            logAppBuryingPoint({},'我的体检','我的');
+            params = {
+                type: 'more-examination-order'
+            }
+            commonOpenWin('record_order_list_win', params);
+        } else {
+            openLoginHtml();
+        }
+    }
+
+    /**----------------------------------体检报名结束---------------------------------------------*/
+
+
+    /**----------------------------------学时开始---------------------------------------------*/
+    // 渲染学时信息
+    function renderStudyTimeInfo(index) {
+        if (islogin()) {
+            if (!index && tabIndex > 4) {
+                closedefaultload();
+                $('#tab-content').show();
+                return;
+            }
+            var params = {
+                learnerId: getUserId()
+            };
+            // $('.view-content').eq(tabIndex - 1).html(loadding_src);
+            switch (index ? index : tabIndex) {
+                case 1:// 科目一
+                    url = 'api/mock-exam-and-study/getMockAndStudyOfCountsAndTime';
+                    params.kemuStatus = 1;
+                    break;
+                case 2:// 科目二
+                    url = 'api/learningRecord/getTraingInfo';
+                    params.kemu = 2;
+                    break;
+                case 3:// 科目三
+                    url = 'api/learningRecord/getTraingInfo';
+                    params.kemu = 3;
+                    break;
+                case 4:// 科目四
+                    url = 'api/mock-exam-and-study/getMockAndStudyOfCountsAndTime';
+                    params.kemuStatus = 4;
+                    break;
+                default:
+                    return;
+            }
+            log('学时入参：', params);
+            ajax_Request(url, "get", "json", params, function (ret, err) {
+                log('学时出参：', ret);
+                if (ret) {
+                    if (ret.code == 0) {
+                        var dataList = [];
+                        var order_list_src = $("#order_list_src" + (index ? index : tabIndex)).html();
+                        switch (index ? index : tabIndex) {
+                            case 1:// 科目一
+                                dataList = ret.mockAndStudyOfCountsAndTime;
+                                dataList.onlineStudyTime = ret.onlineStudyTime;
+                                dataBean = ret.mockAndStudyOfCountsAndTime.dataBean;
+                                break;
+                            case 2:// 科目二
+                                dataList = {
+                                    couponApplyCounts: ret.couponApplyCounts,
+                                    dataBean: ret.dataBean,
+                                    simulatorEffectiveTime: ret.simulatorEffectiveTime,
+                                    simulatorUploadTime: ret.simulatorUploadTime,
+                                    simulatorAccumulatedTime: ret.simulatorAccumulatedTime
+                                };
+                                dataBean = ret.dataBean;
+                                break;
+                            case 3:// 科目三
+                                dataList = {
+                                    couponApplyCounts: ret.couponApplyCounts
+                                };
+                                break;
+                            case 4:// 科目四
+                                dataList = ret.mockAndStudyOfCountsAndTime;
+                                dataList.onlineStudyTime = ret.onlineStudyTime;
+                                dataBean = ret.mockAndStudyOfCountsAndTime.dataBean;
+                                break;
+                        }
+                        $('.view-content').eq((index ? index : tabIndex) - 1).html(doT.template(order_list_src)(dataList));
+                    } else {
+                        $('#tab-content').hide();
+                        // $('.view-content').eq(tabIndex - 1).html(doT.template(msg_src)({code: 9, msg: ret.msg}));
+                    }
+                } else {
+                    log('获取学时信息失败：', err);
+                    $('#tab-content').hide();
+                    // $('.view-content').eq(tabIndex - 1).html(doT.template(msg_src)({code: 9, msg: '服务器繁忙，请稍后重试'}));
+                }
+                if (!index) {
+                    tabIndex++;
+                    renderStudyTimeInfo();
+                }
+            });
+
+        } else {
+            closedefaultload();
+            $('#tab-content').hide();
+            // $('.view-content').eq(tabIndex - 1).html(doT.template(msg_src)({code: 0}));
+        }
+    }
+
+    function time_format(time) {
+        if (isNaN(time)) {
+            time = 0;
+        }
+        var hourRounds = Math.floor(time / 60);
+        var minRounds = time - hourRounds * 60;
+        if (time <= 0) {
+            return '0分';
+        } else if (hourRounds == 0) {
+            return minRounds + '分';
+        } else {
+            return hourRounds + '小时' + minRounds + '分';
+        }
+    }
+
+    function second_format(second) {
+        if (isNaN(time)) {
+            time = 0;
+        }
+        var time = Math.floor(second / 60);
+        var hourRounds = Math.floor(time / 60);
+        var minRounds = time - hourRounds * 60;
+        if (time <= 0) {
+            return '0分';
+        } else if (hourRounds == 0) {
+            return minRounds + '分';
+        } else {
+            return hourRounds + '小时' + minRounds + '分';
+        }
+    }
+
+
+    // 计算异常学时
+    function calErrorTime(timeList, keType) {
+        var err_time = 0;
+        for (var i = 0; i < timeList.length; i++) {
+            if (timeList[i].keType == keType && timeList[i].isAbnormal == 1) {
+                err_time = err_time + parseInt(timeList[i].duration);
+            }
+        }
+        return err_time;
+    }
+
+
+    // 查看异常学时
+    function checkErrorDetail(keType) {
+        log('dataBean', dataBean);
+        api.openWin({
+            name: 'recode_abnormal_time_win',
+            url: './recode_abnormal_time_win.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            useWKWebView: false,
+            pageParam: {
+                dataBean: dataBean,
+                keType: keType
+            }
+        });
+    }
+
+    // 在线计时
+    function to_step_exam(index) {
+    	logAppBuryingPoint({},'去学习',index == 0?'科目一':'科目四','我的');
+        esc_function('index', '', 'changeToFrame(1)');
+        esc_function('index', 'examination', 'setViewFrame(' + index + ')');
+    }
+
+    // 预约模拟器
+    function openSimulatorAppointment(type) {
+        if (!islogin()) {
+            openLoginHtml();
+        } else {
+            if (isauth()) {
+                getLearnerStunum(type);
+            } else {
+                openMessage('提示', '您还未进行实名认证，是否进行实名认证？', '确定', '', 'openAuthentication()', '', null);
+            }
+        }
+    }
+
+    // 获取学员stunum
+    function getLearnerStunum(type) {
+        url = 'api/learner-register-info/check-learner-stunum-info';
+        params = {
+            learnerId: getUserId()
+        };
+        defaultload('获取有效信息中...');
+        ajax_Request(url, "get", "json", params, function (ret, err) {
+            log('获取信息', ret);
+            closedefaultload();
+            if (ret) {
+                if (ret.code == 0) {
+                    if (type === 'simulator') {
+                        openSimulation();
+                    } else {
+                        openClassWin();
+                    }
+                } else {
+                    if (type === 'simulator') {
+                        openSimulationWin();
+                    } else {
+                        openClassAppointment();
+                    }
+                    // alert_msg(ret.msg);
+                }
+            } else {
+                alert_msg('服务器繁忙，请稍后重试~');
+            }
+        });
+    }
+
+    // 打开模拟器预约页面
+    function openSimulation() {
+        api.openWin({
+            name: 'select_driver_school_simulator_list_win',
+            url: '../examination/subjectTwo/select_driver_school_simulator_list_win.html',
+            slidBackEnabled: 'true',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            pageParam: null,
+        });
+    }
+
+    // 打开集中培训预约页面
+    function openClassWin() {
+        api.openWin({
+            name: 'examination_course_reservation',
+            url: '../examination/subjectOne/examination_course_reservation/examination_course_reservation.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            useWKWebView: false,
+            pageParam: {}
+        });
+    }
+
+    // 校验是否该学员已经在维尔注册成功并打开模拟器页面
+    function openSimulationWin() {
+        if (!islogin()) {
+            openLoginHtml();
+        } else {
+            if (isauth()) {
+                url = 'api/third/check-weier-info';
+                params = {
+                    learnerId: getUserId()
+                };
+                log('校验是否该学员已经在维尔注册成功入参：', params);
+                ajax_Request(url, "get", "json", params, function (ret, err) {
+                    log('校验是否该学员已经在维尔注册成功出参：', ret);
+                    if (ret) {
+                        if (ret.code == 0) {
+                            openSimulation();
+                        } else if (ret.code == 400226) {
+                            interfaceCheck('simulator');
+                        }
+                    } else {
+                        alert_msg('服务器繁忙，请稍后重试~');
+                    }
+                });
+
+            } else {
+                openMessage('提示', '您还未进行实名认证，是否进行实名认证？', '确定', '', 'openAuthentication()', '', null);
+            }
+
+        }
+    }
+
+    // 打开理论培训预约页面
+    function interfaceCheck(type) {
+        api.openWin({
+            name: 'examination_course_interface_check_win',
+            url: '../examination/subjectOne/examination_course_reservation/examination_course_interface_check_win.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            useWKWebView: false,
+            pageParam: {
+                type: type,
+            }
+        });
+    }
+
+    // 校验是否该学员已经在维尔注册成功并打开集中培训预约页面
+    function openClassAppointment() {
+        if (!islogin()) {
+            openLoginHtml();
+        } else {
+            if (isauth()) {
+                url = 'api/third/check-weier-info';
+                params = {
+                    learnerId: getUserId()
+                }
+                log('校验是否该学员已经在维尔注册成功入参：', params);
+                ajax_Request(url, "get", "json", params, function (ret, err) {
+                    log('校验是否该学员已经在维尔注册成功出参：', ret);
+                    if (ret) {
+                        if (ret.code == 0) {
+                            openClassWin();
+                        } else if (ret.code == 400226) {
+                            interfaceCheck();
+                        }
+                    } else {
+                        alert_msg('服务器繁忙，请稍后重试~');
+                    }
+                });
+
+            } else {
+                openMessage('提示', '您还未进行实名认证，是否进行实名认证？', '确定', '', 'openAuthentication()', '', null);
+            }
+
+        }
+    }
+
+
+    // 上传学时
+    function reachLearnerTime() {
+        log('dataBean', dataBean);
+        if (dataBean != undefined) {
+            isSure('温馨提示', '确定选择上报？', '是', '否', function () {
+                url = 'api/yunguan/stagetrainningtime';
+                params = {
+                    subject: 1,
+                    inscode: dataBean.inscode,
+                    stunum: dataBean.stunum,
+                    totaltime: dataBean.totalPeriod,
+                    vehicletime: dataBean.effectiveShicao,
+                    classtime: dataBean.effectiveKetangCount,
+                    simulatortime: dataBean.effectiveMoniqiCount,
+                    networktime: dataBean.effectiveYuanchengCount,
+                    duration: dataBean.effectiveCumulativeTime,
+                    rectype: 5,
+                    recarray: dataBean.recarray,
+                    carType: dataBean.carType
+                }
+                log('报审提交参数', params);
+                ajax_Request(url, 'post', 'json', params, function (ret, err) {
+                    log('报审返回', ret);
+                    if (ret) {
+                        if (ret.code == 0) {
+                            openMessage('提示', '上报成功，请耐心等待审核通知', '确定', '', '', '', null);
+                        } else {
+                            openMessage('提示', ret.msg, '确定', '', '', '', null);
+                        }
+                    } else {
+                        alert_msg('服务器繁忙，请稍后再试');
+                    }
+                });
+            }, function () {
+            });
+        } else {
+            alert_msg('未找到有效学时');
+        }
+    }
+
+    /**----------------------------------学时结束---------------------------------------------*/
+
+
+    /**----------------------------------功能菜单开始---------------------------------------------*/
+
+    //打开地图
+    function openMap(hospitalName, latitude, longitude) {
+        params = {
+            to_lon: longitude,
+            latitude: latitude,
+            to_name: hospitalName
+        };
+        api.openWin({
+            name: 'common_map_loaction_win',
+            url: '../common/common_map_loaction_win.html',
+            slidBackEnabled: 'true',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            pageParam: {
+                data: params
+            }
+        });
+    }
+
+    //打开分享页面
+    function openShareWindow() {
+        logAppBuryingPoint({},'分享应用','我的');
+        if (islogin()) {
+            var data = {
+                shareData: {
+                    shareData: 'web',
+                    text: "",
+                    contentUrl: "https://www.mohan-tech.com/share/html/share.html?fatherId=" + getUserId(),
+                    // contentUrl:"http://192.168.2.147:8848/source/html/share.html?fatherId=",
+                    title: "学车就找“驾所通”"
+                },
+                forumId: "",
+                type: "mine"
+            };
+            openShare(data);
+        } else {
+            openLoginHtml();
+        }
+    }
+
+    // 打开成绩打印申请页面
+    function scorePrint() {
+        if (!islogin()) {
+            openLoginHtml();
+        } else {
+            //console.log(JSON.stringify(params));
+            api.openDrawerLayout({
+                name: 'mine_score_print_win',
+                url: '../mine/mine_score_print_win.html',
+                slidBackEnabled: 'true',
+                vScrollBarEnabled: 'false',
+                hScrollBarEnabled: 'false',
+                reload: true,
+                pageParam: {
+                    data: params
+                },
+                animation: {
+                    type: 'push',
+                    subType: "from_right",
+                    duration: 300
+                },
+                rightPane: {
+                    name: 'leftPane',
+                    url: '../common/common_exam_room_list_win.html',
+                    vScrollBarEnabled: false,
+                    hScrollBarEnabled: false,
+                    bounces: false,
+                    pageParam: {
+                        data: {
+                            action: 'test_choose',
+                        }
+                    }
+                }
+            });
+
+        }
+    }
+
+    // 打开考前训练
+    function openPracticeBefore(flag) {
+        if (!islogin()) {
+            openLoginHtml();
+        } else {
+            if (flag == 'two') {
+                url = '../examination/subjectTwo/appoint_exam_role_win.html';
+            } else if (flag == 'three') {
+                url = '../examination/subjectThree/appoint_exam_role_win.html';
+            }
+            api.openWin({
+                name: 'appoint_exam_role_win',
+                url: url,
+                slidBackEnabled: 'false',
+                vScrollBarEnabled: 'false',
+                hScrollBarEnabled: 'false',
+                reload: true,
+                pageParam: {
+                    data: null
+                }
+            });
+        }
+    }
+
+
+    // 打开积分商城
+    function openIntegralShop(type) {
+        logAppBuryingPoint({},'积分商城','我的');
+        if (islogin()) {
+            
+            api.openDrawerLayout({
+                name: 'mine_common_win',
+                url: './mine_common_win.html',
+                slidBackEnabled: 'true',
+                vScrollBarEnabled: 'false',
+                hScrollBarEnabled: 'false',
+                reload: true,
+                pageParam: {
+                    data: {
+                        type: type
+                    }
+                }
+            });
+        } else {
+            openLoginHtml();
+        }
+    }
+
+    // 打开合同管理
+    function agreementManagement() {
+        logAppBuryingPoint({},'合同管理','我的');
+        if (islogin()) {
+            params = {};
+            api.openWin({
+                name: 'recode_my_contract_win',
+                url: '../mine/recode_my_contract_win.html',
+                slidBackEnabled: 'false',
+                vScrollBarEnabled: 'false',
+                hScrollBarEnabled: 'false',
+
+                reload: true,
+                pageParam: {
+                    data: params
+                }
+            });
+        } else {
+            isSure('提示', '还未登录，是否选择去登录', '是', '否', function () {
+                openLoginHtml();
+            });
+        }
+    }
+
+    // 打开地址管理
+    function addressManagement() {
+        logAppBuryingPoint({},'地址管理','我的');
+        if (islogin()) {
+            params = {};
+            api.openWin({
+                name: 'common_address_list_win',
+                url: '../common/learner_address/common_address_list_win.html',
+                slidBackEnabled: 'false',
+                vScrollBarEnabled: 'false',
+                hScrollBarEnabled: 'false',
+                reload: true,
+                pageParam: {
+                    data: params
+                }
+            });
+        } else {
+            isSure('提示', '还未登录，是否选择去登录', '是', '否', function () {
+                openLoginHtml();
+            });
+        }
+    }
+
+    //打开我的优惠券
+    function openMineCoupon() {
+    	logAppBuryingPoint({},'我的优惠券','我的');
+        if (islogin()) {
+            api.openWin({
+                name: 'mine_coupon_win',
+                url: './mine_coupon_win.html',
+                slidBackEnabled: 'false',
+                vScrollBarEnabled: 'false',
+                hScrollBarEnabled: 'false',
+                reload: true,
+                pageParam: {
+                    data: ''
+                }
+            });
+        } else {
+            isSure('提示', '还未登录，是否选择去登录', '是', '否', function () {
+                openLoginHtml();
+            });
+        }
+    }
+    
+    //打开发票管理
+    function invoiceManagement() {
+        logAppBuryingPoint({},'发票管理','我的');
+        if (islogin()) {
+            params = {};
+            api.openWin({
+                name: 'common_invoice_list_win',
+                url: '../common/learner_invoice/common_invoice_list_win.html',
+                slidBackEnabled: 'false',
+                vScrollBarEnabled: 'false',
+                hScrollBarEnabled: 'false',
+                reload: true,
+                pageParam: {
+                    data: params
+                }
+            });
+        } else {
+            isSure('提示', '还未登录，是否选择去登录', '是', '否', function () {
+                openLoginHtml();
+            });
+        }
+    }
+    
+    //打开免单申请
+    function openApplyFree(type) {
+        api.openDrawerLayout({
+            name: 'mine_common_win',
+            url: './mine_common_win.html',
+            slidBackEnabled: 'true',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            pageParam: {
+                data: {
+                    type: type
+                }
+            },
+            animation: {
+                type: 'push',
+                subType: "from_right",
+                duration: 300
+            },
+            rightPane: {
+                name: 'leftPane',
+                url: '../common/common_exam_room_list_win.html',
+                vScrollBarEnabled: false,
+                hScrollBarEnabled: false,
+                bounces: false,
+                pageParam: {
+                    data: {
+                        action: 'sel_room_apply_free',
+                        type: type
+                    }
+                }
+            }
+        });
+    }
+
+    // 账户设置
+    function openSetAccount() {
+        if (islogin()) {
+        	logAppBuryingPoint({},'账户设置','我的');
+            commonOpenWin('mine_account_setting_win', null);
+        } else {
+            openLoginHtml();
+        }
+    }
+
+    // 打开智能客服
+    function openKefu() {
+        logAppBuryingPoint({},'智能客服','我的');
+        if (!islogin()) {
+            openLoginHtml();
+        } else {
+            var cache_account = $api.getStorage('cache_by_account').cache_account;
+            var pdBotData = {
+                userId: cache_account.id,
+                phone: cache_account.account
+            };
+            if (isauth()) {
+                pdBotData.userName = cache_account.name;
+                pdBotData.nickName = cache_account.nickname;
+                pdBotData.remarks = '身份证：' + cache_account.idcardNo
+            }
+            pdBot.startChat(pdBotData, function () {
+            });
+        }
+    }
+
+    // 人工客服
+    function artificial_kefu() {
+        logAppBuryingPoint({},'人工客服','我的');
+        window.location.href = 'tel://0575-82202000';
+    }
+
+
+    // 查看设备号是否是vip
+    function deviceIdIsVip() {
+        url = 'api/learner/deviceId-is-vip';
+        params = {
+            verificationCode: api.deviceId
+        };
+        ajax_Request(url, 'get', 'json', params, function (ret, err) {
+            if (ret && ret.code == '0') {
+                $('#accountSwitching').removeClass('aui-hide');
+            }
+        });
+    }
+
+    /**----------------------------------功能菜单结束---------------------------------------------*/
+
+
+    /**----------------------------------页面通用方法开始---------------------------------------------*/
+    //打开通用页面
+    function openWin(type, params) {
+        switch(type){
+        	case "record_study_subject_one":
+        		logAppBuryingPoint({},'学习记录','科目一','我的');
+        		break;
+        	case "record_exam_subject_one":
+        		logAppBuryingPoint({},'模考记录','科目一','我的');
+        		break;
+        	case "record_scene_subject_two_simulator":
+        		logAppBuryingPoint({},'模拟器培训记录','科目二','我的');
+        		break;
+        	case "simulator":
+        		logAppBuryingPoint({},'去模拟器培训','科目二','我的');
+        		break;
+        	case "two":
+        		logAppBuryingPoint({},'考前训练预约','科目二','我的');
+        		break;
+        	case "record_practice_subject_two":
+        		logAppBuryingPoint({},'考前训练预约记录','科目二','我的');
+        		break;
+        	case "three":
+        		logAppBuryingPoint({},'考前训练预约','科目三','我的');
+        		break;
+        	case "record_practice_subject_three":
+        		logAppBuryingPoint({},'考前训练预约记录','科目三','我的');
+        		break;
+        	case "record_scene_subject_three_appointment":
+        		logAppBuryingPoint({},'训练预约记录','科目三','我的');
+        		break;
+        	case "record_study_subject_four":
+        		logAppBuryingPoint({},'学习记录','科目四','我的');
+        		break;
+        	case "record_exam_subject_four":
+        		logAppBuryingPoint({},'模考记录','科目四','我的');
+        		break;
+        	case "myPost":
+        		logAppBuryingPoint({},'我的帖子','我的');
+        		break;
+        	case "opinion":
+        		logAppBuryingPoint({},'意见反馈','我的');
+        		break;
+        }
+        if (params != undefined && params != null) {
+            if (type == 'record_scene_subject_one') {
+                kemu = params;
+                params = {
+                    type: type,
+                    kemu: kemu
+                };
+                log('kemu', params);
+            } else {
+                params.type = type;
+            }
+        } else {
+            params = {
+                type: type
+            }
+        }
+        if (type == 'setting') {
+            commonOpenWin('mine_common_win', params);
+        } else {
+            if (islogin()) {
+                commonOpenWin('mine_common_win', params);
+            } else {
+                openLoginHtml();
+            }
+        }
+    }
+
+
+    // 关闭窗口
+    function closeWin() {
+        api.closeWin({});
+    }
+
+    /**----------------------------------页面通用方法结束---------------------------------------------*/
+
+</script>
+</html>

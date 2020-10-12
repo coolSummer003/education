@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>科目三</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html,body{
+    		background:#FFF;
+    	}
+    	.aui-grid [class*=aui-col-xs-]:active {
+		    background-color: #FFFFFF;
+		}
+    	.daoh{
+		    height: 2.5rem;
+    		margin: 0.8rem auto 0rem auto;
+    	}
+    	.title{
+    		padding: 0.2rem 0.75rem 0rem 0.75rem;
+    	}
+		.aui-list {
+		    border: none;
+		    background-size: 100% 1px;
+		    background-repeat: no-repeat;
+		    background-position: top;
+		    background-image: linear-gradient(0,#FFF,#FFF 50%,transparent 50%) !important;
+		}
+		.aui-list .aui-list-item-media {
+		    width: 100%;
+		    position: relative;
+		    padding: 0.5rem 0;
+		    /*padding-right: 0.75rem;*/
+		    display: inherit;
+		    -webkit-flex-shrink: 0;
+		    flex-shrink: 0;
+		    -webkit-flex-wrap: nowrap;
+		    flex-wrap: nowrap;
+		    -webkit-box-align: center;
+		    -webkit-align-items: flex-start;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		}
+		.blue{
+			color:#03A9F4;
+		}
+		.aui-ellipsis-2 {
+		    display: -webkit-box !important;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		    word-wrap: break-word;
+		    word-break: break-all;
+		    white-space: normal !important;
+		    -webkit-line-clamp: 2;
+		    -webkit-box-orient: vertical;
+		}
+		.aui-list .aui-list-item-media img {
+		    width: 100%;
+		    display: block;
+		    height: 5rem;
+		    object-fit: content;
+		    border-radius: 10px;
+		}
+		.border-none{
+			border:none !important;
+			background:none !important;
+			padding: 0;
+		    min-height: 0rem;
+		}
+		.aui-col-xs-2 {
+		    width: 20%;
+		}
+		.mt{
+			font-size:0.5rem;
+		}
+		.daoh_small{
+		    height: 1.5rem;
+    		margin: 0 auto;
+		}
+		.cache_txt {
+		    position: relative;
+		    z-index: 20;
+		    width: 1.5rem;
+		    line-height: 1.4rem;
+	        margin:0.5rem auto;
+		}
+		.operation-collection{
+		    height: 3rem;
+		}
+		.operation-item{
+			height: 3rem;
+		    display: flex;
+		    width: 50%;
+		    float: left;
+		    padding: 0 2rem 0 0.75rem;
+		}
+		.operation-item img{
+			width: 1.5rem;
+		    margin: auto;
+		}
+		.operation-item span{
+		    margin: auto;
+		}
+		.radius{
+		    border-radius: 0.4rem;
+		}
+		.mian-line{
+			display: inline-block !important;
+			width: 49%;
+		}
+		.aui-media-list .aui-list-item-inner{
+			padding: 0 !important;
+		}
+		.aui-list .aui-list-item{
+			background-image: none !important;
+		}
+		.aui-list .aui-list-item-inner{
+			min-height: 1.2rem;
+		}
+		.title span{
+			font-size: 0.9rem;
+			font-weight: bold;
+		}
+		.aui-list-item-text{
+			font-size: 0.8rem;
+			font-weight: bold;
+		}
+		.aui-list .aui-list-item{
+			padding-left: 0.75rem;
+			padding-right: 0.5rem;
+		}
+		.aui-list .aui-list-item:nth-child(2n){
+			padding-left: 0.15rem;
+			padding-right: 0.5rem;
+		}
+		.get_more_btn{
+			width: 100%;
+			text-align: center;
+			font-size: 0.6rem;
+			color: #646B7E;
+			margin-top: 0.8rem;
+			margin-bottom: 1rem;
+		}
+		.get_more_btn img{
+			width: 0.8rem;
+			display: inline-block;
+		}
+		.test-normal{
+			 transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            transition: transform .5s;
+		}
+		.test-inverse{
+			transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            transition: transform .5s;
+		}
+		.top-slide:before{
+			height: 0 !important;
+		}
+		.bottom-slide:after{
+			height: 0;
+		}
+		.top_img_m{
+			margin-bottom: 1.3rem !important;
+		}
+    </style>
+</head>
+<body>
+	<section class="aui-grid aui-margin-b-10 top_img_m">
+        <div class="aui-row">
+			<img src="../../icon/vip/video/video_purchase_entrance.png" alt="" style="margin: 0.8rem auto 0 auto; height: 8rem;" tapmode onclick="openChooseExamRoom()">
+			<img src="../../icon/subject/icon_exam_train_line.png" class="daoh" tapmode onclick='openPracticeNotice()'/>
+          <!--   <div class="aui-col-xs-3" tapmode onclick="openClassAppointment('class')">
+            	<img src="../../icon/subject/icon_practical.png" class="daoh"/>
+            	<div class="aui-grid-label">训练预约</div>
+            </div> -->
+            <!-- <div class="aui-col-xs-3" tapmode onclick='openExamRegistraction("three")'>
+                <img src="../../icon/subject/icon_sign.png" class="daoh radius"/>
+                <div class="aui-grid-label">考试报名</div>
+            </div> -->
+           <!-- <div class="aui-col-xs-3" tapmode onclick='openPracticeBefore()'>
+                <img src="../../icon/subject/icon_exam_train.png" class="daoh"/>
+                <div class="aui-grid-label">考前训练</div>
+            </div> -->
+            <!-- <div class="aui-col-xs-3 " tapmode onclick='openFreeApply()'>
+                <img src="../../icon/subject/icon_free_apply.png" class="daoh"/>
+                <div class="aui-grid-label mt">免单申请</div>
+            </div> -->
+        </div>
+    </section>
+    <div class="title">
+	    	<span>考试项目</span>
+	    </div>
+    	<ul class="aui-list aui-media-list none-bottom-style" id="subject_three_skill">
+    		<!-- <li class="aui-list-item mian-line none-bottom-style" tapmode onclick="openSkillExplanation('{{=it[i].name}}','{{=it[i].fatherCode}}','{{=it[i].code}}')">
+		                <div class="aui-list-item-media">
+		                    <img src="../../icon/default/icon_default_big_pic.png" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url + it[i].image}}">
+		                </div>
+		                <div class="aui-list-item-inner">
+		                    <div class="aui-list-item-text">
+		                        <div class="aui-list-item-title aui-ellipsis-1">{{=it[i].name}}</div>
+		                    </div>
+		                    
+		                </div>
+		        </li> -->
+    	</ul>
+    
+    <div class="aui-content top-slide">
+    	<div class="title">
+	    	<span>驾考技巧</span>
+	    </div>
+	    <section class="aui-grid aui-margin-b-10 bottom-slide">
+	        <div class="aui-row" id="driver_exam_skill">
+	            <!-- <div class="aui-col-xs-2" tapmode onclick="openClassAppointment('class')">
+	            	<img src="../../icon/common/icon_load.png" class="daoh_small"/>
+	            	<div class="aui-grid-label mt">
+	                	<img src="../../icon/common/icon_load_txt.png" class="cache_txt" />
+	                </div>
+	            </div>
+	            <div class="aui-col-xs-2" tapmode onclick="openClassAppointment('class')">
+	            	<img src="../../icon/common/icon_load.png" class="daoh_small"/>
+	            	<div class="aui-grid-label mt">
+	                	<img src="../../icon/common/icon_load_txt.png" class="cache_txt" />
+	                </div>
+	            </div>
+	            <div class="aui-col-xs-2" tapmode onclick="openClassAppointment('class')">
+	            	<img src="../../icon/common/icon_load.png" class="daoh_small"/>
+	            	<div class="aui-grid-label mt">
+	                	<img src="../../icon/common/icon_load_txt.png" class="cache_txt" />
+	                </div>
+	            </div>
+	            <div class="aui-col-xs-2" tapmode onclick="openClassAppointment('class')">
+	            	<img src="../../icon/common/icon_load.png" class="daoh_small"/>
+	            	<div class="aui-grid-label mt">
+	                	<img src="../../icon/common/icon_load_txt.png" class="cache_txt" />
+	                </div>
+	            </div>
+	            <div class="aui-col-xs-2" tapmode onclick="openClassAppointment('class')">
+	            	<img src="../../icon/common/icon_load.png" class="daoh_small"/>
+	            	<div class="aui-grid-label mt">
+	                	<img src="../../icon/common/icon_load_txt.png" class="cache_txt" />
+	                </div>
+	            </div> -->
+	        </div>
+	    </section>
+	    <!-- 驾考技巧script -->
+	    <script type="text/template" charset="utf-8" id='driver_exam_skill_src'>
+	    	{{ for(var i=0;i<it.length;i++){ }}
+	    		<div class="aui-col-xs-2" tapmode onclick="openDriverSkill('{{=i}}','{{=it[i].code}}','{{=it[i].name}}')">
+	                <img src="{{=file_load_url + it[i].image}}" class="daoh_small" onerror="javascript:this.src='../../icon/default/icon_default.png'"/>
+	                <div class="aui-grid-label mt">{{=it[i].name}}</div>
+	            </div>
+	    	{{ } }}
+	    </script>
+	    <!-- <div class="title">
+	    	<span>操作模拟</span>
+	    </div>
+	    <div class='operation-collection bottom-slide'>
+	    	<div class='operation-item' tapmode onclick="openSimulation(0)">
+	    		<img src="../../icon/subject/icon_voice.png" alt="" />
+	    		<span>语音指令</span>
+	    	</div>
+	    	<div class='operation-item' tapmode onclick="openSimulation(1)">
+	    		<img src="../../icon/subject/icon_light.png" alt="" />
+	    		<span>灯光指令</span>
+	    	</div>
+	    </div> -->
+	    <!--<div class="title">
+	    	<span>考试项目详解</span>
+	    </div>
+    	<ul class="aui-list aui-media-list" id="subject_three_skill">
+    		
+    	</ul>-->
+    	<!-- 考试项目详解script -->
+    	<script type="text/template" charset="utf-8" id='subject_three_skill_src'>
+    		{{ for(var i=0;i<it.length;i++){ }}
+	    		<!--<li class="aui-list-item" tapmode onclick="openSkillExplanation('{{=it[i].name}}','{{=it[i].fatherCode}}','{{=it[i].code}}')">
+		            <div class="aui-media-list-item-inner">
+		                <div class="aui-list-item-media">
+		                    <img src="../../icon/default/icon_default_big_pic.png" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url + it[i].image}}" style="height: 3.5rem;object-fit: content;">
+		                </div>
+		                <div class="aui-list-item-inner">
+		                    <div class="aui-list-item-text">
+		                        <div class="aui-list-item-title aui-ellipsis-1">{{=it[i].name}}</div>
+		                    </div>
+		                    <div class="aui-list-item-text" style="margin: 0.3rem 0rem;">
+		                    	<div class="aui-info-item aui-ellipsis-2">
+		                        	{{=it[i].remarks}}
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </li>-->
+		        {{if(i<4){}}
+		        <li class="aui-list-item mian-line none-bottom-style" tapmode onclick="openSkillExplanation('{{=it[i].name}}','{{=it[i].fatherCode}}','{{=it[i].code}}')">
+		                <div class="aui-list-item-media">
+		                    <img src="../../icon/default/icon_default_big_pic.png" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url + it[i].image}}">
+		                </div>
+		                <div class="aui-list-item-inner">
+		                    <div class="aui-list-item-text">
+		                        <div class="aui-list-item-title aui-ellipsis-1">{{=it[i].name}}</div>
+		                    </div>
+		                    
+		                </div>
+		        </li>
+		        {{}else{}}
+		        <li class="aui-list-item mian-line none-bottom-style line_hide aui-hide" tapmode onclick="openSkillExplanation('{{=it[i].name}}','{{=it[i].fatherCode}}','{{=it[i].code}}')">
+		                <div class="aui-list-item-media">
+		                    <img src="../../icon/default/icon_default_big_pic.png" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url + it[i].image}}">
+		                </div>
+		                <div class="aui-list-item-inner">
+		                    <div class="aui-list-item-text">
+		                        <div class="aui-list-item-title aui-ellipsis-1">{{=it[i].name}}</div>
+		                    </div>
+		                    
+		                </div>
+		        </li>
+		        {{}}}
+	        {{ } }}
+	        <div class="get_more_btn" onclick="getMore()"><span id="get_more_txt">
+    		        	展开全部
+    		        </span> <img id="downPic" src="../../icon/subject/icon_get_more_down_small.png"/></div>
+    	</script>
+    </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script src="../../script/echo.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var demoJson = [];
+	apiready = function(){
+	};
+	init();
+	function init(){
+		//初始化驾考技巧详解
+		getDictionaryByCode("024002",function(data){
+			log("科目三驾考技巧：================="+JSON.stringify(data))
+		var driver_exam_skill_src = $('#driver_exam_skill_src').html();
+		$("#driver_exam_skill").html(doT.template( driver_exam_skill_src )( data ));
+			
+			for(var i=0;i<data.length;i++){
+				var dt = {
+					"id":data[i].id,
+					"name":data[i].name,
+					"fatherCode":data[i].fatherCode,
+					"code":data[i].code,
+					"kemu":"036003"
+				}
+				demoJson.push(dt)
+				// return demoJson;
+				// log("我把对象添加到了数组"+JSON.stringify(demoJson) )
+			}
+			log("我把对象添加到了数组"+JSON.stringify(demoJson) )
+		});
+		//初始化考试项目详解
+		getDictionaryByCode("024001",function(data){
+			log("科目三标识图标：================="+JSON.stringify(data))
+			var subject_three_skill_src = $('#subject_three_skill_src').html();
+			$("#subject_three_skill").html(doT.template( subject_three_skill_src )( data ));
+			
+		});
+		//延迟加载图片
+		setTimeout(function() {
+			echoInit();
+		}, 300);
+		$(".line_hide").removeClass("mian-line")
+	}
+	
+	//考试项目上下加载事件
+	var flag = true;
+	function getMore(){
+		if(flag){
+			$(".line_hide").removeClass("aui-hide")
+			$(".line_hide").addClass("mian-line")
+			$("#get_more_txt").html("收起全部")
+			$("#downPic").removeClass("test-normal")
+			$("#downPic").addClass("test-inverse")
+			flag = false;
+		}else{
+			$(".line_hide").removeClass("mian-line")
+			$(".line_hide").addClass("aui-hide")
+			$("#get_more_txt").html("展开全部")
+			$("#downPic").removeClass("test-inverse")
+			$("#downPic").addClass("test-normal")
+			flag = true;
+		}
+	}
+	
+	
+	
+	//打开训练预约 
+	function openClassAppointment(type){
+	if(islogin()){
+			params = {
+				type:type,
+				action:'sign-up-action'
+			}
+		    api.openDrawerLayout({
+		    name: 'select_driver_school_list_win',
+		    url: './subjectThree/select_driver_school_list_win.html',
+		    slidBackEnabled:'true',
+		    vScrollBarEnabled:'false',
+	  		hScrollBarEnabled:'false',
+	  		reload:true,
+		    pageParam: {
+		    	data:params
+		    },
+		    animation: {
+		        type: 'push',
+		        subType:"from_right",
+				duration:300
+		    },
+		    rightPane: {
+		        name: 'search_detail',
+		        url: '../home/search_detail.html',
+		        vScrollBarEnabled:false,
+		        hScrollBarEnabled:false,
+		        bounces:false,
+		        pageParam:{
+		        	data:params
+		        }
+		    }
+		});
+		}else{
+			openLoginHtml();
+		}
+	}
+	//打开驾考技巧
+	function openDriverSkill(i,code,title){
+		logAppBuryingPoint({id:code,name:title},'驾考技巧','科三','学车考试');
+		api.openWin({
+	        name: 'subject_skill_menu_list_win',
+	        url: '../common/subject_skill_menu_list_win.html',
+	        slidBackEnabled:'true',
+	        vScrollBarEnabled:'false',
+	        hScrollBarEnabled:'false',
+	        reload:true,
+	        pageParam: {
+	      	    data:demoJson,
+							index:i
+	        }
+	    });
+	}
+	//打开考试项目详解
+	function openSkillExplanation(title,fatherCode,code){
+		logAppBuryingPoint({id:code,name:title},'考试项目','科三','学车考试');
+		api.openWin({
+	        name: 'subject_skill_win',
+	        url: '../common/subject_skill_win.html',
+	        slidBackEnabled:'true',
+	        vScrollBarEnabled:'false',
+	        hScrollBarEnabled:'false',
+	        reload:true,
+	        pageParam: {
+	        	title:title,
+						kemu:"036003",
+						fatherCode:fatherCode,
+						code:code
+	        }
+	    });
+	}
+	
+	//打开模拟
+	function openSimulation(index){
+		api.openWin({
+	        name: 'simulation_operation_win',
+	        url: './subjectThree/simulation_operation_win.html',
+	        slidBackEnabled:'true',
+	        vScrollBarEnabled:'false',
+	        hScrollBarEnabled:'false',
+	        reload:true,
+	        pageParam: {
+	        	index:index
+	        }
+	    });
+	}
+	
+	function openPracticeNotice(){
+		openMessage('温馨提示','强烈建议使用更方便、快捷的驾所通教练版APP进行预约','确定','','openPracticeBefore()','',{})
+	}
+	
+	//打开考前训练
+	function openPracticeBefore(){
+		logAppBuryingPoint({},'考前训练预约','科三','学车考试');
+		if(!islogin()){
+			openLoginHtml();
+		}else{
+			api.openWin({
+		        name: 'appoint_exam_role_win',
+		        url: './subjectThree/appoint_exam_role_win.html',
+		        slidBackEnabled:'false',
+		        vScrollBarEnabled:'false',
+		        hScrollBarEnabled:'false',
+		        reload:true,
+		        pageParam: {
+		        	data:null
+		        }
+		    });
+		}
+		/*params = {
+			type:'select_exam_room_subject_three'
+		}
+		api.openWin({
+	        name: 'mine_common_win',
+	        url: '../mine/mine_common_win.html',
+	        slidBackEnabled:'false',
+	        vScrollBarEnabled:'false',
+	        hScrollBarEnabled:'false',
+	        reload:true,
+	        pageParam: {
+	            data:params
+	        }
+	    });*/
+	}
+	
+	/**
+	 * 打开免单申请 
+	 */
+	function openFreeApply(){
+		if(!islogin()){
+			openLoginHtml();
+		}else{
+		   openApplyFree('free_apply_three');
+		}
+	}
+	
+	//打开免单申请
+	function openApplyFree(type){
+		api.openDrawerLayout({
+		    name: 'mine_common_win',
+		    url: '../mine/mine_common_win.html',
+		    slidBackEnabled:'true',
+		    vScrollBarEnabled:'false',
+	  		hScrollBarEnabled:'false',
+	  		reload:true,
+		    pageParam: {
+		    	data:{
+		    		type:type
+		    	}
+		    },
+		    animation: {
+		        type: 'push',
+		        subType:"from_right",
+				duration:300
+		    },
+		    rightPane: {
+		        name: 'leftPane',
+		        url: '../common/common_exam_room_list_win.html',
+		        vScrollBarEnabled:false,
+		        hScrollBarEnabled:false,
+		        bounces:false,
+		        pageParam:{
+		        	data:{
+			        	action:'sel_room_apply_free',
+			        	type:type
+		        	}
+		        }
+		    }
+		});
+	}
+
+	// 打开选择视频
+	function openChooseExamRoom() {
+		if (!islogin()) {
+			openLoginHtml();
+			return;
+		}
+		logAppBuryingPoint({},'考场线路实拍视频','科三','学车考试');
+		openCommonWin('exam_room_list_win', '../vip_service/video/exam_room_list_win', {type: '036003'});
+		// openCommonWin('question_bank_buy_index', '../vip_service/question_bank/question_bank_buy_index', {});
+	}
+
+
+	// 打开通用win
+	function openCommonWin(winName, winUrl, data) {
+		api.openWin({
+			name: winName,
+			url: winUrl + '.html',
+			slidBackEnabled: 'false',
+			vScrollBarEnabled: 'false',
+			hScrollBarEnabled: 'false',
+			reload: true,
+			useWKWebView: false,
+			pageParam: {
+				data: data
+			}
+		});
+	}
+</script>
+</html>

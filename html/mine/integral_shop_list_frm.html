@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+        <title>积分商城</title>
+        <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+        <style>
+            html,body{
+                background: #EFEFF4;
+                min-height:100%;
+                overflow-x:hidden;
+            }
+           /* .top_block {
+                width: 17.5rem;
+                height: 5rem;
+                margin-left: 0.15rem;
+                margin-bottom: 0.5rem;
+                background: #FFFFFF;
+                box-shadow: 3px 3px 5px #888888;
+                border-radius: 1.5%;
+            }
+            .top_img {
+                width: 8rem;
+                height: 2.5rem;
+            }
+            .top_img_second {
+                width: 8rem;
+                height: 2.5rem;
+                float: right;
+            }
+            .top_integral {
+                position: absolute;
+                left: 1rem;
+                top: 0.65rem;
+                color: white;
+                font-size: 0.8rem;
+            }
+            .top_integral_second {
+                position: absolute;
+                right: 2rem;
+                top: 0.65rem;
+                color: white;
+                font-size: 0.8rem;
+            }
+            .top_img_question {
+                position: absolute;
+                left: -1rem;
+                top: 0.25rem;
+                width: 0.7rem;
+            }
+            .top_img_right {
+                position: absolute;
+                left: 4.5rem;
+                top: 0.25rem;
+                width: 0.7rem;
+            }
+            .top_img_left {
+                position: absolute;
+                right: -1.5rem;
+                top: 0.25rem;
+                width: 0.7rem;
+            }
+            .top_block_middle {
+                position: absolute;
+                left: 3rem;
+                top: 3rem;
+            }
+            #center_block_middle {
+                position: absolute;
+                left: 50%;
+                top: 3rem;
+                height: 1.25rem;
+                width: 0.05rem;
+                background: #CCCCCC;
+            }
+            .left_block_middle {
+                position: absolute;
+                right: 3.5rem;
+                top: 3rem;
+            }*/
+            .aui-card-list {
+                width: 50%;
+                display: inline;
+                border-left: 0.15rem solid #F5F5F5;
+                border-right: 0.15rem solid #F5F5F5;
+                float: left;
+                height: 100%;
+            }
+            .stock {
+                float: right;
+                bottom: 1rem;
+            }
+            .integral_second {
+                float: right;
+            }
+            .mar-right {
+                margin-right: 2px;
+            }
+            .aui-col-xs-4 {
+                width: 33.33333333%;
+                height: 4rem;
+            }
+            .aui-card-list-content img, .aui-card-list-content-padded img {
+                width: 100%;
+                height: 100%;
+                display: block;
+                object-fit: cover;
+            }
+            .aui-card-list-user-name {
+                color: #212121;
+                position: relative;
+                font-size: 0.7rem;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: flex;
+                -webkit-box-pack: justify;
+                -webkit-justify-content: space-between;
+                justify-content: space-between;
+                -webkit-box-align: center;
+                -webkit-align-items: center;
+                align-items: center;
+            }
+            .msg {
+                height: 12rem;
+                text-align: center;
+                font-size: 0.7rem;
+            }
+            .msg img {
+                width: 8rem;
+                margin-top: 2.5rem;
+            }
+            .jiazai {
+                font-size: 0.7rem;
+                background: #EFEFF4;
+                width: 100%;
+                color: #666565;
+                padding-bottom: 1.25rem;
+                vertical-align: middle;
+                padding-top: 1.25rem;
+            }
+            .jiazai img {
+                width: 1.5rem;
+            }
+            .aui-card-list-footer {
+                min-height: 1.5rem!important;
+                padding: 0.1rem 0.75rem;
+            }
+            .auiIconLaud {
+                color: #1E8DD8;
+            }
+            .thumbUp {
+                height: 0.8rem;
+                margin: 0rem 0.1rem -0.1rem 0rem;
+            }
+            .numColor {
+                color: #1E8DD8;
+            }
+            .browse-num {
+                color: #CDCDCD;
+                font-size: 0.6rem;
+            }
+            #load_div {
+                background-color: #EFEFF4;
+            }
+            .line {
+                width: 0.1rem;
+                height: 0.8rem;
+                background-color: #FC0402;
+                margin-left: 0.18rem;
+                margin-bottom: 0.5rem;
+            }
+            .word {
+                position: absolute;
+                margin-top: -0.15rem;
+                margin-left: 0.5rem;
+            }
+            .flipx {
+                -moz-transform: scaleX(-1);
+                -webkit-transform: scaleX(-1);
+                -o-transform: scaleX(-1);
+                transform: scaleX(-1);
+                /*IE*/
+                filter: FlipH;
+            }
+            #couponList{
+                margin-bottom: 0.75rem;
+            }
+            .body_top{
+                width: 100%;
+                height: 9rem;
+                background:linear-gradient(225deg,rgba(255,128,111,1) 0%,rgba(255,95,91,1) 100%);
+                margin-bottom: 1rem;
+            }
+            .my_integral_title{
+                color: #FFFFFF;
+                position: relative;
+                top: 1.5rem;
+                left: 1.5rem;
+                font-size: 0.7rem;
+            }
+            .my_integral{
+                color: #FFFFFF;
+                position: relative;
+                top: 1.5rem;
+                left: 1.5rem;
+                font-size: 2.0rem;
+                font-weight: bold;
+            }
+            .question_img{
+                position: absolute;
+                top: 1.8rem;
+                right: 5.4rem;
+                width: 1.2rem;
+            }
+            .question_title{
+                position: absolute;
+                top: 1.85rem;
+                right: 1.1rem;
+                color: #FFFFFF;
+            }
+            .integral_button{
+                background:linear-gradient(180deg,rgba(255,209,96,1) 0%,rgba(255,168,57,1) 100%);
+                border-radius:20px;
+                width: 6rem;
+                height: 2rem;
+                position: absolute;
+                top: 4.8rem;
+                right: 1.1rem;
+                color: #FFFFFF;
+                font-wight: bold;
+                font-size: 0.8rem;
+            }
+            .coupon_title{
+                font-size: 0.9rem;
+                font-weight: bold;
+                margin-left: 0.75rem;
+                margin-bottom: 1rem;
+            }
+            .coupon_more{
+                position: absolute;
+                right: 0.75rem;
+                color: #878787;
+                font-size: 0.8rem;
+                line-height: 1.3rem
+            }
+            .coupon{
+                background-image: url(../../image/background/coupon_background.png);
+                background-size: cover;
+                height: unset;
+            }
+            .coupon_money{
+                color:#FF1B1B;
+                font-size: 0.6rem;
+                margin: auto;
+                text-align: center;
+            }
+            .coupon_right{
+                position: relative;
+                float:left;
+                left: -0.6rem;
+            }
+            .coupon_name{
+                color: #313131;
+                font-size: 0.6rem;
+                font-weight: bold;
+                width: 3.5rem;
+            }
+            .coupon_discount{
+                font-size:0.55rem;
+                color:#313131;
+                /*position:absolute;
+                bottom: 1.4rem;
+                left: 3.3rem;*/
+            }
+            .coupon_date{
+                font-size:0.45rem;
+                color:#B7B7B7;
+                margin-top: 0.3rem;
+            }
+            .coupon_button{
+                position: absolute;
+                right: -1.95rem;
+                width: 1rem;
+                color: #FFDEB8;
+                font-weight: 800;
+                top: 0.2rem;
+                font-size: 0.8rem;
+            }
+            .shop_goods{
+                background:rgba(255,255,255,1);
+                box-shadow:0px 2px 8px 0px rgba(211,211,211,0.5);
+                border-radius:10px;
+                margin-bottom: 0.75rem;
+                border-left: none;
+                border-right: none;
+
+                
+            }
+            #goodsList{
+                margin-left: 0.5rem;
+                /*margin-right: 0.5rem;*/
+            }
+            .shop_name{
+                margin-left:-0.1rem;
+                margin-top: -0.7rem;
+                color:#28354C;
+                font-size: 0.7rem;
+            }
+            .shop_integral{
+                font-size:0.6rem;
+                margin-top: -1.2rem;
+                margin-left: 0.75rem;
+                color:#FF6C62;
+                width: 90%; 
+            }
+            .shop_exchange_number{
+                font-size:0.65rem;
+                margin-left: 0.75rem;
+                color:#666666;
+                margin-top: 0.1rem;
+                margin-bottom:0.5rem;
+            }
+            .coupon_received_button{
+                position: absolute;
+                right: -1.95rem;
+                width: 1rem;
+                color: #FFDEB8;
+                font-weight: 800;
+                top: -0.3rem;
+                font-size: 0.8rem;
+            }
+            .shop_goods{
+                width: 47%!important;
+                margin-right: 0.5rem;
+            }
+            .aui-card-list-content-padded{
+                padding-left: 0!important;
+                padding-right: 0!important;
+                padding-top: 0!important;
+                margin-top: -5px!important;
+            }
+            .aui-row-padded{
+                border-top-left-radius: 15px!important;
+                border-top-right-radius: 15px!important;
+            }
+            .origalPrice{
+                color:#999999;
+                display: contents;
+                text-decoration: line-through;
+            }
+        </style>
+    </head>
+    <body>
+        <!--<div class="top_block"></div>
+        <div class="top_block_middle" onclick="openHowintegral()">
+            <img src="../../icon/mine/icon_question.png" alt="" class="top_img_question" />
+            <span style="font-size:0.75rem;bottom:0.5rem;">如何赚积分</span>
+            <img src="../../icon/hospital/icon_right.png" alt="" class="top_img_right" />
+        </div>
+        <div id="center_block_middle"></div>
+        <div class="left_block_middle" onclick="openDetaileintegral()">
+            <img src="../../icon/mine/icon_question.png" alt="" class="top_img_question" />
+            <span style="font-size:0.75rem;bottom:0.5rem;">积分明细</span>
+            <img src="../../icon/hospital/icon_right.png" alt="" class="top_img_left" />
+        </div>-->
+        <div class="body_top">
+            <div class="my_integral_title" style="font-size: 0.8rem;">我的积分</div>
+            <div class="my_integral" id="integralExist">0</div>
+            <div class="my_integral_title">今日新增 <span style="font-size: 0.7rem" id="integralExistDay">+100</span></div>
+            <!--<div class="" >-->
+                <img src="../../icon/common/icon_question.png" alt="" class="question_img" onclick="openHowintegral()"/>
+                <span class="question_title" onclick="openHowintegral()">如何赚积分</span>
+                <button class="integral_button" onclick="openDetaileintegral()">积分明细</button>
+            <!--</div>-->
+        </div>
+        <div style="display: grid;">
+            <!--<div class="line"></div>
+            <span class="word">福利</span>-->
+            <div >
+                 <span class="coupon_title">限时补贴</span>
+                 <div style="display: inline" class="coupon_more">
+                  <span  onclick="initCoupon('true')" id="coupon_more">
+                                            更多优惠券
+                    
+                  </span>
+                    <i class="aui-iconfont aui-icon-right" id="right_icon"></i>
+                    <i class="aui-iconfont aui-icon-top aui-hide" id="left_icon"></i>
+                  </div> 
+            </div>
+           
+            <div class="aui-content" id="couponList">
+                <!--<div class="aui-card-list auiCardList coupon">
+                    <div tapmode onclick="openDetail('{{=it.listIntegralGoodsRecord[i].id}}','{{=it.integralExist}}','{{=it.listIntegralGoodsRecord[i].integral}}','{{=it.listIntegralGoodsRecord[i].image}}','{{=it.listIntegralGoodsRecord[i].name}}')">
+                        
+                        <div class="aui-card-list-header" style="min-height: 4.2rem;width: 7.5rem;padding: 0.5rem 0;">
+                        
+                            <div class="aui-card-list-user-name" style="width: 36%;margin-left: 0.4rem;">
+                             
+                                <div class="coupon_money">
+                                                                                ￥<span style="font-size: 1.2rem;font-weight: bold">100</span>
+                                </div>
+                                
+                            </div>
+                            <div class="coupon_right">
+                            <div class="aui-ellipsis-1 coupon_name">
+                                    火锅券
+                                </div>
+                            <div class="coupon_discount">
+                                                                            满200元可用
+                            </div>
+                            <div class="coupon_date">
+                                限5.20前领取
+                            </div>
+                            <div class="coupon_received_button">已领取</div>
+                            </div>
+                            
+                          </div> 
+                        </div>
+                    </div>
+                    <div class="aui-card-list auiCardList coupon">
+                    <div tapmode onclick="openDetail('{{=it.listIntegralGoodsRecord[i].id}}','{{=it.integralExist}}','{{=it.listIntegralGoodsRecord[i].integral}}','{{=it.listIntegralGoodsRecord[i].image}}','{{=it.listIntegralGoodsRecord[i].name}}')">
+                        
+                        <div class="aui-card-list-header" style="min-height: 4.2rem;width: 7.5rem;padding: 0.5rem 0;">
+                        
+                            <div class="aui-card-list-user-name" style="width: 36%;margin-left: 0.4rem;">
+                            
+                                <div class="coupon_money">
+                                                                                ￥<span style="font-size: 1.2rem;font-weight: bold">1</span>
+                                </div>
+                                
+                            </div>
+                            <div class="coupon_right">
+                            <div class="coupon_name">
+                                    火锅券
+                                </div>
+                            <div class="coupon_discount">
+                                                                            满200元可用
+                            </div>
+                            <div class="coupon_date">
+                                限5.20前领取
+                            </div>
+                             <div class="coupon_button">领取</div>
+                            </div>
+                            
+                          </div> 
+                        </div>
+                    </div>-->
+                     
+                </div>
+            </div>
+             <div>
+                <!--<div class="line"></div>
+                <span class="word" style="margin-top:-1.45rem;">热门商品</span>-->
+                 <span class="coupon_title">积分购好物</span>
+                <section class="aui-content" id="goodsList">
+                    <!--<div class="aui-card-list auiCardList shop_goods">
+                    <div tapmode onclick="openDetail('{{=it.listIntegralGoodsRecord[i].id}}','{{=it.integralExist}}','{{=it.listIntegralGoodsRecord[i].integral}}','{{=it.listIntegralGoodsRecord[i].image}}','{{=it.listIntegralGoodsRecord[i].name}}')">
+                        <div class="aui-card-list-content-padded">
+                            <div class="aui-row aui-row-padded" id="{{=it.listIntegralGoodsRecord[i].id}}">
+                        </div>
+                    </div>
+                <div class="aui-card-list-header aui-card-list-user">
+                    <div class="aui-card-list-user-name">
+                        <div class="aui-ellipsis-1 shop_name">商品</div>
+                            
+                </div>
+                </div class="integral_second">
+                    <div class="shop_exchange_number">已兑100件</div>
+                        <div class="shop_integral">20积分</div>
+                    </div>
+                </div>
+                <div class="aui-card-list auiCardList shop_goods">
+                    <div tapmode onclick="openDetail('{{=it.listIntegralGoodsRecord[i].id}}','{{=it.integralExist}}','{{=it.listIntegralGoodsRecord[i].integral}}','{{=it.listIntegralGoodsRecord[i].image}}','{{=it.listIntegralGoodsRecord[i].name}}')">
+                        <div class="aui-card-list-content-padded">
+                            <div class="aui-row aui-row-padded" id="{{=it.listIntegralGoodsRecord[i].id}}" src="../../image/background/coupon_background.png">
+                        </div>
+                    </div>
+                <div class="aui-card-list-header aui-card-list-user">
+                    <div class="aui-card-list-user-name">
+                        <div class="aui-ellipsis-1 shop_name">商品</div>
+                            
+                </div>
+                </div class="integral_second">
+                    <div class="shop_exchange_number">已兑100件</div>
+                        <div class="shop_integral">20积分</div>
+                    </div>
+                </div>-->
+                </section>
+            </div>
+            <div id='load_div'></div>
+            <!--<script type="text/template" charset="utf-8" id='integral_top'>
+                <img class="top_img" src="../../icon/mine/icon_top.png" alt=""/>
+                <span class="top_integral">我的积分:{{=it.integralExist==undefined?0:it.integralExist}}</span>
+                <img class="top_img_second flipx" src="../../icon/mine/icon_top.png" alt=""/>
+                <span class="top_integral_second" onclick="myorder()">我的订单</span>
+            </script>-->
+            <script type="text/template" charset="utf-8" id='integral_shop_list'>
+                {{ for(var i=0;i < it.listIntegralGoodsRecord.length;i++){ }}
+                <div class="aui-card-list auiCardList shop_goods">
+                    <div tapmode onclick="openDetail('{{=it.listIntegralGoodsRecord[i].id}}','{{=it.integralExist}}','{{=it.listIntegralGoodsRecord[i].integral}}','{{=it.listIntegralGoodsRecord[i].image}}','{{=it.listIntegralGoodsRecord[i].name}}')">
+                        <div class="aui-card-list-content-padded">
+                            <div class="aui-row aui-row-padded goods_img" id="{{=it.listIntegralGoodsRecord[i].id}}" >
+                        </div>
+                    </div>
+                <div class="aui-card-list-header aui-card-list-user">
+                    <div class="aui-card-list-user-name">
+                        <div class="aui-ellipsis-1 shop_name"  >{{=it.listIntegralGoodsRecord[i].name}}</div>
+                            <!--<div style="float: right;color: #999999;font-size: 0.65rem;margin-top: -0.55rem;">
+                                {{if(it.listIntegralGoodsRecord[i].exchangeLimit == 0){}}
+                                {{ }else{ }}
+                                <span>限{{=it.listIntegralGoodsRecord[i].exchangeLimit}}件</span>
+                                {{ } }}
+                            </div>-->
+                </div>
+                </div class="integral_second">
+                    <div class="shop_integral aui-ellipsis-1">
+                    <!--{{=it.listIntegralGoodsRecord[i].integral==undefined?0:it.listIntegralGoodsRecord[i].integral}}积分-->
+                    
+                        {{ if(it.listIntegralGoodsRecord[i].price != "0" && it.listIntegralGoodsRecord[i].integral != "0"){}}
+                                                        ￥{{=it.listIntegralGoodsRecord[i].price}}+{{=it.listIntegralGoodsRecord[i].integral}}积分        
+                        {{ }else if(it.listIntegralGoodsRecord[i].price == "0" && it.listIntegralGoodsRecord[i].integral != "0"){ }}
+                          {{=it.listIntegralGoodsRecord[i].integral}}积分
+                        {{ }else if(it.listIntegralGoodsRecord[i].price != "0" && it.listIntegralGoodsRecord[i].integral == "0"){ }}
+                                                         ￥{{=it.listIntegralGoodsRecord[i].price}}       
+                        {{ }else { }}
+                                                        免费                                         
+                        {{ } }}
+                        <del class="origalPrice">￥{{=it.listIntegralGoodsRecord[i].origalPrice}}</del>
+                    </div>
+                    <div class="shop_exchange_number">已兑换{{=it.listIntegralGoodsRecord[i].exchangeCount==undefined?0:it.listIntegralGoodsRecord[i].exchangeCount}}件</div>
+                    </div>
+                </div>
+                {{ } }}
+            </script>
+            <script type="text/template" charset="utf-8" id='integral_coupon_list'>
+                {{ for(var i=0;i < it.listIntegralGoodsRecordCoupon.length;i++){ }}
+                <div class="aui-card-list auiCardList coupon">
+                {{ if(it.listIntegralGoodsRecordCoupon[i].flags == "1"){}}
+                    <div tapmode >                                   
+                {{ }else{ }}
+                    <div tapmode onclick="openCouponDetail('{{=it.listIntegralGoodsRecordCoupon[i].id}}')">
+                {{ } }}
+                    
+                        <div class="aui-card-list-header" style="min-height: 4.2rem;width: 7.5rem;padding: 0.5rem 0rem;">
+                            <div class="aui-card-list-user-name" style="width: 36%;margin-left: 0.4rem;">
+                                <div class="coupon_money">
+                                {{ if(it.listIntegralGoodsRecordCoupon[i].type == "A00011"){}}
+                                                                                ￥<span style="font-size: 1.2rem;font-weight: bold">{{=parseInt(it.listIntegralGoodsRecordCoupon[i].discountAmount)}}</span>
+                                {{ } else if(it.listIntegralGoodsRecordCoupon[i].type == "A00012"){}}
+                                <span style="font-size: 1.2rem;font-weight: bold">{{=it.listIntegralGoodsRecordCoupon[i].discount}}</span>%
+                                {{ } else if(it.listIntegralGoodsRecordCoupon[i].type == "A00013"){}} 
+                                     <span style="font-size: 1.2rem;font-weight: bold">1</span>次
+                                {{ } }}   
+                                </div>
+                            </div>
+                                <div class="coupon_right">
+                                    <div class="aui-ellipsis-1 coupon_name">
+                                        {{=it.listIntegralGoodsRecordCoupon[i].name}}
+                                    </div>
+                                     <div class="coupon_discount">
+                                      {{ if(it.listIntegralGoodsRecordCoupon[i].type == "A00011"){}}                                           <!--满{{=it.listIntegralGoodsRecordCoupon[i].name}}元可用-->
+                                                                                         满{{=it.listIntegralGoodsRecordCoupon[i].conditionsAmount}}元可用
+                                      {{ } else if(it.listIntegralGoodsRecordCoupon[i].type == "A00012"){}} 
+                                        {{ if(it.listIntegralGoodsRecordCoupon[i].conditionsAmount == "0"){}}  
+                                                                                                折扣券
+                                         {{  }else {}}
+                                                                                                满{{=it.listIntegralGoodsRecordCoupon[i].conditionsAmount}}元可用
+                                         {{ } }}   
+                                      {{ } else if(it.listIntegralGoodsRecordCoupon[i].type == "A00013"){}} 
+                                                                                         体验券
+                                       {{ } }}                                        
+                                     </div>
+                                  <div class="coupon_date">
+                                    {{ if(it.listIntegralGoodsRecordCoupon[i].endBuyingTime.slice(5,6) == "0"){}} 
+                                           {{ if(it.listIntegralGoodsRecordCoupon[i].endBuyingTime.slice(8,9) == "0"){}}
+                                                                                                    限{{=it.listIntegralGoodsRecordCoupon[i].endBuyingTime.slice(6,7)}}.{{=it.listIntegralGoodsRecordCoupon[i].endBuyingTime.slice(9,10)}}前领取                                   
+                                           {{ }else{ }}
+                                                                                                    限{{=it.listIntegralGoodsRecordCoupon[i].endBuyingTime.slice(6,7)}}.{{=it.listIntegralGoodsRecordCoupon[i].endBuyingTime.slice(8,10)}}前领取
+                                           {{ } }}
+                                                                                    
+                                        {{ }else{ }}
+                                          {{ if(it.listIntegralGoodsRecordCoupon[i].endBuyingTime.slice(8,9) == "0"){}}
+                                                                                                限{{=it.listIntegralGoodsRecordCoupon[i].endBuyingTime.slice(5,7)}}.{{=it.listIntegralGoodsRecordCoupon[i].endBuyingTime.slice(9,10)}}前领取                                   
+                                          {{ }else{ }}
+                                                                                                限{{=it.listIntegralGoodsRecordCoupon[i].endBuyingTime.slice(5,7)}}.{{=it.listIntegralGoodsRecordCoupon[i].endBuyingTime.slice(8,10)}}前领取
+                                          {{ } }}
+                                        {{ } }}
+                             <!--限5.21前领取-->
+                                 </div>
+                                     {{ if(it.listIntegralGoodsRecordCoupon[i].flags == "1"){}}
+                                        <div class="coupon_received_button">已领取</div>                                 
+                                    {{ }else{ }}
+                                        <div class="coupon_button">领取</div>
+                                    {{ } }}
+                            </div>
+                            
+                          </div>
+                         </div>
+                      </div>
+                {{ } }}
+            </script>
+            <script type="text/template" charset="utf-8" id='integral_shop_list_img'>
+                <div class="aui-col-xs-12">
+                <img src="../../icon/default/icon_default_big_pic.png" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url + it[0]}}" style="height: 6rem;object-fit: content;"/>
+                </div>
+            </script>
+            <script type="text/template" charset="utf-8" id='load_src'>
+                <div class="load">
+                <img src="../../icon/common/loadding.gif" alt="" /><br>
+                <span>加载中...</span>
+                </div>
+            </script>
+            <script type="text/template" charset="utf-8" id='msg_src'>
+                <div class="msg">
+                <img src="../../icon/common/empty.png" alt="" /><br>
+                <span>{{=it.msg}}</span>
+                </div>
+            </script>
+            <script type="text/template" charset="utf-8" id='more_src'>
+                <div class="jiazai">
+                <span>{{=it.msg}}</span>
+                </div>
+            </script>
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+    <script src="../../script/echo.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="../../script/doT_min.js"></script>
+    <script type="text/javascript" src="../../script/common/common.js"></script>
+    <script type="text/javascript">
+		var cache;
+		var headerPos;
+		var title = '';
+		var frameName = '';
+		var page = 1, limit = 6;
+		var load_src = $('#load_src').html();
+		//加载src
+		var msg_src = $('#msg_src').html();
+		//消息提示src
+		var more_src = $('#more_src').html();
+		//更多src
+		var refresh = true;
+		//标记是否是刷新操作
+		var imgs;
+		//存放图片
+		var learnerId;
+		//用户ID
+		var h;
+		var integralExist;
+		var moreCoupon = false;
+		apiready = function() {
+//			init();
+			initCoupon("false");
+			goRefrash(40, '#EFEFF4', null, null, function() {
+				refreshList();
+			});
+			goLoad(function(ret, err) {
+				loadList();
+			});
+			api.refreshHeaderLoading();
+			//获取账户id 前提是已登录状态，否则肯定报错
+			if (islogin()) {
+				learnerId = getUserId();
+			} else {
+				learnerId = "";
+			}
+			api.parseTapmode();
+			cache = api.pageParam.data;
+			api.addEventListener({
+				name : 'closeWin'
+			}, function(ret, err) {
+				if (ret.value.key1 == '1') {
+					refreshList();
+				}
+			});
+			toEventListener('refreshList',function(ret,err){
+                console.log("刷新列表")
+                init();
+                initCoupon("false");
+            });
+		};
+		//打开积分细则页面
+		function openDetaileintegral() {
+			api.openWin({
+				name : 'integral_detail_win',
+				url : '../mine/integral_detail_win.html',
+				slidBackEnabled : 'false',
+				vScrollBarEnabled : 'false',
+				hScrollBarEnabled : 'false',
+				reload : true,
+				pageParam : {
+					learnerId : learnerId,
+				}
+			});
+			api.parseTapmode();
+		}
+
+		//打开积分规则
+		function openHowintegral() {
+			api.openWin({
+				name : 'integral_rule_win',
+				url : '../mine/integral_rule_win.html',
+				slidBackEnabled : 'false',
+				vScrollBarEnabled : 'false',
+				hScrollBarEnabled : 'false',
+				reload : true,
+				pageParam : {
+					learnerId : learnerId,
+				}
+			});
+			api.parseTapmode();
+		}
+
+		//列表刷新
+		function refreshList() {
+			page = 1;
+			refresh = true;
+			//setLoad();
+			init();
+			initCoupon("false");
+		}
+
+		//列表上拉
+		function loadList() {
+			page++;
+			if ($('section').find('.aui-card-list').length == 0)
+				refresh = true;
+			else
+				refresh = false;
+			//setLoad();
+			init();
+			initCoupon("false");
+		}
+
+		function init() {
+		    console.log(moreCoupon)
+			url = '/api/integral-goods/list-integral-goods';
+			params = {
+				learnerId : learnerId,
+				page : page,
+				limit : limit
+			}
+			console.log(JSON.stringify(params));
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('商品列表', ret);
+				integralExist = ret.integralExist;
+				if (ret) {
+//					var integral_top = $('#integral_top').html();
+//					$(".top_block").html(doT.template(integral_top)(ret));
+                    $("#integralExist").html(ret.integralExist)
+                    $("#integralExistDay").html("+"+ret.integralExistDay)
+					if (ret.code == 0 && ret.listIntegralGoodsRecord.length > 0) {
+						setTimeout(function() {
+							echoInit();
+						}, 100);
+						if (page == 1) {
+							var integral_shop_list = $('#integral_shop_list').html();
+							$("section").html(doT.template(integral_shop_list)(ret));
+						} else {
+							var integral_shop_list = $('#integral_shop_list').html();
+							$("section").append(doT.template(integral_shop_list)(ret));
+						}
+						for (var i = 0; i < ret.listIntegralGoodsRecord.length; i++) {
+							var img = ret.listIntegralGoodsRecord[i].image;
+							// log("图片：--------",img)
+							imgs = img.split(',');
+							// log("多图片---------------:",imgs.length)
+							var integral_shop_list_img = $('#integral_shop_list_img').html();
+							$("#" + ret.listIntegralGoodsRecord[i].id).html(doT.template(integral_shop_list_img)(imgs)); 
+						}
+						api.parseTapmode();
+					} else {
+						setMsgGoods( refresh ? '暂无商品' : '');
+					}
+				} else {
+					setMsgGoods('服务器繁忙,请稍后再试！');
+				}
+			})
+			setTimeout(function() {
+				api.refreshHeaderLoadDone();
+			}, 500);
+		}
+
+		function initCoupon(type) {
+		console.log(type)
+		   moreCoupon = "true";
+		  if(type == "true"){
+		     params = {
+                page : 1,
+                limit : 9999999,
+                learnerId: getUserId()
+            }
+            $("#coupon_more").html("收起优惠券");
+            $("#coupon_more").attr("onclick","initCoupon('false')");
+            $("#left_icon").removeClass("aui-hide");
+            $("#right_icon").addClass("aui-hide");
+           }else{
+            params = {
+                page : 1,
+                limit : 2,
+                learnerId: getUserId()
+            }
+            $("#coupon_more").html("更多优惠券");
+            $("#coupon_more").attr("onclick","initCoupon('true')");
+            $("#right_icon").removeClass("aui-hide");
+            $("#left_icon").addClass("aui-hide");
+           }
+           console.log(JSON.stringify(params))
+           defaultload("加载中");
+			url = '/api/integral-goods/list-integral-goods-coupon';
+			//console.log(JSON.stringify(params));
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('优惠券列表', ret);
+				listIntegralGoodsRecordCoupon = ret.listIntegralGoodsRecordCoupon;
+				if (ret) {
+					if (ret.code == 0 && ret.listIntegralGoodsRecordCoupon.length > 0) {
+							var integral_coupon_list = $('#integral_coupon_list').html();
+							$("#couponList").html(doT.template(integral_coupon_list)(ret));
+						    api.parseTapmode();
+					} else {
+						setMsgCoupon( refresh ? '暂无优惠券' : '暂无优惠券');
+					}
+					api.hideProgress();
+				} else {
+					setMsgCoupon('服务器繁忙,请稍后再试！');
+					api.hideProgress();
+				}
+			})
+			setTimeout(function() {
+				api.refreshHeaderLoadDone();
+			}, 500);
+		}
+
+		//设置页面加载的画面
+		// function setLoad() {
+		// 	if (refresh || $('section').find('.aui-card-list').length == 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+		// 		$('#load_div').html('');
+		// 	} else {
+		// 		setTimeout(function() {
+		// 			$('#load_div').html(doT.template(more_src)({
+		//				'msg': '加载更多中...',
+		//				'img': '../../icon/common/jiazai.gif'
+		// 			}));
+		// 		}, 500);
+		// 	}
+		// }
+		//设置页面提示信息
+		function setMsgCoupon(msg) {
+			if (refresh || $('#couponList').find('.aui-card-list').length == 0) {//如果是刷新或者之前无数据的上拉加载，全屏提示
+                setTimeout(function() {
+                    $("#couponList").html(doT.template(msg_src)({
+                        'msg' : msg
+                    }));
+                }, 500);
+            } 
+		}
+        //设置页面提示信息
+        function setMsgGoods(msg) {
+            if (refresh || $('section').find('.aui-card-list').length == 0) {//如果是刷新或者之前无数据的上拉加载，全屏提示
+                setTimeout(function() {
+                    $("section").html(doT.template(msg_src)({
+                        'msg' : msg
+                    }));
+                }, 500);
+            } 
+        }
+		//跳转商品详情
+		function openDetail(id, integralExist, integral, image, name) {
+			params = {
+				integralExist : integralExist,
+				id : id,
+				flag : 'news',
+				integral : integral,
+				name : name,
+				image : image
+			}
+			api.openWin({
+				name : 'shop_detail_win',
+				url : '../mine/shop_detail_win.html',
+				slidBackEnabled : 'false',
+				vScrollBarEnabled : 'false',
+				hScrollBarEnabled : 'false',
+				reload : true,
+				pageParam : {
+					data : params
+				}
+			});
+			api.parseTapmode();
+		}
+
+		//打开我的订单
+		function myorder(learnerId, id) {
+			params = {
+				learnerId : getUserId(),
+			}
+			console.log("222")
+			//console.log(JSON.stringify(params));
+			api.openWin({
+				name : 'order_list_win',
+				url : '../mine/order_list_win.html',
+				slidBackEnabled : 'false',
+				vScrollBarEnabled : 'false',
+				hScrollBarEnabled : 'false',
+				reload : true,
+				pageParam : {
+					data : params
+				}
+			});
+			api.parseTapmode();
+		}
+		
+		function openCouponDetail(id){
+		     console.log(id)
+    		params = {
+                id : id,
+            }
+            api.openWin({
+                name : 'coupon_detail_win',
+                url : '../mine/coupon_detail_win.html',
+                slidBackEnabled : 'false',
+                vScrollBarEnabled : 'false',
+                hScrollBarEnabled : 'false',
+                reload : true,
+                pageParam : {
+                    data : params
+                }
+            });
+            api.parseTapmode();
+		}
+
+    </script>
+</html>

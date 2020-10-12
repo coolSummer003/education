@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>发现-评论回复</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<style>
+			html,body{
+    		background:#FFF;
+    	}
+    	ul{
+    		padding: 0.5rem;
+    	}
+    	.comment_head{
+    		height:2.5rem;
+    	}
+    	.comment_head-icon{
+    		width:20%;
+    		float:left;
+    		display:flex;
+    		height:2.5rem;
+    	}
+    	.comment_head-icon img{
+		    width: 2rem;
+		    border-radius: 100%;
+		    margin: auto;
+		    height: 2rem;
+		    object-fit: cover;
+    	}
+    	.comment_head-info{
+    		width:80%;
+    		float:left;
+    		height:2.5rem;
+    	}
+    	.comment_head-info-name{
+    		height:1.5rem;
+    		width:50%;
+    		line-height: 1.5rem;
+			margin-top: 0.5rem;
+    	}
+    	.comment_head-label{
+    		height:2.5rem;
+    		width:30%;
+    		float:left;
+    	}
+    	.comment_head-info-time{
+    		height:1.5rem;
+    		line-height: 1.5rem;
+			margin-top: -1.5rem;
+    		width:50%;
+    		font-size: 0.6rem;
+    		color:#939393;
+			text-align: right;
+    	}
+    	.community-title{
+    		width:80%;
+    		height: 2rem;
+		    line-height: 2rem;
+		    float: right;
+    	}
+    	.comment_content{
+    		width:93%;
+		    float: right;
+		    font-size:0.7rem;
+		    color:#000;
+			margin-top: -2rem;
+			margin-bottom:0.75rem;
+    	}
+    	.comment_pic_list{
+    		width:90%;
+    		margin: 0.5rem 0rem;
+    	}
+    	
+    	.community-icon{
+    		width:80%;
+    		float: right;
+    		font-size: 0.6rem;
+    		text-align: right;
+		    position:relative;
+    	}
+    	.community-icon:after{
+    		content: '';
+		    height: 1px;
+		    background: #DDDDDD;
+		    width: 100%;
+		    background-color: #dddddd;
+		    display: block;
+	        margin-top: 0.5rem;
+		    -webkit-transform: scaleY(0.5);
+		    transform: scaleY(0.5);
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+    	}
+		.commentCount{
+			float: right;
+			margin-right: 1rem;
+		}
+    	.community-icon img{
+    		height:1rem;
+    		margin: 0rem 0.1rem -0.2rem 0.8rem;
+    	}
+    	li{
+    		overflow: hidden;
+    		padding-top:0.5rem;
+    	}
+    	li:active{
+    		background:#FAFAFA;
+    	}
+    	.publish-button{
+    		position: fixed;
+		    bottom: 3rem;
+		    right: 1rem;
+    	}
+    	.publish-button img{
+		    width: 2.5rem;
+    	}
+		.msg{
+			background: #FFFFFF;
+			height: 20rem;
+			text-align: center;
+			font-size:0.7rem;
+		}
+		.msg img{
+			width:8rem;
+			margin-top: 9rem;
+		}
+		.jiazai{
+			font-size: 0.7rem;
+			background: #FFFFFF;
+			color: #666565;
+			padding-bottom: 0.3rem;
+			text-align: center;
+			padding-top: 0.3rem;
+		}
+		.jiazai img{
+			width: 1.5rem;
+		}
+		.mainImage{
+			width:4rem;
+			height:3.75rem;
+			float:left;
+			position:relative;
+			margin:0 0.5rem 0 0;
+			object-fit: content;
+			background-color:#F7F7F7;
+		}
+		.order_txt{
+		    padding: 0 0.5rem;
+	        position: relative;
+		}
+		.txt-title{
+			font-size: 0.8rem;
+		    position: relative;
+		    margin-top: 0.25rem;
+		}
+		.order_content{
+			width:100%;
+			overflow:hidden;
+			margin-top: 0.2rem;
+			position: relative;
+			background-color:#F7F7F7;
+			left:1rem;
+		}
+		.txt-title-second{
+			font-size: 0.7rem;
+		    position: relative;
+		    margin-top: 0.2rem;
+		    color:#8e8e8e;
+		}
+		.top-slide{
+			margin-top:1rem;
+			border-bottom:1px #F7F7F7 solid
+		}
+    </style>
+	</head>
+	<body>
+		<ul id="commentList">
+		</ul>
+		<!-- <div class='publish-button' tapmode onclick="publish()">
+		<img src="../../icon/common/icon_publish.png" alt="" />
+	</div> -->
+		<script type="text/template" charset="utf-8" id='comment_src'>
+			{{ for(var i=0;i<it.messageListInfo.length;i++){ }}
+			<li>
+				<div class='comment_head' tapmode>
+					<div class='comment_head-icon'>
+						<img src="{{=file_load_url +it.messageListInfo[i].headimgurl}}" alt="" onerror="javascript:this.src='../../icon/mine/icon_mine_head_hui_second.png'" />
+					</div>
+					<div class='comment_head-info'>
+						<div class='comment_head-info-name aui-ellipsis-1' id="name{{=it.messageListInfo[i].id}}">{{=it.messageListInfo[i].nickname==undefined?'匿名用户':it.messageListInfo[i].nickname}}</div>
+						<div class='comment_head-info-time aui-pull-right' id="time{{=it.messageListInfo[i].id}}">{{=it.messageListInfo[i].insertDt}}</div>
+					</div>
+					<div class='comment_head-label'></div>
+				</div>
+				<div class="comment_acticle" tapmode>
+					<!-- <div class='community-title aui-ellipsis-1'></div> -->
+					<div class='comment_content aui-ellipsis-2' style="float:left;position:relative;left:1rem;font-size: 0.8rem">回复<span style="color: #188BBD;">@{{=it.messageListInfo[i].fatherNickname==undefined?'匿名用户':it.messageListInfo[i].fatherNickname}}</span>:{{=it.messageListInfo[i].message}}</div>
+				</div>
+				<div class='comment_pic_list' >
+				<div class='order_content'>
+						<div class="aui-list-item-media">
+							<img src="{{=file_load_url +it.messageListInfo[i].fatherHeadimgurl}}" alt="" onerror="javascript:this.src='../../icon/mine/icon_mine_head_hui_second.png'" class="mainImage"/>
+						</div>
+					
+						<div class='order_txt'>
+							<div class='txt-title'>
+								<div class="txt-title">@<span>{{=it.messageListInfo[i].fatherNickname==undefined?'匿名用户':it.messageListInfo[i].fatherNickname}}</span></div>
+								<div class='txt-title-second'>
+								<span style="width:72%" class="aui-ellipsis-2">{{=it.messageListInfo[i].fatherMessage}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="top-slide"></div>
+			</li>
+		{{ } }}
+	</script>
+		<div id='load_div'>
+		</div>
+		<script type="text/template" charset="utf-8" id='load_src'>
+			<div class="load">
+		<img src="../../icon/common/loadding.gif" alt="" /><br>
+		<span>加载中...</span>
+	</div>
+	</script>
+		<script type="text/template" charset="utf-8" id='msg_src'>
+			<div class="msg">
+			<img src="../../icon/common/empty.png" alt="" /><br>
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+		<script type="text/template" charset="utf-8" id='more_src'>
+			<div class="jiazai">
+			<span>{{=it.msg}}</span> 
+		</div>
+	</script>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script src="../../script/echo.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var pageNo = 1;
+		var pageSize = 50;
+		var load_src = $('#load_src').html(); //加载src
+		var msg_src = $('#msg_src').html(); //消息提示src
+		var more_src = $('#more_src').html(); //更多src
+		var refresh = true; //标记是否是刷新操作
+		var imgs; //存放图片
+		var cache;
+		var type;
+		var list;
+		var List = new Array();
+		var idsList;
+		apiready = function() {
+			cache = api.pageParam;
+			type = api.pageParam.type;
+			api.addEventListener({
+				name: 'refreshList'
+			}, function(ret, err) {
+				location.reload();
+			});
+			goRefrash(40, '#FFFFFF', null, null, function() {
+				refreshList();
+			});
+			goLoad(function(ret, err) {
+				loadList();
+			});
+			setTimeout(function() {
+				api.refreshHeaderLoading();
+			}, 100);
+
+		};
+
+		//列表刷新
+		function refreshList() {
+			pageNo = 1;
+			refresh = true;
+			setLoad();
+			init_refresh();
+		}
+		//列表上拉
+		function loadList() {
+			pageNo++;
+			refresh = false;
+			setLoad();
+			init_refresh();
+		}
+
+		//资讯、考场、社区进来的新消息	
+		function init() {
+			if (islogin()) {
+				var learnerId = getUserId();
+				url = "api/information/get/messageList";
+				params = {
+					learnerId: learnerId,
+					type: type,
+					page: pageNo,
+					limit: pageSize
+				}
+				ajax_Request(url, 'get', 'json', params, function(ret, err) {
+					log('ret', ret)
+					if (ret) {
+						if (ret.code == 0 && ret.messageListInfo.length > 0) {
+							if (pageNo == 1) {
+								var comment_src = $('#comment_src').html();
+								$("#commentList").html(doT.template(comment_src)(ret));
+							} else {
+								var comment_src = $('#comment_src').html();
+								$("#commentList").append(doT.template(comment_src)(ret));
+							}
+							for (i = 0; i < ret.messageListInfo.length; i++) {
+								list = "{" + "id:" + ret.messageListInfo[i].id + "}";
+								List.push(list);
+								idsList = "[" + List.toString() + "]";
+							}
+							sendEvent('Id', idsList);
+							echoInit();
+						} else {
+							setMsg(refresh ? '暂无回复' : '暂无更多');
+						}
+					} else {
+						setMsg("服务器繁忙，请稍后重试")
+					}
+
+				})
+			} else {
+				setMsg("尚未登录请登录")
+			}
+
+			setTimeout(function() {
+				api.refreshHeaderLoadDone();
+			}, 500);
+		}
+
+		//帖子进来的新消息页面
+		function inits() {
+			if (islogin()) {
+				var learnerId = getUserId();
+				url = "api/forum/get/messageList";
+				params = {
+					learnerId: learnerId,
+					page: pageNo,
+					limit: pageSize
+				}
+				ajax_Request(url, 'get', 'json', params, function(ret, err) {
+					if (ret) {
+						log('ssx', ret);
+						if (ret.code == 0 && ret.messageListInfo.length > 0) {
+							if (pageNo == 1) {
+								var comment_src = $('#comment_src').html();
+								$("#commentList").html(doT.template(comment_src)(ret));
+							} else {
+								var comment_src = $('#comment_src').html();
+								$("#commentList").append(doT.template(comment_src)(ret));
+							}
+							for (i = 0; i < ret.messageListInfo.length; i++) {
+								list = "{" + "id:" + ret.messageListInfo[i].id + "}";
+								List.push(list);
+								idsList = "[" + List.toString() + "]";
+							}
+							sendEvent('Ids', idsList);
+							echoInit();
+						} else {
+
+							setMsg(refresh ? '暂无回复' : '暂无更多');
+						}
+					} else {
+						setMsg("服务器繁忙，请稍后重试")
+					}
+
+				})
+			} else {
+				setMsg("尚未登录请登录")
+			}
+
+			setTimeout(function() {
+				api.refreshHeaderLoadDone();
+			}, 500);
+		}
+		//设置页面加载的画面
+		function setLoad() {
+			if (refresh || $('#commentList').find('li').length == 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+				$('#load_div').html('');
+			} else {
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': '加载更多中...',
+						'img': '../../icon/common/jiazai.gif'
+					}));
+				}, 500);
+			}
+		}
+
+		//设置页面提示信息
+		function setMsg(msg) {
+			if (refresh || $('#commentList').find('li').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+				setTimeout(function() {
+					$("#commentList").html(doT.template(msg_src)({
+						'msg': msg
+					}));
+				}, 500);
+			} else { //原先已经有数据的情况下
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': msg,
+						'img': ''
+					}));
+				}, 500);
+			}
+		}
+
+		//判断不同type传进来时加载不同的页面
+		function init_refresh() {
+			if (type == '063004') {
+				inits();
+			}
+			if (type == '063001' || type == '063002' || type == '063003') {
+				init();
+			}
+		}
+	</script>
+</html>

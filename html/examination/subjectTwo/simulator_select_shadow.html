@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>选择模拟器阴影</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <style>
+    	html,body{
+    		height: 98%;
+			background: transparent;
+		}
+    	.shadow{
+		    width: 100%;
+		    height: 100%;
+		    background: #000000;
+		    opacity: 0.3;
+		    position: fixed;
+		    z-index: 998;
+    	}
+    </style>
+</head>
+<body>
+	<div class="shadow"></div>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript">
+	var data;
+	apiready = function(){
+		data = api.pageParam.data;
+		api.openFrame({
+	          name: 'simulator_select_list_frm',
+	          url: './simulator_select_list_frm.html',
+	          rect: {
+	            x:0,
+	            y:0,
+	            w:api.winWidth,
+	            h:'auto'
+	          },
+	          bgColor: 'rgba(0,0,0,0)',
+	          bounces: false,
+	          animation:{
+	          	type:"push",                //动画类型（详见动画类型常量）
+			    subType:"from_left",       //动画子类型（详见动画子类型常量）
+			    duration:200                //动画过渡时间，默认300毫秒
+	          }
+	    });
+	};
+	
+	function addOnclickMode(){
+		document.getElementsByClassName('shadow').onclick = function(){
+			closeSelectShadow();
+		}
+	}
+	
+	function closeSelectShadow(){
+		esc_function('simulator_appointment_detail_win','simulator_appointment_detail_frm','showSelectBtn()');
+        api.closeFrame({
+        	name:'simulator_select_list_frm'
+        });
+        api.closeFrame({
+        	name:'simulator_select_shadow'
+        });
+	}
+</script>
+</html>

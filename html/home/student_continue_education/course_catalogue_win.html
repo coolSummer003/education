@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<meta name="referrer" content="no-referrer">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #DC251F;
+		}
+		header img {
+		    width: 20px;
+		}
+		#p_ex_title{
+		    font-weight: normal;
+		}
+		#history_title{
+			text-align:right;
+		}
+		.aui-btn-info {
+    		color: #000 !important;
+		}
+		.list {
+				width: 100%;
+				position: relative;
+				height: 10.1rem
+				/*box-shadow: 0px 2px 10px 1px #D7D7D7;*/
+				border-radius: 0.5rem;
+				background-color: #fff;
+			}
+			
+			.title {
+				font-weight: 650;
+				font-size: 0.8rem;
+			}
+			
+			.right {
+				margin-left: 0.5rem;
+				font-size: 0.5rem;
+				font-weight: 600;
+				color: #3F86FF;
+				width: 1.8rem;
+				height: 0.9rem;
+				border-radius: 0.5rem;
+				background-color: #DBE8FF;
+				text-align: center;
+				line-height: 0.9rem;
+			}
+			
+			.img {
+				width: 100%;
+				height: 10rem;
+				position: relative;
+			}
+			.img img{
+				width: 100%;
+				height: 10rem;
+			}
+			.tv {
+				width: 1rem;
+				height: 1rem;
+				margin-right: 0.5rem;
+			}
+			
+			.tv img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.time {
+				color: #fff;
+				font-size: 0.6rem;
+				z-index: 100;
+				top: 0.8rem;
+				left: 0.4rem;
+				position: absolute;
+			}
+			
+			.state {
+				position: absolute;
+				top: 0.8rem;
+				right: 0.4rem;
+				color: #fff;
+				font-size: 0.6rem;
+				height: 1rem;
+				line-height: 1rem;
+				width: 2.5rem;
+				background-color: #FF7272;
+				text-align: center;
+				border-radius: 0.5rem;
+			}
+			
+			.list_line {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+			}
+			.msg {
+			    background: #FFFFFF;
+			    height: 20rem;
+			    text-align: center;
+			    font-size: 0.8rem;
+			}
+			
+			.msg img {
+			    width: 8rem;
+			    margin-top: 6rem;
+			}
+			.loading {
+			    font-size: 0.7rem;
+			    background: #FFFFFF;
+			    color: #7D7D7D;
+			    padding-bottom: 0.3rem;
+			    text-align: center;
+			    padding-top: 0.3rem;
+			}
+			
+			.load {
+			    color: #7D7D7D;
+			}
+			
+			.load img {
+			    width: 1.6rem;
+			    height: 1.6rem;
+			    margin-top: 10rem;
+			}
+			.stateEnd{
+				background-color: #CCCCCC !important;
+			}
+			.stateStrat{
+				background-color: #FFC15E !important;
+			}
+			.top-book{
+				float: right;
+				font-weight: 100;
+				font-size: 0.7rem;
+				margin-right: 0.5rem;
+				color: #3F86FF;
+			}
+    </style>
+	</head>
+	<body>
+		<div id="top_height">
+			<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+				<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+					<img src="../../../icon/common/icon_header_return.png">
+				</a>
+				<div class="aui-title" id="p_ex_title">
+					课程目录
+				</div>
+			</header>
+			<div class="list" id="line_list">
+				<div class="img">
+					<!--<img src="../../../../icon/education/bg1.png"/>-->
+					<img id="top_img" src="" alt="" onerror="javascript:this.src='../../../icon/default/icon_default_big_pic.png'"
+					 data-echo="" />
+					<div id="top_time" class="time"></div>
+					<!-- <div id="top_state" class="state">进行中</div> -->
+				</div>
+			</div>
+	</body>
+
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var headerPos;
+		var cache;
+		var allowId;
+		apiready = function() {
+			api.parseTapmode();
+			cache = api.pageParam;
+			log("数据---------",cache.data)
+
+			if (cache.data.allowId != null) {
+				allowId = cache.data.allowId;
+				$(".top-book").removeClass("aui-hide");
+			}
+			var header = $api.byId('aui-header');
+			$api.fixStatusBar(header);
+			headerPos = $api.byId('top_height').offsetHeight;
+			$("#top_img").attr('src', file_load_url + cache.data.educationBg + '&style=image/resize,m_fill,w_400');
+			$("#top_time").html(cache.data.educationStartDate + "-" + cache.data.educationEndDate + "截止")
+			init();
+		}
+
+		function init() {
+			api.openFrame({
+				name: 'course_catalogue_frm',
+				url: './course_catalogue_frm.html',
+				bgColor: '#efeff4',
+				rect: {
+					x: 0,
+					y: headerPos,
+					w: 'auto',
+					h: api.winHeight - headerPos
+				},
+				bounces: false,
+				pageParam: cache,
+				reload: true,
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+
+		function upBook() {
+			api.openWin({
+				name: 'coach_information_up_win',
+				url: '../coach_information/coach_information_up_win.html',
+				slidBackEnabled: false,
+				vScrollBarEnabled: false,
+				hScrollBarEnabled: false,
+				reload: true,
+				useWKWebView: false,
+				bounces: false,
+				pageParam: {
+					data: allowId
+				}
+			});
+
+		}
+
+		function closeWin() {
+			api.closeWin({});
+		}
+	</script>
+</html>

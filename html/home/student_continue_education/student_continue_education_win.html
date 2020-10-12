@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>学员课堂学习</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html{
+    		background-color: #f5f5f5;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+		header img {
+		    width: 20px;
+		}
+       .rectangle_img {
+            width: 0.3rem;
+            height: 1rem;
+            vertical-align: sub;
+            background: #5464FA;
+            position: relative;
+            display: inline-table;
+            margin-left:0.5rem;
+            margin-top:0.5rem;
+        }
+        .box_title{
+            color:#000;
+            padding:0.5rem;
+            display: inline-table;
+            line-height: 1.5rem;
+        }
+        .box-span{
+            /*font-weight: bold;*/
+            display:inline-block;
+            color:#000;
+            margin-left:0.5rem;
+            margin-bottom:0.5rem;
+        }
+        .box-body{
+            box-shadow: 0 2px 8px 0;
+            border-radius: 10px;
+            margin:0.5rem;
+        }
+       
+       
+    </style>
+	</head>
+	<body>
+		<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+				<img src="../../../icon/common/icon_header_return.png">
+			</a>
+			<div class="aui-title" id="p_ex_title">
+				学员课堂学习
+			</div>
+			<a class="aui-pull-right" style="color: #000000;" tapmode onclick="getUserTime();">
+				学时详情
+			</a>
+		</header>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/aui/aui_tab.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var headerPos;
+		var cache;
+		apiready = function() {
+			api.parseTapmode();
+			cache = api.pageParam;
+			var header = $api.byId('aui-header');
+			$api.fixStatusBar(header);
+			headerPos = $api.offset(header)
+			continueEducation();
+		};
+
+		function continueEducation() {
+			api.openFrame({
+				name: 'student_continue_education_frm',
+				url: './student_continue_education_frm.html',
+				bgColor: '#efeff4',
+				rect: {
+					x: 0,
+					y: headerPos.h,
+					w: 'auto',
+					h: api.winHeight - headerPos.h
+				},
+				bounces: false,
+				pageParam: cache,
+				reload: true,
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+		
+		function getUserTime(){
+            api.openWin({
+                name: 'learner_hours_detail_win',
+                url: './learner_hours_detail_win.html',
+                slidBackEnabled: 'false',
+                vScrollBarEnabled: 'false',
+                hScrollBarEnabled: 'false',
+                reload: true,
+                pageParam: {
+                    data: params
+                }
+            });
+		}
+		
+		function closeWin() {
+			api.closeWin({});
+		}
+		
+	</script>
+</html>

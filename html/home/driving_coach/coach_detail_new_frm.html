@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>教练详情</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/swiper/swiper.css">
+    <style>
+        html, body {
+            background-color: #ffffff;
+        }
+
+        .shadow_white {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 1);
+            z-index: 99;
+            top: 0;
+        }
+
+        .msg {
+            background: #FFFFFF;
+            height: 10rem;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #515151;
+        }
+
+        .msg img {
+            width: 4rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .jiazai {
+            font-size: 0.7rem;
+            background: #FFFFFF;
+            color: #666565;
+            padding-bottom: 0.3rem;
+            text-align: center;
+            padding-top: 0.3rem;
+        }
+
+        .jiazai img {
+            width: 1.5rem;
+        }
+
+        .coach_title {
+            position: relative;
+            width: 100%;
+            height: 4.5rem;
+            padding: 0 3%;
+            margin-top: 0.625rem;
+        }
+
+        .coach_title_name {
+            position: absolute;
+            width: 65%;
+            height: 2.5rem;
+            left: 7%;
+        }
+
+        .name_level {
+            width: 100%;
+            height: 1.5rem;
+        }
+
+        .name {
+            display: inline-block;
+            float: left;
+            height: 1.5rem;
+            line-height: 1.5rem;
+            font-size: 1.2rem !important;
+            white-space: nowrap;
+            margin-right: 0.3rem;
+        }
+
+        .level {
+            display: inline-block;
+            width: 2.5rem;
+            vertical-align: middle;
+        }
+
+        .star {
+            position: relative;
+            width: 100%;
+            height: 1rem;
+        }
+
+        .star_img {
+            position: absolute;
+            width: 0.6rem;
+            height: 0 . rem;
+            top: 0.2rem;
+        }
+
+        .star_num {
+            position: absolute;
+            height: 1rem;
+            line-height: 1rem;
+            font-size: 0.6rem;
+            color: #F5A33C;
+            left: 0.8rem;
+        }
+
+        .coach_img {
+            position: absolute;
+            width: 27%;
+            left: 65%;
+            height: 3rem;
+        }
+
+        .coach_img img {
+            position: absolute;
+            width: 3rem;
+            height: 3rem;
+            left: 50%;
+            margin-left: -1.25rem;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .coach_label {
+            position: absolute;
+            width: 94%;
+            height: 1.5rem;
+            top: 2.5rem;
+        }
+
+        .coach_label_list {
+            width: auto;
+            height: 1rem;
+            display: inline-block;
+            margin-right: 0.4rem;
+            font-size: 0.5rem;
+            margin-top: 0.25rem;
+            color: #61636D;
+            border-radius: 1.5625rem;
+            background: #F4F7F7;
+            line-height: 1rem;
+            padding: 0 0.3125rem;
+        }
+
+        .coach_msg {
+            width: 100%;
+            height: auto;
+            padding: 0 3%;
+        }
+
+        .coach_msg_driver_schools {
+            position: relative;
+            width: 100%;
+            height: 3rem;
+        }
+
+        .coach_msg_driver_school, .coach_msg_phone {
+            position: absolute;
+            width: 48%;
+            height: 3rem;
+            box-shadow: 0px 1px 10px #ddd;
+        }
+
+        .coach_msg_phone {
+            margin-left: 52%;
+        }
+
+        .coach_msg_driver_school img, .coach_msg_phone img {
+            width: 100%;
+            height: auto;
+        }
+
+        .coach_msg_driver_school_name, .coach_msg_phone_name{
+            position: absolute;
+            width: 80%;
+            height: 1rem;
+            top: 0.2rem;
+            left: 10%;
+            line-height: 1rem;
+            font-size: 0.6rem;
+        }
+		.coach_msg_driver_school_belong {
+			position: absolute;
+			width: 80%;
+			height: 1rem;
+			top: 30%;
+			left: 10%;
+			line-height: 1rem;
+			font-size: 0.4rem;
+			color: #94BCFF;
+		}
+
+        .coach_msg_car_type {
+            position: relative;
+            width: 100%;
+            height: 1.5rem;
+        }
+
+        .coach_msg_car_type {
+            margin-top: 0.5rem;
+        }
+
+        .coach_msg_driver_school_title, .coach_msg_car_type_title {
+            position: absolute;
+            width: 30%;
+            height: 1rem;
+        }
+
+        .coach_msg_driver_school_title img, .coach_msg_car_type_title img {
+            position: absolute;
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .coach_msg_driver_school_title_name, .coach_msg_car_type_title_name {
+            position: absolute;
+            display: inline-block;
+            font-size: 0.8rem;
+            height: 1rem;
+            line-height: 1rem;
+            left: 1.2rem;
+        }
+
+        .classRight {
+            position: absolute;
+            width: 1rem;
+            height: 1rem;
+            left: 95%;
+        }
+
+        .training_field, .student_evaluate {
+            width: 100%;
+            height: 4.5rem;
+            padding: 0 3%;
+            margin-top: 0.625rem;
+        }
+
+        .training_field_title, .student_evaluate_title {
+            width: 100%;
+            height: 1rem;
+        }
+
+        .training_field_title_name, .student_evaluate_title_name {
+            width: auto;
+            height: 1rem;
+            line-height: 1rem;
+            font-size: 1rem;
+        }
+
+        .training_field_title_more, .student_evaluate_title_more {
+            float: right;
+            width: auto;
+            height: 1rem;
+            line-height: 1rem;
+            font-size: 0.7rem;
+            margin-top: -1rem;
+            color: #646B7E;
+        }
+
+        .training_field_title_more img, .student_evaluate_title_more img {
+            position: relative;
+            width: 0.8rem;
+            height: 0.8rem;
+            top: 0.1rem;
+        }
+
+        .training_field_img_div {
+            position: relative;
+            width: 32%;
+            height: 3rem;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .training_field_img_num {
+            position: absolute;
+            width: auto;
+            height: auto;
+            right: 0;
+            bottom: 0;
+            font-size: 0.5rem;
+            background: #3F86FE;
+            color: #fff;
+            border-radius: 1.5625rem;
+            padding: 0 0.3rem;
+        }
+
+        .training_field_img_div:nth-child(2) {
+            margin-left: 34%;
+            margin-top: -3rem;
+        }
+
+        .training_field_img_div:nth-child(3) {
+            margin-left: 68%;
+            margin-top: -3rem;
+        }
+
+        .training_field_img_div img {
+            width: 100%;
+            height: 3rem;
+        }
+
+        .student_evaluate_list {
+            width: 100%;
+            height: auto;
+            margin-top: 0.625rem;
+        }
+
+        .evaluate_list {
+            width: 100%;
+            height: auto;
+            margin-bottom: 0.625rem;
+        }
+
+        .evaluate_list_title {
+            position: relative;
+            height: 2.5rem;
+        }
+
+        .evaluate_list_title_avatar {
+            position: absolute;
+            width: auto;
+            height: 2.5rem;
+        }
+
+        .evaluate_list_title_avatar img {
+            position: absolute;
+            width: 2rem;
+            height: 2rem;
+            top: 0.25rem;
+            border-radius: 50%;
+        }
+
+        .evaluate_list_title_name {
+            position: absolute;
+            left: 2.5rem;
+            height: 2.5rem;
+        }
+
+        .evaluate_list_title_name_name {
+            height: 1.5rem;
+        }
+
+        .evaluate_list_title_name_name_name {
+            width: auto;
+            display: inline-block;
+            height: 1.5rem;
+            line-height: 1.5rem;
+            font-size: 0.8rem;
+            color: #28303C;
+        }
+
+        .evaluate_list_title_name_name_time {
+            width: auto;
+            display: inline-block;
+            height: 1.5rem;
+            line-height: 1.5rem;
+            font-size: 0.7rem;
+            color: #888888;
+            margin-left: 0.2rem;
+        }
+
+        .evaluate_list_title_name_star {
+            top: -0.3rem;
+        }
+
+        .evaluate_list_comment {
+            width: 15rem;
+            margin-left: 2.5rem;
+            height: auto;
+            color: #28303C;
+            font-size: 0.8rem;
+            text-align: justify;
+            word-wrap: break-word;
+        }
+
+        .evaluate_list_label {
+            width: 15rem;
+            margin-left: 2.5rem;
+            height: 1rem;
+            margin-top: 0.3125rem;
+        }
+
+        .coach_list_content_title_label {
+            float: left;
+            height: 1rem;
+            line-height: 1rem;
+            padding-top: 0.25rem;
+        }
+
+        .coach-label-real-name, .coach-label-qualifications {
+            float: left;
+            height: 1rem;
+            padding: 0.1rem 0;
+        }
+
+        .coach-label-qualifications {
+            margin-left: 0.4rem;
+        }
+
+        .coach-label-real-name img, .coach-label-qualifications img {
+            height: 0.8rem;
+        }
+
+        .coach_msg_car_type_list {
+            width: 100%;
+            height: auto;
+            /* margin-top: 0.4rem; */
+        }
+
+        .coach_msg_car_type_list_show_label {
+            position: relative;
+            width: 100%;
+            height: 1.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .coach_msg_car_type_list_show_label_name {
+            position: absolute;
+            width: 63%;
+            height: 1.5rem;
+            line-height: 1.5rem;
+            font-size: 0.7rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            left: 7%;
+        }
+
+        .coach_msg_car_type_list_show_label_btn {
+            position: absolute;
+            width: 30%;
+            height: 1.5rem;
+            left: 70%;
+        }
+
+        .coach_msg_car_type_list_show_label_btns {
+            position: absolute;
+            width: 4rem;
+            height: 1.2rem;
+            line-height: 1.2rem;
+            text-align: center;
+            border: 1px solid #C2C2C2;
+            font-size: 0.7rem;
+            border-radius: 25px;
+            top: 0.15rem;
+            left: 50%;
+            margin-left: -2rem;
+        }
+
+        .coach_msg_car_type_list_more {
+            width: 100%;
+            height: 1rem;
+            line-height: 1rem;
+            font-size: 0.6rem;
+            text-align: center;
+        }
+
+        .coach_msg_car_type_list_more img {
+            width: 0.6rem;
+        }
+
+        .coach_msg_car_type_list_show {
+            height: 5.5rem;
+            overflow: hidden;
+            transition: 0.5s linear;
+        }
+
+        #foot {
+            position: fixed;
+            width: 100%;
+            height: 2.5rem;
+            bottom: 0;
+            background: #fff;
+        }
+
+        .footbtn {
+            width: 90%;
+            height: 2rem;
+            margin-left: 5%;
+            margin-top: 0.25rem;
+            text-align: center;
+            line-height: 2rem;
+            background: #007AFF;
+            color: #fff;
+            border-radius: 25px;
+        }
+
+        .empty {
+            width: 100%;
+            padding: 3rem 0rem;
+            text-align: center;
+            font-size: 0.6rem;
+        }
+
+        .empty img {
+            width: 6rem;
+            margin-top: 7rem;
+        }
+
+        .empty span {
+            font-size: 0.8rem;
+        }
+
+        #health-div {
+            padding: 1rem 5%;
+        }
+
+        #health-div img {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="shadow_white"></div>
+<div class="coach_title" id="coach_title">
+    <script type="text/template" id="coach_title_s">
+        <div class="coach_title_name">
+            <div class="name_level">
+                <span class="name">{{=it.name}}</span>
+                <div class="coach_list_content_title_label">
+                    <div class="coach-label-real-name">
+                        {{ if(it.isAuth == 1){ }}
+                        <img src="../../../icon/coach/real_name.png">
+                        {{ }else{ }}
+                        <img src="../../../icon/coach/no_real_name.png">
+                        {{ } }}
+                    </div>
+                    <div class="coach-label-qualifications">
+                        {{ if(it.authMode == 1){ }}
+                        <img src="../../../icon/coach/qualifications.png">
+                        {{ } }}
+                    </div>
+                </div>
+            </div>
+            <div class="star">
+                <img class="star_img" src="../../../icon/coach/coach_star.png">
+                <div class="star_num">{{=it.score.toFixed(1)}}分</div>
+            </div>
+        </div>
+        <div class="coach_img">
+            <img src="{{=file_load_url +it.photo+'&style=image/resize,w_400'}}" alt=""
+                 onerror="javascript:this.src='../../../icon/mine/icon_mine_head_hui.png'"
+                 data-echo="{{=file_load_url +it.photo+'&style=image/resize,,w_400'}}"/>
+        </div>
+        {{if(it.tags != undefined){ }}
+        <div class="coach_label">
+            <ul>
+                {{ for(var i=0;i< it.tags.length ;i++){ }}
+                <li class="coach_label_list">{{=labelProcessing(it.tags[i]) ==
+                    undefined?'无效标签':labelProcessing(it.tags[i])}}
+                </li>
+                {{ } }}
+            </ul>
+        </div>
+        {{ } }}
+    </script>
+</div>
+
+
+<!--疫情-->
+<div id="health-div" tapmode onclick="openEpidemicSituation()">
+    <img src="../../../icon/home/register_epidemic_situation/health_banner.png" alt="">
+</div>
+
+
+<div class="coach_msg" id="coach_msg">
+    <script type="text/template" id="coach_msg_s">
+        <div class="coach_msg_driver_schools">
+            {{if(it.cmSchoolId == '' || it.cmSchoolId == null || it.cmSchoolId == undefined){ }}
+            <div class="coach_msg_driver_school">
+                {{ }else{ }}
+                <div class="coach_msg_driver_school" onclick="openSchoolDetail('{{=it.cmSchoolId}}');">
+                    {{ } }}
+                    <img src="../../../icon/coach/driver_school_big.png">
+                    <div class="coach_msg_driver_school_name" id="coach_msg_driver_school_name">{{=it.schoolName}}</div>
+					{{if(it.isBelongTo == 1){ }}
+						<span class="coach_msg_driver_school_belong">驾校认证通过</span>
+					 {{ } }}
+                </div>
+				
+                <div class="coach_msg_phone" onclick="onlineContact('{{=it.mobile}}');">
+                    <img src="../../../icon/coach/phone_big.png">
+                    <div class="coach_msg_phone_name" id="coach_msg_phone_name">
+                        {{=it.mobile.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')}}
+                    </div>
+                </div>
+            </div>
+            <div class="coach_msg_car_type">
+                <div class="coach_msg_car_type_title">
+                    <img src="../../../icon/coach/car_type.png">
+                    <span class="coach_msg_car_type_title_name">准教车型</span>
+                </div>
+            </div>
+            <div class="coach_msg_car_type_list">
+                {{if(it.teachPermitted.length <= 3){ }}
+                <ul id="coach_msg_car_type_list_show" class="">
+                    {{ }else{ }}
+                    <ul id="coach_msg_car_type_list_show" class="coach_msg_car_type_list_show">
+                        {{ } }}
+                        {{for(var i=0;i < it.teachPermitted.length ;i++){ }}
+                        <li class="coach_msg_car_type_list_show_label">
+                            <div class="coach_msg_car_type_list_show_label_name">
+                                {{=carTypeProcessing(it.teachPermitted[i])}}
+                            </div>
+                            <div class="coach_msg_car_type_list_show_label_btn">
+                                <div class="coach_msg_car_type_list_show_label_btns" tapmode
+                                     onclick="toSubmit('{{=it.teachPermitted[i]}}','{{=carTypeProcessing(it.teachPermitted[i])}}');">
+                                    点我咨询
+                                </div>
+                            </div>
+                        </li>
+                        {{ } }}
+                    </ul>
+                    {{if(it.teachPermitted.length > 3){ }}
+                    <div class="coach_msg_car_type_list_more" data-type="1" tapmode
+                         onclick="showCoachList('{{=it.teachPermitted.length}}',this);">
+                        展开全部&nbsp;
+                        <img src="../../../icon/coach/down.png" id="coach_msg_car_type_list_more_arrow"
+                             style="transition: 0.5s linear;">
+                    </div>
+                    {{ } }}
+            </div>
+    </script>
+</div>
+<!-- <div id="training_field_img">
+    <script type="text/template" id="training_field_img_s">
+        {{ if(it.placeList.length > 0){ }}
+<div class="training_field">
+    <div class="training_field_title">
+        <div class="training_field_title_name">
+            训练场地
+        </div>
+        <!-- <div class="training_field_title_more">
+            <div class="" style="display: inline-block;">
+                更多
+            </div>
+            <img src="../../../icon/hospital/icon_right.png">
+        </div>
+    </div>
+    <div class="training_field_img">
+        {{ if(it.placeList.length > 0){ }}
+        {{ for(var i=0;i<(it.placeList.length>3?3:it.placeList.length);i++){ }}
+        {{ if(it.placeList[i].imageCount>0){ }}
+        <div class="training_field_img_div" onclick="toImageView('{{=it.placeList[i].id}}')">
+            <img src="../../../icon/default/icon_default_big_pic.png"
+                 onerror="javascript:this.src='../../../icon/default/icon_default_big_pic.png'"
+                 data-echo="{{=file_load_url +it.placeList[i].image}}">
+            <div class="training_field_img_num">{{=it.placeList[i].imageCount}}</div>
+        </div>
+        {{ }else{ }}
+        <div class="training_field_img_div">
+            <img src="../../../icon/default/icon_default_big_pic.png"
+                 onerror="javascript:this.src='../../../icon/default/icon_default_big_pic.png'"
+                 data-echo="../../../icon/default/icon_default_big_pic.png">
+            <div class="training_field_img_num">0</div>
+        </div>
+        {{ } }}
+        {{ } }}
+        {{ }else{ }}
+        <div class="training_field_img_div">
+            <img src="../../../icon/default/icon_default_big_pic.png"
+                 onerror="javascript:this.src='../../../icon/default/icon_default_big_pic.png'"
+                 data-echo="../../../icon/default/icon_default_big_pic.png">
+            <div class="training_field_img_num">0</div>
+        </div>
+        {{ } }}
+    </div>
+</div>
+{{ } }}
+</script>
+</div> -->
+<div class="student_evaluate">
+    <div class="student_evaluate_title">
+        <div class="student_evaluate_title_name">
+            学员评价
+        </div>
+        <!-- <div class="student_evaluate_title_more">
+    <div class="" style="display: inline-block;">
+        更多
+    </div>
+    <img src="../../../icon/hospital/icon_right.png">
+</div> -->
+    </div>
+    <div class="student_evaluate_list">
+        <ul id="student_evaluate">
+            <script type="text/template" id="student_evaluate_s">
+                {{ for(var i=0;i< it.length;i++){ }}
+                <li class="evaluate_list">
+                    <div class="evaluate_list_title">
+                        <div class="evaluate_list_title_avatar">
+                            <img src="../../../icon/mine/icon_mine_head_hui.png" alt=""
+                                 onerror="javascript:this.src='../../../icon/mine/icon_mine_head_hui.png'"
+                                 data-echo="{{=file_load_url +it[i].learner.headimgurl}}"/>
+                        </div>
+                        <div class="evaluate_list_title_name">
+                            <div class="evaluate_list_title_name_name">
+                                <div class="evaluate_list_title_name_name_name">
+                                    {{=it[i].learner.name == '' || it[i].learner.name ==
+                                    null?'匿名用户':it[i].learner.name}}
+                                </div>
+                                <div class="evaluate_list_title_name_name_time">
+                                    {{=it[i].insertDt}}
+                                </div>
+                            </div>
+                            <div class="star evaluate_list_title_name_star">
+                                <img class="star_img" src="../../../icon/coach/coach_star.png">
+                                <div class="star_num">{{=it[i].level}}分</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="evaluate_list_comment">
+                        {{=it[i].content}}
+                    </div>
+                    <div class="evaluate_list_label">
+                        <ul>
+                            {{ for(var j=0;j < it[i].tags.length;j++){ }}
+                            <li class="coach_label_list">
+                                {{=labelProcessing(it[i].tags[j])==undefined?'无效标签':labelProcessing(it[i].tags[j])}}
+                            </li>
+                            {{ } }}
+                        </ul>
+                    </div>
+                </li>
+                {{ } }}
+            </script>
+        </ul>
+    </div>
+    <div id='load_div'>
+    </div>
+</div>
+<footer id="foot">
+    <div class="footbtn" id="signUp" tapmode onclick="toSubmit('','')"><span>报名咨询</span></div>
+</footer>
+
+<script type="text/template" charset="utf-8" id='load_src'>
+    <div class="load">
+        <img src="../../../icon/common/loadding.gif" alt=""/><br>
+        <span>加载中...</span>
+    </div>
+</script>
+<script type="text/template" charset="utf-8" id='msg_src'>
+    <div class="msg">
+        <img src="../../../icon/common/empty.png" alt=""/><br>
+        <span>{{=it.msg}}</span>
+    </div>
+</script>
+<script type="text/template" charset="utf-8" id='more_src'>
+    <div class="jiazai">
+        <span>{{=it.msg}}</span>
+    </div>
+</script>
+<script type="text/template" charset="utf-8" id="error_src">
+    <div class='empty'>
+        <img src="../../../icon/common/empty.png" alt=""/><br>
+        <span>{{=it.msg}}</span>
+    </div>
+</script>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/swiper/swiper.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript" src="../../../script/echo.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+    var coachLearnerId; // 教练对应的学员id
+    var clearance = 25; //间隙
+    var cache_dictionary;
+    var coachLabel; //教练标签
+    var carType; //准教车型
+    var headerPos;
+    var threshold; //定义的阈值
+    var touchStyle;
+    var systemType; //系统类型
+    var cache;
+    var bMap;
+    var fs;
+    var flag = 0;
+    var articleId; //驾校详情ID
+    var pageNo = 1;
+    var pageSize = 5;
+    var refresh = false;
+    var coach_cache;
+    var load_src = $('#load_src').html(); //加载src
+    var msg_src = $('#msg_src').html(); //消息提示src
+    var more_src = $('#more_src').html(); //更多src
+    apiready = function () {
+        api.parseTapmode();
+        fs = api.require('fs');
+        //字典表缓存
+        cache_dictionary = $api.getStorage('cache_by_app').cache_dictionary;
+        cache = api.pageParam.data;
+        log("驾校报名", cache)
+        articleId = cache.id;
+        bMap = api.require('bMap');
+        systemType = api.systemType;
+        coachLabel = cache_dictionary['001004'].dictionaryList;
+        carType = cache_dictionary['002000'].dictionaryList;
+        log('教练标签', carType)
+        defaultload();
+        cocahMsg();
+        init();
+
+        goLoad(function (ret, err) {
+            loadList();
+        });
+    }
+
+    //列表上拉
+    function loadList() {
+        pageNo++;
+        refresh = false;
+        setLoad();
+        init();
+    }
+
+    var coach_title_s = $('#coach_title_s').html();
+    var coach_msg_s = $('#coach_msg_s').html();
+    var training_field_img_s = $('#training_field_img_s').html();
+
+    function cocahMsg() {
+        mylocation(function (location_result) { //获取当前定位
+            var url = 'api/coach/coach-info-list';
+            var params = {
+                coachId: articleId
+            }
+            // if (location_result.status) { //有定位权限
+            // 	params.lng = location_result.lon,
+            // 	params.lat = location_result.lat
+            // }
+            ajax_Request(url, 'get', 'json', params, function (ret, err) {
+                log('教练详情：', ret);
+                if (ret) {
+                    closedefaultload();
+                    $('.shadow_white').addClass('aui-hide');
+                    if (ret.code == 0) {
+                        coach_cache = ret.returnValue[0];
+                        coachLearnerId = coach_cache.learnerId;
+                        if (coach_cache.tags != undefined) {
+                            coach_cache.tags = (coach_cache.tags).split(',');
+                        }
+                        coach_cache.teachPermitted = (coach_cache.teachPermitted).split(',');
+
+                        $('#coach_title').html(doT.template(coach_title_s)(coach_cache));
+
+                        $('#coach_msg').html(doT.template(coach_msg_s)(coach_cache));
+
+                        // $('#training_field_img').html(doT.template(training_field_img_s)(coach_cache));
+                        sendEvent('returnValue', coach_cache);
+                        sendEvent('callCoach', coach_cache.mobile)
+                        setTimeout(function () {
+                            echoInit();
+                        }, 300)
+                    } else {
+                        $('.shadow_white').removeClass('aui-hide');
+                        setError('暂无教练信息')
+                    }
+
+                } else {
+                    setError('服务器繁忙，请稍后重试');
+                }
+
+            })
+        })
+    }
+
+
+    //设置页面加载的画面
+    function setLoad() {
+        if (refresh || $('#student_evaluate').find('li').length == 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+            $('#load_div').html('');
+        } else {
+            setTimeout(function () {
+                $('#load_div').html(doT.template(more_src)({
+                    'msg': '加载更多中...',
+                    'img': '../../../icon/common/jiazai.gif'
+                }));
+            }, 500);
+        }
+    }
+
+    //设置页面提示信息
+    function setMsg(msg) {
+        if (refresh || $('#student_evaluate').find('li').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+            setTimeout(function () {
+                $("#student_evaluate").html(doT.template(msg_src)({
+                    'msg': msg
+                }));
+            }, 500);
+        } else { //原先已经有数据的情况下
+            setTimeout(function () {
+                $('#load_div').html(doT.template(more_src)({
+                    'msg': msg,
+                    'img': ''
+                }));
+            }, 500);
+        }
+    }
+
+    var error_src = $('#error_src').html();
+
+    //设置出错页面;
+    function setError(msg) {
+
+        $('.shadow_white').html(doT.template(error_src)({
+            'msg': msg
+        }));
+    }
+
+    var evaluate = $('#student_evaluate_s').html();
+
+    function init() {
+        url = "api/coach/feedback/list-coach-forum";
+        params = {
+            coachId: articleId,
+            page: pageNo,
+            limit: pageSize
+        }
+        log('params', params)
+        ajax_Request(url, 'get', 'json', params, function (ret, err) {
+            log('社区列表13：', ret);
+            if (ret) {
+                if (ret.code == 0 && ret.coachForumList.length >= 0) {
+                    //将登入标识放入数据体中
+                    ret.loginId = islogin() ? $api.getStorage('cache_by_account').cache_account.id : '';
+                    if (pageNo == 1 && ret.coachForumList.length == 0) {
+                        flag = 1;
+                        $('#student_evaluate').html($('#evaluateNull').html());
+                    }
+                    if (flag == 0) {
+                        for (var i = 0; i < ret.coachForumList.length; i++) {
+                            ret.coachForumList[i].insertDt = (ret.coachForumList[i].insertDt).substring(0, 10)
+                            ret.coachForumList[i].tags = (ret.coachForumList[i].tags).split(',')
+                            ret.coachForumList[i].level = Number(ret.coachForumList[i].level).toFixed(1);
+                        }
+
+                        if (pageNo == 1) {
+                            $('#student_evaluate').html(doT.template(evaluate)(ret.coachForumList));
+                        } else {
+                            $('#student_evaluate').append(doT.template(evaluate)(ret.coachForumList));
+                        }
+                    }
+                    setTimeout(function () {
+                        echoInit();
+                    }, 300)
+                    api.parseTapmode();
+                } else if (ret.code == 700034) {
+                    setMsg(refresh ? '暂无学员评价' : '暂无更多')
+                    pageNo--;
+                }
+
+            } else {
+                //setMsg("服务器繁忙，请稍后重试")
+            }
+
+        })
+        setTimeout(function () {
+            api.refreshHeaderLoadDone();
+        }, 500);
+    }
+
+    //打开地图
+    function openMap(name, lon, lat) {
+        cache.to_name = name;
+        cache.to_lon = lon;
+        cache.to_lat = lat;
+        api.openWin({
+            name: 'common_map_loaction_win',
+            url: '../../common/common_map_loaction_win.html',
+            slidBackEnabled: 'true',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            pageParam: {
+                data: cache
+            }
+        });
+    }
+
+    //打开驾校服务更多内容
+    function checkMore(index) {
+        param = {
+            index: index,
+            d_school_name: cache.d_school_name,
+            teacherList: driverSchoolData.teacherList,
+            placeList: driverSchoolData.placeList,
+            serviceList: driverSchoolData.serviceList
+        }
+        commonOpenWin('driver_school_serivce_win', param);
+    }
+
+
+    function OpenDriveWin(name, data) {
+        api.openDrawerLayout({
+            name: name,
+            url: './' + name + '.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            useWKWebView: false,
+            pageParam: {
+                data: data
+            },
+            animation: {
+                type: 'push',
+                subType: "from_right",
+                duration: 300
+            },
+            rightPane: {
+                name: 'driving_coach_win',
+                url: '../common/select_coach/driving_coach_win.html',
+                vScrollBarEnabled: false,
+                hScrollBarEnabled: false,
+                bounces: false,
+                pageParam: {}
+            }
+        });
+    }
+
+    //打开分享页面
+    function openShareWindow() {
+        var data = {
+            shareData: {
+                shareData: 'web',
+                text: "",
+                contentUrl: "https://www.mohan-tech.com/share/html/share.html",
+                title: "注册页面"
+            },
+            forumId: articleId
+        }
+        openShare(data);
+    }
+
+    //打开更多驾考类型
+    function checkMoreInfo(planId, planName) {
+        params = {
+            planId: planId,
+            plan_name: planName
+        }
+        api.openWin({
+            name: 'plan_detail_win',
+            url: './driver_school_learning_plan/plan_detail_win.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            useWKWebView: false,
+            pageParam: params
+        });
+    }
+
+    /**
+     *  标签code处理
+     */
+    function labelProcessing(id) {
+        var name;
+        for (var j = 0; j < coachLabel.length; j++) {
+            if (coachLabel[j].code == id) {
+                name = coachLabel[j].name;
+            }
+        }
+        return name;
+    }
+
+    /**
+     *  准教车型code处理
+     */
+    function carTypeProcessing(id) {
+        var name;
+        for (var j = 0; j < carType.length; j++) {
+            if (carType[j].code == id) {
+                name = carType[j].name
+            }
+        }
+        return name;
+    }
+
+
+    function closeWin() {
+        api.closeWin({});
+    }
+
+    function toImageView(id) {
+        var url = 'api/coach/check-image';
+        var params = {
+            id: id
+        }
+        ajax_Request(url, 'get', 'json', params, function (ret, err) {
+            log('cons:', ret)
+            if (ret) {
+                if (ret.code == 0) {
+                    api.openWin({
+                        name: 'coach_place_img_win',
+                        url: './coach_place_img_win.html',
+                        slidBackEnabled: 'false',
+                        vScrollBarEnabled: 'false',
+                        hScrollBarEnabled: 'false',
+                        reload: true,
+                        pageParam: {
+                            id: id
+                        }
+                    });
+                } else {
+                    alert_msg(ret.msg);
+                }
+            } else {
+                alert_msg('服务器故障');
+            }
+        });
+
+    }
+
+    /**
+     * 打开准教车型
+     */
+    function openMsg(teachPermitted) {
+        var content = '';
+        var teachPermitteds = teachPermitted.split(',')
+        log('teachPermitted', teachPermitteds)
+        for (var i = 0; i < teachPermitteds.length; i++) {
+            var teachPermittedName = carTypeProcessing(teachPermitteds[i]);
+            log('teachPermittedName:', teachPermittedName)
+            content += teachPermittedName + '<br/>';
+
+        }
+        log('content', content)
+        api.openFrame({
+            name: 'common_message',
+            url: '../../common/common_message.html',
+            bgColor: 'rgba(0,0,0,0.4)',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: api.winHeight
+            },
+            bounces: false,
+            pageParam: {
+                title: '准教车型',
+                content: content
+            },
+            softInputBarEnabled: true,
+            softInputMode: 'resize'
+        });
+    }
+
+    /**
+     * 展开车型全部
+     * @param {Object} num
+     * @param {Object} e
+     */
+    function showCoachList(num, e) {
+        var type = $(e).attr('data-type');
+        log('type', type)
+        if (type == 1) {
+            $("#coach_msg_car_type_list_show").css('height', 1.8 * num + 'rem');
+            $("#coach_msg_car_type_list_more_arrow").css('transform', 'rotate(180deg)');
+            $(e).attr('data-type', 2);
+        } else if (type == 2) {
+            $("#coach_msg_car_type_list_show").css('height', '5.4rem');
+            $("#coach_msg_car_type_list_more_arrow").css('transform', 'rotate(0deg)');
+            $(e).attr('data-type', 1);
+        }
+    }
+
+    function openSchoolDetail(id) {
+        api.openWin({
+            name: 'driver_school_detail_win',
+            url: '../driver_school_detail_win.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            useWKWebView: false,
+            pageParam: {
+                data: {
+                    id: id
+                }
+            }
+        })
+    }
+
+    function toSubmit(code, name) {
+        if (islogin()) {
+            api.openWin({
+                name: 'submit_information_new',
+                url: './submit_information_new.html',
+                slidBackEnabled: 'false',
+                vScrollBarEnabled: 'false',
+                hScrollBarEnabled: 'false',
+                reload: true,
+                useWKWebView: false,
+                pageParam: {
+                    coach_cache: coach_cache,
+                    car_code: code,
+                    car_name: name
+                }
+            });
+        } else {
+            isSure('提示', '还未登录，是否选择去登录', '是', '否', function () {
+                api.openWin({
+                    name: 'login',
+                    url: '../../login.html',
+                    slidBackEnabled: 'true',
+                    vScrollBarEnabled: 'false',
+                    hScrollBarEnabled: 'false',
+                    reload: true,
+                    pageParam: {}
+                });
+            });
+        }
+    }
+
+    function onlineContact(contactNumber) {
+        if (contactNumber != null) {
+            openMessage('提示', '是否拨打教练电话' + contactNumber, '是', '否', 'call(' + contactNumber + ')', '', {tapClose: true, closeBtn: true});
+        } else {
+            alert_msg('未设置联系方式');
+        }
+    }
+
+    function call(contactNumber) {
+        window.location.href = 'tel://' + contactNumber;
+    }
+
+
+    //打开通用弹出框
+    //title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+    function openMessage(title,content,sureButton,cancelButton,sureFunc,cancelFunc,params){
+        api.openFrame({
+            name: 'common_alert',
+            url: '../../common/common_alert.html',
+            bgColor: 'rgba(0,0,0,0.4)',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: api.winHeight
+            },
+            bounces: false,
+            pageParam:{
+                title:title,
+                content:content,
+                sureButton:sureButton,
+                sureFunc:sureFunc,
+                cancelButton:cancelButton,
+                cancelFunc:cancelFunc,
+                winName:api.winName,
+                frameName:api.frameName,
+                params:params
+            },
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+    }
+
+
+    // 查询是否登记过疫情信息
+    function openEpidemicSituation() {
+        if (islogin()) {
+            url = "api/learneraboutpneumoniainfo/get-is-into-learner-about-pneumonia-info";
+            params = {
+                learnerId: coachLearnerId,
+                isWorker: 1
+            };
+            log('查询是否登记过疫情信息入参', params);
+            ajax_Request(url, 'get', 'json', params, function (ret, err) {
+                log('查询是否登记过疫情信息出参', ret);
+                if (ret) {
+                    if (ret.code == 0) {
+                        if (ret.lsearnerAboutPneumoniaInfoCount.isIntoLearnerAboutPneumoniaInfo == 1) {
+                            openWin1('show_staff_win', 'register_epidemic_situation/show_staff_win', {
+                                learnerId: coachLearnerId
+                            });
+                        } else {
+                            openMessage('温馨提示', '该教练暂未登记健康信息', '确定', '', '', '', {tapClose: true, closeBtn: true});
+                        }
+                    } else {
+                        alert_msg('服务器错误，请稍候再试！');
+                    }
+                } else {
+                    alert_msg('服务器繁忙，请稍候再试！');
+                }
+            });
+        } else {
+            openLoginHtml();
+        }
+    }
+
+
+    function openWin1(name, url, pageParam) {
+        api.openWin({
+            name: name,
+            url: '../' + url + '.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            useWKWebView: false,
+            pageParam: pageParam ? pageParam : {}
+        });
+    }
+
+
+    function openLoginHtml(data) {
+        api.openWin({
+            name: 'unpassword_login',
+            url: '../../../unpassword_login.html',
+            slidBackEnabled: 'true',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            pageParam: data
+        });
+    }
+</script>
+</html>

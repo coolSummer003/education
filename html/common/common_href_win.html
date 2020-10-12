@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<style>
+			body{
+    		
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #FFFFFF;
+    	}
+        .aui-pull-left img{
+        	width:20px;
+        }
+    	.aui-pull-right img{
+    		width:20px;
+    	}
+    	.title{
+	        font-size: 17px;
+	        color: #404040;
+	    }
+    </style>
+	</head>
+	<body>
+		<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+			<a class="aui-pull-left aui-btn" tapmode onclick="goBack()">
+				<img src="../../icon/common/icon_header_return.png">
+			</a>
+			<div class="aui-title title" id="y_title"></div>
+			<a class="aui-pull-right aui-btn">
+
+			</a>
+		</header>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var y_data;
+		apiready = function() {
+			api.parseTapmode();
+			var header = $api.byId('aui-header');
+			$api.fixStatusBar(header);
+			var headerPos = $api.offset(header);
+			y_data = api.pageParam;
+			log('传参', y_data);
+			$api.html($api.byId("y_title"), y_data.name);
+            
+			api.addEventListener({
+				name: 'keyback'
+			}, function(ret, err) {
+				goBack();
+			});
+			//selYinlianOrderDetail(2,'6155201909261103594529325286');
+			if (y_data.url) {
+				api.openFrame({
+					name: 'common_href_frm',
+					url: y_data.url,
+					bgColor: '#efeff4',
+					rect: {
+						x: 0,
+						y: headerPos.h,
+						w: 'auto',
+						h: 'auto'
+					},
+					bounces: false,
+					progress: {
+						type: 'page'
+					},
+					pageParam: {
+
+					},
+					softInputBarEnabled: false,
+					softInputMode: 'resize'
+				});
+			}
+
+			if (y_data.flag != '' && (y_data.channel == 3 || y_data.channel == 4||y_data.channel == 6 || y_data.channel == 7)) {
+				//如果是银联的微信支付或者支付宝支付标识，那么需要两秒后弹出是否已付款的提示
+				setTimeout(function() {
+					//不管用户点了已支付或者未完成，都去查询一遍订单状态，如果ok则都跳转到支付完成页面，如果没有，点了未完成的停留在当前页面，点了已支付的返回原来的支付页面
+					openMessage('温馨提示', '您是否已完成支付？', '已支付', '未完成', 'goBack(1)', 'goBack(2)', null);
+				}, 3000);
+			}
+
+		};
+
+		/**
+		 * 关闭页面前看下是不是支付唤起页面，是的话就要去查询订单情况了 
+		 */
+		function goBack(type) {
+			switch (y_data.flag) {
+				case 'subjectThree-class':
+					//训练预约
+					url = 'api/ke-mu-three/get-pay-status';
+					params = {
+						orderId: y_data.orderId,
+						payChannel:y_data.channel,
+					}
+					break;
+				case 'subjectTwoPractical':
+					//科目二实操
+					url = 'api/PracticalTest/get-pay-status';
+					params = {
+						orderId: y_data.orderId,
+						payChannel:y_data.channel
+					}
+					break;
+				case 'subjectOneCourse':
+					//科目一课程预约
+					url = 'api/courseReservation/get-pay-status';
+					params = {
+						payOrderNo: y_data.payOrderNo,
+						payChannel:y_data.channel
+					}
+					break;
+				case 'subjectTwo-simulator':
+					//模拟器预约
+					url = 'api/Simulator/get-pay-status';
+					params = {
+						payOrderNo: y_data.payOrderNo,
+						payChannel:y_data.channel
+					}
+					break;
+				case 'school-register':
+					//驾校报名
+					url = 'api/driving-school-registration/get-pay-status';
+					params = {
+						orderId: y_data.orderId,
+						payChannel:y_data.channel
+					}
+					break;
+				case 'hospital-exam':
+					//医院报名
+					url = 'api/examination/get-pay-status';
+					params = {
+						orderId: y_data.orderId,
+						payChannel:y_data.channel
+					}
+					break;
+				case 'appoint-kemu2':
+					//科二普通
+					url = 'api/appointment-by-learner/get-pay-status';
+					params = {
+						orderId: y_data.payOrderNo,
+						payChannel:y_data.channel,
+						kemu: 2,
+						isVip: 0
+					}
+					break;
+				case 'appoint-kemu2-vip':
+					//科二vip
+					url = 'api/appointment/get-pay-status';
+					params = {
+						orderId: y_data.orderId,
+						payChannel:y_data.channel,
+						kemu: 2,
+						isVip: 1
+					}
+					break;
+				case 'appoint-kemu3':
+					//科三普通
+					url = 'api/appointment-by-learner/get-pay-status';
+					params = {
+						orderId: y_data.payOrderNo,
+						payChannel:y_data.channel,
+						kemu: 3,
+						isVip: 0
+					}
+					break;
+				case 'appoint-kemu3-vip':
+					//科三vip
+					url = 'api/appointment/get-pay-status';
+					params = {
+						orderId: y_data.orderId,
+						payChannel:y_data.channel,
+						kemu: 3,
+						isVip: 1
+					}
+					break;
+				case 'vip-curriculum':
+					//vip课程
+					url = 'api/questionviporder/get-pay-status';
+					params = {
+						orderId: y_data.orderId,
+						payChannel:y_data.channel
+					};
+					break;
+				case 'vip-video':
+					//vip课程
+					url = 'api/VideoVipOrder/getPayStatus';
+					params = {
+						orderId: y_data.orderId,
+						payChannel:y_data.channel
+					};
+					break;
+				case 'goods_shop_pay_frm':
+                    //积分商品支付
+                    url = 'api/integral-order/getPayStatus';
+                    params = {
+                        orderId: y_data.orderId,
+                        payChannel:y_data.channel
+                    };
+                    break;
+				default:
+					closeWin();
+					return;
+			}
+			log('params', params);
+			defaultload('获取支付状态中...');
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('ret', ret);
+				if (ret) {
+					if (ret.code == 0) {
+						esc_function(y_data.winName, y_data.frmName, 'success_pay()');
+						closeWin();
+					} else {
+						//如果后端没查到已支付，那么可能是回调还没到，就再去查询银联的订单接口，如果订单接口返回的也是未支付那么就是真的没有支付（虽然这种情况不太可能发生，但还是要预防下）
+						selYinlianOrderDetail(type, y_data.payOrderNo);
+					}
+				} else {
+					selYinlianOrderDetail(type, y_data.payOrderNo);
+				}
+			});
+		}
+
+		/**
+		 * 查询银联的订单接口 
+		 */
+		function selYinlianOrderDetail(type, payOrderNo) {
+			url = 'api/driving-school-registration/sel-yinlian-order-status';
+			params = {
+				orderId: payOrderNo,
+				payChannel:y_data.channel
+			}
+			log('银联', params);
+			ajax_Request(url, 'post', 'json', params, function(ret, err) {
+				log('银联回调', ret);
+				if (ret) {
+					if (ret.status == 'TRADE_SUCCESS') {
+						esc_function(y_data.winName, y_data.frmName, 'success_pay()');
+						closeWin();
+					} else {
+						if (type == 2) {
+							closedefaultload();
+							// 如果是微信小程序付款， 关闭窗口
+							if (y_data.channel == 7) {
+								closeWin();
+							}
+						} else {
+							esc_function(y_data.winName, y_data.frmName, 'fail_pay("未完成支付")');
+							closeWin();
+						}
+					}
+				} else {
+					esc_function(y_data.winName, y_data.frmName, 'fail_pay("服务器繁忙，请稍后再试")');
+					closeWin();
+				}
+			});
+		}
+
+		function closeWin() {
+			api.closeWin();
+		}
+	</script>
+</html>

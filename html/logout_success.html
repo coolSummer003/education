@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>账户注销</title>
+		<link rel="stylesheet" type="text/css" href="../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../css/common/common.css" />
+		<style>
+			html{
+    		background-color: #ffffff;
+    	}
+    	.logoutIcon{
+			font-size: 1rem;
+		    background: #FFFFFF;
+		    text-align: center;
+		}
+		
+		.logoutIcon img{
+			height: 6rem;
+		    margin-top: 6rem;
+		}
+		.success_logout{
+	        padding: 1rem 0rem;
+	        color: #333333;
+	        font-size: 1.2rem;
+		}
+
+		.marTop{
+		    margin-top: 1rem;
+		}
+
+		.aui-btn-block {
+		    display: block;
+		    width: 86%;
+		    padding: 0.4rem 0;
+		    font-size: 0.9rem;
+		    float: left;
+		    margin-left: 7%;
+		}
+		.aui-btn-info {
+		    color: #ffffff !important;
+		    background-color: #DC251F !important;
+		    margin-top: 1rem;
+		}
+		.aui-btn-info.aui-active, .aui-btn-info:active {
+		    color: #fff !important;
+		    background-color: #DE5A58 !important;
+		}
+
+		.border-none:before{ 
+			background-color: #FFFFFF !important;
+		}
+		.border-none:after{
+			background-color: #FFFFFF !important;
+		}
+		.back-img{
+			position: absolute;
+		    width: 20px;
+		    top: 2rem;
+		    left: 0.8rem;
+		}
+    </style>
+	</head>
+	<body>
+		<img src="../icon/common/icon_back_home.png" alt="" class="back-img" tapmode onclick='back_to_login()'/>
+		<div class="logoutIcon">
+			<div><img src="../icon/success.png" alt="" class="icon" /></div>
+			<div class="success_logout"><span>已完成注销</span></div>
+		</div>
+		<div class="aui-content aui-margin-b-15">
+			<ul class="aui-list aui-form-list border-none">
+				<div class="aui-btn aui-btn-block aui-btn-info marTop" tapmode onclick="back_to_login()">返回首页</div>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var fs;
+		var systemType;
+		apiready = function() {
+			api.parseTapmode();
+			cache = api.pageParam;
+			systemType = api.systemType;
+			log('上一页面的传参', cache);
+			api.addEventListener({
+	    		name: 'keyback'
+			}, function(ret, err) {
+				back_to_login()
+			});
+	    
+
+		}
+
+		//退出登录
+		function back_to_login() {
+			$api.setStorage('cache_by_account','');//清除与账户相关的缓存
+    		$api.setStorage('islogin',false);
+    		esc_function('index','','bindJpush()');//清除极光推送账号
+    		esc_function('index','','aliPush_init()');//绑定阿里推送账号
+		
+			api.closeWin({  //关闭指定页面
+				name : 'logout_top2'
+			})  
+			api.closeWin({  //关闭指定页面
+				name : 'logout_top1'
+			})  
+			
+			api.closeWin({  //关闭指定页面
+				name : 'mine_account_setting_win'
+			})  
+		
+            api.closeWin({});
+        
+            sendEvent('exit_action');
+            
+            console.log('api.winName==='+api.winName);
+		}
+		function closeWin(){
+			api.closeWin({});
+		}
+	</script>
+</html>

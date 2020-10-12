@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>通用评论页面</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common/comment.css"/>
+    <style>
+        html, body {
+            background: transparent;
+            width: 100%;
+            height: 100%;
+        }
+
+        .modal {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        #publish_comment {
+            position: absolute;
+            bottom: 0;
+            height: 10rem;
+            width: 100%;
+            background-color: #fff;
+            z-index: 999;
+        }
+
+        #publish_comment_title {
+            height: 2.2rem;
+            text-align: right;
+        }
+
+        #publishBtn {
+            padding: 0;
+            width: 4rem;
+            height: 100%;
+            line-height: 2.2rem;
+            border: none;
+            background-color: transparent;
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        #publish_comment_content {
+            height: 5.5rem;
+        }
+
+        #publishContent {
+            margin: 0 5%;
+            padding: 0.45rem 0.3rem;
+            height: 100%;
+            width: 90%;
+            background-color: #f5f5f5;
+            color: #333;
+            font-size: 0.8rem;
+            border-radius: 0.4rem;
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+
+        #publishContent::placeholder {
+            color: #999;
+        }
+
+        #words_limit {
+            margin: 0.1rem 5%;
+            height: 1rem;
+            width: 90%;
+            color: #999;
+            font-size: 0.6rem;
+            overflow: hidden;
+            text-align: right;
+        }
+
+        #words_limit > div {
+            width: 15%;
+            height: 100%;
+            float: right;
+            overflow: hidden;
+        }
+
+        #words_limit span {
+            display: block;
+            float: right;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="modal" tapmode onclick="closeModal()"></div>
+<div id="publish_comment">
+    <div id="publish_comment_title">
+        <button id="publishBtn" tapmode>发布</button>
+    </div>
+    <div id="publish_comment_content" tapmode>
+        <textarea id="publishContent" placeholder="请输入评论..." tapmode></textarea>
+        <div id="words_limit">
+            <div>
+                <span id="totalWordsNum"></span>
+                <span>/</span>
+                <span id="inputWordsNum"></span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+    var cache;
+    var UIInput;
+    var UIInputStr;
+    var UIInputDefaultStr;
+    var id;
+    var keyboardHeight = 0;
+    var x = $('#publishContent').offset().left + 5;
+    var y = $('#publishContent').offset().top + 5;
+    var w = $('#publishContent').width();
+    var h = $('#publishContent').height() - 15;
+    var inputTop;
+    var winHeight;
+    apiready = function () {
+        UIInput = api.require('UIInput');
+        winHeight = api.winHeight;
+        api.parseTapmode();
+        cache = api.pageParam.data;
+        log('cache====', cache);
+        var limit_txt = 50; //限定字数
+        $('#totalWordsNum').html(limit_txt);
+        $('#inputWordsNum').html(0);
+        // $('#publishContent').bind('input propertychange', function () {
+        //     if (this.value.length > 0) {
+        //         $('#publishBtn').css('color', '#4087FE');
+        //     } else {
+        //         $('#publishBtn').css('color', '#666');
+        //     }
+        //     if (this.value.length > limit_txt) {
+        //         this.value = this.value.substr(0, limit_txt);
+        //     }
+        //     $('#inputWordsNum').html(this.value.length);
+        // });
+        // cache.fatherMessageId ? $('#publishContent').attr('placeholder', '请输入对' + cache.name + '评论的回复...') : '';
+        UIInputDefaultStr = cache.fatherMessageId ? '请输入对' + cache.name + '评论的回复...' : '请输入评论...';
+        $('#publishBtn').on('click', function () {
+            cache.fatherMessageId ? reply() : newComments();
+        });
+        inputTop = api.winHeight - $api.offset($api.byId('publishContent')).t - $api.offset($api.byId('publishContent')).h;
+        UIInput_open();
+        $('#publishContent').on('click, focus', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).blur();
+            console.log("++++++++++++-==============++++++++++++++++213123");
+            if (api.systemType === 'android' || api.systemType === 'Android') {
+                UIInput.resetPosition({
+                    position: {
+                        x: $('#publishContent').offset().left + 2,
+                        y: $('#publishContent').offset().top + 2
+                    },
+                    id: id
+                });
+            }
+        });
+    };
+
+    // 输入框获取焦点并弹出键盘
+    function UIInput_open() {
+        UIInput.open({
+            rect: {
+                x: x,
+                y: y,
+                w: w,
+                h: h
+            },
+            styles: {
+                bgColor: '#f5f5f5',
+                size: 14,
+                color: '#333',
+                placeholder: {
+                    color: '#999'
+                }
+            },
+            autoFocus: true,
+            maxRows: 3,
+            maxStringLength: 50,
+            isCenterVertical: false,
+            placeholder: UIInputDefaultStr,
+            keyboardType: 'default',
+            inputType: 'text',
+            fixedOn: api.frameName,
+            fixed: false
+        }, function (ret, err) {
+            if (ret) {
+                id = ret.id;
+                console.log(JSON.stringify(ret));
+                $(window).resize(function () {
+                    console.log(y + '===' + $('#publishContent').offset().top);
+                    if (y !== $('#publishContent').offset().top) {
+                        UIInput.resetPosition({
+                            position: {
+                                x: $('#publishContent').offset().left + 2,
+                                y: $('#publishContent').offset().top + 2
+                            },
+                            id: id
+                        });
+                    }
+                });
+                UIInput.value(function (ret) {
+                    if (ret) {
+                        UIInputStr = ret.msg;
+                        console.log('======' + UIInputStr);
+                        if (ret.msg.length > 0) {
+                            $('#publishBtn').css('color', '#4087FE');
+                        } else {
+                            $('#publishBtn').css('color', '#666');
+                        }
+                        $('#inputWordsNum').html(ret.msg.length);
+                    }
+                });
+                UIInput.popupKeyboard({
+                    id: id
+                });
+                if (api.systemType === 'ios' || api.systemType === 'Ios') {
+                    console.log(1111111);
+                    setTimeout(function () {
+                        // $('#publish_comment').animate({bottom: '2.5rem'}, 300);
+                        $('#publish_comment').css('bottom', '2.85rem');
+                        UIInput.resetPosition({
+                            position: {
+                                x: $('#publishContent').offset().left + 2,
+                                y: $('#publishContent').offset().top + 2
+                            },
+                            id: id
+                        });
+                    }, 500);
+                }
+                UIInput.addEventListener({
+                    id: id,
+                    name: 'becomeFirstResponder'
+                }, function (ret1) {
+                    keyboardHeight = ret1.keyboardHeight;
+                    console.log("输入框获得焦点！" + api.winHeight + ret1.keyboardHeight);
+                    if (ret1.keyboardHeight) {
+                        if (api.systemType === 'android' || api.systemType === 'Android') {
+                            fnscoll(ret1.keyboardHeight);
+                        }
+                        if (api.systemType === 'ios' || api.systemType === 'Ios') {
+                            console.log(2222222);
+                            setTimeout(function () {
+                                console.log(api.winHeight + '===' + winHeight + '===' + keyboardHeight);
+                                if (keyboardHeight > 0) {
+                                    // $('#publish_comment').animate({bottom: '2.5rem'}, 300);
+                                    $('#publish_comment').css('bottom', '2.25rem');
+                                    UIInput.resetPosition({
+                                        position: {
+                                            x: $('#publishContent').offset().left + 2,
+                                            y: $('#publishContent').offset().top + 2
+                                        },
+                                        id: id
+                                    });
+                                }
+                            }, 500);
+                        }
+                    }
+
+                });
+                UIInput.addEventListener({
+                    id: id,
+                    name: 'resignFirstResponder'
+                }, function (ret) {
+                    console.log("输入框失去焦点！" + JSON.stringify(ret));
+                    if (api.systemType === 'ios' || api.systemType === 'Ios') {
+                        setTimeout(function () {
+                            // $('#publish_comment').animate({bottom: '0'}, 300);
+                            $('#publish_comment').css('bottom', '0');
+                            UIInput.resetPosition({
+                                position: {
+                                    x: $('#publishContent').offset().left + 2,
+                                    y: $('#publishContent').offset().top + 2
+                                },
+                                id: id
+                            });
+                        }, 500);
+                    }
+                });
+
+            }
+        });
+    }
+
+
+    // 滚动页面防止被键盘遮挡,仅Android需要
+    function fnscoll(L) {
+        console.log(L + ':' + inputTop);
+        if (L > inputTop) {
+            document.body.scrollTop = L - inputTop; //滚动距离=键盘高度-输入框距屏幕底部距离
+        }
+    }
+
+    //新增评论
+    function newComments() {
+        if (islogin()) {
+            var userId = getUserId();
+            // var newCommentsVal = $("#publishContent").val();
+            // if (!newCommentsVal) {
+            //     alert_msg("尚未填评论内容")
+            //     return;
+            // }
+            // if (newCommentsVal.length > 50) {
+            //     alert_msg("输入内容超出限制")
+            //     return;
+            // }
+            var newCommentsVal = UIInputStr.trim();
+            console.log('+++++++++' + newCommentsVal);
+            if (!UIInputStr) {
+                alert_msg("填评论内容不能为空");
+                return;
+            }
+            if (UIInputStr.length > 50) {
+                alert_msg("输入内容超出限制");
+                return;
+            }
+            defaultload('发送评论中');
+            sensitiveWords(newCommentsVal, function (ret, err) {
+                log("成功+", ret);
+                var newCommentsMsg = ret.code === 0 ? newCommentsVal : ret.msg;
+                log("flag:", cache.flag);
+                if (cache.flag == "news" || cache.flag == "community") {
+                    //资讯，社区新增
+                    url = 'api/comment/insert-news-comment-by-article-id-or-comment-id';
+                    params = {
+                        fatherMessageId: cache.fatherMessageId, //父评论id
+                        informationid: cache.newsId, //id
+                        learnerId: userId, //登入人id
+                        message: newCommentsMsg //输入的东西
+                    };
+                    submit_comment(url, params, cache.flag);
+                    //window.location.reload();
+                    // loadComment(flag)
+                    //	$(".commentList").html(doT.template(newsCommentList)(ret));
+
+                } else if (cache.flag == "all" || cache.flag == "drivingSkill") {
+                    //科目二新增
+                    url = 'api/knowledge/insertKnowledgeMessage';
+                    params = {
+                        fatherMessageId: cache.fatherMessageId, //父评论id
+                        knowledgeId: cache.newsId, //id
+                        learnerId: userId, //登入人id
+                        message: newCommentsMsg //输入的东西
+                    };
+                    submit_comment(url, params, cache.flag)
+                }
+            })
+
+        } else {
+            alert_msg('暂未登录,请先登录')
+        }
+    }
+
+
+    //请求评论接口
+    function submit_comment(url, params, flag) {
+        ajax_Request(url, 'post', 'json', params, function (ret, err) {
+            closedefaultload();
+            log('提交评论返回', ret);
+            if (ret) {
+                if (ret.code === 0) {
+                    alert_msg("评论成功！");
+                    sendEvent('refresh_comment', {
+                        type: 1
+                    });
+                    setTimeout(function () {
+                        closeModal();
+                    }, 100);
+                } else if (ret.code === -2) {
+                    alert_msg(ret.msg)
+                } else {
+                    alert_msg("评论失败！")
+                }
+            } else {
+                alert_msg("服务器繁忙,请稍后重试！")
+            }
+        })
+
+    }
+
+
+    function reply() {
+        if (islogin()) {
+
+            var userId = getUserId();
+            // var newCommentsVal = $("#publishContent").val().trim();
+            // if (!newCommentsVal) {
+            //     alert_msg("尚未填写回复内容")
+            //     return;
+            // }
+            // if (newCommentsVal.length > 50) {
+            //     alert_msg("输入内容超出限制")
+            //     return;
+            // }
+            var newCommentsVal = UIInputStr.trim();
+            console.log('+++++++++' + newCommentsVal);
+            if (!UIInputStr) {
+                alert_msg("填评论内容不能为空");
+                return;
+            }
+            if (UIInputStr.length > 50) {
+                alert_msg("输入内容超出限制");
+                return;
+            }
+            defaultload('发送回复中');
+            sensitiveWords(newCommentsVal, function (ret, err) {
+                var newCommentsMsg = ret.code === 0 ? newCommentsVal : ret.msg;
+                if (cache.type == "all" || cache.type == "video" || cache.type == "drivingSkill") {
+                    //科目二科目三，驾考技巧走子评论
+                    url = 'api/knowledge/insertKnowledgeMessage';
+                    params = {
+                        fatherMessageId: cache.fatherMessageId, //父评论id
+                        knowledgeId: cache.newsId, //id
+                        learnerId: userId, //登入人id
+                        message: newCommentsMsg //输入的东西
+                    };
+                    replyComment(url, params)
+                } else if (cache.type == "news") {
+                    //资讯走子评论
+                    url = 'api/comment/insert-news-comment-by-article-id-or-comment-id';
+                    params = {
+                        fatherMessageId: cache.fatherMessageId, //父评论id
+                        informationid: cache.newsId, //id
+                        learnerId: userId, //登入人id
+                        message: newCommentsMsg //输入的东西
+                    };
+                    log("回复+", JSON.stringify(params));
+                    replyComment(url, params, cache.type)
+                } else {
+                    //社区走子评论
+                    url = 'api/comment/insert-forum-comment-by-article-id-or-comment-id';
+                    params = {
+                        fatherMessageId: cache.fatherMessageId, //父评论id
+                        forumId: cache.newsId, //id
+                        learnerId: userId, //登入人id
+                        message: newCommentsMsg //输入的东西
+                    };
+                    replyComment(url, params)
+                }
+            })
+
+        } else {
+            alert_msg('暂未登录,请先登录')
+        }
+    }
+
+
+    //请求发送子评论
+    function replyComment(url, params, type) {
+        log('我是自评论：');
+        ajax_Request(url, 'post', 'json', params, function (ret, err) {
+            closedefaultload();
+            log('资讯详情：', ret);
+            if (ret) {
+                if (ret.code === 0) {
+                    alert_msg("回复成功！");
+                    sendEvent('refresh_comment', {
+                        type: 2,
+                        message: $("#publishContent").val(),
+                        fatherMessageId: cache.fatherMessageId
+                    });
+                    sendEvent('inits_second');
+                    setTimeout(function () {
+                        closeModal();
+                    }, 100);
+                } else if (ret.code === -2) {
+                    alert_msg(ret.msg)
+                } else {
+                    alert_msg("回复失败！")
+                }
+            } else {
+                alert_msg("服务器繁忙,请稍后重试！")
+            }
+        })
+    }
+
+    function closeModal() {
+        esc_function('', '', 'closeCommentModal()');
+    }
+
+    function alert_msg(msg) {
+        if (api.systemType === 'ios' || api.systemType === 'Ios') {
+            UIInput.hide({
+                id: id
+            });
+            setTimeout(function () {
+                UIInput.show({
+                    id: id
+                });
+            }, 1800);
+        }
+        api.toast({
+            msg: msg,
+            duration: 1500,
+            location: 'middle'
+        });
+    }
+</script>
+</html>

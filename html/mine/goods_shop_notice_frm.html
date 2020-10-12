@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>积分商品支付通知</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.payIcon{
+			font-size: 1rem;
+		    background: #FFFFFF;
+		    text-align: center;
+		}
+		.success_pay{
+	        padding: 1rem 0rem;
+		}
+		.aui-list .aui-list-item {
+		    list-style: none;
+		    margin: 0;
+		    color: #7E7E7E;
+		    background-color: #ffffff;
+		    position: relative;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		    padding: 0.5rem 1.5rem;
+		    text-align:left;
+		    font-size: 0.7rem;
+		}
+		.marTop{
+		    margin-top: 1rem;
+		}
+		.pd_left{
+			padding-left:0.75rem !important;
+		}
+		.aui-btn-block {
+		    display: block;
+		    width: 86%;
+		    padding: 0.4rem 0;
+		    font-size: 0.9rem;
+		    float: left;
+		    margin-left: 7%;
+		}
+		.aui-btn-info {
+		    color: #ffffff !important;
+		    background-color: #DC251F !important;
+		    margin-top: 1rem;
+		}
+		.aui-btn-info.aui-active, .aui-btn-info:active {
+		    color: #fff !important;
+		    background-color: #DE5A58 !important;
+		}
+		.payIcon img{
+    		height: 4rem;
+		    margin-top: 6rem;
+		}
+		.border-none:before{ 
+			background-color: #FFFFFF !important;
+		}
+		.border-none:after{
+			background-color: #FFFFFF !important;
+		}
+		.aui-btn-outlined:active{
+		    color: #E85A5F !important;
+			border: 1px solid #E85A5F !important;
+		}
+		.aui-list .aui-list-item:after{
+		    height: 0; 
+		}
+		#notice{
+		  margin: auto;
+		}
+    </style>
+</head>
+<body>
+	<div class="payIcon">
+	    <div><img src="../../icon/payfor/icon_success.png" alt="" /></div>
+	    <div class="success_pay"><span>支付成功</span></div>
+	</div>
+	<div class="aui-content aui-margin-b-15">
+	    <ul class="aui-list aui-form-list border-none">
+	    	<li class="aui-list-item">
+	    	  <div id="notice">
+	    	  </div>
+	    	 
+	    	</li>
+		    <div class="aui-btn aui-btn-block aui-btn-danger aui-btn-outlined marTop" tapmode onclick="sure()">完成</div>
+	    </ul>
+	 </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		log('通知收到的参数',cache);
+		init();
+	}
+	function init(){
+		var menu = '如有商品质量问题，请联系平台客服';
+		$('#notice').html(menu);
+	}
+	
+	//确认
+	function sure(){
+		params = {
+                learnerId : getUserId(),
+            }
+            //console.log(JSON.stringify(params));
+            api.openWin({
+                name : 'order_list_win',
+                url : '../mine/order_list_win.html',
+                slidBackEnabled : 'false',
+                vScrollBarEnabled : 'false',
+                hScrollBarEnabled : 'false',
+                reload : true,
+                pageParam : {
+                    data : params
+                }
+            });
+            api.parseTapmode();
+	}
+</script>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>教练报名</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html, body {
+            background: #FFF;
+        }
+
+        body > div {
+            padding: 0 5%;
+        }
+
+        #score span {
+            color: #FFAC67;
+        }
+
+        .msg {
+            background: #FFFFFF;
+            height: 20rem;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        .msg img {
+            width: 8rem;
+            margin-top: 9rem;
+        }
+
+        .loading {
+            font-size: 0.7rem;
+            background: #FFFFFF;
+            color: #7D7D7D;
+            padding-bottom: 0.3rem;
+            text-align: center;
+            padding-top: 0.3rem;
+        }
+
+        .load {
+            color: #7D7D7D;
+        }
+
+        .load img {
+            width: 1.6rem;
+            height: 1.6rem;
+        }
+		.coach_list{
+			width: 100%;
+			height: auto;
+			padding: 0.5rem 0 0 0;
+			margin-bottom: 0.5rem;
+		}
+		.coach_list_avatar{
+			width: 3rem;
+			height: 3rem;
+		}
+		.coach_list_avatar_img {
+		    display: block;
+		    float: left;
+		    margin-top: 0;
+		    width: 3rem !important;
+		    height: 3rem !important;
+		    border-radius: 100%;
+		    object-fit:cover;
+		    background: url(../../../icon/common/icon_loadding.gif) 50% 50%/1.2rem 1.2rem no-repeat;
+		}
+		.coach_list_content{
+			display: inline-block;
+			width: 13rem;
+			height: auto;
+			margin-left: 3.5rem;
+			margin-top: -3rem;
+		}
+		.coach_list_content_title{
+			height: 1rem;
+		}
+		.coach_list_content_title_name{
+			 float: left;
+			height: 1rem;
+			line-height: 1rem;
+			font-size: 0.8rem;
+			color: #28354C;
+			margin-right: 0.5rem;
+		}
+		.coach-score-star-icon {
+		    float: left;
+		    height: 0.5rem;
+		    width: 0.5rem!important;
+		    margin-right: 0.25rem;
+		    margin-top: 0.25rem;
+		}
+		.coach_list_content_title_label{
+			float: left;
+			height: 1rem;
+			line-height: 1rem;
+		}
+		.coach-label-real-name,.coach-label-qualifications{
+			float: left;
+			height: 1rem;
+			padding: 0.1rem 0;
+		}
+		.coach-label-qualifications{
+			margin-left: 0.4rem;
+		}
+		.coach-label-real-name img,.coach-label-qualifications img{
+			height: 0.8rem;
+		}
+		.coach_list_content_title_score{
+			float: right;
+			height: 1rem;
+			line-height: 1rem;
+			color: #F5A33C;
+			font-size: 0.5rem;
+		}
+		.coach-score-star-div {
+		    float: right;
+		    height: 1rem;
+		    overflow: hidden;
+		}
+		.coach_list_content_stunum,.coach_list_content_label,.coach_list_content_school{
+			display: inline;
+			float: left;
+			height: 1rem;
+			width: 100%;
+			font-size: 0.6rem;
+			color:#28354C;
+		}
+		#label li {
+		    display: inline-block;
+		    float: left;
+		    padding: 0 0.5rem;
+		    height: 1rem;
+		    line-height: 1rem;
+		    background: #F5F6F6;
+		    border-radius: 1.5625rem;
+			text-align: center;
+		    color: #61636D;
+		    font-size: 0.6rem;
+		}
+
+		.coach-school {
+		    width: 50% !important;
+			height: 1rem;
+			line-height: 1rem;
+			font-size: 0.6rem;
+			color: #28354C;
+		}
+		.coach-distance {
+		    width: 50% !important;
+		    font-size: 0.6rem;
+		    font-weight: normal;
+		    text-align: right;
+		    overflow: hidden;
+		}
+		#load_div {
+		    background-color: #fff;
+		    text-align: center;
+		    margin-bottom: 0.25rem;
+		    color: #666;
+		    font-size: 0.75rem;
+		}
+    </style>
+	</head>
+	<body>
+		<div class="aui-content">
+			<ul class="" id="driverSchool">
+			</ul>
+		</div>
+		<div id='load_div'>
+		</div>
+		<script type="text/template" charset="utf-8" id='load_src'>
+			<div class="load">
+        <img src="../../../icon/common/icon_loadding.gif" alt=""/><br>
+        <span>加载中...</span>
+    </div>
+</script>
+		<script type="text/template" charset="utf-8" id='msg_src'>
+			<div class="msg">
+        <img src="../../../icon/common/empty.png" alt=""/><br>
+        <span>{{=it.msg}}</span>
+    </div>
+</script>
+		<script type="text/template" charset="utf-8" id='more_src'>
+			<div class="loading">
+        <span>{{=it.msg}}</span>
+    </div>
+</script>
+		<script type="text/template" charset="utf-8" id='driverSchool_src'>
+			{{ for(var i=0;i< it.length;i++){ }}
+			<li class="coach_list bottom-slide" tapmode onclick="openDriverSchool('{{=it[i].name}}','{{=it[i].id}}')">
+				<div class="coach_list_avatar">
+					<img src="{{=file_load_url + it[i].photo + '&style=image/resize,w_400'}}" onerror="javascript:this.src='../../../icon/common/icon_users.png'"
+					 data-echo="{{=file_load_url + it[i].photo + '&style=image/resize,w_400'}}" class="coach_list_avatar_img">
+				</div>
+				<div class="coach_list_content">
+					<div class="coach_list_content_title">
+						<div class="coach_list_content_title_name">
+							{{=it[i].name}}
+						</div>
+						<div class="coach_list_content_title_label">
+							<div class="coach-label-real-name">	
+							{{ if(it[i].isAuth == 1){ }}
+								<img src="../../../icon/coach/real_name.png">
+							{{ }else{ }}
+								<img src="../../../icon/coach/no_real_name.png">
+							{{ } }}
+							</div>
+							<div class="coach-label-qualifications">
+								{{ if(it[i].authMode == 1){ }}
+									<img src="../../../icon/coach/qualifications.png">
+								{{ } }}
+							</div>
+						</div>
+						<div class="coach_list_content_title_score">
+							{{=(it[i].score).toFixed(1)}}分
+						</div>
+						<div class="coach-score-star-div">
+							<img src="../../../icon/home/star.png" alt="" class="coach-score-star-icon">
+						</div>
+					</div>
+					<div class="coach_list_content_stunum">
+						<span>拥有{{=it[i].stuNum > 0?it[i].stuNum:0}}名学员</span>
+
+					</div>
+					
+					<div class="coach_list_content_label">
+						<ul id="label">
+							{{=getLabelList(it[i].tags)}}
+						</ul>
+					</div>
+					<div class="coach_list_content_school">
+						<div class="aui-col-xs-5 coach-school">
+							{{=it[i].schoolName}}
+						</div>
+						<div class="aui-col-xs-3 coach-distance">
+							<span style="font-size: 0.7rem;">距离我</span>
+							<span>{{=calcuDistance(it[i].distance ? it[i].distance : -1)}}</span>
+						</div>
+					</div>
+				</div>
+			</li>
+    {{ } }}
+</script>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/echo.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var bMap;
+		var page = 1,
+			limit = 20;
+		var load_src = $('#load_src').html(); //加载src
+		var msg_src = $('#msg_src').html(); //消息提示src
+		var more_src = $('#more_src').html(); //更多src
+		var refresh = true; //标记是否是刷新操作
+		var location_city; //定位城市缓存
+		var coach_car, coach_type;
+		apiready = function() {
+			api.parseTapmode();
+			bMap = api.require('bMap');
+			log('dddd');
+			//监听条件筛选
+			toEventListener('coach', function(ret) {
+				//			page=1;
+				//			refresh = true;
+				log('retss', ret);
+				coach_car = ret.value.carArr;
+				coach_type = ret.value.arr;
+				init(sortType, sort, coach_car, coach_type);
+			})
+			goRefrash(40, '#FFFFFF', null, null, function() {
+				refreshList(sortType, sort);
+			});
+			goLoad(function(ret, err) {
+				loadList(sortType, sort);
+			});
+			location_city = $api.getStorage('cache_by_app').location_city;
+
+			api.refreshHeaderLoading();
+		};
+
+		//列表刷新
+		function refreshList(sortType, sort, keyWords) {
+			page = 1;
+			refresh = true;
+			setLoad();
+			scrollTo(0, 0);
+			if (!(keyWords == '' || keyWords == null || keyWords == undefined)) {
+				defaultload('加载中')
+			}
+			init(sortType, sort, coach_car, coach_type, keyWords);
+		}
+
+		//列表上拉
+		function loadList(sortType, sort) {
+			page++;
+			refresh = false;
+			setLoad();
+			init(sortType, sort, coach_car, coach_type);
+		}
+
+		//列表初始化
+		var sortType = 2; //教练排序种类,默认综合0,距离2
+		var sort = 1; //正续还是倒叙 1正续 2倒叙
+		function init(index, value, coach_car, coach_type, keyWords) {
+			defaultload('获取列表中...');
+			sortType = index;
+			sort = value;
+			if (!(keyWords == '' || keyWords == null || keyWords == undefined)) {
+				page = 1;
+				refresh = true;
+			}
+			mylocation(function(location_result) { //获取当前定位
+				params = {
+					lng: location_result.lon,
+					lat: location_result.lat,
+					sortType: sortType - 0,
+					sort: sort,
+					page: page,
+					limit: limit,
+					keyWords: keyWords == '' || keyWords == null || keyWords == undefined ? '' : keyWords
+				}
+				if (location_result.status) { //有定位权限
+					//教练传参
+					params.lng = location_result.lon;
+					params.lat = location_result.lat;
+				}
+
+				if (coach_car != undefined && coach_car != null) {
+					params.teachPermitted = coach_car.join(',')
+				}
+				if (coach_type != undefined && coach_type != null) {
+					params.tags = coach_type.join(',');
+				}
+				console.log('传参' + JSON.stringify(params));
+				url = 'api/coach/coach-list';
+				ajax_Request(url, 'get', 'json', params, function(ret, err) {
+					if (ret) {
+						console.log('教练：' + JSON.stringify(ret));
+						console.log('教练：' + JSON.stringify(ret.returnValue.length));
+						if (ret.code == 0 && ret.returnValue.length > 0) {
+							var driverSchool_src = $('#driverSchool_src').html();
+							if (refresh || $('#driverSchool').find('li').length == 0) {
+								$("#driverSchool").html(doT.template(driverSchool_src)(ret.returnValue));
+								//alert_msg('教练列表刷新成功');
+							} else {
+								$("#driverSchool").append(doT.template(driverSchool_src)(ret.returnValue));
+							}
+							api.parseTapmode();
+							echoInit();
+						} else {
+							setMsg(refresh ? '暂无教练入驻' : '暂无更多');
+							if (page > 1) {
+								page--;
+							}
+						}
+						closedefaultload();
+					} else {
+						setMsg('服务器繁忙，请稍后重试');
+						closedefaultload();
+					}
+					setTimeout(function() {
+						api.refreshHeaderLoadDone();
+					}, 500);
+				});
+			});
+		}
+
+		//设置页面加载的画面
+		function setLoad() {
+			if (refresh || $('#driverSchool').find('li').length == 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+				$('#load_div').html('');
+				//$("#driverSchool").html(doT.template( load_src )( null ));
+			} else {
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': '加载更多中...',
+						'img': '../../../icon/common/jiazai.gif'
+					}));
+				}, 500);
+			}
+		}
+
+
+		//设置页面提示信息
+		function setMsg(msg) {
+			if (refresh || $('#driverSchool').find('li').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+				setTimeout(function() {
+					$("#driverSchool").html(doT.template(msg_src)({
+						'msg': msg
+					}));
+				}, 500);
+			} else { //原先已经有数据的情况下
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': msg,
+						'img': ''
+					}));
+				}, 500);
+			}
+		}
+
+		//标签加载
+		function getLabelList(tags) {
+			var menu = "";
+			if (tags != '' && tags != undefined && tags != null) {
+				var tagList = tags.split(',');
+				for (var i = 0; i < (tagList.length > 3 ? 3 : tagList.length); i++) {
+					menu += "<li class='tag-style" + i + "'><span>" + getLabelNames(tagList[i]) + "</span></li>";
+				}
+			}
+			return menu;
+		}
+
+		/**
+		 * 返回标签名称
+		 */
+		var coachMap;
+
+		function getLabelNames(code) {
+			coachMap = $api.getStorage('cache_by_app').coachMap;
+
+			return coachMap[code] != undefined ? coachMap[code] : '无效标签';
+		}
+
+		//压缩图片
+		function smallerPic(e) {
+			return SmallerPic($(e).attr('src'), function(url) {
+				$(e).attr('src', url);
+			});
+		}
+
+		//打开教练详情页面
+		function openDriverSchool(name, id) {
+
+			//onEventWithAttributes('driverSchoolClick','教练列表点击',param);
+			var data = {
+				//			d_school_name:'上虞区机动车驾驶员培训学校',
+				id: id,
+				//			name:'绍兴市上虞区'
+			}
+			commonOpenWin('coach_detail_new_win', data);
+		}
+	</script>
+</html>

@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>驾驶能力测评</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html,body{
+    		background-color: #FBFBFF;
+    		overflow-x:hidden;
+    		overflow-y:auto;
+    		height:100%;
+		    width: 100%;
+    	}
+    	.box{
+    		border: 0px solid #FBFBFF;
+		    background: #FBFBFF;
+		  	height:50%;
+		    width: 100%;
+		    border-radius: 1rem 1rem 0 0;    
+		   
+		    overflow: auto;
+    	}
+    	.train{
+    		font-size: 0.8rem;
+    		position: relative;
+    		margin-left: 1rem;
+    		margin-top:1rem;
+    	}
+    	.success{
+		    float: right;
+		    font-size: 0.6rem;
+		    margin-right: -2.1rem;
+		    margin-top: 1.35rem;
+		    color:#8E8E8E;
+    	}
+    	.defeat{
+    		float: right;
+		    font-size: 0.6rem;
+		    margin-right: -5.5rem;
+		    margin-top: 1.35rem;
+		    color: #8E8E8E;
+    	}
+    	
+    	.top_cube{
+    		border:0px solid #FFFFFF;
+    		background:#FFFFFF;
+			
+			width:95%;
+			border-radius:0.4rem 0.4rem 0.4rem 0.4rem;
+			box-shadow: 4px 4px 5px #EDEDF1;
+			margin:0 auto;
+			padding:0.5rem;
+			position:relative;
+			bottom:1rem;
+			z-index: 999;
+			
+    	}
+    	
+    	.top_word{
+	    	color: #8E8E8E;
+	    	font-size: 0.75rem;
+	    	position: relative;
+	    	bottom: 1.55rem;
+	    	left: 2rem;
+    	}
+    	.content_cube{
+    		border:0px solid #FFFFFF;
+    		background:#FFFFFF;
+			height:5rem;
+			width:95%;
+			border-radius:0.4rem 0.4rem 0.4rem 0.4rem;
+			box-shadow: 4px 4px 5px #EDEDF1;
+			margin:0 auto;
+			margin-top:-0.5rem;	
+    	}
+    	.content_cube_second{
+    		border:0px solid #FFFFFF;
+    		background:#FFFFFF;
+			height:9rem;
+			width:95%;
+			border-radius:0.4rem 0.4rem 0.4rem 0.4rem;
+			box-shadow: 4px 4px 5px #EDEDF1;
+			margin:0 auto;
+			margin-top:-0.5rem;	
+    	}
+    	.image_ellipsis{
+    		width: 1.3rem;
+    		position:absolute;
+    		margin-left: 12.5rem;
+    		margin-top: 0.4rem;
+    	}
+    	.aui-hr{
+    		bottom:5.5rem; 
+    		width:90%;
+    		margin:auto;	
+    	}
+    	.train_report{
+    		font-size: 0.8rem;
+    		position: relative;
+    		margin-left: 0.5rem;
+    		margin-top:0.5rem;
+    	}
+    	.image_check{
+    		width: 1.1rem;
+    		float:left;
+    		margin-left: 1.0rem;
+    		margin-top: -4.5rem;
+    	}
+    	.history_number{
+    		position:absolute;
+		    font-size: 0.75rem;
+		    margin-left:2.5rem;
+		    margin-top:-4.5rem;
+    	}
+    	.image_good{
+    		float:left;
+    		width: 1.1rem;
+    		margin-top:-2.93rem;
+    		margin-left:1.0rem;
+    	}
+    	.success_rate{
+    		position: absolute;
+		    font-size: 0.75rem;
+		    margin-left:2.5rem;
+		    margin-top:-2.93rem;
+    	}
+    	.btn{
+    		float:right;
+		    right: 1rem;
+		    top: -6rem;
+    	}
+    	.aui-btn-info{
+		    color: #03B4F7 !important;
+		    border: 1px solid #03B4F7;
+		    margin-top: 2rem !important;
+		    border-radius: 0.2rem !important;
+		   	background:#ffffff !important;
+		    margin-bottom: 1rem !important;
+    	}
+    	#aui-header1{
+			opacity: 1;
+			z-index:12;
+		}
+		#aui-header2{
+			opacity: 0;
+			background:#FFF !important;
+			z-index:12;
+		}
+		.aui-bar-nav {
+			top: 0;
+			line-height: 2.25rem;
+			background-color: #FFF;
+			color: #000;
+			border-bottom: none;
+		}
+		.aui-bar-nav,.aui-bar-tab{
+			background-color: #ffffff;
+		}
+		.aui-bar-nav{
+			color: #2c2c2c;
+			position: fixed;
+			top: 0;
+			left: 0;
+			opacity: 1;
+		}
+		a.aui-pull-left, a.aui-pull-right {
+			color: #35A7FF;
+		}
+		header img {
+			width: 20px;
+		}
+		.cube{
+			position:absolute;
+			margin-top: 0rem;
+			margin-left: 14rem;
+		}
+		.msg{
+			background: #FFFFFF;
+			height: 20rem;
+			width:95%;
+			border-radius:0.4rem 0.4rem 0.4rem 0.4rem;
+			box-shadow: 4px 4px 5px #EDEDF1;
+			text-align: center;
+			font-size:0.7rem;
+			margin:0 auto;
+		}
+		.msg img{
+			width:8rem;
+			margin-top: 9rem;
+		}
+		.jiazai{
+			font-size: 0.7rem;
+			background: #FFFFFF;
+			color: #666565;
+			padding-bottom: 0.3rem;
+			text-align: center;
+			padding-top: 0.3rem;
+		}
+		.jiazai img{
+			width: 1.5rem;
+		}
+		.startDate{
+			font-size:0.6rem;
+			color:#8E8E8E;
+			position: absolute;
+			margin-top: 2rem;
+			margin-left: -3.1rem;
+		}
+		.endDate{
+			font-size:0.6rem;
+			color:#8E8E8E;
+			position: absolute;
+			margin-top: 2rem;
+			margin-left: 6.5rem;
+		}
+		.color_cube{
+			font-size:0.7rem;
+			position:absolute;
+			margin-top:1.5rem;
+			margin-left:0.6rem;
+		}
+		.drive{
+			position:absolute;
+			width:65%;
+			top: 3.4rem;
+			left:1.1rem;
+		}
+		.top_ceping{
+			background:url("../../../image/background/bg_user.png");
+			height:60%;
+			width: 100%;
+		}
+		.main-score{
+			position: absolute;
+			z-index:999;
+			top: 15%;
+			left:5%;
+		
+		}
+		.score{
+			font-weight: 600;
+			font-size: 3rem;
+			color: #FFFFFF;
+		}
+		.title{
+			font-weight: 550;
+			font-size: 1rem;
+			color: #FFFFFF;
+		}
+    </style>
+	</head>
+	<body>
+		<header class="aui-bar aui-bar-nav none-bottom-style" id="aui-header1" style="background: none;">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+				<img src="../../../icon/common/icon_header_return_white.png">
+			</a>
+			<div class="aui-title" style="color: #fff">
+				基础驾能结业测评
+			</div>
+			<a class="aui-pull-right aui-btn" tapmode onclick="openShareWindow()">
+
+			</a>
+		</header>
+		<header class="aui-bar aui-bar-nav" id="aui-header2" style="background: none;">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+				<img src="../../../icon/common/icon_header_return.png">
+			</a>
+			<div class="aui-title" id="driver_s_title">
+				基础驾能结业测评
+			</div>
+			<a class="aui-pull-right aui-btn" tapmode onclick="openShareWindow()">
+
+			</a>
+		</header>
+		<div class="main-score">
+			<div class="score">
+				<font class="score_number">80</font>
+				<font style="font-size:1.5rem;font-weight:550">分</font>
+			</div>
+			<div class="title">中级</div>
+		</div>
+		<div class="top_ceping" id="main">
+
+		</div>
+		<div class="top_cube">
+			<script type="text/template" charset="utf-8" id='msg_explain'>
+				<div class="name-title"><font style="font-weight:bold;">{{=it.title}}</font></div>
+					<div class="explain">
+					{{=it.introduce}}<br><br>
+					{{=it.explain}}
+					</div>
+				</script>
+		</div>
+
+
+		<!--<a class="aui-pull-left aui-btn" tapmode onclick="closeWin()">
+            <img src="../../../icon/common/icon_header_return.png">
+        </a>-->
+
+		<div id='load_div'></div>
+		<script type="text/template" charset="utf-8" id='msg_src'>
+			<div class="msg">
+			<img src="../../../icon/common/empty.png" alt="" /><br>
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+		<script type="text/template" charset="utf-8" id='more_src'>
+			<div class="jiazai">
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/echarts.min.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var headerPos;
+		var statusCode = 0; //为0时为关闭状态
+		var percent = 0; //白底header的隐藏属性值
+		var hidepercent = 0; //非白底header的隐藏属性值
+		var fs;
+		var systemType;
+		var msg_src = $('#msg_src').html(); //消息提示src
+		var more_src = $('#more_src').html(); //更多src
+		apiready = function() {
+			api.parseTapmode();
+			cache = api.pageParam.data;
+			init();
+			$api.fixStatusBar($api.byId('aui-header1'));
+			$api.fixStatusBar($api.byId('aui-header2'));
+			headerPos = $api.offset($api.byId('aui-header1'));
+			threshold = headerPos.h;
+			fs = api.require('fs');
+			systemType = api.systemType;
+			touchStyle = systemType == "ios" ? 'touchmove' : 'scroll';
+			scroll();
+
+		}
+		// 基于准备好的dom，初始化echarts实例
+		function chart(params) {
+			var indicators = [];
+			var values = [];
+			var myChart = echarts.init(document.getElementById('main'));
+			for (i = 0; i < params.length; i++) {
+				indicators.push({
+					text: params[i].title,
+					max: 100
+				})
+				values.push(params[i].score)
+			}
+
+			option = {
+				title: {
+					text: ''
+				},
+				tooltip: {
+					trigger: 'axis'
+				},
+				color: ['#ace'], //雷达图数据颜色
+				legend: {
+					x: 'center',
+					data: ['驾能分析报告']
+				},
+				radar: [{
+						indicator: indicators,
+						label: {
+							normal: {
+								show: true,
+								formatter: function(params) {
+									return params.name + " " + +params.value + " 次"
+								}
+							}
+						},
+						triggerEvent: true,
+						center: ['60%', '70%'],
+						radius: 70,
+						splitArea: {
+							show: true,
+							areaStyle: {
+								color: ["#ffffff"], // 图表背景网格的颜色
+								opacity: 0.8
+							}
+						},
+						// 设置雷达图中间射线的颜色
+						axisLine: {
+							lineStyle: {
+								color: ["#ffffff"],
+							},
+						}
+
+					}
+				],
+
+				series: [{
+					type: 'radar',
+					tooltip: {
+						trigger: 'item'
+					},
+					itemStyle: {
+						normal: {
+							areaStyle: {
+								type: 'default',
+								opacity: 0.5
+							}
+						}
+					},
+					data: [{
+						value: values,
+						name: '驾能分析报告'
+					}]
+				}]
+			};
+
+
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
+
+			var msg_explain = $("#msg_explain").html();
+			log('params[0]', params[0])
+			$(".top_cube").html(doT.template(msg_explain)(params[0]));
+			//渲染点击的数据
+			myChart.on('click', function(data) {
+				for (i = 0; i < params.length; i++) {
+					if (params[i].title == data.name) {
+						$(".top_cube").html(doT.template(msg_explain)(params[i]));
+						break;
+					}
+				}
+			});
+
+		}
+
+		function scroll() {
+			$(window).on(touchStyle, function(event) {
+				scrollPos = $(window).scrollTop();
+				//安卓做限制滚动
+				if (((scrollPos / threshold).toFixed(2) <= 1) && systemType == 'android') {
+					percent = (scrollPos / threshold).toFixed(2) > 1 ? 1 : (scrollPos / threshold).toFixed(2);
+					$('#aui-header2').css("opacity", percent);
+					hidepercent = (1 - percent) < 0 ? 0 : (1 - percent);
+					$('#aui-header1').css("opacity", hidepercent);
+
+				} else {
+					percent = (scrollPos / threshold).toFixed(2);
+					$('#aui-header2').css("opacity", percent);
+					hidepercent = 1 - percent;
+					$('#aui-header1').css("opacity", hidepercent);
+				}
+			});
+		}
+
+
+		function init() {
+			url = 'api/robot/driving-evaluation/list';
+			params = {
+				learnerId: 3309
+			}
+			//log('params:', JSON.stringify(params));
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('=======', ret);
+				if (ret) {
+					log('dcddcs', ret.returnValue.length);
+					if (ret.code == 0 && ret.returnValue.list.length > 0) {
+
+						chart(ret.returnValue.list);
+						$('.title').html(ret.returnValue.title);
+						$('.score_number').html(ret.returnValue.score);
+					} else {
+						setMsg('暂无训练分析');
+
+					}
+				} else {
+					setMsg('服务器繁忙，请稍后再试');
+				}
+			})
+			setTimeout(function() {
+				api.refreshHeaderLoadDone();
+			}, 500);
+		}
+
+		//设置页面提示信息
+		function setMsg(msg) {
+			if ($('section').find('div').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+				setTimeout(function() {
+
+					$("#contents").html(doT.template(msg_src)({
+						'msg': msg
+					}));
+				}, 500);
+			} else { //原先已经有数据的情况下
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': msg,
+						'img': ''
+					}));
+				}, 500);
+			}
+		}
+
+		function closeWin() {	
+			api.closeWin({});
+		}
+	</script>
+</html>

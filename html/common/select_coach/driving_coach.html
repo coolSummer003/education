@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>教练报名</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html,body{
+    		background:#FFF;
+    	}
+    	#score{
+    		height: 1rem;
+    		line-height:1rem;
+    		display: inline-block;
+    		vertical-align: middle;
+    	}
+    	#score li{
+    		float: left;
+    		height: 1rem;
+    		margin-left: 0.1rem;
+    		line-height:1rem;
+    		display: inline-block;
+    		vertical-align: middle;
+    	}
+    	#score li img{
+    		width: 0.7rem;
+    		margin-top: 0.1rem;
+    	}
+    	#label li{
+    		border: solid 1px #F1F1F1;
+		    margin-right: 0.4rem;
+		    font-size: 0.6rem;
+		    padding: 0rem 0.2rem;
+		    background:#F1F1F1;
+    	}
+    	.aui-list .aui-list-item-media {
+		    width: 4rem;
+		    height: 4rem;
+		    position: relative;
+		    padding: 0.5rem 0;
+		    padding-right: 0.75rem;
+		    display: inherit;
+		    -webkit-flex-shrink: 0;
+		    flex-shrink: 0;
+		    -webkit-flex-wrap: nowrap;
+		    flex-wrap: nowrap;
+		    -webkit-box-align: center;
+		    -webkit-align-items: flex-start;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		}
+		.aui-content{
+			background:#FFF;
+		}
+		.aui-list .aui-list-item-media img {
+		    width: 3rem;
+		    height: 3rem;
+		    display: block;
+		    border-radius:100%;
+		    
+		    object-fit: cover;
+		}
+		.msg{
+			background: #FFFFFF;
+		    height: 20rem;
+		    text-align: center;
+		    font-size:0.7rem;
+		    color:#515151;
+		}
+		.msg img{
+			width:2rem;
+			margin-top: 9rem;
+			margin-bottom:0.5rem;
+		}
+		.jiazai{
+    	    font-size: 0.7rem;
+		    background: #FFFFFF;
+		    color: #666565;
+		    padding-bottom: 0.3rem;
+		    text-align: center;
+		    padding-top: 0.3rem;
+	    }
+	    .jiazai img{
+	    	width: 1.5rem;
+	    }
+		.aui-list:after {
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    top: auto;
+		    right: auto;
+		    bottom: 0;
+		    left: 0;
+		    width: 100%;
+		    z-index: 2;
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		    pointer-events: none;
+		}
+		.aui-list .aui-list-item:last-child:after {
+		    height: 2px;
+		}
+		#score span{
+			color:#FFAC67;
+		}
+		.tag-style0{
+			background:#DDEBFF !important;
+			border-color:#DDEBFF !important;
+			color:#75A9CB;
+		}
+		.tag-style1{
+			background:#E9FBF9 !important;
+			border-color:#E9FBF9 !important;
+			color:#63BD9F;
+		}
+		.tag-style2{
+			background:#FDF2E6 !important;
+			border-color:#FDF2E6 !important;
+			color:#ED9366;
+		}
+    </style>
+	</head>
+	<body>
+		<div id="menuPackage" class=''>
+			<div class="aui-content">
+				<ul class="aui-list aui-media-list" id="driverSchool">
+					<!-- <li class="aui-list-item">
+	            <div class="aui-media-list-item-inner">
+	                <div class="aui-list-item-media">
+	                    <img src="../../../image/demo/school/1.jpg">
+	                </div>
+	                <div class="aui-list-item-inner">
+	                    <div class="aui-list-item-text">
+	                        <div class="aui-list-item-title aui-ellipsis-2">上虞教练</div>
+	                        <div class="aui-info-item">上虞区</div>
+	                    </div>
+	                    <div class="aui-list-item-text jz">
+	                    	<ul id="score">
+	                    		<li><img src="../../../icon/common/icon_xing_light.png" alt="" /></li>
+	                    		<li><img src="../../../icon/common/icon_xing_light.png" alt="" /></li>
+	                    		<li><img src="../../../icon/common/icon_xing_light.png" alt="" /></li>
+	                    		<li><img src="../../../icon/common/icon_xing_light.png" alt="" /></li>
+	                    		<li><img src="../../../icon/common/icon_xing_dark.png" alt="" /></li>
+	        		                        <li><span>4.0</span></li>
+	                    	</ul>
+	                    	<div class="aui-info-item">
+	                        	<img src="../../../icon/common/icon_location.png" style="width:0.5rem" class="aui-img-round" />
+	                        	<span class="aui-margin-l-5">距离1.2km</span>
+	                        </div>
+	                    </div>
+	                    <div class="aui-list-item-text jz">
+	                        <span>报名1600元 &ensp;|&ensp;100/学时</span>
+	                    </div>
+	                    <div class="aui-info aui-margin-t-5" style="padding:0">
+	                        <div class="aui-info-item">
+	                                		<ul id="label">
+	        		                    		<li><span>服务态度好</span></li>
+	        		                    		<li><span>教学水平高</span></li>
+	        		                    		<li><span>环境优美</span></li>
+	        		                    	</ul>
+	                                    </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </li> -->
+				</ul>
+			</div>
+			<div id='load_div'>
+			</div>
+		</div>
+		<script type="text/template" charset="utf-8" id='load_src'>
+			<div class="load">
+			<img src="../../../icon/common/loadding.gif" alt="" /><br>
+        	<span>加载中...</span>
+		</div>
+    </script>
+		<script type="text/template" charset="utf-8" id='msg_src'>
+			<div class="msg">
+			<img src="../../../icon/common/icon_defalut.png" alt="" /><br>
+        	<span>{{=it.msg}}</span>
+		</div>
+    </script>
+		<script type="text/template" charset="utf-8" id='more_src'>
+			<div class="jiazai">
+	    	<span>{{=it.msg}}</span>
+	    </div>
+    </script>
+		<script type="text/template" charset="utf-8" id='driverSchool_src'>
+			{{ for(var i=0;i<it.length;i++){ }}
+	    	<li class="aui-list-item" tapmode onclick="openDriverSchool('{{=it[i].name}}','{{=it[i].id}}','{{=it[i].mobile}}')">
+	            <div class="aui-media-list-item-inner">
+	                <div class="aui-list-item-media">
+	                    <img src="{{=file_load_url + it[i].photo + '&style=image/resize,w_400'}}" onerror="javascript:this.src='../../../icon/default/icon_default_list.png'">
+	                </div>
+	                <div class="aui-list-item-inner">
+	                    <div class="aui-list-item-text">
+	                        <div class="aui-list-item-title aui-ellipsis-1" style="width: 11rem;">{{=it[i].name}}</div>
+	                    </div>
+	                    <div class="aui-list-item-text jz">
+	                    	<ul id="score">
+	                    	{{if(it[i].score==null ||it[i].score==undefined ){}}
+	                    		{{=calcuStar(5)}}
+	                    	{{}else{}}
+	                    		{{=calcuStar(it[i].score)}}
+	                    	{{}}}
+	                    	</ul>
+	                        <span style="color:#ff8867;position:relative;right:0.5rem;">{{=it[i].stuNum}}<span style="color:#515151">名学员</span></span>
+	                   </div>
+	                    <div class="aui-list-item-text jz">
+	                        <div class="aui-list-item-title aui-ellipsis-2" style="width: 100%;">
+	                        	<span class='txt-yep txt-small'>{{=it[i].schoolName}}</span>
+	                        	<span class='txt-yep txt-small' style="position:absolute;right:0.5rem;">&emsp;距离我{{=calcuDistance(it[i].distance)}}</span>
+                        		
+                        			<!--<span class='txt-yellow txt-small'>暂无报价</span>-->
+	                        </div>
+	                    </div>
+	                    <div class="aui-info aui-margin-t-5" style="padding:0">
+	                        <div class="aui-info-item">
+	                    		<ul id="label">
+		                    		{{=getLabelList(it[i].tags)}}
+		                    	</ul>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </li>
+        {{ } }}
+    </script>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var bMap;
+		var page = 1,
+			limit = 20;
+		var load_src = $('#load_src').html(); //加载src
+		var msg_src = $('#msg_src').html(); //消息提示src
+		var more_src = $('#more_src').html(); //更多src
+		var refresh = true; //标记是否是刷新操作
+		var location_city; //定位城市缓存
+		var city_code, city_name;
+		var schoolId; //所有的驾校
+		var cmSchoolId; //加盟的駕校
+		var coashNameMsg; //教练姓名
+		apiready = function() {
+			bMap = api.require('bMap');
+			toEventListener('coach_school_action', function(ret, err) {
+				log('params++++++++', ret.value.id);
+				schoolId = ret.value.id;
+				cmSchoolId = ret.value.cmSchoolId;
+				refreshList(sortType, sort);
+				refreshCoachList(id);
+			});
+			//报名教练列表选择			
+			toEventListener('coach_select', function(ret, err) {
+				log('params--------', ret.value);
+				cmSchoolId = ret.value;
+				refreshList(sortType, sort);
+			});
+
+			toEventListener('coach_name', function(ret, err) {
+				log('params++++++++', ret.value);
+				coashNameMsg = ret.value;
+				refreshList(sortType, sort, coashNameMsg);
+			});
+
+			goRefrash(40, '#FFFFFF', null, null, function() {
+				refreshList(sortType, sort, coashNameMsg);
+			});
+			goLoad(function(ret, err) {
+				loadList(sortType, sort, coashNameMsg);
+			});
+			location_city = $api.getStorage('cache_by_app').location_city;
+
+			api.refreshHeaderLoading();
+		};
+
+		//列表刷新
+		function refreshList(sortType, sort, name) {
+			page = 1;
+			refresh = true;
+			setLoad();
+			init(sortType, sort, city_code, city_name, name);
+		}
+		/**
+		 * 返回标签名称
+		 */
+		var coachMap;
+
+		function getLabelNames(code) {
+			coachMap = $api.getStorage('cache_by_app').coachMap;
+			log('code', code);
+			log('coachMap', coachMap);
+			return coachMap[code] != undefined ? coachMap[code] : '无效标签';
+		}
+		//列表上拉
+		function loadList(sortType, sort, name) {
+			page++;
+			refresh = false;
+			setLoad();
+			init(sortType, sort, city_code, city_name, name);
+		}
+		//列表初始化
+		var sortType = 0; //教练排序种类,默认综合0,距离1
+		var sort = 2; //正续还是倒叙 1正续 2倒叙
+		function init(index, value, cityCode, cityName, name) {
+			defaultload('获取列表中');
+			sortType = index;
+			sort = value;
+			mylocation(function(location_result) { //获取当前定位
+				params = {
+					lng: location_result.lon,
+					lat: location_result.lat,
+					sortType: sortType - 0 + 1,
+					schoolId: schoolId,
+					cmSchoolId: cmSchoolId,
+					sort: sort,
+					name: name,
+					page: page,
+					limit: limit
+				}
+				if (location_result.status) { //有定位权限
+					//教练传参
+					params.lng = location_result.lon;
+					params.lat = location_result.lat;
+				}
+
+				if (cityCode != undefined && cityCode != null) {
+					params.districtCode = cityCode;
+				}
+				console.log('传参' + JSON.stringify(params));
+				url = 'api/coach/update-coach-list';
+				ajax_Request(url, 'get', 'json', params, function(ret, err) {
+					api.hideProgress();
+					console.log('选择教练列表' + JSON.stringify(ret));
+					if (ret) {
+						if (ret.code == 0 && ret.returnValue.length > 0) {
+							var driverSchool_src = $('#driverSchool_src').html();
+							if (refresh || $('#driverSchool').find('.aui-list-item').length == 0) {
+								$("#driverSchool").html(doT.template(driverSchool_src)(ret.returnValue));
+								//alert_msg('教练列表刷新成功');
+							} else {
+								console.log("下拉加载")
+								$("#driverSchool").append(doT.template(driverSchool_src)(ret.returnValue));
+							}
+						} else {
+							setMsg(refresh ? '暂无教练入驻' : '暂无更多');
+						}
+					} else {
+						setMsg('服务器繁忙，请稍后重试');
+					}
+					setTimeout(function() {
+						api.refreshHeaderLoadDone();
+					}, 500);
+				});
+			});
+		}
+
+		//设置页面加载的画面
+		function setLoad() {
+			if (refresh || $('#driverSchool').find('.aui-list-item').length == 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+				$('#load_div').html('');
+				//$("#driverSchool").html(doT.template( load_src )( null ));
+			} else {
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': '加载更多中...',
+						'img': '../../../icon/common/jiazai.gif'
+					}));
+				}, 500);
+			}
+		}
+		//根据评分计算星星
+		var star_light_num = 0; //亮星星
+		var star_dark_num = 0; //暗星星
+		function calcuStar(score) {
+			var star_menu = '';
+			star_light_num = Math.round(score);
+			star_dark_num = 5 - star_light_num;
+			for (var i = 0; i < star_light_num; i++) {
+				star_menu += '<li><img src="../../../icon/common/icon_xing_light.png" alt="" /></li>';
+			}
+			for (var i = 0; i < star_dark_num; i++) {
+				star_menu += '<li><img src="../../../icon/common/icon_xing_dark.png" alt="" /></li>';
+			}
+
+			return star_menu;
+		}
+		//设置页面提示信息
+		function setMsg(msg) {
+			if (refresh || $('#driverSchool').find('.aui-list-item').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+				setTimeout(function() {
+					$("#driverSchool").html(doT.template(msg_src)({
+						'msg': msg
+					}));
+				}, 500);
+			} else { //原先已经有数据的情况下
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': msg,
+						'img': ''
+					}));
+				}, 500);
+			}
+		}
+
+		//标签加载
+		function getLabelList(tags) {
+			var menu = "";
+			log('tagss', tags)
+			if (tags != '' && tags != undefined && tags != null) {
+				var tagList = tags.split(',');
+				log('tagList++', tagList);
+				for (var i = 0; i < (tagList.length > 3 ? 3 : tagList.length); i++) {
+					log('tagList', tagList[i]);
+					menu += "<li class='tag-style" + i + "'><span>" + getLabelNames(tagList[i]) + "</span></li>";
+				}
+			}
+			return menu;
+		}
+
+		//压缩图片
+		function smallerPic(e) {
+			return SmallerPic($(e).attr('src'), function(url) {
+				$(e).attr('src', url);
+			});
+		}
+
+		//选择教练详情
+		function openDriverSchool(coach_name, id, mobile) {
+
+			params = {
+				coach_name: coach_name,
+				id: id,
+				mobile: mobile
+			}
+			openMessages('绑定教练', '是否绑定' + coach_name + '教练', '确定', '取消', 'sureDriverSchool(params)', '', '')
+		}
+
+		function sureDriverSchool(params) {
+			binding_coach(params);
+		}
+
+		// 学员绑定教练
+		function binding_coach(params) {
+			params.coachId = params.id;
+			params.learnerId = getUserId();
+			params.coach_name = params.coach_name;
+			url = 'api/learner/bind-learner-coach';
+			log('123',params);
+			ajax_Request(url, 'put', 'json', params, function(ret, err) {
+				log('ret======', ret);
+				log('ret======', ret.msg);
+				if (ret) {
+					if (ret.code == 0) {
+						sendEvent('coach_list_select', params);
+						var cache_by_account = $api.getStorage('cache_by_account');
+						cache_by_account.cache_account.coachId = params.coachId;
+						$api.setStorage('cache_by_account', cache_by_account);
+						api.closeDrawerPane();
+						api.closeWin({
+							name: 'coach_select_under_school_win'
+						});
+						alert_msg('绑定教练成功');
+					} else {
+						alert_msg('您已有绑定教练，请勿重复选择！');
+					}
+				} else {
+					alert_msg('服务器繁忙，请稍后重试~123');
+				}
+			});
+		}
+
+		function openMessages(title, content, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+			api.openFrame({
+				name: 'common_alert',
+				url: '../common_alert.html',
+				bgColor: 'rgba(0,0,0,0.4)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					title: title,
+					content: content,
+					sureButton: sureButton,
+					sureFunc: sureFunc,
+					cancelButton: cancelButton,
+					cancelFunc: cancelFunc,
+					winName: api.winName,
+					frameName: api.frameName,
+					params: params
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+	</script>
+</html>

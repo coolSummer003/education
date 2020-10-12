@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>考前训练预约-第二通道订单list</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+    	#common_title{
+    		font-weight:normal;
+    	}
+    	footer{
+    		height: 2rem;
+		    position: absolute;
+		    bottom: 0;
+		    width: 100%;
+	        padding-top: 0.4rem;
+            border-top: solid 1px #F1F1F1;
+            font-size: 0.7rem;
+    	}
+    	footer img{
+    		height:0.8rem;
+    		margin-bottom: -0.15rem;
+    	}
+    	.order li{
+            float: left;
+		    font-size: 0.7rem;
+	        width: 33.33%;
+    		text-align: center;
+	    }
+	    .order{
+		    height: 2rem;
+		    line-height: 2rem;
+		    position: relative;
+	        background: #FFFFFF;
+		}
+	    .order img{
+		    width: 0.4rem;
+   			margin-bottom: 1px;
+   			-webkit-transition: 0.3s ease;
+		}
+		.active{
+	    	color: #FF9138;
+    		/* border-bottom: solid 2px; */
+	    }
+	    #section2{
+    	    background: #FFF;
+    		padding: 0.5rem;
+    		text-align: right;
+	    }
+	    .aui-radio, .aui-checkbox {
+		    width: 1rem;
+		    height: 1rem;
+		    background-color: #ffffff;
+		    border: solid 1px #dddddd;
+		    -webkit-border-radius: 0.6rem;
+		    border-radius: 0.6rem;
+		    font-size: 0.8rem;
+		    margin: 0;
+		    padding: 0;
+		    position: relative;
+		    display: inline-block;
+		    vertical-align: top;
+		    cursor: default;
+		    -webkit-appearance: none;
+		    -webkit-user-select: none;
+		    user-select: none;
+		    -webkit-transition: background-color ease 0.1s;
+		    transition: background-color ease 0.1s;
+		    margin-top: 0.1rem;
+		}
+		.sel-class{
+			height: 2.2rem;
+		    line-height: 2.2rem;
+		    text-align: right;
+		    background: #FFF;
+		    padding: 0 0.5rem;
+		}
+		.sel-class img{
+			-webkit-transform: rotate(270deg);
+			width:0.8rem;
+		    margin-bottom: -0.15rem;
+		}
+		.sel-b3{
+			width: 50%;
+    		float: left;
+		    height: 2.2rem;
+		    text-align: center;
+		    line-height: 2.2rem;
+		}
+		.a-active{
+			color:#03B4F7;
+		}
+		.notice-container {
+		  	align-items: center;
+		  	color: #DC251F;
+		  	background: #F5D3D3;
+		  	opacity: 0.8;
+		  	font-size:0.8rem;
+		  	margin: 0 auto;
+		  	display: flex;
+		  	padding-right:0.5rem;
+		  	padding-left:0.5rem;
+		  	flex-direction: row;
+		  	flex: 1;
+		}
+		.notice-container .header-notice-marquee {
+		  position: relative;
+		  width: 100%;
+		  overflow: hidden;
+		  height: 2rem;
+		  line-height: 2rem;
+		  animation: marquee 10s linear infinite;
+		}
+		.notice-container .header-notice-marquee:hover {
+		  animation-play-state: paused;
+		}
+		.notice-container .header-notice-marquee .header-marquee-item {
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  white-space: nowrap;
+		}
+		/* Make it move */
+		@keyframes marquee {
+		  0% {
+			text-indent: 25em;
+		  }
+		  100% {
+			text-indent: -25em;
+		  }
+		}
+
+    </style>
+</head>
+<body>
+	<section id='aui-header'>
+		<header class="aui-bar aui-bar-nav aui-border-b tab1">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+	            <img src="../../../icon/common/icon_header_return.png">
+	        </a>
+	        <div class="aui-title" id="common_title">
+	        	第二通道
+	        </div>
+	        <a class="aui-pull-right aui-btn aui-hide">
+	           <!-- <span>提交 </span> -->
+	        </a>
+	    </header>
+	   	<div class="aui-bar aui-bar-btn aui-bar-btn-full">
+			<div class="notice-container">
+				<div class="header-notice-marquee" id="notice-marquee">
+					<span class="header-marquee-item">第二通道的订单被分配排班后请去【训练记录->普通预约】中查看</span>
+				</div>
+			</div>
+		</div>
+	</section>
+    <section id="section">
+    	<div style="overflow: hidden;background:#FFF;">
+	    	<div class="sel-b3" tapmode onclick='changeMenu(0,this,"")'>科目二</div>
+	    	<div class="sel-b3" tapmode onclick='changeMenu(1,this,"")'>科目三</div>
+    	</div>
+    	<div class="list_bar" id="slideSpan">
+	        <div class="list_bar_inner"></div>
+	    </div>
+    </section>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var headerPos;
+	var sectionPos;
+	var frameName = '';//设置的frame名称
+	var frameUrl = '';//设置的frame资源所在未知
+	var bounces = false;//是否弹动
+	var clearance = 40;
+	apiready = function(){
+		api.parseTapmode();
+		var header = $api.byId('aui-header');
+		$api.fixStatusBar(header);
+		cache = api.pageParam;
+		log('cache',cache);
+		frameName = 'recode_appoint_second_channel_order_frm';
+		frameUrl = './recode_appoint_second_channel_order_frm.html';
+		headerPos = $api.offset(header);
+		sectionPos = $api.offset($api.byId('section'));
+		if(cache.index == undefined){
+			//默认显示第一栏记录
+			cache.index = 0;
+			changeMenu(0,$('#section').find('.sel-b3').eq(0),'');
+		}else{
+			changeMenu(cache.index,$('#section').find('.sel-b3').eq(cache.index),'');
+		}
+		openFrame(headerPos.h + sectionPos.h, api.winHeight - headerPos.h - sectionPos.h,'none',bounces);
+	}
+	function openFrame(y,h,animate,bounces){
+		api.openFrame({
+            name: frameName,
+            url: frameUrl,
+            bgColor:'#efeff4',
+            rect: {
+                x: 0,
+                y: y,
+                w: 'auto',
+                h: h
+            },
+            animation:{
+	        	type:animate,                //动画类型（详见动画类型常量）
+			    subType:"from_right",       //动画子类型（详见动画子类型常量）
+			    duration:300
+	        },
+            bounces: bounces?true:false,
+            pageParam:cache,
+            reload:true,
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+	}
+
+	function closeWin(){
+		api.closeWin({
+        });
+	}
+
+	//click样式
+	function changeMenu(index,o,slide_index){
+		f_slide($(o).parent().find('.sel-b3').eq(index),slide_index);
+		esc_function('recode_appoint_second_channel_order_win','recode_appoint_second_channel_order_frm','init('+index+',"from_menu")');
+	}
+
+	//滑块加载事件
+	function f_slide(e,slide_index){
+		$('.sel-b3').removeClass('a-active');
+		$(e).addClass('a-active');
+		$('.list_bar').css('width',($('.a-active').width() - clearance*2)+'px');
+		$('.list_bar_inner').css('width',($('.a-active').width() - clearance*2)+'px');
+		document.getElementById('slideSpan'+slide_index).style.webkitTransform = 'translateX('+($(e).position().left + clearance)+'px)';
+	}
+</script>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>医院详情</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+		footer{
+		    height: 2.5rem;
+		    position: fixed;
+		    bottom: 0;
+		    width: 100%;
+		    z-index: 11;
+    		/*background: #F1F1F1;*/
+    	}
+    	footer img{
+		    height: 1rem;
+    		margin-bottom: -0.4rem;
+    	}
+    	.b_l_1{
+		    width: 24.8%;
+		    height: 2.5rem;
+		    /*margin-right: 1%;*/
+		    border-right:1px solid #f5f5f5;
+		    text-align: center;	
+		    float: left;
+	        background: #FFFFFF;
+	        color: #717372;
+    	}
+    	.b_l_1 span{
+    		font-size: 0.6rem;
+    	}
+    	.b_l_2{
+    		width: 40%;
+    		height: 2.2rem;
+    		line-height: 2.2rem;
+    		margin-top: 0.5%;
+    		float: left;
+    		/*border-right:1px solid #f5f5f5;*/
+    		text-align: center;
+    		background: #FFFFFF;
+    		color: #717372;
+    	}
+    	.b_l_2 span{
+    		font-size: 0.8rem;
+    		color: #323C41;
+    	}
+    	.unable{
+    		width: 40%;
+    		float: right;
+    		height: 2.2rem;
+    		margin-right: 5%;
+    		margin-top: 0.5%;
+    		background: #FBB72A;
+    		border-radius: 25px;
+    		color: #FFF;
+    		font-size: 0.9rem;
+    		line-height: 2.2rem;
+    		text-align: center;
+    	}
+    	.buy{
+		    background: #FBB72A;
+    	}
+    	.buy:active{
+    		background:#FBB72A;
+    	}
+    	.foot-left{
+    		margin-left: 20%;
+    	}
+    </style>
+</head>
+<body>
+    <footer id="foot">
+		<div class="b_l_2" tapmode onclick="onlineContact()">
+			<div class="foot-left">
+				<img src="../../icon/common/icon_phone.png" alt="" />
+				<span>电话咨询</span>
+			</div>
+		</div>
+		<div class="unable" id="signUp"><span>报名体检</span></div>
+	</footer>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var footPos;
+	apiready = function(){
+		api.parseTapmode();
+		var foot = $api.byId('foot');
+        footPos = $api.offset(foot);
+		cache = api.pageParam.data;
+		log('传参',cache);
+		init();
+	}
+	var sign_up_action = 'hosiptal_sign_up';
+	function init(){
+		api.openFrame({
+            name: 'hospital_detail_frm',
+            url: './hospital_detail_frm.html',
+            bgColor:'#efeff4',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: api.winHeight - footPos.h
+            },
+            bounces: false,
+            pageParam:cache,
+            reload:true,
+            softInputBarEnabled:true,
+            useWKWebView:false,
+            softInputMode:'resize'
+        });
+        //医院报名动作监听
+  //       toEventListener(sign_up_action,function(ret,err){
+		// 	loadFinish(true,"报名体检",true,examinationId)
+		// 	// hospital_sign_up(ret.value);
+		// });
+		
+	}
+	//驾校报名
+	function hospital_sign_up(flag){
+		params = {
+			event_action:sign_up_action
+		}
+		if(islogin()){//已登录
+			if(isauth()){//已认证
+				if(flag != ''){//登录或认证flag
+					//因为登录关闭动画需要延迟
+					setTimeout(function(){
+						checkIsAllowExam();
+					},350);
+				}else{
+					checkIsAllowExam();
+				}
+			}else{
+				if(flag != ''){//登录或认证flag
+					// setTimeout(function(){
+						openMessage('温馨提示','您暂未实名认证，请先认证','去认证','','toAuthHtml()','',null);
+						// openAuthHtml(params);
+						
+					// },350);
+				}else{
+					openMessage('温馨提示','您暂未实名认证，请先认证','去认证','','toAuthHtml()','',null);
+					// openAuthHtml(params);
+					
+				}
+			}
+		}else{
+			openLoginHtml(params);
+		}
+	}
+	
+	function toAuthHtml(){
+		params = {
+			event_action:sign_up_action
+		}
+		openAuthHtml(params);
+	}
+	
+	/**
+	 * 判断是否允许进行体检 
+	 */
+	function checkIsAllowExam(){
+		updateLearnerInfo(function(ret,err){
+			if(ret&&ret.code == 0){
+				//获取最新学员信息
+				if(ret.learner.idcardNo != undefined&&(ret.learner.idcardNo.substring(0,6) == '330682'||ret.learner.idcardNo.substring(0,6) == '330622')){
+					logAppBuryingPoint({id:cache.id,name:cache.name},'立刻报名','医院列表','首页');
+					openFrameCommon('physical_examination_inform',cache,0,api.winHeight,false);
+				}else{
+					openMessage('温馨提示','您的身份证归属地暂未开通线上体检业务','确定','','','',null);
+				}
+			}else{
+				alert_msg('获取学员信息失败');
+			}
+		});
+	}
+	
+	/**
+	 * 打开医院报名页面
+	 */
+	function openLuzhi(){
+		commonOpenWin('physical_examination_common_win',cache);
+	}
+	
+	//abled代表按钮显示，isallower代表function是否允许
+	function loadFinish(abled,msg,isallower,examinationId){
+		//console.log('abled:'+abled+'   msg:'+msg);
+		if(abled){
+			$('#signUp').addClass('buy');
+			if(isallower){
+				document.getElementById('signUp').onclick = function(){
+					hospital_sign_up('');
+				}
+			}else{
+				document.getElementById('signUp').onclick = function(){
+					openMessage('温馨提示','您还有未完成的体检订单，点击确定继续体检。','确定','','getExaminationDetail("'+examinationId+'")','',null);
+				}
+			}
+		}else{
+			/*if($('#signUp').hasClass('buy')){
+				$('#signUp').removeClass('buy');
+			}
+			$('#signUp').find('span').html(msg);
+			document.getElementById('signUp').onclick = function(){
+				setTimeout(function(){
+					esc_function('index','','changeToFrame(3)');
+					//esc_function('index','mine','func_init(0)');
+				},300);
+				api.closeWin({
+					name:'hospital_detail_win'
+                });
+			};*/
+		}
+		api.parseTapmode();
+	}
+	
+	/**
+	 * 查看体检订单详情 
+	 */
+	function getExaminationDetail(examinationId){
+		params = {
+			orderId:examinationId,
+			type:'examination-order'
+		}
+		api.openWin({
+	       name: 'record_order_detail_win',
+	       url: '../mine/record_order_detail_win.html',
+	       slidBackEnabled:'false',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       useWKWebView:false,
+	       pageParam: {
+	           data:params
+	       }
+	    });
+	}
+	
+	/**
+	 * 打电话 
+	 */
+	function onlineContact(){
+		esc_function('hospital_detail_win','hospital_detail_frm','onlineContact()');
+	}
+</script>
+</html>

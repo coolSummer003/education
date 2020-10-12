@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>驾驶证上传</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html,body{
+    		background-color: #ffffff;
+    	}
+    	.upload-pic{
+    		width: 100%;
+		    overflow: hidden;
+		    background: #FFF;
+		    position:relative;
+    	}
+    	.pic-item{
+    		height: 6rem;
+		    width: 45%;
+		    float: left;
+		    display: flex;
+		    margin-left: 3.3333%;
+		    position: relative;
+    	}
+    	.photo_pic{
+    		width:100%;
+    		height:90%;
+		    margin: auto;
+    	}
+    	.h_other{
+    		height: 9.5rem;
+    	}
+    	.msg{
+    		font-size: 0.6rem;
+    		padding: 0 2.5%;
+    		margin-bottom:1rem;
+    	}
+    	.dividing_line{
+    		height:0.5rem;
+    		background:#f5f5f5;
+    	}
+    	.aui-tips .aui-tips-title {
+		    padding: 0 0.5rem;
+		    font-size: 0.7rem;
+		    position: relative;
+		    width: 100%;
+		    text-align: center;
+		}
+		.delete{
+		    width: 1.2rem !important;
+		    height: 1.2rem !important;
+		    position: absolute;
+	        right: -0.5rem;
+    		top: 0rem;
+		    z-index:10;
+		}
+		.example{
+		    position: absolute;
+		    right: 3.6rem;
+		    top: 1.7rem;
+		    color: #03B4F7;
+		}
+    </style>
+</head>
+<body>
+	
+	<div class="aui-content aui-margin-b-10" style="">
+	    <ul class="aui-list aui-form-list none-bottom-style">
+
+			<li class="aui-list-item none-bottom-style">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label" style="width:100%;">
+                		驾驶证正面：
+	                </div>
+	            </div>
+	         </li>
+	        <div class='upload-pic'>
+	        	<div class='pic-item'>
+			 		<img src="../../image/background/jiashizheng_front.png" class='photo_pic' alt="" />
+			 	</div>
+			 	<div class='pic-item'>
+			 		<img src="../../image/background/addphoto.png" class='photo_pic' alt="" onclick='getPhoto(0)' id='pic0' onerror="javascript:this.src='../../image/background/addphoto.png'"/>
+			 		<!-- 身份证正面fileId -->
+			 		<input type="hidden" value='' id="img0" style='width: 3rem;'/>
+			 		<img src="../../icon/common/icon_delete_blacker.png" alt="" class='delete aui-hide' tapmode onclick="deletePic(this,0)"/>
+			 	</div>
+		 		
+		 	</div>
+			 <li class="aui-list-item none-bottom-style">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label" style="width:100%;">
+                		驾驶证副面：
+	                </div>
+	            </div>
+	         </li>
+	        <div class='upload-pic'>
+	        	<div class='pic-item'>
+			 		<img src="../../image/background/jiashizheng_back.png" class='photo_pic' alt="" />
+			 	</div>
+			 	<div class='pic-item'>
+			 		<img src="../../image/background/addphoto.png" class='photo_pic' alt="" onclick='getPhoto(1)' id='pic1' onerror="javascript:this.src='../../image/background/addphoto.png'"/>
+			 		<!-- 身份证正面fileId -->
+			 		<input type="hidden" value='' id="img1" style='width：3rem;'/>
+			 		<img src="../../icon/common/icon_delete_blacker.png" alt="" class='delete aui-hide' tapmode onclick="deletePic(this,1)"/>
+			 	</div>
+		 	</div>
+		 	<li class="aui-list-item" style='font-size: 0.7rem;'> 
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		驾驶证号：
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <input type="text" placeholder="自动识别" value="" id="driverLincenseNum" style='font-size: 0.7rem;'>
+	                </div>
+	            </div>
+	        </li>
+	        <li class="aui-list-item" style='font-size: 0.7rem;'>
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		初领日期：
+	                </div>
+	                <div class="aui-list-item-input" id="sex_option">
+                        <input type="text" placeholder="自动识别" value="" id="fstdrilicdate" readonly="" style='font-size: 0.7rem;'>
+                    </div>
+	            </div>
+	        </li>
+	        <li class="aui-list-item" style='font-size: 0.7rem;'>
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		准驾车型：
+	                </div>
+	                <div class="aui-list-item-input" id="country_type">
+	                    <input type="text" placeholder="自动识别" value="" id="perdritype" style='font-size: 0.7rem;'>
+	                </div>
+	            </div>
+	        </li>
+	     </ul>
+	 </div>
+	 <div class="aui-btn aui-btn-info aui-btn-block fixed-b" tapmode onclick="submitInfo()">提交</div>
+	 </script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var FNImageClip;
+	var imageFilter;
+	var systemType;
+	var cache;
+	apiready = function(){
+		api.parseTapmode();
+		imageFilter = api.require('imageFilter');//图片压缩
+		FNImageClip = api.require('FNImageClip');//图片裁剪
+		systemType = api.systemType;
+		cache = api.pageParam;
+		info_init();//身份信息初始化
+	}
+	//身份信息初始化
+	var cache_account;//账户缓存信息
+	var access_token;//
+	function info_init(){
+		defaultload('获取中...');
+		url = third_url + "api/common/certificates/analysis";
+    	api.ajax({
+			url : url,
+			method : 'get',
+			tag:url,//为方便，全部统一
+			timeout:30,
+			dataType : 'json'
+		}, function(ret, err) {
+			//log('access_token',ret);
+			if(ret&&ret.code == 0){
+				access_token = ret.access_token;
+			}else{
+				alert_msg('初始化驾驶证识别模块失败');
+			}
+			//账号，也是手机号码
+			cache_account = $api.getStorage('cache_by_account').cache_account;
+			log('缓存信息',cache_account);
+		
+			if(cache_account.driverLicenseFont != undefined
+				&&cache_account.driverLicenseFont != ''
+				&&cache_account.driverLicenseFont != null){
+				//驾驶证正面
+				returnSmallerPic(file_load_url + cache_account.driverLicenseFont,function(smallerImg){
+					$('#pic0').attr('src',smallerImg);
+				});
+				$('#img0').val(cache_account.driverLicenseFont);//驾驶证正面服务器地址
+			}
+			
+			console.log('cache_account.driverLicenseBack'+cache_account.driverLicenseBack);
+			if(cache_account.driverLicenseBack != undefined
+				&&cache_account.driverLicenseBack != ''
+				&&cache_account.driverLicenseBack != null){
+				//驾驶证反面
+				returnSmallerPic(file_load_url + cache_account.driverLicenseBack,function(smallerImg){
+					$('#pic1').attr('src',smallerImg);
+				});
+				$('#img1').val(cache_account.driverLicenseBack);//驾驶证反面服务器地址
+			}
+			
+			if(cache_account.driverLincenseNum != undefined
+				||cache_account.driverLincenseNum != ''){
+				$('#driverLincenseNum').val(cache_account.driverLincenseNum);//驾驶证证件号
+			}
+			
+			if(cache_account.fstdrilicdate != undefined
+				||cache_account.fstdrilicdate != ''){
+				$('#fstdrilicdate').val(cache_account.fstdrilicdate);//驾驶证初领日期
+			}
+			
+			if(cache_account.perdritype != undefined
+				||cache_account.perdritype != ''){
+				$('#perdritype').val(cache_account.perdritype);//驾驶证准驾类型
+			}
+			
+			api.hideProgress();
+		});
+	}
+	
+	//点击上传图片
+	var sourceType;
+	var title;
+	function getPhoto(index){
+		if(index == 0){
+			title = '驾驶证正面';
+		}else if(index == 1){
+			title = '驾驶证反面';
+		}
+		opWithPermission('camera',function(){
+			api.actionSheet({
+	            title : '上传' + title,
+	            cancelTitle : '取消',
+	            buttons : ['拍照', '从相册中选择']
+	        }, function(ret, err) {
+	            if (ret) {
+	            	if(ret.buttonIndex == 1||ret.buttonIndex == 2){
+	            		sourceType = ret.buttonIndex == 1?'camera':'library'
+	                    getPicture(sourceType,index);
+	            	}
+	            }
+	        });
+		});
+	}
+	
+	var change_img = '';
+	function deletePic(e,index){
+		document.getElementById('pic'+index).onclick = '';
+		change_img ='../../image/background/add_photo_3.png';
+		$('#pic'+index).attr('src',change_img);
+		$(e).addClass('aui-hide');
+		setTimeout(function(){
+			document.getElementById('pic'+index).onclick = function(){
+				getPhoto(index);
+			};
+			api.parseTapmode();
+		},500);
+	}
+	
+	//提交驾驶证材料
+	function uploadImg(index,img_path){
+		params = {
+			bucketName:AliOssBucket,
+			fileNum:1,
+			fileType:'learnerApp/driverLicense/' + getUserId()
+		}
+		defaultload('上传中...');
+		//循环上传比较操蛋，因为是异步所以不能根据循环定位到哪张图片，只能通过标记去定位
+		var isloadFlag = 0;//标记位 isload代表是否上传，0代表未上传，1代表捕捉上传，2代表与阿里云建立连接，3代表上传完成
+		getUploadFilePower(params,function(ret,err){
+			if(ret&&ret.code == 0){
+				isloadFlag = 1;//标记上传
+				//阿里云上传可能会崩，所以这里定时器：10秒后查询标记位，把isload为2的图片让用户选择上传
+				var judegeCollapse = setTimeout(function(){
+					collapse(isloadFlag,img_path,index);
+				},10000);
+				var filePath = ret.fileList[0].fileId;
+				file_upload(ret.fileList[0].signUrl, 'put', 'json', img_path, params, function(ret,err,param){
+					if(ret){
+						clearTimeout(judegeCollapse);//清除定时器
+						isloadFlag = 2;//标记与阿里云服务器连接
+						if(ret.progress == 100&&ret.status == 1){
+							distinguishDriverCard(index,img_path,filePath);
+						}
+					}else if(err){
+						//ios一直会返回数据类型错误(目前找不到原因)，但是图片已上传完毕，所以也当success返回
+						if(systemType == 'ios'&&err.progress == 100&&err.code == 3){
+							clearTimeout(judegeCollapse);//清除定时器
+							isloadFlag = 2;//标记与阿里云服务器连接
+							
+							distinguishDriverCard(index,img_path,filePath);
+						}else if((systemType == 'ios'&&err.statusCode == 0)
+									||(systemType == 'ios'&&err.statusCode == 403)){
+							clearTimeout(judegeCollapse);//清除定时器
+							//网络无法连接或者签名错误就重新上传
+							uploadImg(index,img_path);
+						}
+					}
+				});
+			}else{
+				alert_msg('获取上传文件权限失败');
+			}
+		});
+	}
+	
+	//判断是否有图片上传时候与阿里云断开连接
+	function collapse(isloadFlag,img_path,index){
+    	api.hideProgress();
+		if(isloadFlag == 1){
+			api.confirm({
+			    title: '温馨提示',
+			    msg: '上传与服务器断开连接，是否重连',
+			    buttons: ['重新连接', '不上传了']
+			}, function(ret, err) {
+			    var index = ret.buttonIndex;
+			    if(index == 1){
+			    	uploadImg(index,img_path);
+			    }
+			});
+		}
+	}
+	
+	//拍照或打开相机 sourceType：从相册选还是拍照 faceType代表
+    function getPicture(sourceType,index) {
+		api.getPicture({
+		    sourceType: sourceType,
+		    encodingType: 'jpg',
+		    mediaValue: 'pic',
+		    destinationType: 'url',
+		    allowEdit: false,
+		    quality: 50, //1-100图片质量
+		    saveToPhotoAlbum: false
+		}, function(ret, err) {
+			//console.log('选择图片：'+JSON.stringify(ret));
+		    if (ret&&ret.data != '') {
+		    	cutIdCardFrontAndBack(index,ret.data);
+				//uploadImg(index,ret.data);
+            } else {
+                console.log('系统故障或者未选中照片');
+            };
+		});
+	}
+	
+	/**
+	 * 截取驾驶证
+	 */
+	function cutIdCardFrontAndBack(index,img_path){
+		var viewP = api.screenWidth/api.winWidth;
+		var FNImageClipData = {
+		    rect: {
+		        x: 0,
+		        y: 0,
+		        w: api.winWidth,
+		        h: api.winHeight
+		    },
+		    srcPath: img_path,
+		    isHideGrid:true,
+		    isMinWidth:true,
+		    isMinHeight:true,
+		    style: {
+		        mask: 'rgba(0,0,0,0.6)',
+		        clip: {
+		            w: api.winWidth * 1,
+		            h: api.winWidth * 1 / 1.48,
+		            x: (api.winWidth * 0)/2,
+		            y: (api.frameHeight - api.winWidth * 1 / 1.48)/2,
+		            borderColor: '#03B4F7',
+		            borderWidth: 1,
+		            appearance: 'rectangle'
+		        }
+		    },
+		    mode:'image',
+		    fixedOn: api.frameName
+		}
+		if(systemType == 'ios'){
+			FNImageClipData.highDefinition = true;
+		}
+		FNImageClip.open(FNImageClipData, function(ret, err) {
+		    if (ret) {
+		    	esc_function('common_drive_upload_win','','showTools()');
+		    	//监听保存截图事件
+		    	toEventListener('getDriverProveCut',function(ret,err){
+		    		getCut(index);
+		    	});
+		    } else {
+		        alert_msg('打开截图失败',err);
+		    }
+		});
+	}
+	
+	//取消截图
+	function cancelCut(){
+		FNImageClip.close();
+		esc_function('common_drive_upload_win','','hideTools()');
+	}
+	
+	//保存截图
+	function getCut(index){
+		var dest_path = 'fs://imageClip/result'+Math.floor(Math.random()*1000000)+'.png';
+		defaultload('处理中...');
+		FNImageClip.save({
+		    destPath: dest_path,
+		    copyToAlbum: false,
+		    quality: 1
+		}, function(ret, err) {
+			log('ret',ret);
+		    if (ret) {
+		    	//上传到oss
+		        uploadImg(index,ret.destPath);
+		        cancelCut();
+		    } else {
+		        alert_msg('截取失败，请重试');
+		    }
+		});
+	}
+	
+	/**
+	 * 驾驶证识别 
+	 */
+	function distinguishDriverCard(index,img_path,uploadImgPath){
+		//console.log('uploadImgPath'+uploadImgPath);
+		//驾驶证识别
+		if(index == 0){
+			defaultload('驾驶证识别中...');
+			picToBase64(file_load_url + uploadImgPath + '&style=image/resize,w_500',function(imgBase64){
+				//console.log('imgBase64:'+imgBase64.replace('data:image/png;base64,',''));
+				api.ajax({
+					url : 'http://dm-52.data.aliyun.com/rest/160601/ocr/ocr_driver_license.json',
+					method : 'post',
+					tag:url,
+					timeout:30,
+					dataType : 'json',
+					headers : {
+						"Authorization" : "APPCODE 369d4f6cc7ae42e48a0470861fb702e0"
+					},
+					data: {
+						body: {
+							image:imgBase64.replace('data:image/png;base64,',''),
+							configure:{side:"face"} //首页/副页:face/back
+						}
+					}
+				}, function(ret, err) {
+					log('驾驶证识别返回',ret);
+					if(ret){
+						$('#driverLincenseNum').val(ret.num);//驾驶证编号
+						var fstdrilicdate = ret.issue_date;
+						if(fstdrilicdate.length == 8){
+							var fstdrilic_date = fstdrilicdate.substring(0,4)
+							+ '-' + fstdrilicdate.substring(4,6)
+							+ '-' + fstdrilicdate.substring(6,8);
+							$('#fstdrilicdate').val(fstdrilic_date);//驾驶证初领日期
+						}else{
+							alert_msg('识别初领日期失败，请重新上传');
+						}
+						$('#perdritype').val(ret.vehicle_type);//原准驾车型
+						loaddingPic(index,img_path,uploadImgPath);
+					}else{
+						alert_msg('识别失败，请稍后重试');
+						api.hideProgress();
+					}
+				});
+			});
+		}else{
+			loaddingPic(index,img_path,uploadImgPath);
+		}
+	}
+	
+	//加载照片显示
+	function loaddingPic(index,img_path,uploadImgPath){
+		$('#img'+index).val(uploadImgPath);
+		$('#pic'+index).attr('src',img_path);
+		$('#pic'+index).parent().parent().find('.delete').removeClass('aui-hide');
+		document.getElementById('pic' + index).onclick = function(){
+			openPic(img_path);
+		};
+		api.hideProgress();
+		api.parseTapmode();
+	}
+	
+	//上传驾驶证信息到云端
+	function submitInfo(){
+		defaultload('正在提交驾驶证材料');
+		var driverLicenseFont = $('#img0').val();
+		if(driverLicenseFont == ''||driverLicenseFont == null){
+			api.hideProgress();
+			alert_msg('驾驶证正面上传失败，请重新上传');
+			return;
+		}
+		var driverLicenseBack = $('#img1').val();
+		if(driverLicenseBack == ''||driverLicenseBack == null){
+			api.hideProgress();
+			alert_msg('驾驶证副面上传失败，请重新上传');
+			return;
+		}
+		var driverLincenseNum = $('#driverLincenseNum').val();
+		var fstdrilicdate = $('#fstdrilicdate').val();
+		var perdritype = $('#perdritype').val();
+		if(driverLincenseNum == ''||driverLincenseNum == null
+			||fstdrilicdate == ''||fstdrilicdate == null
+			||perdritype == ''||perdritype == null){
+			api.hideProgress();
+			alert_msg('驾驶证识别失败，请重新上传');
+			return;
+		}
+		params = {
+			learner:{
+				id:getUserId(),
+				driverLicenseFont:driverLicenseFont,
+				driverLicenseBack:driverLicenseBack,
+				driverLincenseNum:driverLincenseNum,
+				fstdrilicdate:fstdrilicdate,
+				perdritype:perdritype
+			}
+		}
+		url = 'api/learner/update';
+		log('上传驾驶证最后传参:',params);
+		ajax_Request(url, 'put', 'json', params, function(ret,err){
+			api.hideProgress();
+			log('上传证明材料信息返回：',ret);
+			if(ret){
+				if(ret.code == 0){
+					var cache_by_account = $api.getStorage('cache_by_account');
+					cache_by_account.cache_account.driverLicenseFont = driverLicenseFont;//实名认证信息缓存中加入驾驶证正面
+					cache_by_account.cache_account.driverLicenseBack = driverLicenseBack;//实名认证信息缓存中加入驾驶证反面
+					cache_by_account.cache_account.driverLincenseNum = driverLincenseNum;//实名认证信息缓存中加入驾驶证编号
+					cache_by_account.cache_account.fstdrilicdate = fstdrilicdate;//实名认证信息缓存中加入驾驶证初领日期
+					cache_by_account.cache_account.perdritype = perdritype;//实名认证信息缓存中加入驾驶证准驾车型
+					$api.setStorage('cache_by_account',cache_by_account);//加入缓存中
+					log('cache_by_account：::;',cache_by_account);
+					alert_msg('已提交驾驶证材料');
+					setTimeout(function(){
+						api.closeWin({
+							name:'common_drive_upload_win'
+	                    });
+					},300);
+				}else{
+					alert_msg(ret.msg);
+				}
+			}else{
+				alert_msg('系统出错，请稍后再试');
+			}
+		});
+	}
+</script>
+</html>

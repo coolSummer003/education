@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	body,html{
+			margin: 0;
+			padding: 0;
+			background: #fff;
+    	}
+		.all_bor{
+			position: relative;
+		}
+		img{
+			width: 100%;
+		}
+		.free_btn{
+			position: absolute;
+			width: 60%;
+			background-image: linear-gradient(180deg, #4C3C3C 0%, #302523 100%);
+			top:53%;
+			left: 20% ;
+			text-align: center;
+			color: #FFF;
+			padding: 0.55rem;
+			border-radius: 25px;
+		}
+		.line_text{
+			position: absolute;
+			width: 80%;
+			top:75%;
+			left: 12%;
+		}
+		.line_text p{
+			font-size: 0.6rem;
+			color: #000;
+			margin-top: 0.6rem;
+		}
+    </style>
+</head>
+<body>
+	<div class="all_bor">
+		<img src="../../../image/background/question_share_background.png" >
+		<div class="free_btn" onclick="free_btn()">开始做题</div>
+		<div class="line_text">
+			<p>1、本试卷来自近一年的高频考题</p>
+			<p>2、本试卷免费，邀请一人助力即可领取</p>
+			<p>3、解锁试卷后，有效期一天，过期后再次参与即可。</p>
+			<p>4、本活动最终解释权归驾所通所有。</p>
+		</div>
+	</div>
+	
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+		// console.log("6666hahah ")
+	};
+	
+	function free_btn(){
+		api.openDrawerLayout({
+		    name: 'selected_topic_win',
+		    url: '../common/selected_topic_win.html',
+		    slidBackEnabled: 'true',
+		    vScrollBarEnabled: 'false',
+		    hScrollBarEnabled: 'false',
+		    reload: true,
+		    pageParam: {
+		       data: {
+		           type: 'selected_topic'
+		       }
+			}
+		});
+		
+	}
+</script>
+</html>

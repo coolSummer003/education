@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>网上体检报名通知</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html,body{
+    		/*background-color: #f5f5f5;*/
+    		background-color: #fff;
+    	}
+    	.payIcon{
+			font-size: 1rem;
+		    background: #FFFFFF;
+		    text-align: center;
+		}
+		.success_pay{
+	        padding: 1rem 0rem;
+	        color: #7DCF15;
+		}
+		.aui-list .aui-list-item {
+		    list-style: none;
+		    margin: 0;
+		    color: #7E7E7E;
+		    background-color: #ffffff;
+		    position: relative;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		    padding: 0.5rem 1.3rem 0rem 1.3rem;
+		    text-align:center;
+		    font-size: 0.7rem;
+		    height:5rem;
+		}
+		.marTop{
+			position: fixed;
+			width: 90%;
+			height: 2.25rem;
+			line-height: 2.25rem;
+			border-radius: 25px;
+			left: 5%;
+			bottom: 1rem;
+		    background: linear-gradient(to left ,#3F86FE,#64ADF6);
+			color: #fff;
+			text-align: center;
+		}
+		.pd_left{
+			padding-left:0.75rem !important;
+		}
+		.aui-btn-block {
+	        display: block;
+		    width: 70%;
+		    padding: 0.35rem 0;
+		    font-size: 0.9rem;
+		    float: left;
+		    margin-left: 15%;
+	        height: 2rem;
+		}
+		.aui-btn-info {
+		    color: #ffffff !important;
+		    margin-top: 35% !important;
+		    margin-bottom: -1rem !important;
+		    width: 100%;
+		    margin-left: 0%;
+		}
+		.aui-btn-info.aui-active, .aui-btn-info:active {
+		    color: #fff !important;
+		    background-color: #DE5A58 !important;
+		}
+		.payIcon img{
+    		height: 4rem;
+		    margin-top: 6rem;
+		}
+		.border-none:before{ 
+			background-color: #FFFFFF !important;
+		}
+		.border-none:after{
+			background-color: #FFFFFF !important;
+		}
+		.aui-btn-outlined:active{
+		    color: #E85A5F !important;
+			border: 1px solid #E85A5F !important;
+		}
+		.outline{
+			color: #F6A171 !important;
+    		border: 1px solid #F6A171 !important;
+		}
+		.aui-btn-outlined {
+		    background: transparent !important;
+		    border: 1px solid #bdbdbd;
+		    color: #bdbdbd;
+		}
+		.parent-div{
+			overflow: hidden;
+			background: #FFF;
+		    width: 90%;
+    		margin-left: 5%;
+    		margin-top: 0;
+    		position: absolute;
+    		z-index: 996;
+		}
+		.notice{
+			width: 90%;
+		    position: absolute;
+		    z-index: 999;
+		    top: 1.13rem;
+		    left: 5%;
+		}
+		.notice-content{
+		    overflow: hidden;
+		    height:70%;
+    		margin-top: 1rem;
+		}
+		.text-l{
+			text-align:left !important;
+		}
+		.notice-video{
+		    width: 100%;
+		    height: 9rem;
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size:cover;
+		    /*margin-left: 2%;*/
+		    display: flex;
+		    border-radius: 3px;
+		}
+		.notice_bottom_1{
+		    width: 100%;
+		    position: fixed;
+		    bottom: 0;
+		    z-index: 997;
+		    height:5rem;
+		}
+		.notice_bottom_2{
+			width: 100%;
+		    position: fixed;
+		    bottom: 0;
+		    z-index: 999;
+		    height:5rem;
+		}
+		.notice-video img{
+			width:3.5rem;
+			height:3.5rem;
+			position:relative;
+			left:5rem;
+			top:1.6rem;
+			object-fit: cover;
+		}
+		.unable{
+			background: linear-gradient(to left, #C4C4C4 , #E0E0E0) !important;
+			color: #000 !important;
+		}
+		.unable:active{
+			color: #000 !important;
+		}
+		p{
+    		display:block;
+		    -webkit-margin-before:1em;
+		    -webkit-margin-after:1em;
+		    -webkit-margin-start:0px;
+		    -webkit-margin-end:0px;
+		}
+		.notice-video img{
+			margin-left: 10%;
+			margin-top: 8%;
+		}
+		.notice_success{
+			width: 100%;
+			height: 10rem;
+			text-align: center;
+			padding-bottom: 1rem;
+			margin-top: 2rem;
+		}
+		.notice_success img{
+			width: 40%;
+			margin-bottom: auto;
+		}
+		.notice_success p{
+			margin: 0;
+			font-weight: 700;
+			font-size: 1.2rem;
+		}
+		
+		.ex_border{
+			margin-top: 2rem;
+		}
+		.ex_know{
+			height: 1rem;
+		}
+		.font_line{
+			display: inline-block;
+			width: 0.25rem;
+			background-color: #3F86FF ;
+			height: 100%;
+			vertical-align: top;
+		}
+		.ex_font{
+			display: inline-block;
+			line-height: 1rem !important;
+			vertical-align: top;
+			font-weight: 800;
+			/* margin-left: 0rem; */
+			font-size: 0.9;
+		}
+		.ex_four{
+			font-size: 0.7rem;
+			font-weight: 400;
+			margin-top: 1rem;
+			font-size: 0.8rem;
+			line-height: 1.5rem;
+		}
+		.ex_four img{
+			width: 0.5rem;
+			margin-right: 0.2rem;
+		}
+		.ex_four div{
+			margin-top: 0.5rem;
+		}
+		.font_bule{
+			color: #3F86FF;
+			font-weight: 500;
+		}
+    </style>
+	</head>
+	<body>
+		<!--<img src="../../image/background/notice_success_second.png" alt="" class='notice'/>-->
+		<!-- <div class="notice_success" id="notice_success">
+			<img src="../../image/background/notice_success_pic.png" alt="" />
+			<p>体检注意事项</p>
+			<p style="color: #f00;font-size: 0.8rem;">请先观看下方视频信息采集演示视频</p>
+		</div> -->
+
+		<div class="aui-content aui-margin-b-15 parent-div">
+			<ul class="aui-list aui-form-list border-none notice-content" style='padding-bottom: 1rem;height: auto;'>
+				<div class='notice-video'>
+					<!-- <img src="../../image/background/video_play_start.png" alt="" tapmode onclick="openExamVideo()" /> -->
+				</div>
+				<div class="ex_border">
+					<div class="ex_know">
+						<div class="font_line">
+						</div>
+						<div class="ex_font">注意事项
+						</div>
+					</div>
+					<div class="ex_four">
+						<div><img src="../../../image/data/data/icon_strat_font.png" ><span class="font_bule">听力：</span>双耳佩戴耳机</div>
+						<div><img src="../../../image/data/data/icon_strat_font.png" ><span class="font_bule">视力：</span>严密遮挡眼睛</div>
+						<div><img src="../../../image/data/data/icon_strat_font.png" ><span class="font_bule">四肢躯干：</span>四肢躯干完全入镜，不出现他人或他人声音</div>
+						<div><img src="../../../image/data/data/icon_strat_font.png" ><span class="font_bule">体检全程：</span>禁止出现他人声音、身影；保持着装整齐，禁止赤膊</div>
+					</div>
+				</div>
+				
+			</ul>
+		</div>
+		<div class="marTop unable " id="online_exam">请先观看完整视频（剩余<span id="online_exam_time" style="color: #f00 !important;">48</span>秒）</div>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var flag;
+		var noticeSuccessPos;
+		var dkplayer;
+		var moviePlayer;
+		var systemType;
+		var headerHeight;
+		apiready = function() {
+			api.parseTapmode();
+			var notice_success = $api.byId('notice_success');
+			noticeSuccessPos = $api.offset(notice_success);
+			log('noticeSuccessPos', noticeSuccessPos)
+			cache = api.pageParam.cache;
+			log('----------', cache)
+			init();
+			headerHeight = api.pageParam.headerHeight;
+			toEventListener('closeVideo',function(ret,err){
+				moviePlayer.pause();
+				clearInterval(timer);
+			})
+			api.addEventListener({
+			    name: 'keyback'
+			}, function(ret, err) {
+			    console.log('按了返回键');
+				moviePlayer.pause();
+				clearInterval(timer);
+			});
+			
+			systemType = api.systemType;
+			if(systemType != 'ios'){
+				
+				api.addEventListener({
+					name: 'pause'
+				}, function(ret, err) {
+				   moviePlayer.onPause();
+				});
+				
+				api.addEventListener({
+				    name: 'resume'
+				}, function(ret, err) {
+				  moviePlayer.onResume();
+				});
+				
+			}
+			
+			
+			toEventListener('openVideoShow',function(ret,err){
+				setTimeout(function(){
+					ios_init(1);
+				},300)
+				
+			})
+			
+			moviePlayer = api.require('moviePlayer');
+			
+			var systemVersion = api.systemVersion;
+			log('系统版本',systemVersion)
+			if(systemVersion.split('.')[0] <= 0){
+				openMessage('温馨提示','由于您的安卓版本('+systemVersion+')过低，无法使用该功能','确定','','closeWin()','',null)
+			}else{
+				setTimeout(function(){
+					ios_init(0);
+				},300)
+				
+			}
+			
+			
+			//已生成订单关闭学员列表，医院列表
+			setTimeout(function(){
+				esc_function('my_student_physical_all_win','','closeWin()')
+				esc_function('home_index_physical_examination_win','','closeWin()')
+			},100)
+		}
+		
+
+		function init() {
+			console.log(cache+api.winName)
+			console.log(cache.onoffLine)
+			if (cache.onoffLine.indexOf('线上体检') == -1) { //不支持线上体检
+				$('#online_exam').html('在线体检（不支持）');
+				$('#online_exam').addClass('unable');
+				document.getElementById('online_exam').onclick = function() {
+					alert_msg('该医院不支持在线体检');
+				};
+			} else {
+				document.getElementById('online_exam').onclick = function() {
+					start_physical_examination();
+				};
+			}
+			//		if(cache.onoffLine.indexOf('线下体检') == -1){//不支持线下体检
+			//			$('#outline_exam').html('预约体检（不支持）');
+			//			$('#outline_exam').addClass('unable');
+			//			document.getElementById('outline_exam').onclick = function(){
+			//				alert_msg('该医院不支持预约体检');
+			//			};
+			//		}else{
+			//			document.getElementById('outline_exam').onclick = function(){
+			//				openUnderLine();
+			//			};
+			//		}
+		}
+
+
+		/**
+		 * ios视频播放初始化 
+		 */
+		// var time = 48;
+		var time = 48;
+		var timer;
+		var flag = false;
+		function ios_init(type) {
+			console.log('景来看')
+			moviePlayer.open({
+				rect: {
+					x: 0,
+					y: headerHeight,
+					w: api.winWidth,
+					h: api.winWidth * 9 / 16
+				},
+				coverImg: '',
+				styles: {
+					head: {
+						height: 0,
+						y: 10,
+						backSize: 0
+					},
+					foot: {
+						bg: 'rgba(0,0,0,0)',
+						height: 44,
+						palyBtn: {
+							size: 25,
+							playImg: 'widget://res/icon_play.png', //（可选项）字符串类型；底部播放按钮的背景图片，要求本地路径（widget://、fs://）；默认：播放按钮图标
+							pauseImg: 'widget://res/icon_stop.png', //（可选项）字符串类型；底部暂停按钮的背景图片，要求本地路径（widget://、fs://）；默认：暂停按钮图标 
+							marginLeft: 10
+						},
+						currentTimeLabel: {
+							textSize: 12,
+							textColor: "#FFF",
+							textWidth: 43,
+							marginLeft: 5
+						},
+						seekBar: {
+							sliderW: 15,
+							sliderH: 15,
+							progressColor: '#696969',
+							progressSelected: '#76EE00',
+							marginLeft: 10,
+							marginRight: 10
+						},
+						totalTimeLabel: {
+							textSize: 14,
+							textColor: "#FFF",
+							textWidth: 43,
+							marginRight: 5
+						},
+						fullscreenBtn: {
+							size: 0,
+						}
+					}
+				},
+				path: file_load_url + 'cm/examination_video.mp4',
+				//					path: videoUrl,
+				autoPlay: true,
+				// seekBarDragable: false,
+				isShowControlView: true,
+				autorotation: false,
+				useGestureControl:false,
+			}, function(ret, err) {
+				console.log(JSON.stringify(ret));
+				if (ret) {
+					moviePlayer.setShowOrHideControlView({
+						isShow: true
+					});
+					
+					moviePlayer.addEventListener(function(ret) {
+						log('ret', ret)
+						if (ret && ret.eventType == 'prepared') {
+							if(type == 0){
+								timer = setInterval(function(){
+									time--;
+									if(time == 0){
+										flag = true;
+										clearInterval(timer);
+										$('#online_exam').html('开始视频信息采集');
+										$('#online_exam').removeClass('unable');
+									}
+									$("#online_exam_time").html(time);
+								},1000)
+							}else{
+								moviePlayer.pause();
+							}
+							
+						}
+					});
+
+				}
+			});
+		}
+
+		/**
+		 * 安卓视频播放初始化 
+		 */
+		// function android_init() {
+		// 	dkplayer.open({
+		// 		rect: {
+		// 			x: api.winWidth * 0.05,
+		// 			y: noticeSuccessPos.h,
+		// 			w: api.winWidth * 0.9,
+		// 			h: api.winWidth * 0.9 * 9 / 16
+		// 		},
+		// 		url: file_load_url + 'cm/examination_example.mp4',
+		// 		coverImg: '',
+		// 		animation: false,
+		// 		title: cache.name,
+		// 		isLive: false,
+		// 		enableFull: false, //是否全屏
+		// 		autoPlay: true, //自动播放
+		// 		fixedOn: api.frameName,
+		// 		fixed: true
+		// 	}, function(ret, err) {
+		// 		//alert(JSON.stringify(ret));
+		// 	});
+		// }
+
+		//打开医院线下预约
+		function openUnderLine() {
+			//存在本地录制视频
+			if (isLocalHasVideo(cache.orderId)) {
+				params = {
+					send_event_name: 'jugde_is_has_local_video',
+					data: cache
+				}
+				toEventListener(params.send_event_name, function(ret, err) {
+					commonOpenWin('physical_examination_underline_sign_up_win', ret.value);
+				});
+				openMessage('温馨提示', '&emsp;&emsp;您已在本地录制了体检视频，是否改为线下预约？', '是', '否', '', '', params);
+			} else {
+				commonOpenWin('physical_examination_underline_sign_up_win', cache);
+			}
+		}
+
+		//本地是否含有录制视频
+		function isLocalHasVideo(orderId) {
+			//console.log('orderId:'+orderId);
+			var examResult = $api.getStorage('cache_by_account')['exam_result' + orderId];
+			if (examResult == null || examResult == undefined) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+
+		//开始视频信息采集
+		function start_physical_examination() {
+			//本地已经录制完成在线体检
+			if (isLocalHasVideo(cache.orderId)) {
+				openMessage('温馨提示', '您已录制体检视频', '知道了', '', '', '', null);
+			} else {
+				if (flag) {
+					moviePlayer.pause();
+					// openMessage_countdown('请注意', '体检信息采集全程录音录像，若其他人的声音或图像出现在视频中，会被认定为信息采集不规范。', 'countdown', '确认', '', 'finish()', '',null);
+					// openMessage('温馨提示','请按照提示规范完成录制','确定','','finish()','',null);
+					
+					defaultload("加载中");
+					url = 'api/hospital-examination-video/check-video-can-upload';
+					params = {
+						id:cache.orderId
+					}
+					ajax_Request(url, 'get', 'json', params, function(ret,err){
+						api.hideProgress();
+						console.log("限制出餐+"+JSON.stringify(ret))
+						if(ret){
+							if(ret.code == 0){
+								finish();
+							}else{
+								alert_msg(ret.msg);
+							}
+						}else{
+							alert_msg('服务器繁忙');
+						}
+					});
+					
+				} else {
+					alert_msg('请先将视频观看完成');
+				}
+				//			openMessage_countdown('请注意','体检信息采集全程录音录像，若其他人的声音或图像出现在视频中，会被认定为信息采集不规范。','countdown','确认','','finish()','',null);
+				//			commonOpenWin('physical_examination_video_win',cache);
+			}
+		}
+
+		function finish() {
+			moviePlayer.close();
+			logAppBuryingPoint({id:cache.hospitalId,name:cache.hospitalName},'开始采集','视频采集','医院列表','首页');
+			api.openWin({
+			    name: "physical_examination_video_win",
+			    url: './physical_examination_video_win.html',
+			    slidBackEnabled: false,
+			    vScrollBarEnabled: false,
+			    hScrollBarEnabled: false,
+			    reload: true,
+			    useWKWebView: false,
+			    pageParam: {
+			        data: {
+						cache:cache,
+						videoBlock:0
+					}
+			    }
+			});
+			
+			setTimeout(function() {
+				// api.hideProgress();
+				esc_function('physical_examination_video_win', '', 'startTimeCal()'); //开始倒计时
+				esc_function('physical_examination_video_win', '', 'judgeExamVideo(cache.orderId,1)'); //打开摄像头
+			}, 1000);
+		}
+
+		function openMessage_countdown(title, content, type, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+			api.openFrame({
+				name: 'common_alert_countdown',
+				url: '../../common/common_alert_countdown.html',
+				bgColor: 'rgba(0,0,0,0.4)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					title: title,
+					content: content,
+					type: type,
+					sureButton: sureButton,
+					sureFunc: sureFunc,
+					cancelButton: cancelButton,
+					cancelFunc: cancelFunc,
+					winName: api.winName,
+					frameName: api.frameName,
+					params: params
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+
+		//本地是否含有录制视频
+		function isLocalHasVideo(orderId) {
+			//console.log('orderId:'+orderId);
+			var examResult = $api.getStorage('cache_by_account')['exam_result' + orderId];
+			if (examResult == null || examResult == undefined) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		/**
+		 * 打开示例视频 
+		 */
+		function openExamVideo() {
+			params = {
+				url: file_load_url + 'cm/examination_video.mp4',
+				name: '线上体检示例',
+				flag: 'exam_video'
+			}
+			// api.openWin({
+			//        name: 'common_video_frm',
+			//        url: '../common/common_video_frm.html',
+			//        animation:{
+			//         type:'none'
+			//        },
+			//        slidBackEnabled:'false',
+			//        vScrollBarEnabled:'false',
+			//        hScrollBarEnabled:'false',
+			//        reload:true,
+			//        pageParam:params
+			//    });
+		}
+		
+		function closeWin(){
+			api.closeWin({})
+		}
+	</script>
+</html>

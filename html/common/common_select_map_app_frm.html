@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>选择地图页面</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background: transparent;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background: transparent;
+    	}
+		.shadow{
+		    position: absolute;
+		    bottom: 0rem;
+		    top: 0rem;
+		    width: 100%;
+		}
+		.map-item{
+		    height: 2.5rem;
+		    line-height: 2.5rem;
+		    text-align: center;
+		}
+		footer{
+		    position: fixed;
+		    bottom: 0;
+		    left: 0;
+		    width: 100%;
+		    background: #FFF;
+		}
+    </style>
+</head>
+<body>
+	<div class="shadow" onclick="closeShadow()"></div>
+	<footer>
+		<div class='map-item bottom-slide' tapmode onclick='openMapUtil(1)'>百度地图</div>
+		<div class='map-item bottom-slide' tapmode onclick='openMapUtil(2)'>高德地图</div>
+		<div class='map-item bottom-slide aui-hide' tapmode onclick='openMapUtil(3)'>苹果地图</div>
+	</footer>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var path;
+	var mapData;
+	var systemType;
+	var navigators;
+	apiready = function(){
+		api.parseTapmode();
+		mapData = api.pageParam;
+		systemType = api.systemType;
+		//navigators = api.require('navigator');//打开地图app的模块
+		if(systemType == 'ios'){
+			$('.map-item').eq(2).removeClass('aui-hide');
+		}
+		//console.log('mapData:'+JSON.stringify(mapData));
+	}
+	//选择地图
+	var start_location; // 起点信息.
+	var end_location; // 终点信息.
+	var mode = 'transit';//出行方式
+	var strateggy = 'transit_fast';//策略 高德地图需要
+	function selectMap(index){
+		start_location = {
+	        lon: mapData.location_lon, // 初始经度
+	        lat: mapData.location_lat, // 初始纬度
+	        name: '我的位置'
+	    }
+	    end_location = {
+	    	lon: mapData.to_lon, // 目标经度
+	        lat: mapData.to_lat, // 目标纬度
+	        name: mapData.to_name
+	    }
+		if(index == 0){//百度地图
+			navigators.installed({
+			    target: 'bMap'
+			}, function(ret, err) {
+			    if (ret.status) {
+			        navigators.bMapNavigation({
+					    start: start_location,
+					    end: end_location,
+					    mode: mode
+					});
+					setTimeout(closeShadow,500);
+			    } else {
+			        alert_msg('未安装百度地图');
+			    }
+			});
+		}else if(index == 1){//高德地图
+			navigators.installed({
+			    target: 'aMap'
+			}, function(ret, err) {
+			    if (ret.status) {
+			        navigators.aMapPath({
+					    start: start_location,
+					    end: end_location,
+					    mode: mode,
+					    strateggy: strateggy
+					});
+					setTimeout(closeShadow,500);
+			    } else {
+			        alert_msg('未安装高德地图');
+			    }
+			});
+		}else{
+			if(systemType == 'ios'){//苹果地图
+				navigators.appleNavigation({
+				    start: start_location,
+				    end: end_location,
+				    mode: mode
+				});
+				setTimeout(closeShadow,500);
+			}else{//谷歌地图
+				navigators.installed({
+				    target: 'gMap'
+				}, function(ret, err) {
+				    if (ret.status) {
+				        navigators.gMapNavigation({
+						    start: start_location,
+						    end: end_location,
+						    mode: mode
+						});
+						setTimeout(closeShadow,500);
+				    } else {
+				        alert_msg('未安装谷歌地图');
+				    }
+				});
+			}
+		}
+	}
+	
+	/**
+     * 打开系统地图
+     * 
+     * mapType 地图类型  1:ios自带地图  2:高德地图  3:百度地图
+     * slat 起点纬度
+     * slon 起点经度
+     * dlat 终点维度
+     * dlon 终点经度
+     * sname 起点名称
+     * dname 终点名称
+     */
+    function openMapUtil(mapType){
+        slat = mapData.location_lat;
+        slon = mapData.location_lon;
+        dlat = mapData.to_lat;
+        dlon = mapData.to_lon;
+        sname = '我的位置';
+        dname = mapData.to_name;
+        
+        // 目标应用的包名或 action（Android平台使用），Android下必传
+        var androidPkg="";
+        // 指定目标应用响应的uri（Android平台使用）
+        var uri="";
+        // 目标应用的url（iOS平台使用），iOS下必传
+        var iosUrl="";
+        // 应用的参数
+        var appParam={};
+        
+        if (sname==""||sname==null){
+            sname="起点"
+        }
+        if (dname==""||dname==null){
+            dname="终点"
+        }
+        // 高德地图特有 起点id (不是很重要,目前为随便填的)
+        var sid = "BGVIS1";
+        // 高德地图特有 终点id (不是很重要,目前为随便填的)
+        var did = "BGVIS2";
+        // 高德地图特有  起终点是否偏移。0:lat和lon是已经加密后的,不需要国测加密;1:需要国测加密，可为空，但起点或终点不为空时，不能为空
+        var dev = 0;
+        // 高德地图特有  路线类型   0 驾车;1 公交;2 步行;3 骑行   (目前默认为0驾车)
+        var t = 0;
+        
+        // 百度地图    坐标类型，必选参数 bd09ll（百度经纬度坐标）bd09mc（百度墨卡托坐标）gcj02（经国测局加密的坐标）wgs84（gps获取的原始坐标）
+        var coord_type = "bd09ll";
+        // 百度地图  导航模式，固定为transit、driving、navigation、walking，riding分别表示公交、驾车、导航、步行和骑行
+        var mode = "driving";
+        // 百度地图  表示来源，用于统计  必选参数，格式为：ios.companyName.appName 不传此参数，不保证服务
+        var src_android = "com.baidu.BaiduMap";
+        var src_ios = "ios.kobesoft.xinjiakao";
+        
+        if (mapType == 3){// ios自带地图
+            iosUrl="http://maps.apple.com/maps?saddr="+slat+","+slon+"&daddr="+dlat+","+dlon;
+        } else if (mapType == 2){ // 高德地图
+            androidPkg = "android.intent.action.VIEW";
+            uri ="amapuri://route/plan/?sid="+sid+"&slat="+slat+"&slon="+slon+"&sname="+sname+"&did="+did+"&dlat="+dlat+"&dlon="+dlon+"&dname="+dname+"&dev="+dev+"&t="+t;
+            iosUrl = "iosamap://path";
+            appParam = {
+                sid: sid,
+                slat: slat,
+                slon: slon,
+                sname: sname,
+                did: did,
+                dlat: dlat,
+                dlon: dlon,
+                dname: dname,
+                dev: dev,
+                t: t
+            };
+        } else if (mapType == 1){ // 百度地图
+            androidPkg = "android.intent.action/VIEW";
+            uri ="intent://map/direction?origin=latlng:"+slat+","+slon+"|name:"+sname+"&destination=latlng:"+dlat+","+dlon+"|name:"+dname+"&coord_type="+coord_type+"&mode="+mode+"&src=kobesoft#Intent;scheme=bdapp;package="+src_android+";end";
+            iosUrl="baidumap://map/direction";
+            appParam= {
+                origin: "latlng:"+slat+","+slon+"|name:"+sname,
+                destination: "latlng:"+dlat+","+dlon+"|name:"+dname,
+                coord_type: coord_type, 
+                mode: mode,
+                src: src_ios
+            };      
+        }
+        
+        api.openApp({
+            androidPkg: androidPkg,
+            uri:uri,
+            appParam: appParam,
+            iosUrl: iosUrl
+        },function(ret,err){
+			
+            if(ret){
+            }else{
+                if (mapType == 1) { // 百度地图
+                   alert_msg("您还没有安装百度地图");
+                } else if (mapType == 2){ // 高德地图
+                   alert_msg("您还没有安装高德地图");
+                } else if (mapType == 3){ // ios自带地图
+                    alert_msg("您还没有安装苹果地图");
+                }       
+            }
+        });
+    }
+	
+	function closeShadow(){
+		document.getElementsByClassName('shadow').onclick = "";
+		api.closeFrame({
+			name:'common_select_map_app_frm'
+        });
+	}
+</script>
+</html>

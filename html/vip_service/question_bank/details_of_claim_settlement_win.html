@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>理赔详情</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html,
+			body {
+				width: 100%;
+			}
+			
+			header img {
+				width: 20px;
+			}
+			
+			#aui-header {
+				color: #fff !important;
+				background: url(../../../icon/vip/question_bank/requirement_title_bg.png);
+				background-size: 100% 100%;
+				background-repeat: no-repeat;
+				font-size: 0.8rem;
+			}
+			#header_top {
+			    height: 2.2rem;
+			    padding: 0;
+			    overflow: hidden;
+			    line-height: 2.2rem;
+			}
+			.aui-border-b:after{
+				height: 0 !important;
+			}
+    </style>
+	</head>
+	<body>
+		<header class="aui-bar aui-bar-nav aui-border-b" id="aui-header" style="padding-top: 25px;">
+			<div class="aui-row" id="header_top">
+				<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+					<img src="../../../icon/common/icon_header_return_white.png">
+				</a>
+				<div class="aui-title" id="common_title">
+					理赔详情
+				</div>
+				<a class="aui-pull-right aui-btn">
+				
+				</a>
+			</div>
+		</header>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var headerPos;
+		apiready = function() {
+			api.parseTapmode();
+			var header = $api.byId('aui-header');
+			headerPos = $api.offset(header);
+			cache = api.pageParam;
+			init()
+		}
+
+		function init() {
+			api.openFrame({
+				name: 'details_of_claim_settlement_frm',
+				url: './details_of_claim_settlement_frm.html',
+				bgColor: '#efeff4',
+				rect: {
+					x: 0,
+					y: headerPos.h,
+					w: 'auto',
+					h: api.winHeight - headerPos.h
+				},
+				bounces: false,
+				pageParam: {
+					headerHeight: headerPos.h,
+					cache: cache
+				},
+				reload: true,
+				softInputBarEnabled: true,
+				useWKWebView: false,
+				softInputMode: 'resize'
+			});
+		}
+
+		function closeWin() {
+			api.closeWin({});
+		}
+	</script>
+</html>

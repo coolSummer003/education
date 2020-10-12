@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>VIP课程</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/swiper/swiper_min.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style type="text/css">
+			html,
+			body {
+				background: #fff;
+			}
+
+			.title {
+				position: relative;
+				width: 100%;
+				height: 6rem;
+			}
+
+			.title_bg {
+				position: absolute;
+				width: 100%;
+				height: auto;
+			}
+
+			.title_msg_tips {
+				position: absolute;
+				width: 94%;
+				height: 1.4rem;
+				background: linear-gradient(to right, #FFD9B0, #FFE9D5);
+				left: 3%;
+				font-size: 0.7rem;
+				line-height: 1.4rem;
+				border-radius: 0.25rem;
+				padding-left: 0.3rem;
+				top: 0.5rem;
+			}
+
+			.title_msg_tips_img {
+				float: right;
+				width: 0.3rem;
+				height: 0.6rem;
+				margin-right: 0.3rem;
+				margin-top: 0.4rem;
+			}
+
+			.title_man_msg {
+				position: absolute;
+				width: 94%;
+				height: 2.5rem;
+				left: 3%;
+				top: 0.8rem;
+			}
+
+			.title_man_msg_avatar {
+				width: 2rem;
+				height: 2.5rem;
+			}
+
+			.title_man_msg_avatar img {
+				width: 2rem;
+				height: 2rem;
+				margin-top: 0.25rem;
+				border-radius: 50%;
+			}
+
+			.title_man_msg_name {
+				width: 10rem;
+				height: 2.5rem;
+				margin-left: 2.3rem;
+				margin-top: -2.5rem;
+			}
+
+			.title_man_msg_name_s {
+				display: inline-block;
+				width: auto;
+				height: 1.3rem;
+				line-height: 1.3rem;
+				color: #E6B996;
+				padding: 0.6rem 0.2rem;
+				font-size: 0.9rem;
+			}
+
+			.title_man_msg_name_img {
+				width: 1.8rem;
+			}
+
+			.title_man_msg_time {
+				float: right;
+				color: #9B9B9B;
+				height: 2.5rem;
+				line-height: 2.5rem;
+				margin-top: -2.5rem;
+				font-size: 0.7rem;
+			}
+
+			.content {
+				width: 100%;
+				height: auto;
+			}
+
+			.content_tab {
+				position: relative;
+				height: 2.2rem;
+			}
+
+			#menu {
+				position: absolute;
+				font-size: 0.8rem;
+			}
+
+			.aui-bar-btn-item.aui-active {
+				background: #fff;
+				color: #2D2A29;
+				/*border-bottom: solid 2px #FFCE02;*/
+			}
+
+			.aui-bar-btn-item {
+				padding: 0 !important;
+				background: #fff;
+				color: #9B9B9B;
+				font-size: 0.7rem;
+				min-height: 1.1rem !important;
+			}
+
+			.aui-bar-nav {
+				top: 0;
+				line-height: 2.25rem;
+				background: linear-gradient(to left, #3F86FF, #3F86FF);
+				color: #FFF;
+			}
+
+			.aui-active {
+				font-weight: bold;
+				font-size: 0.7rem;
+			}
+
+			.list_bar {
+				width: 50% !important;
+				height: 4px !important;
+			}
+
+			.list_bar .list_bar_inner {
+				width: 15% !important;
+				background: #2C292A;
+				border-radius: 1.5625rem !important;
+			}
+
+			.content_content {
+				width: 100%;
+				height: auto;
+			}
+
+			.content_curriculum_service,
+			.content_assurance_service {
+				width: 100%;
+				height: auto;
+			}
+
+			.content_curriculum_service_title,
+			.content_assurance_service_title {
+				width: 94%;
+				height: 1.5rem;
+				margin-left: 3%;
+				padding-top: 0.3rem;
+			}
+
+			.content_curriculum_service_title_name,
+			.content_assurance_service_title_name {
+				width: 50%;
+				height: 1.5rem;
+				line-height: 1.5rem;
+				color: #2D2A29;
+				font-size: 0.9rem;
+				font-weight: 700;
+			}
+
+			.content_assurance_service_title_record {
+				position: relative;
+				width: 50%;
+				height: 1.5rem;
+				line-height: 1.5rem;
+				color: #333333;
+				font-size: 0.7rem;
+				margin-left: 50%;
+				margin-top: -1.5rem;
+				text-align: right;
+				padding-right: 0.5rem;
+			}
+
+			.content_assurance_service_title_record img {
+				position: absolute;
+				width: 0.3rem;
+				height: 0.4rem;
+				top: 0.5rem;
+			}
+
+			.content_curriculum_service_title_btn {
+				width: 50%;
+				height: 1.5rem;
+				margin-left: 50%;
+				margin-top: -1.5rem;
+			}
+
+			.content_curriculum_service_title_btn_name {
+				float: right;
+				margin-right: 0.5rem;
+				width: auto;
+				height: 1.2rem;
+				font-size: 0.7rem;
+				line-height: 1.2rem;
+				margin-top: 0.15rem;
+				color: #2D2A29;
+			}
+
+			.content_curriculum_service_title_btn_btn {
+				float: right;
+				margin-right: 0.3rem;
+				width: 2rem;
+				height: 1.2rem;
+				line-height: 1.2rem;
+				text-align: center;
+				margin-top: 0.15rem;
+				background: linear-gradient(to right, #A77A43, #D8AD85);
+				color: #F8D092;
+				border-radius: 25px;
+				font-size: 0.6rem;
+			}
+
+			.content_curriculum_service_content {
+				width: 94%;
+				margin-left: 3%;
+				height: auto;
+			}
+
+			.content_curriculum_service_content_title {
+				width: 100%;
+				height: 1.5rem;
+				margin-top: 1rem;
+			}
+
+			.content_curriculum_service_content_title img {
+				width: 70%;
+				margin-left: 15%;
+			}
+
+			.content_curriculum_service_content_subject {
+				width: 100%;
+				height: auto;
+				margin-top: 1.3rem;
+			}
+
+			.content_curriculum_service_content_subject_list {
+				position: relative;
+				width: 30%;
+				height: 3.5rem;
+				border: 1px solid #FFE4C7;
+				box-shadow: 0 2px 8px rgba(215, 215, 215, 0.5);
+				border-radius: 0.75rem;
+				margin-bottom: 0.5rem;
+			}
+
+			.content_curriculum_service_content_subject_list:nth-child(3n+2) {
+				margin-left: 35%;
+				margin-top: -4rem;
+			}
+
+			.content_curriculum_service_content_subject_list:nth-child(3n+3) {
+				margin-left: 70%;
+				margin-top: -4rem;
+			}
+
+			.content_curriculum_service_content_subject_list_name {
+				font-size: 0.6rem;
+				color: #252C38;
+				font-weight: 700;
+				width: 80%;
+				margin-left: 10%;
+				margin-top: 0.3rem;
+			}
+
+			.content_curriculum_service_content_subject_list_img {
+				position: absolute;
+				width: 1.5rem;
+				height: 1.5rem;
+				right: 0.5rem;
+				bottom: 0.3rem;
+			}
+
+			.content_curriculum_service_content_subject_list_img img {
+				width: 1.5rem;
+				height: 1.5rem;
+			}
+
+			.content_assurance_service_content {
+				width: 94%;
+				height: auto;
+				margin-left: 3%;
+				margin-top: 0.5rem;
+			}
+
+			.content_assurance_service_content_list_name {
+				position: relative;
+				width: 100%;
+				height: 4.4rem;
+			}
+
+			.content_assurance_service_content_list_name_title {
+				position: absolute;
+				width: 100%;
+				height: 1.2rem;
+				line-height: 1.2rem;
+				color: #2C292A;
+				font-size: 0.9rem;
+				top: 0.4rem;
+			}
+
+			.content_assurance_service_content_list_name_yuan {
+				position: absolute;
+				width: 100%;
+				height: 1.2rem;
+				line-height: 1.2rem;
+				top: 1.6rem;
+				color: #2C292A;
+				font-size: 0.7rem;
+			}
+
+			.content_assurance_service_content_list_name_time {
+				position: absolute;
+				height: 1.2rem;
+				width: 100%;
+				line-height: 1.2rem;
+				top: 2.8rem;
+				color: #9D9EA7;
+				font-size: 0.6rem;
+			}
+
+			.content_assurance_service_content_list_name_btn {
+				position: absolute;
+				width: 3rem;
+				height: 1.2rem;
+				line-height: 1.2rem;
+				text-align: center;
+				border: 1px solid #D2A77D;
+				border-radius: 25px;
+				color: #2D2A29;
+				top: 1.6rem;
+				right: 0.5rem;
+				font-size: 0.6rem;
+			}
+
+			.equity {
+				width: 100%;
+				height: 1.3rem;
+				line-height: 1.3rem;
+				text-align: center;
+				color: #9D9EA7;
+				font-size: 0.6rem;
+			}
+
+			.equity span {
+				font-size: 0.6rem;
+			}
+
+			/*到期样式*/
+			.expire {
+				position: relative;
+				width: 94%;
+				height: 3rem;
+				margin-left: 3%;
+				margin-top: 0.8rem;
+				background: url(../../../icon/vip/question_bank/expire.png) no-repeat;
+				background-size: 100% 100%;
+				border-radius: 15px;
+			}
+
+			.expire_con {
+				position: absolute;
+				width: 100%;
+				top: 0.45rem;
+			}
+
+			.expire_title {
+				width: 94%;
+				color: #8B5F3C;
+				font-size: 0.8rem;
+				font-weight: 700;
+				margin-left: 3%;
+			}
+
+			.expire_tips {
+				width: 94%;
+				margin-left: 3%;
+				color: #8B5F3C;
+				font-size: 0.6rem;
+			}
+
+			.expire_btn {
+				position: absolute;
+				width: 4rem;
+				height: 1.5rem;
+				line-height: 1.5rem;
+				background: linear-gradient(to right, #CF956B, #DAA97A);
+				color: #fff;
+				text-align: center;
+				border-radius: 1.5625rem;
+				right: 1rem;
+				top: 0.75rem;
+				font-size: 0.7rem;
+			}
+
+			/*提示页面*/
+			.tips {
+				position: fixed;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, .7);
+				top: 0;
+				z-index: 99;
+			}
+
+			.expiration_reminder {
+				position: absolute;
+				width: 80%;
+				height: 12rem;
+				background: linear-gradient(to right, #FFF8F0, #FFFCF9);
+				border-radius: 10px;
+				left: 10%;
+				top: 50%;
+				margin-top: -6rem;
+			}
+
+			.expiration_reminder_title {
+				width: 100%;
+				height: 1.5rem;
+				left: 1.5rem;
+				text-align: center;
+				color: #443636;
+				font-size: 1.2rem;
+				margin-top: 1rem;
+				font-weight: 700;
+			}
+
+			.expiration_reminder_content {
+				width: 90%;
+				height: auto;
+				text-align: center;
+				margin-left: 5%;
+				margin-top: 1.5rem;
+				color: #443636;
+			}
+
+			.expiration_reminder_btn {
+				position: absolute;
+				width: 8rem;
+				height: 2rem;
+				line-height: 2rem;
+				text-align: center;
+				color: #FFC696;
+				background: #443636;
+				border-radius: 25px;
+				left: 50%;
+				margin-left: -4rem;
+				bottom: 1.5rem;
+			}
+
+			.empty {
+				width: 100%;
+				padding: 3rem 0rem;
+				text-align: center;
+				font-size: 0.6rem;
+			}
+
+			.empty img {
+				width: 7rem;
+				margin-top: 5rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="userMsg">
+			<div class="title" id="title">
+				<img src="../../../icon/vip/question_bank/head_bottom.png" class="title_bg">
+				<!-- <div class="title_msg_tips" tapmode onclick="toPersonalMsg();">
+					请补全个人基本信息，否则将无法获得保障赔偿！
+					<img src="../../../icon/vip/question_bank/icon_more.png" class="title_msg_tips_img">
+				</div> -->
+				<div class="title_man_msg">
+					<div class="title_man_msg_avatar">
+						<img src="../../../icon/mine/icon_mine_head_hui.png" alt="" onerror="javascript:this.src='../../../icon/mine/icon_mine_head_hui.png'"
+						 data-echo="" id="title_man_msg_avatar">
+					</div>
+					<div class="title_man_msg_name">
+						<div class="title_man_msg_name_s"></div>
+						<img src="../../../icon/vip/question_bank/VIP.png" class="title_man_msg_name_img">
+					</div>
+					<div class="title_man_msg_time">
+						套餐剩余120天
+					</div>
+				</div>
+			</div>
+			<div class="content" id="content">
+				<div class="content_tab" id="content_tab">
+					<div class="aui-bar aui-bar-btn aui-bar-btn-full" id="menu">
+						<div class="aui-bar-btn-item aui-active">课程服务</div>
+						<div class="aui-bar-btn-item">保障服务</div>
+					</div>
+					<li class="list_bar" id="slideSpan">
+						<div class="list_bar_inner"></div>
+					</li>
+				</div>
+				<div class="content_content">
+					<div class="swiper-container">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide">
+								<div class="expire aui-hide">
+									<div class="expire_con">
+										<div class="expire_title">
+											您的VIP课程包已到期
+										</div>
+										<div class="expire_tips">
+											续费继续享特权
+										</div>
+									</div>
+									<div class="expire_btn" tapmode onclick="toQuestionIndex();">
+										立即续费
+									</div>
+								</div>
+								<div class="content_curriculum_service" id="content_curriculum_service">
+									<div class="content_curriculum_service_title">
+										<div class="content_curriculum_service_title_name">
+											科一试题
+										</div>
+										<div class="content_curriculum_service_title_btn">
+											<div class="content_curriculum_service_title_btn_btn" tapmode onclick="changeSubject();">
+												切换
+											</div>
+											<div class="content_curriculum_service_title_btn_name">
+												科目一
+											</div>
+										</div>
+									</div>
+									<div class="content_curriculum_service_content">
+										<div class="content_curriculum_service_content_title">
+											<img src="../../../icon/vip/question_bank/classTitle.png">
+										</div>
+										<div class="content_curriculum_service_content_subject">
+											<ul>
+												<li class="content_curriculum_service_content_subject_list" tapmode onclick="deviceIds('500');">
+													<div class="content_curriculum_service_content_subject_list_name">
+														精选500题
+													</div>
+													<div class="content_curriculum_service_content_subject_list_img">
+														<img src="../../../icon/vip/question_bank/500.png">
+													</div>
+												</li>
+												<li class="content_curriculum_service_content_subject_list" tapmode onclick="deviceIds('shorthand');">
+													<div class="content_curriculum_service_content_subject_list_name">
+														答题攻略
+													</div>
+													<div class="content_curriculum_service_content_subject_list_img">
+														<img src="../../../icon/vip/question_bank/shorthand.png">
+													</div>
+												</li>
+												<li class="content_curriculum_service_content_subject_list" tapmode onclick="deviceIds('errorProne');">
+													<div class="content_curriculum_service_content_subject_list_name">
+														易错题集
+													</div>
+													<div class="content_curriculum_service_content_subject_list_img">
+														<img src="../../../icon/vip/question_bank/error_prone.png">
+													</div>
+												</li>
+												<li class="content_curriculum_service_content_subject_list" tapmode onclick="deviceIds('difficultProblem');">
+													<div class="content_curriculum_service_content_subject_list_name">
+														难题攻克
+													</div>
+													<div class="content_curriculum_service_content_subject_list_img">
+														<img src="../../../icon/vip/question_bank/difficult_problem.png">
+													</div>
+												</li>
+												<li class="content_curriculum_service_content_subject_list" tapmode onclick="deviceIds('consolidate');">
+													<div class="content_curriculum_service_content_subject_list_name">
+														考前巩固
+													</div>
+													<div class="content_curriculum_service_content_subject_list_img">
+														<img src="../../../icon/vip/question_bank/consolidate.png">
+													</div>
+												</li>
+												<li class="content_curriculum_service_content_subject_list" tapmode onclick="deviceIds('passingRate');">
+													<div class="content_curriculum_service_content_subject_list_name">
+														预测通过率
+													</div>
+													<div class="content_curriculum_service_content_subject_list_img">
+														<img src="../../../icon/vip/question_bank/passing_rate.png">
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="swiper-slide">
+								<div class="content_assurance_service" id="content_assurance_service">
+									<div class="content_assurance_service_title">
+										<div class="content_assurance_service_title_name">
+											权益保障
+										</div>
+										<div class="content_assurance_service_title_record" tapmode onclick="toClaimRecord();">
+											理赔记录&nbsp;
+											<img src="../../../icon/vip/question_bank/icon_more.png">
+										</div>
+									</div>
+									<div class="content_assurance_service_content">
+										<ul id="content_assurance_service_content">
+											<script type="text/template" id="content_assurance_service_content_s">
+												{{ if(it.isContainKemuFour == 1 && it.isContainKemuOne == 1){ }}
+												<li class="content_assurance_service_content_list_name">
+													<div class="content_assurance_service_content_list_name_title">
+														科目一理赔保障
+													</div>
+													<div class="content_assurance_service_content_list_name_yuan">
+														考不过立赔40元
+													</div>
+													<div class="content_assurance_service_content_list_name_time">
+														{{=it.timeHtml}}
+													</div>
+													<div class="content_assurance_service_content_list_name_btn" tapmode onclick="toAssuranceRequirement(1);">
+														去理赔
+													</div>
+												</li>
+												<li class="content_assurance_service_content_list_name top-slide">
+													<div class="content_assurance_service_content_list_name_title">
+														科目四理赔保障
+													</div>
+													<div class="content_assurance_service_content_list_name_yuan">
+														考不过立赔40元
+													</div>
+													<div class="content_assurance_service_content_list_name_time">
+														{{=it.timeHtml}}
+													</div>
+													<div class="content_assurance_service_content_list_name_btn" tapmode onclick="toAssuranceRequirement(4);">
+														去理赔
+													</div>
+												</li>
+												{{ }else if(it.isContainKemuFour == 1 && it.isContainKemuOne == 0){ }}
+												<li class="content_assurance_service_content_list_name top-slide">
+													<div class="content_assurance_service_content_list_name_title">
+														科目四理赔保障
+													</div>
+													<div class="content_assurance_service_content_list_name_yuan">
+														考不过立赔40元
+													</div>
+													<div class="content_assurance_service_content_list_name_time">
+														{{=it.timeHtml}}
+													</div>
+													<div class="content_assurance_service_content_list_name_btn" tapmode onclick="toAssuranceRequirement(4);">
+														去理赔
+													</div>
+												</li>
+												{{ } }}
+											</script>
+										</ul>
+									</div>
+									<div class="equity">
+										查看<span>《驾所通会员协议》</span>、<span>《保障套餐介绍》</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tips aui-hide">
+				<div class="expiration_reminder aui-hide">
+					<div class="expiration_reminder_title">
+						VIP课程包到期提醒
+					</div>
+					<div class="expiration_reminder_content">
+						您所购买的VIP课程半年包已到期，继续享用VIP体验，请您尽快续费。
+					</div>
+					<div class="expiration_reminder_btn" tapmode onclick="closeExpirationReminder();">
+						我知道了
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/template" charset="utf-8" id="error_src">
+			<div class='empty'>
+				<img src="../../../icon/common/empty.png" alt="" /><br>
+				<span>{{=it.msg}}</span>
+			</div>
+		</script>
+		<script type="text/javascript" src="../../../script/api.js"></script>
+		<script type="text/javascript" src="../../../script/aui/aui_tab.js"></script>
+		<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+		<script src="../../../script/doT_min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../../script/swiper/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../../script/common/common.js"></script>
+		<script src="../../../script/echo.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var cache;
+			var clearance = 0; //间隙
+			var headerHeight;
+			var titleHeightPos;
+			var contentTabPos;
+			var local; //本地数据
+			var mySwiper; //滑块
+			var subjectType = 1; //科一试题 1 科四试题 4
+			var serviceType; //套餐是否到期 0 未到期 1 已到期
+			var vipServiceOrderId; //套餐订单ID
+			var deviceId; //设备号
+			var deviceModel; //设备型号
+			apiready = function() {
+				api.parseTapmode();
+				cache = api.pageParam;
+				headerHeight = cache.headerHeight;
+				deviceId = api.deviceId; //设备号
+				deviceModel = api.deviceModel; //设备型号
+				
+				//切换menu初始化
+				var tabwork = new auiTab({
+					element: document.getElementById("menu"),
+					repeatClick: true
+				}, function(ret) {
+					if (ret) {
+						f_slide($(ret.dom));
+						// setViewFrame(ret.index-1);
+						if (ret.dom.clicker != undefined) {
+							mySwiper.slideTo(ret.index - 1, 500, false);
+						}
+
+					}
+				});
+				$('.aui-active').click();
+				mySwiper = new Swiper('.swiper-container', {
+					onSlideChangeEnd: function(swiper) {
+						var j = mySwiper.activeIndex;
+						f_slide($('.aui-bar-btn-item').eq(j))
+					}
+				})
+
+				var cache_by_account = $api.getStorage('cache_by_account');
+				log('用户缓存', cache_by_account)
+				$(".title_man_msg_name_s").html(cache_by_account.cache_account.name)
+				$("#title_man_msg_avatar").attr('data-echo', file_load_url + cache_by_account.cache_account.headimgurl);
+				defaultload();
+				init(0);
+				setTimeout(function() {
+					echoInit();
+				}, 300)
+			}
+			//滑块加载事件
+			function f_slide(e) {
+				$('.aui-bar-btn-item').removeClass('aui-active');
+				$(e).addClass('aui-active');
+				$('.list_bar').css('width', ($('.aui-active').width() - clearance * 3) + 'px');
+				$('.list_bar_inner').css('width', ($('.aui-active').width() - clearance * 3) + 'px');
+				document.getElementById('slideSpan').style.webkitTransform = 'translateX(' + ($(e).position().left + clearance) +
+					'px)';
+			}
+			/**
+			 * 套餐详情
+			 */
+			var content_assurance_service_content_s = $("#content_assurance_service_content_s").html();
+
+			function init(initType) {
+				url = 'api/questionviporder/get-question-vip-order-info';
+				parmas = {
+					learnerId: getUserId()
+				}
+				ajax_Request(url, 'get', 'json', parmas, function(ret, err) {
+					log('用户信息', ret)
+					if (ret) {
+						closedefaultload();
+						if (ret.code == 0 && ret.type == 0) {
+							var nowDate = new Date();
+							local = ret.questionVipOrderInfo;
+							log('local', local)
+							var serviceEndDt = local.serviceEndNumber;
+							var time = calcuTimeValue_new(nowDate, serviceEndDt);
+							var day = calcuTimeValue_new(nowDate, serviceEndDt).split("天");
+							log('time', time)
+							serviceType = local.typeOne;
+							vipServiceOrderId = local.id;
+							var timeHtml;
+							if (local.typeOne == 1) {
+								timeHtml = '套餐到期';
+								$(".expire").removeClass('aui-hide');
+								$('.title_man_msg_name_img').attr('src', '../../../icon/vip/question_bank/VIP_no.png');
+								if (initType == 0) {
+									$('.tips').removeClass('aui-hide');
+									$('.expiration_reminder').removeClass('aui-hide');
+								}
+							} else if (day[0] < 3 && local.typeOne == 0) {
+								timeHtml = '套餐剩余不足'+(day[0] == 2 ?'三':day[0] == 1?'两':'一')+'天';
+							} else {
+								timeHtml = '套餐剩余' + time;
+							}
+							$(".title_man_msg_time").html(timeHtml);
+							local.time = time;
+							local.timeHtml = timeHtml;
+							$("#content_assurance_service_content").html(doT.template(content_assurance_service_content_s)(local));
+						} else if (ret.code == 0 && ret.type == 1) {
+							setError('您尚未购买任何套餐')
+						} else {
+							setError('您尚未购买任何套餐')
+						}
+					} else {
+						setError('服务器繁忙，请稍后重试')
+					}
+				})
+			}
+
+			/**
+			 * 计算两个时间段之差
+			 */
+			var startTime;
+			var endTime;
+
+			function calcuTimeValue_new(startTime, endTime) {
+				startTime = new Date(startTime);
+				endTime = new Date(endTime);
+				difference = endTime.getTime() - startTime.getTime(); //时间差的毫秒数
+				days = Math.floor(difference / (24 * 3600 * 1000));
+				var leave1 = difference % (24 * 3600 * 1000); //计算天数后剩余的毫秒数
+				hours = Math.floor(leave1 / (3600 * 1000));
+				var leave2 = leave1 % (3600 * 1000); //计算小时数后剩余的毫秒数
+				minutes = Math.floor(leave2 / (60 * 1000));
+				var leave3 = leave2 % (60 * 1000); //计算分钟数后剩余的毫秒数
+				seconds = Math.round(leave3 / 1000);
+				return (days == 0 ? '0天' : days + "天") + (hours == 0 ? '' : hours + "时");
+			}
+
+
+			//设置出错页面;
+			function setError(msg) {
+				var error_src = $('#error_src').html();
+				$('#userMsg').html(doT.template(error_src)({
+					'msg': msg
+				}));
+			}
+
+			/**
+			 * 试题切换
+			 * subjectType = 1; //科一试题 1 科四试题 4
+			 */
+			function changeSubject() {
+				if (subjectType == 1) {
+					$(".content_curriculum_service_title_name").html('科四试题');
+					$(".content_curriculum_service_title_btn_name").html('科目四');
+					subjectType = 4;
+				} else if (subjectType == 4) {
+					$(".content_curriculum_service_title_name").html('科一试题');
+					$(".content_curriculum_service_title_btn_name").html('科目一');
+					subjectType = 1;
+				}
+			}
+			/**
+			 * 去个人信息页面
+			 */
+			// function toPersonalMsg() {
+			// 	commonOpenWin('personal_information_win','')
+			// 	api.openWin({
+			// 		name: 'personal_information_win',
+			// 		url: './personal_information_win.html',
+			// 		slidBackEnabled: 'false',
+			// 		vScrollBarEnabled: 'false',
+			// 		hScrollBarEnabled: 'false',
+			// 		reload: true,
+			// 		useWKWebView: false,
+			// 		pageParam: {}
+			// 	})
+			// }
+
+			/**
+			 * 打开500题
+			 */
+			function showExpirationReminder() {
+				var winUrl = subjectType == 1?'vip_subject_one':'vip_subject_four';
+				api.openWin({
+					name: 'practice_common_win',
+					url: '../'+winUrl+'/practice_common_win.html',
+					slidBackEnabled: 'false',
+					vScrollBarEnabled: 'false',
+					hScrollBarEnabled: 'false',
+					reload: true,
+					useWKWebView: false,
+					pageParam: {
+						data: {
+							type: 'random'
+						}
+					}
+				});
+			}
+
+			/**
+			 * 打开答题攻略
+			 */
+			function showShorthand() {
+				console.log('打开答题攻略')
+			}
+			
+			/**
+			 * 易错题集
+			 */
+			function errorProne() {
+				var winUrl = subjectType == 1?'vip_subject_one':'vip_subject_four';
+				api.openWin({
+					name: 'practice_common_win',
+					url: '../'+winUrl+'/practice_common_win.html',
+					slidBackEnabled: 'false',
+					vScrollBarEnabled: 'false',
+					hScrollBarEnabled: 'false',
+					reload: true,
+					useWKWebView: false,
+					pageParam: {
+						data: {
+							type: 'mistake'
+						}
+					}
+				});
+			}
+			
+			/**
+			 * 难题攻克
+			 */
+			function difficultProblem() {
+				var winUrl = subjectType == 1?'vip_subject_one':'vip_subject_four';
+				api.openWin({
+					name: 'practice_common_win',
+					url: '../'+winUrl+'/practice_common_win.html',
+					slidBackEnabled: 'false',
+					vScrollBarEnabled: 'false',
+					hScrollBarEnabled: 'false',
+					reload: true,
+					useWKWebView: false,
+					pageParam: {
+						data: {
+							type: 'difficult'
+						}
+					}
+				});
+			}
+			
+			/**
+			 * 考前巩固
+			 */
+			function consolidate() {
+				var winUrl = subjectType == 1?'vip_subject_one':'vip_subject_four';
+				api.openWin({
+					name: 'practice_common_win',
+					url: '../'+winUrl+'/practice_common_win.html',
+					slidBackEnabled: 'false',
+					vScrollBarEnabled: 'false',
+					hScrollBarEnabled: 'false',
+					reload: true,
+					useWKWebView: false,
+					pageParam: {
+						data: {
+							type: 'simulation_explain'
+						}
+					}
+				})
+			}
+
+			/**
+			 * 套餐是否过期
+			 */
+			function isOverdue(callBack) {
+				url = 'api/questionviporder/get-question-vip-order-service-status';
+				params = {
+					vipServiceOrderId: vipServiceOrderId,
+					kemu: subjectType
+				}
+				defaultload('校验中...');
+				ajax_Request(url, 'post', 'json', params, function(ret, err) {
+					log('是否到期', ret)
+					if (ret) {
+						if (ret.code == 0) {
+							return callBack(ret);
+						} else {
+							api.hideProgress();
+							alert_msg(ret.msg)
+						}
+					} else {
+						api.hideProgress();
+						alert_msg('服务器异常，请稍后重试')
+					}
+				})
+			}
+			/**
+			 * 同一设备号只能在三个设备上登录
+			 */
+			function deviceIds(pageUrl) {
+				isOverdue(function(ret) {
+					if (ret.serviceStatus == 0) {
+						api.hideProgress();
+						$('.tips').removeClass('aui-hide');
+						$('.expiration_reminder').removeClass('aui-hide');
+					} else {
+						url = 'api/questionviporder/check-can-into';
+						params = {
+							learnerId: getUserId(),
+							bindMac: deviceId,
+							phoneModel: deviceModel
+						}
+						log('设备信息', params)
+						defaultload('验证中...');
+						ajax_Request(url, 'post', 'json', params, function(ret, err) {
+							log('返回信息', ret)
+							api.hideProgress();
+							if (ret) {
+								if (ret.code == 0) {
+									if (ret.isMoreThan == 0) {
+										if(pageUrl == '500'){
+											//精选500题
+											showExpirationReminder();
+										}else if(pageUrl == 'shorthand'){
+											//答题攻略
+											showShorthand();
+										}else if(pageUrl == 'errorProne'){
+											//易错题集
+											errorProne();
+										}else if(pageUrl == 'difficultProblem'){
+											//难题攻克
+											difficultProblem();
+										}else if(pageUrl == 'consolidate'){
+											//考前巩固
+											consolidate();
+										}else if(pageUrl == 'passingRate'){
+											//预测通过率
+											toPassingRate();
+										}
+									} else {
+										openMessages('温馨提示', '该账号所登录的手机设备已超过3个', '确定', '','', '', null)
+									}
+								} else {
+									alert_msg(ret.msg)
+								}
+							} else {
+								alert_msg('服务器异常，请稍后重新')
+							}
+						})
+					}
+				})
+			}
+
+			/**
+			 * 关闭vip到期提醒
+			 */
+			function closeExpirationReminder() {
+				defaultload();
+				init(1);
+				$('.tips').addClass('aui-hide');
+				$('.expiration_reminder').addClass('aui-hide');
+			}
+
+			/**
+			 * 去理赔条件
+			 * classType 1 科目一 4 科目四
+			 */
+			function toAssuranceRequirement(classType) {
+				isOverdue(function(ret) {
+					if (ret.serviceStatus == 0) {
+						$('.tips').removeClass('aui-hide');
+						$('.expiration_reminder').removeClass('aui-hide');
+						sendEvent('closeThisWin', '')
+					} else {
+						if (ret.tjStatus == 0) {
+							var params = {
+								classType: classType,
+								vipServiceOrderId: vipServiceOrderId
+							}
+							commonOpenWin('requirement_win', params)
+						} else {
+							openMessages('温馨提示', '您的科目' + (classType == 1 ? '一' : '四') + '理赔已提交申请，请不要重复提交', '查看理赔记录', '取消',
+								'toClaimRecord()', '', null)
+						}
+					}
+				})
+			}
+
+			/**
+			 * 去理赔列表
+			 */
+			function toClaimRecord() {
+				commonOpenWin('claim_record_win', '')
+			}
+
+			/**
+			 * 去通过率
+			 */
+			function toPassingRate() {
+				commonOpenWin('passing_rate_win', '')
+			}
+
+			/**
+			 * 去题库首页
+			 */
+			function toQuestionIndex() {
+				commonOpenWin('question_bank_buy_index', '')
+			}
+
+			//打开通用弹出框
+			//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+			function openMessages(title, content, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+				api.openFrame({
+					name: 'common_alert',
+					url: '../../common/common_alert.html',
+					bgColor: 'rgba(0,0,0,0.4)',
+					rect: {
+						x: 0,
+						y: 0,
+						w: 'auto',
+						h: api.winHeight
+					},
+					bounces: false,
+					pageParam: {
+						title: title,
+						content: content,
+						sureButton: sureButton,
+						sureFunc: sureFunc,
+						cancelButton: cancelButton,
+						cancelFunc: cancelFunc,
+						winName: api.winName,
+						frameName: api.frameName,
+						params: params
+					},
+					softInputBarEnabled: true,
+					softInputMode: 'resize'
+				});
+			}
+		</script>
+	</body>
+</html>

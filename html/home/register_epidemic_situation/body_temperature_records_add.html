@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>体温采集</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css"/>
+    <style>
+        html, body {
+            height: 100%;
+            background-image: url(../../../icon/home/register_epidemic_situation/info_add_bg.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        #aui-header {
+            background-color: transparent;
+        }
+
+        #aui-header:after {
+            height: 0;
+        }
+
+        #aui-header img {
+            width: 20px;
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+
+        #logo1 {
+            margin: 0 5%;
+            height: 5rem;
+        }
+
+        #logo1 img {
+            height: 100%;
+            width: 100%;
+        }
+
+        #container {
+            margin: 0 5%;
+            background-image: url(../../../icon/home/register_epidemic_situation/illustration.png);
+            background-repeat: no-repeat;
+            background-position: 30% 0;
+            background-size: 9rem 9rem;
+        }
+
+        #link-div {
+            overflow: hidden;
+            padding: 5rem 0.5rem 1rem;
+        }
+
+        #my-promise-btn {
+            display: block;
+            float: left;
+            height: 2rem;
+            line-height: 2rem;
+            padding: 0;
+            width: 47.5%;
+            margin-right: 5%;
+            background-color: #FFBB3F;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            z-index: 999;
+        }
+
+        #my-record-list-btn {
+            display: block;
+            float: left;
+            height: 2rem;
+            line-height: 2rem;
+            padding: 0;
+            width: 47.5%;
+            background-color: #FFBB3F;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            z-index: 999;
+        }
+
+        #form-div {
+            padding: 0.5rem 0.5rem 2rem;
+            border-top-left-radius: 0.5rem;
+            border-top-right-radius: 0.5rem;
+            background-color: #ECF2FF;
+            overflow-y: auto;
+        }
+
+        .input-title {
+            height: 1.2rem;
+            line-height: 1.2rem;
+            margin: 0.5rem 0;
+            padding-left: 0.5rem;
+            border-left: 4px solid #2A67F8;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+
+        .aui-row {
+            padding: 0.25rem 0.5rem;
+        }
+
+        .aui-radio {
+            border: 2px solid #2A67F8;
+        }
+
+        .aui-radio:checked {
+            background-color: #2A67F8 !important;
+            border: none!important;
+            height: 1.2rem!important;
+            width: 1.2rem!important;
+        }
+
+        #temperature-div {
+            position: relative;
+            top: 0.25rem;
+            height: 2.5rem;
+            width: 100%;
+        }
+
+        input#temperature::placeholder {
+            font-weight: bold;
+            color: #999;
+        }
+
+        input#temperature {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            line-height: 2.5rem;
+            padding: 0 1rem;
+            background: #F7F8FF;
+            border: 1px solid #CFDDFF;
+            box-shadow: inset 0 0 4px 0 rgba(216,227,255,0.40);
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            color: #333;
+        }
+
+        #temperature-div img {
+            position: absolute;
+            right: 0.5rem;
+            top: 0.75rem;
+            width: 0.5rem;
+            height: 1rem;
+            display: block;
+        }
+
+        #submit-div {
+            position: relative;
+            height: 0;
+            z-index: 998;
+        }
+
+        #submit-btn {
+            position: absolute;
+            left: 10%;
+            top: -1.1rem;
+            height: 2.2rem;
+            line-height: 2.2rem;
+            padding: 0;
+            width: 80%;
+            background-color: #FFBB3F;
+            border-radius: 1rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #0C55FF;
+            text-align: center;
+            z-index: 999;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<!-- 头部 -->
+<header class="aui-bar aui-bar-nav aui-border-b" id="aui-header">
+    <a class="aui-pull-left aui-btn" tapmode onclick="closeWin()">
+        <img src="../../../icon/common/icon_header_return_white.png">
+    </a>
+    <div class="aui-title title">
+        体温采集
+    </div>
+</header>
+
+<div id="logo1">
+    <img src="../../../icon/home/register_epidemic_situation/body_temperature_collect.png" alt="">
+</div>
+
+<!-- 表单输入信息 -->
+<div id="container">
+    <div id="link-div">
+        <button id="my-promise-btn" tapmode onclick="openMyPromisePage()">
+            我的承诺书
+        </button>
+        <button id="my-record-list-btn" tapmode onclick="openMyRecordListPage()">
+            体温记录
+        </button>
+    </div>
+    <div id="form-div">
+        <div class="input-title">
+            采集原因
+        </div>
+        <div id="collection-reason-learner" class="aui-hide">
+            <div class="aui-row">
+                <div class="aui-col-xs-5" tapmode>
+                    <label for="reason1">
+                        <input id="reason1" class="aui-radio" type="radio" name="reason" value="报名">&emsp;报名
+                    </label>
+                </div>
+                <div class="aui-col-xs-2" style="height: 1.2rem;"></div>
+                <div class="aui-col-xs-5" tapmode>
+                    <label for="reason2">
+                    <input id="reason2" class="aui-radio" type="radio" name="reason" value="体检">&emsp;体检
+                    </label>
+                </div>
+            </div>
+            <div class="aui-row">
+                <div class="aui-col-xs-5" tapmode>
+                    <label for="reason3">
+                        <input id="reason3" class="aui-radio" type="radio" name="reason" value="课堂理论">&emsp;课堂理论
+                    </label>
+                </div>
+                <div class="aui-col-xs-2" style="height: 1.2rem;"></div>
+                <div class="aui-col-xs-5" tapmode>
+                    <label for="reason4">
+                        <input id="reason4" class="aui-radio" type="radio" name="reason" value="模拟器培训">&emsp;模拟器培训
+                    </label>
+                </div>
+            </div>
+            <div class="aui-row">
+                <div class="aui-col-xs-5" tapmode>
+                    <label for="reason5">
+                        <input id="reason5" class="aui-radio" type="radio" name="reason" value="科目二培训">&emsp;科目二培训
+                    </label>
+                </div>
+                <div class="aui-col-xs-2" style="height: 1.2rem;"></div>
+                <div class="aui-col-xs-5" tapmode>
+                    <label for="reason6">
+                        <input id="reason6" class="aui-radio" type="radio" name="reason" value="科目三培训">&emsp;科目三培训
+                    </label>
+                </div>
+            </div>
+            <div class="aui-row">
+                <div class="aui-col-xs-5" tapmode>
+                    <label for="reason7">
+                        <input id="reason7" class="aui-radio" type="radio" name="reason" value="考前训练">&emsp;考前训练
+                    </label>
+                </div>
+                <div class="aui-col-xs-2" style="height: 1.2rem;"></div>
+                <div class="aui-col-xs-5" tapmode>
+                    <label for="reason8">
+                        <input id="reason8" class="aui-radio" type="radio" name="reason" value="考试">&emsp;考试
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div id="collection-reason-employee" class="aui-hide">
+            <div class="aui-row">
+                <div class="aui-col-xs-5" tapmode>
+                    <label for="reason9">
+                        <input id="reason9" class="aui-radio" type="radio" name="reason" value="上班">&emsp;上班
+                    </label>
+                </div>
+                <div class="aui-col-xs-2" style="height: 1.2rem;"></div>
+                <div class="aui-col-xs-5" tapmode>
+                    <label for="reason10">
+                        <input id="reason10" class="aui-radio" type="radio" name="reason" value="其他">&emsp;其他
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="input-title">
+            体温
+        </div>
+        <div id="temperature-div">
+            <input type="number" id="temperature" name="temperature" placeholder="请输入您的体温，例如36.5，37">
+            <img src="../../../icon/home/register_epidemic_situation/temperature.png" alt="">
+        </div>
+    </div>
+</div>
+
+
+<!-- 提交按钮 -->
+<div id="submit-div">
+    <img id="submit-btn" src="../../../icon/home/register_epidemic_situation/submit.png" alt="" tapmode onclick="submit()">
+<!--    <button  tapmode onclick="submit()">
+        提交
+    </button>-->
+</div>
+
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+    var pageParam;
+    apiready = function () {
+        pageParam = api.pageParam;
+        api.parseTapmode();
+        var header = $api.byId('aui-header');
+        $api.fixStatusBar(header);
+        if (pageParam.type === 0) {
+            $('#collection-reason-learner').removeClass('aui-hide');
+            $('#collection-reason-employee').addClass('aui-hide');
+        } else {
+            $('#collection-reason-employee').removeClass('aui-hide');
+            $('#collection-reason-learner').addClass('aui-hide');
+        }
+    };
+
+    // 打开我的承诺书页面
+    function openMyPromisePage() {
+        if (pageParam.type === 0) {
+            openWin1('show_student_win', 'show_student_win');
+        } else {
+            openWin1('show_staff_win', 'show_staff_win');
+        }
+    }
+
+    // 打开温度记录页面
+    function openMyRecordListPage() {
+        openWin1('body_temperature_records', 'body_temperature_records', {infoId: pageParam.infoId, type: pageParam.type});
+    }
+
+
+    // 提交信息
+    function submit() {
+        var businessType = $('input[name=reason]:checked').val();
+        var temperature = $('#temperature').val();
+        if (!businessType) {
+            alert_msg('请输入采集原因');
+            return;
+        }
+        if (!temperature) {
+            alert_msg('请输入体温');
+            return;
+        }
+        if (isNaN(temperature) || !(/^[^\s]{1,4}$/.test(temperature))) {
+            alert_msg('请输入正确的温度格式，例如36.5，37');
+            return;
+        }
+        if (temperature > 50 || temperature < 30) {
+            alert_msg('输入温度超出人体正常体温范围');
+            return;
+        }
+        url = "api/temperature/insert-temperature-daily";
+        params = {
+            learnerId: getUserId(),
+            infoId: pageParam.infoId,
+            businessType: businessType,
+            temperature: temperature
+        };
+        log('添加体温记录入参', JSON.stringify(params));
+        defaultload("正在提交");
+        ajax_Request(url, 'post', 'json', params, function (ret, err) {
+            closedefaultload();
+            log('添加体温记录出参', ret);
+            if (ret) {
+                if (ret.code == 0) {
+                    $('input').blur();
+                	api.alert({
+					    title: '温馨提示',
+					    msg: '体温采集成功',
+					}, function(ret, err) {
+                        closeWin();
+					});
+                    sendEvent('add_record_success');
+                    //openMessage('温馨提示','温度采集成功','确定','','closeWin()','',null);
+                } else {
+                    alert_msg(ret.msg);
+                }
+            } else {
+                alert_msg('服务器繁忙，请稍候再试！');
+            }
+        });
+    }
+
+
+    function openWin1(name, url, pageParam) {
+        api.openWin({
+            name: name,
+            url: './' + url + '.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            useWKWebView: false,
+            pageParam: pageParam ? pageParam : {}
+        });
+    }
+
+    function openMessage(title,content,sureButton,cancelButton,sureFunc,cancelFunc,params){
+        api.openFrame({
+            name: 'common_alert',
+            url: '../../common/common_alert.html',
+            bgColor: 'rgba(0,0,0,0.4)',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: api.winHeight
+            },
+            bounces: false,
+            pageParam:{
+                title:title,
+                content:content,
+                sureButton:sureButton,
+                sureFunc:sureFunc,
+                cancelButton:cancelButton,
+                cancelFunc:cancelFunc,
+                winName:api.winName,
+                frameName:api.frameName,
+                params:params
+            },
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+    }
+
+    function closeWin() {
+        api.closeWin({});
+    }
+
+</script>
+</html>

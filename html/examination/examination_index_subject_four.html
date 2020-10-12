@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>科目四</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html,body{
+    		background:#FFF;
+    	}
+    	.subject-totel{
+    		width:100%;
+    		overflow: hidden;
+    		background:#FFF;
+    	}
+    	.subject-item{
+		    width: 100%;
+		
+    	}
+    	.subject-items{
+		    width: 6rem;
+			height: 8.9rem;
+    	}
+    	.subject-item ul{
+    	}
+    	.subject-item li{
+    		height:5rem;
+    		padding-top: 0.8rem;
+    		text-align:center;
+    	}
+    	.subject-item img{
+    		height:2rem;
+    		border-radius: 0.4rem;
+    	}
+    	.subject-item span{
+    		font-size:0.7rem;
+    	}
+    	.circle {
+		    position: relative;
+		    text-align: center;
+		    margin: 0 auto;
+		    bottom: 20px;
+		    width: 50px;
+		    height: 50px;
+		    border-radius: 50px;
+		    background: #F2F2F2;
+		    z-index: 99;
+		    border-top: solid 1px #fff;
+		}
+		.inline_quan{
+	        width: 4.85rem;
+		    height: 4.9rem;
+		    position: absolute;
+		    border-radius: 100%;
+		    margin-top: 2.2rem;
+		    margin-left: 2.2rem;
+		    z-index: 9999;
+		    font-size: 0.6rem;
+		    text-align: center;
+		    color: #FFF;
+		    padding-top: 1.4rem;
+		}
+		.text-a-f{
+			text-align:left;
+		}
+		.text-a-r{
+			text-align:right;
+		}
+		.text-a-c{
+			text-align:center;
+		}
+		.blue{
+		    background: linear-gradient(to top, #409AFF , #A2CBFC);
+		}
+		.blue:active{
+			background: #93C4FC;
+		}
+		.green{
+		    background: linear-gradient(to top, #24D3CF 1%, #E6FBFD 99%);
+		}
+		.orange{
+		    background: linear-gradient(to top, #EF8841, #FFCE9D);
+		}
+		.orange:active{
+		    background: #F7B281;
+		}
+		.subject-head{
+		    height: 3rem;
+    		padding: 0.5rem 1rem;
+		}
+		.subject-head img{
+			height: 1.8rem;
+			margin-bottom: -0.6rem;
+		}
+		.subject-head span{
+
+		}
+		.pd-l{
+			padding-left: 1.5rem;
+		}
+		.pd-r{
+			padding-right: 1.5rem;
+		}
+
+		.aui-col-xs-3 img {
+		    width: 2rem;
+		}
+		.aui-list-item-label-icon img {
+		    width: 1rem;
+		}
+		.aui-list:before {
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    right: auto;
+		    bottom: auto;
+		    width: 100%;
+		    z-index: 2;
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		    pointer-events: none;
+		}
+		.aui-grid [class*=aui-col-] {
+		    display: table-cell;
+		    position: relative;
+		    text-align: center;
+		    vertical-align: middle;
+		    padding-bottom:0rem;
+		    padding-top: 0.5rem;
+		}
+		.aui-list .aui-list-item-title {
+		    font-size: 0.7rem;
+		    position: relative;
+		    max-width: 100%;
+		    color: #212121;
+		}
+		.aui-list .aui-list-item-right, .aui-list-item-title-row em {
+		    max-width: 50%;
+		    position: relative;
+		    font-size: 0.6rem;
+		    color: #757575;
+		    margin-right: 0.8rem;
+		}
+		.aui-list-item-arrow:before {
+		    content: '';
+		    width: 0.4rem;
+		    height: 0.4rem;
+		    position: absolute;
+		    top: 50%;
+		    right: 0rem;
+		    margin-top: -0.2rem;
+		    background: transparent;
+		    border: 1px solid #03B4F7;
+		    border-top: none;
+		    border-right: none;
+		    z-index: 2;
+		    -webkit-border-radius: 0;
+		    border-radius: 0;
+		    -webkit-transform: rotate(-135deg);
+		    transform: rotate(-135deg);
+		}
+		.head-msg{
+			height:1.5rem;
+		    text-align: center;
+		}
+		.head-msg img{
+			width:1.5rem;
+		}
+		.head-msg span{
+			font-size:0.6rem;
+			color:#74CBF7;
+		}
+		#practice-circles{
+			width: 100%;
+			margin: 0 auto;
+			width:150%;
+			position:relative;
+			right:3.5rem;
+		}
+		#practice-circle{
+			margin: 0 auto;
+			width:150%;
+			position:relative;
+			left:0.5rem;
+		}
+		.aui-list:before{
+			height:0;
+		}
+		.aui-list:after{
+			height:0;
+		}
+		.icon-title{
+			color:#2B313D;
+			font-size:0.9rem;
+			font-weight: bold;		
+		}
+		.aui-list .aui-list-item{
+			min-height:3.2rem!important;
+		}
+		.bottom-slide:after{
+			height:0;
+		}
+		#itemBank{
+			color: #024FA9!important;
+			font-size:0.8rem;
+			font-weight:bold;
+			padding-top:0.4rem;
+		}
+		.aui-list .aui-list-item-label, .aui-list .aui-list-item-label-icon{
+			width: 20%!important;
+		}
+		.aui-col-xs-20{
+			width: 20%!important;
+		}
+		.car_type_background{
+			background-image:url(../../icon/subject/subjectOne/vehicle_type_background.png);
+			background-size:cover;
+		}
+		.top-title{
+			font-size:0.8rem!important;
+		}
+		.top-title-desc{
+			font-size:0.7rem!important;
+		}
+		.tongbu{
+		    width: 40%;
+		    height: 1.5rem;
+		    line-height: 1.5rem;
+		    background: #409AFF;
+		    color: #FFF;
+		    text-align: center;
+		    margin-top: 1rem;
+		    float: left;
+		    margin-left: 6.6666%;
+		}
+		.question-vip{
+			width: 90%;
+		    height: 4rem;
+		    margin-left: 5%;
+		    margin-top: 1rem;
+		    border-radius: 0.5rem 0.5rem 25% 25%;
+		    background: linear-gradient(to top, #F0DCC2 1%, #EEC599 99%);
+		    position: relative;
+		}
+		.question-vip-txt{
+			float: left;
+			color: #722E07;
+    		padding: 0.4rem 0.6rem;
+		}
+		.question-vip-txt h2{
+			font-weight:bold;
+		}
+		.question-vip-txt h3{
+			font-weight:bold;
+		}
+		.question-vip-btn{
+			position: absolute;
+		    padding: 0.3rem 0.8rem;
+		    background: #722E07;
+		    color: #FFC696;
+		    border-radius: 1rem;
+		    top: 1.2rem;
+		    right: 1rem;
+		    font-size: 0.6rem;
+		}
+		.question-vip-btn:active{
+			background:#9B6C52;
+		}
+		.question-medium{
+			width: 95%;
+		    margin: 0.75rem 2.5%;
+		    box-shadow: 0px 0px 10px #E4E7ED;
+		    border-radius: 10px;
+	        overflow: hidden;
+		}
+		.traffic-logo-item{
+			width: 30%;
+		    float: left;
+		    margin: 5px 3.33% 5px 0px;
+		    height: 3.5rem;
+		    padding: 5px;
+		    box-shadow: 0px 0px 10px #E4E7ED;
+		    border-radius: 5px;
+		}
+		.traffic-logo-item:active{
+			background:#f5f5f5;
+		}
+		.traffic-logo-txt{
+			width: 60%;
+		    float: left;
+		    font-size: 0.7rem;
+		    height: 3.5rem;
+		}
+		.traffic-logo{
+			width: 40%;
+		    float: right;
+		    position: relative;
+		    height: 3.5rem;
+		}
+		.traffic-logo img{
+			width: 2rem;
+		    position: absolute;
+		    bottom: 0.5rem;
+		}
+		.question-bank-type{
+			height: 2rem;
+		    line-height: 2rem;
+		    text-align: right;
+		    padding-right: 0.75rem;
+		    font-size: 0.7rem;
+		    position: relative;
+		}
+		.question-bank-type span{
+		    color: #FFF;
+		    background: #3F86FE;
+		    display: inline;
+		    padding: 0.2rem 0.6rem;
+		    font-size: 0.7rem;
+		    border-radius: 1rem;
+		    padding-right: 1.3rem;
+		} 
+		.question-bank-type span:active{
+			background: #A0C1FC;
+		}
+		.question-bank-type img{
+            width: 0.8rem;
+		    position: absolute;
+		    top: 0.55rem;
+		    right: 1rem;
+		} 
+		.question-answer-info-item{
+			width: 33.33%;
+		    height: 4rem;
+		    text-align: center;
+		    padding-top: 0.5rem;
+		    font-size: 0.7rem;
+		    float: left;
+		}
+		.question-answer-info-item-num{
+			font-size:1.2rem;
+			font-weight:bold;
+		}
+		.m-head:active{
+			background:#F4F4F4;
+		}
+    </style>
+</head>
+<body>
+	<div class='question-medium m-head'>
+		<div class='question-bank-type' tapmode onclick='openPracticeWin("select-question-type")'>
+			当前题库：<span>点击选择</span>
+			<img src="../../icon/subject/subjectOne/icon_change_bank_type.png" alt="" />
+		</div>
+		<div class='question-answer-info' tapmode onclick="openRecodeRanking(0)">
+			<div class='question-answer-info-item'>
+				<span class='question-answer-info-item-num'>0</span><br>
+				<span>累计答题数</span>
+			</div>
+			<div class='question-answer-info-item'>
+				<span class='question-answer-info-item-num'>0</span><br>
+				<span>上次模考</span>
+			</div>
+			<div class='question-answer-info-item'>
+				<span class='question-answer-info-item-num'>0%</span><br>
+				<span>做题正确率</span>
+			</div>
+		</div>
+	</div>
+	<div class='question-medium'>
+		<div class="subject-totel">
+			<div class="subject-items text-a-c" style="float:right">
+				<div id="practice-circles" tapmode onclick="openPracticeWin('simulation_explain')">
+					<div class='inline_quan orange'>
+						<span class="top-title">模拟考试</span><br>
+						<span class="top-title-desc">仿真模拟</span>
+					</div>
+				</div>
+			</div>
+			<div class="subject-items text-a-c" style="float:left">
+				<div id="practice-circle" tapmode onclick="openPracticeWin('order')">
+					<div class='inline_quan blue'>
+						<span class="top-title">顺序练习</span><br>
+						<span class="top-title-desc">0/0</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="subject-item aui-grid free">
+			<ul class="aui-row">
+				<li class="aui-col-xs-3" tapmode onclick="openPracticeWin('random')">
+					<img src="../../icon/subject/subjectOne/icon_random_practice.png" alt=""/><br>
+					<span>随机练习</span>
+				</li>
+				<li class="aui-col-xs-3" tapmode onclick="openPracticeWin('special')">
+					<img src="../../icon/subject/subjectOne/icon_special_exercises.png" alt="" style="border-radius: 100%;"/><br>
+					<span>专项练习</span>
+				</li>
+				<li class="aui-col-xs-3" taomode onclick="openPracticeWin('vip')">
+					<img src="../../icon/subject/subjectOne/icon_selected_item_bank.png" alt=""/><br>
+					<span>VIP题库</span>
+				</li>
+				<li class="aui-col-xs-3" tapmode onclick="openPracticeWin('mistake')">
+					<img src="../../icon/subject/subjectOne/icon_error_bank.png" alt="" /><br>
+					<span>我的错题</span>
+				</li>
+				<li class="aui-col-xs-3" tapmode onclick="openRecodeRanking(1)">
+					<img src="../../icon/subject/subjectOne/icon_order_score.png" alt="" /><br>
+					<span>成绩排行</span>
+				</li>
+				<li class="aui-col-xs-3" tapmode onclick="openPracticeWin('selected_topic_win')">
+					<img src="../../icon/subject/subjectOne/icon_question_stronger.png" alt="" style="border-radius: 100%;"/><br>
+					<span>考前巩固</span>
+				</li>
+				<li class="aui-col-xs-3" tapmode onclick="openPracticeWin('difficult')">
+					<img src="../../icon/subject/subjectOne/icon_question_dificult.png" alt="" /><br>
+					<span>难题攻克</span>
+				</li>
+				<li class="aui-col-xs-3" tapmode onclick="openSyncStudyRecode()">
+					<img src="../../icon/subject/subjectOne/icon_sync.png" alt="" /><br>
+					<span>同步做题</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+		
+	<!-- <div class="aui-contentfree free car_type_background" style="overflow: hidden;">
+		<ul class="aui-list aui-list-in">
+			<li class="aui-list-item none-bottom-style car_type_background">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+						
+	                </div>
+	                <div class="aui-list-item-input bottom-slide" tapmode onclick='openPracticeWin("select-question-type")' style="padding-right:3.5rem">
+	                    <input type="text" value="无题库选择" id="itemBank" readonly style="text-align: left;">
+	                </div>
+	            </div>
+	        </li>
+		</ul>
+	</div> -->
+	
+	<section class="aui-grid" style='margin-top: 0.5rem;'>
+		<div class="aui-content" style="overflow: hidden;">
+		    <ul class="aui-list aui-list-in">
+				<li class="aui-list-item" style="min-height: 2.2rem!important;">
+		            <div class="aui-list-item-inner none-bottom-style">
+		             	<span class="icon-title">老司机带你认标识</span>
+		            </div>
+		        </li>
+	        </ul>
+	    </div>
+	    <div style='overflow:hidden;margin-bottom:3rem;' class='aui-hide'>
+			<div class='tongbu' tapmode onclick='start_sync("036004")'>开始同步</div>
+			<div class='tongbu' tapmode onclick='deteleQuestionFile("036004")'>清除做题记录</div>
+			<div class='tongbu' tapmode onclick='deteleFile("036004")'>清除做题原始记录</div>
+			<div class='tongbu' tapmode onclick='getQuestionFile("036004")'>获取做题记录</div>
+			<div class='tongbu' tapmode onclick='clearModel("036004")'>清除模式缓存</div>
+			<div class='tongbu' tapmode onclick='syncRecode("036004")'>获取同步记录</div>
+			<div class='tongbu' tapmode onclick='clearSyncRecode("036004")'>清除同步记录</div>
+		</div>
+		<div class="aui-row" id="identify" style='padding-left: 2.5%;'>
+			<!-- <div class='traffic-logo-item'>
+				<div class='traffic-logo-txt'>事故图解</div>
+				<div class='traffic-logo'>
+					<img src="../../icon/subject/subjectOne/icon_local_question.png" alt="" />
+				</div>
+			</div> -->
+		</div>
+	</section>
+	<script type="text/template" charset="UTF-8" id="identification">
+		{{ for(var i=0;i<it.length;i++){ }}
+			{{ if(it[i].code == '021001'){ }}
+				<div class='traffic-logo-item' tapmode onclick="openLogoTotle('{{=it[i].code}}')">
+					<div class='traffic-logo-txt'>{{=it[i].name}}</div>
+					<div class='traffic-logo'>
+						<img alt="" onerror="javascript:this.src='../../icon/default/icon_default.png'" src="../../icon/default/icon_default.png" data-echo="{{=file_load_url + it[i].image + '&style=image/resize,m_fill,w_100'}}" />
+					</div>
+				</div>
+			{{ }else{ }}
+				<div class='traffic-logo-item' tapmode onclick="openLogoRecognition('{{=it[i].name}}','{{=it[i].code}}')">
+					<div class='traffic-logo-txt'>{{=it[i].name}}</div>
+					<div class='traffic-logo'>
+						<img onerror="javascript:this.src='../../icon/default/icon_default.png'" src="../../icon/default/icon_default.png" data-echo="{{=file_load_url + it[i].image + '&style=image/resize,m_fill,w_100'}}" alt="" />
+					</div>
+				</div>
+			{{ } }}
+		{{ } }}
+	</script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/circliful/jquery.circliful.js"></script>
+<script type="text/javascript" src="../../script/echo.min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript" src="../../script/question_sync/question_download.js"></script>
+<script type="text/javascript" src="../../script/question_sync/question_sync.js"></script>
+<script type="text/javascript">
+	var db;
+	var sql = '';
+	var fs;
+	var eaaminationLogo;//标识图标
+	var bankType;
+	var kemu = '036004';
+	apiready = function(){
+		db = api.require('db');
+		fs = api.require('fs');
+		bankType = getBankType(kemu);
+		goRefrash(40,'#FFFFFF',null,null,function(){
+			getNewestQuestion(kemu);//下拉获取最新题库
+			api.refreshHeaderLoadDone();
+		});
+
+		//监听题库切换
+		toEventListener('kemu_four_items_bank',function(ret,err){
+			bankType = ret.value.code;
+			$('.question-bank-type').find('span').html(ret.value.name);
+			getAnswerSInfo();
+		});
+		
+		//监听退出登录
+		toEventListener('exit_action',function(ret,err){
+			getAnswerSInfo();
+		});
+		
+		//监听登录
+		toEventListener('refresh_my_index',function(ret,err){
+			getNewestQuestion(kemu);
+		});
+		
+		//监听题库刷新
+		toEventListener('refresh_question',function(ret,err){
+			getAnswerSInfo();
+		});
+		
+		init();
+	};
+	function init(){
+	
+		getNewestQuestion(kemu);//下拉获取最新题库
+
+		//初始化题库切换
+		var questionBankTypeMap = $api.getStorage('cache_by_app').questionBankTypeMap;
+		$('.question-bank-type').find('span').html(questionBankTypeMap[getBankType(kemu)]);
+
+		//标识大全
+		getDictionaryByCode("021000",function(data){
+			var identification = $("#identification").html();
+			$("#identify").html(doT.template(identification)(data))
+			api.parseTapmode();
+			//延迟加载图片
+			setTimeout(function() {
+				echoInit();
+			}, 300);
+		});
+		
+		$('.aui-col-xs-3').eq(2).find('img').addClass('refresh-animation');
+		setTimeout(function(){
+			changeImage();
+			setInterval(function() {
+				changeImage();
+			},4000);
+		},750);
+		
+	}
+	
+	/**
+	 * 获取该学员答题情况 
+	 */
+	function getAnswerSInfo(){
+		if(islogin()){
+			sql = 'SELECT recode_num, right_percent, totle_num FROM ';
+				sql += '(SELECT COUNT(DISTINCT Q.question_id) recode_num FROM cm_question q LEFT JOIN cm_question_recode r ON r.question_id = q.question_id WHERE r.id IS NOT NULL AND kemu = "'+ kemu +'" AND belong_bank_type = "' + bankType + '" AND learner_id = '+getUserId()+') Q1 LEFT OUTER JOIN ';
+				sql += '(SELECT COUNT(DISTINCT Q.question_id) totle_num FROM cm_question q WHERE kemu = "'+ kemu +'" AND bank_type like "%' + bankType + '%" AND (city = "" OR city IS NULL)) Q2 LEFT OUTER JOIN ';
+				sql += '(SELECT ROUND((CAST(right_num as double) * 100)/(CAST(right_num as double) + CAST(wrong_num as double)),0) right_percent FROM (';
+					sql += 'SELECT right_num,wrong_num FROM (SELECT SUM(T1.right_num) right_num FROM (SELECT DISTINCT r.* FROM cm_question q LEFT JOIN cm_question_recode r ON r.question_id = q.question_id WHERE r.right_num > 0 AND kemu = "'+ kemu +'" AND belong_bank_type = "' + bankType + '" AND learner_id = '+getUserId()+') T1) G ';
+					sql += 'LEFT OUTER JOIN (SELECT SUM(T2.wrong_num) wrong_num FROM (SELECT DISTINCT r.* FROM cm_question q LEFT JOIN cm_question_recode r ON r.question_id = q.question_id WHERE r.wrong_num > 0 AND kemu = "'+ kemu +'" AND belong_bank_type = "' + bankType + '" AND learner_id = '+getUserId()+') T2) G';
+			sql += ')) Q3';
+			db.selectSql({
+		        name:'drivingApp',
+		        sql:sql
+	        },function(ret,err){
+	        	log('做题情况',ret);
+	        	if(ret){
+	        		if(ret.status){
+	        			loadNum($('.top-title-desc').eq(1), ret.data[0].recode_num, 1000,'/' + ret.data[0].totle_num);
+	        			loadNum($('.question-answer-info-item-num').eq(0), ret.data[0].recode_num, 1000,'');
+	        			loadNum($('.question-answer-info-item-num').eq(2), ret.data[0].right_percent?ret.data[0].right_percent:0, 1000,'%');
+	        			loadCircle(parseInt(ret.data[0].recode_num*100/ret.data[0].totle_num),100);
+	        		}else{
+	        			alert_msg(JSON.stringify(ret));
+	        		}
+	        	}else{
+	        		//数据库有问题
+	        	}
+	        });
+	        
+	        url = 'api/mock-exam-and-study/list-ke-mu-four-mock-exam-record-by-id';
+			params = {
+				learnerId:getUserId(),
+				page:1,
+				limit:1
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('ret',ret);
+				if(ret&&ret.code == 0&&ret.listKeMuFourMockExamRecord.length > 0){
+					loadNum($('.question-answer-info-item-num').eq(1), ret.listKeMuFourMockExamRecord[0].score, 1000,'');
+				}else{
+					loadNum($('.question-answer-info-item-num').eq(1), 0, 1000,'');
+				}
+			});
+		}else{
+			sql = 'SELECT COUNT(DISTINCT question_id) totle_num FROM cm_question WHERE kemu = "'+ kemu +'" AND bank_type like "%' + bankType + '%" AND (city = "" OR city IS NULL)';
+			db.selectSql({
+		        name:'drivingApp',
+		        sql:sql
+	        },function(ret,err){
+	        	if(ret){
+	        		if(ret.status){
+						loadNum($('.top-title-desc').eq(1), 0, 1000,'/' + ret.data[0].totle_num);
+						loadNum($('.question-answer-info-item-num').eq(0), 0, 1000,'');
+						loadNum($('.question-answer-info-item-num').eq(2), 0, 1000,'%');
+						loadCircle(0,100);
+	        		}else{
+	        			alert_msg(JSON.stringify(ret));
+	        		}
+	        	}else{
+	        		//数据库有问题
+	        	}
+	        });
+	        loadNum($('.question-answer-info-item-num').eq(1), 0, 1000,'');
+		}
+	}
+	
+	/**
+	 * 切换图片 
+	 */
+	function changeImage(){
+		if($('.refresh-animation').eq(0).attr('src') == '../../icon/subject/subjectOne/icon_selected_item_bank.png'){
+			$('.refresh-animation').eq(0).attr('src','../../icon/subject/subjectOne/icon_vip_500.png');
+		}else{
+			$('.refresh-animation').eq(0).attr('src','../../icon/subject/subjectOne/icon_selected_item_bank.png');
+		}
+	}
+	
+	function commonOpenWin(name,data){
+	   api.openWin({
+	       name: name,
+	       url: '../mine/'+name+'.html',
+	       slidBackEnabled:'false',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       useWKWebView:false,
+	       pageParam: {
+	           data:data
+	       }
+	   });
+	}
+	function loadCircle(study_percent,practice_percent){
+		$("#practice-circle").circliful({
+			foregroundBorderWidth:5,//进度条粗细
+			backgroundBorderWidth:2,//内圈进度条粗细
+			fontColor: '#0586C6',//圈内字体颜色
+			percent: study_percent,//数据
+			foregroundColor: "#03B4F7",//进度条颜色
+			backgroundColor: "#FFF",//背景进度条颜色
+			progressColor:{
+				0:"#64ADFF",
+				100:"#C1DBFC"
+			},
+			animationStep:10
+	    });
+	    $("#practice-circles").circliful({
+			foregroundBorderWidth:5,//进度条粗细
+			backgroundBorderWidth:2,//内圈进度条粗细
+			fontColor: '#0586C6',//圈内字体颜色
+			percent: practice_percent,//数据
+			foregroundColor: "#E29587",//进度条颜色
+			backgroundColor: "#FFF",//背景进度条颜色
+			progressColor:{
+				0:"#FFCE9D",
+				100:"#FFEDD8"
+			},
+			animationStep:10
+	    });
+	    $('.subject-totel').removeClass('aui-hide')
+	}
+
+	//打开通用头部
+	function openPracticeWin(type){
+		if(islogin()){
+			
+			if(type == 'signUp'){//考试报名页面用不同方式打开
+				openExamRegistraction('four');
+				return;
+			}
+			param = {type:type};
+			
+			if(type == 'vip'){
+				logAppBuryingPoint({},'vip题库','科四','学车考试');
+				if(islogin()){
+					url = 'api/questionviporder/get-question-vip-order-info-is-buy';
+					params = {
+						learnerId: getUserId()
+					}
+					ajax_Request(url, 'post', 'json', params, function(ret, err) {
+						log('购买vip套餐', ret)
+						if (ret) {
+							if (ret.code == 0) {
+								if (ret.isBuy == 0) {
+									api.openWin({
+										name: 'curriculum_service_win',
+										url: '../vip_service/question_bank/curriculum_service_win.html',
+										slidBackEnabled: 'false',
+										vScrollBarEnabled: 'false',
+										hScrollBarEnabled: 'false',
+										reload: true,
+										useWKWebView: false,
+										pageParam: {
+											kemu:kemu
+										}
+									})
+								} else {
+									api.openWin({
+										name: 'question_bank_buy_index',
+										url: '../vip_service/question_bank/question_bank_buy_index_new.html',
+										slidBackEnabled: 'false',
+										vScrollBarEnabled: 'false',
+										hScrollBarEnabled: 'false',
+										reload: true,
+										useWKWebView: false,
+										pageParam: {
+											kemu:kemu
+										}
+									})
+								}
+							} else {
+								alert_msg(ret.msg);
+							}
+						} else {
+							alert_msg('服务器繁忙，请稍后再试！');
+						}
+					})
+				}else{
+					openMessage('温馨提示', '你尚未登录，请登录', '确定', '取消', 'openLoginHtml();', '', null)
+				}
+				return;
+			}
+			
+			//科目四做题记录有缓存，顺序联系让用户确认是重新做题还是继续做题
+			if(type == 'order'){
+				logAppBuryingPoint({},'顺序练习','科四','学车考试');
+				//var question_recode = $api.getStorage('cache_by_app').question_recode;//用户做题记录
+				var normal_order_recode = getGlobalData('normal_order_recode');//用户普通做题记录
+				if(normal_order_recode != undefined
+					&&normal_order_recode != null
+					&&normal_order_recode.kemu_four_order != undefined){
+					isSure('温馨提示','是否继续上次答题','重新开始','继续答题',function(){
+						param.isContinue = false;
+						openPracticeCommonWin(param);
+					},function(){
+						param.isContinue = true;
+						param.order_num = normal_order_recode.kemu_four_order;
+						openPracticeCommonWin(param);
+					});
+				}else{
+					param.isContinue = false;
+					openPracticeCommonWin(param);
+				}
+			}else if(type == 'concentrate'){
+				alert_msg('升级中，敬请期待~');
+				return;
+			}else if(type == 'selected_topic_win'){
+				logAppBuryingPoint({},'考前巩固','科四','学车考试');
+				openPracticeSelectedTopic(param);
+			}else{
+				param.isContinue = false;
+				openPracticeCommonWin(param);
+			}
+			if(type == 'special'){
+				logAppBuryingPoint({},'专项练习','科四','学车考试');
+			}
+			if(type == 'random'){
+				logAppBuryingPoint({},'随机练习','科四','学车考试');
+			}
+			if(type == 'mistake'){
+				logAppBuryingPoint({},'我的错题','科四','学车考试');
+			}
+			if(type == 'difficult'){
+				logAppBuryingPoint({},'难题攻克','科四','学车考试');
+			}
+			if(type == 'concentrate'){
+				logAppBuryingPoint({},'vip题库','科四','学车考试');
+			}
+			if(type == 'simulation_explain'){
+				logAppBuryingPoint({},'模拟考试','科四','学车考试');
+			}
+		}else{
+			openLoginHtml(null);
+		}
+	}
+	
+	/**
+	 * 打开页面 
+	 */
+	function openPracticeCommonWin(params){
+		api.openWin({
+	      name: 'practice_common_win',
+	      url: './subjectFour/practice_common_win.html',
+		  slidBackEnabled:'true',
+	      vScrollBarEnabled:'false',
+	      hScrollBarEnabled:'false',
+	      reload:true,
+	      pageParam: {
+	         data:params
+	      }
+	    });
+	}
+	
+	/**
+	 * 打开排行榜和学习记录 
+	 */
+	function openRecodeRanking(sel_index){
+		if(islogin()){
+			logAppBuryingPoint({},sel_index == 0?'学习成绩':'成绩排行','科四','学车考试');
+			params.sel_index = sel_index;
+			params.kemu = kemu;
+			api.openWin({
+		      name: 'question_recode_ranking_win',
+		      url: './common/question_recode_ranking_win.html',
+		      slidBackEnabled:'true',
+		      vScrollBarEnabled:'false',
+		      hScrollBarEnabled:'false',
+		      reload:true,
+		      pageParam: {
+		         data:params
+		      }
+		    });
+		}else{
+			openLoginHtml(null);
+		}
+	}
+	
+	/**
+	 * 打开学习记录同步 
+	 */
+	function openSyncStudyRecode(){
+		if(islogin()){
+			logAppBuryingPoint({},'同步做题','科四','学车考试');
+			params.kemu = kemu;
+			api.openWin({
+		      name: 'question_bank_sync_win',
+		      url: './common/question_bank_sync_win.html',
+		      slidBackEnabled:'true',
+		      vScrollBarEnabled:'false',
+		      hScrollBarEnabled:'false',
+		      reload:true,
+		      pageParam: {
+		         data:params
+		      }
+		    });
+		}else{
+			openLoginHtml(null);
+		}
+	}
+
+	function openPracticeSelectedTopic(params){
+		params.type = "click_four"
+		api.openWin({
+	      name: 'selected_topic_win',
+	      url: './common/selected_topic_win.html',
+	      slidBackEnabled:'true',
+	      vScrollBarEnabled:'false',
+	      hScrollBarEnabled:'false',
+	      reload:true,
+	      pageParam: {
+	         data:params
+	      }
+	    });
+	}
+	//打开识别标识
+	function openLogoRecognition(name,code){
+		logAppBuryingPoint({id:code,name:name},'各种标识','科四','学车考试');
+		params = {
+	 		title:name,
+	 		type:code
+	 	}
+	 	commonOpenWinThis('logo_recognition_win',params);
+	}
+
+	//打开识别logo窗口
+	function toRecognition(name){
+	 	params = {
+	 		title:name
+	 	}
+		commonOpenWinThis('logo_recognition_win',params);
+	}
+
+	//打开标识大全
+	function openLogoTotle(type){
+		logAppBuryingPoint({},'交通标志大全','科四','学车考试');
+		params = {
+			type:'logo',
+			typeCode:type
+		}
+		commonOpenWinThis('practice_common_win',params);
+	}
+
+	function commonOpenWinThis(name,params){
+		api.openWin({
+	        name: name,
+	        url: './subjectFour/'+name+'.html',
+	        slidBackEnabled:'false',
+	        vScrollBarEnabled:'false',
+	        hScrollBarEnabled:'false',
+	        reload:true,
+	        pageParam: {
+	            data:params
+	        }
+	   });
+	}
+</script>
+</html>

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>确认模拟器预约信息</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+    	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+    	 .practical-list-item{
+	    	height:2rem;
+	    	padding: 0rem 0.5rem;
+	    	
+	    }
+	    .practical-list-item-param{
+    	    float: left;
+    		height:2rem;
+    		font-size:0.7rem;
+    		line-height:2rem;
+	    }
+	   
+	    .c-btn{
+	    	width:10%;
+	    	-webkit-transition: 0.3s ease;
+	    	text-align: left;
+	    }
+	    .dark{
+	    	color:#A0A0A0;
+	    }
+	    .appointment-button{
+	    	
+	    }
+	    .appointment-button span{
+		    color: #0595F2;
+		    padding: 0.2rem 0rem;
+		    border-radius: 0.5rem;
+		    font-weight:bold;
+	    }
+	    .other-item{
+	    	width:100%;
+	    	overflow:hidden;
+    	    -webkit-transition: 0.3s ease;
+    	    float: right;
+	    }
+	    .w-90{
+	    	width:100% !important;
+	    	padding-left:0.2rem !important;
+	    }
+	    .text-r{
+	    	text-align:right;
+	    }
+	    .text-c{
+	    	text-align:left;
+	    }
+	    .text-l{
+	    	text-align:center;
+	    }
+	    .practical-list-item-param font{
+	    	color:#03B4F7;
+	    }
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		.pic_unit{
+		    overflow: hidden;
+	    	background: #F3F3F3;
+    	    padding-bottom: 0.5rem;
+    	    /*column-count: 2;
+    		column-gap: 0;*/
+		}
+		.pic_div{
+		    width: 45.5%;
+		    float: left;
+		    margin: 0.5rem 0% 0rem 3%;
+		    background: #FFFFFF;
+		}
+		.pic_div img{
+			width: 100%;
+		}
+		.f_left{
+			float: left;
+		    max-width: 90%;
+		    display: flex;
+		}
+		.f_right{
+			float: right;
+		}
+		.pic_title{
+		    margin: 0.5rem 0.7rem 0.1rem 0.7rem;
+		    font-size: 0.8rem;
+		    height: 2.4rem;
+		}
+		input[type="text"], input[type="password"], input[type="search"], input[type="email"], input[type="tel"], input[type="url"], input[type="date"], input[type="datetime-local"], input[type="time"], input[type="number"], select, textarea {
+		    border: none;
+		    background: none;
+		    border-radius: 0;
+		    box-shadow: none;
+		    display: block;
+		    padding: 0;
+		    margin: 0;
+		    width: 100%;
+		    min-height: 2.7rem;
+		    color: #424242;
+		    font-size: 0.8rem;
+		    font-family: inherit;
+		    box-sizing: border-box;
+		    -webkit-user-select: text;
+		    user-select: text;
+		    -webkit-appearance: none;
+		    appearance: none;
+		    -webkit-appearance: none;
+		}
+		.aui-list textarea {
+		    overflow: auto;
+		    margin: 0.5rem 0;
+		    height: 5rem;
+		    line-height: 1rem;
+		    resize: none;
+		}
+		.aui-list-item-label-fushu{
+		    color: #212121;
+		    width: 35%;
+		    min-width: 1.5rem;
+		    margin: 0;
+		    padding: 0;
+		    padding-right: 0.25rem;
+		    /* line-height: 2.2rem; */
+		    position: relative;
+		    overflow: hidden;
+		    white-space: nowrap;
+		    max-width: 100%;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    height: 5rem;
+    		line-height: 1rem;
+		}
+		.color_red{
+			color:#DC251F !important;
+		}
+		.hetong{
+			min-width: 14.5rem !important;
+    		font-size: 0.7rem !important;
+	        line-height: 1.3rem;
+	        text-align: center;
+	        padding-right: 0.75rem !important;
+		}
+		.aui-switch:checked {
+		    border-color: #DC251F;
+		    background-color: #DC251F;
+		}
+		.aui-list {
+		    padding: 0;
+		    margin: 0;
+		    position: relative;
+		    font-size: 0.8rem;
+		    background: #FFFFFF;
+		    padding-bottom: 1rem;
+	        overflow: hidden;
+		}
+		.aui-btn-info.aui-active, .aui-btn-info:active {
+		    color: #fff !important;
+		    background-color: #DE5A58 !important;
+		}
+		.pay_type{
+		    width: 100%;
+		    text-align: center;
+		}
+		.pay_type img{
+		    width: 6rem;
+		    margin-top: 0.3rem;
+		}
+		.pd_left{
+			padding-left:0.75rem !important;
+		}
+		.cancel{
+		    margin-top: 1rem;
+		}
+		.aui-radio:checked, .aui-radio.aui-checked, .aui-checkbox:checked, .aui-checkbox.aui-checked {
+		    background-color: #DC251F;
+		    border: solid 1px #DC251F;
+		    text-align: center;
+		    background-clip: padding-box;
+		}
+		.aui-list .aui-list-item {
+		    list-style: none;
+		    margin: 0;
+		    padding: 0;
+		    padding-left: 0.75rem;
+		    color: #212121;
+		    background-color: #ffffff;
+		    position: relative;
+		    min-height: 3.5rem;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		}
+		.danwei{
+			color:#A5A5A5;
+		}
+		.cash{
+		    color: #FB6500;
+		}
+		.ziBig{
+			font-size:1rem;
+		}
+		.zigeneral{
+			font-size: 0.8rem;
+		}
+		.pay-icon{
+			float: left;
+			width: 90%;
+    		text-align: left;
+		}
+		.list_div{
+		    min-height: 2.2rem;
+    		padding: 0 0.3rem;
+			background: #FFF;
+			transition: all 0.5s;
+			-webkit-transition: all 0.5s;
+		    position: relative;
+		}
+		.check-box{
+			float: right;
+		    margin-top: 0.7rem;
+		}
+		.aui-list.aui-form-list .aui-list-item:active {
+		    background-color: #F1F1F1;
+		}
+		.aui-tips {
+		    padding: 0 0.75rem;
+		    width: 100%;
+		    z-index: 99;
+		    height: 1.9rem;
+		    line-height: 1.9rem;
+		    position: relative;
+		    background-color: #FFE9D6;
+		    color: #FF9036;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		    -webkit-align-items: center;
+		    align-items: center;
+		}
+    </style>
+</head>
+<body>
+		<div class="aui-content aui-margin-b-15">
+			<div class="aui-tips aui-margin-b-15e" id="tips-1">
+				<i class="aui-iconfont aui-icon-info"></i>
+				<div class="aui-tips-title">温馨提示：请在<span id="limit-time">00:00</span>之内进行支付</div>
+				<i class="aui-iconfont aui-icon-date"></i>
+			</div>
+			<div class="list_div" style="padding-left:0.7rem;line-height:2rem;width:100%;margin-top:0.3rem;">
+				<div class='recode-content'>
+					<div class='recode-txt'>
+						<div class='txt-title'>
+							<span style="color:#787878">训练地点：</span><span class="d_school_name">上虞区xxx理论培训中心</span>
+						</div>
+						<div class='txt-title'>
+							<span style="color:#787878">训练车型：</span><span class="traincar">c1</span>
+						</div>
+						<div class='txt-title'>
+							<span style="color:#787878">训练教室：</span><span class="trainClassroom">教室A</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<ul style="margin-top:0.3rem;background:#ffffff">
+				<li class='bottom-slide'>
+					<div class="practical-list-item">
+
+						<div class='other-item bottom-slide w-90'>
+							<div class="practical-list-item-param text-c" style="width:40%;">训练日期</div>
+							<div class="practical-list-item-param text-c" style="width:40%;">预约时间段</div>
+							<div class="practical-list-item-param text-c" style="width:20%;">价值</div>
+						</div>
+					</div>
+				</li>
+				<div id='data_list'>
+
+				</div>
+				<!--
+    			<li class='checkStyle'>
+    			<div class="practical-list-item">
+    				
+    				<div class='other-item w-90' tapmode onclick="">
+    			    <div class="practical-list-item-param text-c" style="width:40%;">11.00~22.00</div>
+    				<div class="practical-list-item-param text-c" style="width:40%;">机动车原理1</div>
+    				<div class="practical-list-item-param text-c" style="width:20%;">￥20</div>
+    				
+    				</div>
+    			</div>
+    		</li> -->
+			</ul>
+		<script type="text/template" charset="utf-8" id='schedule_src'>
+			{{ for(var i=0;i<it.length;i++){ }}
+	    	<li class='checkStyle'>
+	    		<div class="practical-list-item" >
+					<div class='other-item w-90'>
+						<div class="practical-list-item-param text-c" style="width:40%;">{{=it[i].lessonDate.substr(0,10)}}</div>
+	    				<div class="practical-list-item-param text-c" style="width:40%;">{{=it[i].beginDate.substr(10,6)}} ~{{=it[i].endDate.substr(10,6)}}</div>
+	    				<div class="practical-list-item-param text-c" style="width:20%;">{{=it[i].learnerTime}}学时</div>
+					</div>
+				</div>
+			</li>
+			{{ } }}
+	    </script>
+
+		<ul class="aui-list aui-form-list none-bottom-style" style="margin-top:0.3rem;">
+			<!--<li class="aui-list-item" tapmode onclick="openSelTcmSchool()">
+				<div class="aui-list-item-inner aui-list-item-arrow" >
+					<div class="aui-list-item-label">
+						所属驾校：
+					</div>
+					<div class="aui-list-item-input">
+						<span id="schoolName" >加载中...</span>
+					</div>
+				</div>
+			</li>-->
+				
+			<li class="aui-list-item">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label">
+						支付价值：
+					</div>
+					<div class="aui-list-item-input">
+						<span class="cash">0</span>
+						<span class='danwei'>学时</span>
+					</div>
+				</div>
+			</li>	
+			<div class="aui-btn aui-btn-info aui-btn-block" id="m_pay" tapmode onclick="pay()">确认支付</div>			
+		</ul>		
+		</div>
+	</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript">
+		var cache;
+		var aliPayPlus; //支付宝
+		var wxPayPlus; //微信
+		var isAllowPay = true; //是否允许去支付
+		var params;
+		var payFee;
+		var limitTime = 5*60; //设置支付超时时间
+		var dangertime = 1*60; //危险时间
+		var timer;
+		var systemType;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam.data;
+		systemType = api.systemType;
+		aliPayPlus = api.require('aliPayPlus');
+		wxPayPlus = api.require('wxPayPlus');
+		console.log("cache++++++++++++=========="+JSON.stringify(cache));
+		$(".d_school_name").text(cache.d_school_name);
+		$(".trainClassroom").text(cache.className);
+		$(".cash").text(cashFormatO(cache.sum));
+		$(".traincar").text(cache.areaName);
+//		$(".trainDate").text(cache.lessonListByIdList[0].lessonDate.substr(0,10));
+		setTimeDown();
+		timer = setInterval(setTimeDown, 1000);
+		defaultload('加载订单中...');
+		init();
+		//监听所属驾校选择事件
+//		toEventListener('sel_tcm_school_action',function(ret,err){
+//			$('#schoolName').text(ret.value.name);
+//			schoolId = ret.value.id;
+//		});
+	}
+	function init(){
+		var schedule_src = $('#schedule_src').html();
+		$('#data_list').html(doT.template(schedule_src)(cache.lessonListByIdList));
+		$('#payType').removeClass('aui-hide');
+		api.parseTapmode();
+		api.hideProgress();
+	}
+	
+	//倒计时
+	var maxtime = limitTime;
+	function setTimeDown() {
+		if (maxtime >= 0) {
+			minutes = Math.floor(maxtime / 60);
+			seconds = Math.floor(maxtime % 60);
+			msg = time_2(minutes) + ":" + time_2(seconds);
+			$('#limit-time').html(msg);
+			if (maxtime == dangertime) {
+				openMessage('温馨提示', '支付还剩余最后1分钟', '知道了', '', '', '', null);
+			};
+			--maxtime;
+		} else {
+			clearInterval(timer);
+			openMessage('温馨提示', '支付超时', '退出', '', 'closeWin()', '', null);
+		}
+	}
+	
+	/**
+	 * 打开驾校列表
+	 */
+//	function openSelTcmSchool(){
+//		api.openWin({
+//	       name: 'common_select_under_school_win',
+//	       url: '../../common/common_select_under_school_win.html',
+//	       slidBackEnabled:'false',
+//	       vScrollBarEnabled:'false',
+//	       hScrollBarEnabled:'false',
+//	       reload:true,
+//	       useWKWebView:false,
+//	       pageParam: {
+//	           data:null
+//	       }
+//	    });
+//	}
+	
+	
+	/**
+	 * 选择支付方式 
+	 */
+	function selPayType(e){
+		$(e).parent().find("input[type='radio']").click();
+	}
+	
+	//学时支付
+	function pay(){
+		defaultload('唤起支付中');
+		url = 'api/Simulator/simulatorByTimes';
+		params = {
+			orderId:cache.orderId,
+			learnerId:getUserId(),
+			learnerPhone: $api.getStorage('cache_by_account').cache_account.account,
+			systemType:systemType,
+			learnerTime:cache.sum,
+			recodeDate:cache.lessonListByIdList[0].lessonDate,
+			tcmSchoolId:cache.tcmSchoolId,
+			item:'080005',//模拟器项目
+		}
+		log('+++++',params);
+		clearInterval(timer);//清除定时器
+		ajax_Request(url, 'post', 'json', params, function(ret,err){
+			if(ret){
+				if(ret.code == 0){
+					success_pay();
+				}else{
+					alert_msg(ret.msg);
+				}
+			}else{
+				alert_msg('服务器繁忙，请稍后重试~');
+			}
+		});
+	}
+
+	//处理时间格式
+	function time_2(time) {
+		if (time == 0) {
+			return "00";
+		} else if (time.toString().length == 1) {
+			return "0" + time;
+		} else {
+			return time;
+		}
+	}
+
+	//支付成功
+	function success_pay() {	
+		api.hideProgress();
+		clearInterval(timer);//清除定时器
+		esc_function('simulator_appointment_pay_for_win','','pay_for_next()');
+	}
+	
+	//失败处理
+	function fail_pay(msg) {
+		//定时器继续
+		timer = setInterval(setTimeDown, 1000);
+		api.hideProgress();
+		alert_msg(msg);
+	}
+	
+	//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+	function openMessage(title, content, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+		api.openFrame({
+			name: 'common_alert',
+			url: '../../common/common_alert.html',
+			bgColor: 'rgba(0,0,0,0.4)',
+			rect: {
+				x: 0,
+				y: 0,
+				w: 'auto',
+				h: api.winHeight
+			},
+			bounces: false,
+			pageParam: {
+				title: title,
+				content: content,
+				sureButton: sureButton,
+				sureFunc: sureFunc,
+				cancelButton: cancelButton,
+				cancelFunc: cancelFunc,
+				winName:'simulator_appointment_pay_for_win',
+        		frameName:'',
+				params: params
+			},
+			softInputBarEnabled: true,
+			softInputMode: 'resize'
+		});
+	}
+	
+	
+</script>
+</html>

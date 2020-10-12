@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>账户注销</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+    	#common_title{
+    		font-weight:normal;
+    	}
+
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+            <img src="../icon/common/icon_back_home.png"/>
+        </a>
+        <div class="aui-title" id="common_title">
+        	账户注销
+        </div>
+    </header>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var headerPos;
+	var title = '';
+	var frameName = '';
+	apiready = function(){
+		api.parseTapmode();
+		var header = $api.byId('aui-header');
+		
+		$api.fixStatusBar(header);
+		cache = api.pageParam.data;
+		headerPos = $api.offset(header);
+		openFrame('logout_first',headerPos.h, api.winHeight - headerPos.h,'none');
+	}
+	function openFrame(frameName,y,h,animate){
+		api.openFrame({
+            name: frameName,
+            url: frameName+'.html',
+            bgColor:'#efeff4',
+            rect: {
+                x: 0,
+                y: y,
+                w: 'auto',
+                h: h
+            },
+            animation:{
+	        	type:animate,                //动画类型（详见动画类型常量）
+			    subType:"from_right",       //动画子类型（详见动画子类型常量）
+			    duration:300
+	        },
+            bounces: false,
+            pageParam:{
+            	data:cache
+            },
+            reload:true,
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+	}
+	
+	function closeWin(){
+		api.closeWin({});
+	}
+</script>
+</html>

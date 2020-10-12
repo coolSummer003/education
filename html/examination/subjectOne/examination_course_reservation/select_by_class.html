@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>查询</title>
+		<link rel="stylesheet" type="text/css" href="../../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../../css/aui/aui.css" />
+		<link rel="stylesheet" type="text/css" href="../../../../css/common/common.css" />
+		<style>
+			html,body{
+			background: #FFF;
+		}
+		.aui-media-list .aui-list-item-inner {
+		    display: block;
+		    padding-top: 0.5rem;
+		    padding-bottom: 0rem;
+		}
+    	.aui-searchbar {
+		    display: -webkit-box;
+		    -webkit-box-pack: center;
+		    -webkit-box-align: center;
+		    height: 2.5rem;
+		    overflow: hidden;
+		    width: 89%;
+		    background-color: #fff;
+		    color: #9e9e9e;
+		    -webkit-backface-visibility: hidden;
+		    backface-visibility: hidden;
+		    position: relative;
+		}
+    	.aui-searchbar-cancel{
+		    margin-right: 0.4rem;
+	        color: #03B4F7;
+	        font-size:0.8rem;
+    	}
+    	.aui-bar-nav {
+		    top: 0;
+		    line-height: 2.25rem;
+		    background-color: #FFFFFF;
+		    color: #ffffff;
+		    display: -webkit-inline-box;
+		}
+		.aui-searchbar-input {
+		    margin: 0 0.5rem;
+		    background-color: #ffffff;
+		    border-radius: 0.25rem;
+		    height: 1.7rem;
+		    line-height: 1.7rem;
+		    font-size: 0.9rem;
+		    position: relative;
+		    padding-left: 1.3rem;
+		    display: -webkit-box;
+		    -webkit-box-flex: 1;
+		    border: solid 1px #F1F1F1;
+		}
+		.aui-searchbar-input input {
+		    color: #666666;
+		    width: 100%;
+		    padding: 0 1.5rem 0 0.5rem;
+		    margin: 0;
+		    height: 1.7rem;
+		    line-height: normal;
+		    border: 0;
+		    -webkit-appearance: none;
+		    font-size: 0.8rem;
+		}
+		.ser{
+		    width: 15px;
+		    position: absolute;
+		    top: 0.4rem;
+		    left: 0.4rem;
+		}
+		header img {
+		    width: 1rem;
+		}
+		.img_delete{
+            width: 0.7rem;
+		    height: 0.7rem;
+		    position: absolute;
+		    top: 0.5rem;
+		    right: 0.3rem;
+		    display:none;
+    	}
+    	.aui-bar-nav .aui-btn {
+		    position: relative;
+		    z-index: 20;
+		    height: 2.5rem;
+		    line-height: 2.5rem;
+		    padding-top: 0;
+		    padding-bottom: 0;
+		    margin: 0;
+		    border-radius: 0.1rem;
+		    border-width: 0;
+		    background: #FFF !important;
+		}
+		#label{
+		    padding: 1rem 0.5rem;
+		}
+		#label li{
+    		margin-right: 0.4rem;
+		    font-size: 0.7rem;
+		    padding: 0.3rem 0.5rem;
+		    background: #F8F8F8;
+		    float: left;
+		    margin-bottom: 0.6rem;
+		    color: #6A6A6A;
+		    display: flex;
+		    border-radius: 1rem;
+    	}
+    	#label span{
+    		margin:auto;
+    	}
+    	.bottom-slide{
+			position:relative;
+		}
+		.bottom-slide:after{
+			content: '';
+		    height: 1px;
+		    background: #DDDDDD;
+		    width: 100%;
+		    background-color: #dddddd;
+		    display: block;
+		    -webkit-transform: scaleY(0.3);
+		    transform: scaleY(0.3);
+		    -webkit-transform-origin: 30% 100%;
+		    transform-origin: 30% 100%;
+		    bottom: 0;
+		    position: absolute;
+		}
+    	.history-select{
+    		margin: 1rem 0.5rem;
+    		overflow: hidden;
+    	}
+    	.history-select-title{
+		    padding: 0rem 0.5rem 0.3rem 0.5rem;
+		    color: #8E8E8E;
+		    font-size: 0.6rem;
+    	}
+    	.history-select-title img{
+		    width: 1rem;
+    		float: right;
+    	}
+    	.back-img{
+    		width:2rem;
+    		height:2.6rem;
+    	}
+    	.back-img img{
+    		height: 1.2rem;
+    		width: auto;
+    		margin: 0.7rem 0.5rem;
+    	}
+    	
+    	#score{
+    		height: 1rem;
+    		line-height:1rem;
+    		display: inline-block;
+    		vertical-align: middle;
+    	}
+    	#score li{
+    		float: left;
+    		height: 1rem;
+    		margin-left: 0.1rem;
+    		line-height:1rem;
+    		display: inline-block;
+    		vertical-align: middle;
+    	}
+    	#score li img{
+    		width: 0.7rem;
+    		margin-top: 0.1rem;
+    	}
+    	#label li{
+    		border: solid 1px #F1F1F1;
+		    margin-right: 0.4rem;
+		    font-size: 0.6rem;
+		    padding: 0rem 0.2rem;
+		    background:#F1F1F1;
+    	}
+    	.aui-list .aui-list-item-media {
+		    width: 5.8rem;
+		    height: 5.8rem;
+		    position: relative;
+		    padding: 0.5rem 0;
+		    padding-right: 0.75rem;
+		    display: inherit;
+		    -webkit-flex-shrink: 0;
+		    flex-shrink: 0;
+		    -webkit-flex-wrap: nowrap;
+		    flex-wrap: nowrap;
+		    -webkit-box-align: center;
+		    -webkit-align-items: flex-start;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		}
+		.aui-list .aui-list-item-media img {
+		    width: 100%;
+		    display: block;
+		    height: 100%;
+		    object-fit: cover;
+		}
+		.msg{
+			background: #FFFFFF;
+		    height: 20rem;
+		    text-align: center;
+		    font-size:0.7rem;
+		}
+		.msg img{
+			width:8rem;
+			margin-top: 9rem;
+		}
+		.jiazai{
+    	    font-size: 0.7rem;
+		    background: #FFFFFF;
+		    color: #666565;
+		    padding-bottom: 0.3rem;
+		    text-align: center;
+		    padding-top: 0.3rem;
+	    }
+	    .jiazai img{
+	    	width: 1.5rem;
+	    }
+		.aui-list:after {
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    top: auto;
+		    right: auto;
+		    bottom: 0;
+		    left: 0;
+		    width: 100%;
+		    z-index: 2;
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		    pointer-events: none;
+		}
+		.aui-list .aui-list-item:last-child:after {
+		    height: 2px;
+		}
+		#score span{
+			color:#FFAC67;
+		}
+		.tag-style0{
+			background:#DDEBFF !important;
+			border-color:#DDEBFF !important;
+			color:#75A9CB;
+		}
+		.tag-style1{
+			background:#E9FBF9 !important;
+			border-color:#E9FBF9 !important;
+			color:#63BD9F;
+		}
+		.tag-style2{
+			background:#FDF2E6 !important;
+			border-color:#FDF2E6 !important;
+			color:#ED9366;
+		}
+		#list-label li{
+    		border: solid 1px #F1F1F1;
+		    margin-right: 0.4rem;
+		    font-size: 0.6rem;
+		    padding: 0rem 0.2rem;
+		    background:#F1F1F1;
+    	}
+    	.list-title{
+	    	padding-left: 1rem;
+    		height: 2rem;
+    		line-height: 2rem;
+    	}
+    	.aui-list .aui-list-item-text {
+		    font-size: 0.7rem;
+		    color: #757575;
+		    position: relative;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		    -webkit-align-items: center;
+		    align-items: center;
+		}
+    </style>
+	</head>
+	<body>
+		<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+			<div class='back-img' tapmode onclick="closeWin();">
+				<img src="../../../../icon/common/icon_header_return.png">
+			</div>
+			<div class="aui-searchbar" id="search" style="overflow: visible">
+				<div class="aui-searchbar-input aui-border-radius" style="overflow: visible">
+					<form action="javascript:search();" id="search-form">
+						<img src="../../../../icon/common/icon_search.png" alt="" class="ser" />
+						<input type="search" id="search-input">
+						<img src="../../../../icon/common/icon_delete.png" alt="" class="img_delete" />
+					</form>
+				</div>
+				<div class="aui-searchbar-cancel" onclick="search()">搜索</div>
+			</div>
+		</header>
+		<div class="history-select">
+			<div class="history-select-title bottom-slide">
+				<span>历史搜索</span>
+				<img src="../../../../icon/common/icon_garbage.png" alt="" tapmode onclick='deleteIndexSearch()' class="aui-hide" />
+			</div>
+			<ul id="label">
+			</ul>
+		</div>
+		<script type="text/template" charset="utf-8" id='search_src'>
+			{{ for(var i=it.length-1;i>=(it.length-10 < 0?0:it.length-10);i--){ }}
+			<li tapmode onclick='clickRecode(this)'><span>{{=it[i]}}</span></li>
+		{{ } }}
+	</script>
+
+		<!-- 驾校列表数据 -->
+		<div class="aui-content aui-hide">
+			<div class='list-title'>培训中心搜索结果</div>
+			<ul class="aui-list aui-media-list" id="driverSchool">
+
+			</ul>
+		</div>
+		<script type="text/template" charset="utf-8" id='driverSchool_src'>
+			{{ for(var i=0;i<it.length;i++){ }}
+	    	<li class="aui-list-item" tapmode onclick="openDriverSchool('{{=it[i].name}}','{{=it[i].id}}','{{=it[i].district.cityName + it[i].district.districtName}}')">
+	            <div class="aui-media-list-item-inner">
+	                <div class="aui-list-item-media">
+	                    <img src="{{=file_load_url + it[i].logo}}" onerror="javascript:this.src='../../../../icon/default/icon_default_list.png'">
+	                </div>
+	                <div class="aui-list-item-inner">
+	                    <div class="aui-list-item-text">
+	                        <div class="aui-list-item-title aui-ellipsis-1" style="width: 11rem;">{{=it[i].name}}</div>
+	                    </div>
+	                    <div class="aui-list-item-text jz">
+	                    	<ul id="score">
+	                    		{{=calcuStar(it[i].score)}}
+	                    	</ul>
+	                    	<div class="aui-info-item">
+	                        	<!-- <img src="../../../../icon/common/icon_location.png" style="width:0.4rem"/> -->
+	                        	<span class="aui-margin-l-5">{{=calcuDistance(it[i].distance)}}</span>
+	                        </div>
+	                    </div>
+	                    <div class="aui-list-item-text jz">
+	                        <div class="aui-list-item-title aui-ellipsis-2">
+	                        	<span class='txt-yep txt-small'></span>
+	                        	<span class='txt-yellow txt-small'></span>
+	                        	<span class='txt-yellow txt-big'>
+	                        
+                        			<span class='txt-yellow txt-big'>
+	                        	
+		                        	</span>
+		                        	<span class='txt-yellow txt-small'></span>
+                        		
+                        			<span class='txt-yellow txt-small'></span>
+                        	
+	                        	</span>
+	                        </div>
+	                        <div class="aui-info-item">{{=it[i].district.cityName}} {{=it[i].district.districtName}}</div>
+	                    </div>
+	                    <div class="aui-info aui-margin-t-5" style="padding:0">
+	                        <div class="aui-info-item">
+	                    		<ul id="list-label">
+		                    		{{=getLabelList(it[i].tags)}}
+		                    	</ul>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </li>
+        {{ } }}
+    </script>
+
+
+	</body>
+	<script type="text/javascript" src="../../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var keyWord = "";
+		var bMap;
+		apiready = function() {
+			var search = $api.byId('aui-header');
+			bMap = api.require('bMap');
+			$api.fixStatusBar(search);
+			cache = api.pageParam;
+			setTimeout(function() {
+				document.getElementById("search-input").focus()
+			}, 300)
+			loadHistorySearch(); //加载历史搜索记录
+		};
+
+		//加载历史搜索记录
+		var cache_by_account;
+		var history_search_cache;
+		var index_search = [];
+		//缓存结构查看svn上的apicloud文档说明 
+		function loadHistorySearch() {
+			cache_by_account = $api.getStorage('cache_by_account');
+			//console.log('cache_by_account：'+JSON.stringify(cache_by_account));
+			if ($.isPlainObject(cache_by_account)) {
+				history_search_cache = cache_by_account.history_search_cache; //历史搜索
+				if ($.isPlainObject(history_search_cache)) {
+					index_search = history_search_cache.index_search //首页的历史搜索
+					//console.log('index_search:'+JSON.stringify(index_search));
+					if ($.isArray(index_search)) {
+						var search_src = $('#search_src').html();
+						if (index_search.length > 0) {
+							$('.history-select-title').find('img').removeClass('aui-hide');
+						} else {
+							$('.history-select-title').find('img').addClass('aui-hide');
+						}
+						$('#label').html(doT.template(search_src)(index_search));
+					} else {
+						history_search_cache.index_search = [];
+						$api.setStorage('history_search_cache', history_search_cache);
+					}
+				} else {
+					history_search_cache = {
+						index_search: index_search
+					}
+					cache_by_account.history_search_cache = history_search_cache
+					$api.setStorage('cache_by_account', cache_by_account);
+				}
+			} else {
+				cache_by_account = {
+					history_search_cache: {
+						index_search: []
+					}
+				}
+				$api.setStorage('cache_by_account', cache_by_account);
+			}
+		}
+
+		// 关闭当前框架
+		function closeFrame() {
+			esc_function(cache.winName, cache.frameName, 'viewSearch()'); //原先的输入框显示
+			api.closeFrame({});
+		}
+
+		// 搜索样式处理
+		function search() {
+			if ($('#search-input').val() == '') {
+				alert_msg('请输入搜索内容');
+				return;
+			}
+			cache_by_account.history_search_cache.index_search.push($('#search-input').val());
+			index_search = removeDuplicatedItem(cache_by_account.history_search_cache.index_search);
+			cache_by_account.history_search_cache.index_search = index_search;
+			$api.setStorage('cache_by_account', cache_by_account);
+			loadHistorySearch();
+			keyWord = $('#search-input').val();
+			//$(".img_delete").click();
+			//执行搜索
+			selectContent();
+		}
+
+		//调用接口开始搜索
+		function selectContent() {
+			defaultload('搜索中');
+			url = 'api/courseReservation/courseReservation/list';
+			params = {
+
+				//	        	sortType:sortType - 0 + 1,
+				//	        	sort:sort,
+				page: 1,
+				limit: 5,
+				name: keyWord
+			}
+
+			mylocation(function(location_result) { //获取当前定位
+				if (location_result.status) { //有定位权限
+					//驾校传参
+					params.lng = location_result.lon;
+					params.lat = location_result.lat;
+				}
+				log('搜索结果', params);
+				ajax_Request(url, 'get', 'json', params, function(ret, err) {
+					log('搜索结果', ret);
+					api.hideProgress();
+					if (ret) {
+						//驾校
+						if (ret.code == 0 && ret.courseReservationCenterList.length > 0) {
+							var driverSchool_src = $('#driverSchool_src').html();
+							$("#driverSchool").html(doT.template(driverSchool_src)(ret.courseReservationCenterList));
+							$('#driverSchool').parent().removeClass('aui-hide');
+						} else {
+							$('#driverSchool').parent().addClass('aui-hide');
+						}
+
+
+
+						if (ret.code == 0 && ret.courseReservationCenterList.length == 0 && ret.courseReservationCenterList.length ==
+							0) {
+							alert_msg('无搜索结果');
+						}
+					} else {
+						alert_msg('服务器繁忙，请稍后重试');
+					}
+				});
+			});
+		}
+
+		//点击搜素记录
+		var recode;
+
+		function clickRecode(e) {
+			recode = $(e).find('span').html();
+			$('#search-input').val(recode);
+			$(".img_delete").css("display", "block");
+			keyWord = $('#search-input').val();
+			//执行搜索
+			selectContent();
+		}
+
+		var star_light_num = 0; //亮星星
+		var star_dark_num = 0; //暗星星
+		function calcuStar(score) {
+			var star_menu = '';
+			star_light_num = Math.round(score);
+			star_dark_num = 5 - star_light_num;
+			for (var i = 0; i < star_light_num; i++) {
+				star_menu += '<li><img src="../../../../icon/common/icon_xing_light.png" alt="" /></li>';
+			}
+			for (var i = 0; i < star_dark_num; i++) {
+				star_menu += '<li><img src="../../../../icon/common/icon_xing_dark.png" alt="" /></li>';
+			}
+			if ((score + '').length == 1) {
+				score = score + '.0';
+			}
+			star_menu += '<li><span>' + (score) + '</span></li>';
+			return star_menu;
+		}
+		//清除首页历史搜索
+		function deleteIndexSearch() {
+			cache_by_account.history_search_cache.index_search = [];
+			$api.setStorage('cache_by_account', cache_by_account);
+			loadHistorySearch();
+		}
+
+		// 关闭当前框架
+		function closeWin() {
+			api.closeWin({});
+		}
+
+		//监听输入框输入
+		$('#search-input').bind('input propertychange', function() {
+			if ($(this).val() != '') {
+				$(".img_delete").css("display", "block");
+			} else {
+				$(".img_delete").css("display", "none");
+			}
+		});
+		$(".img_delete").click(function() {
+			$("#search-input").val("");
+			$(".img_delete").css("display", "none");
+			keyWord = "";
+		})
+		//监听失去焦点
+		$("#search-input").blur(function() {
+			//	    closeFrame();
+		});
+
+		//标签加载
+		function getLabelList(tags) {
+			var menu = "";
+			if (tags != '' && tags != undefined && tags != null) {
+				var tagList = tags.split(',');
+				for (var i = 0; i < (tagList.length > 3 ? 3 : tagList.length); i++) {
+					menu += "<li class='tag-style" + i + "'><span>" + getLabelName(tagList[i]) + "</span></li>";
+				}
+			}
+			return menu;
+		}
+
+		//压缩图片
+		function smallerPic(e) {
+			returnSmallerPic($(e).attr('src'), function(url) {
+				$(e).attr('src', url);
+			});
+		}
+
+		//打开课程预约详情页面
+		function openDriverSchool(d_school_name, id, are_name) {
+			var data = {
+				d_school_name: d_school_name,
+				id: id,
+				are_name: are_name
+			}
+			commonOpenWin('examination_course_reservation_detailed_win', data);
+		}
+		//医院体检支持
+		function support(offline) {
+			menu = '';
+			if (offline != undefined) {
+				if (offline.indexOf('线上体检') != -1) {
+					menu += '<div style="float: left;color: #000;">线上体检:支持</div>'
+				} else {
+					menu += '<div style="float: left;color: #000;">线上体检:不支持</div>'
+				}
+				if (offline.indexOf('线下体检') != -1) {
+					menu += '<div style="float: right;color: #000;">线下体检:支持</div>'
+				} else {
+					menu += '<div style="float: right;color: #000;">线下体检:不支持</div>'
+				}
+			}
+			return menu;
+		}
+
+		//打开医院详情页面
+		function openHospital(id, name, onoffLine) {
+			var data = {
+				id: id,
+				name: name,
+				onoffLine: onoffLine
+			}
+			commonOpenWin('hospital_detail_win', data);
+		}
+	</script>
+</html>

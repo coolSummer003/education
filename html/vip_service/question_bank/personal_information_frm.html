@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>填写个人信息</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_list_swipe.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			body,html{
+    		background: #FFF;
+    	}
+    	.aui-list-item-input input{
+    		text-align: right;
+    	}
+    	.aui-list-item-label img{
+    		width: 0.7rem;
+    	}
+    	.aui-list-item-input p{
+    		width: 100%;
+    		font-size: 0.6rem;
+    		color: #9D9EA7;
+    	}
+    	.aui-list:after{
+    		height: 0;
+    	}
+    	.leftImg{
+    		width: 10% !important;
+    		margin-top: -10% !important;
+    		height: 100%;
+    		/*vertical-align: text-top;*/
+    	}
+    	.bottom_btn{
+    		margin-top: 3rem;
+    		width: 100%;
+    	}
+    	.btn{
+    		width: 94%;
+    		background: #443636;
+    		text-align: center;
+    		margin: auto;
+    		border-radius: 25px;
+    		color: #FFC696;
+    		height: 2.2rem;
+    		line-height: 2.2rem;
+    	}
+    </style>
+	</head>
+	<body>
+		<ul class="aui-list aui-form-list none-top-style">
+			<li class="aui-list-item">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label">
+						科目
+					</div>
+					<div class="aui-list-item-input">
+						<input type="text" placeholder="科目获取中..." value="" id="subject" readonly>
+					</div>
+				</div>
+			</li>
+			<li class="aui-list-item">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label" style="width: 70% !important;">
+						科目一理赔生效时间
+					</div>
+					<div class="aui-list-item-input">
+						<input type="text" placeholder="生效时间获取中..." value="" id="subject_two_time" readonly>
+					</div>
+				</div>
+			</li>
+			<li class="aui-list-item">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label" style="width: 70% !important;">
+						科目四理赔生效时间
+					</div>
+					<div class="aui-list-item-input">
+						<input type="text" placeholder="生效时间获取中..." value="" id="subject_four_time" readonly>
+					</div>
+				</div>
+			</li>
+
+			<!--<li class="aui-list-item aui-list-item-arrow">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		考试所在地
+	                </div>
+	                <div class="aui-list-item-input" id="exam_area">
+	                </div>
+	            </div>
+	        </li>-->
+			<li class="aui-list-item">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label">
+						考试所在地
+					</div>
+					<div class="aui-list-item-input">
+						<input type="text" placeholder="请选择考试所在地" id="provinceAndCity" readonly>
+					</div>
+				</div>
+			</li>
+			<li class="aui-list-item">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label">
+						所报驾校
+					</div>
+					<div class="aui-list-item-input">
+						<input type="text" placeholder="请填写您报名的驾校" value="" id="drive_school">
+					</div>
+				</div>
+			</li>
+			<li class="aui-list-item">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label">
+						姓名
+					</div>
+					<div class="aui-list-item-input">
+						<input type="text" placeholder="请填写您的姓名" value="" id="name">
+					</div>
+				</div>
+			</li>
+			<li class="aui-list-item">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label">
+						身份证号
+					</div>
+					<div class="aui-list-item-input">
+						<input type="text" placeholder="请填写您的身份证号" value="" id="idcard_no">
+					</div>
+				</div>
+			</li>
+			<li class="aui-list-item">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label">
+						联系电话
+					</div>
+					<div class="aui-list-item-input">
+						<input type="text" placeholder="请填写您的手机号" value="" id="phone">
+					</div>
+				</div>
+			</li>
+			<li class="aui-list-item" style="margin-top: 1rem;">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label leftImg">
+						<img src="../../../icon/vip/question_bank/icon_vip_tag.jpg" />
+					</div>
+					<div class="aui-list-item-input">
+						<p>温馨提示：为了保障您能够正常获得补偿的权益，请如是填写以上信息，一个身份证只能获得一次补偿，如因填写有误造成无法获得补偿，责任将由您自行承担。</p>
+					</div>
+				</div>
+			</li>
+
+		</ul>
+
+		<div class="bottom_btn">
+			<div class="btn">提交</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			loadAddress("undefined");
+		};
+
+		//加载省市区
+		function loadAddress(district) {
+			var juageNull = (district == undefined || district.districtCd == undefined);
+			if (!juageNull) {
+				$('#provinceAndCity').val(district.province + ' ' + district.city + ' ' + district.area);
+				dirId = district.districtCd;
+			}
+			addressView = api.require('addressView'); //省市区
+			addressView.open({
+				file_addr: 'widget://res/district.txt',
+				selected_color: '#ff0000',
+				pro_id: juageNull ? 330000 : district.provinceCd.toString().substring(0, 6), //省id
+				city_id: juageNull ? 330600 : district.cityCd.toString().substring(0, 6), //市id
+				dir_id: juageNull ? 330682 : district.areaCd.toString().substring(0, 6) //区id  这几个必须传
+			});
+			$api.addEvt($api.byId("provinceAndCity"), 'click', function() {
+				addressView.show({}, function(ret, err) {
+					if (ret.status) {
+						log("地区：", ret)
+						//					$('#provinceAndCity').val(ret.data[0].name + ' '+ ret.data[1].name + ' ' + ret.data[2].name);
+						$('#provinceAndCity').val(ret.data[2].name);
+						dirId = ret.data[2].id + "000"; //区code
+					} else {
+						alert_msg('加载省市区出错');
+					}
+				});
+			});
+		}
+	</script>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>订单详情通用win</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<style>
+			html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+    	#common_title{
+    		font-weight:normal;
+    	}
+    	footer{
+    		height: 2rem;
+		    position: absolute;
+		    bottom: 0;
+		    width: 100%;
+	        padding-top: 0.4rem;	
+            border-top: solid 1px #F1F1F1;
+            font-size: 0.7rem;
+    	}
+    	footer img{
+    		height:0.8rem;
+    		margin-bottom: -0.15rem;
+    	}
+    	.order li{
+            float: left;
+		    font-size: 0.7rem;
+	        width: 33.33%;
+    		text-align: center;
+	    }
+	    .order{
+		    height: 2rem;
+		    line-height: 2rem;
+		    position: relative;
+	        background: #FFFFFF;
+		}
+	    .order img{
+		    width: 0.4rem;
+   			margin-bottom: 1px;
+   			-webkit-transition: 0.3s ease;
+		}
+		.active{
+	    	color: #FF9138;
+    		/* border-bottom: solid 2px; */
+	    }
+	    .aui-btn{
+	    	color: #646B7E !important;
+	    }
+    </style>
+	</head>
+	<body>
+		<!-- 通用头部 -->
+		<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+				<img src="../../icon/common/icon_header_return.png">
+			</a>
+			<div class="aui-title" id="common_title">
+				订单详情
+			</div>
+			<a class="aui-pull-right aui-btn aui-hide" tapmode onclick="cancelOrder()">
+				<span>取消订单 </span>
+			</a>
+		</header>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var headerPos;
+		var title = '';
+		var frameName = ''; //设置的frame名称
+		var frameUrl = ''; //设置的frame资源所在未知
+		var bounces = false; //是否弹动
+		apiready = function() {
+			api.parseTapmode();
+			var header = $api.byId('aui-header');
+			$api.fixStatusBar(header);
+			cache = api.pageParam.data;
+			switch (cache.type) {
+				case 'register-order':
+					title = '驾校报名详情';
+					frameName = 'record_school_register_detail_frm';
+					frameUrl = './record_school_register_detail_frm.html';
+					break;
+				case 'examination-order':
+					title = '体检订单详情';
+					frameName = 'record_hospital_examintion_detail_frm';
+					frameUrl = './record_hospital_examintion_detail_frm.html';
+					break;
+				case 'appointment-before-exam-order':
+					title = '训练订单详情';
+					frameName = 'record_appontment_before_exam_detail_frm';
+					frameUrl = './record_appontment_before_exam_detail_frm.html';
+					break;
+				case 'appointment-before-exam-order-by-learner':
+					title = '训练订单详情';
+					frameName = 'record_appontment_before_exam_order_detail_frm';
+					frameUrl = './record_appontment_before_exam_order_detail_frm.html';
+					break;
+				default:
+					title = '未知';
+			}
+			headerPos = $api.offset(header);
+			$('#common_title').html(title);
+			openFrame(headerPos.h, api.winHeight - headerPos.h, 'none', bounces);
+		}
+
+		function openFrame(y, h, animate, bounces) {
+			api.openFrame({
+				name: frameName,
+				url: frameUrl,
+				bgColor: '#efeff4',
+				rect: {
+					x: 0,
+					y: y,
+					w: 'auto',
+					h: h
+				},
+				animation: {
+					type: animate, //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300
+				},
+				bounces: bounces ? true : false,
+				pageParam: {
+					data: cache
+				},
+				reload: true,
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+
+		/**
+		 * 显示取消按钮 
+		 */
+		function showCancelButton() {
+			$('.aui-pull-right').removeClass('aui-hide');
+		}
+		/**
+		 * 隐藏取消按钮 
+		 */
+		function hideCancelButton() {
+			$('.aui-pull-right').addClass('aui-hide');
+		}
+
+		/**
+		 * 取消订单 
+		 */
+		function cancelOrder() {
+			openMessage('温馨提示', '确定取消该订单吗？', '确定', '不了', 'sureCancel()', '', null);
+		}
+
+		function sureCancel() {
+			if (cache.type == 'register-order') {
+				defaultload('取消订单中');
+				url = 'api/driving-school-registration/cancel-registration';
+				params = {
+					id: cache.orderId
+				}
+				ajax_Request(url, 'put', 'json', params, function(ret, err) {
+					api.hideProgress();
+					if (ret) {
+						if (ret.code == 0) {
+							alert_msg('取消成功');
+							hideCancelButton();
+							sendEvent('register_pay_sucesss', {});
+							//重新渲染我的
+							//esc_function('index','mine','func_init(1)');
+							//重新渲染详情
+							//esc_function('record_order_detail_win','record_school_register_detail_frm','init()');
+							//重新渲染列表
+							//esc_function('record_order_list_win','record_school_register_list_frm','refreshList()');
+						} else {
+							alert_msg(ret.msg);
+						}
+					} else {
+						alert_msg('网络出错');
+					}
+				});
+			} else if (cache.type == 'examination-order') {
+				defaultload('取消订单中');
+				url = 'api/examination/cancel-examination';
+				params = {
+					orderId: cache.orderId,
+					learnerId: getUserId()
+				}
+				ajax_Request(url, 'put', 'json', params, function(ret, err) {
+					api.hideProgress();
+					if (ret) {
+						if (ret.code == 0) {
+							alert_msg('取消成功');
+							hideCancelButton();
+							sendEvent('hospital_pay_submit', {}); //重新渲染医院详情，体检列表，体检详情
+							//重新渲染我的
+							//esc_function('index','mine','func_init(0)');
+							//重新渲染详情
+							//esc_function('record_order_detail_win','record_hospital_examintion_detail_frm','init()');
+							//重新渲染列表
+							//esc_function('record_order_list_win','record_hospital_examintion_list_frm','refreshList()');
+						} else {
+							alert_msg(ret.msg);
+						}
+					} else {
+						alert_msg('网络出错');
+					}
+				});
+			}
+		}
+
+		function closeWin() {
+
+			if (cache.type == 'examination-order') {
+					
+					setTimeout(function() {
+						// api.closeToWin({
+						// 	name: 'record_order_list_win',
+						// 	animation:{
+						// 		type:"movein",
+						// 		subType:"from_left"
+						// 	}
+						// });
+						
+						var params = {
+							type: 'more-examination-order'
+						}
+						api.openWin({
+							name: 'record_order_list_win',
+							url: './record_order_list_win.html',
+							slidBackEnabled: 'true',
+							vScrollBarEnabled: 'false',
+							hScrollBarEnabled: 'false',
+							reload: true,
+							pageParam: {
+								data: params
+							},
+							animation: {
+								type: "movein",
+								subType: "from_left"
+							}
+						});
+					}, 300)
+					
+
+
+			} else {
+				api.closeWin({});
+			}
+
+		}
+	</script>
+</html>

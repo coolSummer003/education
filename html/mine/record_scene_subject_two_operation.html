@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>科目三实操训练记录</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_list_swipe.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<style>
+			body,html{
+    		background:#FFF;
+    	}
+    	.aui-list:before {
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    right: auto;
+		    bottom: auto;
+		    width: 100%;
+		    z-index: 2;
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		    pointer-events: none;
+		}
+		.room_list{
+	    	overflow: hidden;
+	    	zoom: 1;
+		}
+		.room_list_div{
+			overflow-x:hidden;
+			width:100%;
+		}
+		.list_div{
+		    min-height: 2.2rem;
+    		padding: 0 0.3rem;
+			background: #FFF;
+			transition: all 0.5s;
+			-webkit-transition: all 0.5s;
+		    position: relative;
+		}
+		.list_div:after{
+			content: '';
+		    height: 1px;
+		    background: #DDDDDD;
+		    width: 100%;
+		    background-color: #dddddd;
+		    display: block;
+		    -webkit-transform: scaleY(0.5);
+		    transform: scaleY(0.5);
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		}
+		.swipeleft{
+			min-height:2.2rem;
+			padding: 0 0.3rem;
+			background: #FFF;
+			transition: all 0.5s;
+			-webkit-transition: all 0.5s;
+			transform:translateX(-50%);
+			-webkit-transform:translateX(-50%);
+		    position: relative;
+		}
+		.swipeleft:after{
+			content: '';
+		    height: 1px;
+		    background: #DDDDDD;
+		    width: 100%;
+		    background-color: #dddddd;
+		    display: block;
+		    -webkit-transform: scaleY(0.5);
+		    transform: scaleY(0.5);
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		}
+		.recode-title{
+			height:1.5rem;
+			font-size:0.7rem;
+			line-height:1.5rem;
+		    padding-top: 0.3rem;
+		}
+		.recode-title img{
+		    height: 1rem;
+		    width: 1rem;
+		    margin-bottom: -0.2rem;
+		    border-radius: 100%;
+		    object-fit: cover;
+		    margin-right: 0.2rem;
+		}
+		.recode-title font{
+			color:#7D7D7D;
+			font-size: 0.6rem;
+		}
+		.recode-content{
+			width:100%;
+			overflow:hidden;
+			margin-top: 0.5rem;
+			position: relative;
+		}
+		.recode-img{
+			width:20%;
+			float:left;
+		}
+		.recode-img_div{
+			width:3.5rem;
+			height:3.5rem;
+		    margin: auto;
+		}
+		.recode-img_div img{
+			width:100%;
+			height:100%;
+			object-fit:cover;
+		}
+		.recode-txt{
+		    padding: 0 0.5rem;
+	        position: relative;
+		}
+		.txt-title{
+			font-size: 0.7rem;
+		    position: relative;
+		    overflow: hidden;
+		    margin-top: 0.1rem;
+		}
+		.txt-start{
+			font-size:0.7rem;
+			color:#7D7D7D;
+		}
+		.txt-submit-time{
+			font-size:0.7rem;
+			color:#7D7D7D;
+		}
+		.txt-price{
+			font-size: 0.6rem;
+		    text-align: right;
+	        height: 1.5rem;
+    		line-height: 1.5rem;
+		}
+		.txt-price span{
+			font-size:0.8rem;
+		    color: #FF9641;
+		}
+		.recode-status{
+	        font-size: 0.6rem;
+		    position: absolute;
+		    right: 0.5rem;
+		    background: #1E8DD8;
+		    color: #FFF;
+		    padding: 1px 0.2rem;
+		    z-index: 1;
+		}
+		.w-orange{
+			color:#FF9641;
+		}
+		.txt-title span{
+			color:#7D7D7D;
+		}
+		.recode-title span{
+			color:#4D92E3;
+		}
+		.label{
+		    font-size: 0.5rem;
+		    background: #FDF2E6;
+		    color: #EE9A70;
+		    border:solid 1px #FDF2E6;
+		    float: left;
+		    padding: 0rem 0.1rem;
+		    margin-top: 0.1rem;
+		    margin-right:0.5rem;
+		}
+		.label-status{
+		    font-size: 0.5rem;
+		    border:solid 1px #EE9A70;
+		    color: #EE9A70;
+		    float: left;
+		    padding: 0rem 0.2rem;
+		    margin-top: 0.1rem;
+		    margin-right:0.5rem;
+		}
+		.msg{
+			background: #FFFFFF;
+		    height: 20rem;
+		    text-align: center;
+		    font-size:0.7rem;
+		}
+		.msg img{
+			width:8rem;
+			margin-top: 9rem;
+		}
+		.jiazai{
+    	    font-size: 0.7rem;
+		    background: #FFFFFF;
+		    color: #666565;
+		    padding-bottom: 0.3rem;
+		    text-align: center;
+		    padding-top: 0.3rem;
+	    }
+	    .jiazai img{
+	    	width: 1.5rem;
+	    }
+	    .order-button{
+    		overflow: hidden;
+		    padding: 0.5rem 0rem;
+	    }
+	    .op-button{
+	    	color: #535860;
+		    font-size: 0.7rem;
+		    text-align: center;
+		    border-radius: 1rem;
+		    float: right;
+		    margin-left: 0.5rem;
+		    background: #F1F2F4;
+	        padding: 0.1rem 0.6rem;
+	    }
+	    .unabled{
+	    	color:#909090;
+	    }
+	    .unabled-cash{
+	    	color:#EE9A70;
+	    	background:#FDF2E6;
+	    }
+	    .order-button-detail{
+	    	color:#03A9F4;
+	    	background:#E8F7FA;
+	    }
+    </style>
+	</head>
+	<body>
+		<!--<div class="aui-bar aui-bar-btn aui-bar-btn-full " id="bar">
+
+			<div class="aui-bar-btn-item aui-active">规定培训时间：6h</div>
+
+			<div class="aui-bar-btn-item aui-sum">实际培训时间:0h</div>
+
+		</div>-->
+		<div class="room_list">
+			<div class="room_list_div">
+				<!-- <div class="list_div">
+				<div class='recode-title'>
+					<img src="../../image/demo/school/2.jpg" alt="" />
+					<span>上虞海滨考场<font>&ensp;500米</font></span>
+				</div>
+				<div class='recode-content'>
+					<div class='recode-txt'>
+						<div class='txt-title'><span>训练时间：</span>2019-4-26</div>
+						<div class='txt-title'><span>区域：</span>A区&emsp;<span>线路：</span>线路1&emsp;<span>班次：</span>白班</div>
+						<div class='txt-price'>共3个学员&emsp;实际支付
+							<font style='color: #FF9641;'>￥</font>
+							<span>150.0</span>
+							<font style='color: #FF9641;'>（优惠300）</font>
+						</div>
+						<div class='order-button'>
+							<span class="op-button">
+					    					地图导航
+			    			</span>
+							<span class="op-button unabled">
+					    					已支付
+			    			</span>
+						</div>
+					</div>
+				</div>
+			</div> -->
+			</div>
+		</div>
+		<div id='load_div'>
+		</div>
+		<script type="text/template" charset="utf-8" id='load_src'>
+			<div class="load">
+			<img src="../../icon/common/loadding.gif" alt="" /><br>
+        	<span>加载中...</span>
+		</div>
+    </script>
+		<script type="text/template" charset="utf-8" id='msg_src'>
+			<div class="msg">
+			<img src="../../icon/common/empty.png" alt="" /><br>
+        	<span>{{=it.msg}}</span>
+		</div>
+    </script>
+		<script type="text/template" charset="utf-8" id='more_src'>
+			<div class="jiazai">
+	    	<span>{{=it.msg}}</span>
+	    </div>
+    </script>
+		<script type="text/template" charset="utf-8" id='recode_practice_src'>
+
+			{{ for(var i=0;i<it.length;i++){ }}
+			<div class="list_div">
+				<div class='recode-title'>
+					<img src="{{=file_load_url + it[i].logo}}" alt="" onerror="javascript:this.src='../../icon/default/icon_default.png'"/>
+					<span>{{=it[i].centername}}<font>&ensp;{{=calcuDistance(it[i].distance)}}</font></span>
+				</div>
+				
+				<div class='recode-content'>
+					<div class='recode-txt'>
+						<div class='txt-title'>
+							<span>培训车型：</span>{{=it[i].carType}}						
+						</div>
+						<div class='txt-title'>
+						<span>培训日期：</span>{{=it[i].lessonDate}}&emsp;
+							<span>培训时间：</span>{{=it[i].beginTime}}~{{=it[i].endTime}}
+						</div>
+						
+						<div class='txt-price'>
+							实际支付
+							<font style='color: #FF9641;'>￥</font>
+							<span>{{=cashFormatO(it[i].price)}}</span>
+							
+						</div>
+						<div class='order-button'>
+							<span class="op-button" tapmode onclick="openMap('{{=it[i].centername}}','{{=it[i].latitude}}','{{=it[i].longitude}}')">
+		    					地图导航
+			    			</span>
+			    			<span class="op-button">
+		    					已支付
+			    			</span>
+			    			{{ if(it[i].practicalTestLessonOrderDetail.refundStatus == 0){ }}
+		    					<span class="op-button order-button-detail" onclick="refundApply('{{=it[i].practicalTestLessonOrderDetail.id}}','{{=it[i].centername}}','{{=it[i].price}}','{{="训练日期：" + it[i].lessonDate + "/" + "课程日期：" + it[i].beginTime + "~" + it[i].endTime + "/" + "培训地点：" + it[i].centername + "/" + "培训车型：" + it[i].carType}}','{{=it[i].logo}}','{{=it[i].lessonDate}}')">
+									申请退款
+								</span>
+								{{ }else if(it[i].practicalTestLessonOrderDetail.refundStatus == 1){ }}
+								<span class="op-button order-button-detail">
+									退款中
+								</span>
+								<span class="op-button order-button-detail" onclick="cancelRefund('{{=it[i].practicalTestLessonOrderDetail.id}}')">
+									取消退款
+								</span>
+								{{ }else if(it[i].practicalTestLessonOrderDetail.refundStatus == 2){ }}
+								<span class="op-button order-button-detail">
+									已退款
+								</span>
+								{{ }else if(it[i].practicalTestLessonOrderDetail.refundStatus == 9){ }}
+								<span class="op-button order-button-detail">
+									退款失败
+								</span>
+							{{ } }}
+						</div>
+					</div>
+				</div>
+			</div>
+		{{ } }}
+	</script>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var page = 1,
+			limit = 10;
+		var load_src = $('#load_src').html(); //加载src
+		var msg_src = $('#msg_src').html(); //消息提示src
+		var more_src = $('#more_src').html(); //更多src
+		var bMap;
+		var refresh = true; //标记是否是刷新操作
+		var params;
+		var data;
+
+		var FNImageClip;
+		var imageFilter;
+		var systemType;
+		var cache;
+		var id;//id
+		var version;//版本
+		var bMap;
+		var lon;//坐标
+		var lat;//坐标
+		var sourceEile;//相机源文件
+
+		var startSignPicAddress;//签到图片链接(阿里云)
+		apiready = function(){
+			cache = api.pageParam.data;
+		
+			defaultload('获取中');
+			imageFilter = api.require('imageFilter'); //图片压缩
+			FNImageClip = api.require('FNImageClip'); //图片裁剪
+			systemType = api.systemType;
+			bMap = api.require('bMap');
+			cache = api.pageParam;
+			log('cache', cache);
+			
+			goRefrash(40, '#FFFFFF', null, null, function() {
+				refreshList();
+			});
+			
+			goLoad(function(ret, err) {
+				log('goLoad上拉加载',page);
+				loadList();
+			});
+			init();
+			toEventListener('simulator_refund_apply',function(ret,err){
+		    		init();
+		   	});
+		}
+		//列表刷新
+		function refreshList() {
+			page = 1;
+			refresh = true;
+			setLoad();
+			log('page下拉刷新',page);
+			init();
+		}
+		
+		//列表上拉
+		function loadList() {
+			page++;
+			refresh = false;
+			setLoad();
+			log('page上拉加载',page);
+			init();
+		}
+		//获取列表
+		function init() {
+			log('pagepage',page);
+
+			mylocation(function(location_result) { //获取当前定位
+				url = 'api/PracticalTest/get/learnerMessage';
+				params = {
+					learnerId: getUserId(),
+					limit: limit,
+					page: page
+				}
+				if(location_result.status){//有定位权限
+		        //驾校传参
+			        params.lng = location_result.lon;
+			        params.lat = location_result.lat;
+				}
+				log('params上传刷新',params);
+				ajax_Request(url, 'get', 'json', params, function(ret, err) {
+					console.log("ter::"+JSON.stringify(ret));
+					if (ret) {
+						closedefaultload();
+						data = ret.lessonMessageList;
+						if (ret.code == 0 && data.length > 0) {
+//							$('.aui-sum').html('实际培训时间:' + ret.trainingTimeSum + 'h');
+							var recode_practice_src = $('#recode_practice_src').html();
+
+							if (refresh || $('.room_list_div').find('.list_div').length == 0) {
+
+								$('.room_list_div').html(doT.template(recode_practice_src)(data));
+
+							} else {
+
+								$('.room_list_div').append(doT.template(recode_practice_src)(data));
+
+							}
+						} else {
+							setMsg(refresh ? '暂无预约数据' : '暂无更多');
+						}
+					} else {
+						setMsg('服务器繁忙，请稍后再试');
+					}
+					setTimeout(function() {
+						api.refreshHeaderLoadDone();
+					}, 300);
+				});
+			});
+		}
+		
+		//设置页面加载的画面
+		function setLoad() {
+			if (refresh || $('.room_list_div').find('.list_div').length == 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+				$('#load_div').html('');
+				$(".room_list_div").html(doT.template(load_src)(null));
+
+			} else {
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': '加载更多中...',
+						'img': '../../icon/common/jiazai.gif'
+					}));
+				}, 300);
+			}
+		}
+		//设置页面提示信息
+		function setMsg(msg) {
+			if (refresh || $('.room_list_div').find('.list_div').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+				setTimeout(function() {
+					$(".room_list_div").html(doT.template(msg_src)({
+						'msg': msg
+					}));
+				}, 300);
+			} else { //原先已经有数据的情况下
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': msg,
+						'img': ''
+					}));
+				}, 300);
+			}
+		}
+		//打开地图
+		function openMap(name, latitude, longitude) {
+			mylocation(function(location_result) { //获取当前定位
+				if (location_result.status) { //有定位权限
+					params = {
+						to_lon: longitude,
+						to_lat: latitude,
+						to_name: name
+					}
+					api.openWin({
+						name: 'common_map_loaction_win',
+						url: '../common/common_map_loaction_win.html',
+						slidBackEnabled: 'true',
+						vScrollBarEnabled: 'false',
+						hScrollBarEnabled: 'false',
+						reload: true,
+						pageParam: {
+							data: params
+						}
+					});
+				} else {
+					alert_msg('未能获取您的定位');
+				}
+			});
+		}
+		
+
+		
+		/**
+	 * 申请退款 
+	 */
+	function refundApply(detailId,centername,lessonFee,info,logo,limitDate){
+		params = {
+			id:detailId,
+			name:centername,
+			paymentAmount:lessonFee,	
+			licenseType:info,
+			status:'',
+			logo:logo,
+			limitDate:limitDate,
+			type:'KemuTwo_operation',
+		}
+		console.log("======="+JSON.stringify(params))
+		//title标题 content内容 sureButton确认按钮文字 cancelButton取消按钮文字 sureFunc确定方法 cancelFunc取消方法  params额外参数，没有必须传null
+		//openMessage(title, content, sureButton, cancelButton, sureFunc, cancelFunc, params)
+		openMessage('退款提示', '&emsp;&emsp;您退款后订单人数减少，可能导致批次变动，具体联系考场82068000', '好的', '我再想想', 'openWin(params)', '', null);
+		
+	}
+	
+	function openWin(params){
+		log('params',params)
+		api.openWin({
+		       name: 'common_order_refund_win',
+		       url: '../common/common_order_refund_win.html',
+		       slidBackEnabled:'false',
+		       vScrollBarEnabled:'false',
+		       hScrollBarEnabled:'false',
+		       reload:true,
+		       useWKWebView:false,
+		       pageParam: params
+		   });
+	}
+	
+	/**
+	 *取消退款 
+	 */
+	function cancelRefund(detailId){
+		params = {
+			detailId:detailId
+		}
+		console.log("======="+JSON.stringify(params))
+		openMessage('取消退款提示', '您确定要取消退款吗', '是的', '我再想想', 'cancel(params)', '', null);
+	}
+	
+	function cancel(params){
+		console.log("+++++"+JSON.stringify(params));
+		url='api/PracticalTest/cancel-refund';
+		ajax_Request(url,'POST','json',params,function(ret,err){
+			console.log("orderId"+JSON.stringify(ret));
+			if(ret){
+			console.log("dsasad"+JSON.stringify(ret));
+				if(ret.code == 400221 ){
+				alert_msg(ret.msg);
+				init();
+//					setMsg('取消退款成功');
+				}else {
+					alert_msg(ret.msg);
+					init();
+				}
+			}else{
+				setMsg('服务器繁忙，请稍后再试！');
+			}
+		});
+	}
+	</script>
+</html>

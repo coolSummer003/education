@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>文章详情-视频</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<style>
+			html,body{
+    		background-color: #ffffff;
+			height:100%;
+    	}
+    	.aui-list .aui-list-item-media {
+		    width: 6.5rem;
+		    position: relative;
+		    padding: 0.5rem 0;
+		    padding-right: 0.75rem;
+		    display: inherit;
+		    -webkit-flex-shrink: 0;
+		    flex-shrink: 0;
+		    -webkit-flex-wrap: nowrap;
+		    flex-wrap: nowrap;
+		    -webkit-box-align: center;
+		    -webkit-align-items: flex-start;
+	        display: flex;
+		    align-items: center;
+		    justify-content: center;
+		}
+    	.article-title{
+	        font-size: 0.9rem;
+		    font-weight: bold;
+		    padding: 0rem 0.5rem;
+		    padding-top: 9.5rem;
+		    background: #F1F1F1;
+    	}
+    	.article-auther{
+    		height: 3rem;
+    		font-size: 0.7rem;
+    		padding: 0rem 0.5rem;
+    	}
+    	.item-left{
+    		float: left;
+		    display: flex;
+		    height: 3rem;
+    	}
+    	.item-left span{
+		    margin: auto;
+    		margin-left: 0.5rem;
+    	}
+    	.item-left img{
+		    width: 2rem;
+    		margin: auto;
+		    border-radius: 100%;
+    	}
+    	.item-right span{
+    		margin: auto;
+    	}
+    	.item-right{
+    		float: right;
+		    height: 3rem;
+		    display: flex;
+    	}
+    	.content img{
+    		width:100%;
+    		margin:0.5rem 0rem;
+    	}
+    	
+    	footer{
+    		height: 2.5rem;
+		    position: fixed;
+		    bottom: 0;
+		    width: 100%;
+		    font-size: 0.7rem;
+		    left: 0;
+		    background: #FFF;
+    	}
+		.footer-input{
+			float: left;
+		    height: 2.5rem;
+		    width: 70%;
+		    padding-left: 0.5rem;
+		}
+		.footer-input input{
+		    min-height: 1.7rem;
+		    background: #F1F1F1;
+		    padding: 0 0.5rem;
+		    margin-top: 0.4rem;
+		    border-radius: 1rem;
+		    line-height: 1.7rem;
+		}
+		.footer-send{
+			width:13%;
+			float:right;
+			height: 2.5rem;
+			display: flex;
+			margin-right: 2%;
+		}
+		.footer-opinion{
+			width:15%;
+			float:right;
+			height: 2.5rem;
+			display: flex;
+		    position: relative;
+		}
+		.footer-opinion img{
+			width: 1.3rem;
+    		margin: auto;
+		}
+		.footer-send img{
+			width: 1.3rem;
+    		margin: auto;
+		}
+		.opinion-num{
+			position: absolute;
+		    background: #F45454;
+		    color: #FFF;
+		    padding: 0rem 0.2rem;
+		    border-radius: 0.5rem;
+		    font-size: 0.5rem;
+		    right: 0.1rem;
+		    top: 0.3rem;
+		    height: 0.8rem;
+    		line-height: 0.8rem;
+		}
+		.mian-content{
+			position: absolute;
+			width: 100%;
+		    top: 0;
+		    bottom: 2.5rem;
+		    overflow: scroll;
+		    -webkit-overflow-scrolling: touch;
+		}
+		.content-vedio{
+		}
+		.content-vedio img{
+			width: 100%;
+			height: 12rem;
+		}
+		.vedio-info{
+		    overflow: hidden;
+		}
+		.info-left{
+		    padding: 0 0.5rem;
+		    display: flex;
+		    height: 2rem;
+	        float: left;
+		}
+		.info-left img{ 
+		    width: 1rem;
+		    margin:auto;
+		}
+		.info-left span{
+	        margin: auto;
+		    color: #A5A5A5;
+		    font-size: 0.6rem;
+		    padding-left: 0.2rem;
+		}
+		.info-right{
+		    padding: 0 0.5rem;
+		    display: flex;
+		    height: 2rem;
+	        float: right;
+		}
+		.info-right img{ 
+		    width: 1rem;
+		    margin:auto;
+	        padding-bottom: 0.2rem;
+		}
+		.info-right span{
+	        margin: auto;
+		    color: #A5A5A5;
+		    font-size: 0.6rem;
+		    padding-right: 0.2rem;
+		}
+		.small-font{
+			font-size:0.6rem;
+		}
+		.label{
+			font-size: 0.5rem;
+		    background: #49C5FA;
+		    color: #FFF;
+		    position: absolute;
+		    bottom: 0;
+		    left: 0;
+		    padding: 0 0.1rem;
+		}
+		.vedio-group{
+			position:relative;
+		    height: 100%;
+		}
+		.aui-list .aui-list-item-media img {
+		    width: 100%;
+	        height: 100%;
+		    display: block;
+				float: right;
+    		object-fit: cover;
+		}
+		.aui-list [class*=aui-col-xs-] img {
+		    max-width: 100%;
+		    width: 100%;
+		    display: block;
+		    height: 3rem;
+		    border-radius: 2px;
+		}
+		.aui-media-list .aui-list-item-inner {
+		    display: block;
+		    padding-top: 0.5rem;
+		    padding-bottom: 0.5rem;
+		    margin: auto;
+		}
+		.aui-media-list-item-inner {
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    min-height: 5rem;
+		}
+		.aui-list .aui-list-item {
+		    background-size: 100% 1px;
+		    background-repeat: no-repeat;
+		    background-position: bottom;
+		    background-image: linear-gradient(0,#FFF,#FFF 50%,transparent 50%);
+		    background-image: -webkit-linear-gradient(90deg,#FFF,#FFF 50%,transparent 50%);
+	      border-bottom: solid 1px #FFF;
+		}
+		.item-title{
+		    height: 2.5rem;
+		    line-height: 2.1rem;
+		    padding-left: 0.5rem;
+		    color: #757575;
+		    border-top: solid 0.4rem #F1F1F1;
+		}
+		.font-bigger{
+			font-size:0.8rem;
+			color:#505050;
+		}
+		.send{
+			width: 3rem;
+			height: 1.6rem;
+			margin-top: 0.4rem;
+			line-height: 1.6rem;
+			padding: 0rem;
+			background: #1E8DD8;
+			color: #fff;
+			padding-top: 0.1rem;
+		}
+    </style>
+	</head>
+	<body>
+		<!-- 解决自己app上传的视频无法播放问题，黑科技，我也不知道为什么，必须时去除下面的video的注释 -->
+		<!-- <video width="0" height="0" controls>
+		<source src="http://192.168.2.132/api/file/getFileAuth?bucketName=drivinghome&fileName=58AA92DB44DD9505E80EFBD0C78908B4" type="video/mp4">
+	</video> -->
+		<div class='mian-content'>
+			<!-- <div class='content-vedio'>
+			<img src="../../image/demo/school/2.jpg" alt="" />
+		</div> -->
+			<div id="videoControls">
+				<script type="text/template" charset="UTF-8" id="video">
+					<div class='article-title'>
+					<div style="opacity: 0;">{{=it.title}}</div>
+					</div>
+				<!-- <div class='vedio-info'>
+					<div class='info-left'>
+						<img src="../../icon/article/icon_eye.png" alt="" />
+						<span>播放数：1541</span>
+					</div>
+					<div class='info-right'>
+						<span>点赞{{=it.likeCount}}</span>
+						<img src="../../icon/article/icon_dianzan.png" alt="" />
+					</div>
+				</div>
+				<div class='article-auther'>
+					<div class="item-left">
+						<img src="../../image/demo/icon_touxiang.jpeg" alt="" />
+						<span>汽车大师</span>
+					</div>
+					<div class="item-right">
+						<span id="time">{{=it.insertDt}}</span>
+					</div>
+				</div> -->
+			</script>
+			</div>
+
+			<div class='item-title'>
+				相关推荐
+			</div>
+			<div class="aui-content">
+				<ul class="aui-list aui-media-list" id="subject_skill">
+					</ul>
+			</div>
+		</div>
+		<script type="text/template" charset="UTF-8" id="subjectSkill">
+			{{ for(var i=0;i<it.length;i++){ }}
+				{{ if(it[i].video == undefined || it[i].video == null  || it[i].video == ""){ }}
+					{{ if(it[i].model == 1){ }}
+						<li class="aui-list-item" tapmode onclick='openDetail("{{=it[i].id}}","{{=it[i].title}}","all")'>
+							<div class="aui-media-list-item-inner">
+								<div class="aui-list-item-inner">
+									<div class="aui-list-item-text" style="margin: 0.3rem 0rem;">
+										<div class="aui-info-item-title aui-ellipsis-2 font-bigger">
+											{{=it[i].title}}
+										</div>
+									</div>
+									<!-- <div class="aui-list-item-text" style="margin: 0.3rem 0rem;">
+										<div class="aui-info-item small-font">
+											{{=it[i].view}}次浏览 &ensp;{{=it[i].optinion}}评论
+										</div>
+									</div> -->
+								</div>
+								<div class="aui-list-item-media">
+									{{ for(var j=0;j<it[i].image.split(',').length;j++){ }}
+					                	<div class="vedio-group" >
+											<img src="../../icon/default/icon_default_big_pic.png"  onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url + it[i].image.split(',')[j]}}" style="object-fit: content;" />
+										</div>
+				                	{{ } }}
+								</div>
+							</div>
+						</li>
+					{{ }else if(it[i].model == 2){ }}
+						<li class="aui-list-item bottom-slide" tapmode onclick='openDetail("{{=it[i].id}}","{{=it[i].title}}","all")'>
+							<div class="aui-media-list-item-inner">
+								<div class="aui-list-item-inner">
+									<div class="aui-list-item-text" style="margin: 0.3rem 0rem;">
+										<div class="aui-info-item-title aui-ellipsis-2 font-bigger">
+											{{=it[i].title}}
+										</div>
+									</div>
+									<div class="aui-row aui-row-padded">
+										{{ for(var j=0;j<it[i].image.split(',').length;j++){ }}
+											<div class="aui-col-xs-4">
+												<img src="../../icon/default/icon_default_big_pic.png"  onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url + it[i].image.split(',')[j]}}" style="object-fit: cover;" />
+											</div>
+					                	{{ } }}
+									</div>
+									<!-- <div class="aui-list-item-text" style="margin: 0.3rem 0rem;float: right;">
+										<div class="aui-info-item small-font">
+											{{=it[i].view}}次浏览 &ensp;{{=it[i].optinion}}评论
+										</div>
+									</div> -->
+								</div>
+							</div>
+						</li>
+					{{ } }}
+				{{ }else{ }}
+					<li class="aui-list-item bottom-slide" tapmode onclick='openDetail("{{=it[i].id}}","{{=it[i].title}}","video","{{=it[i].video}}")'>
+						<div class="aui-media-list-item-inner">
+							<div class="aui-list-item-inner">
+								<div class="aui-list-item-text" style="margin: 0.3rem 0rem;">
+									<div class="aui-info-item-title aui-ellipsis-2 font-bigger">
+										{{=it[i].title}}
+									</div>
+								</div>
+								<!-- <div class="aui-list-item-text" style="margin: 0.3rem 0rem;">
+									<div class="aui-info-item small-font">
+										{{=it[i].view}}次播放 &ensp;{{=it[i].optinion}}评论
+									</div>
+								</div> -->
+							</div>
+							<div class="aui-list-item-media">
+								<div class="vedio-group" >
+									<div class='label'>视频</div>
+									<img src="../../icon/default/icon_default_big_pic.png" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url + it[i].image}}" style="object-fit: cover;" />
+								</div>
+							</div>
+						</div>
+					</li>
+				{{ } }}
+			{{ } }}
+		</script>
+		<footer id="footer">
+			<div class='footer-input'>
+				<input type="text" placeholder='随便说点什么' value="" id='newComments' />
+			</div>
+			<div class='footer-send' onclick="newComments()">
+				<!-- <img src="../../icon/article/icon_send.png" alt="" />-->
+				<button class="send">评论</button>
+			</div>
+			<div class='footer-opinion' tapmode onclick="openOriginal()">
+				<img src="../../icon/article/icon_opinion.png" alt="" />
+				<script type="text/template" charset="UTF-8" id="commentCount">
+					{{ if(it != '0'){ }}
+				<div class='opinion-num'>
+					{{=it}}
+				</div>
+			{{ } }}
+			</script>
+			</div>
+		</footer>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script src="../../script/echo.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../script/doT_min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var moviePlayer
+		var fs;
+		var cache;
+		var newsId;
+		var connectionType;//当前网络状态
+		var moviePlayer;//视频实例
+		var systemType;
+		apiready = function() {
+			systemType = api.systemType;
+			cache = api.pageParam.data;
+			newsId = cache.id;
+			//console.log(JSON.stringify(cache));
+			connectionType = api.connectionType;
+//			setTimeout(function() {
+//				ReadIntegral();
+//			}, 10000);
+			if(systemType == 'ios'){
+				//初始化ios播放
+				moviePlayer = api.require('moviePlayer');
+			}else{
+				//初始化安卓播放
+				dkplayer = api.require('dkplayer');
+			    api.addEventListener({
+			        name : 'pause'
+			    }, function(ret, err) {
+			        dkplayer.pause();
+			    });
+			    api.addEventListener({
+			        name : 'resume'
+			    }, function(ret, err) {
+			        dkplayer.resume();
+			    });
+			    api.addEventListener({
+			        name : 'viewdisappear'
+			    }, function(ret, err) {
+			        dkplayer.pause();
+			    });
+			}
+			
+			init();
+		}
+
+		function init() {
+			defaultload('加载详情中...');
+			url = "api/knowledge/getKnowledgeDetail";
+			params = {
+				id: cache.id
+			}
+			ajax_Request(url, "get", "json", params, function(ret, err) {
+				log("视频" , ret);
+				api.hideProgress();
+				if (ret) {
+					if (ret.code == 0) {
+						var video = $("#video").html();
+						$("#videoControls").html(doT.template(video)(ret.knowledge));
+						playVideo(ret.knowledge.video,ret.knowledge.image.split(',')[0]);
+						var commentCount = $("#commentCount").html();
+						$(".footer-opinion").append(doT.template(commentCount)(ret.knowledge.commentCount))
+						
+						recommend();
+					} else {
+						alert_msg(ret.msg);
+					}
+				} else {
+					alert_msg("服务器繁忙，请稍后重试");
+				}
+			})
+		}
+		//相关推荐
+		function recommend() {
+			url = "api/knowledge/getKnowledgeListRelevant";
+			params = {
+				kemu:cache.kemu,
+				categoryA:cache.categoryA,
+				categoryB:cache.categoryB
+			}
+			ajax_Request(url, "get", "json", params, function(ret, err) {
+				log("推荐" , ret);
+				if (ret) {
+					if (ret.code == 0 && ret.knowledgeList.length > 0) {
+						var subjectSkill = $('#subjectSkill').html();
+						$("#subject_skill").html(doT.template(subjectSkill)(ret.knowledgeList));
+						echoInit();
+					} else {
+						alert_msg(ret.msg);
+					}
+				} else {
+					alert_msg("服务器繁忙，请稍后重试");
+				}
+			});
+		}
+		//获得积分
+		function ReadIntegral(){
+		var policyCode;
+			var url = '/api/integral-policy/integral-change'
+			params = {
+				learnerId: getUserId(),
+				policyCode: '8'
+			}
+			log('详情params：', JSON.stringify(params));
+			ajax_Request(url, 'post', 'json', params, function(ret, err) {
+			log('详情：', ret);
+				if (ret.code == 0) {
+					
+					api.openFrame({
+						name: 'common_Integral_Acquisition_frm',
+						url: './common_Integral_Acquisition_frm.html',
+						bgColor: 'rgba(255, 255, 255, 0.2)',
+						rect: {
+							x: 0,
+							y: 0,
+							w: 'auto',
+							h: 'auto'
+						},
+						bgColor: 'rgba(0, 0, 0, 0.3)',
+						pageParam: {
+							data: '5',
+							information:'学习操作技巧小视频'
+						},
+						animation: {
+							type: "fade", //动画类型（详见动画类型常量）
+
+							duration: 300 //动画过渡时间，默认300毫秒
+						}
+					});
+
+
+				} else {
+
+				}
+			})
+
+		}
+		//视频控件
+		function playVideo(videoUrl,coverImg) {
+			if(systemType != 'ios'){
+				dkplayer.open({
+			        rect : {
+			            x: 0,
+			            y: 0,
+			            w: api.frameWidth,
+						h: parseInt(api.frameWidth / 16 * 9)
+		            },
+			        url : file_load_url + videoUrl,
+			        coverImg : coverImg,
+			        animation : false,
+			        title : cache.name,
+			        isLive : false,
+			        enableFull : false, //是否全屏
+			        autoPlay : true, //自动播放
+			        fixedOn : api.frameName,
+			        fixed : true
+				}, function(ret, err) {
+				    //alert(JSON.stringify(ret));
+				});
+				
+dkplayer.addOnVideoViewStateChangeListener(function(ret, err) {
+   
+        if(ret.playState=='STATE_PLAYBACK_COMPLETED') {
+        		if (islogin()) {
+				
+				ReadIntegral();
+			} else {
+				
+			}
+        }
+    
+});
+			}else{
+				moviePlayer.open({
+					rect: {
+						x: 0,
+						y: cache.h_c,
+						w: api.frameWidth,
+						h: parseInt(api.frameWidth / 16 * 9)
+					},
+					coverImg:file_load_url + coverImg,
+					styles: {
+						head: {
+							height: 0,
+							y: 0,
+							backSize: 0
+						},
+						foot: {
+							bg: 'rgba(0,0,0,0)',
+							height: 44,
+							palyBtn: {
+								size: 25,
+								playImg: 'widget://res/icon_play.png', //（可选项）字符串类型；底部播放按钮的背景图片，要求本地路径（widget://、fs://）；默认：播放按钮图标
+								pauseImg: 'widget://res/icon_stop.png', //（可选项）字符串类型；底部暂停按钮的背景图片，要求本地路径（widget://、fs://）；默认：暂停按钮图标 
+								marginLeft: 10
+							},
+							currentTimeLabel: {
+								textSize: 12,
+								textColor: "#FFF",
+								textWidth: 43,
+								marginLeft: 5
+							},
+							seekBar: {
+								sliderW: 15,
+								sliderH: 15,
+								progressColor: '#696969',
+								progressSelected: '#76EE00',
+								marginLeft: 10,
+								marginRight: 10
+							},
+							totalTimeLabel: {
+								textSize: 14,
+								textColor: "#FFF",
+								textWidth: 43,
+								marginRight: 5
+							},
+							fullscreenBtn: {
+								size: 0,
+							}
+						}
+					},
+					path: file_load_url + videoUrl,
+					autoPlay: true,
+					autorotation: false
+				}, function(ret, err) {
+					log(66666,ret);
+					if (ret) {
+						moviePlayer.setShowOrHideControlView({
+							isShow: true
+						});
+						moviePlayer.addEventListener(function(ret){
+						    if(ret && ret.eventType == 'complete'){
+						   		  if (islogin()) {
+										ReadIntegral();
+									} else {
+										
+									}
+						    	}
+							});
+
+					}
+				});
+			}
+			
+			
+		}
+		//点击播放检测网络状态
+
+		
+		//打开详情
+		function openDetail(id,name,flag,videoUrl){
+			param = {
+				id:id,
+				name:name,
+				flag:flag,
+				kemu:cache.kemu,
+				categoryA:cache.categoryA,
+				categoryB:cache.categoryB
+			}
+			
+			if(flag == 'video'){
+				//如果是视频，更新视频播放
+				if(systemType == 'ios'){
+					moviePlayer.replay({
+					    title:name,
+					    path : file_load_url + videoUrl
+					});
+				}else{
+					dkplayer.setUrl({
+					    url : file_load_url + videoUrl,
+					    title : name,
+					    autoPlay:true
+					});
+				}
+				esc_function('subject_skill_detail_win','','changeTitle("'+name+'")');
+			}else{
+				commonOpenWin('subject_skill_detail_win',param);
+			}
+		}
+		//新增评论
+		function newComments() {
+			if(islogin()){
+				// log(true);
+				var userId = getUserId();
+				// log("学员ID"+userId);
+				var newCommentsVal = $("#newComments").val();
+				// log("资讯ID：" + newsId)
+				// log(newCommentsVal);
+				if(newCommentsVal == "" || newCommentsVal == null || newCommentsVal == undefined){
+					alert_msg("尚未填评论内容");
+				}else{
+					sensitiveWords(newCommentsVal,function(ret,err){
+					log("成功+",JSON.stringify(ret));
+					if(ret.code == 0){
+						var newCommentsMsg = newCommentsVal; 
+					}else{
+						var newCommentsMsg = ret.msg;
+					}
+					
+						//科目二新增
+						url = 'api/knowledge/insertKnowledgeMessage';
+						params = {
+							fatherMessageId :"",       //父评论id
+							knowledgeId :newsId,    //id
+							learnerId :userId,        //登入人id
+							message :newCommentsMsg     //输入的东西
+						}
+						ajax_Request(url, 'post', 'json', params, function(ret, err) {
+							log('视频添加评论：' , JSON.stringify(ret));
+							if (ret) {
+								if (ret.code == 0) {
+									alert_msg("评论成功！")
+									$("#newComments").val("");
+								} else{
+									alert_msg("评论失败！")
+								}
+							} else{
+								alert_msg("服务器繁忙，请稍后重试")
+							}
+						})			
+					})
+				}
+			}else{
+				alert_msg('暂未登录,请先登录')
+			}
+		}
+		//跳转最新评论
+		function openOriginal() {
+			params = {
+				name: '最新评论',
+				newsId:newsId,
+				flag: cache.flag
+			}
+			api.openWin({
+				name: 'common_original_comment_win',
+				url: './common_original_comment_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				pageParam: {
+					data: params
+				}
+			});
+		}
+		
+		/**
+		 * 安卓-退出监听 
+		 */
+		function goback() {
+			console.log('退出');
+			if(systemType != 'ios'){
+			    if (dkplayer.isFullScreen()) {
+			        if (dkplayer.isLock()) {
+		                api.toast({
+		                    msg : '请先解锁屏幕！',
+		                    global : true
+		                });
+			        } else {
+			            api.setScreenOrientation({
+			               orientation : 'portrait_up'
+			            });
+			            dkplayer.stopFullScreen();
+		           }
+			    } else {
+			    	console.log('关闭播放器');
+			        dkplayer.removeOnVideoViewStateChangeListener();
+			        dkplayer.release();
+			        api.closeWin({
+	                });
+			    }
+			}else{
+				moviePlayer.close();
+				api.closeWin({
+                });
+			}
+		}
+	</script>
+</html>

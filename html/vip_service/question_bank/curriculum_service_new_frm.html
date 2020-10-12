@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>VIP课程 无理赔</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/swiper/swiper_min.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style type="text/css">
+			html,
+			body {
+				background: #fff;
+			}
+
+			.title {
+				position: relative;
+				width: 100%;
+				height: 4.5rem;
+				z-index: 999;
+				background-color: rgba(0, 0, 0, 0);
+			}
+
+			.title_bg {
+				position: absolute;
+				width: 100%;
+				height: auto;
+
+			}
+
+			.title_msg_tips {
+				position: absolute;
+				width: 94%;
+				height: 1.4rem;
+				background: linear-gradient(to right, #FFD9B0, #FFE9D5);
+				left: 3%;
+				font-size: 0.7rem;
+				line-height: 1.4rem;
+				border-radius: 0.25rem;
+				padding-left: 0.3rem;
+				top: 0.5rem;
+			}
+
+			.title_msg_tips_img {
+				float: right;
+				width: 0.3rem;
+				height: 0.6rem;
+				margin-right: 0.3rem;
+				margin-top: 0.4rem;
+			}
+
+			.title_man_msg {
+				position: absolute;
+				width: 94%;
+				height: 2.5rem;
+				left: 3%;
+				top: 0.8rem;
+			}
+
+			.title_man_msg_avatar {
+				width: 2rem;
+				height: 2.5rem;
+			}
+
+			.title_man_msg_avatar img {
+				width: 2rem;
+				height: 2rem;
+				margin-top: 0.25rem;
+				border-radius: 50%;
+			}
+
+			.title_man_msg_name {
+				width: 10rem;
+				height: 2.5rem;
+				margin-left: 2.3rem;
+				margin-top: -2.5rem;
+			}
+
+			.title_man_msg_name_s {
+				display: inline-block;
+				width: auto;
+				height: 1.3rem;
+				line-height: 1.3rem;
+				color: #E6B996;
+				padding: 0.6rem 0.2rem;
+				font-size: 0.9rem;
+			}
+
+			.title_man_msg_name_img {
+				width: 1.8rem;
+			}
+
+			.title_man_msg_time {
+				float: right;
+				color: #9B9B9B;
+				height: 2.5rem;
+				line-height: 2.5rem;
+				margin-top: -2.5rem;
+				font-size: 0.7rem;
+			}
+
+			.title_coach_msg {
+				position: absolute;
+				width: 94%;
+				height: 1.5rem;
+				left: 3%;
+				top: 3.2rem;
+				color: #fff;
+				font-size: 0.7rem;
+			}
+
+			.my_coach_msg_title {
+				position: absolute;
+				width: 3.8rem;
+				height: 1.5rem;
+				left: 2.3rem;
+				/* outline: 1px solid #f00; */
+			}
+
+			.my_coach_msg_name,
+			.my_coach_msg_names {
+				position: absolute;
+				width: 50%;
+				height: 1.5rem;
+				left: 6.1rem;
+				/* outline: 1px solid #f00; */
+			}
+
+			.my_coach_msg_name_text,
+			.my_coach_msg_name_texts {
+				position: absolute;
+				width: auto;
+				top: 0;
+				text-align: center;
+			}
+
+			.my_coach_msg_name_img {
+				position: absolute;
+				width: 0.3rem;
+				height: 0.4rem;
+				top: 0.3rem;
+				left: 3.6rem;
+			}
+
+			.content {
+				width: 100%;
+				height: auto;
+			}
+
+			.content_tab {
+				position: relative;
+				height: 2.2rem;
+			}
+
+			#menu {
+				position: absolute;
+				font-size: 0.8rem;
+			}
+
+			.aui-bar-btn-item.aui-active {
+				background: #fff;
+				color: #2D2A29;
+				/*border-bottom: solid 2px #FFCE02;*/
+			}
+
+			.aui-bar-btn-item {
+				padding: 0 !important;
+				background: #fff;
+				color: #9B9B9B;
+				font-size: 0.7rem;
+				min-height: 1.1rem !important;
+			}
+
+			.aui-bar-nav {
+				top: 0;
+				line-height: 2.25rem;
+				background: linear-gradient(to left, #3F86FF, #3F86FF);
+				color: #FFF;
+			}
+
+			.aui-active {
+				font-weight: bold;
+				font-size: 0.7rem;
+			}
+
+			.list_bar {
+				width: 50% !important;
+				height: 4px !important;
+			}
+
+			.list_bar .list_bar_inner {
+				width: 15% !important;
+				background: #2C292A;
+				border-radius: 1.5625rem !important;
+			}
+
+			.content_content {
+				width: 100%;
+				height: auto;
+			}
+
+			.content_curriculum_service,
+			.content_assurance_service {
+				width: 100%;
+				height: auto;
+			}
+
+			.content_curriculum_service_title,
+			.content_assurance_service_title {
+				width: 94%;
+				height: 1.5rem;
+				margin-left: 3%;
+				padding-top: 0.3rem;
+			}
+
+			.content_curriculum_service_title_name,
+			.content_assurance_service_title_name {
+				width: 50%;
+				height: 1.5rem;
+				line-height: 1.5rem;
+				color: #2D2A29;
+				font-size: 0.9rem;
+				font-weight: 700;
+			}
+
+			.content_assurance_service_title_record {
+				position: relative;
+				width: 50%;
+				height: 1.5rem;
+				line-height: 1.5rem;
+				color: #333333;
+				font-size: 0.7rem;
+				margin-left: 50%;
+				margin-top: -1.5rem;
+				text-align: right;
+				padding-right: 0.5rem;
+			}
+
+			.content_assurance_service_title_record img {
+				position: absolute;
+				width: 0.3rem;
+				height: 0.4rem;
+				top: 0.5rem;
+			}
+
+			.content_curriculum_service_title_btn {
+				width: 50%;
+				height: 1.5rem;
+				margin-left: 50%;
+				margin-top: -1.5rem;
+			}
+
+			.content_curriculum_service_title_btn_name {
+				float: right;
+				margin-right: 0.5rem;
+				width: auto;
+				height: 1.2rem;
+				font-size: 0.7rem;
+				line-height: 1.2rem;
+				margin-top: 0.15rem;
+				color: #2D2A29;
+			}
+
+			.content_curriculum_service_title_btn_btn {
+				float: right;
+				margin-right: 0.3rem;
+				width: 2rem;
+				height: 1.2rem;
+				line-height: 1.2rem;
+				text-align: center;
+				margin-top: 0.15rem;
+				background: linear-gradient(to right, #A77A43, #D8AD85);
+				color: #F8D092;
+				border-radius: 25px;
+				font-size: 0.6rem;
+			}
+
+			.content_curriculum_service_content {
+				width: 94%;
+				margin-left: 3%;
+				height: auto;
+			}
+
+			.content_curriculum_service_content_title {
+				width: 100%;
+				height: 1.5rem;
+				margin-top: 1rem;
+			}
+
+			.content_curriculum_service_content_title img {
+				width: 70%;
+				margin-left: 15%;
+			}
+
+			.content_curriculum_service_content_subject {
+				width: 100%;
+				height: auto;
+				margin-top: 1.3rem;
+			}
+
+			.content_curriculum_service_content_subject_list {
+				position: relative;
+			    width: 32%;
+			    height: 4.5rem;
+			    border: 1px solid #FAEDDB;
+			    box-shadow: 0 2px 8px rgba(215, 215, 215, 0.5);
+			    border-radius: 0.5rem;
+			    margin-bottom: 0.5rem;
+			}
+			
+			.content_curriculum_service_content_subject_list:active{
+				background:#FAEDDB;
+			}
+
+			.content_curriculum_service_content_subject_list:nth-child(3n+2) {
+				margin-left: 34%;
+				margin-top: -5rem;
+			}
+
+			.content_curriculum_service_content_subject_list:nth-child(3n+3) {
+				margin-left: 68%;
+				margin-top: -5rem;
+			}
+
+			.content_curriculum_service_content_subject_list_name {
+				font-size: 0.7rem;
+				color: #252C38;
+				font-weight: 700;
+				width: 80%;
+				margin-left: 10%;
+				margin-top: 0.3rem;
+			}
+
+			.content_curriculum_service_content_subject_list_img {
+				position: absolute;
+				width: 1.5rem;
+				height: 1.5rem;
+				right: 0.5rem;
+				bottom: 0.3rem;
+			}
+
+			.content_curriculum_service_content_subject_list_img img {
+				width: 1.5rem;
+				height: 1.5rem;
+			}
+
+			.content_assurance_service_content {
+				width: 94%;
+				height: auto;
+				margin-left: 3%;
+				margin-top: 0.5rem;
+			}
+
+			.content_assurance_service_content_list_name {
+				position: relative;
+				width: 100%;
+				height: 4.4rem;
+			}
+
+			.content_assurance_service_content_list_name_title {
+				position: absolute;
+				width: 100%;
+				height: 1.2rem;
+				line-height: 1.2rem;
+				color: #2C292A;
+				font-size: 0.9rem;
+				top: 0.4rem;
+			}
+
+			.content_assurance_service_content_list_name_yuan {
+				position: absolute;
+				width: 100%;
+				height: 1.2rem;
+				line-height: 1.2rem;
+				top: 1.6rem;
+				color: #2C292A;
+				font-size: 0.7rem;
+			}
+
+			.content_assurance_service_content_list_name_time {
+				position: absolute;
+				height: 1.2rem;
+				width: 100%;
+				line-height: 1.2rem;
+				top: 2.8rem;
+				color: #9D9EA7;
+				font-size: 0.6rem;
+			}
+
+			.content_assurance_service_content_list_name_btn {
+				position: absolute;
+				width: 3rem;
+				height: 1.2rem;
+				line-height: 1.2rem;
+				text-align: center;
+				border: 1px solid #D2A77D;
+				border-radius: 25px;
+				color: #2D2A29;
+				top: 1.6rem;
+				right: 0.5rem;
+				font-size: 0.6rem;
+			}
+
+			.equity {
+				width: 100%;
+				height: 1.3rem;
+				line-height: 1.3rem;
+				text-align: center;
+				color: #9D9EA7;
+				font-size: 0.6rem;
+			}
+
+			.equity span {
+				font-size: 0.6rem;
+			}
+
+			/*到期样式*/
+			.expire {
+				position: relative;
+				width: 94%;
+				height: 3rem;
+				margin-left: 3%;
+				margin-top: 2.5rem;
+				margin-bottom: 0.5rem;
+				background: url(../../../icon/vip/question_bank/expire.png) no-repeat;
+				background-size: 100% 100%;
+				border-radius: 15px;
+			}
+
+			.expire_con {
+				position: absolute;
+				width: 100%;
+				top: 0.45rem;
+			}
+
+			.expire_title {
+				width: 94%;
+				color: #8B5F3C;
+				font-size: 0.8rem;
+				font-weight: 700;
+				margin-left: 3%;
+			}
+
+			.expire_tips {
+				width: 94%;
+				margin-left: 3%;
+				color: #8B5F3C;
+				font-size: 0.6rem;
+			}
+
+			.expire_btn {
+				position: absolute;
+				width: 4rem;
+				height: 1.5rem;
+				line-height: 1.5rem;
+				background: linear-gradient(to right, #CF956B, #DAA97A);
+				color: #fff;
+				text-align: center;
+				border-radius: 1.5625rem;
+				right: 1rem;
+				top: 0.75rem;
+				font-size: 0.7rem;
+			}
+
+			/*提示页面*/
+			.tips {
+				position: fixed;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, .7);
+				top: 0;
+				z-index: 99;
+			}
+
+			.expiration_reminder {
+				position: absolute;
+				width: 80%;
+				height: 12rem;
+				background: linear-gradient(to right, #FFF8F0, #FFFCF9);
+				border-radius: 10px;
+				left: 10%;
+				top: 50%;
+				margin-top: -6rem;
+			}
+
+			.expiration_reminder_title {
+				width: 100%;
+				height: 1.5rem;
+				left: 1.5rem;
+				text-align: center;
+				color: #443636;
+				font-size: 1.2rem;
+				margin-top: 1rem;
+				font-weight: 700;
+			}
+
+			.expiration_reminder_content {
+				width: 90%;
+				height: auto;
+				text-align: center;
+				margin-left: 5%;
+				margin-top: 1.5rem;
+				color: #443636;
+			}
+
+			.expiration_reminder_btn {
+				position: absolute;
+				width: 8rem;
+				height: 2rem;
+				line-height: 2rem;
+				text-align: center;
+				color: #FFC696;
+				background: #443636;
+				border-radius: 25px;
+				left: 50%;
+				margin-left: -4rem;
+				bottom: 1.5rem;
+			}
+
+			.empty {
+				width: 100%;
+				padding: 3rem 0rem;
+				text-align: center;
+				font-size: 0.6rem;
+			}
+
+			.kemu {
+				width: 94%;
+				position: relative;
+				left: 3%;
+				height: 9rem;
+				z-index: 997;
+				background-image: linear-gradient(#FEF7EE, #F0DCC2);
+				border-radius: 0.5rem;
+
+			}
+
+			.main {
+				width: 100%;
+				padding-top: 2.5rem;
+				display: flex;
+				flex-flow: row;
+				justify-content: space-between;
+			}
+
+			.main .left {
+				position: relative;
+				margin-left: 0.5rem;
+				width: 6rem;
+				height: 2rems;
+				border-radius: 2rem;
+			}
+
+			.left_one,
+			.left_four {
+				position: absolute;
+				width: 3rem;
+				height: 1.5rem;
+				line-height: 1.5rem;
+				border: 1px solid #B18551;
+				border-radius: 25px 0 0 25px;
+				text-align: center;
+				font-size: 0.7rem;
+				color: #A97C45;
+			}
+
+			.left_one {
+				border-right: 0px;
+			}
+
+			.left_four {
+				border-radius: 0 25px 25px 0;
+				left: 3rem;
+				border-left: 0px;
+			}
+
+			.left_one_active {
+				background: linear-gradient(to left, #A77A43, #D8AD85);
+				color: #fff;
+				border: none;
+			}
+
+			.left_four_active {
+				background: linear-gradient(to right, #A77A43, #D8AD85);
+				color: #fff;
+				border: none;
+			}
+			.left_one_active_s{
+				border-radius: 25px;
+			}
+			.left_four_active_s{
+				border-radius: 25px;
+				border-width: 1px;
+				left: 0;
+			}
+
+			.main .left img {
+				width: 100%;
+				height: auto;
+			}
+
+			.main .right {
+				margin-right: 0.5rem;
+				width: auto;
+				height: 1.5rem;
+				display: flex;
+				flex-flow: row;
+				justify-content: space-between;
+
+			}
+
+			.main .right .change {
+				height: 100%;
+				width: 2.5rem;
+				background-image: linear-gradient(to right, #D8AD85, #A77A43);
+				text-align: center;
+				color: #fff;
+				border-radius: 1.5rem;
+				line-height: 1.5rem;
+				font-size: 0.7rem;
+			}
+
+			.main .right .type {
+				line-height: 1.5rem;
+				font-weight: 700;
+			}
+
+			.status {
+				width: 100%;
+				height: 4.4rem;
+				display: flex;
+			}
+
+			.status .number {
+				flex: 1;
+				display: flex;
+				flex-flow: column;
+				align-items: center;
+				justify-content: center;
+				font-size: 0.6rem;
+			}
+
+			.status .text {
+				padding-bottom: 0.5rem;
+			}
+
+			.status .num div {
+				font-size: 1.2rem;
+				font-weight: 700;
+				margin-top: 0.5rem;
+			}
+
+			.status .continue {
+				flex: 1;
+				display: flex;
+				flex-flow: column;
+				align-items: center;
+				justify-content: center;
+
+			}
+
+			.status .continue .btn {
+				width: 3.8rem;
+				height: 1.5rem;
+				background-color: #2E2E2E;
+				text-align: center;
+				color: #FFC696;
+				font-size: 0.7rem;
+				border-radius: 0.8rem;
+				line-height: 1.5rem;
+				margin-top: 0.3rem;
+			}
+
+			.empty img {
+				width: 7rem;
+				margin-top: 5rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="userMsg">
+			<div class="title" id="title">
+				<img src="../../../icon/vip/question_bank/header_bottom.png" class="title_bg">
+				<div class="title_man_msg">
+					<div class="title_man_msg_avatar">
+						<img src="../../../icon/mine/icon_mine_head_hui.png" alt="" onerror="javascript:this.src='../../../icon/mine/icon_mine_head_hui.png'"
+						 data-echo="" id="title_man_msg_avatar">
+					</div>
+					<div class="title_man_msg_name">
+						<div class="title_man_msg_name_s"></div>
+						<img src="../../../icon/vip/question_bank/VIP.png" class="title_man_msg_name_img">
+					</div>
+					<div class="title_man_msg_time">
+
+					</div>
+				</div>
+				<div class="title_coach_msg">
+					<div class="my_coach_msg_title">
+						我的教练：
+					</div>
+					<div class="my_coach_msg_name aui-hide" tapmode onclick="coach_choice()">
+						<div class="my_coach_msg_name_text">
+							请绑定教练
+						</div>
+						<img src="../../../icon/vip/question_bank/icon_more_white.png" class="my_coach_msg_name_img">
+					</div>
+					<div class="my_coach_msg_names aui-hide">
+						<div class="my_coach_msg_name_texts">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="content" id="content">
+				<div class="content_content">
+					<div class="swiper-container">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide">
+								<div class="expire aui-hide">
+									<div class="expire_con">
+										<div class="expire_title">
+											您的VIP课程包已到期
+										</div>
+										<div class="expire_tips">
+											续费继续享特权
+										</div>
+									</div>
+									<div class="expire_btn" tapmode onclick="toQuestionIndex();">
+										立即购买
+									</div>
+								</div>
+								<!--  <script type="text/template" charset="UTF-8" id="my_information"> -->
+								<div class="kemu">
+									<div class="main">
+										<div class="left">
+											<div class="left_one left_one_active" id="left_one" tapmode onclick="changeKemu(1)">
+												科目一
+											</div>
+											<div class="left_four" id="left_four" tapmode onclick="changeKemu(4)">
+												科目四
+											</div>
+										</div>
+										<div class="right">
+											<div class="type" id="type">检测题库中...</div>
+											<div class="change" tapmode onclick="change()">切换</div>
+										</div>
+									</div>
+									<div class="status">
+										<div class="number">
+											<div class="num">
+												<div id='cumulativeAnswer'>0</div>
+											</div>
+											<div class="text">累计答题数</div>
+										</div>
+										<div class="number">
+											<div class="num">
+												<div id='mock_vip_percent'>0</div>
+											</div>
+											<div class="text">模拟考试平均分</div>
+										</div>
+										<div class="continue">
+											<div class="btn" tapmode onclick="deviceIds('500',true)">继续刷题</div>
+										</div>
+									</div>
+								</div>
+								<div class="content_curriculum_service_content">
+									<div class="content_curriculum_service_content_title">
+										<img src="../../../icon/vip/question_bank/classTitle.png">
+									</div>
+									<div class="content_curriculum_service_content_subject">
+										<ul>
+											<li class="content_curriculum_service_content_subject_list" tapmode onclick="deviceIds('500');">
+												<div class="content_curriculum_service_content_subject_list_name">
+													精选500题
+												</div>
+												<div class="content_curriculum_service_content_subject_list_img">
+													<img src="../../../icon/vip/question_bank/500.png">
+												</div>
+											</li>
+											<li class="content_curriculum_service_content_subject_list" tapmode onclick="deviceIds('shorthand');">
+												<div class="content_curriculum_service_content_subject_list_name">
+													答题攻略
+												</div>
+												<div class="content_curriculum_service_content_subject_list_img">
+													<img src="../../../icon/vip/question_bank/shorthand.png">
+												</div>
+											</li>
+											<li class="content_curriculum_service_content_subject_list" tapmode onclick="deviceIds('errorProne');">
+												<div class="content_curriculum_service_content_subject_list_name">
+													易错题集
+												</div>
+												<div class="content_curriculum_service_content_subject_list_img">
+													<img src="../../../icon/vip/question_bank/error_prone.png">
+												</div>
+											</li>
+											<li class="content_curriculum_service_content_subject_list" tapmode onclick="deviceIds('difficultProblem');">
+												<div class="content_curriculum_service_content_subject_list_name">
+													难题攻克
+												</div>
+												<div class="content_curriculum_service_content_subject_list_img">
+													<img src="../../../icon/vip/question_bank/difficult_problem.png">
+												</div>
+											</li>
+											<li class="content_curriculum_service_content_subject_list" tapmode onclick="deviceIds('consolidate');">
+												<div class="content_curriculum_service_content_subject_list_name">
+													模拟考试
+												</div>
+												<div class="content_curriculum_service_content_subject_list_img">
+													<img src="../../../icon/vip/question_bank/consolidate.png">
+												</div>
+											</li>
+											<li class="content_curriculum_service_content_subject_list" tapmode onclick="openPracticeSelectedTopic();">
+												<div class="content_curriculum_service_content_subject_list_name">
+													考前巩固
+												</div>
+												<div class="content_curriculum_service_content_subject_list_img">
+													<img src="../../../icon/vip/question_bank/icon_question_stronger.png">
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tips aui-hide">
+			<div class="expiration_reminder aui-hide">
+				<div class="expiration_reminder_title">
+					VIP课程包到期提醒
+				</div>
+				<div class="expiration_reminder_content">
+					您所购买的包已到期，继续享用VIP体验，请您再次购买。
+				</div>
+				<div class="expiration_reminder_btn" tapmode onclick="closeExpirationReminder();">
+					我知道了
+				</div>
+			</div>
+		</div>
+		</div>
+		<script type="text/template" charset="utf-8" id="error_src">
+			<div class='empty'>
+				<img src="../../../icon/common/empty.png" alt="" /><br>
+				<span>{{=it.msg}}</span>
+			</div>
+		</script>
+		<script type="text/javascript" src="../../../script/api.js"></script>
+		<script type="text/javascript" src="../../../script/aui/aui_tab.js"></script>
+		<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+		<script src="../../../script/doT_min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../../script/swiper/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../../script/common/common.js"></script>
+		<script src="../../../script/echo.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../../script/question_sync/question_sync.js"></script>
+		<script type="text/javascript">
+			var cache;
+			var clearance = 0; //间隙
+			var headerHeight;
+			var titleHeightPos;
+			var contentTabPos;
+			var local; //本地数据
+			var mySwiper; //滑块
+			var subjectType = 1; //科一试题 1 科四试题 4
+			var serviceType; //套餐是否到期 0 未到期 1 已到期
+			var vipServiceOrderId; //套餐订单ID
+			var deviceId; //设备号
+			var deviceModel; //设备型号
+			var carType; //学车题库类型
+			var cache_by_app;
+			var db;
+			var fs;
+			apiready = function() {
+				api.parseTapmode();
+				cache = api.pageParam;
+				headerHeight = cache.headerHeight;
+				deviceId = api.deviceId; //设备号
+				deviceModel = api.deviceModel; //设备型号
+				db = api.require('db');
+				fs = api.require('fs');
+				var cache_account = $api.getStorage('cache_by_account').cache_account;
+				$(".title_man_msg_name_s").html(cache_account.name);
+				$("#title_man_msg_avatar").attr('data-echo', file_load_url + cache_account.headimgurl);
+				if (cache_account.coachId != '' && cache_account.coachId != null && cache_account.coachId != undefined) {
+					getCoach(cache_account.coachId);
+				} else {
+					$('.my_coach_msg_names').addClass('aui-hide');
+					$('.my_coach_msg_name').removeClass('aui-hide');
+					$(".my_coach_msg_name_text").html('请绑定教练');
+				}
+
+				//监听教练绑定
+				toEventListener('coach_list_select', function(ret, err) {
+					log('绑定教练信息', ret)
+					var cache_by_account = $api.getStorage('cache_by_account');
+					cache_by_account.cache_account.coachId = ret.value.id;
+					$api.setStorage("cache_by_account", cache_by_account);
+					getCoach(ret.value.id);
+					binding_coach(ret.value);
+				});
+
+				//监听重新计算答题数
+				toEventListener('reCalCumulativeAnswer', function(ret) {
+					setTimeout(function() {
+						calCumulativeAnswer(subjectType == 1 ? '036001' : '036004');
+					}, 500)
+				});
+
+				/**
+				 * 题库切换
+				 * @param {Object} ret
+				 * @param {Object} err
+				 */
+				toEventListener('kemu_one_items_bank', function(ret, err) {
+					log('题库切换', ret)
+					$('#type').html(ret.value.name);
+					carType = ret.value.code;
+					calCumulativeAnswer('036001');
+				});
+				toEventListener('kemu_four_items_bank', function(ret, err) {
+					log('题库切换', ret)
+					$('#type').html(ret.value.name);
+					carType = ret.value.code;
+					calCumulativeAnswer('036004');
+				});
+				
+				//监听题库下载完成
+				toEventListener('question_download_finish',function(ret, err){
+					finishQuestion(ret.value.kemu);
+				});
+				
+				//初始化
+				init(0);
+				setTimeout(function() {echoInit();}, 300);
+			}
+
+			/**
+			 * 计算累计答题数 
+			 */
+			function calCumulativeAnswer(kemu) {
+				var bank_type = getBankType(kemu); //获取当前选中的题库
+				//var bank_type = '022001'; //获取当前选中的题库
+				sql =
+					'SELECT DISTINCT r.* FROM cm_question_recode r LEFT JOIN cm_question q ON q.question_id = r.question_id WHERE learner_id = ' +
+					getUserId() + ' AND q.kemu = "' + kemu + '" AND q.bank_type like "%' + bank_type +
+					'%" AND q.question_id IS NOT NULL AND is_vip = 1';
+				db.selectSql({
+					name: 'drivingApp',
+					sql: sql
+				}, function(ret, err) {
+					if (ret && ret.status) {
+						//渲染num
+						loadNum($('#cumulativeAnswer'), ret.data.length, 1000,'');
+					} else {
+						$('#cumulativeAnswer').html(0);
+						log('获取累计答题数', err);
+					}
+				});
+
+				//获取科目一/科目四平均分
+				url = 'api/mock-exam-and-study/list-mock-exam-average';
+				params = {
+					learnerId: getUserId(),
+					kemu: kemu,
+					isVip: 1,
+					//bankType: getBankType(kemu)
+					bankType: '022001'
+				}
+				log('获取平均分传参', params);
+				ajax_Request(url, 'get', 'json', params, function(ret, err) {
+					log('平均分', ret);
+					api.hideProgress();
+					if (ret && ret.code == 0) {
+						if (ret.list.length > 0 && ret.list[0] != null) {
+							//渲染num
+							loadNum($('#mock_vip_percent'), parseInt(ret.list[0].score), 1000,'');
+						} else {
+							$('#mock_vip_percent').html(0);
+						}
+					} else {
+						$('#mock_vip_percent').html(0);
+						alert_msg('获取模考平均分失败');
+					}
+				});
+			}
+
+			//科目一车型
+			function initOne() {
+				cache_by_app = $api.getStorage('cache_by_app');
+				//$('#type').html(cache_by_app.questionBankTypeMap['022001']);
+				$('#type').html(cache_by_app.questionBankTypeMap[getBankType('036001')]);
+			}
+
+			//科目四车型
+			function initFour() {
+				cache_by_app = $api.getStorage('cache_by_app');
+				//$('#type').html(cache_by_app.questionBankTypeMap['022001']);
+				$('#type').html(cache_by_app.questionBankTypeMap[getBankType('036004')]);
+			}
+
+			/**
+			 * 套餐详情
+			 */
+			function init(initType) {
+				defaultload();
+				url = 'api/questionviporder/get-question-vip-order-info';
+				parmas = {
+					learnerId: getUserId()
+				}
+				ajax_Request(url, 'get', 'json', parmas, function(ret, err) {
+					log('用户购买的vip信息', ret);
+					if (ret) {
+						if (ret.code == 0 && ret.type == 0) {
+							var nowDate = new Date();
+							local = ret.questionVipOrderInfo;
+							var serviceEndDt = local.serviceEndNumber;
+							var time = calcuTimeValue_new(nowDate, serviceEndDt);
+							var day = calcuTimeValue_new(nowDate, serviceEndDt).split("天");
+							serviceType = local.typeOne;
+							vipServiceOrderId = local.id;
+							$(".expiration_reminder_content").html("您所购买的"+local.serviceName+"已到期，继续享用VIP体验，请您再次购买。")
+							var timeHtml;
+							if (local.typeOne == 1) {
+								timeHtml = '套餐到期';
+								$(".expire").removeClass('aui-hide');
+								$('.title_man_msg_name_img').attr('src', '../../../icon/vip/question_bank/VIP_no.png');
+								if (initType == 0) {
+									$('.tips').removeClass('aui-hide');
+									$('.expiration_reminder').removeClass('aui-hide');
+								}
+							} else if (day[0] < 3 && local.typeOne == 0) {
+								timeHtml = '套餐剩余不足' + (day[0] == 2 ? '三' : day[0] == 1 ? '两' : '一') + '天';
+							} else {
+								timeHtml = '套餐剩余' + time;
+							}
+							$(".title_man_msg_time").html(timeHtml);
+							local.time = time;
+							local.timeHtml = timeHtml;
+							if (local.isContainKemuFour == 0) {
+								//不包含科目四vip
+								$("#left_four").addClass('aui-hide');
+								$("#left_one").addClass('left_one_active_s');
+								changeKemu(1);
+							} else if (local.isContainKemuOne == 0) {
+								//不包含科目一vip
+								$("#left_one").addClass('aui-hide');
+								$("#left_four").addClass('left_four_active_s');
+								$("#left_four").addClass('left_four_active');
+								changeKemu(4);
+							}else{
+								//如果都包含，那么以进来的入口为准
+								changeKemu(cache.kemu == '036001' ? 1 : 4);
+							}
+						} else if (ret.code == 0 && ret.type == 1) {
+							api.hideProgress();
+							setError('您尚未购买任何套餐')
+						} else {
+							api.hideProgress();
+							setError('您尚未购买任何套餐')
+						}
+					} else {
+						api.hideProgress();
+						setError('服务器繁忙，请稍后重试')
+					}
+				})
+			}
+
+			function getCoach(coachId) {
+				url = 'api/coach/get-coach-person-detail-by-id';
+				params = {
+					coachId: coachId
+				}
+				ajax_Request(url, 'get', 'json', params, function(ret, err) {
+					log('教练信息', ret)
+					if (ret) {
+						if (ret.code == 0) {
+							if (ret.coachPersonInfo != undefined) {
+								$('.my_coach_msg_name').addClass('aui-hide');
+								$('.my_coach_msg_names').removeClass('aui-hide');
+								$(".my_coach_msg_name_texts").html(ret.coachPersonInfo.name);
+							}
+						} else {
+
+						}
+					} else {
+
+					}
+				})
+			}
+
+			/**
+			 * 计算两个时间段之差
+			 */
+			var startTime;
+			var endTime;
+
+			function calcuTimeValue_new(startTime, endTime) {
+				startTime = new Date(startTime);
+				endTime = new Date(endTime);
+				difference = endTime.getTime() - startTime.getTime(); //时间差的毫秒数
+				days = Math.floor(difference / (24 * 3600 * 1000));
+				var leave1 = difference % (24 * 3600 * 1000); //计算天数后剩余的毫秒数
+				hours = Math.floor(leave1 / (3600 * 1000));
+				var leave2 = leave1 % (3600 * 1000); //计算小时数后剩余的毫秒数
+				minutes = Math.floor(leave2 / (60 * 1000));
+				var leave3 = leave2 % (60 * 1000); //计算分钟数后剩余的毫秒数
+				seconds = Math.round(leave3 / 1000);
+				return (days == 0 ? '0天' : days + "天") + (hours == 0 ? '' : hours + "时");
+			}
+
+
+			//设置出错页面;
+			function setError(msg) {
+				var error_src = $('#error_src').html();
+				$('#userMsg').html(doT.template(error_src)({
+					'msg': msg
+				}));
+			}
+
+			//跳转到选择教练页面
+			function coach_choice() {
+				api.openDrawerLayout({
+					name: 'coach_select_under_school_win',
+					url: '../../common/select_coach/coach_select_under_school_win.html',
+					slidBackEnabled: 'true',
+					vScrollBarEnabled: 'false',
+					hScrollBarEnabled: 'false',
+					reload: true,
+					slidToOpenPane: false,
+					slidToClosePane: false,
+					pageParam: {
+						data: params
+					},
+					animation: {
+						type: 'push',
+						subType: "from_right",
+						duration: 300
+					},
+					rightPane: {
+						name: 'driving_coach_win',
+						url: '../../common/select_coach/driving_coach_win.html',
+						vScrollBarEnabled: false,
+						hScrollBarEnabled: false,
+						bounces: false,
+						pageParam: {
+							data: params
+						}
+					}
+				});
+			}
+			// 学员绑定教练
+			function binding_coach(cache) {
+				url = 'api/learner/bind-learner-coach';
+				params = {
+					learnerId: getUserId(),
+					coachId: cache.id //教练id
+				};
+				ajax_Request(url, 'put', 'json', params, function(ret, err) {
+					log('ret======', ret);
+					if (ret) {
+						if (ret.code == 0) {
+							alert_msg('绑定教练成功');
+						}
+					} else {
+						alert_msg('服务器繁忙，请稍后重试');
+					}
+				});
+			}
+
+
+
+			//跳转到选择车型页面
+
+			function change() {
+				commonOpenWin('select_item_bank_win', {
+					subjectType: subjectType
+				})
+			}
+			//科目一科目四切换
+			function changeKemu(subType) {
+				subjectType = subType;
+				if (subType == 1) {
+					$('#left_one').addClass('left_one_active');
+					$('#left_four').removeClass('left_four_active');
+				} else {
+					$('#left_one').removeClass('left_one_active');
+					$('#left_four').addClass('left_four_active');
+				}
+
+				//获取最新题库
+				getNewestQuestion(subType);
+			}
+
+			/**
+			 * 打开500题
+			 */
+			function showExpirationReminder(is_continue) {
+				var vip_order_recode = getGlobalData('vip_order_recode'); //用户vip做题记录
+				var winUrl = subjectType == 1 ? 'vip_subject_one' : 'vip_subject_four';
+				params = {
+					type: 'order'
+				}
+				log('vip_order_recode', vip_order_recode);
+				if (vip_order_recode != undefined && vip_order_recode != null && vip_order_recode.kemu_one_order != undefined) {
+					params.order_num = subjectType == 1 ? vip_order_recode.kemu_one_order : vip_order_recode.kemu_four_order;
+					if (is_continue) {
+						//如果是继续做题，那么直接继续
+						params.isContinue = true;
+						openOrderQuestionWin(params, winUrl);
+						return;
+					}
+					isSure('温馨提示', '是否继续上次答题', '重新开始', '继续答题', function() {
+						params.isContinue = false;
+						openOrderQuestionWin(params, winUrl);
+					}, function() {
+						params.isContinue = true;
+						openOrderQuestionWin(params, winUrl);
+					});
+				} else {
+					params.isContinue = false;
+					openOrderQuestionWin(params, winUrl);
+				}
+			}
+
+			/**
+			 * 打开精选500题
+			 */
+			function openOrderQuestionWin(params, winUrl) {
+				api.openWin({
+					name: 'practice_common_win',
+					url: '../' + winUrl + '/practice_common_win.html',
+					slidBackEnabled: 'false',
+					vScrollBarEnabled: 'false',
+					hScrollBarEnabled: 'false',
+					reload: true,
+					useWKWebView: false,
+					pageParam: {
+						data: params
+					}
+				});
+			}
+
+			/**
+			 * 打开答题攻略
+			 */
+			function showShorthand() {
+				var winUrl = subjectType == 1 ? 'vip_subject_one' : 'vip_subject_four';
+				api.openWin({
+					name: 'formula_win',
+					url: './formula_win.html',
+					slidBackEnabled: 'false',
+					vScrollBarEnabled: 'false',
+					hScrollBarEnabled: 'false',
+					reload: true,
+					useWKWebView: false,
+					pageParam: {
+						subjectType: subjectType
+					}
+				});
+			}
+
+			/**
+			 * 易错题集
+			 */
+			function errorProne() {
+				var winUrl = subjectType == 1 ? 'vip_subject_one' : 'vip_subject_four';
+				api.openWin({
+					name: 'practice_common_win',
+					url: '../' + winUrl + '/practice_common_win.html',
+					slidBackEnabled: 'false',
+					vScrollBarEnabled: 'false',
+					hScrollBarEnabled: 'false',
+					reload: true,
+					useWKWebView: false,
+					pageParam: {
+						data: {
+							type: 'mistake'
+						}
+					}
+				});
+			}
+
+			/**
+			 * 难题攻克
+			 */
+			function difficultProblem() {
+				var winUrl = subjectType == 1 ? 'vip_subject_one' : 'vip_subject_four';
+				api.openWin({
+					name: 'practice_common_win',
+					url: '../' + winUrl + '/practice_common_win.html',
+					slidBackEnabled: 'false',
+					vScrollBarEnabled: 'false',
+					hScrollBarEnabled: 'false',
+					reload: true,
+					useWKWebView: false,
+					pageParam: {
+						data: {
+							type: 'difficult'
+						}
+					}
+				});
+			}
+
+			/**
+			 * 考前巩固
+			 */
+			function consolidate() {
+				var winUrl = subjectType == 1 ? 'vip_subject_one' : 'vip_subject_four';
+				logAppBuryingPoint({},'考前巩固','vip题库',subjectType == 1?'科一':'科四','学车考试');
+				api.openWin({
+					name: 'practice_common_win',
+					url: '../' + winUrl + '/practice_common_win.html',
+					slidBackEnabled: 'false',
+					vScrollBarEnabled: 'false',
+					hScrollBarEnabled: 'false',
+					reload: true,
+					useWKWebView: false,
+					pageParam: {
+						data: {
+							type: 'simulation_explain'
+						}
+					}
+				})
+			}
+
+			/**
+			 * 套餐是否过期
+			 */
+			function isOverdue(callBack) {
+				url = 'api/questionviporder/get-question-vip-order-service-status';
+				params = {
+					vipServiceOrderId: vipServiceOrderId,
+					kemu: subjectType
+				}
+				ajax_Request(url, 'post', 'json', params, function(ret, err) {
+					log('是否到期', ret)
+					if (ret) {
+						if (ret.code == 0) {
+							return callBack(ret);
+						} else {
+							api.hideProgress();
+							alert_msg(ret.msg)
+						}
+					} else {
+						api.hideProgress();
+						alert_msg('服务器异常，请稍后重试')
+					}
+				})
+			}
+			/**
+			 * 同一设备号只能在三个设备上登录
+			 */
+			function deviceIds(pageUrl, iscontinue) {
+				isOverdue(function(ret) {
+					if (ret.serviceStatus == 0) {
+						api.hideProgress();
+						$('.tips').removeClass('aui-hide');
+						$('.expiration_reminder').removeClass('aui-hide');
+					} else {
+						url = 'api/questionviporder/check-can-into';
+						params = {
+							learnerId: getUserId(),
+							bindMac: deviceId,
+							phoneModel: deviceModel
+						}
+						log('设备信息', params)
+						ajax_Request(url, 'post', 'json', params, function(ret, err) {
+							log('返回信息', ret)
+							api.hideProgress();
+							if (ret) {
+								if (ret.code == 0) {
+									if (ret.isMoreThan == 0) {
+										if (pageUrl == '500') {
+											logAppBuryingPoint({},'精选500题','vip题库',subjectType == 1?'科一':'科四','学车考试');
+											showExpirationReminder(iscontinue);
+										} else if (pageUrl == 'shorthand') {
+											logAppBuryingPoint({},'精选500题','答题攻略',subjectType == 1?'科一':'科四','学车考试');
+											showShorthand();
+										} else if (pageUrl == 'errorProne') {
+											logAppBuryingPoint({},'易错题集','vip题库',subjectType == 1?'科一':'科四','学车考试');
+											errorProne();
+										} else if (pageUrl == 'difficultProblem') {
+											logAppBuryingPoint({},'难题攻略','vip题库',subjectType == 1?'科一':'科四','学车考试');
+											difficultProblem();
+										} else if (pageUrl == 'consolidate') {
+											logAppBuryingPoint({},'模拟考试','vip题库',subjectType == 1?'科一':'科四','学车考试');
+											consolidate();
+										} else if (pageUrl == 'passingRate') {
+											toPassingRate();
+										}
+									} else {
+										openMessage('温馨提示', '该账号所登录的手机设备已超过3个', '确定', '', '', '', null)
+									}
+								} else {
+									alert_msg(ret.msg)
+								}
+							} else {
+								alert_msg('服务器异常，请稍后重新')
+							}
+						})
+					}
+				})
+			}
+
+			/**
+			 * 关闭vip到期提醒
+			 */
+			function closeExpirationReminder() {
+				defaultload();
+				init(1);
+				$('.tips').addClass('aui-hide');
+				$('.expiration_reminder').addClass('aui-hide');
+			}
+
+			/**
+			 * 去理赔条件
+			 * classType 1 科目一 4 科目四
+			 */
+			function toAssuranceRequirement(classType) {
+				isOverdue(function(ret) {
+					if (ret.serviceStatus == 0) {
+						$('.tips').removeClass('aui-hide');
+						$('.expiration_reminder').removeClass('aui-hide');
+						sendEvent('closeThisWin', '')
+					} else {
+						if (ret.tjStatus == 0) {
+							var params = {
+								classType: classType,
+								vipServiceOrderId: vipServiceOrderId
+							}
+							commonOpenWin('requirement_win', params)
+						} else {
+							openMessage('温馨提示', '您的科目' + (classType == 1 ? '一' : '四') + '理赔已提交申请，请不要重复提交', '查看理赔记录', '取消',
+								'toClaimRecord()', '', null)
+						}
+					}
+				})
+			}
+
+			/**
+			 * 去理赔列表
+			 */
+			function toClaimRecord() {
+				commonOpenWin('claim_record_win', '')
+			}
+
+			/**
+			 * 去通过率
+			 */
+			function toPassingRate() {
+				commonOpenWin('passing_rate_win', '')
+			}
+
+			/**
+			 * 去题库首页
+			 */
+			function toQuestionIndex() {
+				commonOpenWin('question_bank_buy_index_new', '')
+			}
+
+			//打开通用弹出框
+			//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+			function openMessage(title, content, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+				api.openFrame({
+					name: 'common_alert',
+					url: '../../common/common_alert.html',
+					bgColor: 'rgba(0,0,0,0.4)',
+					rect: {
+						x: 0,
+						y: 0,
+						w: 'auto',
+						h: api.winHeight
+					},
+					bounces: false,
+					pageParam: {
+						title: title,
+						content: content,
+						sureButton: sureButton,
+						sureFunc: sureFunc,
+						cancelButton: cancelButton,
+						cancelFunc: cancelFunc,
+						winName: api.winName,
+						frameName: api.frameName,
+						params: params
+					},
+					softInputBarEnabled: true,
+					softInputMode: 'resize'
+				});
+			}
+
+			//获取科目四最新题库
+			function getNewestQuestion(subjectType) {
+				api.hideProgress();
+				url = 'api/question/version';
+				params = {
+					kemu: subjectType == 1 ? '036001' : '036004'
+				}
+				if (islogin()) {
+					params.learnerId = getUserId();
+				}
+				ajax_Request(url, "get", "json", params, function(ret, err) {
+					log('最新题库版本', ret);
+					if (ret && ret.code == 0) {
+						checkVersion(ret.question.version, subjectType == 1 ? '036001' : '036004'); //拿服务器最新题库版本和本地题库版本做校验
+					} else {
+						alert_msg('获取最新题库版本号失败');
+					}
+				});
+			}
+
+			//拿服务器最新题库版本和本地题库版本做校验
+			function checkVersion(serverVersion, kemu) {
+				sql = 'SELECT version FROM cm_question WHERE kemu = "' + kemu + '" ORDER BY version DESC LIMIT 0,1';
+				db.selectSql({
+					name: 'drivingApp',
+					sql: sql
+				}, function(ret, err) {
+					log('本地版本号', ret);
+					if (ret && ret.status) {
+						if (ret.data.length > 0) {
+							if (serverVersion != ret.data[0].version) { //版本不一致，以服务器的为准
+								openDownloadVision(serverVersion,kemu); //下载题库
+							} else {
+								console.log('题库' + kemu + '已最新');
+								if (kemu == '036001') {
+									$(".left_img").attr("src", "../../../icon/vip/question_bank/kemu1.png");
+									initOne();
+								} else if (kemu == '036004') {
+									$(".left_img").attr("src", "../../../icon/vip/question_bank/kemu4.png");
+									initFour();
+								}
+								//计算累计答题
+								calCumulativeAnswer(kemu);
+							}
+						} else {
+							openDownloadVision(serverVersion,kemu); //下载题库
+						}
+					} else if (err) {
+						log('vip比较版本失败', err);
+						//数据库出现异常，重新加载数据库
+    					delete_db(kemu == '036001'?1:4);
+					}
+				});
+			};
+			
+			/**
+			 * 打开考前巩固 
+			 */
+			function openPracticeSelectedTopic(){
+				params.type = subjectType == 1?"click_one":"click_four";
+				api.openWin({
+			      name: 'selected_topic_win',
+			      url: '../../examination/common/selected_topic_win.html',
+			      slidBackEnabled:'true',
+			      vScrollBarEnabled:'false',
+			      hScrollBarEnabled:'false',
+			      reload:true,
+			      pageParam: {
+			         data:params
+			      }
+			    });
+			}
+			
+			//打开题库下载界面
+			function openDownloadVision(serverVersion,kemu){
+				api.openFrame({
+			        name: 'download_progress_frm',
+			        url: '../../common/question/download_progress_frm.html',
+			        bgColor: 'rgba(0,0,0,0.1)',
+			        rect: {
+			            x: 0,
+			            y: 0,
+			            w: 'auto',
+			            h: api.winHeight
+			        },
+			        bounces: false,
+			        pageParam:{
+			        	serverVersion:serverVersion,
+			        	kemu:kemu,
+			        	winName:api.winName,
+			        	frameName:api.frameName
+			        },
+			        softInputBarEnabled:true,
+			        softInputMode:'resize'
+			    });
+			}
+			
+			/**
+			 * 题库下载完成处理 
+			 */
+			function finishQuestion(kemu){
+				if (kemu == '036001') {
+					$(".left_img").attr("src", "../../../icon/vip/question_bank/kemu1.png");
+					initOne();
+				} else if (kemu == '036004') {
+					$(".left_img").attr("src", "../../../icon/vip/question_bank/kemu4.png");
+					initFour();
+				}
+				//计算累计答题
+				calCumulativeAnswer(kemu);
+			}
+			
+			//删除DB
+			function delete_db(kemu){
+				fs.rmdir({
+				    path: 'fs://' + db_name
+				}, function(ret, err) {
+				    if (ret.status) {
+				        console.log("删除DB成功"+JSON.stringify(ret));
+				        copy_db(kemu);
+				    }else if(err){
+				    	sendErrorLog("删除数据库错误：",JSON.stringify(err));
+				    	copy_db(kemu);
+				    } else {
+				        console.log("删除DB失败"+JSON.stringify(err));
+				    }
+				});
+			}
+			
+			//复制DB文件到手机存储空间
+			function copy_db(kemu){
+				fs.copyTo({
+				    oldPath: 'widget://res/db/' + db_name,
+				    newPath: 'fs://'
+				}, function(ret, err) {
+				    if (ret.status) {
+				        console.log("copyDB文件成功");
+				        open_db(kemu);
+				    }else if(err){
+				    	sendErrorLog("复制数据库错误：",JSON.stringify(err));
+				    } else {
+				        console.log("copyDB文件失败"+JSON.stringify(err));
+				    }
+				});
+			}
+			
+			//打开数据库
+			function open_db(kemu){
+				db.openDatabase({
+				    name: 'drivingApp',
+				    path: 'fs://' + db_name
+				}, function(ret, err) {
+				    if (ret.status) {
+				        log('db打开成功',{});
+				        getNewestQuestion(kemu);
+				    }else if(err){
+				    	sendErrorLog("打开数据库错误：",JSON.stringify(err));
+				    } else {
+				        log('db打开失败',err);
+				    }
+				});
+			}
+		</script>
+	</body>
+</html>

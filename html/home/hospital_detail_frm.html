@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>医院详情</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/swiper/swiper.css">
+    <style>
+    	html,body{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+		    color: #2c2c2c;
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    opacity: 1;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+    	.hospital-pic{
+		    position: relative;
+    		height: 14rem;
+    	}
+    	.hospital-pic img{
+    		width: 100%;
+		    height: 100%;
+		    object-fit: cover;
+    	}
+    	.hospital-pic-num{
+    		position: absolute;
+		    bottom: 1rem;
+		    left: 1rem;
+		    background: url(../../icon/common/icon_shadow_small.png) transparent center center no-repeat;
+		    background-size: 100% 99%;
+		    padding: 0.4rem 0.5rem;
+		    color: #FFF;
+		    font-size:0.7rem;
+    	}
+    	.hospital-name{
+    		font-size: 1rem;
+    		overflow: hidden;
+		    height: 2.7rem;
+		    line-height: 2.7rem;
+    	}
+    	.item-name{
+    		float:left;
+    		width: 60%;
+    		overflow: hidden;
+    		font-weight: 500;
+    		margin-left: 4%;
+    		font-size: 0.9rem;
+    	}
+    	.item-price{
+    		width: 35%;
+		    float: right;
+		    text-align: right;
+		    font-size: 0.7rem;
+		    color: #757575;
+    	}
+    	.item-price span{
+    		color:#FF5917;
+    		font-size:1rem;
+    	}
+    	.item-price font{
+    		color:#FF5917;
+    		font-size:0.7rem;
+    	}
+    	.hospital-info{
+    		padding: 0rem 0.5rem;
+    	}
+    	.hospital-percent{
+    		font-size: 0.7rem;
+		    overflow: hidden;
+    	}
+    	.hospital-percent li{
+    		float: left;
+    		margin-right: 1rem;
+    	}
+    	.hospital-label li{
+		    border: solid 1px #F1F1F1;
+		    margin-right: 0.4rem;
+		    margin-bottom:0.4rem;
+		    padding: 0rem 0.2rem;
+		    background: #F1F1F1;
+		    float:left;
+		    line-height: 1rem;
+    		height: 1rem;
+    	}
+    	.font-list-item{
+    		color:#757575;
+		    font-size: 0.7rem;
+		    overflow: hidden;
+    	}
+    	.list_bar .list_bar_inner{
+			 position:absolute;
+			 min-width: 0rem;
+			 height:100%;
+			 top:0;
+			 left:50%;
+			 background-color:#03a9f4;
+			 -webkit-transform:translateX(-50%);
+			 transform:translateX(-50%);
+			 -webkit-transition: 0.3s ease;
+		}
+		.list_bar {
+			 position:absolute;
+			 bottom:0;
+			 left:0%;
+			 height:2px;
+			 width:20%;
+			 -webkit-transform:translateX(0%);
+			 transform:translateX(0%);
+			 -webkit-transition:all .25s ease;
+			 transition:all .25s ease;
+			 z-index:10;
+		}
+		.hospital-sort{
+			margin-left: 6%;
+		}
+		.hospital-sort-menu{
+			position: relative;
+		}
+		#score{
+    		height: 1rem;
+    		line-height:1rem;
+    		display: inline-block;
+    		vertical-align: middle;
+    	}
+    	#score li{
+    		float: left;
+    		height: 1rem;
+    		margin-left: 0.1rem;
+    		line-height:1rem;
+    		display: inline-block;
+    		vertical-align: middle;
+    	}
+    	#score li img{
+    		width: 0.6rem;
+    		margin-top: 0.2rem;
+    	}
+    	.head-portrait img{
+    		height:100%;
+    		border-radius:100%;
+    	}
+    	.aui-ellipsis-2 {
+		    display: -webkit-box !important;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		    word-wrap: break-word;
+		    white-space: normal !important;
+		    -webkit-line-clamp: 2;
+		    -webkit-box-orient: vertical;
+		}
+		.driver-img{
+			width: 3rem !important;
+    		height: 3rem !important;
+    		margin: auto !important;
+		}
+		.checkMore{
+			height: 3rem;
+		    line-height: 3rem;
+		    text-align: center;
+	        font-size: 0.7rem;
+		}
+		.checkMore img{
+			height: 0.8rem;
+    		margin-bottom: -0.1rem;
+    		-webkit-transform: rotate(180deg);
+		}
+		.hospital-des{
+			padding: 0.8rem 0.8rem 0.8rem 0rem;
+   			font-size: 0.7rem;
+   			width:100%;
+   			overflow:auto;
+		}
+		.aui-border-t:before, .aui-border-b:after {
+		    width: 100%;
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    z-index: 2;
+		    left: 0;
+		    right: auto;
+		    -webkit-transform-origin: 100% 50%;
+		    transform-origin: 100% 50%;
+		    pointer-events: none;
+		}
+		.aui-bar-nav {
+		    top: 0;
+		    line-height: 2.25rem;
+		    background-color: #FFF;
+		    color: #000;
+		    border-bottom: none;
+		}
+		#aui-header1{
+		    opacity: 0;
+		    z-index:12;
+		}
+		#aui-header2{
+		    opacity: 1;
+		    background:#FFF !important;
+		    z-index:12;
+		}
+		.swiper-pagination-bullet-active {
+		    opacity: 1;
+		    background: #FFF;
+		}
+		.swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets {
+		    bottom: 10px;
+		    left: 0;
+		    width: 95%;
+		}
+		.swiper-pagination {
+		    position: absolute;
+		    text-align: right;
+		    -webkit-transition: 300ms;
+		    -moz-transition: 300ms;
+		    -o-transition: 300ms;
+		    transition: 300ms;
+		    -webkit-transform: translate3d(0, 0, 0);
+		    -ms-transform: translate3d(0, 0, 0);
+		    -o-transform: translate3d(0, 0, 0);
+		    transform: translate3d(0, 0, 0);
+		    z-index: 10;
+		}
+		.shadow{
+    		width:100%;
+    		height:100%;
+    		background:#000;
+    		opacity:0.3;
+    		position: absolute;
+    	}
+    	.hospital-des img{
+    		max-width:100%;
+    	}
+    	.aui-list .aui-list-item-media {
+		    width: 5.5rem;
+		    position: relative;
+		    padding: 0.5rem 0;
+		    padding-right: 0.75rem;
+		    display: inherit;
+		    -webkit-flex-shrink: 0;
+		    flex-shrink: 0;
+		    -webkit-flex-wrap: nowrap;
+		    flex-wrap: nowrap;
+		    -webkit-box-align: center;
+		    -webkit-align-items: flex-start;
+		    align-items: flex-start;
+		}
+		.jz {
+		    margin: 0.5rem 0rem;
+		}
+		.font-list-item font{
+			color:#000000;
+		}
+		.icon_img{
+			width:0.9rem;
+		}
+		.txt-rmb{
+			font-size: 0.6rem !important;
+		    padding-top: 0.2rem;
+		}
+		.hospital-msg{
+			width: 100%;
+			padding-top: 0.5rem;
+			font-size: 1rem;
+			font-weight: 650;
+			height: 1.2rem;
+			line-height: 1.2rem;
+		}
+		.hospital-line{
+			height: 0.9rem ;
+			width: 0.2rem;
+			background: #3F86FF;
+			vertical-align: top;
+			margin-top: 1%;
+		}
+		
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav none-bottom-style" id="aui-header1" style="background: none;">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+            <img src="../../icon/common/icon_header_return_white.png">
+        </a>
+        <div class="aui-title">
+        	
+        </div>
+    </header>
+	<header class="aui-bar aui-bar-nav" id="aui-header2" style="background: none;">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+            <img src="../../icon/common/icon_header_return.png">
+        </a>
+        <div class="aui-title" id="hospital_s_title">
+        	医院详情
+        </div>
+    </header>
+    <div id="hospitalDetail">
+	    <div class='load_img'>
+	    	<img src="../../image/background/preloading.gif" alt="" />
+	    </div>
+    </div>
+    <script type="text/template" charset="utf-8" id='error_src'>
+    	<div class='error_img'>
+	    	<img src="../../icon/common/icon_serive_error.png" alt="" />
+	    </div>
+    </script>
+    <script type="text/template" charset="utf-8" id='hospitalDetail_src'>
+	    <div class="swiper-container">
+		    <div class="swiper-wrapper">
+		    	<div class="swiper-slide">
+		    		<div class='hospital-pic'>
+						<img src="{{=file_load_url + it.logo}}" alt="" onerror="javascript:this.src='../../icon/default/icon_default_big_pic.png'"/>
+		    		</div>
+		    	</div>
+		    </div>
+		    <div class="swiper-pagination"></div>
+		</div>
+		<div class="hospital-info">
+			<div class="hospital-name" >
+				<div class='item-name'>{{=it.name}}</div>
+				<div class='item-price'><span>{{=it.examinationPrice}} <span class="txt-rmb">元</span></span>&nbsp;</div>
+			</div>
+			<div class="aui-content aui-margin-b-15" >
+			    <ul class="aui-list aui-list-in">
+			        <li class="aui-list-item">
+						<div class="aui-list-item-label-icon">
+							<img src="../../icon/hospital/icon_time_clock.png" alt="" class='icon_img'/>
+						</div>
+						<div class="aui-list-item-inner font-list-item" style="padding: 0.2rem 0rem;">
+							<span><font>工作时间：</font>{{=it.examinationTime}}</span>
+						</div>
+			        </li>
+			        <li class="aui-list-item">
+			        	<div class="aui-list-item-label-icon">
+	        				<img src="../../icon/hospital/icon_special.png" alt="" class='icon_img' style="position: absolute;top:8%;"/>
+		        		</div>
+		        		<div class="aui-list-item-inner font-list-item" style="padding: 0.2rem 0rem;">
+	        				<span>{{=it.examinationInfo}}</span>
+		        		</div>
+			        </li>
+			       <!-- <li class="aui-list-item">
+			        	<div class="aui-list-item-label-icon">
+        				<img src="../../icon/hospital/icon_support.png" alt="" class='icon_img'/>
+	        		</div>
+					<div class="aui-list-item-inner font-list-item" style="padding: 0.2rem 0rem;">
+						<span><font id="physicalList{{=it.id}}"></font></span>
+					</div>
+			        </li> -->
+			        <li class="aui-list-item aui-list-item-arrow" tapmode onclick="openMap('{{=it.name}}','{{=it.longitude}}','{{=it.latitude}}')">
+			        	<div class="aui-list-item-label-icon">
+		        			<img src="../../icon/hospital/icon_position.png" alt="" class='icon_img'/>
+			        	</div>
+			        	<div class="aui-list-item-inner font-list-item" style="margin-top: 1%;">
+		        			<span><font>{{=it.address}}</font></span>
+			        	</div>
+			        </li>
+			    </ul>
+			</div>
+		</div>
+		<div style="height: 0.5rem;background: #F5F5F5;"></div>
+		<div class="hospital-sort">
+			<!-- <div class="hospital-sort-menu">
+				<div class="aui-bar aui-bar-btn aui-bar-btn-full border-bottom" id="menu">
+				    <div class="aui-bar-btn-item aui-active">简介</div>
+				</div>
+				<div class="list_bar" id="slideSpan">
+			        <div class="list_bar_inner"></div>
+			    </div>
+			</div> -->
+		    <div class="bar-content">
+		    	<div class="bar-content-item">
+		    		<div class="hospital-msg">
+		    			<span class="hospital-line"></span>
+		    			医院简介
+		    		</div>
+		    		<div class="hospital-des">
+		    			{{=Base64.decode(it.introduction)}}
+		    		</div>
+		    	</div>
+		    </div>
+		</div>
+	</script>
+	<script type="text/template" charset="UTF-8" id="physical">
+		<div>
+			<div style="margin-top: 2%;">
+				支持：
+			{{ if( (it[0] == "线上体检" && it[0] != undefined && it[0] != null && it[0] != "") && (it[1] == "线下体检" && it[1] != undefined && it[1] != null && it[1] != "") ){ }}
+				线上/线下
+			{{ }else{ }}
+				{{ if(it[0] == "线上体检" && it[0] != undefined && it[0] != null && it[0] != "" ){ }}
+				线上
+				{{ }else if(it[0] == "线下体检" && it[0] != undefined && it[0] != null && it[0] != ""){ }}
+				线下
+				{{ }else{ }}
+				暂不支持体检
+				{{ } }}
+			{{ } }}
+			</div>
+			<!--<div>
+			{{ if(it[1] == "线下体检" || it[1] != undefined || it[1] != null || it[1] != ""){ }}
+				线下预约:支持
+			{{ }else{ }}
+				线下预约:不支持
+			{{ } }}
+			</div>-->
+		</div>
+	</script>
+	<!-- <div class='shadow aui-hide'></div> -->
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/swiper/swiper.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var clearance = 25;//间隙
+	var headerPos;
+	var threshold;//定义的阈值
+	var touchStyle;
+	var systemType;//系统类型
+	var cache;
+	var contactNumber;//医院电话
+	apiready = function(){
+		$api.fixStatusBar($api.byId('aui-header1'));
+		$api.fixStatusBar($api.byId('aui-header2'));
+		cache = api.pageParam;
+		$('#hospital_s_title').html(cache.name);
+		headerPos = $api.offset($api.byId('aui-header1'));
+		threshold = headerPos.h + 30;
+		systemType = api.systemType;
+		touchStyle = systemType == "ios"?'touchmove':'scroll';
+		scroll();
+		
+		//监听医院详情刷新action
+		toEventListener('hospital_pay_submit',function(ret){
+			renderingData();//渲染医院数据
+		});
+		toEventListener("hosiptal_sign_up",function(ret,err){
+			// loadFinish(true,"报名体检",true,examinationId)
+			renderingData();
+			// hospital_sign_up(ret.value);
+		});
+		
+		renderingData();//渲染医院数据
+	}
+	
+	function renderingData(){
+		params = {
+        	hospital:{
+        		id:cache.id
+        	},
+        	learnerId:islogin()?getUserId():null
+        }
+        console.log('传参'+JSON.stringify(params));
+        url = 'api/hospital';
+        ajax_Request(url, 'get', 'json', params, function(ret,err){
+        	if(ret){
+        		if(ret.code == 0){
+        			console.log('医院详情数据：'+JSON.stringify(ret));
+        			$('#aui-header1').css("opacity",1);
+        			$('#aui-header2').css("opacity",0);
+        			var hospitalDetail_src = $('#hospitalDetail_src').html();
+        			$('#hospitalDetail').html(doT.template(hospitalDetail_src)(ret.hospitalDetail));
+        			toolInit(ret.hospitalDetail);//样式初始化
+							
+							contactNumber = ret.hospitalDetail.contactNumber;
+					var physical = ret.hospitalDetail.onoffLine;
+					var physicals = physical.split(",")
+					//log(physicals);
+					var physicalList = $("#physical").html();
+					$("#physicalList"+ret.hospitalDetail.id).html(doT.template( physicalList )( physicals ));
+							
+        		}else{
+        			setError(ret.msg);
+        		}
+        	}else{
+        		setError('服务器繁忙，请稍后重试');
+        	}
+        });
+	}
+	
+	//设置出错页面;
+    function setError(msg){
+    	var error_src = $('#error_src').html();
+		$('#hospitalDetail').html(doT.template(error_src)({}));
+    	alert_msg(msg);
+    }
+	
+	//样式初始化
+	function toolInit(hospitalDetail){
+		//切换menu初始化
+		var tabwork = new auiTab({
+	        element:document.getElementById("menu"),
+	        repeatClick:true
+	    },function(ret){
+	        if(ret){
+	        	$('.aui-bar-btn-item').removeClass('active');
+				f_slide($(ret.dom));
+	        	setViewFrame(ret.index - 1);
+	        }
+	    });
+	    
+	    //初始化轮播
+	    var mySwiper = new Swiper(".swiper-container", {
+	    	pagination : '.swiper-pagination',
+			paginationElement : 'li'
+		});
+	    
+	    //给第一个menu添加样式
+	    $('.aui-bar-btn-item').each(function(index,e){
+	    	if(index == 0){
+	    		f_slide(e);
+	    	}
+	    });
+	    
+	    //暂定：只要有有效的体检记录，就不允许报名
+	    /*if(hospitalDetail.hospitalExaminationList.length == 0){
+		    esc_function('hospital_detail_win','','loadFinish('+true+',"报名体检")');
+	    }else{
+	    	esc_function('hospital_detail_win','','loadFinish('+false+',"'+hospitalDetail.hospitalExaminationList[0].status.name+'")');
+	    }*/
+	   
+	   	//如果有体检订单，则检测是否可以再次报名
+	   	var isallower = true;
+	   	var examinationId;
+	   	if(hospitalDetail.hospitalExaminationList.length > 0){
+	   		 if(hospitalDetail.hospitalExaminationList[0].videoHasUploadTimes < hospitalDetail.hospitalExaminationList[0].videoUploadTimes
+	   		 		&&hospitalDetail.hospitalExaminationList[0].status.code != '014006'
+	   		 		&&hospitalDetail.hospitalExaminationList[0].status.code != '014008'
+	   		 		&&(hospitalDetail.hospitalExaminationList[0].refundStatus == 0
+	   		 		||hospitalDetail.hospitalExaminationList[0].refundStatus == 9)){
+	   		 	//体检还未合格且视频上传次数尚未超过最大限制次数且未退款或者退款失败
+	   		 	isallower = false;
+	   		 	examinationId = hospitalDetail.hospitalExaminationList[0].id;
+	   		 }else if(hospitalDetail.hospitalExaminationList[0].videoHasUploadTimes >= hospitalDetail.hospitalExaminationList[0].videoUploadTimes
+	   		 			&&hospitalDetail.hospitalExaminationList[0].hospitalMedia[0].status != 1
+	   		 			&&hospitalDetail.hospitalExaminationList[0].status.code != '014006'
+	   		 			&&hospitalDetail.hospitalExaminationList[0].status.code != '014008'
+	   		 			&&(hospitalDetail.hospitalExaminationList[0].refundStatus == 0
+	   		 			||hospitalDetail.hospitalExaminationList[0].refundStatus == 9)){
+	   		 	//体检还未合格且视频上传次数已达最大，但是最近一次视频还没被打回	且未退款或者退款失败	
+	   		 	isallower = false;
+	   		 	examinationId = hospitalDetail.hospitalExaminationList[0].id;
+	   		 }
+	   	}
+	    
+	    if(hospitalDetail.status.code != '011001'){
+	    	esc_function('hospital_detail_win','','loadFinish('+false+',"休息中")');
+	    }else{
+		    esc_function('hospital_detail_win','','loadFinish('+true+',"报名体检",'+isallower+',"'+examinationId+'")');
+	    }
+	}
+	
+	//监听页面滑动控制头部menu样式
+	var scrollPos;//监听上下滚动顶部的距离
+	var percent = 0;//白底header的隐藏属性值
+	var hidepercent = 0;//非白底header的隐藏属性值
+	function scroll(){
+		$(window).on(touchStyle,function(event){
+	        scrollPos = $(window).scrollTop();
+	        //安卓做限制滚动
+	    	if(((scrollPos/threshold).toFixed(2) <= 1)&&systemType == 'android'){
+	    		percent = (scrollPos/threshold).toFixed(2);
+		    	$('#aui-header2').css("opacity",percent);
+	    		hidepercent = 1 - percent;
+		    	$('#aui-header1').css("opacity",hidepercent);
+	    	}else{
+	    		percent = (scrollPos/threshold).toFixed(2) > 1?1:(scrollPos/threshold).toFixed(2);
+		    	$('#aui-header2').css("opacity",percent);
+	    		hidepercent = (1 - percent) < 0?0:(1 - percent);
+		    	$('#aui-header1').css("opacity",hidepercent);
+	    	}
+	    });
+	}
+    
+    //设置驾校服务页面展示
+    function setViewFrame(i){
+    	$('.bar-content-item').each(function(index,e){
+    		if(i == index){
+    			$(e).removeClass('aui-hide');
+    			//滚动到底部，后期得改下
+    			$('html,body').animate({scrollTop: $(document).height()-$(window).height()+'px'}, 300);
+    		}else{
+    			$(e).addClass('aui-hide');
+    		}
+    	});
+    }
+    
+    //滑块加载事件
+	function f_slide(e){
+		$(e).addClass('active');
+		$('.list_bar').css('width',($('.active').width() - clearance*2)+'px');
+		$('.list_bar_inner').css('width',($('.active').width() - clearance*2)+'px');
+		document.getElementById('slideSpan').style.webkitTransform = 'translateX('+($(e).position().left + clearance)+'px)';
+	}
+	
+	//打开地图
+	function openMap(name,lon,lat){
+		cache.to_name = cache.name;
+		cache.to_lon = lon;
+		cache.to_lat = lat;
+		api.openWin({
+	       name: 'common_map_loaction_win',
+	       url: '../common/common_map_loaction_win.html',
+	       slidBackEnabled:'true',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       pageParam: {
+	           data:cache
+	       }
+	   });
+	}
+	
+	function closeWin(){
+		api.closeWin({
+			name:'hospital_detail_win'
+        });
+	}
+	
+	/**
+	* 电话 
+	*/
+	function onlineContact(){
+		if(contactNumber != null){
+			isSure('提示','是否拨打电话'+contactNumber,'是','否',function(){
+				window.location.href = 'tel://' + contactNumber;
+			});
+		}else{
+			alert_msg('未设置联系方式');
+		}
+	}
+</script>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>课程目录</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/swiper/swiper.css">
+		<style>
+			html,
+			body {
+				background-color: #fff;
+			}
+			/*.list_li{
+				margin-bottom: 0.5rem;
+			}
+			.list_all .list_li:nth-last-child{
+				margin-bottom: 0 !important;
+			}*/
+			
+			.list {
+				background-color: #fff;
+				height: 5.5rem;
+				width: 100%;
+				padding-top: 0.7rem;
+				padding-left: 0.7rem;
+				padding-bottom: 0.7rem;
+				/*margin-bottom: 0.5rem;*/
+				display: flex;
+				flex-flow: row;
+				position: relative;
+			}
+			
+			.img {
+				height: 100%;
+				width: 35%  !important;
+				border-radius: 0.8rem;
+				overflow: hidden;
+			}
+			
+			.img img {
+				width: 100%;
+				height: 100%;
+			}
+			.line_wid{
+				width: 60%;
+			}
+			.text1 {
+				height: 2rem;
+				font-size: 0.8rem;
+				margin-left: 0.5rem;
+				font-weight: 650;
+				overflow: hidden;
+				text-overflow:ellipsis;
+				white-space: nowrap;
+			}
+			
+			.text2 {
+				font-size: 0.6rem;
+				margin-left: 0.5rem;
+				color: #666666;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 2;
+				overflow: hidden;
+			}
+			
+			.state {
+				position: absolute;
+				width: 3rem;
+				height: 3rem;
+				top: 0;
+				right: 0;
+			}
+			
+			.state img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.msg {
+				background: #FFFFFF;
+				height: 20rem;
+				text-align: center;
+				font-size: 0.8rem;
+			}
+			
+			.msg img {
+				width: 8rem;
+				margin-top: 6rem;
+			}
+			
+			.loading {
+				font-size: 0.7rem;
+				background: #FFFFFF;
+				color: #7D7D7D;
+				padding-bottom: 0.3rem;
+				text-align: center;
+				padding-top: 0.3rem;
+			}
+			
+			.load {
+				color: #7D7D7D;
+			}
+			
+			.load img {
+				width: 1.6rem;
+				height: 1.6rem;
+				margin-top: 10rem;
+			}
+			.grey{
+				width: 100%;
+				height: 0.5rem;
+				background: #f5f5f5;
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<main>
+			<ul id="list_all">
+			</ul>
+			<div id='load_div'>
+			</div>
+		</main>
+
+	</body>
+
+	<script type="text/template" charset="utf-8" id='list_src'>
+		{{ for(var i=0;i
+		<it.length;i++){ }} <li tapmode onclick="open_continue_trian('{{=it[i].id}}','{{=it[i].kemu}}')">
+			<div class="list">
+				<div class="img">
+					<!--<img src="../../../../icon/education/list_img.png">-->
+					<img src="{{=file_load_url + it[i].videoImg + '&style=image/resize,m_fill,w_400'}}" alt="" onerror="javascript:this.src='../../../icon/default/icon_default_big_pic.png'" data-echo="{{=file_load_url + it[i].videoImg + '&style=image/resize,m_fill,w_400'}}"/>
+				</div>
+				<div class="line_wid">
+					<div class="text1">[{{=it[i].kemu == '036001'? '科目一':it[i].kemu == '036004'?'科目四':''}}] {{=it[i].videoTitle}}</div>
+					<div class="text2">{{=it[i].videoAbstract}}</div>
+				</div>
+				<div class="state">
+					{{if(it[i].isFinish == 1){}}
+					<img src="../../../icon/education/learn.png" alt=""> {{}}}
+				</div>
+				
+			</div>
+			<div class="grey"></div>
+			</li>
+			{{ } }}
+	</script>
+
+	<script type="text/template" charset="utf-8" id='msg_src'>
+		<div class="msg">
+			<img src="../../../icon/common/empty.png" alt="" /><br>
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+	<script type="text/template" charset="utf-8" id='load_src'>
+		<div class="load">
+			<img src="../../../icon/common/icon_loadding.gif" alt="" /><br>
+			<span>加载中...</span>
+		</div>
+	</script>
+	<script type="text/template" charset="utf-8" id='more_src'>
+		<div class="loading">
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript" src="../../../script/echo.min.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		var page = 1;
+		var limit = 10;
+		var load_src = $('#load_src').html(); //加载src
+		var msg_src = $('#msg_src').html(); //加载src
+		var more_src = $('#more_src').html(); //更多src
+		var refresh = true;
+		var cache;
+		var type = false; //判断是否从列表进入false:列表进入 true 视频中课程目录进入
+		apiready = function() {
+			cache = api.pageParam;
+			log("页面数据1111111-------------", cache)
+			if (cache.data.type != "" && cache.data.type != undefined) {
+				type = true;
+			}
+			init();
+			goRefrash(40, '#FFFFFF', null, null, function() {
+				refreshList();
+			});
+			goLoad(function(ret, err) {
+				loadList();
+			});
+
+			toEventListener('playData', function(ret, err) {
+				console.log("监听事件数据====" + JSON.stringify(ret))
+			})
+			toEventListener('student_refresh_list', function(ret, err) {
+				refreshList();
+			})
+		};
+		//列表刷新
+		function refreshList() {
+			page = 1;
+			refresh = true;
+			setLoad();
+			init();
+		}
+
+		var list_src = $('#list_src').html();
+
+		function init() {
+			defaultload('获取内容中');
+			var url = "api/learner-eduction/video-list-menu"
+			params = {
+				eductionId: cache.data.id,
+				learnerId: getUserId(),
+				page: page,
+				limit: 10,
+			};
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('出参', ret);
+				if (ret) {
+					if (ret.code == 0 && ret.returnVal.length > 0) {
+						if (refresh || $('#list_all').find('li').length === 0) {
+							$('#list_all').html(doT.template(list_src)(ret.returnVal));
+						} else {
+							$('#list_all').append(doT.template(list_src)(ret.returnVal));
+						}
+						
+					} else {
+						setMsg(refresh ? '暂无课程信息' : '暂无更多课程信息')
+					}
+					closedefaultload()
+				} else {
+					alert_msg('服务器繁忙，请稍后再试');
+					closedefaultload()
+				}
+			});
+			setTimeout(function() {
+				api.refreshHeaderLoadDone();
+			}, 300);
+		}
+		//列表上拉
+		function loadList() {
+			page++;
+			refresh = false;
+			setLoad();
+			init();
+		}
+
+		// 设置页面加载的画面
+		function setLoad() {
+			if (refresh || $('#list_all').find('li').length === 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+				$('#load_div').html('');
+				$("#listDiv").html(load_src);
+			} else {
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': '加载更多中...',
+						'img': '../../icon/common/jiazai.gif'
+					}));
+				}, 300);
+			}
+		}
+		//设置页面提示信息
+		function setMsg(msg) {
+			if (refresh || $('#list_all').find('li').length === 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+				setTimeout(function() {
+					$("#list_all").html(doT.template(msg_src)({
+						'msg': msg
+					}));
+				}, 300);
+			} else { //原先已经有数据的情况下
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': msg,
+						'img': ''
+					}));
+				}, 300);
+			}
+		}
+
+		function open_continue_trian(id,kemu) {
+			param = {
+				id: cache.data.id,
+				videoId: id,
+				type: type,
+				kemu: kemu
+			}
+			api.openWin({
+				name: 'coach_education_win',
+				url: './coach_education_win.html',
+				slidBackEnabled: false,
+				vScrollBarEnabled: false,
+				hScrollBarEnabled: false,
+				reload: true,
+				useWKWebView: false,
+				bounces: false,
+				pageParam: {
+					data: param
+				}
+			});
+		}
+	</script>
+
+</html>

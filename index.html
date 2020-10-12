@@ -1,0 +1,1241 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="./css/api.css" />
+    <link rel="stylesheet" type="text/css" href="./css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="./css/common/common.css" />
+    <style type="text/css">
+        html,body {
+            height: 100%;
+        }
+		header{
+			background:#FFFFFF;
+		}
+        .wrap {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-flex-flow: column;
+        }
+
+        .flex-1 {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+        }
+
+        footer {
+            height: 30px;
+            width: 100%;
+            background-color: #81a9c3;
+            color: white;
+            line-height: 30px;
+            text-align: center;
+        }
+        #footer .aui-bar-tab-item{
+    		background-repeat:no-repeat;
+    		background-size:22px ;
+    		background-position:center 5px;
+    	}
+    	#footer .foot_home{
+    		background-image:url(./image/button/icon_index.png);
+    		background-size: 1.3rem;
+    		background-position-y: 0.3rem;
+    	}
+    	#footer .foot_home.aui-active{
+    		background-image:url(./image/button/icon_index_b.png);
+    		background-size: 1.3rem;
+    		background-position-y: 0.3rem;
+    	}
+    	#footer .foot_sort{
+    		background-image:url(./image/button/icon_sort.png);
+    		background-size: 1.3rem;
+    		background-position-y: 0.3rem;
+    	}
+    	#footer .foot_sort.aui-active{
+    		background-image:url(./image/button/icon_sort_b.png);
+    		background-size: 1.3rem;
+    		background-position-y: 0.3rem;
+    	}
+    	#footer .foot_recommend{
+    		background-image:url(./image/button/icon_recommend.png);
+    		background-size: 1.3rem;
+    		background-position-y: 0.3rem;
+    	}
+    	#footer .foot_recommend.aui-active{
+    		background-image:url(./image/button/icon_recommend_b.png);
+    		background-size: 1.3rem;
+    		background-position-y: 0.3rem;
+    	}
+    	#footer .foot_find{
+    		background-image:url(./image/button/icon_mine.png);
+    		background-size: 1.3rem;
+    		background-position-y: 0.3rem;
+    	}
+    	#footer .foot_find.aui-active{
+    		background-image:url(./image/button/icon_mine_b.png);
+		    background-size: 1.3rem;
+    		background-position-y: 0.3rem;
+    	}
+    	#footer .foot_mine{
+    		background-image:url(./image/button/icon_mine.png);
+    		background-size: 1.3rem;
+    		background-position-y: 0.3rem;
+    	}
+    	#footer .foot_mine.aui-active{
+    		background-image:url(./image/button/icon_mine_b.png);
+    		background-size: 1.3rem;
+    		background-position-y: 0.3rem;
+    	}
+    	.aui-bar-tab .aui-active {
+		    color: #1E8DD8;
+		}
+		.tips-msg{
+        	width: 100%;
+		    text-align: center;
+		    margin-top: 16rem;
+		    color:#757575;
+		    font-size:0.6rem;
+        }
+        .tips-msg img{
+        	width: 6rem;
+		    height: 4.1rem;
+        }
+    </style>
+</head>
+<body class="wrap">
+	<div class='tips-msg aui-hide'>
+		<img src="./icon/common/empty.png" alt="" /><br>
+		<span>请检查你的网络连接</span>
+	</div>
+    <footer class="aui-bar aui-bar-tab" id="footer">
+	    <div class="aui-bar-tab-item foot_home top-slide aui-active">
+	        <div class="aui-bar-tab-label mar-top1-4">首页</div>
+	    </div>
+	    <div class="aui-bar-tab-item foot_sort top-slide">
+	        <div class="aui-bar-tab-label mar-top1-4">学车考试</div>
+	    </div>
+	    <div class="aui-bar-tab-item foot_recommend top-slide">
+	        <div class="aui-badge info aui-hide" id="found"></div>
+	        <div class="aui-bar-tab-label mar-top1-4">发现</div>
+	    </div>
+	    <div class="aui-bar-tab-item foot_mine top-slide">
+	        <!-- <div class="aui-dot"></div> -->
+	        <div class="aui-bar-tab-label mar-top1-4">我的</div>
+	    </div>
+	</footer>
+</body>
+<script type="text/javascript" src="./script/api.js"></script>
+<script type="text/javascript" src="./script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="./script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="./script/common/common.js"></script>
+<script type="text/javascript">
+    //menu栏目与groupframe关系
+    var frameGroupMap = ['home_index_frm','examination_group','discovery_group'];
+    //var ajpush;//极光推送
+    var systemType;
+    var mam;
+    var appVersion;
+    var footer;
+    var message=$api.getStorage('message');
+    var channel;
+    var appVersion;
+    var aliPush;
+    apiready = function() {
+        // 最新api.js为了适配iPhoneX增加的方法，修复底部Footer部分与iPhoneX的底部虚拟横条键重叠的问题；
+        footer = $api.byId('footer');
+        $api.fixTabBar(footer);
+        channel = api.channel;
+        systemType = api.systemType;
+        appVersion = api.appVersion;
+        mam = api.require('mam');
+        
+        aliPush = api.require('aliPushNoUtdId');
+        
+        //状态栏设置为黑色
+        api.setStatusBarStyle({style: 'dark'});
+        
+        //如果没有消息缓存，则清除消息数字
+        if(message == "" || message == undefined){
+	      	setTimeout(function() {
+		        esc_function('index','signExamination','messageCenterHide()');
+			}, 4000);
+	    }else{
+	    	//如果有消息缓存，则加上消息数字
+	       	setTimeout(function() {
+		    	esc_function('index','signExamination','messageCenterNotHide()');
+			}, 4000);
+	    }
+
+        //切换menu初始化
+		var tabwork = new auiTab({
+	        element:document.getElementById("footer"),
+	        repeatClick:true
+	    },function(ret){
+	        if(ret){
+	        	switch(ret.index){
+	        		case 1:
+	        			logAppBuryingPoint({},'首页');
+	        			break;
+	        		case 2:
+	        			logAppBuryingPoint({},'学车考试');
+	        			break;
+	        		case 3:
+	        			logAppBuryingPoint({},'发现');
+	        			break;
+	        		case 4:
+	        			logAppBuryingPoint({},'我的');
+	        			break;
+	        	}
+	        	setViewFrame(ret.index - 1);
+	        }
+	    });
+
+	    //监听退出事件
+	    exit_app();
+
+	    //获取百度人脸识别access_token
+	    //getBaiduFaceAccessToken();
+
+	    //获取百度人体分析access_token
+	    getBaiduBodyAnalysisAccessToken();
+
+        //判断当前网络是否可用
+        is_connect();
+
+        //动态权限机制
+        getPermission();
+        
+        //第一次打开获取手机令牌token
+        getPhoneToken(function(ret,err){
+        	if(ret){
+				if(ret.code == 0){
+					$api.setStorage('appToken', ret.appToken);
+					//登录获取积分
+					if(islogin()){setTimeout(function() {ReadIntegral();}, 500);}
+					//取字典表的数据缓存到本地cache_by_app缓存中，app重新打开的时候去加载一次
+    				cacheDictionary();
+    				//打开frameGroup
+    				openFrameGroup();
+				}else{
+					alert_msg(ret.msg);
+				}
+			}else{
+				$('.tips-msg').removeClass('aui-hide');
+			}
+        });
+        
+        //登录情况下请求消息通知
+        if (islogin()) {	
+			inits();
+		}
+		
+		//监听退出action：执行消除红点操作
+		toEventListener('exit_action',function(ret,err){
+			$("#found").addClass('aui-hide');
+		});
+		
+		//监听进入新消息时，重新初始化加载
+		toEventListener('inits_second',function(ret,err){
+			inits();
+		});
+		
+        //监听页面刷新时，重新初始化加载
+        toEventListener('refresh',function(ret,err){
+			inits();
+		});
+		
+		//监听注销时，重新初始化加载
+        toEventListener('post_cancel',function(ret,err){
+			$("#found").addClass('aui-hide');
+		});
+		
+		// setGlobalData("is_share",false)
+
+		// //百度移动统计初始化
+		// startWithAppkey();
+		
+		// //app开机启动统计
+		// appStartUpStatic();
+		
+		// //阿里推送初始化
+        // aliPush_init();
+    };
+    
+    /**
+     * 阿里推送初始化 
+     */
+    function aliPush_init(){
+    	aliPush.isRegister(function(ret, err) {
+			 if (ret && ret.status){	
+			     console.log('注册阿里移动推送成功');
+			     //统计设备信息
+		         aliPush.onAppStart(function(ret, err) {
+					 console.log(JSON.stringify(ret));
+				 });
+				 aliPushBind();
+		    }else{
+		    	log('注册阿里移动推送失败',err);
+		    }
+		});
+    }
+    
+    /**
+     * 阿里推送-绑定登录账号
+     */
+    function aliPushBind(){
+    	var account = islogin()?getUserId():'driving_home_anonymous';
+    	//先解除原有，再绑定新的
+    	aliPush.unbindAccount(function(ret, err) {
+		    if(ret.status){
+			    aliPush.bindAccount({
+					account: account
+				},function(ret, err) {
+				    if(ret.status){
+				    	//推送监听
+				    	aliPushAddEvent();
+				    }else{
+				    	alert_msg('绑定设备失败');
+				    }
+				});
+		    }else{
+		    	alert_msg('解除绑定设备失败');
+		    }
+		});
+    }
+    
+    //阿里推送监听
+    function aliPushAddEvent(){
+    	//用于接收服务端推送的消息（控制台选择推送消息，则不会触发弹窗，而会回调该方法。反之，推送通知不会触发该方法。）
+    	aliPush.addEventListener({
+            name : 'onMessage'
+        }, function(ret, err) {
+            console.log("收到onMessage监听：" + JSON.stringify(ret));
+        });
+        
+        //用于在接收通知后，用户需要自定义操作的场景，或者用于获取扩展字段。 ios和安卓返回消息体请分别处理。
+    	aliPush.addEventListener({
+            name : 'onNotification'
+        }, function(ret, err) {
+            console.log("收到notification监听：" + JSON.stringify(ret));
+            if(ret.status){
+            
+               //右上角图标显示设置
+	           message = $api.getStorage('message');
+		       if(message == "" || message == undefined){
+		       		$api.setStorage('message','1');
+		       }else{
+		       		$api.setStorage('message',parseInt(message) + 1);
+		       }
+			   esc_function('index','signExamination','messageCenterNotHide()');
+			   
+			   //如果是弹出的话弹出窗口
+			   //var extraMap = isJsonString(api.systemType == 'ios'?ret.userInfo:ret.extraMap);
+			   
+            }
+        });
+        
+        //在用户打开（某个）notification的时候，会回调该方法。ios和安卓返回消息体请分别处理。
+        aliPush.addEventListener({
+            name : 'onNotificationOpened'
+        }, function(ret, err) {
+            console.log("打开notification监听：" + JSON.stringify(ret));
+            if(ret.status){
+        		var extraMap = isJsonString(api.systemType == 'ios'?ret.userInfo:ret.extraMap);
+        		//打开消息详情
+	            auiDot(extraMap.id,extraMap.fromType);
+	            
+	            //消息缓存-1
+	            reduceMessNum();
+            }
+        });
+        //在用户删除（某个）notification的时候，会回调该方法。 messageId 消息id，删除的消息的Id。
+        aliPush.addEventListener({
+            name : 'onNotificationRemoved'
+        }, function(ret, err) {
+            console.log("移除notification监听：" + JSON.stringify(ret));
+            if(ret.status){
+	            //消息缓存-1
+	            reduceMessNum();
+            }
+        });
+    }
+    
+    function reduceMessNum(){
+    	message = $api.getStorage('message');
+        if(message == "" || message == undefined || message == 1){
+       		$api.setStorage('message','');
+		    esc_function('index','signExamination','messageCenterHide()');
+        }else{
+       		$api.setStorage('message',parseInt(message) - 1);
+		    esc_function('index','signExamination','messageCenterNotHide()');
+        }
+    }
+
+    /**
+     * 判断当前版本是否可用
+     */
+    function judgeVersion(){
+		console.log('systemType:'+systemType);
+		var appSystemVs = api.appVersion.split('.');
+		
+		//测试包不下载
+    	if(appSystemVs[0] == '00'){return;}
+    	
+    	params = {
+    		appName:'learner_app',
+    		systemType:api.systemType,
+    		versionLevel1:parseInt(appSystemVs[0]),
+    		versionLevel2:parseInt(appSystemVs[1]),
+    		versionLevel3:parseInt(appSystemVs[2])
+    	}
+    	url = 'api/auth/compareVersion';
+    	log('传参',params);
+    	ajax_Request(url, 'get', 'json', params, function(ret,err){
+    		log('版本校验返回',ret);
+    		if(ret&&ret.code == 0){
+    			if(ret.isVersion){
+    				//版本符合
+    			}else{
+    				setTimeout(function(){
+			    		openMessage_i('发现新版本',ret.updateContent,'前去下载','','openDownload()','',{isAllowClose:false});
+					},2000);
+    			}
+    		}else{
+    			console.log('获取版本号失败');
+    		}
+    	});
+    }
+    
+    /**
+     * 前去下载页面
+     */
+    function openDownload(){
+    	var href_url = 'https://www.mohan-tech.com/share/html/download.html';
+    	if(systemType == 'ios'){
+	    	params = {
+				name:'下载页面',
+				url:href_url
+			}
+			api.openWin({
+		       name: 'common_href_win',
+		       url: './html/common/common_href_win.html',
+		       slidBackEnabled:'false',
+		       vScrollBarEnabled:'false',
+		       hScrollBarEnabled:'false',
+		       reload:true,
+		       useWKWebView:false,
+		       pageParam: params
+		   });
+    	}else{
+    		//安卓去打开浏览器下载
+			api.openApp({
+	            uri : href_url
+	        }, function(ret, err) {
+	        });
+    	}
+    }
+    
+    //获得积分
+	function ReadIntegral(){
+		var policyCode;
+		var url = '/api/integral-policy/integral-change'
+		params = {
+			learnerId: getUserId(),
+			policyCode: '1'
+		}
+		ajax_Request(url, 'post', 'json', params, function(ret, err) {
+			if (ret.code == 0) {
+				api.openFrame({
+					name: 'common_Integral_Acquisition_frm',
+					url: './html/common/common_Integral_Acquisition_frm.html',
+					bgColor: 'rgba(255, 255, 255, 0.2)',
+					rect: {
+						x: 0,
+						y: 0,
+						w: 'auto',
+						h: 'auto'
+					},
+					bgColor: 'rgba(0, 0, 0, 0.3)',
+					pageParam: {
+						data: '1',
+						information:'今日首次登录驾所通APP'
+					},
+					animation: {
+						type: "fade", //动画类型（详见动画类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					}
+				});
+			} else {
+
+			}
+		});
+	}
+
+    /**
+     * 动态权限机制
+     */
+    function getPermission(){
+    	var resultList = api.hasPermission({
+		    list:['notification','storage','location']
+		});
+		toPermissionList = [];
+		for(var i=0;i<resultList.length;i++){
+			if(!resultList[i].granted){
+				toPermissionList.push(resultList[i].name);
+			}
+		}
+		api.requestPermission({
+		    list:toPermissionList,
+		    code:1
+		}, function(ret, err){
+		    if(ret){
+			    for(var i=0;i<ret.list.length;i++){
+			    	if(ret.list[i].name == 'location'||ret.list[i].name == 'locationAlways'){
+			    		esc_function('index','signExamination','getLocation()');
+			    		break;
+			    	}
+			    }
+		    }
+		});
+    }
+
+    function is_connect(){
+    	var connectionType = api.connectionType;  //比如： wifi
+    	if (connectionType=="unknown"||connectionType=="none"){
+    		alert_msg("当前网络不可用，请检查你的网络设置");
+    	}
+    	api.addEventListener({
+		    name:'online'
+		}, function(ret, err){
+			if (ret.connectionType=="unknown"||ret.connectionType=="none"){
+				//console.log("ret.connectionType:"+ret.connectionType);
+				//alert_msg("当前网络不可用，请检查你的网络设置");
+			}
+//			}else{
+//				alert("网络连接正常"+ret.connectionType);
+//			}
+		});
+		api.addEventListener({
+		    name:'offline'
+		}, function(ret, err){
+		    alert_msg('当前网络不可用，请检查你的网络设置');
+		});
+    }
+
+    /**
+     * //监听退出事件
+     */
+    function exit_app(){
+    	//监听退出事件
+	    api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err){
+			var modalShow = $api.getStorage('search_school_modal_show');
+			if (modalShow &&  modalShow !== 'undefined' && JSON.parse(modalShow)) {
+				esc_function('index', 'search_shadow', 'closeSearchShadow()');
+			} else {
+				alert_msg('再点击一次退出应用');
+				api.addEventListener({
+					name: 'keyback'
+				}, function(ret, err){
+					api.closeWidget({
+						id: 'A6097799277566', //这里需要修改为自己的应用ID
+						retData: {name:'closeWidget'},
+						silent:true
+					});
+				});
+				setTimeout(exit_app,2000);
+			}
+        });
+    }
+
+    /**
+     * 获取百度人脸识别access_token
+     */
+    function getBaiduFaceAccessToken(){
+    	url = third_url + "api/common/face/detect";
+    	api.ajax({
+			url : url,
+			method : 'get',
+			tag:url,//为方便，全部统一
+			timeout:30,
+			dataType : 'json'
+		}, function(ret, err) {
+			log('access_token',ret);
+			if(ret&&ret.code == 0){
+				$api.setStorage('access_token',ret.access_token);
+			}else{
+				alert_msg('初始化人脸识别模块失败');
+			}
+		});
+    }
+
+    /**
+     *  获取百度人脸识别access_token
+     */
+    function getBaiduBodyAnalysisAccessToken(){
+    	url = third_url + "api/common/body/analysis";
+    	api.ajax({
+			url : url,
+			method : 'get',
+			tag:url,//为方便，全部统一
+			timeout:30,
+			dataType : 'json'
+		}, function(ret, err) {
+			log('access_token',ret);
+			if(ret&&ret.code == 0){
+				$api.setStorage('access_token_for_body_analysis',ret.access_token);
+			}else{
+				alert_msg('初始化人脸识别模块失败');
+			}
+		});
+    }
+
+	//极光绑定初始化
+	function bindJpush(){
+		/*var alias = '';
+		if(islogin()){
+			//登录-绑定用户标识
+			alias = getUserId();
+		}else{
+			//未登录-绑定一个匿名账户
+			alias = 'driving_home_anonymous'
+		}
+		var param = {alias:alias};
+		ajpush.bindAliasAndTags(param,function(ret) {
+	        var statusCode = ret.statusCode;
+		});*/
+	}
+
+    //设置极光推送收到消息监听
+	function setJpushListener(){
+		/*ajpush.setListener(function(ret) {
+		   //ios消息和通知都会进这里，所以可能会调两次，需要测试下；安卓没有问题，通知走状态，消息走处理
+	       message=$api.getStorage('message');
+	       if(message == "" || message == undefined){
+	       		$api.setStorage('message','1');
+	       }else{
+	       		$api.setStorage('message',parseInt(message)+1);
+	       }
+		   esc_function('index','signExamination','messageCenterNotHide()');
+	    });*/
+	}
+
+	//设置ios极光推送通知点击回调
+	function setIosEventListener(){
+		/*api.addEventListener({
+		    name: 'noticeclicked'
+		}, function(ret, err) {
+		    if (ret && ret.value) {
+		        var ajpush = ret.value;
+		        auiDot(ajpush.extra.id,ajpush.extra.fromType);
+		    }
+		});*/
+	}
+
+	//设置Android极光推送通知点击回调
+	function setAndriodEventListener(){
+		/*api.addEventListener({
+		    name: 'appintent'
+		}, function(ret, err) {
+		    if (ret && ret.appParam.ajpush) {
+		        var ajpush = ret.appParam.ajpush;
+		        auiDot(ajpush.extra.id,ajpush.extra.fromType);
+		    }
+		});*/
+	}
+	
+	//打开消息详情
+	function auiDot(id,fromType) {
+		var alias = '';
+		if(islogin()){
+			//登录-绑定用户标识
+			alias = getUserId();
+		}else{
+			//未登录-绑定一个匿名账户
+			alias = 'driving_home_anonymous'
+		}
+			
+		url = 'api/message/message-by-id';
+		
+		params = {
+			learnerId: alias,
+			id: id,
+			fromType: fromType
+		}
+		ajax_Request(url, 'get', 'json', params, function(ret, err) {
+			if (ret) {
+				if (ret.code == 0) {
+					commonOpenWin(ret.returnVal);
+				} else {
+					alert_msg('暂无详情');
+				}
+			} else {
+				alert_msg('服务器繁忙,请稍后重试！');
+			}
+		});
+	}
+	
+	function commonOpenWin(data){
+	   api.openWin({
+	       name: 'message_center',
+	       url: './html/home/message_center_item/message_center.html',
+	       slidBackEnabled:'false',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       useWKWebView:false,
+	       pageParam: {
+	           data:data
+	       }
+	   });
+	}
+
+    //设置frameGroup可见,目前一共2个需要控制隐藏和显示
+    function setViewFrame(index){
+    	var isHidden;
+    	for(i = 1;i<frameGroupMap.length;i++){
+    		if(index == i){
+    			isHidden = false;
+    		}else{
+    			isHidden = true;
+    		}
+    		api.setFrameGroupAttr({
+			    name: frameGroupMap[i],
+			    hidden: isHidden
+			});
+    	}
+    	//不是首頁就隱藏首頁frm
+    	if(index != 0){
+    		api.setFrameAttr({
+	            name: frameGroupMap[0],
+	            hidden:true
+            });
+    	}else{
+    		api.setFrameAttr({
+	            name: frameGroupMap[0],
+	            hidden:false
+            });
+    	}
+    	api.setFrameGroupIndex({
+		    name: 'index_group',
+		    index: index
+		});
+    }
+    
+    /**
+     * 判断是否实名认证 
+     */
+    function alertToAuth(){
+    	if(!isauth()){
+    		isSure('温馨提示','驾校报名、在线体检等需要实名认证','去实名认证','暂不',function(){
+    			api.openWin({
+			       name: 'mine_account_auth_win',
+			       url: './html/mine/mine_account_auth_win.html',
+			       slidBackEnabled:'true',
+			       vScrollBarEnabled:'false',
+			       hScrollBarEnabled:'false',
+			       reload:true,
+			       pageParam: {}
+			   });
+    		},function(){
+    		});
+    	}
+    }
+
+    //切换到指定frameGroup
+    function changeToFrame(index){
+    	$('.aui-bar-tab-item').removeClass('aui-active');
+    	$('.aui-bar-tab-item').eq(index).addClass('aui-active');
+    	setViewFrame(index);
+    }
+
+    //加载frameGroup
+    function openFrameGroup(){
+    	footPos = $api.offset(footer);
+    	footHeight = footPos.h;
+    	api.openFrameGroup({
+		    name: 'index_group',
+		    scrollEnabled:false,
+		    preload:0,
+		    index:0,
+		    rect: {
+		        x: 0,
+		        y: 0,
+		        w: 'auto',
+		        h: api.winHeight - footHeight
+		    },
+		    frames: [{
+		        name: 'signExamination',//报名与体检
+		        url: './html/home/home_index_win.html',
+		        bgColor: '#FFFFFF',
+		        bounces: false,
+		        scrollToTop:true,
+		        pageParam:{
+		        	footHeight:footHeight
+		        }
+			},{
+		        name: 'examination',//考试与培训
+		        bounces: false,
+		        url: './html/examination/examination_index_win.html',
+		        bgColor: '#FFFFFF',
+		        scrollToTop:true,
+		        pageParam:{
+		        	footHeight:footHeight
+		        }
+		    },{
+		        name: 'discovery',//发现
+		        bounces: true,
+		        url: './html/discovery/discovery_index_win.html',
+		        bgColor: '#FFFFFF',
+		        scrollToTop:true,
+		        pageParam:{
+		        	footHeight:footHeight
+		        }
+		    },{
+		        name: 'mine',//我的
+		        bounces: false,
+		        url: './html/mine/mine_index.html',
+		        bgColor: '#FFFFFF',
+		        overScrollMode:'scrolls'
+		    }]
+		}, function(ret, err) {
+		    var index = ret.index;
+		    if(index == 0){
+		    	onEvent('index0','报名体检');
+		    }
+		    if(index == 1){
+		    	onEvent('index1','学车考试');
+		    }
+		    if(index == 2){
+		    	onEvent('index2','发现');
+		    }
+		    if(index == 3){
+		    	onEvent('index3','我的');
+		    }
+		    if(index = 3){
+		    	sendEvent('myposts');
+		    }
+		});
+		//判断当前版本是否可用
+        judgeVersion();
+    }
+
+    //请求字典表数据缓存到本地
+    var labelsMap = {};//根据需要拼接成的标签json，方便取值，labelsMap['001001'] = '规模大'
+    var coachMap = {};//根据需要拼接成的教练标签json，方便取值
+    var licenseTypeMap = {};//根据需要拼接成的标签json，方便取值，lincenTypeMap['002001'].name = 'A1（大型客车和A3、B1、B2）'
+    var questionTypeKeMuOneMap = {};//根据需要拼接成的科目一题型json，方便取值，例如questionTypeKeMuOneMap['015008'] = '罚款题'
+    var questionTypeKeMuFourMap = {};//根据需要拼接成的科目四题型json，方便取值，例如questionTypeKeMuFourMap['025005'] = '时间题'
+    var questionTypeMap = {};//根据需要拼接成的题目类型json，方便取值，例如questionTypeMap['057002'] = '多选题'
+    var chapterKuMuOneMap = {};//根据需要拼接成的科目一章节json，方便取值，例如chapterKuMuOne['017001'] = '1.道路交通安全法律、法规和规章'
+    var chapterKuMuFourMap = {};//根据需要拼接成的科目四章节json，方便取值，例如chapterKuMuOne['027006'] = '6.紧急情况下避险常识'
+    var carTypeKeMuTwoMap = {};//根据需要拼接成的科目二车型json，方便取值，例如carTypeKeMuTwoMap['034001'] = '新桑塔纳'
+    var carTypeKeMuThreeMap = {};//根据需要拼接成的科目三车型json，方便取值，例如carTypeKeMuThreeMap['056001'] = '老桑塔纳'
+    var lessionMap = {};//根据需要拼接成的班次json，方便取值，例如lessionMap['050001'] = '早班'
+    var batchMap = {};//根据需要拼接成的批次json，方便取值，例如batchMap['055001'] = '第一批'
+    var batchVipKemuTwoMap = {};//根据需要拼接成的科目二vip批次json，方便取值，例如batchVipKemuTwoMap['058001'] = '第一批'
+    var batchVipKemuThreeMap = {};//根据需要拼接成的科目三vip批次json，方便取值，例如batchVipKemuThreeMap['059001'] = '第一批'
+    var questionBankTypeMap = {};//根据需要拼接成的题型json，方便取值，例如questionBankTypeMap['022001'] = 'C1/C2/C3'
+    function cacheDictionary(){
+    	url = 'api/dictionary';
+		params = {
+			codes:'001000,001004,022000,023001,023002,024000,024001,024002,002000,021000,003000,034000,004000,043000,006000,015000,017000,025000,027000,028000,050000,054000,055000,056000,057000,058000,059000'
+		}
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			console.log('字典表数据'+JSON.stringify(ret));
+			if(ret&&ret.code == 0){
+				var cache_by_app = $api.getStorage('cache_by_app');
+				console.log('cache_by_app'+cache_by_app);
+				if(cache_by_app != null&&cache_by_app != undefined){
+					cache_by_app.cache_dictionary = ret.dictionarys;
+				}else{
+					//初始化消息类缓存
+					cache_by_app = {
+						message_cache:{
+							isChecked:true,
+							messageNum:0 //这个地方要做一个获取初始化消息条数
+						},
+						cache_dictionary:ret.dictionarys
+					}
+				}
+
+				//标签json
+				var labels = ret.dictionarys['001000'].dictionaryList;
+				for(var i=0;i<labels.length;i++){
+					labelsMap[labels[i].code] = labels[i].name;
+				}
+				//教练标签json
+				var coach_label = ret.dictionarys['001004'].dictionaryList;
+				for(var i=0;i<coach_label.length;i++){
+					coachMap[coach_label[i].code] = coach_label[i].name;
+				}
+
+				//准驾类型
+				var licenseTypes = ret.dictionarys['002000'].dictionaryList;
+				for(var i=0;i<licenseTypes.length;i++){
+					switch(licenseTypes[i].code){
+						case "002001"://A1（大型客车和A3、B1、B2）
+							licenseTypeMap[licenseTypes[i].code] = {
+								min_age:26,
+								max_age:50,
+								addDay:90,
+								min_height:155,
+								min_vision:5,
+								name:licenseTypes[i].name
+							}
+							break;
+						case "002002"://A2（牵引车和B1、B2）
+							licenseTypeMap[licenseTypes[i].code] = {
+								min_age:24,
+								max_age:50,
+								addDay:90,
+								min_height:155,
+								min_vision:5,
+								name:licenseTypes[i].name
+							}
+							break;
+						case "002003"://A3（城市公交车和C1）
+							licenseTypeMap[licenseTypes[i].code] = {
+								min_age:20,
+								max_age:50,
+								addDay:90,
+								min_height:155,
+								min_vision:5,
+								name:licenseTypes[i].name
+							}
+							break;
+						case "002004"://B1（中型客车和C1、M）
+							licenseTypeMap[licenseTypes[i].code] = {
+								min_age:21,
+								max_age:50,
+								addDay:90,
+								min_height:150,
+								min_vision:5,
+								name:licenseTypes[i].name
+							}
+							break;
+						case "002005"://B2（大型货车和C1、M）
+							licenseTypeMap[licenseTypes[i].code] = {
+								min_age:20,
+								max_age:50,
+								addDay:90,
+								min_height:155,
+								min_vision:5,
+								name:licenseTypes[i].name
+							}
+							break;
+						case "002006"://C1（小型汽车和C2、C3）
+							licenseTypeMap[licenseTypes[i].code] = {
+								min_age:18,
+								max_age:70,
+								addDay:45,
+								min_height:0,
+								min_vision:4.9,
+								name:licenseTypes[i].name
+							}
+							break;
+						case "002007"://C2（小型自动挡汽车）
+							licenseTypeMap[licenseTypes[i].code] = {
+								min_age:18,
+								max_age:70,
+								addDay:45,
+								min_height:0,
+								min_vision:4.9,
+								name:licenseTypes[i].name
+							}
+							break;
+						case "002008"://C3（低速载货汽车和C4）
+							licenseTypeMap[licenseTypes[i].code] = {
+								min_age:18,
+								max_age:60,
+								addDay:45,
+								min_height:0,
+								min_vision:4.9,
+								name:licenseTypes[i].name
+							}
+							break;
+						case "002009"://C4（三轮汽车）
+							licenseTypeMap[licenseTypes[i].code] = {
+								min_age:18,
+								max_age:60,
+								addDay:45,
+								min_height:0,
+								min_vision:4.9,
+								name:licenseTypes[i].name
+							}
+							break;
+						case "002010"://C5（残疾人专用小型自动挡载客汽车）
+							licenseTypeMap[licenseTypes[i].code] = {
+								min_age:18,
+								max_age:60,
+								addDay:45,
+								min_height:0,
+								min_vision:4.9,
+								name:licenseTypes[i].name
+							}
+							break;
+						case "002011"://D（普通三轮摩托车和E）
+							licenseTypeMap[licenseTypes[i].code] = {
+								min_age:18,
+								max_age:60,
+								addDay:45,
+								min_height:0,
+								min_vision:4.9,
+								name:licenseTypes[i].name
+							}
+							break;
+						case "002012"://E（普通二轮摩托车和F）
+							licenseTypeMap[licenseTypes[i].code] = {
+								min_age:18,
+								max_age:60,
+								addDay:45,
+								min_height:0,
+								min_vision:4.9,
+								name:licenseTypes[i].name
+							}
+							break;
+						case "002013"://F（轻便摩托车）
+							licenseTypeMap[licenseTypes[i].code] = {
+								min_age:18,
+								max_age:70,
+								addDay:45,
+								min_height:0,
+								min_vision:4.9,
+								name:licenseTypes[i].name
+							}
+							break;
+						case "002014"://M（轮式自行机械车）
+							licenseTypeMap[licenseTypes[i].code] = {
+								min_age:18,
+								max_age:60,
+								addDay:45,
+								min_height:0,
+								min_vision:4.9,
+								name:licenseTypes[i].name
+							}
+							break;
+						case "002015"://N（无轨电车）
+							licenseTypeMap[licenseTypes[i].code] = {
+								min_age:20,
+								max_age:50,
+								addDay:90,
+								min_height:155,
+								min_vision:5,
+								name:licenseTypes[i].name
+							}
+							break;
+						case "002016"://P（有轨电车）
+							licenseTypeMap[licenseTypes[i].code] = {
+								min_age:20,
+								max_age:50,
+								addDay:90,
+								min_height:155,
+								min_vision:5,
+								name:licenseTypes[i].name
+							}
+							break;
+					}
+				}
+
+				//科目一题目分类json
+				var questionTypeKeMuOne = ret.dictionarys['015000'].dictionaryList;
+				for(var i=0;i<questionTypeKeMuOne.length;i++){
+					questionTypeKeMuOneMap[questionTypeKeMuOne[i].code] = questionTypeKeMuOne[i].name;
+				}
+				
+				//题库分类json
+				var questionBankType = ret.dictionarys['022000'].dictionaryList;
+				for(var i=0;i<questionBankType.length;i++){
+					questionBankTypeMap[questionBankType[i].code] = questionBankType[i].name;
+				}
+
+				//科目四题目分类json
+				var questionTypeKeMuFour = ret.dictionarys['025000'].dictionaryList;
+				for(var i=0;i<questionTypeKeMuFour.length;i++){
+					questionTypeKeMuFourMap[questionTypeKeMuFour[i].code] = questionTypeKeMuFour[i].name;
+				}
+
+				//题目类型json
+				var questionType = ret.dictionarys['057000'].dictionaryList;
+				for(var i=0;i<questionType.length;i++){
+					questionTypeMap[questionType[i].code] = questionType[i].name;
+				}
+
+				//科目一章节json
+				var chapterKuMuOne = ret.dictionarys['017000'].dictionaryList;
+				for(var i=0;i<chapterKuMuOne.length;i++){
+					chapterKuMuOneMap[chapterKuMuOne[i].code] = chapterKuMuOne[i].name;
+				}
+
+				//科目四章节json
+				var chapterKuMuFour = ret.dictionarys['027000'].dictionaryList;
+				for(var i=0;i<chapterKuMuFour.length;i++){
+					chapterKuMuFourMap[chapterKuMuFour[i].code] = chapterKuMuFour[i].name;
+				}
+				
+				//科目二车型json
+				var carTypeKeMuTwo = ret.dictionarys['034000'].dictionaryList;
+				for(var i=0;i<carTypeKeMuTwo.length;i++){
+					carTypeKeMuTwoMap[carTypeKeMuTwo[i].code] = carTypeKeMuTwo[i].name;
+				}
+				
+				//科目三车型json
+				var carTypeKeMuThree = ret.dictionarys['056000'].dictionaryList;
+				for(var i=0;i<carTypeKeMuThree.length;i++){
+					carTypeKeMuThreeMap[carTypeKeMuThree[i].code] = carTypeKeMuThree[i].name;
+				}
+				
+				//班次
+				var lession = ret.dictionarys['050000'].dictionaryList;
+				for(var i=0;i<lession.length;i++){
+					lessionMap[lession[i].code] = lession[i].name;
+				}
+				
+				//批次
+				var batch = ret.dictionarys['055000'].dictionaryList;
+				for(var i=0;i<batch.length;i++){
+					batchMap[batch[i].code] = batch[i].name;
+				}
+				
+				//科目二vip批次
+				var batchVipKemuTwo = ret.dictionarys['058000'].dictionaryList;
+				for(var i=0;i<batchVipKemuTwo.length;i++){
+					batchVipKemuTwoMap[batchVipKemuTwo[i].code] = batchVipKemuTwo[i].name;
+				}
+				
+				//科目三vip批次
+				var batchVipKemuThree = ret.dictionarys['059000'].dictionaryList;
+				for(var i=0;i<batchVipKemuThree.length;i++){
+					batchVipKemuThreeMap[batchVipKemuThree[i].code] = batchVipKemuThree[i].name;
+				}
+
+				cache_by_app.labelsMap = labelsMap;
+				cache_by_app.coachMap=coachMap;
+				cache_by_app.licenseTypeMap = licenseTypeMap;
+				cache_by_app.questionBankTypeMap = questionBankTypeMap;
+				cache_by_app.questionTypeKeMuOneMap = questionTypeKeMuOneMap;
+				cache_by_app.questionTypeKeMuFourMap = questionTypeKeMuFourMap;
+				cache_by_app.questionTypeMap = questionTypeMap;
+				cache_by_app.chapterKuMuOneMap = chapterKuMuOneMap;
+				cache_by_app.chapterKuMuFourMap = chapterKuMuFourMap;
+				cache_by_app.carTypeKeMuTwoMap = carTypeKeMuTwoMap;
+				cache_by_app.carTypeKeMuThreeMap = carTypeKeMuThreeMap;
+				cache_by_app.lessionMap = lessionMap;
+				cache_by_app.batchMap = batchMap;
+				cache_by_app.batchVipKemuTwoMap = batchVipKemuTwoMap;
+				cache_by_app.batchVipKemuThreeMap = batchVipKemuThreeMap;
+
+				$api.setStorage('cache_by_app',cache_by_app);
+			}
+		});
+    }
+
+    //打开通用弹出框
+	//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+	function openMessage_i(title,content,sureButton,cancelButton,sureFunc,cancelFunc,params){
+		api.openFrame({
+	        name: 'common_message',
+	        url: './html/common/common_message.html',
+	        bgColor: 'rgba(0,0,0,0.4)',
+	        rect: {
+	            x: 0,
+	            y: 0,
+	            w: 'auto',
+	            h: api.winHeight
+	        },
+	        bounces: false,
+	        pageParam:{
+	        	title:title,
+	        	content:content,
+	        	sureButton:sureButton,
+	        	sureFunc:sureFunc,
+	        	cancelButton:cancelButton,
+	        	cancelFunc:cancelFunc,
+	        	winName:api.winName,
+	        	frameName:api.frameName,
+	        	params:params
+	        },
+	        softInputBarEnabled:true,
+	        softInputMode:'resize'
+	    });
+	}
+	//请求消息通知
+	function inits(){
+		if(islogin()){
+			var learnerId = getUserId();
+			url="api/information/get/SumCount";
+			params = {
+				learnerId: learnerId
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+			log('ret',ret)
+				if(ret){
+					if(ret.code == 0){
+						if(ret.count != 0){
+							$("#found").text(ret.count);
+							$("#found").removeClass('aui-hide');
+						}
+					}else{
+						alert_msg(ret.msg);
+					}
+				}else{
+					alert_msg("服务器繁忙，请稍后重试");
+				}
+			})
+		}
+	}
+	
+	function isJsonString(str) {
+	    try {
+	        return JSON.parse(str);
+	    } catch (e) {
+	        return str;
+	    }
+	}
+	
+	/**
+	 * 打开app统计
+	 */
+	function appStartUpStatic(){
+		url = 'api/alilog/app-start-up-statcic';
+		params = {
+			user_id:'unknow',//id
+			phone:'unknow',//电话号码
+			name:'unknow',//姓名
+			sex:'unknow',//性别
+			age:'unknow',//年龄
+			idcard_no:'unknow',//身份证
+			is_coach:'unknow',//是否教练
+			auth_status:'unknow',//认证状态
+			app_type:'learner',//app类型
+			system_type:api.systemType,//手机系统类型
+			system_version:api.systemVersion,//手机系统版本
+			app_version:api.appVersion,//app系统版本
+			device_model:api.deviceModel,//手机型号
+			connection_type:api.connectionType,//连接方式
+			insert_dt:new Date().getTime()//时间戳
+		}
+		if(islogin()){
+			params.user_id = getUserId();
+			params.phone = $api.getStorage('cache_by_account').cache_account.account;
+			params.is_coach = $api.getStorage('cache_by_account').cache_account.isCoach;
+			params.auth_status = $api.getStorage('cache_by_account').cache_account.identification;
+			if(isauth()){
+				params.name = $api.getStorage('cache_by_account').cache_account.name;
+				params.sex = $api.getStorage('cache_by_account').cache_account.sex;
+				params.idcard_no = $api.getStorage('cache_by_account').cache_account.idcardNo;
+				params.age = getAgeByIdCard(params.idcard_no,0);
+			}
+		}
+		log('启动日志传参',params);
+		ajax_Request(url, 'post', 'json', params, function(ret, err){
+			
+		});
+	}
+</script>
+</html>

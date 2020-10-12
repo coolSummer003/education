@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>通用退款申请</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	body{
+    		
+    	}
+    	.input-warn{
+			font-size: 0.6rem;
+		    color: #999999;
+		    height: 2rem;
+		    background: #FFF;
+		    text-align: right;
+		    padding: 0rem 0.75rem;
+		}
+		.cash{
+			color:#F76702;
+		}
+		.cash-include{
+			font-size:0.6rem;
+			color:#74CB5D;
+		}
+		.marTop{
+			margin-top:0.5rem;
+		}
+		.order-status{
+			color:#F76702 !important;
+		}
+		.aui-list textarea {
+    		overflow: auto;
+		    height: 6rem;
+		    line-height: 1rem;
+		    resize: none;
+		    background: #FCFCFC;
+		    padding: 0.5rem;
+		}
+    </style>
+</head>
+<body>
+	<div class="aui-content aui-margin-b-15" id='applyContent'>
+		
+	</div>	 
+	<script type="text/template" charset="utf-8" id='apply_content_src'>
+		<ul class="aui-list aui-media-list none-top-style">
+	    	<li class="aui-list-item">
+                <div class="aui-media-list-item-inner">
+                    <div class="aui-list-item-media">
+                        <img src="{{=(file_load_url + it.logo)}}">
+                    </div>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title">{{=it.name}}</div>
+                            <div class="aui-list-item-right order-status">{{=it.status}}</div>
+                        </div>
+                        <div class="aui-list-item-text">
+                        	{{ if(it.type == 'hospital'||it.type == 'driverschool'){ }}
+	                           <span>准驾车型：{{=it.licenseType}}</span>
+                        	{{ }else{ }}
+	                           <span>{{=it.licenseType}}</span>
+                        	{{ } }}
+                        </div>
+                    </div>
+                </div>
+            </li>
+		</ul>
+	    <ul class="aui-list aui-form-list none-top-styl marTop">
+	    	<li class="aui-list-item none-bottom-style">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+                		退款金额：
+	                </div>
+	                <div class="aui-list-item-input">
+	                    <span class='cash'>￥{{=it.paymentAmount}}</span>
+	                    <span class='cash-include'>（<font>0.6%</font>手续费，具体以实际扣款为准）</span>
+	                </div>
+	            </div>
+	        </li>
+	        <li class="aui-list-item none-bottom-style">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-input">
+	                	<textarea name="" id="refundRemark" cols="30" rows="10" placeholder="请简单描述您的理由"></textarea>
+	                </div>
+	            </div>
+	        </li>
+	        <div class='input-warn'>还能输入<span>0</span>字</div>
+	    </ul>
+	</script>   
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var headerHeight;
+	var limit_txt = 150//限定字数
+	apiready = function(){
+		cache = api.pageParam;
+		log('撒CIA0',cache);
+		init();
+	};
+	
+	//监听textarea输入字数
+	function init(){
+	
+		defaultload();
+		
+		setTimeout(function(){
+			var apply_content_src = $('#apply_content_src').html();
+			$('#applyContent').html(doT.template(apply_content_src)(cache));
+			$('.input-warn').find('span').html(limit_txt);
+			$('#refundRemark').bind('input propertychange', function() {
+				$('.input-warn').find('span').html(limit_txt - $(this).val().length);
+				if((limit_txt - $(this).val().length) < 20){
+					$('.input-warn').find('span').css("color","#DC251F");
+				}else{
+					$('.input-warn').find('span').css("color","#999999");
+				}
+			});
+			api.hideProgress();
+		},300);
+	}
+	
+	/**
+	 * 申请退款 
+	 */
+	function applyFree(){
+		defaultload();
+		params = {
+			orderId:cache.orderId,
+			learnerId:getUserId(),
+			remark:$('#refundRemark').val(),
+			refundAmount:cache.paymentAmount
+		}
+		switch(cache.type){
+			//医院退款
+			case 'hospital':
+				url = 'api/examination/apply-refund';
+				break;
+			//驾校退款
+			case 'driverschool':
+				url = 'api/driving-school-registration/apply-refund';
+				break;
+			//模拟器退款
+			case 'Kemutwo_simulator':
+				url = 'api/Simulator/apply-refund';
+				params.limitDate = cache.limitDate;
+				params.detailId = cache.id;
+				break;
+			//实操退款
+			case 'KemuTwo_operation':
+				url = 'api/PracticalTest/apply-refund';
+				params.limitDate = cache.limitDate;
+				params.detailId = cache.id;
+				break;
+			//训练预约退款
+			case 'KemuThree_appointment':
+				url = 'api/ke-mu-three/apply-refund';
+				params.limitDate = cache.limitDate;
+				params.detailId = cache.id;
+				break;
+			//科目一课程预约退款
+			case 'KemuOne':
+				url = 'api/courseReservation/apply-refund';
+				params.limitDate = cache.limitDate;
+				params.detailId = cache.id;
+				break;
+			//考场退款
+			case 'testCenter':
+				url = 'api/appointment/apply-refund';
+				params.flag = cache.flag;
+				params.vipGrade = cache.vipGrade;
+				params.limitDate = cache.limitDate;
+				break;
+		}
+		if($('#refundRemark').val() == ''){
+			alert_msg('请输入您的理由');
+			api.hideProgress();
+			return;
+		}
+		
+		if($('#refundRemark').val().length > limit_txt){
+			alert_msg('超过最大字数限制'+limit_txt);
+			api.hideProgress();
+			return;
+		}
+		
+		
+		log('传参',params);
+		ajax_Request(url, 'put', 'json', params, function(ret,err){
+			log('ret',ret);
+			log('err',err);
+			api.hideProgress();
+			if(ret){
+				if(ret.code == 0){
+					sendEvent('refund_apply_submit',null);
+					sendEvent('simulator_refund_apply',null);
+					sendEvent('refund_apply',null);
+					openMessage('温馨提示','&emsp;&emsp;您的退款申请已提交，预计7个工作日内处理完成','确认','','closeWin()','',{});
+					if(cache.type == 'hospital'){
+						sendEvent('hospital_refresh_list',{})
+					}
+				}else{
+					alert_msg(ret.msg);
+				}
+			}else{
+				alert_msg('提交申请失败');
+			}
+		});
+	}
+    
+    function closeWin(){
+    	api.closeWin({
+        });
+    }
+</script>
+</html>

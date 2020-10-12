@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>标识类别列表</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/swiper/swiper_min.css">
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	@charset "utf-8";
+			* {
+			margin:0;
+			padding:0
+		}
+		html {
+			height:100%
+		}
+		body {
+			height:100%;
+			background:url(../images/shouye_nvsheng_bg.png);
+			background-size:100% 100%
+		}
+		#header img {
+			width:100%
+		}
+		.swiper-container {
+			width:100%;
+			-webkit-perspective:1200px;
+			-moz-perspective:1200px;
+			-ms-perspective:1200px;
+			perspective:1200px
+		}
+		.swiper-wrapper {
+			margin-top:10px
+		}
+		.swiper-slide {
+			width:80%;
+			-webkit-transform-style:preserve-3d;
+			-moz-transform-style:preserve-3d;
+			-ms-transform-style:preserve-3d;
+			transform-style:preserve-3d
+		}
+		.swiper-slide .main-img {
+			width:80%;
+			margin:0 auto;
+			display:block;
+			height: 10rem;
+    		object-fit: contain;
+		}
+		#pagination {
+			position:absolute;
+			bottom:100px;
+			width:100%
+		}
+		#pagination .swiper-pagination-bullet {
+			width:9.5%;
+			float:left;
+			margin:0 0 0 6.15%;
+			background:0;
+			opacity:1
+		}
+		.swiper-pagination-bullet i {
+			background:#41203f;
+			width:24px;
+			height:24px;
+			line-height:24px;
+			font-size:12px;
+			border-radius:50px;
+			display:block;
+			font-style:normal;
+			text-align:center;
+			margin:0 auto;
+			color:#f5b55c
+		}
+		.swiper-pagination-bullet-active i {
+			-webkit-transform:scale(1.5);
+			background:url(../../../image/demo/logo/shouye_nvsheng_huangseb.png) no-repeat center 50%;
+			background-size:auto 100%;
+			color:#815d4b
+		}
+		@media screen and (min-height:481px) {
+			.swiper-wrapper {
+		}
+		#pagination {
+			bottom:110px
+		}
+		}@media screen and (min-height:569px) {
+			.swiper-wrapper {
+		}
+		#pagination {
+			bottom:120px
+		}
+		.swiper-pagination-bullet i {
+			width:30px;
+			height:30px;
+			line-height:30px;
+			font-size:15px
+		}
+		}#footer {
+			position:absolute;
+			bottom:0
+		}
+		#footer img {
+			width:100%;
+			display:block
+		}
+    	.main-div{
+		    margin: 0.7rem;
+	        border:solid 1px #D8D8D8;
+		    border-radius: 0.5rem;
+		    padding: 0.5rem;
+    	}
+    	.explain-title{
+		    margin-top: 2rem;
+		    font-weight: bold;
+		    text-align: center;
+		    min-height: 2rem;
+    	}
+    	.explain-desc{
+    		font-size: 0.7rem;
+    		margin-bottom: 1.5rem;
+    	}
+    	.tips{
+    		text-align:center;
+    		height: 5rem;
+    	}
+    	.tips img{
+    		height:4rem;
+    		margin-top:1rem;
+    	}
+		.msg{
+			background: #FFFFFF;
+			height: 20rem;
+			text-align: center;
+			font-size:0.7rem;
+		}
+		.msg img{
+			width:8rem;
+			margin-top: 9rem;
+		}
+    </style>
+</head>
+<body>
+	<div class="tips"><img src="../../../icon/subject/icon_left_right.png" alt="" /></div>
+	<div class="swiper-container">
+	    <div class="swiper-wrapper">
+	    
+	    </div>
+	</div>
+    <div class="swiper-pagination" style="width: 100%;margin-top: 1rem;"></div>
+    <script type="text/template" charset="utf-8" id='logo_recognition_src'>
+    	{{ for(var i=0;i<it.length;i++){ }}
+    		<div class="swiper-slide">
+		    	<div class="main-div">
+			    	<img src="{{=file_load_url + it[i].image}}" class="main-img">
+		    		<div class="explain-title">{{=it[i].title}}</div>
+		    		<div class="explain-desc">{{=it[i].description}}</div>
+		    	</div>
+		    </div>
+    	{{ } }}
+    </script>
+	<div id='load_div'>
+	</div>
+	</script>
+		<script type="text/template" charset="utf-8" id='msg_src'>
+			<div class="msg">
+			<img src="../../../icon/common/empty.png" alt="" /><br>
+			<span>{{=it.msg}}</span>
+		</div>
+	</script>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript" src="../../../script/swiper/swiper.js"></script>
+<script type="text/javascript">
+	var cache;
+	var isHide = false;
+	var menu = "";
+	var type; //标识父code
+	var secondType; //标识子code
+	var msg_src = $('#msg_src').html(); //消息提示src
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam.data;
+		type = cache.type;
+		secondType = cache.secondType;
+		init();
+	}
+	function init(){
+		url="api/traffic-sign/select-one-class-list";
+		params={
+			type:type,
+			secondType:secondType
+		}
+		ajax_Request(url,"get","json",params,function(ret,err){
+			onEvent('exam17','科目一-老司机教你认标识');
+			if(ret){
+				if(ret.code == 0){
+					var logo_recognition_src = $('#logo_recognition_src').html();
+					$(".swiper-wrapper").html(doT.template( logo_recognition_src )( ret.cmTrafficSignList ));
+					loadSwiper();
+					api.parseTapmode();
+				}else{
+					setMsg("暂无标识")
+					$('.tips').css("display","none");
+				}
+			}else{
+				alert_msg("服务器繁忙，请稍后重试")
+			}
+			
+		})
+		
+	}
+	
+	//设置页面提示信息
+	function setMsg(msg) {
+		if ($('.swiper-wrapper').find('.swiper-slide').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+			setTimeout(function() {
+				$(".swiper-container").html(doT.template(msg_src)({
+					'msg': msg
+				}));
+			}, 500);
+		} else { //原先已经有数据的情况下
+			setTimeout(function() {
+				$('#load_div').html(doT.template(more_src)({
+					'msg': msg,
+					'img': ''
+				}));
+			}, 500);
+		}
+	}
+	
+	function loadSwiper(){
+		var mySwiper = new Swiper(".swiper-container", {
+			slidesPerView: "auto",
+			centeredSlides: !0,
+			watchSlidesProgress: !0,
+			pagination: ".swiper-pagination",
+			paginationType : 'fraction',
+			paginationClickable: !0,
+			onProgress: function(a) {
+				var b, c, d;
+				for (b = 0; b < a.slides.length; b++) c = a.slides[b],
+				d = c.progress,
+				scale = 1 - Math.min(Math.abs(.2 * d), 1),
+				es = c.style,
+				es.opacity = 1 - Math.min(Math.abs(d / 2), 1),
+				es.webkitTransform = es.MsTransform = es.msTransform = es.MozTransform = es.OTransform = es.transform = "translate3d(0px,0," + -Math.abs(150 * d) + "px)"
+			},
+			onSetTransition: function(a, b) {
+				for (var c = 0; c < a.slides.length; c++) es = a.slides[c].style,
+				es.webkitTransitionDuration = es.MsTransitionDuration = es.msTransitionDuration = es.MozTransitionDuration = es.OTransitionDuration = es.transitionDuration = b + "ms"
+			},
+			onTouchEnd: function(swiper,even){
+				if(!isHide){
+					$('.tips img').fadeOut(500);
+					isHide = true;
+				}
+		    }
+		});
+	}
+	
+	function closeWin(){
+		api.closeWin({
+        });
+	}
+</script>
+</html>

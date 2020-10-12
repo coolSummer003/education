@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>选择所属城市</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html,body{
+			background: #FFF;
+		}
+		#menuPackage{
+			background:#FFF;
+			position:fixed;
+			top:0;
+			left:0;
+			width:100%;
+			z-index:999;
+		}
+		#menu{
+			font-size:0.8rem;
+		}
+		.location-info{
+			margin-top:2.5rem;
+		}
+		.select{
+	    	height: 2.5rem;
+		    line-height: 2.5rem;
+		    /* text-align: right; */
+		    position: relative;
+	    }
+	    .select_kuang{
+	    	width: 3rem;
+		    position: absolute;
+		    right: 0.5rem;
+		    text-align: right;
+		    font-size: 0.8rem;
+	    }
+	    .aui-searchbar-cancel img{
+    		width:1.1rem;
+    		margin-top: 0.25rem;
+    	}
+    	.messageNum{
+		    width: 0.9rem;
+		    height: 0.9rem;
+		    background: #DC251F;
+		    border-radius: 100%;
+		    color: #FFF;
+		    position: absolute;
+		    right: 0.2rem;
+		    top: 0.3rem;
+		    line-height: 0.9rem;
+		    font-size: 0.6rem;
+		    text-align: center;
+    	}
+    	.aui-searchbar-input {
+		    margin: 0 0.5rem;
+		    background-color: #F3F4F4;
+		    border-radius: 1rem;
+		    height: 1.8rem;
+		    line-height: 1.8rem;
+		    font-size: 0.8rem;
+		    width: 100%;
+		    position: relative;
+		    padding-left: 0.5rem;
+		    display: -webkit-box;
+		    -webkit-box-flex: 1;
+		    border: solid 1px #F1F1F1;
+		}
+		.aui-searchbar .aui-searchbar-cancel {
+		    font-size: 0.7rem;
+		    color: #666666;
+		    margin-right: 0.3rem;
+		    width: 2.3rem;
+		    height: 1.5rem;
+		    line-height: 1.5rem;
+		    text-align: left;
+		    -webkit-transition: all .3s;
+		    transition: all .3s;
+		    color: #FFF;
+		    padding-left:0.2rem;
+		}
+		.aui-searchbar-input input::-webkit-input-placeholder {
+			color: #9FA7AB;
+			font-size:0.7rem;
+		}
+		.aui-searchbar-cancel span{
+			color:#03B4F7;
+			font-size:0.8rem;	
+		}
+		.img_delete{
+            width: 0.9rem;
+		    height: 0.9rem;
+		    position: absolute;
+		    top: 0.4rem;
+		    right: 0.4rem;
+		    display:none;
+    	}
+    	label{
+		    font-size: 0.6rem;
+    		margin: 0.5rem;
+    		color:#666666;
+    	}
+    	.cuurent-content{
+    		padding-bottom:0.5rem;
+    	}
+    	.cuurent-location{
+		    display: flex;
+		}
+    	.location{
+		    margin: auto;
+	        display: -webkit-inline-box;
+	        width: 100%;
+	        padding-left: 0.5rem;
+    	}
+    	.location span{
+    		margin-left: 0.2rem;
+    		font-weight: bold;
+    	}
+    	.location img{
+    		width:0.7rem;
+    		height:0.7rem;
+    		margin-top: 0.2rem;
+    	}
+    	.reload-location{
+    		margin: auto;
+    		width: 100%;
+    		text-align:right;
+    		padding-right:0.5rem;
+    		font-size:0.7rem;
+    		color:#03B4F7;
+    	}
+    	.line{
+    		background:#F3F4F4;
+    		height:0.5rem;
+    	}
+    	.cuurent-content ul{
+    		overflow:hidden;
+    	}
+    	.cuurent-content li{
+		    background: #F3F4F4;
+		    width: 30%;
+		    float: left;
+		    margin-left: 2.5%;
+		    height: 1.7rem;
+		    line-height: 1.7rem;
+		    text-align: center;
+		    border-radius: 0.2rem;
+		    margin-bottom: 0.5rem;
+	        color: #666666;
+	        font-size:0.7rem;
+    	}
+    	.aui-searchbar-input input {
+		    color: #666666;
+		    width: 92%;
+		    padding: 0 1.6rem 0 0.4rem;
+		    margin: 0.2rem 0rem;
+		    height: 1.4rem;
+		    min-height: 1.4rem;
+		    line-height: 1.4rem;
+		    border: 0;
+		    -webkit-appearance: none;
+		    font-size: 0.8rem;
+		    position: relative;
+		}
+		.active{
+			background: #eaf3ff !important;
+			color: #03B4F7 !important;
+		}
+		#area_list{
+			margin-top:2.5rem;
+		}
+		.location-btn{
+		    position: fixed;
+		    bottom: 0;
+		    left: 0;
+		    width: 100%;
+		    margin-left: 0;
+		    height: 2.5rem;
+		    line-height: 2.5rem;
+		    padding: 0;
+		    color: #ffffff !important;
+		    background: linear-gradient(to left, #3F86FE , #64ADF6) !important;
+		    border-radius: 0;
+		}
+		.location-btn:active{
+			background: #64ADF6 !important;
+		}
+    </style>
+</head>
+<body>
+	<div id="menuPackage" class='bottom-slide'>
+		<div class="aui-searchbar select" id="search">
+		    <div class="aui-searchbar-input aui-border-radius">
+		        <i class="aui-iconfont aui-icon-search"></i>
+	            <input type="search" placeholder="输入城市名" id="search-input">
+	            <img src="../../icon/common/icon_delete.png" alt="" class="img_delete"/>
+		    </div>
+		    <div class="aui-searchbar-cancel" tapmode onclick='hiddenCitySel()'>
+		    	<span>取消</span>
+		    </div>
+		</div>
+	</div>
+	
+	<!-- 定位信息 -->
+	<div class='location-info'>
+		<div class='cuurent-content'>
+			<label for="">当前定位</label>
+			<div class='cuurent-location'>
+				<div class='location' tapmode onclick='selCity(this)'>
+					<img src="../../icon/hospital/icon_location_new.png" alt="" />
+					<span id='address-area'>定位中...</span>
+					<input type="hidden" class='address-area-code' value='' id='address-area-code'/>
+					<input type="hidden" class='address-area-name' value='' id='address-area-name'/>
+					<input type="hidden" class='address-city-code' value='' id='address-city-code'/>
+					<input type="hidden" class='address-city-name' value='' id='address-city-name'/>
+					<input type="hidden" class='address-province-code' value='' id='address-province-code'/>
+					<input type="hidden" class='address-province-name' value='' id='address-province-name'/>
+				</div>
+				<div class='reload-location' tapmode onclick='reloadLocation()'>重新定位</div>
+			</div>
+		</div>
+		<div class='line'></div>
+		<div class='cuurent-content' id='city_list'>
+			
+		</div>
+		<script type="text/template" charset="utf-8" id="city_list_src">
+			<label for="">城市列表</label>
+			<ul>
+				{{ for(var i=0;i<it.sub.length;i++){ }}
+					{{ for(var j=0;j<it.sub[i].sub.length;j++){ }}
+						<li tapmode onclick = 'selectCity(this,"{{=it.sub[i].sub[j].id}}")'><span>{{=it.sub[i].sub[j].name}}</span></li>
+					{{ } }}
+				{{ } }}
+			</ul>
+		</script>
+		<!-- 地区选择列表信息 -->
+		<div class='district-list' id='sel_area_list'>
+		</div>
+		<script type="text/template" charset="utf-8" id="sel_area_list_src">
+			<label for="">地区列表</label>
+			<div class="aui-content aui-margin-b-15">
+				<ul class="aui-list aui-list-in">
+					{{ for(var i=0;i<it.sub.length;i++){ }}
+						{{ for(var j=0;j<it.sub[i].sub.length;j++){ }}
+							{{ for(var k=0;k<it.sub[i].sub[j].sub.length;k++){ }}
+								{{ if(it.sub[i].sub[j].id == it.city_code){ }}
+							        <li class="aui-list-item" tapmode onclick='selCity(this)'>
+							            <div class="aui-list-item-inner">
+							                <div class="aui-list-item-title">
+							                	<span>{{=it.sub[i].sub[j].sub[k].name}}</span>
+							                	<input type="hidden" class='address-area-code' value='{{=it.sub[i].sub[j].sub[k].id}}'/>
+												<input type="hidden" class='address-area-name' value='{{=it.sub[i].sub[j].sub[k].name}}'/>
+												<input type="hidden" class='address-city-code' value='{{=it.sub[i].sub[j].id}}'/>
+												<input type="hidden" class='address-city-name' value='{{=it.sub[i].sub[j].name}}'/>
+												<input type="hidden" class='address-province-code' value='{{=it.sub[i].id}}'/>
+												<input type="hidden" class='address-province-name' value='{{=it.sub[i].name}}'/>
+							                </div>
+							                <div class="aui-list-item-right">{{=it.sub[i].sub[j].name}}</div>
+							            </div>
+							        </li>
+								{{ } }}
+					        {{ } }}
+				        {{ } }}
+				    {{ } }}
+				</ul>
+			</div>
+		</script>
+	</div>
+
+	<!-- 地区搜索列表信息 -->
+	<div class="aui-content aui-margin-b-15" id='area_list'>
+	</div>
+	
+	<div class="aui-btn aui-btn-block location-btn" tapmode onclick="selLocation()">选择当前定位</div>
+	<script type="text/template" charset="utf-8" id="area_list_src">
+	    <ul class="aui-list aui-list-in">
+		{{ for(var i=0;i<it.sub.length;i++){ }}
+			{{ for(var j=0;j<it.sub[i].sub.length;j++){ }}
+				{{ for(var k=0;k<it.sub[i].sub[j].sub.length;k++){ }}
+					{{ if(it.sub[i].sub[j].sub[k].name.indexOf(it.keyword) != -1 || it.sub[i].sub[j].name.indexOf(it.keyword) != -1){ }}
+				        <li class="aui-list-item" tapmode onclick='selCity(this)'>
+				            <div class="aui-list-item-inner">
+				                <div class="aui-list-item-title">
+				                	<span>{{=it.sub[i].sub[j].sub[k].name}}</span>
+				                	<input type="hidden" class='address-area-code' value='{{=it.sub[i].sub[j].sub[k].id}}'/>
+									<input type="hidden" class='address-area-name' value='{{=it.sub[i].sub[j].sub[k].name}}'/>
+									<input type="hidden" class='address-city-code' value='{{=it.sub[i].sub[j].id}}'/>
+									<input type="hidden" class='address-city-name' value='{{=it.sub[i].sub[j].name}}'/>
+									<input type="hidden" class='address-province-code' value='{{=it.sub[i].id}}'/>
+									<input type="hidden" class='address-province-name' value='{{=it.sub[i].name}}'/>
+				                </div>
+				                <div class="aui-list-item-right">{{=it.sub[i].sub[j].name}}</div>
+				            </div>
+				        </li>
+					{{ } }}
+		        {{ } }}
+	        {{ } }}
+	    {{ } }}
+	    </ul>
+	</script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var systemType;
+	var bMap;
+	var cache;
+	apiready = function(){
+		var search = $api.byId('aui-header');
+		systemType = api.systemType;
+		cache = api.pageParam;
+		bMap = api.require('bMap');
+		$api.fixStatusBar(search);
+		
+		//获取城市列表
+		getCityList();
+		
+		//获取当前定位
+        setTimeout(function(){getLocation();},1000);
+	};
+	
+	/**
+	 * 获取城市列表 
+	 */
+	var cityList;//城市列表
+	function getCityList(){
+		url = 'api/dictionary/all/district';
+		ajax_Request(url, 'get', 'json', null, function(ret,err){
+			log('省市区',ret);
+			if(ret&&ret.code == 0){
+				cityList = ret;
+				//加载城市列表
+				city_load();
+				//输入初始化
+				input_init();
+			}else{
+				alert_msg('获取城市列表失败');
+			}
+		});
+	}
+	
+	/**
+	 * 加载城市列表
+	 */
+	function city_load(){
+		var city_list_src = $('#city_list_src').html();
+		$('#city_list').html(doT.template(city_list_src)(cityList));
+		api.parseTapmode();
+	}
+	
+	/**
+	 * 选择城市列表 
+	 */
+	function selectCity(e,city_code){
+		console.log(city_code);
+		$('#city_list').find('li').removeClass('active');
+		$(e).addClass('active');
+		cityList.city_code = city_code;
+		var sel_area_list_src = $('#sel_area_list_src').html();
+		$('#sel_area_list').html(doT.template(sel_area_list_src)(cityList));
+	}
+	
+	/**
+	 * 获取当前定位 
+	 */
+	function getLocation(){
+		getCurrentAddress();
+	}
+	
+	/**
+	 * 选择城市 
+	 */
+	function selCity(e){
+		params = {
+			cityName:$(e).find('.address-area-name').val(),
+			cityCode:$(e).find('.address-area-code').val(),
+			city_level2_Name:$(e).find('.address-city-name').val(),
+			city_level2_Code:$(e).find('.address-city-code').val(),
+			city_level1_Name:$(e).find('.address-province-name').val(),
+			city_level1_Code:$(e).find('.address-province-code').val()
+		}
+		if(params.cityCode == ''){alert_msg('未检测到定位信息');return;}
+		
+		//当前定位信息放入缓存
+		var cache_by_app = $api.getStorage('cache_by_app');
+		cache_by_app.location_city = params;
+		$api.setStorage('cache_by_app',cache_by_app);
+		sendEvent(cache.action,params);
+		setTimeout(function(){hiddenCitySel();},300);
+	}
+	
+	/**
+	 * 选择当前定位 
+	 */
+	function selLocation(){
+		selCity($('.location'));
+	}
+	
+	/**
+	 *  获取当前地址
+	 */
+	function getCurrentAddress(){
+		mylocation(function(ret) {
+		    if(location_result.status){
+		    	//有定位权限
+		    	bMap.getNameFromCoords({
+				    lon: ret.lon,
+				    lat: ret.lat
+				}, function(ret, err) {
+				    if (ret&&ret.status) {
+			        	$('#address-area').html(ret.district);
+			        	$('#address-area-name').val(ret.district);
+			        	$('#address-area-code').val(ret.adCode + '000');
+			        	$('#address-city-name').val(ret.city);
+			        	$('#address-city-code').val(ret.adCode.toString().substring(0,4) + '00000');
+			        	$('#address-province-name').val(ret.province);
+			        	$('#address-province-code').val(ret.adCode.toString().substring(0,2) + '0000000');
+			        	//
+			        	if(systemType == 'ios'){
+			        	}
+				    }else{
+				    	$('#address-area').html('定位失败');
+			        	$('#address-area-name').val('');
+			        	$('#address-area-code').val('');
+			        	$('#address-city-name').val('');
+			        	$('#address-city-code').val('');
+			        	$('#address-province-name').val('');
+			        	$('#address-province-code').val('');
+				    }
+				});
+		    }else{
+		    	//无定位权限
+		    	$('#address-area').html('无定位');
+	        	$('#address-area-name').val('');
+	        	$('#address-area-code').val('');
+	        	$('#address-city-name').val('');
+	        	$('#address-city-code').val('');
+	        	$('#address-province-name').val('');
+	        	$('#address-province-code').val('');
+		    }
+		});
+	}
+	
+	/**
+	 * 重新获取定位 
+	 */
+	function reloadLocation(){
+		$('#address-area').html('定位中...');
+		setTimeout(function(){
+			getLocation();
+		},300);
+	}
+	
+	function input_init(){
+		//监听输入框输入
+		$('#search-input').bind('input propertychange', function() {
+			if($(this).val() != ''){
+				cityList.keyword = $(this).val();
+				$('.location-info').addClass('aui-hide');
+				$(".img_delete").css("display","block");
+				var area_list_src = $('#area_list_src').html();
+				$('#area_list').html(doT.template(area_list_src)(cityList));
+				api.parseTapmode();
+			}else{
+				$('.location-info').removeClass('aui-hide');
+				$(".img_delete").css("display","none");
+				$('#area_list').html('');
+			}
+		});
+		$(".img_delete").click(function(){
+			$("#search-input").val("");
+			$('.location-info').removeClass('aui-hide');
+			$(".img_delete").css("display","none");
+			$('#area_list').html('');
+			keyWord = "";
+		});
+	}
+	
+	
+	/**
+	 * 隐藏城市选择 
+	 */
+	function hiddenCitySel(){
+		api.setFrameAttr({
+		    name: api.frameName,
+		    hidden: true
+		});
+	}
+</script>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>通用信息说明框</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background: transparent;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background: transparent;
+    		display:flex;
+    	}
+    	.attention-div{
+    		margin: auto;
+		    position: absolute;
+		    height: 100%;
+			-webkit-transform: scale(0);
+			transform:scale(0);
+			opacity: 0;
+			width: 100%;
+		    padding: 2rem 1rem 0rem 1rem;
+	        background: #FFF;
+    	}
+    	.shadow{
+    		width:100%;
+    		height:100%;
+    		background:#000;
+    		opacity:0;
+    		position: absolute;
+    	}
+    	.trans {
+            /*transition*/
+            -webkit-transition: 0.3s ease;
+            -moz-transition: 0.3s ease;
+            -ms-transition: 0.3s ease;
+            -o-transition: 0.3s ease;
+            transition: 0.3s ease;
+        }
+        .show{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+        }
+		.sure{
+		    height: 2rem;
+		    line-height: 2rem;
+		    background: #DC251F;
+		    color: #FFF;
+		    border-radius: 0.2rem;
+		}
+		.message-txt{
+		    width: 85%;
+		    margin: auto;
+		    text-align: left;
+		    font-size: 0.8rem;
+		    height: 55%;
+		    background: #FFF;
+		    border-radius: 0.5rem;
+	        padding: 1.5rem 1rem;
+	        overflow: auto;
+		}
+		.message-txt-title{
+			width: 100%;
+		    height: 2.5rem;
+		    line-height: 2.5rem;
+		    border-radius: 0.5rem 0.5rem 0rem 0rem;
+    		border-bottom: none;
+    		font-weight: bold;
+    		color:#03B4F7;
+		}
+		.message-txt-content{
+		    width: 100%;
+		    height: 5rem;
+		    text-align: left;
+		    display: flex;
+		    line-height: 1.3rem;
+		}
+		.message-txt-content span{
+			margin:auto;
+			padding: 0 0.3rem;
+		}
+		.message-txt-button{
+	        width: 86%;
+		    height: 2rem;
+		    line-height: 2rem;
+		    background: linear-gradient(to left, #03B4F7 , #90DBF7);
+		    color: #fff;
+		    border-radius: 1rem;
+		    margin-left: 7%;
+		}
+		.message-txt-button:active{
+			background:#90DBF7;
+		}
+		.in{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+		}
+		.bottom-slide-red {
+		    position: relative;
+		}
+		.bottom-slide-red:after {
+		    content: '';
+		    height: 1px;
+		    background: #6AD3FC;
+		    width: 100%;
+		    display: block;
+		    -webkit-transform: scaleY(0.3);
+		    transform: scaleY(0.3);
+		    -webkit-transform-origin: 30% 100%;
+		    transform-origin: 30% 100%;
+		    bottom: 0;
+		    left: 0;
+		    position: absolute;
+		}
+		.closeAlert{
+			position: fixed;
+			width: 1rem;
+			height: 1rem;
+			margin-left: 70%;
+			margin-top: -1rem;
+		}
+		.closeAlert img{
+			width: 1rem;
+			height: 1rem;
+		}
+    </style>
+</head>
+<body>
+	
+	<!-- 提示说明 -->
+	<div class='message-txt' id="messageTxt">
+		<div class="closeAlert" tapmode onclick="close_alert()">
+			<img src="../../icon/common/icon_close.png" >
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		$('.message-txt').append(cache.msg);
+		//添加返回监听
+		api.addEventListener({
+		　　　name: 'keyback'
+		}, function(ret, err) {
+		　　　close_alert();
+		});
+	}
+	$("body").on({
+	    click:function(e){
+	        if(e.target.className!="message-txt"){
+	        	close_alert();
+	        };
+	    }
+	})
+
+	//关闭弹窗
+	function close_alert(){
+		api.closeFrame({
+			name:'common_msg'
+        });
+	}
+</script>
+</html>

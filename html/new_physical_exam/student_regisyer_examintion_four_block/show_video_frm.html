@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>体检报名</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<style>
+			html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+		a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+		#p_ex_title{
+		    font-weight: normal;
+		}
+    </style>
+	</head>
+	<body>
+		
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var headerPos;
+		var cache;
+		var moviePlayer;
+		apiready = function() {
+			api.parseTapmode();
+			cache = api.pageParam;
+			log('数据', cache)
+			var header = $api.byId('aui-header');
+			$api.fixStatusBar(header);
+			headerPos = $api.offset(header);
+			moviePlayer = api.require('moviePlayer');
+			init(cache.viodeUrl);
+		}
+
+		function init(viodeUrl) {
+			moviePlayer.open({
+				rect: {
+					x: 0,
+					y: cache.headHeight,
+					w: api.frameWidth,
+					h: api.frameHeight
+				},
+				styles: {
+					
+					foot: {
+						bg: 'rgba(0,0,0,0.5)',
+						height: 44,
+						palyBtn: {
+							size: 20,
+							playImg: 'widget://image/play.png',
+							pauseImg: 'widget://image/pause.png',
+							marginLeft: 5
+						},
+						currentTimeLabel: {
+							textSize: 14,
+							textColor: "#FFF",
+							textWidth: 43,
+							marginLeft: 5
+						},
+						seekBar: {
+							sliderImg: 'widget://image/circle.png',
+							sliderW: 20,
+							sliderH: 20,
+							progressColor: '#696969',
+							progressSelected: '#76EE00',
+							marginLeft: 10,
+							marginRight: 10
+						},
+						totalTimeLabel: {
+							textSize: 14,
+							textColor: "#FFF",
+							textWidth: 43,
+							marginRight: 5
+						},
+						fullscreenBtn: {
+							size: 0
+						}
+					}
+				},
+				path: file_load_url + viodeUrl,
+				// isShowControlView: false,
+				autoPlay: true,
+				videoDirection: "portrait",
+				autorotation: false,
+				useGestureControl:false,
+				showBack: false
+			}, function(ret, err) {
+				if (ret) {
+					console.log(JSON.stringify(ret));
+				}
+
+				moviePlayer.addEventListener(function(ret) {
+					if (ret && ret.eventType == 'back') {
+						// alert('点击back按钮');
+						moviePlayer.close();
+					}
+				});
+
+			});
+		}
+
+	</script>
+</html>

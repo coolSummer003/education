@@ -1,0 +1,659 @@
+  <!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>考前训练记录</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_list_swipe.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	body,html{
+    		background:#FFF;
+    	}
+    	.aui-list:before {
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    right: auto;
+		    bottom: auto;
+		    width: 100%;
+		    z-index: 2;
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		    pointer-events: none;
+		}
+		.room_list{
+	    	overflow: hidden;
+	    	zoom: 1;
+		}
+		.room_list_div{
+			overflow-x:hidden;
+			width:100%;
+		}
+		.list_div{
+		    min-height: 2.2rem;
+    		padding: 0 0.3rem;
+			background: #FFF;
+			transition: all 0.5s;
+			-webkit-transition: all 0.5s;
+		    position: relative;
+		}
+		.list_div:after{
+			content: '';
+		    height: 1px;
+		    background: #DDDDDD;
+		    width: 100%;
+		    background-color: #dddddd;
+		    display: block;
+		    -webkit-transform: scaleY(0.5);
+		    transform: scaleY(0.5);
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		}
+		.swipeleft{
+			min-height:2.2rem;
+			padding: 0 0.3rem;
+			background: #FFF;
+			transition: all 0.5s;
+			-webkit-transition: all 0.5s;
+			transform:translateX(-50%);
+			-webkit-transform:translateX(-50%);
+		    position: relative;
+		}
+		.swipeleft:after{
+			content: '';
+		    height: 1px;
+		    background: #DDDDDD;
+		    width: 100%;
+		    background-color: #dddddd;
+		    display: block;
+		    -webkit-transform: scaleY(0.5);
+		    transform: scaleY(0.5);
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		}
+		.recode-title{
+			height:1.5rem;
+			font-size:0.7rem;
+			line-height:1.5rem;
+		    padding-top: 0.3rem;
+		}
+		.recode-title img{
+		    height: 1rem;
+		    width: 1rem;
+		    margin-bottom: -0.2rem;
+		    border-radius: 100%;
+		    object-fit: cover;
+		    margin-right: 0.2rem;
+		}
+		.recode-title font{
+			color:#7D7D7D;
+			font-size: 0.6rem;
+		}
+		.recode-content{
+			width:100%;
+			overflow:hidden;
+			margin-top: 0.5rem;
+			position: relative;
+		}
+		.recode-img{
+			width:20%;
+			float:left;
+		}
+		.recode-img_div{
+			width:3.5rem;
+			height:3.5rem;
+		    margin: auto;
+		}
+		.recode-img_div img{
+			width:100%;
+			height:100%;
+			object-fit:cover;
+		}
+		.recode-txt{
+		    padding: 0 0.5rem;
+	        position: relative;
+		}
+		.txt-title{
+			font-size: 0.7rem;
+		    position: relative;
+		    overflow: hidden;
+		    margin-top: 0.1rem;
+		}
+		.txt-start{
+			font-size:0.7rem;
+			color:#7D7D7D;
+		}
+		.txt-submit-time{
+			font-size:0.7rem;
+			color:#7D7D7D;
+		}
+		.txt-price{
+			font-size: 0.6rem;
+		    text-align: right;
+	        height: 1.5rem;
+    		line-height: 1.5rem;
+		}
+		.txt-price span{
+			font-size:0.8rem;
+		    color: #FF9641;
+		}
+		.recode-status{
+	        font-size: 0.6rem;
+		    position: absolute;
+		    right: 0.5rem;
+		    background: #1E8DD8;
+		    color: #FFF;
+		    padding: 1px 0.2rem;
+		    z-index: 1;
+		}
+		.w-orange{
+			color:#FF9641;
+		}
+		.txt-title span{
+			color:#7D7D7D;
+		}
+		.recode-title span{
+			color:#4D92E3;
+		}
+		.label{
+		    font-size: 0.5rem;
+		    background: #FDF2E6;
+		    color: #EE9A70;
+		    border:solid 1px #FDF2E6;
+		    float: left;
+		    padding: 0rem 0.1rem;
+		    margin-top: 0.1rem;
+		    margin-right:0.5rem;
+		}
+		.label-status{
+		    font-size: 0.5rem;
+		    border:solid 1px #EE9A70;
+		    color: #EE9A70;
+		    float: left;
+		    padding: 0rem 0.2rem;
+		    margin-top: 0.1rem;
+		    margin-right:0.5rem;
+		}
+		.msg{
+			background: #FFFFFF;
+		    height: 20rem;
+		    text-align: center;
+		    font-size:0.7rem;
+		}
+		.msg img{
+			width:8rem;
+			margin-top: 9rem;
+		}
+		.jiazai{
+    	    font-size: 0.7rem;
+		    background: #FFFFFF;
+		    color: #666565;
+		    padding-bottom: 0.3rem;
+		    text-align: center;
+		    padding-top: 0.3rem;
+	    }
+	    .jiazai img{
+	    	width: 1.5rem;
+	    }
+	    .order-button{
+    		overflow: hidden;
+		    padding: 0.5rem 0rem;
+	    }
+	    .op-button{
+	    	color: #535860;
+		    font-size: 0.7rem;
+		    text-align: center;
+		    border-radius: 1rem;
+		    float: right;
+		    margin-left: 0.5rem;
+		    background: #F1F2F4;
+	        padding: 0.1rem 0.6rem;
+	    }
+	    .unabled{
+	    	color:#909090;
+	    }
+	    .unabled-cash{
+	    	color:#EE9A70;
+	    	background:#FDF2E6;
+	    }
+	    .order-button-detail{
+	    	color:#03A9F4;
+	    	background:#E8F7FA;
+	    }
+	    .is-dismiss{
+		    height: 1.2rem;
+		    line-height: 1.2rem;
+		    text-align: center;
+		    border: solid 1px #DC251F;
+		    color: #DC251F;
+		    font-size: 0.7rem;
+		    position: absolute;
+		    right: 10px;
+		    top: 20px;
+		    transform: rotate(25deg);
+		    padding:0 0.3rem;
+	    }
+	    .waitting{
+	    	width: 3.8rem;
+	    	height: 2.1rem;
+	    	line-height:1rem;
+	    	color:#FF9641;
+	    	border:solid 1px #FF9641;
+	    }
+	    .finish{
+	    	color: #03A9F4;
+    		border:solid 1px #03A9F4;
+	    }
+	    .weight{
+	    	font-weight:bold;
+	    }
+    </style>
+</head>
+<body>
+	<div class="room_list">
+		<div class="room_list_div">
+			<!-- <div class="list_div">
+				<div class='recode-title'>
+					<img src="../../image/demo/school/2.jpg" alt=""/>
+					<span>上虞海滨考场<font>&ensp;500米</font></span>
+				</div>
+				<div class='recode-content'>
+					<div class='recode-txt'>
+						<div class='txt-title'><span class='weight'>训练时间：</span>2019-4-26</div>
+						<div class='txt-title'><span class='weight'>区域：</span>A区&emsp;<span class='weight'>线路：</span>线路1&emsp;<span class='weight'>班次：</span>白班</div>
+						<div class='txt-price'>共3个学员&emsp;实际支付
+							<font style='color: #FF9641;'>￥</font>
+							<span>150.0</span>
+							<font style='color: #FF9641;'>（优惠300）</font>
+							<font style='color: #FF9641;'>已支付</font>
+						</div>
+						<div class='order-button'>
+							<span class="op-button">
+					    					地图导航
+			    			</span>
+			    			<span class='op-button order-button-detail' tapmode onclick='openDetail("{{=it[i].id}}")'>详情</span>
+						</div>
+					</div>
+				</div>
+				<div class='is-dismiss waitting'><span>等待剩余学员预约</span></div>
+			</div> -->
+		</div>
+	</div>
+	<div id='load_div'>
+    </div>
+    <script type="text/template" charset="utf-8" id='load_src'>
+    	<div class="load">
+			<img src="../../icon/common/loadding.gif" alt="" /><br>
+        	<span>加载中...</span>
+		</div>
+    </script>
+    <script type="text/template" charset="utf-8" id='msg_src'>
+    	<div class="msg">
+			<img src="../../icon/common/empty.png" alt="" /><br>
+        	<span>{{=it.msg}}</span>
+		</div>
+    </script>
+    <script type="text/template" charset="utf-8" id='more_src'>
+    	<div class="jiazai">
+	    	<span>{{=it.msg}}</span>
+	    </div>
+    </script>
+	<script type="text/template" charset="utf-8" id='recode_practice_src'>
+		{{ for(var i=0;i<it.length;i++){ }}
+			<div class="list_div">
+				<div class='recode-title'>
+					<img src="{{=file_load_url + it[i].examinationRoom.logo}}" alt="" onerror="javascript:this.src='../../icon/default/icon_default.png'"/>
+					<span>{{=it[i].examinationRoom.name}}<font>&ensp;{{=calcuDistance(it[i].distance)}}</font></span>
+				</div>
+				<div class='recode-content'>
+					<div class='recode-txt'>
+						<div class='txt-title'>
+							<span class='weight'>训练日期：</span>{{=(it[i].trainingDate).substring(0,10)}}&emsp;
+							<span class='weight'>考试日期：</span>{{=(it[i].testDate).substring(0,10)}}
+						</div>
+						<div class='txt-title'>
+							{{ if(it[0].type == 'two'){ }}
+								<span class='weight'>区域：</span>{{=it[i].appointmentArea.name}}&emsp;
+								{{ if(it[0].index == 1||it[0].index == 2){ }}
+									<span class='weight'>班次：</span>{{=it[i].lesson.name}}&emsp;
+								{{ }else{ }}
+									<span class='weight'>班次：</span>{{=it[i].shifts.name}}&emsp;
+								{{ } }}
+							{{ }else{ }}
+								<span class='weight'>批次：</span>{{=it[i].batch.name}}&emsp;
+							{{ } }}
+							<span class='weight'>线路：</span>{{=it[i].appointmentLine.name}}
+						</div>
+						<div class='txt-title'>
+							<span class='weight'>最少人数：</span>{{=it[i].minPeople}}&emsp;
+							<span class='weight'>最多人数：</span>{{=it[i].maxPeople}}&emsp;
+							{{ if(it[i].remark != undefined){ }}
+								<span class='weight'>训练时间：</span>{{=it[i].remark}}
+							{{ } }}
+						</div>
+						{{ if(it[i].carNum != undefined){ }}
+							<div class='txt-title'>
+								<span class='weight'>教练车牌号：</span>{{=it[i].carNum}}&emsp;
+							</div>
+						{{ } }}
+						<div class='txt-price'>{{=it[i].peopleNum}}个学员已预约&emsp;排班总价值
+							<font style='color: #FF9641;'>￥</font>
+							<span>{{=cashFormatO(it[i].totalTrainingFee + it[i].totalServiceFee)}}</span>
+							{{ if(it[i].apponintScheduleOrderNotVip.paymentOrderFee >= it[i].trainingFee){ }}
+								<font style='color: #FF9641;'>（优惠{{=(it[i].apponintScheduleOrderNotVip.paymentOrderFee - it[i].trainingFee)}}）</font>
+							{{ } }}
+							{{ if(it[i].apponintScheduleOrderNotVip.paymentOrderStatus == 1){ }}
+								<font style='color: #FF9641;'>已支付</font>
+							{{ }else if(it[i].apponintScheduleOrderNotVip.paymentOrderStatus == 0){ }}
+								<font style='color: #000;'>未支付</font>
+							{{ }else{ }}
+								<font style='color: #000;'>支付失败</font>
+							{{ } }}
+						</div>
+						<div class='order-button'>
+			    			{{ if(it[i].apponintScheduleOrderNotVip.isDismiss == 0){ }}
+			    				<span class='op-button order-button-detail' tapmode onclick='openDetail("{{=it[i].id}}")'>详情</span>
+			    				{{ if(it[i].apponintScheduleOrderNotVip.paymentOrderStatus == 1){ }}
+			    					<!-- <span class='op-button' tapmode onclick='goToExit("{{=it[i].apponintScheduleOrderNotVip.id}}")'>我要退出</span> -->
+			    				{{ } }}
+			    			{{ } }}
+							<span class="op-button" tapmode onclick="openMap('{{=it[i].examinationRoom.name}}','{{=it[i].examinationRoom.latitude}}','{{=it[i].examinationRoom.longitude}}')">
+		    					地图导航
+			    			</span>
+						</div>
+					</div>
+				</div>
+				{{ if(it[i].apponintScheduleOrderNotVip.isDismiss == 1){ }}
+					<div class='is-dismiss'><span>已解散</span></div>
+				{{ }else if(it[i].apponintScheduleOrderNotVip.isDismiss == 2){ }}
+					<div class='is-dismiss finish'><span>随机分配</span></div>
+				{{ }else{ }}
+					{{ if(it[i].status == 2){ }}
+						<div class='is-dismiss waitting'><span>等待剩余学员预约</span></div>
+					{{ }else if(it[i].status == 3){ }}
+						<div class='is-dismiss finish'><span>预约完成</span></div>
+					{{ } }}
+				{{ } }}
+			</div>
+		{{ } }}
+	</script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var page = 1,limit = 10;
+	var load_src = $('#load_src').html();//加载src
+	var msg_src = $('#msg_src').html();//消息提示src
+	var more_src = $('#more_src').html();//更多src
+	var bMap;
+	var refresh = true;//标记是否是刷新操作
+	var b_index;
+	var params;
+	var kemu;
+	var isVip;
+	apiready = function(){
+		cache = api.pageParam.data;
+		bMap = api.require('bMap');
+		b_index = cache.index;
+		goRefrash(40,'#FFFFFF',null,null,function(){
+			reashList();
+		});
+		
+		api.addEventListener({
+		    name: 'closeWinInv'
+		}, function(ret, err) {
+			if(ret.value.key1=='1'){
+			 	init(b_index);
+			}
+		});
+		
+		goLoad(function(ret,err){
+			page++;refresh = false;
+			setLoad();
+			init(b_index);
+		});
+		init(b_index);
+		
+		
+		api.addEventListener({
+		    name: 'myEvent'
+		}, function(ret, err) {
+		    params=ret.value;
+		});
+	};
+	
+	function reashList(){
+		page = 1;refresh = true;
+		setLoad();
+		init(b_index);
+	}
+	
+		//申请发票
+	function openApplicationReceipt(ordId,testCenterId){
+		if(cache.type == 'two'){
+			if(b_index == 1||b_index == 2){
+			 	isVip='1';
+			}else{
+				isVip='0';
+			}
+			kemu='036002'
+		}else{
+			if(b_index == 1){
+				 isVip='1';
+			}else{
+				isVip='0';
+			}
+			kemu='036003'
+		}
+	 	api.openWin({
+			name: 'common_application_receipt_status',
+			url: '../common/common_application_receipt_status.html',
+			slidBackEnabled: 'false',
+			vScrollBarEnabled: 'false',
+			hScrollBarEnabled: 'false',
+			reload: true,
+			pageParam: {
+				organizationType:'0',
+				ordId:ordId,
+				kemu:kemu,
+				isVip:isVip,	
+				testCenterId:testCenterId
+			}
+			});
+		}
+	function openReceipt(orderId){	
+		log('ID',orderId)
+		api.openWin({
+		name: 'common_receipt_status',
+		url: '../common/common_receipt_status.html',
+		slidBackEnabled: 'false',
+		vScrollBarEnabled: 'false',
+		hScrollBarEnabled: 'false',
+		reload: true,
+		pageParam: {
+			organizationType:'0',
+			orderId:orderId
+		}
+		});
+	}
+	//isEscFun代表是否点击menu
+	function init(index,isEscFun){
+		b_index = index;
+		if(isEscFun != undefined){
+			page = 1;refresh = true;
+			setLoad();
+		}
+		params = {
+			learnerId:getUserId(),
+			page:page,
+			limit:limit
+		}
+		if(cache.type == 'two'){
+			if(b_index == 1||b_index == 2){
+				url = 'api/appointment-vip/getAppointmentScheduleListByLearnerId';
+				params.vipGrade = b_index == 1?0:1;
+			}else{
+				url = 'api/appointment-by-learner/getAppointmentScheduleListByLearnerId';
+			}
+		}else{
+			if(b_index == 1){
+				url = 'api/appointmentKemuThreeVip/getAppointmentScheduleListByLearnerId';
+				params.vipGrade = 0;
+			}else{
+				url = 'api/appointmentKemuThree-by-learner/getAppointmentScheduleListByLearnerId';
+			}
+		}
+		mylocation(function(location_result){//获取当前定位
+			if(location_result.status){//有定位权限
+		        params.lng = location_result.lon;
+		        params.lat = location_result.lat;
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret,err){
+				log('考前预约信息',ret);
+				if(ret){
+					var data;
+					if(cache.type == 'two'){
+						if(b_index == 1||b_index == 2){
+							data = ret.appointmentScheduleVipOrderList;
+						}else{
+							data = ret.appointmentScheduleNotVipOrderList;
+						}
+					}else{
+						if(b_index == 1){
+							data = ret.appointmentScheduleKemuThreeVipResponseList;
+						}else{
+							data = ret.appointmentScheduleKemuThreeNotVipResponseList;
+						}
+					}
+				
+	        		if(ret.code == 0&&data.length > 0){
+	        			data[0].type = cache.type;
+	        			data[0].index = b_index;
+						var recode_practice_src = $('#recode_practice_src').html();
+						if(refresh||$('.room_list_div').find('.list_div').length == 0){
+							$('.room_list_div').html(doT.template( recode_practice_src )( data ));
+						}else{
+							$('.room_list_div').append(doT.template( recode_practice_src )( data ));
+						}
+	        		}else{
+	        			setMsg(refresh?'暂无预约数据':'暂无更多');
+	        		}
+	        	}else{
+	        		setMsg('服务器繁忙，请稍后重试');
+	        	}
+	        	setTimeout(function(){
+			        api.refreshHeaderLoadDone();
+	        	},300);
+			});
+		});
+	}
+	
+	//设置页面加载的画面
+	function setLoad(){
+		if(refresh||$('.room_list_div').find('.list_div').length == 0){//如果是刷新或者之前无数据的下拉刷新，全屏提示
+			$('#load_div').html('');
+			$(".room_list_div").html(doT.template( load_src )( null ));
+		}else{
+			setTimeout(function(){
+				$('#load_div').html(doT.template( more_src )( {'msg':'加载更多中...','img':'../../icon/common/jiazai.gif'} ));
+			},300);
+		}
+	}
+	
+	//设置页面提示信息
+	function setMsg(msg){
+		if(refresh||$('.room_list_div').find('.list_div').length == 0){//如果是刷新或者之前无数据的上拉加载，全屏提示
+			setTimeout(function(){
+				$(".room_list_div").html(doT.template( msg_src )( {'msg':msg} ));
+			},300);
+		}else{//原先已经有数据的情况下
+			setTimeout(function(){
+			    $('#load_div').html(doT.template( more_src )( {'msg':msg,'img':''} ));
+			},300);
+		}
+	}
+	
+	//打开地图
+	function openMap(name,latitude,longitude){
+		mylocation(function(location_result){//获取当前定位
+			if(location_result.status){//有定位权限
+				params = {
+					to_lon:longitude,
+					to_lat:latitude,
+					to_name:name
+				}
+				api.openWin({
+			       name: 'common_map_loaction_win',
+			       url: '../common/common_map_loaction_win.html',
+			       slidBackEnabled:'true',
+			       vScrollBarEnabled:'false',
+			       hScrollBarEnabled:'false',
+			       reload:true,
+			       pageParam: {
+			           data:params
+			       }
+			   });
+			}else{
+				alert_msg('未能获取您的定位');
+			}
+		});
+	}
+	
+	/**
+	 * 打开排班详情 
+	 */
+	function openDetail(orderId){
+		params = {
+			orderId:orderId,
+			flag:cache.type,
+			vipGrade:b_index,
+			type:'appointment-before-exam-order-by-learner'
+		}
+		commonOpenWin('record_order_detail_win',params);
+	}
+	
+	/**
+	 * 我要退出排班 
+	 */
+	function goToExit(orderId){
+		openMessage('温馨提示','您确定要退出该训练排班吗？','确定','取消','toExit("'+orderId+'")','',{});
+	}
+	
+	function toExit(orderId){
+		params = {
+			orderId:orderId,
+			learnerId:getUserId()
+		}
+		
+		if(cache.type == 'two'){
+			url = 'api/appointment-by-learner/exit-that-Schedule';
+		}else{
+			url = 'api/appointmentKemuThree-by-learner/exit-that-Schedule';
+		}
+		
+		ajax_Request(url, 'post', 'json', params, function(ret,err){
+			log('退出排班返回',ret);
+			if(ret){
+				if(ret.code == 0){
+					openMessage('退出提示','您已成功退出，请重新选择排班','好的','','reashList()','',{});
+				}else{
+					alert_msg(ret.msg);
+				}
+			}else{
+				alert_msg("服务器繁忙，请稍后再试");
+			}
+		});
+	}
+</script>
+</html>

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>考场选择列表</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html,body{
+    		background:#FFF;
+    	}
+    	#score{
+    		height: 1rem;
+    		line-height:1rem;
+    		display: inline-block;
+    		vertical-align: middle;
+    	}
+    	#score li{
+    		float: left;
+    		height: 1rem;
+    		margin-left: 0.1rem;
+    		line-height:1rem;
+    		display: inline-block;
+    		vertical-align: middle;
+    	}
+    	#score li img{
+    		width: 0.7rem;
+    		margin-top: 0.1rem;
+    	}
+    	#label li{
+    		border: solid 1px #F1F1F1;
+		    margin-right: 0.4rem;
+		    font-size: 0.6rem;
+		    padding: 0rem 0.2rem;
+		    background:#F1F1F1;
+    	}
+    	.aui-list .aui-list-item-media {
+		    width: 5.8rem;
+		    height: 5.8rem;
+		    position: relative;
+		    padding: 0.5rem 0;
+		    padding-right: 0.75rem;
+		    display: inherit;
+		    -webkit-flex-shrink: 0;
+		    flex-shrink: 0;
+		    -webkit-flex-wrap: nowrap;
+		    flex-wrap: nowrap;
+		    -webkit-box-align: center;
+		    -webkit-align-items: flex-start;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		}
+		.aui-list .aui-list-item-media img {
+		    width: 100%;
+		    display: block;
+		    height: 100%;
+		    object-fit: cover;
+		}
+		.msg{
+			background: #FFFFFF;
+		    height: 20rem;
+		    text-align: center;
+		    font-size:0.7rem;
+		    color:#515151;
+		}
+		.msg img{
+			width:2rem;
+			margin-top: 9rem;
+			margin-bottom:0.5rem;
+		}
+		.jiazai{
+    	    font-size: 0.7rem;
+		    background: #FFFFFF;
+		    color: #666565;
+		    padding-bottom: 0.3rem;
+		    text-align: center;
+		    padding-top: 0.3rem;
+	    }
+	    .jiazai img{
+	    	width: 1.5rem;
+	    }
+		.aui-list:after {
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    top: auto;
+		    right: auto;
+		    bottom: 0;
+		    left: 0;
+		    width: 100%;
+		    z-index: 2;
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		    pointer-events: none;
+		}
+		.aui-list .aui-list-item:last-child:after {
+		    height: 2px;
+		}
+		.selected{
+			background:url("../../icon/common/icon_list_selet.png") no-repeat;
+		    background-position-x: right;
+    		background-position-y: 1px;
+    		background-size: 10%;
+		}
+		.phone-img{
+			width:1rem;
+		}
+		.txt-blue{
+			color:#1E8DD8;
+		}
+		#label li{
+    		border: solid 1px #F1F1F1;
+		    margin-right: 0.4rem;
+		    font-size: 0.6rem;
+		    padding: 0rem 0.2rem;
+		    background:#F1F1F1;
+    	}
+    	.tag-style0{
+			background:#DDEBFF !important;
+			border-color:#DDEBFF !important;
+			color:#75A9CB;
+		}
+		.tag-style1{
+			background:#E9FBF9 !important;
+			border-color:#E9FBF9 !important;
+			color:#63BD9F;
+		}
+		.tag-style2{
+			background:#FDF2E6 !important;
+			border-color:#FDF2E6 !important;
+			color:#ED9366;
+		}
+		
+		.room_list{
+	    	overflow: hidden;
+	    	zoom: 1;
+		}
+		.room_list_div{
+			overflow-x:hidden;
+			width:100%;
+		}
+		.list_div{
+		    min-height: 2.2rem;
+    		padding: 0 0.3rem;
+			background: #FFF;
+			transition: all 0.5s;
+			-webkit-transition: all 0.5s;
+		    position: relative;
+		}
+		.list_div:after{
+			content: '';
+		    height: 1px;
+		    background: #DDDDDD;
+		    width: 100%;
+		    background-color: #dddddd;
+		    display: block;
+		    -webkit-transform: scaleY(0.5);
+		    transform: scaleY(0.5);
+		    -webkit-transform-origin: 20% 100%;
+		    transform-origin: 20% 100%;
+		}
+		.swipeleft{
+			min-height:2.2rem;
+			padding: 0 0.3rem;
+			background: #FFF;
+			transition: all 0.5s;
+			-webkit-transition: all 0.5s;
+			transform:translateX(-20%);
+			-webkit-transform:translateX(-20%);
+		    position: relative;
+		}
+		.option-btn{
+		    text-align: center;
+		    background: #F55252;
+		    width: 20%;
+		    float: right;
+		    position: absolute;
+		    height: 100%;
+	    	display: flex;
+		    top: 0;
+		    right: -20%;
+		    color: #fff;
+		}
+		.operation{
+		    width: 100%;
+    		height: 100%;
+		}
+		.navigation{
+		    width: 100%;
+    		height: 100%;
+    		display:flex;
+		    background: #F7B24D;
+		}
+		.navigation span{
+		    margin:auto;
+		}
+		.navigation img{
+		    margin:auto;
+		    width:2rem;
+		}
+    </style>
+</head>
+<body>
+	<div class="aui-content room_list">
+		<ul class="aui-list aui-media-list room_list_div" id="examinationRoom">
+	        <!-- <li class="aui-list-item selected list_div">
+	            <div class="aui-media-list-item-inner">
+	                <div class="aui-list-item-media">
+	                    <img src="../../../image/demo/school/1.jpg" onerror="javascript:this.src='../../icon/default/icon_default_list.png'">
+	                </div>
+	                <div class="aui-list-item-inner">
+	                    <div class="aui-list-item-text">
+	                        <div class="aui-list-item-title aui-ellipsis-2">上虞海滨驾校</div>
+	                        <div class="aui-info-item">
+	                        	<span class="aui-margin-l-5">绍兴市 上虞区</span>
+	                        </div>
+	                    </div>
+	                    <div class="aui-list-item-text jz">
+	                    	上虞是百官街道长海公路撒了哈
+	                    </div>
+	                    <div class="aui-list-item-text">
+	                        <div class="aui-info-item">
+	                        	<span class="aui-margin-l-5">15.83km</span>
+	                        </div>
+	                        <div class="aui-info-item">
+	                    		<img src="../../icon/common/icon_phone_new.png" alt="" class='phone-img'/>
+	                        	<span class="aui-margin-l-5 txt-blue">057582451254</span>
+	                        </div>
+	                    </div>
+	                    <div class="aui-info aui-margin-t-5" style="padding:0">
+	                        <div class="aui-info-item">
+	                    		<ul id="label">
+	        		                    		<li class='tag-style0'><span>服务态度好</span></li>
+	        		                    		<li class='tag-style1'><span>教学水平高</span></li>
+	        		                    		<li class='tag-style2'><span>环境优美</span></li>
+	        		                    	</ul>
+	                                    </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class='option-btn'>
+	            	<div class='operation'>
+	            		<div class='navigation bg-yellow'>
+	            			<img src="../../icon/common/icon_navigation.png" alt="" />
+	            		</div>
+	            	</div>
+	            </div>
+	        </li> -->
+	    </ul>
+	</div>
+    <div id='load_div'>
+    </div>
+    <script type="text/template" charset="utf-8" id='load_src'>
+    	<div class="load">
+			<img src="../../icon/common/loadding.gif" alt="" /><br>
+        	<span>加载中...</span>
+		</div>
+    </script>
+    <script type="text/template" charset="utf-8" id='msg_src'>
+    	<div class="msg">
+			<img src="../../icon/common/icon_defalut.png" alt="" /><br>
+        	<span>{{=it.msg}}</span>
+		</div>
+    </script>
+    <script type="text/template" charset="utf-8" id='more_src'>
+    	<div class="jiazai">
+	    	<span>{{=it.msg}}</span>
+	    </div>
+    </script>
+    <script type="text/template" charset="utf-8" id='examinationRoom_src'>
+    	{{ for(var i=0;i<it.length;i++){ }}
+	    	<li class="aui-list-item list_div">
+	            <div class="aui-media-list-item-inner" tapmode onclick="openExamRoom('{{=it[i].shortName}}','{{=it[i].id}}',this)">
+	                <div class="aui-list-item-media">
+	                    <img src="{{=file_load_url + it[i].logo}}" onerror="javascript:this.src='../../icon/default/icon_default_list.png'">
+	                </div>
+	                <div class="aui-list-item-inner">
+	                    <div class="aui-list-item-text">
+	                        <div class="aui-list-item-title aui-ellipsis-2">{{=it[i].shortName}}</div>
+	                        <div class="aui-info-item">
+	                        	<span class="aui-margin-l-5">{{=it[i].district.cityName}} {{=it[i].district.districtName}}</span>
+	                        </div>
+	                    </div>
+	                    <div class="aui-list-item-text jz">
+	                    	{{=it[i].address}}
+	                    </div>
+	                    <div class="aui-list-item-text">
+	                        <div class="aui-info-item">
+	                        	<span class="aui-margin-l-5">{{=(it[i].distance == undefined?"":calcuDistance(it[i].distance))}}</span>
+	                        </div>
+	                        <div class="aui-info-item">
+	                    		<img src="../../icon/common/icon_phone_new.png" alt="" class='phone-img'/>
+	                        	<span class="aui-margin-l-5 txt-blue">{{=it[i].contactNumber}}</span>
+	                        </div>
+	                    </div>
+	                    <div class="aui-list-item-text jz">
+	                    	<div class="aui-info-item">
+	                    		<ul id="label">
+		                    		{{=getLabelList(it[i].tags)}}
+		                    	</ul>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <!-- 地图导航 -->
+	            <div class='option-btn' tapmode onclick='openTestRoomMap("{{=it[i].shortName}}","{{=it[i].latitude}}","{{=it[i].longitude}}")'>
+	            	<div class='operation'>
+	            		<div class='navigation bg-yellow'>
+	            			<img src="../../icon/common/icon_navigation.png" alt="" />
+	            		</div>
+	            	</div>
+	            </div>
+	        </li>
+        {{ } }}
+    </script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var bMap;
+	var page = 1,limit = 10;
+	var load_src = $('#load_src').html();//加载src
+	var msg_src = $('#msg_src').html();//消息提示src
+	var more_src = $('#more_src').html();//更多src
+	var refresh = true;//标记是否是刷新操作
+	var cache;
+	var location_city;//定位城市缓存
+	apiready = function(){
+		bMap = api.require('bMap');
+		cache = api.pageParam.data;
+		goRefrash(40,'#FFFFFF',null,null,function(){
+			refreshList(sortType,sort);
+		});
+		goLoad(function(ret,err){
+			loadList(sortType,sort);
+		});
+		location_city = $api.getStorage('cache_by_app').location_city;
+		api.refreshHeaderLoading();
+	};
+	//swiftLeft();
+	
+	//列表刷新
+	function refreshList(sortType,sort){
+		page = 1;refresh = true;
+		setLoad();
+		init(sortType,sort);
+	}
+	//列表上拉
+	function loadList(sortType,sort){
+		page++;refresh = false;
+		setLoad();
+		init(sortType,sort);
+	}
+	//列表初始化
+	var sortType = 1;//驾校排序种类
+	var sort = 1;//正续还是倒叙 1正续 2倒叙
+	function init(index,value){
+		sortType = index;
+		sort = value;
+		mylocation(function(location_result){//获取当前定位
+			params = {
+	        	sortType:sortType - 0 + 1,
+	        	sort:sort,
+	        	page:page,
+	        	limit:limit
+	        }
+			if(location_result.status){//有定位权限
+		        //驾校传参
+		        params.lng = location_result.lon;
+		        params.lat = location_result.lat;
+			}else{
+				alert_msg('建议开启定位');
+			}
+			if(cache.type == 'two'||cache.type == 'free_apply_two'){
+				params.supportType = '036002';
+			}else if(cache.type == 'three'||cache.type == 'free_apply_three'){
+				params.supportType = '036003';
+			}
+			if(location_city != undefined || location_city != null){
+				//有定位城市那么根据城市去筛选
+				//params.districtCode = location_city.cityCode;
+			}
+			
+	        //console.log('传参'+JSON.stringify(params));
+	        url = 'api/examinationRoom/list';
+	        ajax_Request(url, 'get', 'json', params, function(ret,err){
+	        	console.log('考场列表数据：'+JSON.stringify(ret));
+	        	if(ret){
+	        		if(ret.code == 0&&ret.examinationRoomList.length > 0){
+						var examinationRoom_src = $('#examinationRoom_src').html();
+						if(refresh||$('#examinationRoom').find('.aui-list-item').length == 0){
+							$("#examinationRoom").html(doT.template( examinationRoom_src )( ret.examinationRoomList ));
+						}else{
+							$("#examinationRoom").append(doT.template( examinationRoom_src )( ret.examinationRoomList ));
+						}
+						//如果是考前预约，则左滑动出地图按钮
+						if(cache.from == 'before_exam'){
+							swiftLeft();
+							//openMessage('温馨提示','同一车的考试学员，为防止被解散，必须在同一天内完成预约','确定','','','',{});
+						}
+	        		}else{
+	        			setMsg(refresh?'该地区暂无考场入驻':'暂无更多');
+	        		}
+	        	}else{
+	        		setMsg('服务器繁忙，请稍后再试');
+	        	}
+	        	setTimeout(function(){
+			        api.refreshHeaderLoadDone();
+	        	},300);
+	        });
+		});
+	}
+	
+	//设置页面加载的画面
+	function setLoad(){
+		if(refresh||$('#examinationRoom').find('.aui-list-item').length == 0){//如果是刷新或者之前无数据的下拉刷新，全屏提示
+			$('#load_div').html('');
+			//$("#examinationRoom").html(doT.template( load_src )( null ));
+		}else{
+			setTimeout(function(){
+				$('#load_div').html(doT.template( more_src )( {'msg':'加载更多中...','img':'../../../icon/common/jiazai.gif'} ));
+			},500);
+		}
+	}
+	
+	//设置页面提示信息
+	function setMsg(msg){
+		console.log($('#examinationRoom').find('.aui-list-item').length);
+		if(refresh||$('#examinationRoom').find('.aui-list-item').length == 0){//如果是刷新或者之前无数据的上拉加载，全屏提示
+			setTimeout(function(){
+				$("#examinationRoom").html(doT.template( msg_src )( {'msg':msg} ));
+			},500);
+		}else{//原先已经有数据的情况下
+			setTimeout(function(){
+			    $('#load_div').html(doT.template( more_src )( {'msg':msg,'img':''} ));
+			},500);
+		}
+	}
+	//打开模拟器预约或者实操预约
+	function openExamRoom(e_room_name,id,e){
+		param = {
+			'testCenterName': e_room_name,
+		}
+		onEventWithAttributes('testCenterlListClick', '考场列表点击', param);
+		//如果是考前预约，则打开预约页面
+		if(cache.from == 'before_exam'){
+			cache.e_room_name = e_room_name;
+			cache.e_room_id = id;
+			var winUrl = '';
+			var winName = '';
+			if(cache.type == 'two'){
+				if(cache.role == 'normal'){
+					winName = 'appoint_before_exam_detail_win';
+					winUrl = '../examination/subjectTwo/appoint_before_exam_detail_win.html';
+				}else{
+					winName = 'vip_appoint_before_exam_detail_win';
+					winUrl = '../examination/subjectTwo/vip_appoint_before_exam_detail_win.html';
+				}
+			}else if(cache.type == 'three'){
+				if(cache.role == 'normal'){
+					winName = 'appoint_before_exam_detail_win';
+					winUrl = '../examination/subjectThree/appoint_before_exam_detail_win.html';
+				}else{
+					winName = 'vip_appoint_before_exam_detail_win';
+					winUrl = '../examination/subjectThree/vip_appoint_before_exam_detail_win.html';
+				}
+			}
+			api.openWin({
+		       name: winName,
+		       url: winUrl,
+		       slidBackEnabled:'false',
+		       vScrollBarEnabled:'false',
+		       hScrollBarEnabled:'false',
+		       reload:true,
+		       useWKWebView:false,
+		       pageParam: {
+		           data:cache
+		       }
+		    });
+		}else{
+			$('.aui-media-list-item-inner').removeClass('selected');
+			$(e).addClass('selected');
+			var data = {
+				e_room_name:e_room_name,
+				id:id
+			}
+			sendEvent(cache.action,data);
+			//esc_function('common_exam_sign_up_win','common_exam_sign_up_frm','getExamRoom("'+e_room_name+'","'+id+'")');
+			api.closeDrawerPane();
+		}
+	}
+	
+	//标签加载
+	function getLabelList(tags){
+		var menu = "";
+		if(tags != ''&&tags != undefined&&tags != null){
+			var tagList = tags.split(',');
+			for(var i=0;i<(tagList.length > 3?3:tagList.length);i++){
+				menu += "<li class='tag-style"+i+"'><span>"+getLabelName(tagList[i])+"</span></li>";
+			}
+		}
+		return menu;
+	}
+	
+	/**
+	 * 打开考场区域地图 
+	 */
+	function openTestRoomMap(name,lat,lon){
+		mylocation(function(location_result){//获取当前定位
+			if(location_result.status){//有定位权限
+				params = {
+					to_lon:lon,
+					to_lat:lat,
+					to_name:name
+				}
+				api.openWin({
+			       name: 'common_map_loaction_win',
+			       url: '../common/common_map_loaction_win.html',
+			       slidBackEnabled:'true',
+			       vScrollBarEnabled:'false',
+			       hScrollBarEnabled:'false',
+			       reload:true,
+			       pageParam: {
+			           data:params
+			       }
+			   });
+			}else{
+				alert_msg('未能获取您的定位');
+			}
+		});
+	}
+	
+	//加载左滑动
+	function swiftLeft(){
+		var expansion = null; //是否存在展开的list
+		var container = document.querySelectorAll('.room_list .room_list_div .list_div');
+		for(var i = 0; i < container.length; i++){
+		    var x, y, X, Y, swipeX, swipeY;
+		    container[i].addEventListener('touchstart', function(event) {
+		        x = event.changedTouches[0].pageX;
+		        y = event.changedTouches[0].pageY;
+		        swipeX = true;
+		        swipeY = true;
+		    });
+		    container[i].addEventListener('click', function(event) {
+		        event.preventDefault();
+                this.className = "aui-list-item list_div";    //点击收起
+		    });
+		    container[i].addEventListener('touchmove', function(event){
+		        
+		        X = event.changedTouches[0].pageX;
+		        Y = event.changedTouches[0].pageY;
+		        if(expansion){  //判断是否展开，如果展开则收起
+		            expansion.className = "aui-list-item list_div";
+		        }
+		        // 左右滑动
+		        if(swipeX && Math.abs(X - x) - Math.abs(Y - y) > 0){
+		            // 阻止事件冒泡
+		            event.stopPropagation();
+		            if(X - x > 10){   //右滑
+		                event.preventDefault();
+		                this.className = "aui-list-item list_div";    //右滑收起
+		            }
+		            if(x - X > 10){   //左滑
+		                event.preventDefault();
+		                this.className = "aui-list-item swipeleft";   //左滑展开
+		                expansion = this;
+		            }
+		            swipeY = false;
+		        }
+		        // 上下滑动
+		        if(swipeY && Math.abs(X - x) - Math.abs(Y - y) < 0) {
+		            swipeX = false;
+		        }        
+		    });
+		}
+    }
+</script>
+</html>

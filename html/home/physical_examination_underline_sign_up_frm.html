@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>医院线下预约</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/mobiscroll/normalize3_0_2_min.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/mobiscroll/mobiscroll.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/mobiscroll/mobiscroll_date.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html,body{
+    		background-color: #F5F5F5;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    		font-weight: 700;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+    	#practical_appointment_title{
+    		font-weight:normal;
+    	}
+		.screen{
+		    /* float: left !important;
+		       			margin-right: 0.8rem; */
+		}
+		.screen img{
+			width: 0.8rem;
+    		margin-bottom: -0.05rem;
+		}
+		.active{
+	    	color: #DC251F;
+    		/* border-bottom: solid 2px; */
+	    }
+	    .practical-list{
+    	    background: #FFF;
+		    width: 92%;
+		    margin-left: 4%;
+	    }
+	    .practical-list li{
+	    	height:3rem;
+	    	line-height:3rem;
+	    }
+	    .practical-list-item{
+	    	height:3rem;
+	    	padding: 0rem 0.5rem;
+	    }
+	    .practical-list-item-param{
+    	    float: left;
+    		height:3rem;
+	    }
+	    .practical-list-item-param input{
+	        margin-top: 0.9rem;
+	    }
+	    .c-btn{
+	    	width:10%;
+	    	-webkit-transition: 0.3s ease;
+	    	text-align: left;
+	    }
+	    .dark{
+	    	color:#A0A0A0;
+	    }
+	    .appointment-button{
+	    	
+	    }
+	    .appointment-button span{
+		    color: #0595F2;
+		    padding: 0.2rem 0rem;
+		    border-radius: 0.5rem;
+		    font-weight:bold;
+	    }
+	    .other-item{
+	    	width:100%;
+	    	overflow:hidden;
+    	    -webkit-transition: 0.3s ease;
+    	    float: right;
+	    }
+	    .w-90{
+	    	width:90% !important;
+	    }
+	    .text-r{
+	    	text-align:right;
+	    }
+	    .text-c{
+	    	text-align:center;
+	    }
+	    .text-l{
+	    	text-align:left;
+	    }
+	    .practical-list-item-param font{
+	    	color:#03B4F7;
+	    }
+	    .practical-select{
+	    	
+	    }
+	    .select_practical_title{
+    		font-weight: bold;
+		    text-align: left;
+		    height: 2rem;
+		    line-height: 2rem;
+		    margin: 0.5rem 0rem;
+		    padding-left: 4%;
+		}
+		.select_practical_input{
+		    text-align: left;
+		    height: 2rem;
+	        line-height: 2rem;
+            margin: 0.5rem 0rem;
+		}
+		#appointment-date{
+		    text-align: left;
+		    margin-left: 4%;
+		    width: 92%;
+		    background: #FFFFFF;
+	        padding-left: 1.2rem;
+		}
+		.nav {
+	        height: 100%;
+	        overflow-x: scroll;
+	        overflow-y: hidden;
+	        background-color: #FFFFFF;
+	        /*解决ios上滑动不流畅*/
+	        -webkit-overflow-scrolling: touch;
+	    }
+	    .con {
+	        height: 100%;
+		    display: -webkit-box;
+		    align-items: center;
+	        position: relative;
+	    }
+	    .con>li {
+	        text-align: center;
+		    font-size: 0.8rem;
+		    min-width: 3rem;
+		    list-style: none;
+		    margin: 0rem 0.5rem;
+	    }
+	    .container {
+            height: 2.5rem;
+		    line-height: 2.5rem;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    overflow: hidden;
+	    }
+	    .container ::-webkit-scrollbar {
+	        display: none;
+	    }
+	    .lump{
+	    	background: #F1F1F1;
+		    float: left;
+		    padding: 0rem 1rem;
+		    font-size: 0.8rem;
+		    color: #6F6F6F;
+		    height: 2rem;
+		    border-radius: 5px;
+		    border: solid 1px #F1F1F1;
+		    line-height: 2rem;
+	    }
+	    .lump-active {
+		    color: #FA5552 !important;
+		    border: solid 1px #FA5552 !important;
+		    background: #FCF2F2 !important;
+		}
+		.select_practical_title img{
+		    width: 1rem;
+			margin-bottom: -0.2rem;
+		}
+		.load-src{
+			width: 100%;
+    		display: flex;
+		}
+		.load-src img{
+		    width: 8rem;
+    		margin: auto;
+		}
+		.msg-src{
+			width: 100%;
+			text-align:center;
+			padding-bottom: 6rem;
+		}
+		.msg-src img{
+			width: 6rem;
+    		margin-top: 6rem;
+		}
+		.msg-src span{
+			font-size:0.7rem;
+			color:#767676;
+		}
+    </style>
+</head>
+<body>
+	<section class='practical-select'>
+		<div class="select_practical_title">
+			<img src="../../icon/common/icon_date.png" alt="" />
+			<span>选择预约日期</span>
+	    </div>
+	    <div class="select_practical_input">
+	        <input type="text" id="appointment-date" onchange="selectDate()">
+	    </div>
+	</section>
+	<div class="select_practical_title" style='margin: 2rem 0rem 0rem 0rem;'>
+		<img src="../../icon/common/icon_clock.png" alt="" />
+		<span>选择时间段</span>
+    </div>
+    <div class='practical-list'>
+    	<ul>
+    		<li class='bottom-slide'>
+    			<div class="practical-list-item">
+    				<div class="practical-list-item-param c-btn aui-hide">
+    					
+    				</div>
+    				<div class='other-item w-90'>
+	    				<div class="practical-list-item-param text-l" style="width:36%;">预约时间段</div>
+	    				<div class="practical-list-item-param text-c" style="width:28%;">费用</div>
+	    				<div class="practical-list-item-param text-r" style="width:36%;">状态</div>
+    				</div>
+    			</div>
+    		</li>
+    		<div id='data_list'>
+    			<div class='load-src'>
+		    		<img src="../../icon/common/icon_common_load.gif" alt="" />
+		    	</div>
+		    	<!-- <div class='msg-src'>
+		    		<img src="../../../icon/common/empty.png" alt="" /><br>
+		    		<span>暂无数据</span>
+		    	</div> -->
+    		</div>
+    		<!-- <li>
+    			<div class="practical-list-item dark">
+    				<div class="practical-list-item-param c-btn">
+    					<input class="aui-radio" type="checkbox" name="appointment1" disabled>
+    				</div>
+    				<div class='other-item w-90'>
+    			    				<div class="practical-list-item-param text-l" style="width:36%;">08:00 ~ 09:00</div>
+    			    				<div class="practical-list-item-param text-c" style="width:28%;">50.0</div>
+    			    				<div class="practical-list-item-param text-r" style="width:36%;">已约满</div>
+    				</div>
+    			</div>
+    		</li>
+    		<li class='checkStyle'>
+    			<div class="practical-list-item">
+    				<div class="practical-list-item-param c-btn">
+    					<input class="aui-radio" type="checkbox" name="appointment1" readonly>
+    				</div>
+    				<div class='other-item w-90' tapmode onclick="selectTimeSlot()">
+    			    				<div class="practical-list-item-param text-l" style="width:36%;">09:00 ~ 10:00</div>
+    			    				<div class="practical-list-item-param text-c" style="width:28%;">60.0</div>
+    			    				<div class="practical-list-item-param text-r" style="width:36%;">可预约</div>
+    				</div>
+    			</div>
+    		</li>
+    		<li class='checkStyle'>
+    			<div class="practical-list-item">
+    				<div class="practical-list-item-param c-btn aui-hide">
+    					<input class="aui-radio" type="checkbox" name="appointment2">
+    				</div>
+    				<div class='other-item' tapmode onclick="selectTimeSlot()">
+    			    				<div class="practical-list-item-param text-l" style="width:36%;">10:00 ~ 11:00</div>
+    			    				<div class="practical-list-item-param text-c" style="width:28%;">60.0</div>
+    			    				<div class="practical-list-item-param text-r" style="width:36%;">可预约</div>
+    				</div>
+    			</div>
+    		</li> -->
+    		
+    	</ul>
+    	<div class="aui-btn aui-btn-info aui-btn-block aui-hide" style='margin-bottom:1rem;' onclick="appointBatch()" id="appointment">预约</div>
+    </div>
+    <script type="text/template" charset="utf-8" id='load_src'>
+    	<div class='load-src'>
+	    	<img src="../../icon/common/icon_common_load.gif" alt="" />
+    	</div>
+  	</script>
+    <script type="text/template" charset="utf-8" id='msg_src'>
+    	<div class='msg-src'>
+    		<img src="../../icon/common/empty.png" alt="" /><br>
+    		<span>{{=it.msg}}</span>
+    	</div>
+  	</script>
+    <script type="text/template" charset="utf-8" id='outline_src'>
+    	{{ for(var i=0;i<it.length;i++){ }}
+    	<li class='checkStyle'>
+			{{ if((it[i].orderedCount >= it[i].maxCount)||isTimeout(it[i].startTime,it[i].reservationDate)){ }}
+    		<div class="practical-list-item dark">
+			{{ }else{ }}
+    		<div class="practical-list-item">
+			{{ } }}
+				<div class="practical-list-item-param c-btn">
+					{{ if((it[i].orderedCount < it[i].maxCount)&&!isTimeout(it[i].startTime,it[i].reservationDate)){ }}
+    					<input class="aui-radio" type="radio" name="outline_appointment" value="{{=it[i].id}}">
+					{{ }else{ }}
+						<input class="aui-radio" type="radio" name="outline_appointment" value="{{=it[i].id}}" disabled>
+					{{ } }}
+				</div>
+				{{ if((it[i].orderedCount < it[i].maxCount)&&!isTimeout(it[i].startTime,it[i].reservationDate)){ }}
+					<div class='other-item w-90' tapmode onclick="selectTimeSlot(this,'{{=it[i].id}}')">
+				{{ }else{ }}
+					<div class='other-item w-90'>
+				{{ } }}
+    				<div class="practical-list-item-param text-l" style="width:36%;">{{=it[i].startTime}} ~ {{=it[i].endTime}}</div>
+    				<div class="practical-list-item-param text-c" style="width:28%;">{{=it[i].examinationFee}} 元</div>
+    				<div class="practical-list-item-param text-r" style="width:36%;">
+    					{{ if(it[i].orderedCount >= it[i].maxCount){ }}
+    						已约满
+    					{{ }else if(isTimeout(it[i].startTime,it[i].reservationDate)){ }}
+    						不可预约
+    					{{ }else{ }}
+	    					<font>{{=it[i].orderedCount}}</font>/{{=it[i].maxCount}}
+    					{{ } }}
+    				</div>
+				</div>
+			</div>
+		</li>
+		{{ } }}
+    </script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/mobiscroll/mobile_select.js"></script> 
+<script type="text/javascript" src="../../script/mobiscroll/mobiscroll_date.js"></script> 
+<script type="text/javascript" src="../../script/mobiscroll/mobiscroll.js"></script> 
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var headerPos;
+	var msg_src = $('#msg_src').html();
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		init();
+	}
+	
+	function init(){
+		var startDate = (new Date()).Format('yyyy-MM-dd');//
+		var endDate = (new Date(new Date().getTime() + 3*24*60*60*1000)).Format('yyyy-MM-dd');//3天后
+		$('#appointment-date').val(startDate);
+		
+		mobiscrollDate(startDate,endDate,$('#appointment-date'),'今天');//初始化日期组件
+		
+		getStartDateAppointment(startDate);
+	}
+	
+	/**
+	 * 获取开始日期时候的预约信息 
+	 */
+	function getStartDateAppointment(startDate){
+		params = {
+			hospitalId:cache.hospitalId,
+			reservationDate:startDate,
+			learnerId:getUserId()
+		}
+		url = 'api/offline/list';
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			log('获取的线下预约信息',ret);
+			if(ret){
+				if(ret.code == 0){
+					if(ret.exaOffLineList.length > 0){
+						var outline_src = $('#outline_src').html();
+						$('#data_list').html(doT.template(outline_src)(ret.exaOffLineList));
+						$('.aui-btn-info').removeClass('aui-hide');
+					}else{
+						$('#data_list').html(doT.template(msg_src)({msg:'无线下预约'}));
+						$('.aui-btn-info').addClass('aui-hide');
+					}
+				}else{
+					$('#data_list').html(doT.template(msg_src)({msg:ret.msg}));
+				}
+			}else{
+				alert_msg('服务器故障');
+			}
+		});
+	}
+	
+	//点击预约
+	function appointBatch(){
+		defaultload('提交订单中...');
+		var outline_appointment_id = $('input[type="radio"]:checked').val();
+		if(outline_appointment_id == ''||outline_appointment_id == null){
+			alert_msg('请选择预约时间');
+			api.hideProgress();
+			return;
+		}
+		params = {
+			id:outline_appointment_id,
+			learnerId:getUserId(),
+			orderId:cache.orderId
+		}
+		log('传参',params);
+		url = 'api/offline/insert-order';
+		ajax_Request(url, 'post', 'json', params, function(ret,err){
+			log('返回数据',ret);
+			//坑位占据
+			if(ret){
+				if(ret.code == 0){//占据坑位成功
+					esc_function('physical_examination_underline_sign_up_win','','batch_next("'+outline_appointment_id+'","'+cache.hospitalName+'","'+cache.orderId+'")');
+				}else{
+					api.hideProgress();
+					alert_msg(ret.msg);
+				}
+			}else{
+				api.hideProgress();
+				alert_msg('服务器繁忙，请稍后重试');
+			}
+		});
+	}
+	
+	//选择该时间段
+	function selectTimeSlot(e,id){
+		$(e).parent().find("input[type='radio']").click();
+	}
+	
+	//选择日期
+	function selectDate(){
+		getStartDateAppointment($('#appointment-date').val());
+	}
+	
+</script>
+</html>

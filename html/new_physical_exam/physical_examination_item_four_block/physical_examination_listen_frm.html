@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>体检项目-听力</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/swiper/swiper.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html{
+    		background: transparent;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background: transparent;
+    	}
+    	section{
+    		width:100%;
+    		height:50%;
+    		background:#FFF;
+    	}
+    	footer{
+    		width:50%;
+    		height:50%;
+    		position:fixed;
+    		bottom:0;
+    		right:0;
+    		background:#FFF;
+    	}
+    	.option-item{
+    		width:100%;
+    		height:100%;
+    	}
+    	.option-item-menu{
+    		width: 90%;
+    		height:20%;
+    		margin-left:5%;
+    		margin-bottom:5%;
+    		/*background:#F6F6F6;*/
+    		background:#F4F7F7;
+    		display: flex;
+    		border-radius:5px;
+    		color: #9D9EA7;
+		    /*color: #6F6F6F;*/
+    		border: solid 1px #F6F6F6;
+    	}
+    	.option-item-menu span{
+    		margin:auto;
+    	}
+		.active {
+		    color: #FFFFFF !important;
+		    /*border: solid 1px #90C3E7 !important;*/
+		    /*background: #DDE9F1 !important;*/
+		   background: linear-gradient(to left, #3F86FE, #64ADF6) !important;
+		}
+		.option-item-menu-next{
+		    width: 90%;
+		    height: 15%;
+		    left: 5%;
+		    bottom: 5%;
+		    /*background: linear-gradient(to left, #03B4F7 , #90DBF7);*/
+		   background: linear-gradient(to left, #3F86FE, #64ADF6) !important;
+		    color: #FFF;
+		    display: flex;
+		    border-radius: 5px;
+		    position: absolute;
+		}
+		.option-item-menu-next span{
+    		margin:auto;
+    	}
+		.option-item-menu-next:active{
+			background:#90DBF7;
+		}
+		.content-item{
+		    width: 95%;
+		    height: 80%;
+    		margin: 2.5%;
+    		display:flex;
+		}
+		.content-item img{
+			margin:auto;
+			height:4rem;
+		}
+		.content-title{
+		    height: 15%;
+		    width: 95%;
+		    margin-left: 2.5%;
+		    font-size:0.85rem;
+		}
+		.option-item-menus{
+			height:100%;
+		}
+		.play_icon{
+			margin: auto;
+		    width: 7rem;
+		    height: 7rem;
+		    text-align: center;
+		    line-height: 7rem;
+		    border-radius: 100%;
+		    border: solid 1px #707070;
+		    color: #707070;
+		    font-weight: bold;
+		    font-size: 1rem;
+		}
+    </style>
+	</head>
+	<body>
+		<section>
+			<div class="swiper-container" style="height:100%;" id="swiper_question">
+				<div class="swiper-wrapper" id="question_list">
+					<!-- <div class="swiper-slide swiper-no-swiping">
+		    		<div class='content-item'>
+		    			<div class='play_icon' tapmode onclick="openVoice(this)">点击播放</div>
+		    				    		<img src="../../../icon/subject/icon_voice.png" alt="" />
+		    		</div>
+		    		<div class='content-title'>
+		    			<span>问题：语音中说了什么1</span>
+		    		</div>
+		    	</div> -->
+				</div>
+			</div>
+		</section>
+		<footer>
+			<div class='option-item' id='option_items_list'>
+				<!-- <div class="swiper-container" style="height:80%;" id="swiper_answer">
+		    	<div class="swiper-wrapper" id="">
+		    		<div class="swiper-slide swiper-no-swiping">
+							<div class='option-item-menus'>
+								<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项A：</span><span>28</span></div>
+								<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项B：</span><span>18</span></div>
+								<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项C：</span><span>38</span></div>
+								<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项D：</span><span>48</span></div>
+							</div>
+						</div>
+		    	</div>
+		    </div>
+			<div class='option-item-menu-next' tapmode onclick="clickNext()"><span>确定无误，下一题</span></div> -->
+			</div>
+			<audio src="" loop="loop" id="fry_audio" autoplay="autoplay"></audio>
+		</footer>
+		<script type="text/template" charset="utf-8" id='question_list_src'>
+			{{ for(var i=0;i<it.length;i++){ }}
+			<div class="swiper-slide swiper-no-swiping">
+	    		<div class='content-item'>
+	    			<div class='play_icon palyVoive{{=i}}' tapmode onclick="openVoice('{{=i}}','{{=it[i].voice}}')">点击播放</div>
+	    		</div>
+	    		<div class='content-title'>
+	    			{{if(it[i].voiceType == 1){ }}
+		    			<span>{{=it[i].subject}} （左耳）</span>
+	    			{{ }else{ }}
+		    			<span>{{=it[i].subject}} （右耳）</span>
+	    			{{ } }}
+	    		</div>
+	    	</div>
+		{{ } }}
+	</script>
+		<script type="text/template" charset="utf-8" id='options_src'>
+			<div class="swiper-container" style="height:80%;" id="swiper_answer">
+	    	<div class="swiper-wrapper">
+				{{ for(var i=0;i<it.length;i++){ }}
+					<div class="swiper-slide swiper-no-swiping">
+						<div class='option-item-menus' id="answer_options{{=(i - 0 + 1)}}">
+							<!-- 题目ID -->
+							<div class='question-id aui-hide'>{{=it[i].id}}</div>
+							<!-- 正确答案 -->
+							<div class='right-answer aui-hide'>{{=it[i].answerRight}}</div>
+							{{ if(it[i].answerA != ''){ }}
+								<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项A：</span><span><font>{{=it[i].answerA}}</font></span></div>
+							{{ } }}
+							{{ if(it[i].answerB != ''){ }}
+								<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项B：</span><span><font>{{=it[i].answerB}}</font></span></div>
+							{{ } }}
+							{{ if(it[i].answerC != ''){ }}
+								<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项C：</span><span><font>{{=it[i].answerC}}</font></span></div>
+							{{ } }}
+							<!--{{ if(it[i].answerD != ''){ }}
+								<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项D：</span><span><font>{{=it[i].answerD}}</font></span></div>
+							{{ } }}-->
+						</div>
+		    		</div>
+				{{ } }}
+			</div>
+	    </div>
+		<div class='option-item-menu-next' onclick="clickNext('{{=it.length}}')"><span>确定，下一题</span></div>
+	</script>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/swiper/swiper.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var swiper_question;
+		var swiper_answer;
+		var examResult; //用户在体检过程中产生的答案
+		// var audioStreamer;//音频播放
+		var voiceList; //获取播放信息
+		var cache;
+		var videoBlock;
+		apiready = function() {
+			api.parseTapmode();
+			// examResult = api.pageParam;
+
+			cache = api.pageParam.examResult;
+			videoBlock = api.pageParam.videoBlock;
+			log('打开听力的数据', cache)
+			log('打开听力的数据', videoBlock)
+			examResult = {
+				exaId: cache.orderId, //体检订单
+				licenseType: cache.licenseType, //准驾类型
+				videoNodeList: [], //视频节点
+				answerList: [], //用户答题记录
+				headerH: cache.headerH,
+				videoId: cache.orderId + '-1',
+				type: '1'
+			}
+			esc_function('physical_examination_video_win', '', 'openFaceKuang()');
+			// audioStreamer = api.require('audioStreamer');
+			console.log('听力检测收到的数据' + JSON.stringify(examResult));
+			setTimeout(function(){
+				openMessage_i_second('听力信息采集', '', 'listen', '准备完毕', '', 'init()', '', null);
+			},100)
+		}
+
+		function init() {
+			//获取辨色力接口
+			// open_load_lower();
+			defaultload("获取题目中");
+
+			url = 'api/item-bank/list-item-bank-for-hearing-random';
+			params = {
+				listSize: 2
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				api.hideProgress();
+				console.log('获取听力题' + JSON.stringify(ret));
+				if (ret && ret.code == 0) {
+					if (ret.listData.length == 0) {
+						isSure('温馨提示', '未找到听力题库，请重试', '重试', '取消', function() {
+							init();
+						}, function() {});
+					} else {
+						var question_list_src = $('#question_list_src').html();
+						$('#question_list').html(doT.template(question_list_src)(ret.listData));
+						var options_src = $('#options_src').html();
+						$('#option_items_list').html(doT.template(options_src)(ret.listData));
+						voiceList = ret.listData;
+						api.parseTapmode();
+						openVoice(0, ret.listData[0].voice); //打开第一题时播放
+						loadSwiper();
+						// esc_function('physical_examination_video_win','','startRecorder()');	
+					}
+				} else {
+					alert_msg('获取视力题失败');
+				}
+				close_load();
+			});
+		}
+
+		//初始化轮播
+		function loadSwiper() {
+			swiper_question = new Swiper("#swiper_question", {});
+			swiper_answer = new Swiper("#swiper_answer", {});
+		}
+
+		var i = 1;
+		var answerResult;
+		var errorNum = 0; //错误题数
+		// var fry_audio=$('#fry_audio');
+		// var fry_audio = $("#audio")[0];  
+		var fry_audio = document.getElementById('fry_audio');
+		// myAuto.pause();
+		function clickNext(questionListLength) {
+			// audioStreamer.stop();
+			//		$('.voice-play').remove();
+			//		$('.play_icon').removeClass('aui-hide');
+			defaultload('获取信息中');
+			var active_answer_options = $('#answer_options' + i).find('.option-item-menu.active');
+			if (questionListLength == 0) {
+				closedefaultload()
+				console.log('进来了，介绍了')
+				sendEvent('exam_item_result', examResult);
+				return;
+			}
+			if (active_answer_options.length == 0) {
+				closedefaultload()
+				alert_msg('请选择答案');
+				return;
+			}
+			answerResult = {
+				answer: active_answer_options.parent().find('.right-answer').html(),
+				exaQuestionsId: active_answer_options.parent().find('.question-id').html(),
+				type: 3, //1辨色力 2视力 3听力
+				userAnswer: active_answer_options.find('font').html()
+			}
+
+			if (answerResult.answer != answerResult.userAnswer) {
+				//记录错误题数
+				errorNum++;
+			}
+
+			//		if(errorNum >= 2){
+			//			//错两题以上在线体检直接结束
+			//			openMessage_i('请注意','&emsp;听力信息采集未通过,信息采集自动终止,如有需要,请重新进行体检。','好的','','shutDownExamination()','',null);return;
+			////			alert('您累计做错听力题目2次，视频体检提前结束');shutDownExamination();return;
+			//		}
+			//console.log('一条用户产生的数据:'+JSON.stringify(answerResult));
+			examResult.answerList.push(answerResult);
+
+			if (i == (questionListLength - 1)) {
+				$('.option-item-menu-next').find('span').html('确定，完成');
+			} else if (i == questionListLength) {
+				console.log('听力项目产生的数据:' + JSON.stringify(examResult));
+				fry_audio.paused;
+				// sendEvent('exam_item_result',examResult);
+				closedefaultload()
+				if (videoBlock == 0) {
+					sendEvent('exam_item_finish_block', examResult);
+				} else {
+					sendEvent('exam_item_finish', examResult);
+				}
+
+				return;
+			}
+			swiper_question.slideTo(i, 500, false);
+			swiper_answer.slideTo(i, 500, false);
+			log('voiceList', voiceList);
+			openVoice(i, voiceList[i].voice);
+			// console.log("这里是听力的题目的第几题---------------" + i)
+			i++;
+			closedefaultload();
+		}
+
+		function openVoice(e, voicePath) {
+			// audioStreamer.stop();
+			$('.palyVoive' + e).addClass('aui-hide');
+			log('voicePath', voicePath);
+			$('.palyVoive' + e).parent().append(
+				'<img src="../../../image/gif/icon_voice_play_bule.gif" alt="" class="voice-play"/>');
+
+			$('#fry_audio').attr('src', file_load_url + voicePath);
+			// var fry_audio=$('#fry_audio');
+			// fry_audio.paused;
+			// audioStreamer.openPlayer({
+			// 	path:file_load_url + voicePath,
+			//     //path: 'http://7xisq1.com1.z0.glb.clouddn.com/apicloud/0d0b81b8bd5ab81bda9ca54267eb9b98.mp3',
+			// }, function(ret) {
+			//     if (ret.status) {
+			//         console.log('打开音频成功');		     
+			//         audioStreamer.setLoop({loop:true});//设置循环
+			//       	audioStreamer.setVolume({volume: 0.8});//设置音量
+			//     }else{
+			//     	console.log('音频打开失败'+JSON.stringify(err));
+			//     }
+			// });
+		}
+
+		/**
+		 * 结束在线体检 
+		 */
+		function shutDownExamination() {
+			esc_function('physical_examination_video_win', '', 'closeVideoRecode()');
+		}
+
+		//选择选项
+		function selectOption(o) {
+			$('.option-item-menu').each(function(index, e) {
+				if ($(o).is($(e))) {
+					$(e).addClass('active');
+				} else {
+					$(e).removeClass('active');
+				}
+			});
+		}
+
+		function openMessage_i(title, content, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+			api.openFrame({
+				name: 'common_alert',
+				url: '../../common/common_alert.html',
+				bgColor: 'rgba(0,0,0,0.4)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					title: title,
+					content: content,
+					sureButton: sureButton,
+					sureFunc: sureFunc,
+					cancelButton: cancelButton,
+					cancelFunc: cancelFunc,
+					winName: api.winName,
+					frameName: api.frameName,
+					params: params
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+		//打开通用弹出框
+		//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+		function openMessage_i_second(title, content, type, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+			api.openFrame({
+				name: 'common_alert_second',
+				url: '../../common/common_alert_second.html',
+				bgColor: 'rgba(0,0,0,0.4)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					title: title,
+					content: content,
+					type: type,
+					sureButton: sureButton,
+					sureFunc: sureFunc,
+					cancelButton: cancelButton,
+					cancelFunc: cancelFunc,
+					winName: api.winName,
+					frameName: api.frameName,
+					params: params
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+	</script>
+</html>

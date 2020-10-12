@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>分享页面</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background: transparent;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background: transparent;
+    	}
+    	.share{
+    		position: fixed;
+    		bottom: 0;
+    	}
+    	.daoh{
+		    height: 1.5rem;
+    		margin: 0 auto;
+    	}
+    	.aui-grid [class*=aui-col-] {
+		    display: table-cell;
+		    position: relative;
+		    text-align: center;
+		    vertical-align: middle;
+		    padding: 0.5rem 0;
+		}
+		.shadow{
+		    position: absolute;
+		    bottom: 0rem;
+		    top: 0rem;
+		    width: 100%;
+		}
+		.aui-grid [class*=aui-col-xs-]:active {
+		    background-color: #FFFFFF;
+		}
+		.explain-header{
+			height: 2rem;
+		    line-height: 2rem;
+		    text-align: center;
+		    background:#FFF;
+	        margin-bottom: 0.5px;
+		}
+		.explain-header:after{
+			content: '';
+		    height: 1px;
+		    background-color: #dddddd;
+		    display: block;
+		    -webkit-transform: scaleY(0.5);
+		    transform: scaleY(0.5);
+		    -webkit-transform-origin: 50% 100%;
+    		transform-origin: 50% 100%;
+		}
+    </style>
+</head>
+<body>
+	<div class="shadow" tapmode onclick="closeShadow()"></div>
+	<div class='share'>
+		<div class='explain-header'>举报</div>
+		<section class="aui-grid">
+	        <div class="aui-row">
+	            <div class="aui-col-xs-4" tapmode onclick="shareFrinds()" id="shareFriend">
+	                <img src="../../icon/common/icon_wechat.png" class="daoh"/>
+	                <div class="aui-grid-label mt">微信好友</div>
+	            </div>
+	            <div class="aui-col-xs-4" tapmode onclick="shareCircle()" id="shareCercle">
+	            	<img src="../../icon/common/icon_friend.png" class="daoh"/>
+	            	<div class="aui-grid-label mt">朋友圈</div>
+	            </div>
+	            <div class="aui-col-xs-4" tapmode onclick="report()" id="report">
+	                <img src="../../icon/common/icon_pay_error.png" class="daoh"/>
+	                <div class="aui-grid-label mt">举报</div>
+	            </div>
+	        </div>
+	    </section>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var path;
+	var cache;
+	var shareData;
+	var session;
+	var timeline;
+	var forumId;//社区详情ID
+	var type; //类型
+	var contentUrl;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		log("分享:",JSON.stringify(cache) )
+		shareData = cache.shareData;
+		forumId = cache.forumId;
+		type = cache.type;
+		console.log(JSON.stringify(shareData));
+		if(type == "community"){
+			$("#report").css("display","block");
+			$("#shareFriend").css("display","none");
+			$("#shareCercle").css("display","none");
+			$(".explain-header").html("举报");
+		}else{
+			$("#report").css("display","none");
+			$("#shareFriend").css("display","block");
+			$("#shareCercle").css("display","block");
+			$(".explain-header").html("分享到");
+		}
+		contentUrl = shareData.contentUrl;
+	}
+	//入参 {shareData:"web",text:"aaaaaaaa",contentUrl:"http://baidu.com",title:"帅的一批"}
+	//text,contentUrl选填一个 ;其他必填
+	function shareFrinds(){
+		session = "session"
+		shareType(shareData.shareData,session,shareData.text,contentUrl,shareData.title)
+	}
+	
+	function shareCircle(){
+		timeline = "timeline"
+		shareType(shareData.shareData,timeline,shareData.text,contentUrl,shareData.title)
+	}
+	
+	function shareType(shareData,difference,text,contentUrl,title){
+		// shareData :区分分享内容,difference:区分会话和朋友圈,text:文本内容,contentUrl:链接,title:标题
+		var apiKey = "wx7791feb5b9c0b84e"
+		var wxPlus = api.require('wxPlus');
+		var	sharetext = shareData;
+	
+			switch(sharetext){
+				case 'text': //分享文本
+					wxPlus.shareText({
+					    apiKey: apiKey,
+					    scene: difference,
+					    text: text
+					}, function(ret, err) {
+					    if (ret.status) {
+					        alert('分享成功'); 
+					    } else {
+					        alert(err.code);
+					    }
+					});
+					break;
+				case 'image': //分享图片
+					wxPlus.shareImage({
+						apiKey: apiKey,
+						scene: difference,
+						// thumb: 'widget://a.jpg',
+						contentUrl: contentUrl
+						// 'widget://b.jpg'
+					}, function(ret, err) {
+						if (ret.status) {
+							alert('分享成功');
+						} else {
+							alert(err.code);
+						}
+					});
+					break;
+				case 'music': //分享音乐
+					wxPlus.shareMusic({
+						apiKey: apiKey,
+						scene: difference,
+						title: title,
+						// description: '分享内容的描述',
+						// thumb: 'widget://a.jpg',
+						contentUrl: contentUrl
+						// 'http://docs.apicloud.com/test/m.mp3'
+					}, function(ret, err) {
+						if (ret.status) {
+							alert('分享成功');
+						} else {
+							alert(err.code);
+						}
+					});
+					break;
+				case 'video': //分享视频
+					wxPlus.shareVideo({
+						apiKey: apiKey,
+						scene: difference,
+						title: title,
+						// description: '分享内容的描述',
+						// thumb: 'widget://a.jpg',
+						contentUrl: contentUrl
+						// 'http://resource.apicloud.com/video/apicloud.mp4'
+					}, function(ret, err) {
+						if (ret.status) {
+							alert('分享成功');
+						} else {
+							alert(err.code);
+						}
+					});
+					break;
+				case 'web': //分享链接
+					wxPlus.shareWebpage({
+						apiKey: apiKey,
+						scene: difference,
+						title: title,
+						description: text,
+						thumb: 'widget://icon/app/app_logo.png',
+						contentUrl: contentUrl
+						// 'http://baidu.com'
+					}, function(ret, err) {
+						if (ret.status) {
+							alert('分享成功');
+						} else {
+							alert(err.code);
+						}
+					});
+			}
+		
+	}
+	
+	//举报
+	function report(){
+		openReport(forumId);
+		api.closeFrame({
+			name:'common_share'
+		});
+		api.closeFrame({
+			name:'common_share_shadow'
+		});
+	}
+	
+	function closeWin(){
+		api.closeWin({
+        });
+	}
+	function closeShadow(){
+		esc_function(shareData.winName,'common_share_shadow','closeShadow()');
+		api.closeFrame({
+			name:'common_share'
+        });
+	}
+	
+</script>
+</html>

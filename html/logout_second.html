@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>账户设置</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../css/common/common.css" />
+    <style>
+    	html{
+    		background: #F5F5F5;
+    		height: 100%;
+    		display:flex;
+    	}
+    	body{
+    		background: #F5F5F5;
+			margin:auto;
+    	}
+    	.aui-list .aui-list-item-title {
+		    font-size: 0.8rem;
+		    position: relative;
+		    width: 50%;
+		    color: #212121;
+		    border-radius: 2rem;
+		}
+		input::-webkit-input-placeholder{
+			font-size:0.7rem;
+			font-family:微软雅黑
+		}
+		.aui-list .aui-list-item-right, .aui-list-item-title-row em {
+		    max-width: 50%;
+		    position: relative;
+		    color: #3F86FE;
+		    margin-left: 0.25rem;
+		    font-size: 0.7rem;
+		}
+		.aui-content{
+			width: 90%;
+		    font-size: 0.9rem;
+		    margin: 0 auto;
+		    margin-left: 5%;
+		    position: absolute;
+		    top: 0;
+		}
+		.aui-list-item{
+			border-radius: 0.5rem;
+		}
+	
+		.aui-btn-block {
+		    display: block;
+		    width: 90%;
+		    padding: 0.4rem 0;
+		    font-size: 0.8rem;
+		    margin: 0 auto;
+		    float: left;
+		    margin-left: 5%;
+		}
+		.aui-btn-info {
+		    color: #ffffff !important;
+		    background: linear-gradient(to left, #3F86FE , #64ADF6) !important;
+		    border-radius: 2rem;
+		}
+
+		.aui-list.aui-list-in .aui-list-item:last-child > .aui-list-item-inner:after {
+		    height: 1px;
+		}
+
+		footer{
+		    overflow: hidden;
+		}
+		.aui-list .aui-list-item-label-captions {
+			font-size: 0.8rem;
+		    padding-top: 0.85rem;
+		}
+		.aui-list .aui-list-item-label-icon {
+		    width: 1.5rem;
+		    padding-right: 0rem;
+		}
+		
+		input::-webkit-input-placeholder{
+			font-size: 0.8rem;
+			font-family:微软雅黑;
+			color:#D5D5D5;
+		}
+		
+		input{
+			font-size:0.8rem !important;
+		}
+		
+		.aui-btn:active {
+	        color: #90DBF7;
+		    background-color: #FFF;
+		}
+		
+		#cn{
+			font-size:0.8rem;
+		}
+
+    </style>
+</head>
+<body>
+	<div class="aui-content aui-margin-b-15">
+	    <ul class="aui-list aui-list-in">
+	    	<li class="aui-list-item" style="background: #F5F5F5">
+		    	<div class="aui-list-item-label-captions">
+	        		手机号码
+	            </div>
+	    	</li>
+	        <li class="aui-list-item" id="tel" >
+	            <div class="aui-list-item-label-icon">
+	                <i class="aui-iconfont aui-icon-mobile"></i>
+	            </div>
+	            <div class="aui-list-item-inner">
+	            	<div class="aui-list-item-title">
+		                <input type="tel" maxlength="11" placeholder="请输入手机号" id="account" readonly="readonly"/>
+	            	</div>
+	            </div>
+	        </li>
+	        <li class="aui-list-item" style="background: #F5F5F5">
+		    	<div class="aui-list-item-label-captions">
+	        		短信验证码
+	            </div>
+	    	</li>
+	        <li class="aui-list-item" id="pcd" >
+	            <div class="aui-list-item-label-icon">
+	                <i class="aui-iconfont aui-icon-mail"></i>
+	            </div>
+	            <div class="aui-list-item-inner">
+	            	<div class="aui-list-item-title">
+		                <input type="tel" maxlength="6" placeholder="六位验证码" id="postcode"/>
+	            	</div>
+	                <div class="aui-list-item-right">
+	                    <span id="cn" onclick="getMessage()">点击发送</span>
+	                </div>
+	            </div>
+	        </li>
+	    </ul>
+	    <div class="aui-btn aui-btn-info aui-btn-block" id="logout" tapmode onclick="logout()">申请注销</div>
+	</div>
+	<footer>
+		
+	</footer>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var phone;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		
+		if(islogin()){
+			$('#account').val($api.getStorage('cache_by_account').cache_account.account);
+		}else{
+			$('#account').val(cache.data.phone);
+			$("#account").removeAttr("readonly");
+		}
+	};
+
+	//input 聚焦失焦
+	$telhtml = $("<style>#tel::after{background-color:#1E8DD8;}</style>");
+	$pcdhtml = $("<style>#pcd::after{background-color:#1E8DD8;}</style>");
+	$tel = $("<style>#tel::after{background-color:#ff0000;}</style>");
+	$pcd = $("<style>#pcd::after{background-color:#ff0000;}</style>");
+	
+	$("input[type='tel']").focus(function () {
+		$(this).parent().parent().parent().append($telhtml);
+	}).blur(function () { 
+		$telhtml.remove();
+	})
+	$("input[type='text']").focus(function () {
+		$(this).parent().parent().parent().append($pcdhtml);
+	}).blur(function () { 
+		$pcdhtml.remove();
+	})
+
+
+	//点击发送验证码
+	function getMessage(){
+		if(!isPhoneAvailable($('#account').val())){
+			alert_msg('请输入正确的手机号');
+			$("#tel").append($tel);
+			return;
+		}
+		open_load_up();
+		params = {
+			telephone:$('#account').val(),
+			type:'logout'
+		}
+		sendMessage(params, function(ret,err){
+			close_load();
+			if(ret){
+				if(ret.code == 0){
+					timedCount('点击发送');
+					alert_msg('发送成功');
+				}else{
+					alert_msg(ret.msg);
+				}
+				$tel.remove();
+			}else{
+				alert_msg("发送验证码失败"+JSON.stringify(err));
+			}
+		});
+	}
+
+	//点击确定
+	function logout(){
+		if(!isPhoneAvailable($('#account').val())){
+			alert_msg('请输入正确的手机号');
+			$("#tel").append($tel);
+			return;
+		}
+    	if(!isCodeAvailable($('#postcode').val())){
+			alert_msg('请输入验证码');
+			$("#pcd").append($pcd);
+			return;
+		}
+
+		url = 'api/learner/logout';
+		params = {
+			learner:{
+				account:$('#account').val()
+			},
+			verificationCode:$('#postcode').val()
+		}
+		ajax_Request(url, 'post', 'json', params, function(ret,err){
+			console.log("注销申请"+JSON.stringify(ret));
+			if(ret){
+				if(ret.code == 0){
+		    		$api.setStorage('cache_by_account','');//清除与账户相关的缓存
+		    		$api.setStorage('islogin',false);
+		    		esc_function('index','','bindJpush()');//清除极光推送账号
+		    		esc_function('index','','aliPush_init()');//绑定阿里推送账号
+			  		api.openWin({
+						name: 'logout_success',
+						url: 'logout_success.html',
+						slidBackEnabled:'true',
+						vScrollBarEnabled:'false',
+						hScrollBarEnabled:'false',
+						reload:true,
+						pageParam: {
+							data:null
+						}
+					});
+		            sendEvent('exit_action');
+				}
+				alert_msg(ret.msg);
+			}else{
+				console.log("注销失败"+JSON.stringify(err));
+				$tel.remove();
+				$pcd.remove();
+			}
+		});
+	}
+
+	//返回
+	function back(){
+		api.closeWin({});
+	}
+</script>
+</html>

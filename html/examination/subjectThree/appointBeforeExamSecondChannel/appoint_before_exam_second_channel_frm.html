@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>第二通道-frm</title>
+	<link rel="stylesheet" type="text/css" href="../../../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../../../css/aui/aui_2_0.css" />
+	<link rel="stylesheet" type="text/css" href="../../../../css/mobiscroll/normalize3_0_2_min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../css/mobiscroll/mobiscroll.css" />
+	<link rel="stylesheet" type="text/css" href="../../../../css/mobiscroll/mobiscroll_date.css"/>
+	<link rel="stylesheet" type="text/css" href="../../../../css/common/common.css" />
+	<style>
+		.bold{
+			font-weight:bold;
+		}
+		.student-list{
+			margin-bottom:0.3rem;
+		}
+		.delete-img{
+		    position: absolute;
+			bottom: 0.5rem;
+			right: 1rem;
+		}
+		.delete-img img{
+		    width: 1rem;
+		}
+		.add_button{
+		    width: 1rem;
+		    height: 1rem;
+		    margin-top: 0.75rem;
+		    position: absolute;
+		    right: 0.5rem;
+		}
+		.carNum{
+			padding-right: 1rem;
+			width:80% !important;
+		}
+		.aui-tips {
+		    padding: 0 0.75rem;
+		    width: 100%;
+		    z-index: 99;
+		    height: 1.9rem;
+		    line-height: 1.9rem;
+		    position: relative;
+		    background-color: #FFE9D6;
+		    color: #FF9036;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		    -webkit-align-items: center;
+		    align-items: center;
+		    opacity: 0.9;
+		}
+		.sch_info{
+            font-size: 0.6rem;
+		    height: auto;
+		    line-height: 1.1rem;
+		    width: 100%;
+		    overflow: hidden;
+		    color: #DC251F;
+		    background: #F5D3D3;
+		    padding: 0.2rem 0rem 0.2rem 0.75rem;
+		}
+		.d-left{
+			float:left;
+			width:50%;
+		}
+		.d-right{
+			float:left;
+			width:50%;
+		}
+		ul,ol{
+				list-style: none;
+			}
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			#container{
+				width: 100%;
+				height: 100%;
+				padding-top: 50px;
+			}
+			#carLicenseBox{
+				width: 80%;
+				/*height: 100%;*/
+				border-radius: 10px;
+				margin: 0 auto;
+				padding-bottom: 20px;
+				overflow: hidden;
+				background-color: #ffffff;
+			}
+			#carLicenseBox .carLicenseTitle{
+				width: 100%;
+				height: 70px;
+				background-color: #fff;
+				text-align: center;
+				line-height: 70px;
+				color: black;
+				font-size: 18px;
+			}
+			#carLicenseBox .carLicenseMain{
+				width: 100%;
+				height: 160px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+			}
+			#carLicenseBox .carLicenseMain ul{
+				width: 100%;
+				height: 36px;
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: center;
+			}
+			#carLicenseBox .carLicenseMain ul li{
+				width: 34px;
+				height: 40px;
+				border: 1px solid #cccccc;
+				text-align: center;
+				line-height: 40px;
+				float: left;
+			}
+			#carLicenseBox .carLicenseMain ul li:last-of-type{
+				margin: 0;
+			}
+			#carLicenseBox .carLicenseMain ul li.active{
+				border: 2px solid #f3483e;
+			}
+			#carLicenseBox .carLicenseMain ul li.xinnengyuan{
+				background: url(img/xinnengyuan.png) no-repeat center;
+				background-size: 100% 100%;
+				border: 2px dashed #CCCCCC;
+			}
+			#carLicenseBox .submitBtn{
+				width: 80%;
+				height: 45px;
+				background-color: #f3483e;
+				border: none;
+				border-radius: 6px;
+				text-align: center;
+				line-height: 45px;
+				color: white;
+				font-size: 20px;
+				margin-left: 10%;
+			}
+			#keyboardBox{
+				width: 100%;
+				position: fixed;
+				bottom: 0px;
+				left: 0px;
+				z-index: 999;
+			}
+			#keyboardBox .provienceBox,#keyboardBox .textBox{
+				width: 100%;
+				background-color: #D0D5D9;
+				padding-top: 10px;
+				padding-bottom: 4px;
+			}
+			#keyboardBox .provienceBox ul,#keyboardBox .textBox ul{
+				width: 100%;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-around;
+				align-items: center;
+				margin-top: 10px;
+			}
+			#keyboardBox .provienceBox ul:first-of-type, #keyboardBox .textBox ul:first-of-type{
+				margin-top: 0px;
+			}
+			#keyboardBox .provienceBox ul li,#keyboardBox .textBox ul li{
+				width: 30px;
+				height: 43px;
+				border-radius: 6px;
+				text-align: center;
+				line-height: 43px;
+				float: left;
+				background-color: #ffffff;
+			}
+			#keyboardBox .textBox{
+				display: none;
+			}
+			#keyboardBox .provienceBox ul .changeContentBtn,#keyboardBox .provienceBox ul .deleteBtn,#keyboardBox .textBox ul .changeContentBtn,#keyboardBox .textBox ul .deleteBtn{
+				width: 40px;
+				height: 40px;
+				background-color: #ACB3BB;
+				text-align: center;
+				line-height: 40px;
+			}
+			#keyboardBox .provienceBox ul .deleteBtn img,#keyboardBox .textBox ul .deleteBtn img{
+				width: 23px;
+				height: 16px;
+				margin: 0px;
+				margin-top: 12px;
+			}
+
+			.img-jpg{
+				width: 80%;
+				margin: 0 auto;
+			}
+			.img-jpg img{
+				width: 100%;
+			}
+			.textBox ul li:click{
+				background: #0088CC;
+			}
+			 @keyframes scaleDraw {  /*定义关键帧、scaleDrew是需要绑定到选择器的关键帧名称*/
+			0%{
+				transform: scale(1);  /*开始为原始大小*/
+			}
+			25%{
+				transform: scale(1.3); /*放大1.1倍*/
+			}
+			50%{
+				transform: scale(1.3);
+			}
+			100%{
+				transform: scale(1);
+			}
+		}
+		.activeKey{
+			background-color: #ACB3BB !important;
+			/*background: #999 !important;*/
+			opacity: 0.8;
+			color: #fff;
+			-webkit-animation-name: scaleDraw; /*关键帧名称*/
+			-webkit-animation-timing-function: ease-in-out; /*动画的速度曲线*/
+			-webkit-animation-duration: 0.2s; /*动画所花费的时间*/
+		}
+		.close{
+			width:1.9rem;
+			height:1.5rem;
+			line-height:1.5rem;
+	
+			position: absolute;
+			border-radius:0.3rem;
+			text-align:center;
+			font-size:0.7rem;
+			right: 0.4rem;
+		}
+		.delete{
+			width:1.9rem;
+			height:1.5rem;
+			line-height:1.5rem;
+			position: absolute;
+			border-radius:0.3rem;
+			text-align:center;
+			font-size:0.7rem;
+			left: 0.4rem;
+		}
+		.select_practical_title{
+		    font-weight: bold;
+		    text-align: left;
+		    height: 1.7rem;
+		    line-height: 1.7rem;
+		    margin-top: 0.5rem;
+		    padding-left: 4%;
+		}
+		#appointment-date{
+			text-align: left;
+		    width: 100%;
+		    background: #FFFFFF;
+		    padding-left: 1.2rem;
+		}
+		.select_practical_title img{
+		    width: 1rem;
+			margin-bottom: -0.2rem;
+		}
+		.nav {
+	        height: 100%;
+	        overflow-x: scroll;
+	        overflow-y: hidden;
+	        background-color: #FFFFFF;
+	        /*解决ios上滑动不流畅*/
+	        -webkit-overflow-scrolling: touch;
+	    }
+	    .con {
+	        height: 100%;
+		    display: -webkit-box;
+		    align-items: center;
+	        position: relative;
+	    }
+	    .con>li {
+	        text-align: center;
+		    font-size: 0.8rem;
+		    min-width: 3rem;
+		    list-style: none;
+		    margin: 0rem 0.5rem;
+		    margin-top:0.5rem;
+	    }
+	    .container {
+            height: 2.5rem;
+		    line-height: 2.5rem;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    overflow: hidden;
+	    }
+	    .container ::-webkit-scrollbar {
+	        display: none;
+	    }
+	    .lump{
+		    float: left;
+		    padding: 0rem 1rem;
+		    font-size: 0.8rem;
+		    color: #6F6F6F;
+		    height: 2rem;
+		    border-radius: 5px;
+		    border: solid 1px #F1F1F1;
+		    line-height: 2rem;
+	    }
+	    .lump-active {
+		    color: #72A8C9 !important;
+		    border: solid 1px #72A8C9 !important;
+		    background: #DDEBFF !important;
+		}
+		.list_bar .list_bar_inner {
+		    position: absolute;
+		    min-width: 0rem;
+		    height: 100%;
+		    top: 0;
+		    left: 50%;
+		    background-color: #1E8DD8;
+		    -webkit-transform: translateX(-50%);
+		    transform: translateX(-50%);
+		    -webkit-transition: 0.3s ease;
+		}
+		.rights{
+			position:absolute;
+			margin-top:0.5rem;
+			z-index: 999;
+			right:0rem;
+			padding:0 0.3rem;
+			width:2.6rem;
+			line-height:0.7rem;
+			background: #FFFFFF;
+			font-size:0.5rem;
+			text-align: center;
+			color: #043EB8;
+		}
+		.sel-student{
+		    width: 25%;
+    		height: 2.2rem;
+		    float: right;
+		    text-align: right;
+		}
+		.sel-student img{
+			height: 0.8rem;
+    		margin-top: 0.6rem;
+    		transform: rotate(180deg);
+		}
+	</style>
+</head>
+<body>
+	<div class="aui-content">
+		<ul class="aui-list aui-form-list none-bottom-style">
+			<li class="aui-list-item">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label bold">
+						教练信息&emsp;
+					</div>
+					<div class="aui-list-item-input">
+					</div>
+				</div>
+			</li>
+			<li class="aui-list-item" style="min-height: 2.5rem;">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label">
+						教练姓名：
+					</div>
+					<div class="aui-list-item-input">
+						<input type="text" value="" id="coachName" placeholder="姓名" onfocus="auiHide()">
+					</div>
+				</div>
+			</li>
+			<li class="aui-list-item" style="min-height: 2.5rem;">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label">
+						联系电话：
+					</div>
+					<div class="aui-list-item-input">
+						<input type="tel" maxlength="11" value="" id="coachPhone" placeholder="联系方式" onfocus="auiHide()">
+					</div>
+				</div>
+			</li>
+			<li class="aui-list-item car_num" style="min-height: 2.5rem;position: relative;">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label">
+						车牌号码：
+					</div>
+					<div class="aui-list-item-input">
+						<input type="text" value="" id="carId1" placeholder="教练车牌号" class='carNum' readonly="" tapmode onclick="popUpKeyboard(1)">
+					</div>
+				</div>
+			</li>
+			<li class="aui-list-item aui-hide" style="min-height: 2.5rem;" id="idCardNum">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label">
+						身份证号：
+					</div>
+					<div class="aui-list-item-input">
+						<input type="text" value="" id="idCard" placeholder="教练身份证" onfocus="auiHide()">
+					</div>
+				</div>
+			</li>
+			<li class="aui-list-item aui-list-item-arrow" style="min-height: 2.5rem;">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label">
+						所属驾校：
+					</div>
+					<div class="aui-list-item-input" tapmode onclick="openSelTcmSchool()">
+						<input type="text" value="" id="schoolName" placeholder="请选择教练所属驾校" readonly>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<section class='practical-select'>
+		<div class="select_practical_title">
+			<img src="../../../../icon/common/icon_date.png" alt="" />
+			<span>考试日期</span>
+	    </div>
+	    <div class="select_practical_input">
+	        <input type="text" id="appointment-date" onchange="selectDate()">
+	    </div>
+	</section>
+	
+	<section class='practical-select'>
+		<div class="select_practical_title">
+			<img src="../../../../icon/subject/icon_cars.png" alt="" />
+			<span>选择车型</span>
+	    </div>
+	    <div class="container" style="height:3rem;line-height:3rem;">
+	        <nav class="nav" id="carTypes_nav">
+		        <div class="rights aui-hide">
+		        	<img src="../../../../icon/subject/right.png" alt="" class="right" style="height:1.2rem;margin-left:0.2rem;"/>
+				 	向左滑动
+		        </div>
+	            <ul class="con">
+	            	
+	            </ul>
+	        </nav>
+        </div>
+	</section>
+	<div class="aui-content aui-margin-b-15" id="studentListAppend">
+		<ul class="aui-list aui-form-list none-bottom-style">
+			<li class="aui-list-item">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label bold" style="width: 70%;">
+						学员信息<span style='color:#DC251F;'>（*输入身份证即可查询）</span>
+					</div>
+					<div class="aui-btn aui-btn-primary aui-hide" style="margin-right: 1rem;" tapmode onclick="addStudent(this)" id="addLearnerButton">添加学员</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="aui-btn aui-btn-info aui-btn-block" style='margin-top:1rem !important;' tapmode onclick='next()'>提交</div>
+	<div id="keyboardBox" class="aui-hide">
+		<ul style="width:100%;height: 1.9rem;padding:0.5rem;background:#D0D5D9">
+			<li class="delete" tapmode onclick="auiDel()">清空</li>
+			<li class="close" tapmode onclick="auiHide()">关闭</li>
+		</ul>
+		<div class="provienceBox" id="provienceBox">
+			<ul>
+				<li tapmode onclick='provinceClick(this)'>京</li>
+				<li tapmode onclick='provinceClick(this)'>津</li>
+				<li tapmode onclick='provinceClick(this)'>渝</li>
+				<li tapmode onclick='provinceClick(this)'>沪</li>
+				<li tapmode onclick='provinceClick(this)'>冀</li>
+				<li tapmode onclick='provinceClick(this)'>晋</li>
+				<li tapmode onclick='provinceClick(this)'>辽</li>
+				<li tapmode onclick='provinceClick(this)'>吉</li>
+				<li tapmode onclick='provinceClick(this)'>黑</li>
+				<li tapmode onclick='provinceClick(this)'>苏</li>
+			</ul>
+			<ul>
+				<li tapmode onclick='provinceClick(this)' style="background: #DD524D;color: #FFFFFF;">浙</li>
+				<li tapmode onclick='provinceClick(this)'>皖</li>
+				<li tapmode onclick='provinceClick(this)'>闽</li>
+				<li tapmode onclick='provinceClick(this)'>赣</li>
+				<li tapmode onclick='provinceClick(this)'>鲁</li>
+				<li tapmode onclick='provinceClick(this)'>豫</li>
+				<li tapmode onclick='provinceClick(this)'>鄂</li>
+				<li tapmode onclick='provinceClick(this)'>湘</li>
+				<li tapmode onclick='provinceClick(this)'>粤</li>
+				<li tapmode onclick='provinceClick(this)'>琼</li>
+			</ul>
+			<ul>
+				<li tapmode onclick='provinceClick(this)'>川</li>
+				<li tapmode onclick='provinceClick(this)'>贵</li>
+				<li tapmode onclick='provinceClick(this)'>云</li>
+				<li tapmode onclick='provinceClick(this)'>陕</li>
+				<li tapmode onclick='provinceClick(this)'>甘</li>
+				<li tapmode onclick='provinceClick(this)'>青</li>
+				<li tapmode onclick='provinceClick(this)'>蒙</li>
+				<li tapmode onclick='provinceClick(this)'>桂</li>
+				<li tapmode onclick='provinceClick(this)'>宁</li>
+				<li tapmode onclick='provinceClick(this)'>新</li>
+			</ul>
+			<ul>
+				<li class="changeContentBtn other" tapmode onclick='changeInput(this)'>ABC</li>
+				<li tapmode onclick='provinceClick(this)'>藏</li>
+				<li tapmode onclick='provinceClick(this)'>使</li>
+				<li tapmode onclick='provinceClick(this)'>领</li>
+				<li tapmode onclick='provinceClick(this)'>警</li>
+				<li tapmode onclick='provinceClick(this)' style="background: #DD524D;color: #FFFFFF;">学</li>
+				<li tapmode onclick='provinceClick(this)'>港</li>
+				<li tapmode onclick='provinceClick(this)'>澳</li>
+				<li class="deleteBtn other" tapmode onclick='deleteBtnClick(this)'>删除</li>
+			</ul>
+		</div>
+		<div class="textBox" id="textBox">
+			<ul>
+				<li tapmode onclick='txtClick(this)'>1</li>
+				<li tapmode onclick='txtClick(this)'>2</li>
+				<li tapmode onclick='txtClick(this)'>3</li>
+				<li tapmode onclick='txtClick(this)'>4</li>
+				<li tapmode onclick='txtClick(this)'>5</li>
+				<li tapmode onclick='txtClick(this)'>6</li>
+				<li tapmode onclick='txtClick(this)'>7</li>
+				<li tapmode onclick='txtClick(this)'>8</li>
+				<li tapmode onclick='txtClick(this)'>9</li>
+				<li tapmode onclick='txtClick(this)'>0</li>
+			</ul>
+			<ul>
+				<li tapmode onclick='txtClick(this)'>Q</li>
+				<li tapmode onclick='txtClick(this)'>W</li>
+				<li tapmode onclick='txtClick(this)'>E</li>
+				<li tapmode onclick='txtClick(this)'>R</li>
+				<li tapmode onclick='txtClick(this)'>T</li>
+				<li tapmode onclick='txtClick(this)'>Y</li>
+				<li tapmode onclick='txtClick(this)'>U</li>
+				<li tapmode onclick='txtClick(this)'>I</li>
+				<li tapmode onclick='txtClick(this)'>O</li>
+				<li tapmode onclick='txtClick(this)'>P</li>
+			</ul>
+			<ul>
+				<li tapmode onclick='txtClick(this)'>A</li>
+				<li tapmode onclick='txtClick(this)'>S</li>
+				<li tapmode onclick='txtClick(this)'>D</li>
+				<li tapmode onclick='txtClick(this)'>F</li>
+				<li tapmode onclick='txtClick(this)'>G</li>
+				<li tapmode onclick='txtClick(this)'>H</li>
+				<li tapmode onclick='txtClick(this)'>J</li>
+				<li tapmode onclick='txtClick(this)'>K</li>
+				<li tapmode onclick='txtClick(this)'>L</li>
+			</ul>
+			<ul>
+				<li class="changeContentBtn other" tapmode onclick='changeInput(this)'>返回</li>
+				<li tapmode onclick='txtClick(this)'>Z</li>
+				<li tapmode onclick='txtClick(this)'>X</li>
+				<li tapmode onclick='txtClick(this)'>C</li>
+				<li tapmode onclick='txtClick(this)'>V</li>
+				<li tapmode onclick='txtClick(this)'>B</li>
+				<li tapmode onclick='txtClick(this)'>N</li>
+				<li tapmode onclick='txtClick(this)'>M</li>
+				<li class="deleteBtn other" tapmode onclick='deleteBtnClick(this)'>删除</li>
+			</ul>
+		</div>
+	</div>
+</body>
+<!--最少学员模板-->
+<script type="text/template" charset="utf-8" id="studentTemplate">
+	{{ for(var i =0;i<it;i++){ }} 
+		<ul class="aui-list aui-form-list none-bottom-style none-top-style student-list">
+			<li class="aui-list-item" style="min-height: 2.5rem;">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label" style="width:22%;">
+						身份证：
+					</div>
+					<div class="aui-list-item-input">
+						<input type="text" value="" class="studentIdCard" placeholder="学员身份证" style='width: 75%;float:left;' onfocus="auiHide()">
+						<div class='sel-student' tapmode onclick="selIdCardByList(this)"><img src="../../../../icon/common/icon_header_return.png" alt="" /></div>
+					</div>
+				</div>
+			</li>
+			<li class="aui-list-item" style="min-height: 2.5rem;">
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label" style="width: 60%;">
+						姓&emsp;名：
+					</div>
+					<div class="aui-list-item-input">
+						<input type="text" value="" class="studentName" placeholder="自动识别" readonly="">
+					</div>
+				</div>
+				<div class="aui-list-item-inner">
+					<div class="aui-list-item-label" style="width: 75%;">
+						手机号：
+					</div>
+					<div class="aui-list-item-input studentNameTemplate" style="width: 140%;">
+						<input type="tel" maxlength="11" class="studentPhone" placeholder="请输入" onfocus="auiHide()">
+					</div>
+				</div>
+			</li>
+		</ul>
+	{{ } }}
+</script>
+<!--添加学员模板-->
+<script type="text/template" charset="utf-8" id="addStudentTemplate">
+	<ul class="aui-list aui-form-list none-bottom-style none-top-style student-list" id="">
+		<li class="aui-list-item" style="min-height: 2.5rem;">
+			<div class="aui-list-item-inner">
+				<div class="aui-list-item-label" style="width:22%;">
+					身份证：
+				</div>
+				<div class="aui-list-item-input">
+					<input type="text" value="" class="studentIdCard" placeholder="学员身份证" style='width: 75%;float:left;' onfocus="auiHide()">
+					<div class='sel-student' tapmode onclick="selIdCardByList(this)"><img src="../../../../icon/common/icon_header_return.png" alt="" /></div>
+				</div>
+			</div>
+		</li>
+		<li class="aui-list-item" style="min-height: 2.5rem;">
+			<div class="aui-list-item-inner">
+				<div class="aui-list-item-label" style="width: 60%;">
+					姓&emsp;名：
+				</div>
+				<div class="aui-list-item-input">
+					<input type="text" value="" class="studentName" placeholder="自动识别" readonly="">
+				</div>
+			</div>
+			<div class="aui-list-item-inner">
+				<div class="aui-list-item-label" style="width: 75%;">
+					手机号：
+				</div>
+				<div class="aui-list-item-input studentNameTemplate" style="width: 140%;">
+					<input type="tel" maxlength="11" class="studentPhone" placeholder="请输入" onfocus="auiHide()">
+				</div>
+			</div>
+		</li>
+		<div class='delete-img' tapmode onclick='deleteLearner(this)'>
+			<img src="../../../../icon/subject/icon_delete.png" alt="" />
+		</div>
+	</ul>
+</script>
+<!-- 手机号选择 -->
+<script type="text/template" charset="utf-8" id="template_student_phone_src">
+	<select class='studentPhone'>
+		{{ if(it.length > 1 ){ }}
+			<option value="">请选择</option>
+			{{ for(var i=0;i<it.length;i++){ }}
+				<option value="{{=it[i]}}">{{=it[i]}}</option>
+			{{ } }}
+		{{ }else{ }}
+			<option value="{{=it[0]}}">{{=it[0]}}</option>
+		{{ } }}
+	</select>
+</script>
+<!-- 车型选择 -->
+<script type="text/template" charset="utf-8" id='carTypes_src'>
+	{{ for(var i=0;i<it.length;i++){ }}
+		<li class="menuLi margin-top-0-5">
+        	<div class='lump' tapmode onclick="selectCarTypes(this,'{{=it[i].name}}','{{=it[i].code}}')">
+        		<span>{{=it[i].name}}</span>
+        	</div>
+        </li>
+	{{ } }}
+</script>
+<!-- 手机号填写初始化 -->
+<script type="text/template" charset="utf-8" id="template_student_null_phone_src">
+	<input type="text" value="" class="studentPhone" placeholder="自动识别" readonly="">
+</script>
+<script type="text/javascript" src="../../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../../script/mobiscroll/mobile_select.js"></script> 
+<script type="text/javascript" src="../../../../script/mobiscroll/mobiscroll_date.js"></script> 
+<script type="text/javascript" src="../../../../script/mobiscroll/mobiscroll.js"></script> 
+<script type="text/javascript" src="../../../../script/common/common.js"></script>
+<script type="text/javascript">
+	//默认输入的学员人数为1,最多为9，具体人数从上页面传递
+	var minStudentNum = 1;
+	var maxStudentNum = 9;
+	var actualStudentNum;
+	var cache;
+	var schoolId = '';//所属驾校标识
+	var testDate;//考试日期
+	var systemType;
+	var touchStyle;
+	apiready = function(){
+		cache = api.pageParam;
+		log('cache',cache);
+		if(minStudentNum == maxStudentNum){
+			$('#addLearnerButton').addClass('aui-hide');	
+		}
+		//log('传入的参数',cache);
+		//初始人数为最小
+		actualStudentNum = minStudentNum;
+		//渲染最少学员人数模块
+		setStudent(minStudentNum);
+		//渲染剩下的学员人数
+		setLeftStudent(maxStudentNum - minStudentNum);
+		
+		systemType = api.systemType;
+		touchStyle = systemType == "ios" ? 'touchmove' : 'scroll';
+		
+		//openMessage_ii('温馨提示','&emsp;&emsp;系统将发送支付验证码至学员驾所通APP，请确保所有报名学员已安装驾所通并完成实名认证！','知道了','','','',null);
+		
+		//监听所属驾校选择事件
+		toEventListener('sel_tcm_school_action',function(ret,err){
+			var cache_by_account = $api.getStorage('cache_by_account');
+			var coach_info = cache_by_account.coach_info;
+			$('#schoolName').val(ret.value.name);
+			schoolId = ret.value.id;
+			if(coach_info != undefined){
+				coach_info.selTcmSchool = ret.value;
+			}else{
+				coach_info = {
+					selTcmSchool:ret.value
+				}
+			}
+			cache_by_account.coach_info = coach_info;
+			$api.setStorage('cache_by_account',cache_by_account);
+		});
+		
+		//日期初始化
+		var startDate = (new Date().Format('yyyy-MM-dd'));//1天内
+		var endDate = (new Date(new Date().getTime() + 4*24*60*60*1000)).Format('yyyy-MM-dd');//4天内
+		$('#appointment-date').val(startDate);
+		testDate = startDate;
+		
+		mobiscrollDate(startDate,endDate,$('#appointment-date'),'最近');//初始化日期组件
+		mobiscrollDate(startDate,endDate,$('#test-date'),'最近');//初始化日期组件
+		selectDate();//校验日期
+		
+		init();
+		carIdInput();
+	}
+	
+	function init(){
+		var cache_account = $api.getStorage('cache_by_account').cache_account;
+		var coach_info = $api.getStorage('cache_by_account').coach_info;
+		
+		log('教练缓存信息',coach_info);
+		
+		if(coach_info != undefined){
+			//教练名称
+			if(coach_info.coachName != undefined){
+				$('#coachName').val(coach_info.coachName);
+			}
+			
+			//教练联系方式
+			if(coach_info.coachPhone != undefined){
+				$('#coachPhone').val(coach_info.coachPhone);
+			}else{
+				$('#coachPhone').val(cache_account.account);
+			}
+			
+			//教练车牌号
+			if(coach_info.coachCarId != undefined){
+				var carIds = coach_info.coachCarId.split(',');
+				$('#carId1').val(carIds[0]);
+			}
+			//教练身份证
+			/*if(coach_info.coachIdCard != undefined){
+				$('#idCard').val(coach_info.coachIdCard);
+			}*/
+			
+			//教练所属驾校
+			if(coach_info.selTcmSchool != undefined){
+				$('#schoolName').val(coach_info.selTcmSchool.name);
+				schoolId = coach_info.selTcmSchool.id;
+			}
+		}
+		
+		//获取科目三车型集合
+		getDictionary('056000',function(ret,err){
+			if(ret){
+				log("车型",ret);
+				if(ret.code == 0){
+					if(ret.dictionarys['056000'].dictionaryList.length > 0){
+						if(ret.dictionarys['056000'].dictionaryList.length>3){
+							$('#carTypes_nav').children('.rights').removeClass("aui-hide");
+						}
+						var carTypes_src = $('#carTypes_src').html();
+						$('#carTypes_nav').find('.con').html(doT.template(carTypes_src)(ret.dictionarys['056000'].dictionaryList));
+						selectCarTypes($('#carTypes_nav').find('.lump').eq(0),ret.dictionarys['056000'].dictionaryList[0].name,ret.dictionarys['056000'].dictionaryList[0].code);
+					}else{
+						alert_msg('无车型');
+					}
+				}else{
+					alert_msg(ret.msg);
+				}
+			}else{
+				alert_msg('获取车型失败');
+			}
+		});
+		
+		scroll();
+	}
+	
+	function scroll() {
+		$('#carTypes_nav').on(touchStyle, function(event) {
+			if($('#carTypes_nav').scrollLeft() >= 5){
+				$('#carTypes_nav').children('.rights').addClass('aui-hide');
+			}
+		});
+	}
+	
+	function auiHide() {
+		$("#keyboardBox").addClass('aui-hide');
+
+	}
+	function auiDel(){
+		$('#carId' + keyBoard_index).val('');
+	}
+	
+	/**
+	 * 选择训练日期 
+	 */
+	function selectDate(){
+		url = 'api/appointment/get-export-info';
+		params = {
+			isVip:0,
+			testCenterId:cache.e_room_id,
+			kemu:'036003',
+			testDate:$('#appointment-date').val()
+		}
+		log('传参',params);
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			log("ret",ret);
+			if(ret){
+				if(ret.code == 0){
+					if(ret.tcmExportRecodeList.length > 0){
+						if(ret.tcmExportRecodeList[0].isClose == 0){
+							if(isOverDate($('#appointment-date').val())){
+								testDate = $('#appointment-date').val();
+							}else{
+								openMessage_i('温馨提示','考试日期' + $('#appointment-date').val() + '第二通道已自动关闭','好的','','','',{});
+								$('#appointment-date').val(testDate);
+							}
+						}else{
+							openMessage_i('温馨提示','考试日期' + $('#appointment-date').val() + '后台已关闭第二通道','好的','','','',{});
+							$('#appointment-date').val(testDate);
+						}
+					}else{
+						openMessage_i('温馨提示','考试日期' + $('#appointment-date').val() + '第二通道未开启','好的','','','',{});
+						$('#appointment-date').val(testDate);
+					}
+				}else{
+					$('#appointment-date').val(testDate);
+					alert_msg(ret.msg);
+				}
+			}else{
+				$('#appointment-date').val(testDate);
+				alert_msg('获取导出记录失败');
+			}
+		});
+	}
+	
+	/**
+	 * 检测是否超出默认关闭时间 
+	 */
+	function isOverDate(selDate){
+		var nowDateTime = new Date();
+		var closeDateTime = new Date(selDate.replace(/-/g,"/") + ' 13:00:00');
+		if(closeDateTime.getTime() < nowDateTime.getTime()){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	var keyBoard_index = 1;//键盘聚焦
+	var num = 7; //需要输入的车牌数
+	function popUpKeyboard(index){
+		keyBoard_index = index;
+		$("#keyboardBox").removeClass('aui-hide');
+		//返回车牌号输入
+		$('#textBox').hide();
+		$('#provienceBox').show();
+	}
+	function carIdInput() {
+		//键盘点击动画
+		$(".textBox ul li").each(function() {
+			$(this).click(function() {
+				$(this).addClass("activeKey") //添加动画效果
+				$(this).siblings().removeClass("activeKey") //移除动画效果
+				var interval = setTimeout(function() { //定时器及时清除自身动画效果
+					$(this).removeClass("activeKey")
+					window.clearInterval(interval)
+				}.bind(this), 200);
+			});
+		});
+		api.parseTapmode();
+	}
+	
+	//省份键盘点击事件
+	function provinceClick(e){
+		$(e).addClass("activeKey") //添加动画效果
+		$(e).siblings().removeClass("activeKey") //移除动画效果
+		var interval = setTimeout(function() { //定时器及时清除自身动画效果
+			$(e).removeClass("activeKey")
+			var self = this;
+			keyboard(num, self);
+			window.clearInterval(interval)
+		}.bind(e), 200);
+	}
+	
+	//文本键盘点击事件
+	function txtClick(e){
+		$(e).addClass("activeKey") //添加动画效果
+		$(e).siblings().removeClass("activeKey") //移除动画效果
+		var interval = setTimeout(function() { //定时器及时清除自身动画效果
+			$(e).removeClass("activeKey")
+			var self = this;
+			keyboard(num, self);
+			window.clearInterval(interval)
+		}.bind(e), 200);
+	}
+	
+	//回退按钮点击事件
+	function deleteBtnClick(){
+		var leng = $('#carId' + keyBoard_index).val().toString().substring(0, $('#carId' + keyBoard_index).val().length - 1);
+		$('#carId' + keyBoard_index).val(leng);
+		var index = getIndex();
+		if(index=='1'){
+			$('#textBox').hide();
+			$('#provienceBox').show();
+		}
+	}
+	
+	//切换键盘
+	function changeInput(e){
+		$('li').siblings().removeClass("activeKey")
+		if ($(e).html() == 'ABC') {
+			$('#textBox').show();
+			$('#provienceBox').hide();
+		} else {
+			$('#textBox').hide();
+			$('#provienceBox').show();
+		}
+	}
+	
+	//获取当前车牌数字索引
+	function getIndex() {
+		var index = $('#carId' + keyBoard_index).val();
+		return index.length;
+	}
+	//自定义键盘处理函数
+	function keyboard(num, self) {
+		var content = $('#carId' + keyBoard_index).val() + $(self).html()
+		//console.log('index' + index);
+		$('#carId' + keyBoard_index).val(content);
+		var index = getIndex();
+		if (index <= num) {
+			if (index == num) {
+				$('#carId' + keyBoard_index).val(content);
+			} else {
+			}
+			$('#textBox').show();
+			$('#provienceBox').hide();
+		}
+	}
+	
+	//渲染最少学员人数模块
+	function setStudent(minStudentNum) {
+		var studentTemplate = $('#studentTemplate').html();
+		$("#studentListAppend").append(doT.template(studentTemplate)(minStudentNum));
+	}
+	//渲染剩下的学员人数
+	function setLeftStudent(leftStudentNum){
+		var addStudentTemplate = $('#addStudentTemplate').html();
+		for(var i=0;i<leftStudentNum;i++){
+			actualStudentNum++;
+			$("#studentListAppend").append(doT.template(addStudentTemplate)(actualStudentNum));
+		}
+		//初始化监听输入框输入
+		inputAddEventListen();
+	}
+	
+	/**
+	 * 初始化监听输入框输入
+	 */
+	function inputAddEventListen(){
+		$('.studentIdCard').bind('input propertychange', function() {
+			if($(this).val().length == 18){
+				$(this).val($(this).val().toUpperCase());
+				if(checkIDCard($(this).val())){
+					getLearnerInfo($(this));
+				}else{
+					alert_msg('身份证格式不正确');
+				}
+			}
+		});
+		
+		/*$('#idCard').bind('input propertychange', function() {
+			if($(this).val().length == 18){
+				$(this).val($(this).val().toUpperCase());
+				if(!checkIDCard($(this).val())){
+					alert_msg('身份证格式不正确');
+				}
+			}
+		});*/
+		
+		//自动查询缓存中是否有该教练信息
+		$('#coachName').bind('input propertychange', function() {
+			var cache_by_app = $api.getStorage('cache_by_app');
+			if(cache_by_app.coach_history_info == undefined||cache_by_app.coach_history_info == null){
+				
+			}else{
+				log('教练对应缓存信息',cache_by_app.coach_history_info[Base64.encode($(this).val())]);
+				//教练名称
+				var this_coach_info = cache_by_app.coach_history_info[Base64.encode($(this).val())];
+				
+				if(this_coach_info != undefined){
+					if(this_coach_info.coachName != undefined){
+						$('#coachName').val(this_coach_info.coachName);
+					}
+					
+					//教练联系方式
+					if(this_coach_info.coachPhone != undefined){
+						$('#coachPhone').val(this_coach_info.coachPhone);
+					}else{
+						$('#coachPhone').val(cache_account.account);
+					}
+					
+					//教练车牌号
+					if(this_coach_info.coachCarId != undefined){
+						var carIds = this_coach_info.coachCarId.split(',');
+						for(var i=0;i<carIds.length;i++){
+							$('#carId'+(i - 0 + 1)).val(carIds[i]);
+						}
+					}
+					//教练身份证
+					/*if(this_coach_info.coachIdCard != undefined){
+						$('#idCard').val(this_coach_info.coachIdCard);
+					}*/
+				}
+			}
+		});
+	}
+	
+	/**
+	 * 获取学员信息 
+	 */
+	function getLearnerInfo(e){
+		params = {
+			idcardNo:e.val(),
+			kemu:'036003',//科目三
+			testCenterId:cache.e_room_id,//考场
+			testDate:testDate,
+			carTypeName:carTypeName
+		}
+		
+		log('传参',params);
+		url = 'api/tcm/get-test-learnerinfo';
+		
+		defaultload('获取该考生信息中');
+		
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			log('数据',ret);
+			api.hideProgress();
+			if(ret){
+				if(ret.code == 0){
+					//自动填充考生姓名
+					$(e).parent().parent().parent().parent().find('.studentName').val(ret.tcmLearnerInfoList[0].name);
+					if(ret.phone != undefined||ret.phone != ''){
+						$(e).parent().parent().parent().parent().find('.studentPhone').val(ret.phone);
+					}
+					//自动加载考生手机号（一个手机号默认选中第一个，多个则让其选择）
+					var template_student_phone_src = $('#template_student_phone_src').html();
+					//$(e).parent().parent().parent().parent().find('.studentNameTemplate').html(doT.template(template_student_phone_src)(ret.phone.split(',')));
+				}else if(ret.code == '700019'){
+					//存在申请中的免单券
+					isSure('温馨提示',ret.msg,'放弃免单','等待免单通过',function(){
+						isSure('温馨提示','确定取消该学员的免单吗','确定','再想想',function(){
+							//取消该学员的免单申请
+							cancelFreeApply(e,cache.e_room_id,ret.tcmLearnerInfoList[0].name,ret.phone);
+						},function(){
+							$(e).parent().parent().parent().parent().find('.studentIdCard').val('');
+							$(e).parent().parent().parent().parent().find('.studentName').val('');
+							var template_student_null_phone_src = $('#template_student_null_phone_src').html();
+							//$(e).parent().parent().parent().parent().find('.studentNameTemplate').html(doT.template(template_student_null_phone_src)({}));
+						});
+					},function(){
+						$(e).parent().parent().parent().parent().find('.studentIdCard').val('');
+						$(e).parent().parent().parent().parent().find('.studentName').val('');
+						var template_student_null_phone_src = $('#template_student_null_phone_src').html();
+						//$(e).parent().parent().parent().parent().find('.studentNameTemplate').html(doT.template(template_student_null_phone_src)({}));
+					});
+				}else{
+					$(e).parent().parent().parent().parent().find('.studentName').val('');
+					var template_student_null_phone_src = $('#template_student_null_phone_src').html();
+					//$(e).parent().parent().parent().parent().find('.studentNameTemplate').html(doT.template(template_student_null_phone_src)({}));
+					var msg = '科目：科目三<br>';
+					msg += '考试日期：' + testDate.substring(0,10) + '<br>';
+					msg += '考试车型：'+carTypeName + '<br>';
+					msg += ret.msg;
+					openMessage_ii('温馨提示',msg,'好的','','','',null);
+				}
+			}else{
+				alert_msg('网络异常');
+			}
+		});
+	}
+	
+	/**
+	 *取消该学员的免单申请 
+	 */
+	function cancelFreeApply(e,testCenterId,studentName,phone){
+		params = {
+			idcardNo:e.val(),
+			testCenterId:testCenterId,
+			kemu:3,
+			learnerId:getUserId()
+		}
+		url = 'api/coupons/cancel-apply';
+		defaultload();
+		ajax_Request(url, 'put', 'json', params, function(ret,err){
+			api.hideProgress();
+			if(ret){
+				if(ret.code == 0){
+					$(e).parent().parent().parent().parent().find('.studentName').val(studentName);
+					var template_student_phone_src = $('#template_student_phone_src').html();
+					//$(e).parent().parent().parent().parent().find('.studentNameTemplate').html(doT.template(template_student_phone_src)(phone.split(',')));
+				}else{
+					alert_msg(ret.msg);
+				}
+			}else{
+				alert_msg('服务器繁忙，请稍后重试');
+			}
+		});
+	}
+	
+	//点击添加学员渲染
+	function addStudent(e) {
+		actualStudentNum++;
+		if(actualStudentNum >= maxStudentNum){
+			$(e).addClass('aui-hide');
+		}
+		var addStudentTemplate = $('#addStudentTemplate').html();
+		$("#studentListAppend").append(doT.template(addStudentTemplate)(actualStudentNum));
+	}
+	
+	/**
+	 * 删除学员
+	 */
+	function deleteLearner(e){
+		actualStudentNum--;
+		$(e).parent().remove();
+		$('#addLearnerButton').removeClass('aui-hide');
+	}
+	
+	/**
+	 * 查找学员 
+	 */
+	function selIdCardByList(o){
+		$('.sel-student').each(function(index,e){
+			if($(e).is($(o))){
+				params = {
+					index:index,
+					winName:api.winName,
+					frameName:api.frameName,
+					testDate:testDate,
+					testCenterId:cache.e_room_id,
+					kemu:'036003'
+				}
+				api.openWin({
+       				name: 'examination_list_win',
+			        url: '../../common/examination_list_win.html',
+			        slidBackEnabled:'false',
+			        vScrollBarEnabled:'false',
+			        hScrollBarEnabled:'false',
+			        reload:true,
+			        useWKWebView:false,
+			        pageParam: params
+			    });
+			}
+		});
+	}
+	
+	/**
+	 * 填入学员身份证 
+	 */
+	function setIdCard(index,idcardNo,name,carType){
+		if(carType != 'undefined'&&carType != undefined&&carType != '' &&carType != null&&carType != carTypeName){
+			openMessage_i('车型不匹配',name + '考试车型为' + carType,'确定','','','',{});
+			return;
+		}
+		$('.student-list').eq(index).find('.studentName').val(name);
+		$('.student-list').eq(index).find('.studentIdCard').val(idcardNo);
+	}
+	
+	/**
+	 * 下一步 
+	 */
+	var learnerMap = {};
+	var learnerList = [];
+	var isRight;//是否通过校验
+	function next(){
+		isRight = true;//是否通过校验
+		$('input').blur();//使input框失去焦点
+		
+		learnerList = [];
+		var coachName = $('#coachName').val();
+		if(coachName == ''||coachName == null){
+			alert_msg('请输入教练姓名');
+			return;
+		}
+		var coachPhone = $('#coachPhone').val();
+		if(!isPhoneAvailable(coachPhone)){
+			alert_msg('请输入有效的教练联系方式');
+			return;
+		}
+		var carId = $('#carId1').val();
+		if(!isVehicleNumber(carId)){
+			alert_msg('请输入正确的教练车牌号');
+			return;
+		}
+		
+		var idCard = $('#idCard').val();
+		/*if(!checkIDCard(idCard)){
+			alert_msg('请输入有效的教练身份证');
+			return;
+		}*/
+		
+		if(schoolId == ''||schoolId == null){
+			alert_msg('请选择教练所属驾校');
+			return;
+		}
+		
+		var schoolName = $('#schoolName').val();
+		
+		for(var i=0;i<actualStudentNum;i++){
+			//只要学员基本信息中有一个填了就进入校验
+			var studentIdCard = $('.student-list').eq(i).find('.studentIdCard').val();
+			var studentName = $('.student-list').eq(i).find('.studentName').val();
+			var studentPhone = $('.student-list').eq(i).find('.studentPhone').val();
+			if(studentIdCard != ''
+				||studentName != ''
+				||studentPhone != ''){
+				//所有信息都通过校验才能加入预约学员的list
+				if(checkIDCard(studentIdCard)
+					&&studentName != ''
+					&&isPhoneAvailable(studentPhone)){
+					learnerMap = {
+						idcardNo:studentIdCard,
+						learnerName:studentName,
+						phone:studentPhone,
+					}
+					learnerList.push(learnerMap);
+				}else{
+					alert('学员' + (i - 0 + 1) + '的信息不正确');
+					isRight = false;
+					break;
+				}
+			}
+		}
+		
+		if(!isRight){
+			console.log('校验不通过');
+			return;
+		}
+		
+		//校验预约学员数量是否在规定人数内
+		if(learnerList.length < minStudentNum
+			||learnerList.length > maxStudentNum){
+			alert_msg('预约人数必须在'+minStudentNum+'到'+maxStudentNum+ '之间');
+			return;
+		}
+		
+		//校验重复性
+		if(isRepeat(learnerList)){
+			alert_msg('存在重复的身份证');
+			return;
+		}
+		
+		params = {
+			testCenterId:cache.e_room_id,//考场id
+			testDate:testDate,//考试日期日期
+			carTypeId:carTypeId,//车型code
+			carTypeName:carTypeName,//车型名称
+			coachName:coachName,//教练名称
+			coachPhone:coachPhone,//教练联系方式
+			carId:carId.toUpperCase(),//教练车牌号
+			//idCard:idCard,//教练身份证
+			schoolId:schoolId,//教练所属驾校id
+			schoolName:schoolName,//教练所属驾校name
+			appointmentOrderList:learnerList//填写的学员信息
+		}
+		
+		//存储下教练信息
+		var cache_by_account = $api.getStorage('cache_by_account');
+		if(cache_by_account.coach_info == undefined||cache_by_account.coach_info == null){
+			cache_by_account.coach_info = {};
+		}
+		cache_by_account.coach_info.coachName = coachName;
+		cache_by_account.coach_info.coachPhone = coachPhone;
+		//cache_by_account.coach_info.coachIdCard = idCard;
+		cache_by_account.coach_info.coachCarId = carId;
+		cache_by_account.coach_info.schoolId = schoolId;
+		$api.setStorage('cache_by_account',cache_by_account);
+		
+		//将教练信息存入历史记录，以教练名字的base64为主键
+		var cache_by_app = $api.getStorage('cache_by_app');
+		if(cache_by_app.coach_history_info == undefined||cache_by_app.coach_history_info == null){
+			cache_by_app.coach_history_info = {};
+		}
+		var base64_coach = Base64.encode(coachName);
+		var coach_info = {
+			coachName:coachName,
+			coachPhone:coachPhone,
+			//coachIdCard:idCard,
+			coachCarId:carId,
+			schoolId:schoolId
+		}
+		cache_by_app.coach_history_info[base64_coach] = coach_info;
+		$api.setStorage('cache_by_app',cache_by_app);
+		
+		openFrameAlert('appoint_before_exam_second_channel_sure_frm',params,0,api.winHeight);
+	}
+	
+	//处理时间格式
+	function time_2(time){
+		if(time == 0){
+			return "00";
+		}else if(time.toString().length == 1){
+			return "0" + time;
+		}else{
+			return time;
+		}
+	}
+	
+	/**
+	 * 校验学员重复性 
+	 */
+	function isRepeat(learnerList){
+		var find = false;
+		for(var i=0;i<learnerList.length;i++){
+			for (var j = i + 1; j < learnerList.length; j++) {
+			 	if (learnerList[i].idcardNo == learnerList[j].idcardNo) {
+			 		find = true; 
+			 		break;
+			 	}
+			}
+			if(find){
+				break;
+			}
+		}
+		return find;
+	}
+	
+	/**
+	 * 校验车牌照重复性 
+	 */
+	function isCarRepeat(carList){
+		var find = false;
+		for(var i=0;i<carList.length;i++){
+			for (var j = i + 1; j < carList.length; j++) {
+			 	if (carList[i] == carList[j]) {
+			 		find = true; 
+			 		break;
+			 	}
+			}
+			if(find){
+				break;
+			}
+		}
+		return find;
+	}
+	
+	//选择车型
+	var carTypeId = '';
+	var carTypeName = '';
+	function selectCarTypes(o,name,code,flag){
+		$('#carTypes_nav').find('.lump').each(function(index,e){
+			if($(e).is($(o))){
+				$(e).addClass('lump-active');
+			}else{
+				$(e).removeClass('lump-active');
+			}
+		});
+		carTypeId = code;
+		carTypeName = name;
+		$("#carTypes_nav").animate({scrollLeft: $(o).position().left - 130 + 'px'}, 500);
+	}
+	
+	/**
+	 * 打开驾校列表
+	 */
+	function openSelTcmSchool(){
+		auiHide();
+		api.openWin({
+	       name: 'common_select_under_school_win',
+	       url: '../../../common/common_select_under_school_win.html',
+	       slidBackEnabled:'false',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       useWKWebView:false,
+	       pageParam: {
+	           data:null
+	       }
+	    });
+	}
+	
+	function close(){
+		api.closeWin({
+        });
+	}
+	//打开通用弹出框
+	//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+	function openMessage_i(title,content,sureButton,cancelButton,sureFunc,cancelFunc,params){
+		api.openFrame({
+	        name: 'common_alert',
+	        url: '../../../common/common_alert.html',
+	        bgColor: 'rgba(0,0,0,0.4)',
+	        rect: {
+	            x: 0,
+	            y: 0,
+	            w: 'auto',
+	            h: api.winHeight
+	        },
+	        bounces: false,
+	        pageParam:{
+	        	title:title,
+	        	content:content,
+	        	sureButton:sureButton,
+	        	sureFunc:sureFunc,
+	        	cancelButton:cancelButton,
+	        	cancelFunc:cancelFunc,
+	        	winName:api.winName,
+	        	frameName:api.frameName,
+	        	params:params
+	        },
+	        softInputBarEnabled:true,
+	        softInputMode:'resize'
+	    });
+	}
+	
+	//打开通用弹出框
+	//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+	function openMessage_ii(title,content,sureButton,cancelButton,sureFunc,cancelFunc,params){
+		api.openFrame({
+	        name: 'common_message',
+	        url: '../../../common/common_message.html',
+	        bgColor: 'rgba(0,0,0,0.4)',
+	        rect: {
+	            x: 0,
+	            y: 0,
+	            w: 'auto',
+	            h: api.winHeight
+	        },
+	        bounces: false,
+	        pageParam:{
+	        	title:title,
+	        	content:content,
+	        	sureButton:sureButton,
+	        	sureFunc:sureFunc,
+	        	cancelButton:cancelButton,
+	        	cancelFunc:cancelFunc,
+	        	winName:api.winName,
+	        	frameName:api.frameName,
+	        	params:params
+	        },
+	        softInputBarEnabled:true,
+	        softInputMode:'resize'
+	    });
+	}
+</script>
+</html>

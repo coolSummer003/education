@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>地图</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    </style>
+</head>
+<body>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var systemType;
+	var bMap;
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		bMap = api.require('bMap');
+		systemType = api.systemType;
+		//log('地图传入数据',cache);
+        setTimeout(init,100);//延迟100毫秒，防止页面卡顿
+	}
+	function init(){
+        openBaiduMap(cache.to_lon,cache.to_lat);
+        /*bMap.searchRoute({
+		    id: 332,
+		    type: 'drive',
+		    policy: 'ecar_dis_first',
+		    start: {
+		        lon: 119.8,
+		        lat: 31
+		    },
+		    end: {
+		        lon: 120.1,
+		        lat: 31.5
+		    }
+		}, function(ret, err) {
+		    if (ret.status) {
+		        console.log(JSON.stringify(ret));
+		    }
+		});*/
+	}
+	
+	//打开百度地图
+	function openBaiduMap(lon,lat){
+		bMap.open({
+		    rect: {
+		        x: 0,
+		        y: 0,
+		        w: api.frameWidth,
+		        h: api.frameHeight
+		    },
+		    zoomLevel:15,
+		    center: {
+		        lon: lon,
+		        lat: lat
+		    },
+		    showUserLocation: true,
+		    fixedOn: api.frameName,
+		    fixed: true
+		}, function(ret) {
+		    if (ret.status) {
+		        console.log('地图打开成功');
+		        addAnnotations(lon,lat);
+		    }
+		});
+	}
+	
+	//设置地图气泡
+	function addAnnotations(lon,lat){
+		bMap.addAnnotations({
+		    annotations: [{
+		        id: 1,
+		        lon: lon,
+		        lat: lat
+		    }],
+		    draggable: false
+		}, function(ret) {
+		    if (ret) {
+		    	console.log('设置气泡：'+JSON.stringify(ret));
+		    }
+		});
+	}
+	
+	//关闭百度地图
+	function closeMap(){
+		log('关闭百度地图',{});
+		bMap.close();//关闭百度地图
+	}
+</script>
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>模拟考试记录</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_list_swipe.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html,body{
+    		background:#F5F5F5;
+    	}
+    	.aui-list:before {
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    right: auto;
+		    bottom: auto;
+		    width: 100%;
+		    z-index: 2;
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		    pointer-events: none;
+		}
+		.room_list{
+	    	overflow: hidden;
+	    	zoom: 1;
+		}
+		.room_list_div{
+			overflow-x:hidden;
+			width:100%;
+		}
+		.list_div{
+		    min-height: 2.2rem;
+    		padding: 0 0.3rem;
+			background: #FFF;
+			transition: all 0.5s;
+			-webkit-transition: all 0.5s;
+		    position: relative;
+		    margin: 0.4rem;
+    		border-radius: 0.5rem;
+		}
+		.list_div:active{
+			background:#F5F5F5;
+		}
+		.swipeleft{
+			min-height:2.2rem;
+			padding: 0 0.3rem;
+			background: #FFF;
+			transition: all 0.5s;
+			-webkit-transition: all 0.5s;
+			transform:translateX(-50%);
+			-webkit-transform:translateX(-50%);
+		    position: relative;
+		}
+		.swipeleft:after{
+			content: '';
+		    height: 1px;
+		    background: #DDDDDD;
+		    width: 100%;
+		    background-color: #dddddd;
+		    display: block;
+		    -webkit-transform: scaleY(0.5);
+		    transform: scaleY(0.5);
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		}
+		.option-btn{
+		    text-align: center;
+		    background: #F55252;
+		    width: 50%;
+		    float: right;
+		    position: absolute;
+		    height: 100%;
+	    	display: flex;
+		    top: 0;
+		    right: -50%;
+		    color: #fff;
+		}
+		.recode-title{
+			height:1.5rem;
+			font-size:0.7rem;
+			line-height:1.5rem;
+		    padding-top: 0.3rem;
+		}
+		.recode-title img{
+			height:0.8rem;
+			margin-bottom: -0.15rem;
+			margin-right: 0.3rem;
+		}
+		.recode-title font{
+			color:#7D7D7D;
+		}
+		.recode-content{
+			width:100%;
+			overflow:hidden;
+			margin-top: 0.5rem;
+			position: relative;
+		}
+		.recode-img{
+			width:20%;
+			float:left;
+		}
+		.recode-img_div{
+			width:2.5rem;
+			height:2.5rem;
+		    margin: auto;
+		}
+		.recode-img_div img{
+			width:100%;
+			height:100%;
+			object-fit:cover;
+			border-radius: 0.2rem;
+		}
+		.recode-txt{
+			width:80%;
+			float:right;
+		    padding: 0 0.5rem;
+	        position: relative;
+		}
+		.txt-title{
+			font-size:0.8rem;
+		}
+		.txt-start{
+			font-size:0.7rem;
+			color:#7D7D7D;
+		}
+		.txt-submit-time{
+			font-size:0.7rem;
+			color:#7D7D7D;
+		}
+		.txt-price{
+			font-size: 0.7rem;
+		    text-align: right;
+		    height: 1.5rem;
+		    line-height: 1.5rem;
+		}
+		.txt-price span{
+			font-size:1.2rem;
+		    font-family: "ST";
+    		color: #DC251F;
+		}
+		.w-orange{
+			color:#FA5001;
+		}
+		.txt-submit-time font{
+			color:#FA5001;
+		}
+		.msg{
+			background: #F5F5F5;
+		    height: 20rem;
+		    text-align: center;
+		    font-size:0.7rem;
+		}
+		.msg img{
+			width:8rem;
+			margin-top: 9rem;
+		}
+		.jiazai{
+    	    font-size: 0.7rem;
+		    background: #F5F5F5;
+		    color: #666565;
+		    padding-bottom: 0.3rem;
+		    text-align: center;
+		    padding-top: 0.3rem;
+	    }
+	    .jiazai img{
+	    	width: 1.5rem;
+	    }
+    </style>
+</head>
+<body>
+	<div class="room_list">
+		<div class="room_list_div">
+			<!-- <div class="list_div">
+				<div class='recode-title'>
+					<img src="../../icon/common/icon_clock.png" alt="" />
+					<span>1小时前<font>&ensp;用时45分钟</font></span>
+				</div>
+				<div class='recode-content'>
+					<div class='recode-img'>
+						<div class='recode-img_div'><img src="../../icon/common/icon_qualified.png" alt="" /></div>
+					</div>
+					<div class='recode-txt'>
+						<div class='txt-title'>测试结果：<span class='w-orange'>合格</span></div>
+						<div class='txt-submit-time'>共做题：13道&ensp;正确率：87.1%</div>
+						<div class='txt-submit-time'>正确：9道&ensp;错误：4道</div>
+						<div class='txt-price'>得分：<span>99</span></div>
+					</div>
+				</div>
+			</div>
+			<div class="list_div">
+				<div class='recode-title'>
+					<img src="../../icon/common/icon_clock.png" alt="" />
+					<span>2小时前<font>&ensp;用时45分钟</font></span>
+				</div>
+				<div class='recode-content'>
+					<div class='recode-img'>
+						<div class='recode-img_div'><img src="../../icon/common/icon_unqualified.png" alt="" /></div>
+					</div>
+					<div class='recode-txt'>
+						<div class='txt-title'>测试结果：<span class='w-orange'>不合格</span></div>
+						<div class='txt-submit-time'>共做题：13道&ensp;正确率：87.1%</div>
+						<div class='txt-submit-time'>正确：9道&ensp;错误：4道</div>
+						<div class='txt-price'>得分：<span>57</span></div>
+					</div>
+				</div>
+			</div> -->
+		</div>
+	</div>
+	<div id='load_div'>
+    </div>
+    <script type="text/template" charset="utf-8" id='load_src'>
+    	<div class="load">
+			<img src="../../icon/common/loadding.gif" alt="" /><br>
+        	<span>加载中...</span>
+		</div>
+    </script>
+    <script type="text/template" charset="utf-8" id='msg_src'>
+    	<div class="msg">
+			<img src="../../icon/common/empty.png" alt="" /><br>
+        	<span>{{=it.msg}}</span>
+		</div>
+    </script>
+    <script type="text/template" charset="utf-8" id='more_src'>
+    	<div class="jiazai">
+	    	<span>{{=it.msg}}</span>
+	    </div>
+    </script>
+	<script type="text/template" charset="utf-8" id='recode_question_exam_src'>
+		{{ for(var i=0;i<it.length;i++){ }}
+			<div class="list_div">
+				<div class='recode-title'>
+					<img src="../../icon/common/icon_clock.png" alt="" />
+					<span>{{=calcuTime(it[i].beginDt)}}<font>&ensp;用时{{=calCuTime(it[i].studySeconds)}}</font></span>
+				</div>
+				<div class='recode-content'>
+					<div class='recode-img'>
+						<div class='recode-img_div'>
+							{{ if(it[i].score >= 90){ }}
+								<img src="../../icon/mine/icon_exam.png" alt="" />
+							{{ }else{ }}
+								<img src="../../icon/mine/icon_mistake.png" alt="" />
+							{{ } }}
+						</div>
+					</div>
+					<div class='recode-txt'>
+						<div class='txt-title'>测试结果：<span class=''>{{=it[i].score >= 90?'合格':'不合格'}}</span></div>
+						<div class='txt-submit-time'>共做题：{{=it[i].totleCount}}道&ensp;正确率：{{=it[i].accuracyRate}}%</div>
+						<div class='txt-submit-time'>正确：{{=it[i].rightCount}}道&ensp;错误：{{=it[i].wrongCount}}道</div>
+						<div class='txt-price'>得分：<span>{{=it[i].score}}</span></div>
+					</div>
+				</div>
+			</div>
+		{{ } }}
+	</script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var limit = 10,page = 1;
+	var load_src = $('#load_src').html();//加载src
+	var msg_src = $('#msg_src').html();//消息提示src
+	var more_src = $('#more_src').html();//更多src
+	var refresh = true;//标记是否是刷新操作
+	apiready = function(){
+		cache = api.pageParam.data;
+		goRefrash(40,'#F5F5F5',null,null,function(){
+			refreshList();
+		});
+		goLoad(function(ret,err){
+			loadList();
+		});
+		init();
+	};
+	function init(){
+		//console.log('传入模考记录类型'+cache.type);
+		var recode_question_exam_src = $('#recode_question_exam_src').html();
+		switch(cache.type){
+			//科目一模考记录
+			case 'record_exam_subject_one':
+				url = 'api/mock-exam-and-study/list-ke-mu-one-mock-exam-record-by-id';
+				params = {
+					learnerId:getUserId(),
+					page:page,
+					limit:limit
+				}
+				break;
+			//科目四模考记录
+			case 'record_exam_subject_four':
+				url = 'api/mock-exam-and-study/list-ke-mu-four-mock-exam-record-by-id';
+				params = {
+					learnerId:getUserId(),
+					page:page,
+					limit:limit
+				}
+				break;	
+		}
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			log('学习记录',ret);
+			if(ret){
+				var listMockExamRecord = cache.type == 'record_exam_subject_one'?ret.listKeMuOneMockExamRecord:ret.listKeMuFourMockExamRecord;
+				if(ret.code == 0&&listMockExamRecord.length > 0){
+					if(refresh||$('.room_list_div').find('.list_div').length == 0){
+						$('.room_list_div').html(doT.template( recode_question_exam_src )( listMockExamRecord ));
+					}else{
+						$('.room_list_div').append(doT.template( recode_question_exam_src )( listMockExamRecord ));
+					}
+				}else{
+					setMsg(refresh?'无模考记录':'暂无更多');
+				}
+				setTimeout(function(){
+					api.refreshHeaderLoadDone();
+				},300)
+			}else{
+				setMsg('服务器繁忙，请稍后重试');
+			}
+		});
+	}
+	
+	//设置页面加载的画面
+	function setLoad(){
+		if(refresh||$('.room_list_div').find('.list_div').length == 0){//如果是刷新或者之前无数据的下拉刷新，全屏提示
+			$('#load_div').html('');
+			//$(".room_list_div").html(doT.template( load_src )( null ));
+		}else{
+			setTimeout(function(){
+				$('#load_div').html(doT.template( more_src )( {'msg':'加载更多中...','img':'../../icon/common/jiazai.gif'} ));
+			},500);
+		}
+	}
+	
+	//设置页面提示信息
+	function setMsg(msg){
+		if(refresh||$('.room_list_div').find('.list_div').length == 0){//如果是刷新或者之前无数据的上拉加载，全屏提示
+			setTimeout(function(){
+				$(".room_list_div").html(doT.template( msg_src )( {'msg':msg} ));
+			},500);
+		}else{//原先已经有数据的情况下
+			setTimeout(function(){
+			    $('#load_div').html(doT.template( more_src )( {'msg':msg,'img':''} ));
+			},500);
+		}
+	}
+	
+	//列表刷新
+	function refreshList(){
+		page = 1;refresh = true;
+		setLoad();
+		init();
+	}
+	//列表上拉
+	function loadList(){
+		page++;refresh = false;
+		setLoad();
+		init();
+	}
+	
+	//获取用时时长
+	function calCuTime(seconds){
+		return 	Math.floor(seconds/60) + '分' + seconds%60 + '秒';
+	}
+</script>
+</html>

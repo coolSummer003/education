@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>题目</title>
+	<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+	<style>
+		html{
+		background: transparent;
+		height:100%;
+	}
+	body{
+		width: 100%;
+		height:100%;
+		background: transparent;
+	}
+	
+	.aui-grid{
+    	position:absolute;
+    	bottom:0;
+    	height:76%;
+	}
+	.aui-grid [class*=aui-col-] {
+	    display: table-cell;
+	    position: relative;
+	    text-align: center;
+	    vertical-align: middle;
+	    padding: 0.5rem 0;
+	}
+	.shadow{
+	    position: absolute;
+	    bottom: 0rem;
+	    top: 0rem;
+	    width: 100%;
+	}
+	.aui-grid [class*=aui-col-xs-]:active {
+	    background-color: #FFFFFF;
+	}
+	.explain-header{
+		height: 2rem;
+	    line-height: 2rem;
+	    text-align: center;
+	    background:#FFF;
+        margin-bottom: 0.5px;
+       
+	}
+	.aui-content{
+		position: absolute;
+		top: 1.8rem;
+		padding:0.5rem;
+		right: 0rem;
+		left: 0rem;
+		background:#FFFFFF;
+		bottom: 0rem;
+		overflow-y: auto;
+		overflow-x: hidden;
+		overflow-y: scroll;
+		-webkit-overflow-scrolling: touch;
+	}
+	.content{
+		position: absolute;
+		top: 0rem;
+		padding:0rem;
+		right: 0rem;
+		left: 0rem;
+		background:#F9F9F9;
+		bottom: 0rem;
+		overflow-y: auto;
+		overflow-x: hidden;
+		overflow-y: scroll;
+		-webkit-overflow-scrolling: touch;
+	}
+	::-webkit-scrollbar {
+	/*隐藏滚轮*/
+		display: none;
+	}
+	
+	.aui-colt {
+		/*border:1px solid #F0F0F0;*/
+		background: #F6F6F6;
+		color:#cacaca;
+		width:2.5rem;
+		height:2.5rem;
+		line-height:1.5rem;
+		margin:2%;
+		border-radius:50%;
+	}
+	.aui-list-item-middle{
+		text-align:right;
+		padding-right:0.7rem;
+		height: 100%;
+		background: #F9F9F9 !important;
+		font-weight:normal !important;
+    	display: flex;
+	}
+	.aui-list-item-middle p{
+		margin:auto;
+		width:100%;
+	}
+	.aui-list-item-label{
+		height:2rem;
+		font-size:0.6rem;
+		line-height:2rem;
+	}
+	span{
+		font-size: 0.55rem;
+		color: #767676;
+		width:85%;
+		margin-top:0.25rem;
+	}
+	.question-wrong{
+		background: #fbe3e3;
+		color: #df8579;
+	}
+	.question-right{
+		background: #E8FBF9;
+		color: #70BEA4;
+	}
+	.question-selected{
+		background: #eaf3ff;
+		color: #79ABCC;
+	}
+	.list_selected{
+		background: #FFFFFF !important;
+		font-weight:bold !important;
+	}
+    </style>
+</head>
+<body>
+	<div class="shadow" tapmode onclick="closeShadow()"></div>
+	<div class='share' style="">
+	<!--<section class="aui-grid" >
+		<div class="aui-tips aui-margin-b-15" id="tips-1"  style="width:100%; background:#FFFFFF;">
+				
+			<div class="aui-tips-title" style="color:#DA974C;font-size: 0.6rem"></div>
+			<i class="aui-iconfont aui-icon-trash" style="font-size: 0.8rem;color:#000;"></i>
+		</div>
+	</section>-->
+	<section class="aui-grid" style="width:25%;height:76%;">
+		<div class="content" style="height:100%;">
+		 	<ul class="aui-list aui-list-noborder " id="ul" style="height:100%;" >
+	    	</ul>
+	    </div>
+    </section>
+    <!-- 左侧menu栏 -->
+	<script type="text/template" charset="UTF-8" id="commentCount">
+		{{ for(var i=1;i <= it;i+=100){ }}
+			<li class="leftlist" style="height: {{=getLabelHeight(it)}}%;">
+	            <div class="aui-list-item-middle" tapmode onclick="onclickList(this,'{{=i}}','{{=(i+99<=it?i+99:it)}}')">
+	            	<p>{{=i}}-{{=(i+99<=it?i+99:it)}}</p>
+	            </div>
+	        </li>
+		{{ } }}
+	</script>
+	<section class="aui-grid" style="width: 75%;left:25%;">
+		<div class="aui-tips aui-margin-b-15" style="width:100%;height:1.8rem; background:#FFFFFF;">
+			<!-- <div class="aui-tips-title" style="color:#DA974C;font-size: 0.6rem"></div>
+			<i class="aui-iconfont aui-icon-trash" style="font-size: 0.6rem;color:#000;">清空</i> -->
+		</div>
+			
+		<div class="aui-content" id="questionList">
+		</div>
+	</section>
+	<!-- 题目序号 -->
+	 <script type="text/template" charset="UTF-8" id="questionListSrc">
+		{{ for(var i=parseInt(it.start_question_order);i<=parseInt(it.end_question_order);i++){ }}
+	 		<div class="row aui-row-padded">
+	 			{{ if(it.question_recode_list[parseInt(i) - 1].is_right == 1){ }}
+				 	<div class="aui-col-xs-3 aui-colt question-right" tapmode onclick="clickCircle(this,'{{=parseInt(i) - 1}}')" >
+			          	{{=i}}
+			        </div>
+	 			{{ }else if(it.question_recode_list[parseInt(i) - 1].is_right == 2){ }}
+	 				<div class="aui-col-xs-3 aui-colt question-wrong" tapmode onclick="clickCircle(this,'{{=parseInt(i) - 1}}')" >
+			          	{{=i}}
+			        </div>
+	 			{{ }else{ }}
+	 				<div class="aui-col-xs-3 aui-colt" tapmode onclick="clickCircle(this,'{{=parseInt(i) - 1}}')" >
+			          	{{=i}}
+			        </div>
+	 			{{ } }}
+		     </div>
+	    {{ } }}		
+	</script>
+	</body>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var question_recode_list;
+	var selected_num = 0;//标记选中的menu
+	var num = 0;
+	apiready = function() {
+		question_recode_list = api.pageParam.data;
+		num = api.pageParam.num - 0 + 1;
+		init();
+	}
+	
+	function init(){
+		var commentCount = $('#commentCount').html();
+		$("#ul").html(doT.template(commentCount)(question_recode_list.length));
+		api.parseTapmode();
+		//默认选中第一个menu
+		onclickList($('.aui-list-item-middle').eq(0),1,question_recode_list.length<100?question_recode_list.length:100);
+	}
+	
+	/**
+	 * 根据题目获取左边每个按钮的高度，设置最小高度为10%
+	 */
+	function getLabelHeight(question_length){
+	 	var min_height_percet = 10;
+		var list_num = question_length/100 + (question_length%100/100 > 0?1:0);
+		return 100/list_num < min_height_percet?min_height_percet:100/list_num;
+	}
+	
+	/**
+	 * 点击左侧menu栏 
+	 */	
+	function onclickList(e,start_question_order,end_question_order){
+		$('.aui-list-item-middle').removeClass('list_selected');
+		$(e).addClass('list_selected');
+		var questionListSrc = $('#questionListSrc').html();
+		param = {
+			start_question_order:start_question_order,
+			end_question_order:end_question_order,
+			question_recode_list:question_recode_list
+		}
+		$("#questionList").html(doT.template(questionListSrc)(param));
+	}
+	
+	/**
+	 * 选中题目
+	 */
+	function clickCircle(e,question_order){
+		esc_function(api.winName,'','selectQuestion('+question_order+')');
+	}
+	
+	/**
+	 * 刷新题目选择的数据 
+	 */
+	function reloadMenu(num,isRight){
+		question_recode_list[num].is_right = isRight?1:2;
+	}
+	
+	/**
+	 * 重新选择menu选择 
+	 */
+	function reloadSelMenu(num){
+		//console.log('getMenuSel()'+getMenuSel(num));
+		var menu_sel = getMenuSel(num);
+		var start_order = menu_sel*100 + 1;
+		var end_order = question_recode_list.length<(menu_sel + 1)*100?question_recode_list.length:(menu_sel + 1)*100;
+		//重新渲染menu
+		onclickList($('.aui-list-item-middle').eq(menu_sel),start_order,end_order);
+		//选中样式
+		$('.aui-col-xs-3').removeClass('question-selected');
+		$('.aui-col-xs-3').eq(parseInt(num%100 - 1)).addClass('question-selected');
+	}
+	
+	/**
+	 * 根据题目顺序获取左边menu栏选中的 
+	 */
+	function getMenuSel(this_num){
+		console.log('当前的题目序号'+this_num);
+		if(this_num == 0){return 0;}
+		return parseInt(this_num/100 + (this_num%100 > 0?1:0)) - 1;
+	}
+	
+	//点击阴影关闭，不保存信息
+	function closeShadow() {
+		esc_function(api.winName,'','hiddenQuestion()');
+	}
+</script>
+</html>

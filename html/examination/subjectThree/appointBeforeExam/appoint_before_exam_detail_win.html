@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>科目三考前训练预约</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+    	.order li{
+            float: left;
+		    font-size: 0.7rem;
+		    margin-left: 2.2rem;
+	    }
+	    .order{
+		    height: 2rem;
+		    line-height: 2rem;
+		    position: relative;
+	        background: #FFFFFF;
+		}
+	    .order img{
+		    width: 0.4rem;
+   			margin-bottom: 1px;
+   			-webkit-transition: 0.3s ease;
+		}
+		.screen{
+		    float: right !important;
+   			margin-right: 0.8rem;
+		}
+		.screen img{
+			width: 0.8rem;
+    		margin-bottom: -0.05rem;
+		}
+		.active{
+	    	color: #DC251F !important;
+    		/* border-bottom: solid 2px; */
+	    }
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin()">
+            <img src="../../../../icon/common/icon_header_return.png">
+        </a>
+        <div class="aui-title" id="appoint_before_exam_title">
+        	科目三考前训练预约
+        </div>
+        <a class="aui-pull-right aui-btn" tapmode onclick="checkAppointList(this);" >
+           	预约记录
+        </a>
+    </header>
+</body>
+<script type="text/javascript" src="../../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var headerPos;
+	apiready = function(){
+		api.parseTapmode();
+		var header = $api.byId('aui-header');
+		$api.fixStatusBar(header);
+		cache = api.pageParam.data;
+		headerPos = $api.offset(header);
+		init();
+	}
+	
+	var oper_status = 0;//0代表初始1进入信息确认页面2进入支付页面3支付成功
+	function init(){
+		api.openFrame({
+            name: 'appoint_before_exam_detail_frm',
+            url: './appoint_before_exam_detail_frm.html',
+            bgColor:'#efeff4',
+            rect: {
+                x: 0,
+                y: headerPos.h,
+                w: 'auto',
+                h: api.winHeight - headerPos.h
+            },
+            bounces: false,
+            pageParam:cache,
+            reload:true,
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+        
+        //监听物理返回键
+        api.addEventListener({
+	    	name: 'keyback'
+		}, function(ret, err) {
+		    closeWin();
+		});
+        
+        //弹出确认页面
+        toEventListener('sure_info',function(ret,err){
+        	oper_status = 1;
+        });
+        //进入支付页面
+        toEventListener('success_seize_seat',function(ret,err){
+        	oper_status = 2;
+        	submitCoachInput(ret.value);
+        });
+        //支付成功
+        toEventListener('appoint_pay_finish',function(ret,err){
+        	oper_status = 3;
+        	appointPayFinish(ret.value);
+        });
+	}
+	
+	function closeWin(){
+		if(oper_status == 1){
+			oper_status = 0;//操作状态退回到初始状态
+			esc_function('appoint_before_exam_detail_win','appoint_before_exam_sure_frm','returnChange()');
+		}else if(oper_status == 2){
+			oper_status = 0;//操作状态退回到初始状态
+			api.closeFrame({name:'appoint_before_exam_pay_for_frm'});
+		}else{
+			api.closeWin({
+	        });
+		}
+	}
+	
+	//修改头部名
+	function changeMenuTitle(name,jsfun){
+		$('#appoint_before_exam_title').html(name);
+		api.parseTapmode();
+	}
+	
+	/**
+	 *  进入支付页面
+	 */
+	function submitCoachInput(data){
+		openFrameFromRight('appoint_before_exam_pay_for_frm',data,headerPos.h,api.winHeight - headerPos.h);
+	}
+	
+	//支付成功
+	function appointPayFinish(data){
+		changeMenuTitle('课程预约结果');
+		openFrameCommon('appoint_before_exam_notice_frm',data,headerPos.h,api.winHeight - headerPos.h,false);
+	}
+	
+	/**
+	 * 查看预约记录 
+	 */
+	function checkAppointList(){
+		params = {
+			type:'record_practice_subject_three',
+			index:0
+		}
+		api.openWin({
+	       name: 'mine_common_win',
+	       url: '../../../mine/mine_common_win.html',
+	       slidBackEnabled:'false',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       useWKWebView:false,
+	       pageParam: {
+	           data:params
+	       }
+	   });
+	}
+	
+	//frame淡滑出
+	function frameSlideOut(frmName){
+		setTimeout(function(){
+			api.closeFrame({
+				name:frmName,
+				animation:{
+					type:"fade",                //动画类型（详见动画类型常量）
+				    duration:300 
+				}
+	        });
+		},300);
+	}
+</script>
+</html>

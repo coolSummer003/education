@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>题库支付</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html, body {
+            background-color: #F5F5F5;
+            padding: 0;
+            margin: 0;
+        }
+
+        #aui-header {
+            background-color: #fff;
+            color: #333;
+        }
+
+        #aui-header:after {
+            height: 0;
+        }
+
+        #aui-header img {
+            width: 1rem;
+        }
+
+        ul:before, ul:after {
+            height: 0 !important;
+        }
+
+        .aui-content {
+            background-color: #F5F5F5;
+        }
+
+        .aui-row {
+            width: 100%;
+        }
+
+        .title {
+            font-size: 0.8rem;
+            color: #27344C;
+            font-weight: bold;
+        }
+
+        .content {
+            font-size: 0.8rem;
+            color: #323E55;
+        }
+
+        .aui-list .aui-list-header {
+            padding: 0.6rem 0.4rem;
+            background-color: #fff;
+            position: relative;
+        }
+
+        .aui-list .aui-list-header:after {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 1px;
+            background-color: #ddd;
+            display: block;
+            content: '';
+            width: 100%;
+            z-index: 2;
+            -webkit-transform-origin: 50% 100%;
+            transform-origin: 50% 100%;
+            pointer-events: none;
+            transform: scaleY(0.333);
+        }
+
+        .aui-list-header > div {
+            border-left: 3px solid #443636;
+            height: 1rem;
+            line-height: 1rem;
+            padding-left: 0.75rem;
+            color: #27344C;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .aui-col-xs-2 > img {
+            display: block;
+            margin: 0.5rem auto;
+            height: 1.5rem;
+            width: 1.5rem;
+        }
+
+        .pay-btn {
+            margin: 1.5rem auto;
+            width: 90%;
+            height: 2.25rem;
+            line-height: 2.25rem;
+            background: #443636;
+            border-radius: 1.25rem;
+            color: #FFC696;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .payment-method-selected {
+            display: none;
+            position: absolute;
+            top: 0.75rem;
+            right: 0;
+            height: 1rem;
+            width: 1rem;
+        }
+    </style>
+	</head>
+	<body>
+		<!-- 头部 -->
+		<header class="aui-bar aui-bar-nav aui-border-b" id="aui-header">
+			<div id="header_top" style="height: 2.25rem;">
+				<a class="aui-pull-left aui-btn" tapmode onclick="closeThis()">
+					<img src="../../../icon/common/icon_header_return.png" alt="">
+				</a>
+				<div class="aui-title">
+					支付
+				</div>
+			</div>
+		</header>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var paymentMethod = 3;
+		var paid = false;
+		var aliPayPlus; //支付宝
+		var wxPayPlus; //微信
+		var headerPos;
+		var frmName = 'question_bank_pay'
+		apiready = function() {
+			api.parseTapmode();
+			aliPayPlus = api.require('aliPayPlus');
+			wxPayPlus = api.require('wxPayPlus');
+			cache = api.pageParam.data;
+			log('', cache)
+			$api.fixStatusBar($api.byId('aui-header'));
+			var header = $api.byId('aui-header');
+			headerPos = $api.offset(header);
+			toEventListener('openPaySuccess',function(ret,err){
+				log('',ret)
+				init(ret.value.frmName,ret.value.params)
+				$('.aui-title').html('支付成功');
+			})
+			// toEventListener('closeVipO',function(ret,err){
+			// 	console.log('我进来了，我要关闭2')
+			// 	// setTimeout(function(){
+			// 		closeThis()
+			// 	// },500)
+			// })
+			
+			init(frmName,cache);
+		};
+		
+		function init(frmName,data){
+			api.openFrame({
+				name: frmName,
+				url: './'+frmName+'.html',
+				bgColor:'#efeff4',
+				rect: {
+				    x: 0,
+				    y: headerPos.h,
+				    w: 'auto',
+				    h: api.winHeight - headerPos.h
+				},
+				bounces: true,
+				pageParam:{
+					data:data
+				},
+				reload:true,
+				softInputBarEnabled:true,
+				softInputMode:'resize'
+			})
+		}
+		
+
+		function closeThis() {
+			api.closeWin({})
+		}
+	</script>
+</html>

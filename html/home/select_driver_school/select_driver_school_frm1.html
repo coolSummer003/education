@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>帮我选驾校</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html,body{
+    		background: url(../../../image/background/selectdriverschool.png) no-repeat;
+    	}
+		.imgouter{
+			display: flex;
+			flex-flow: row;
+		}
+		.text{
+			width: 8rem;
+			height: 7rem;
+			margin-top:3rem;
+			margin-left: 1rem;
+			z-index: 999;
+		}
+		.text img{
+			width: 100%;
+			height: auto;
+			
+		}
+		.text1{
+			width: 11rem;
+			height: 7rem;
+			margin-top: 0.5rem;
+			margin-right: 0;
+			z-index: 998;
+		}
+		.text1 img{
+			width: 100%;
+			height: auto;
+			
+		}
+		.outer{
+			width: 94%;
+			margin-left: 3%;
+			background-color: #fff;
+			border-radius: 1rem;
+			position: relative;
+			height: 20rem;
+			top: 2rem;
+			padding: 1rem 0.8rem 1rem 0.8rem;
+		}
+		.btn1{
+			border: #3F86FF solid 0.05rem;
+			padding: 0.4rem 0.5rem 0.4rem 0.5rem;
+			width: 5rem;
+			text-align: center;
+			height: 1.5rem;
+			line-height: 0.6rem;
+			border-radius: 1rem;
+			color: #3F86FF;
+			font-size: 0.6rem;
+		}
+		.arrow{
+			height: 1rem;
+		}
+		.arrow img{
+			height: 100%;
+			width: auto;
+		}
+		.opin{
+			display: flex;
+			flex-flow: row;
+			align-items: center;
+			margin-top: 0.5rem;
+		}
+		.icon{
+			width: 0.8rem;
+			height: 0.8rem;
+		}
+		.icon img{
+			width: 100%;
+			height: auto;
+		}
+		.text2{
+			color: #999999;
+			font-size: 0.7rem;
+			margin-top: 0.2rem;
+			margin-left: 0.5rem;
+		}
+		.sub{
+			width: 94%;
+			margin-left: 3%;
+			height: 2.25rem;
+			background-image: linear-gradient( to right,#64ADF6,#3F86FE);
+			text-align: center;
+			line-height: 2.25rem;
+			border-radius: 1rem;
+			color: #fff;
+			margin-top: 2rem;
+		}
+		.aui-list:before{
+			height: 0 !important;
+		}
+		#area{
+			width: 10rem !important;
+		}
+		#type{
+			width: 10rem !important;
+		}
+    	
+    </style>
+	</head>
+	<body>
+		<div class="imgouter">
+		<div class="text">
+			<img src="../../../icon/home/choosing_driving_schools_text.png" alt="">
+		</div>
+		<div class="text1">
+			<img src="../../../icon/home/people.png" alt="">
+		</div>
+		</div>
+		<div class="outer">
+			<ul class="aui-list aui-form-list">
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label " >
+							姓名
+						</div>
+						<div class="aui-list-item-input" style="margin-left: 0.75rem;">
+							<input type="text" placeholder="输入姓名">
+						</div>
+					</div>
+				</li>
+
+				<!-- 				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							手机号
+						</div>
+						<div class="aui-list-item-input">
+							<input type="number" placeholder="输入手机号">
+						</div>
+					</div>
+				</li>
+				 -->
+				<li class="aui-list-item" id="tel">
+					<div class="aui-list-item-label-icon">
+						手机号
+					</div>
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-title" style="margin-left: 0.75rem;">
+							<input type="tel" maxlength="11" style="margin-left: 1.2rem;" placeholder="请输入手机号" id="account" />
+						</div>
+					</div>
+					<div class="aui-list-item-label-icon" id="clearPhone">
+
+					</div>
+				</li>
+
+
+
+
+				<li class="aui-list-item" id="pcd">
+					<div class="aui-list-item-label-icon">
+						验证码
+					</div>
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-title" style="margin-left: 0.7rem;">
+							<input type="tel" maxlength="6" style="margin-left: 1.2rem;" placeholder="六位验证码" id="postcode" />
+						</div>
+						<div class="aui-list-item-right">
+							<span id="cn" onclick="getMessage()" class="btn1">获取验证码</span>
+						</div>
+					</div>
+				</li>
+
+				<li class="aui-list-item" id="pcd">
+					<div class="aui-list-item-label-icon">
+						我的位置
+					</div>
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-title" tapmode onclick="map()">
+							<input type="text" style="margin-left: 1.2rem;" id="area" disabled />
+						</div>
+						<div class="aui-list-item-right">
+							<span id="cn" class="arrow"><img src="../../../icon/home/blackarr.png"></span>
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item" id="pcd">
+					<div class="aui-list-item-label-icon">
+						驾照类型
+					</div>
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-title" tapmode onclick="type()">
+							<input type="text" style="margin-left: 1.2rem;" id="type" disabled />
+						</div>
+						<div class="aui-list-item-right">
+							<span id="cn" class="arrow"><img src="../../../icon/home/blackarr.png"></span>
+						</div>
+					</div>
+				</li>
+
+
+
+
+
+
+			</ul>
+			<div class="opin">
+				<div class="icon">
+					<img src="../../../icon/home/opin.png" alt="">
+				</div>
+				<div class="text2">提交成功之后，推荐的驾校将与您电话联系</div>
+
+			</div>
+
+			<div class="sub" tapmode onclick="next()">下一步</div>
+
+		</div>
+		</div>
+
+
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/aui/aui_tab.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/swiper/swiper.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var clearance = 25; //间隙
+		var headerPos;
+		var cache;
+		var bMap;
+		var lon;
+		var lat;
+	
+		apiready = function() {
+			$api.fixStatusBar($api.byId('aui-header1'));
+			$api.fixStatusBar($api.byId('aui-header2'));
+			fs = api.require('fs');
+			cache = api.pageParam;
+			//log("驾校报名"+JSON.stringify(cache))
+			bMap = api.require('bMap');
+			systemType = api.systemType;
+			touchStyle = systemType == "ios" ? 'touchmove' : 'scroll';
+			scroll();
+			imageFilter = api.require('imageFilter');
+
+			api.parseTapmode();
+			toEventListener('type', function(ret) {
+				log('retss', ret);
+				$("#type").val(ret.value.name);
+			})
+			toEventListener('selectArea', function(ret) {
+				log('----------------', ret);
+				$("#area").val(ret.value.address);
+			})
+			/* init(); */
+
+		}
+
+		function getMessage() {
+			if (!isPhoneAvailable($('#account').val())) {
+				alert_msg('请输入正确的手机号');
+				$("#tel").append($tel);
+				return;
+			}
+			params = {
+				telephone: $('#account').val(),
+				type: 'register'
+			}
+			open_load_up();
+			sendMessage(params, function(ret, err) {
+				//console.log("发送验证码"+JSON.stringify(ret));
+				close_load();
+				if (ret) {
+					if (ret.code == 0) {
+						timedCount('点击发送');
+						alert_msg('发送成功');
+					} else {
+						alert_msg(ret.msg);
+					}
+					$tel.remove();
+				} else {
+					alert_msg("服务器繁忙，请稍后再试");
+				}
+			});
+		}
+
+		function open_load_up(msg) {
+			api.openFrame({
+				name: 'common_progress_frm',
+				url: '../../common/common_progress_frm.html',
+				bgColor: 'rgba(255,255,255,0.8)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: api.winWidth,
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					msg: msg
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+
+		function next() {
+
+
+
+			api.openWin({
+				name: 'select_driver_school_win2',
+				url: './select_driver_school_win2.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: {}
+			});
+
+
+
+		}
+		//选择位置
+		function map() {
+			api.openWin({
+				name: 'area_win',
+				url: './area_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: {}
+			});
+
+
+
+
+
+		}
+
+
+
+
+
+
+
+
+
+		//选择驾照类型
+		function type() {
+			api.openWin({
+				name: 'select_study_carType_win',
+				url: './select_study_carType_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: {}
+			});
+
+		}
+
+		function closeWin() {
+			api.closeWin({});
+		}
+	</script>
+</html>

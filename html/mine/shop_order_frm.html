@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>订单详情</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/comment.css" />
+		<style>
+			html,body{
+				background:#F5F5F5;
+				width:100%;
+				overflow-y: auto;
+				overflow-x: hidden;
+		    	overflow-y: scroll;
+		    	-webkit-overflow-scrolling: touch;
+			}
+			header img {
+				width: 20px;
+			}
+			footer{
+    		height: 2.5rem;
+		    position: absolute;
+		    bottom: 0;
+		    width: 100%;
+		    font-size: 0.7rem;
+		    left: 0;
+		    background: #EFEFF4;
+    	}
+
+			.footer-send{
+				width:25%;
+				float:right;
+				margin-right: 5%;
+				height: 2.5rem;
+				display: flex;
+			}
+			.convert{
+				width: 5rem;
+				height: 1.8rem;
+				margin-top: 0.4rem;
+				padding: 0rem;
+				background: #3F86FF;
+				color: #fff;
+				font-size: 0.7rem;
+                border-radius: 2rem;
+			}
+			.default{
+				display: inline-block;
+				height: 0.7rem;
+				line-height: 0.7rem;
+				margin-bottom: 0.4rem;
+				width: 1.2rem;
+				text-align: center;
+				font-size: 0.5rem;
+				background: #f00;
+				color: #fff;
+				border-radius: 10%;
+				position: absolute;
+				top: 2.5rem;
+				right:5.5rem;
+			}
+
+			ul,
+			li {
+			    list-style: none;
+			}
+			a:hover {
+                cursor: pointer;
+                text-decoration: none;
+                color:#9a9a9a;
+            }
+			a {
+				color:#9a9a9a;
+			    text-decoration: none;
+			}
+			
+			a:link {
+				color:#9a9a9a;
+			    text-decoration: none;
+			}
+			
+			img {
+			    vertical-align: middle;
+			}
+			.exchange{
+				position:relative;
+				top:-1.1rem;
+				float:right;
+			}
+			.btn-numbox li {
+			    float: left;
+			}
+			.btn-numbox {
+			    margin-left: 11rem;
+			    margin-top: -1.1rem;   
+			}
+			
+			.num-jian{
+			    display: inline-block;
+			    width: 1.6rem;
+			    height: 1.4rem;
+			    line-height: 1.4rem;
+			    text-align: center;
+			    font-size: 0.8rem;
+				color: #888888;
+				border-radius:3px 0 0 3px ;
+			    border: 1px solid #e6e6e6;
+			    cursor:pointer;
+			}
+			
+			.num-jia {
+			    display: inline-block;
+			    width: 1.6rem;
+			    height: 1.4rem;
+			    line-height: 1.4rem;
+			    text-align: center;
+			    font-size: 0.8rem;
+				color: #888888;
+				border-radius:0 3px 3px 0 ;
+			    border: 1px solid #e6e6e6;
+			    cursor:pointer;
+			}
+			.btn-numbox .input-num {
+				text-align: center;
+			    width: 2rem;
+			    border-top: 1px solid #e6e6e6;
+			    border-bottom: 1px solid #e6e6e6;
+				color: #6E6E6E;
+				font-size:0.8rem;
+				min-height: 1.4rem;
+			}
+			.information_content{
+				padding: 0.3rem;
+				border-radius: 10px;
+				width: auto;
+				height: auto;
+				background-color: #F5F5F5;
+				margin-top: 1rem;
+				margin-left: 0.3rem;
+				margin-right:0.3rem;
+				background-image:url(../../image/background/address_background.png);
+				background-repeat:no-repeat;
+                background-size: 100% 100%;
+			}
+			.information_content_second{
+				padding: 0.3rem;
+				border-radius: 7px 7px 0 0 ;
+				width: auto;
+				height: 7rem;
+				background-color: #ffffff;
+				margin-top: 0.2rem;
+				margin-right: 0.7rem;
+				margin-left: 0.7rem;
+			}
+			.information_content_third{
+				padding:0.3rem;
+				border-radius: 0 0 7px 7px ;
+				width: auto;
+				background-color: #ffffff;
+				margin-right: 0.7rem;
+				margin-left: 0.7rem;
+			}
+			.choose_store{
+				border-radius: 0 0 7px 7px;
+				width: auto;
+				height: 2.5rem;
+				background-color: #ffffff;
+				margin-right: 0.7rem;
+				margin-left: 0.7rem;
+			}
+			.top_img_left{
+				width: 0.95rem;
+				position:absolute;
+				top:4.7rem;
+				right:1rem;
+			}
+			.top_img_right{
+				float: right;
+				width: 0.75rem;
+				position: relative;
+				top:1rem;
+				right:0.27rem;
+			}
+			.address{
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				height: 100%;
+			}
+			.address_list{
+				width: 98%;
+				margin-left:2%;
+				padding-left: 1%;
+				height: auto;
+			}
+			.address_list:after{
+				content: '';
+				height: 1px;
+				background: #DDDDDD;
+				width: 100%;
+				background-color: #dddddd;
+				display: block;
+				margin-top: 0.5rem;
+				-webkit-transform: scaleY(0.5);
+				transform: scaleY(0.5);
+				-webkit-transform-origin: 50% 100%;
+				transform-origin: 50% 100%;
+			}
+
+			.address_address{
+				height: auto;
+			}
+			.address_edit{
+				width: 10%;
+				height: auto;
+				margin-left: 90%;
+				margin-top: -1rem;
+			}
+			.address_edit img{
+				width: 0.8rem;
+			}
+			.msg{
+				background: #FFFFFF;
+				height: 90%;
+				text-align: center;
+				font-size:0.7rem;
+				display: flex;
+			}
+			.msg img{
+				width:8rem;
+				margin-top: 9rem;
+			}
+			.msg span{
+				margin:auto;
+			}
+			.selected{
+				background:url("../../../icon/common/icon_list_selet.png") no-repeat;
+				background-position-x: right;
+				background-position-y: 0px;
+				background-size: 6%;
+				background-color:#F0F0F0;
+			}
+			.address_img{
+				width:1.2rem;
+				height:1.2rem;
+				position:absolute;
+				top:4.7rem;
+				left:1.3rem;
+			}
+			.address_foot{
+			     margin-top:0.2rem;
+			}
+			.addressName{
+				position:relative;
+				font-size:0.7rem;
+				left:2.4rem;
+				color:#333333;
+			}
+			.addressTel{
+				position:relative;
+				font-size:0.7rem;
+				color:#333333;
+				left:2.9rem;
+			}
+			.addressDetail{
+				margin-top:0.6rem;
+				margin-left:2.4rem;
+				font-size:0.9rem;
+				font-weight: bold;
+				width:13rem;
+				color: #333333;
+			}
+			.chooseStore{
+				position:relative;
+				top:0.9rem;
+				left:1rem;
+			}
+			.switch_button{
+				position:relative;
+				top:0.55rem;
+				left:0.8rem;
+				width: 2.45rem;
+				float: left; 
+			}
+			.door{
+				float: left;
+				position: relative;
+				top: 0.55rem;
+				left:0.8rem;
+			}
+			.store_list{
+				position:relative;
+				float:right;
+				color:#9a9a9a;
+				font-size:0.75rem;
+				top: 0.8rem;
+				right: 0.5rem;
+			}
+			.top-slide{
+				top:0.2rem;
+				left:0rem;
+			}
+			.mainImage{
+				width:6rem;
+				height:4.5rem;
+				float:left;
+				position:relative;
+				margin:0.7rem;
+				object-fit: content;
+			}
+			.mainName{
+				position:relative;
+				font-size:0.8rem;
+				top:1.25rem;
+				width:8rem;
+				font-weight: bold;
+				color: #333333;
+			}
+			.mainNumber{
+				font-size:0.8rem;
+				color:#333333;
+				position: relative;
+				float: right;
+				top: 0.1rem;
+			}
+			.changeNum{
+				position:relative;
+				font-size:0.8rem;
+				top:2.2rem;
+				color: #333333;
+			}
+			.order_remark{
+				margin-top:0.7rem;
+				margin-left:1.32rem;
+				font-size:0.65rem;
+			}
+			.areaRemarks{
+				overflow-x:hidden;
+				overflow-y:scroll;
+				font-size: 0.6rem;
+				position: relative;
+				margin-top:-0.9rem;
+				left: 4.7rem;
+				width: 11rem;
+				min-height: 5rem;
+			}
+			.allNum{
+				float: left;
+				position:relative;
+				font-size: 0.75rem;
+				color:#9a9a9a;
+				margin-left:1.5rem;
+				margin-top: 0.75rem;
+			}
+			.countNum{
+				float: left;
+				position:relative;
+				font-size: 0.75rem;
+				margin-left:0.3rem;
+				margin-top: 0.75rem;
+			}
+			.integralNum{
+				float: left;
+				color:#FC0202;
+				font-size: 0.75rem;
+				margin-top: 0.75rem;
+			}
+			.selectType{
+			    width:4.5rem;
+                height: 1.5rem;
+                background:rgba(63,134,255,1);
+                border-radius: 2rem;
+                color: #FFFFFF;
+                z-index: 99;
+			}
+			.notSelectType{
+                width:5.5rem;
+                height: 1.5rem;
+                background: #CFE1FF;
+                border-radius: 2rem;
+                color: #FFFFFF;
+            }
+            .express_button{
+                margin-left: 0.75rem;
+                margin-top: 0.75rem;
+            }
+            .self_access_button{
+                margin-top: 0.75rem;
+                margin-left: -0.9rem;
+            }
+            .shopOrigalPrice{
+                color: #999999;
+                font-size: 0.7rem;
+                margin-left: 0.5rem;
+            }
+            .bottom-slide:after{
+                height: 1.5rem;
+                color: #F5F5F5;
+            }
+            .aui-list:before,.aui-list:after,.aui-list .aui-list-item:after{
+                height: 0;
+            }
+            .input_title{
+                margin-left: 0.7rem;
+                font-size: 0.8rem;
+                color: #333333;
+                /*float: left;*/
+                margin-top: 1rem;
+                font-weight:400;
+                /*display: inline-block;*/
+            }
+            .input_val{
+                text-align: right;
+                font-size: 0.8rem;
+                color: #333333;
+                font-weight:400;
+                height: auto;
+            }
+    </style>
+	</head>
+	<body>
+	    <div>
+	       <button class="selectType express_button" onclick="select_express()" id="select_express">快递邮寄</button>
+	       <button class="notSelectType self_access_button" onclick="select_self_access()" id="select_self_access">到店自取</button>
+	    </div>
+		<div id="a"></div>
+		<ul class="address" id="address">
+		  <div class="information_content"  onclick="select_address()">
+                    <div class="aui-list-item-media" >
+                    <img src="../../icon/mine/icon_address.png" class="address_img">
+                    </div>
+                    <div class="address_name">
+                        
+                    </div>
+                    <div class="address_address aui-list-item-title">
+                        <p id="addressView" class="aui-list-item-text addressDetail" ></p>
+                        <img src="../../icon/hospital/icon_right.png" alt="" class="top_img_left" />
+                    </div>
+                    <div class="address_foot">
+                        <span class="aui-list-item-title aui-ellipsis-1 addressName" ></span>
+                        <span class="aui-list-item-title aui-ellipsis-1 addressTel" ></span>
+                    </div>
+                </div>
+		</ul>
+		<div id="choosestore">
+		  <div class="information_content_second bottom-slide">
+            <div class="aui-list-item-media">
+                <img src="{{=file_load_url + it.data.image}}" alt="" onerror="javascript:this.src='../../icon/mine/icon_mine_head_hui.png'" class="mainImage"/>
+            </div>
+            <div class="address_name">
+                <span class="aui-list-item-title aui-ellipsis-2 mainName" ></span>
+                <span id="integralExit" class="aui-list-item-title mainNumber" ></span>
+                <!--<span id="integralExit" class="aui-list-item-title aui-ellipsis-1 mainIntegral" >{{=it.data.integral}}积分</span>-->
+            </div>
+            <div class="address_address aui-list-item-title">
+               <p class="aui-list-item-text aui-ellipsis-2 changeNum" ></p>
+            </div>
+            <!--<div class="exchange">
+                <ul class="btn-numbox">
+                    <li>
+                        <ul class="count">
+                            <li><span id="num-jian" class="num-jian">-</span></li>
+                            <li><input type="text" class="input-num" id="input-num" value="1" readonly onchange="inputNum()"  maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></li>
+                            <li><span id="num-jia" class="num-jia">+</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>-->
+        </div>
+        <div class="information_content_third">
+            <div class="aui-content">
+                    <ul class="aui-list aui-form-list">
+                    <li class="aui-list-item">
+                            <div class="aui-list-item-inner">
+                                <div class="aui-list-item-label input_title">
+                                    商品合计
+                                </div>
+                                <div class="aui-list-item-input">
+                                    <input type="text" id="total_price" class="input_val" readonly>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-inner">
+                                <div class="aui-list-item-label input_title">
+                                    积分扣除
+                                </div>
+                                <div class="aui-list-item-input">
+                                    <input type="text" id="totle_integral" class="input_val" readonly>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-inner">
+                                <div class="aui-list-item-label input_title">
+                                    合计
+                                </div>
+                                <div class="aui-list-item-input">
+                                    <input type="text" id="totle" class="input_val" readonly>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            <!--<div class="address_address aui-list-item-title">
+                <span class="aui-list-item-text aui-ellipsis-2 order_remark" >订单备注</span>
+                <div class="aui-list-item-input">
+                    <textarea  placeholder="选填" id="remarks" class="areaRemarks" ></textarea>
+                </div>
+            </div>-->
+            <!--<div class="aui-list-item-title">
+                <span id="integral" style="float: right;position:relative;color:#FC0202;font-size: 0.65rem;margin-top: 0.2rem;">&nbsp;{{=it.data.integral}}积分</span>
+                <span style="float: right;position:relative;font-size: 0.65rem;margin-top: 0.2rem;">小计：</span>
+                <span style="float: right;position:relative;font-size: 0.65rem;margin-right: 0.3rem;margin-top:0.2rem;color:#9a9a9a;">共<a id="num">1</a>件</span>
+                
+            </div>-->
+        </div>
+		</div>
+		<div class="shop_order_position"></div>
+		<footer id="footer" ></footer>
+		<!-- 地址列表 -->
+		<script type="text/template" charset="UTF-8" id="addressList">
+			{{ for(var i=0;i<it.length;i++){ }}
+				<div class="information_content"  onclick="select_address()" id="selectType">
+					<div class="aui-list-item-media" >
+		            <img src="../../icon/mine/icon_address.png" class="address_img">
+		      		</div>
+					<div class="address_name">
+						<!--<span class="aui-list-item-title aui-ellipsis-1 addressName" >{{=it[i].name}}</span>
+						<span class="aui-list-item-title aui-ellipsis-1 addressTel" >{{=it[i].telephone}}</span>-->
+						<!--{{ if(it[i].isDefault != 0){ }}
+								<span class="default aui-ellipsis-1">默认</span>
+						{{ } }}-->
+					</div>
+					<div class="address_address aui-list-item-title">
+						<p id="addressView" class="aui-list-item-text aui-ellipsis-2 addressDetail" >请选择邮寄地址</p>
+						<img src="../../icon/hospital/icon_right.png" alt="" class="top_img_left" />
+					</div>
+					<div class="address_foot">
+					   <span class="aui-list-item-title aui-ellipsis-1 addressName" >{{=it[i].name}}</span>
+                        <span class="aui-list-item-title aui-ellipsis-1 addressTel" >{{=it[i].telephone}}</span>
+					</div>
+					
+				</div>
+			{{ } }}
+	</script>
+	<script type="text/template" charset="UTF-8" id="store">
+		<!--<div class="choose_store">
+            <div class="aui-list-item-input chooseStore top-slide"   >
+            <div tapmode onclick="openSwitch()" class="switch_button">
+                <input type="checkbox" name="checkboxs" class="aui-switch" value="0" checked onclick="return false">
+           </div>
+           		<span class="door">门店自取</span>
+            </div>
+            <img src="../../icon/hospital/icon_right.png" alt="" class="top_img_right" tapmode onclick="selTestCenter()" />
+		<div class="aui-list-item-title store_list" id="storeList"   onclick="selTestCenter()">选择门店</div>		
+	</div>-->
+	</script>
+	<script type="text/template" charset="UTF-8" id="shop_order">
+		<div class="information_content_second bottom-slide">
+			<div class="aui-list-item-media">
+				<img src="{{=file_load_url + it.data.image + '&style=image/resize,w_400'}}" alt="" onerror="javascript:this.src='../../icon/mine/icon_mine_head_hui.png'" class="mainImage"/>
+			</div>
+			<div class="address_name">
+				<span class="aui-list-item-title aui-ellipsis-2 mainName" >{{=it.data.name}}</span>
+				<span id="integralExit" class="aui-list-item-title mainNumber" >x{{=it.data.shoppingNumber}}
+				
+				</span>
+				<!--<span id="integralExit" class="aui-list-item-title aui-ellipsis-1 mainIntegral" >{{=it.data.integral}}积分</span>-->
+			</div>
+			<div class="address_address aui-list-item-title">
+				<p class="aui-list-item-text aui-ellipsis-2 changeNum" >
+				{{ if(it.data.price != "" && it.data.integral != ""){}}
+                                                ￥{{=it.data.price}}+{{=it.data.integral}}积分        
+                {{ }else if(it.data.price == "0" && it.data.integral != "0"){ }}
+                     {{=it.data.integral}}积分
+                {{ }else if(it.data.price != "0" && it.data.integral == "0"){ }}
+                                                ￥{{=it.data.price}}
+                {{ }else { }}
+                       免费             
+                {{ } }}
+				<del class="shopOrigalPrice">￥{{=it.data.origalPrice}} </del>
+				</p>
+			</div>
+			<!--<div class="exchange">
+				<ul class="btn-numbox">
+					<li>
+						<ul class="count">
+							<li><span id="num-jian" class="num-jian">-</span></li>
+							<li><input type="text" class="input-num" id="input-num" value="1" readonly onchange="inputNum()"  maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></li>
+							<li><span id="num-jia" class="num-jia">+</span></li>
+						</ul>
+					</li>
+				</ul>
+			</div>-->
+		</div>
+		<div class="information_content_third ">
+			 <div class="aui-content">
+                    <ul class="aui-list aui-form-list">
+                    <li class="aui-list-item">
+                            <div class="aui-list-item-inner">
+                                <div class="aui-list-item-label input_title">
+                                    商品合计
+                                </div>
+                                <div class="aui-list-item-input">
+                                    <input type="text" id="total_price" class="input_val" readonly>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-inner">
+                                <div class="aui-list-item-label input_title">
+                                    积分扣除
+                                </div>
+                                <div class="aui-list-item-input">
+                                    <input type="text" id="totle_integral" class="input_val" readonly>
+                                </div>
+                            </div>
+                        </li>
+                         <li class="aui-list-item">
+                            <div class="aui-list-item-inner">
+                                <div class="aui-list-item-label input_title">
+                                    合计
+                                </div>
+                                <div class="aui-list-item-input">
+                                    <input type="text" id="totle" class="input_val" readonly>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+			<!--<div class="aui-list-item-title">
+				<span id="integral" style="float: right;position:relative;color:#FC0202;font-size: 0.65rem;margin-top: 0.2rem;">&nbsp;{{=it.data.integral}}积分</span>
+				<span style="float: right;position:relative;font-size: 0.65rem;margin-top: 0.2rem;">小计：</span>
+				<span style="float: right;position:relative;font-size: 0.65rem;margin-right: 0.3rem;margin-top:0.2rem;color:#9a9a9a;">共<a id="num">1</a>件</span>
+				
+			</div>-->
+		</div>
+	</script>
+	
+		<script type="text/template" charset="UTF-8" id="change">
+			
+				 <div class="aui-list-item-title">
+				 	<span  class="allNum">共<a id="num">{{=it.data.shoppingNumber}}</a>件</span>
+				 	<span  class="countNum">小计：</span>		
+					<span id="integral" class="integralNum">
+					   {{ if(it.data.price != "" && it.data.integral != ""){}}
+                                                        ￥{{=cashFormat(it.data.price*it.data.shoppingNumber)}}+{{=it.data.integral*=it.data.shoppingNumber}}积分        
+                        {{ }else if(it.data.price == "0" && it.data.integral != "0"){ }}
+                          {{=it.data.integral*=it.data.shoppingNumber}}积分
+                        {{ }else if(it.data.price != "0" && it.data.integral == "0"){ }}
+                                                         ￥{{=cashFormat(it.data.price*it.data.shoppingNumber)}}
+                        {{ }else { }}
+                                                        免费                                                 
+                        {{ } }}
+					</span>				
+				</div>
+				<div class='footer-send'  onclick="newConvert('integral_shop')" >
+					<button class="convert" id="convert">提交订单</button>
+				</div>
+	
+		
+		</script>
+			
+		<script type="text/template" charset="utf-8" id='msg_src'>
+			<div class="msg">
+				<img src="../../icon/common/empty.png" alt="" /><br>
+				<span>{{=it.msg}}</span>
+			</div>
+		</script>
+		<script type="text/template" charset="utf-8" id='more_src'>
+			<div class="jiazai"><!--上拉加载-->
+			<span>{{=it.msg}}</span>
+		</div>
+		</script>
+
+	</body>
+	<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var text;
+		var cache;
+		var addressViewCode = '';
+		var postalCode;//邮编
+		var msg_src = $('#msg_src').html(); //更多src
+		var isAllowNew = true; //是否允许再创建
+		var addressLimit = 8; //允许创建的最大地址数
+		var learnerAddressList; //学员地址全局变量
+		var selected_address_id;//选中地址的id
+		var addressList = $("#addressList").html();
+		var obj;
+		var businessid;//经销商id
+		var Name;//用户姓名
+		var alladdress;//用户地址
+		var alladdressCode;//区code
+		var business_code;//经销商code
+		var Telephone;//用户手机号
+		var pickupWay = 1;//选择邮寄方式   0：自提，1：邮寄
+		apiready = function() {
+			cache = api.pageParam;
+			goodsId = cache.data.id;
+            Id = cache.data.goodsId;
+			console.log(JSON.stringify(cache))
+			integral = cache.data.integral;
+			image = cache.data.image;
+			name = cache.data.name;
+			price = cache.data.price;
+			origalPrice = cache.data.origalPrice;
+			integralExist = cache.data.integralExist;
+			isMail = cache.data.isMail;
+			traderId = cache.data.traderId;
+			shoppingNumber = cache.data.shoppingNumber;
+			api.addEventListener({
+				name: 'init'
+			}, function(ret, err) {
+				location.reload();
+			});		
+		//监听地址选择
+		toEventListener('shop_order',function(ret){
+			log('地址',ret.value);
+			var address_info = ret.value;	
+			var arr = new Array();//转化为数组
+			arr.push(address_info);
+			$("#address").html(doT.template(addressList)(arr));
+		    $("#addressView").html(address_info.district.provinceName+" "+address_info.district.cityName+" "+address_info.district.areaName+" "+address_info.addressDetail)
+			addres(arr);//获取地址、信息方法
+			selected_address_id = address_info.id;
+		});
+		//监听门店选择
+		toEventListener('store_choose',function(ret){
+			var store_list = ret.value; 
+			console.log(JSON.stringify(store_list))
+			businessid = store_list.id;//门店列表传回来的门店id
+			traderId = businessid;
+			alladdress = store_list.choose_store_list;
+			business_code = store_list.business_code;//门店列表传回来的经销商code
+			//console.log(business_code);
+			$("#addressView").text(store_list.choose_store_list);//选中门店后的赋值
+		});
+			api.parseTapmode();
+			init();
+		}
+		
+		//选择门店
+		function selTestCenter(){	
+			api.openDrawerPane({
+			    type: 'right'
+			});
+			api.parseTapmode();
+		}
+		//提示暂时只能自取
+		function openSwitch(){
+			alert_msg("暂时只支持门店自取");
+		}
+		//选择地址
+		function select_address(){
+		params = {
+			selected_address_id:selected_address_id,//选中的地址id，可能为空，用来标记
+			isSelect:true, //是否是选择
+			action:'shop_order' //动作监听name
+		}
+		api.openWin({
+	       name: 'common_address_list_win',
+	       url: '../common/learner_address/common_address_list_win.html',
+	       slidBackEnabled:'false',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       useWKWebView:false,
+	       pageParam: params
+	   });
+	   api.parseTapmode();
+	}	
+//		//打开兑换数量input
+//		function openInput(){
+//				api.prompt({
+//					title : '请输入兑换数量',
+//					text : $("#input-num").val(),
+//					type : 'number',			
+//              },function(ret,err){
+//              	//coding...
+//              	text = ret.text;
+//              	console.log(JSON.stringify(ret));
+//              	//输入为空时，显示为0
+//		 			if (text == '')
+//					 {
+//						 text = 0;
+//	 				 }
+//	                	$("#num").text(text);
+//	                	$("#input-num").val(text);
+//	                	$("#integral").text(parseInt($("#integralExit").text().replace(/\D+/g,""))*parseInt(text)+"积分");
+//	                });
+//	                api.parseTapmode();
+//				}
+		
+		//数字加减框
+		 $("body").on("click",".num-jian",function (m) {
+		 	obj = $(this).closest("ul").find(".input-num");
+		    if (obj.val() <= 0) {
+		            obj.val(0);
+		       } else {
+		            obj.val(parseInt(obj.val()) - 1);
+		    	}
+		       obj.change();
+		       $("#num").text(obj.val());
+		       $("#integral").text(parseInt($("#integralExit").text().replace(/\D+/g,""))*parseInt(obj.val())+"积分");
+		       api.parseTapmode();
+		 });
+		 
+		 $("body").on("click",".num-jia",function (m) {
+			 	obj = $(this).closest("ul").find(".input-num");
+		      	obj.val(parseInt(obj.val()) + 1);
+		       	obj.change();
+		       	$("#num").text(obj.val());
+		       	$("#integral").text(parseInt($("#integralExit").text().replace(/\D+/g,""))*parseInt(obj.val())+"积分");
+		       	api.parseTapmode();
+		 });
+		 
+		 //监听input值变化，赋值到总件数
+		 function inputNum(){
+		 		$("#num").text($("#input-num").val());
+		 	 	$("#integral").text(parseInt($("#integralExit").text().replace(/\D+/g,""))*parseInt($("#input-num").val())+"积分");
+		 }
+		 //地址加载、订单加载
+
+			function init() {
+				defaultload();
+				url = "api/learner/address-list";
+				params = {
+					learnerId : getUserId()
+				}
+				ajax_Request(url, "get", "json", params, function(ret, err) {
+					log("地址数据：", ret);
+					var myaddress = new Array();
+					var countAddres = 0;
+					//默认地址数量
+					if (ret) {
+						var shop_order = $('#shop_order').html();
+						$(".shop_order_position").html(doT.template(shop_order)(cache));
+						var store = $("#store").html();
+						$("#choosestore").html(doT.template(store));
+						var change = $("#change").html();
+						$("#footer").html(doT.template(change)(cache));
+						$("#total_price").val("￥"+(price*shoppingNumber))
+						$("#totle_integral").val(cache.data.integral)
+						if(cache.data.price != "" && cache.data.integral != ""){
+						$("#totle").val("￥"+price*shoppingNumber +" + "+integral*shoppingNumber+"积分")                   
+                        }else if(cache.data.price == "0" && cache.data.integral != "0"){
+                          $("#totle").val(cache.data.integral+"积分")
+                        }else if(cache.data.price != "0" && cache.data.integral == "0"){
+                         $("#totle").val("￥"+price*shoppingNumber)
+                        }else{
+                            $("#totle").val("免费")
+                        }
+						$("#footer").attr('style', 'background: #ffffff');
+						if (ret.code == 0) {
+							if (ret.learnerAddressList.length > 0) {
+								$("#a").remove();
+								if (ret.learnerAddressList.length == 1) {
+									//只有一条地址时
+									myaddress = myaddress.concat(ret.learnerAddressList[0]);
+									addres(myaddress);
+								} else {
+									//有多条地址时
+									for (var i = 0; i < ret.learnerAddressList.length; i++) {
+										if (ret.learnerAddressList[i].isDefault == "1") {//取默认地址
+											myaddress = myaddress.concat(ret.learnerAddressList[i]);
+											countAddres = countAddres + 1;
+											//存默认地址的数量
+											addres(myaddress);
+											//获取地址、信息方法
+										}
+									}
+									//没有默认地址,取第一条
+									if (countAddres == 0) {
+										myaddress = myaddress.concat(ret.learnerAddressList[0]);
+										addres(myaddress);
+										//获取地址、信息方法
+									}
+								}
+								if (cache.isSelect) {
+									//如果是通过选择页面进来的，需要标记被选中的哪条地址
+									ret.learnerAddressList[0].selected_address_id = cache.selected_address_id;
+								}
+								$("#address").html(doT.template(addressList)(myaddress));
+								api.parseTapmode();
+							} else {
+								//在进入当前订单页时,未存在地址信息，给一个默认信息
+								var h = "<div class=\"information_content\" id=\"a\" tapmode onclick=\"select_address()\">";
+								h += "<div class=\"aui-list-item-media\" >";
+								h += "<img src=\"../../icon/mine/icon_address.png\" class=\"address_img\">";
+								h += "</div>";
+								h += "<div class=\"address_name\">";
+								h += "<span class=\"aui-list-item-title aui-ellipsis-1 addressName\">请先选择姓名手机号</span>";
+								h += "</div>";
+								h += "<div class=\"address_address aui-list-item-title\">";
+								h += "<img src=\"../../icon/hospital/icon_right.png\"  class=\"top_img_left\" />";
+								h += "</div>";
+								h += "</div>";
+								$("#a").append(h);
+							}
+						} else {
+							//						setMsg(ret.msg);
+						}
+						if(isMail == "1"){
+                          select_express()
+                        }else{
+                          select_self_access()  
+                        }
+						api.hideProgress();
+					} else {
+						alert_msg("服务器繁忙,请稍候再试！");
+						api.hideProgress();
+					}
+				})
+			}
+
+		//兑换接口请求
+
+			function newConvert() {
+				//			pickupways();
+				var exp = "undefined";
+				if (pickupWay == "0") {
+					if (exp == typeof (businessid)) {
+						alert_msg("请选择门店");
+						return false;
+					}
+				} else {
+					if (!selected_address_id) {
+						alert_msg("请选择邮寄地址");
+						return false;
+					}
+				}
+				console.log(integral,price)
+				if ((price == 0 && integral != "0") || (price == 0 && integral == "0")) {
+				    defaultload("商品兑换中");
+					url = "api/exchange/exchange";
+					type = 'integral_shop';
+					params = {
+						learnerId : getUserId(),
+						pickupWay : pickupWay,//送货方式
+						goodsId : goodsId,//规格id
+						id:Id,//商品
+						businessId : traderId,//门店和自取ID
+						exchangeQuantity : shoppingNumber,//商品数量
+						address : alladdress,//地址
+						districtCode: alladdressCode,//地址Code
+						telephone : Telephone,//联系电话
+						liaisonMan : Name,//联系人
+					}
+					console.log("积分兑换提交" + JSON.stringify(params));
+					api.confirm({
+						title : '温馨提示',
+						msg : '是否确认兑换？',
+						buttons : ['确认', '取消']
+					}, function(ret, err) {
+						var index = ret.buttonIndex;
+						if (index == 1) {
+						     defaultload("兑换中，请稍等");
+							ajax_Request(url, "post", "json", params, function(ret, err) {
+							console.log("积分兑换返回" + JSON.stringify(ret));
+								if (ret.code == 0) {
+								    alert_msg("兑换成功");
+								    var params = {
+                                        price: money,
+                                        serviceName: name,
+								    }
+								    sendEvent('goods_pay_success',"");
+								    setTimeout(function() {
+                                        api.closeWin({
+                                            name : 'shop_detail_win'
+                                        });
+                                        api.sendEvent({
+                                            name : 'closeWin',
+                                            extra : {
+                                                key1 : '1',
+                                            }
+                                        });
+                                        api.hideProgress();
+                                    }, 500);
+									
+								} else {
+									alert_msg(ret.msg);
+									api.hideProgress();
+								}
+							})
+						}
+					});
+				}else{
+				    defaultload("订单生成中");
+				    var money = price * shoppingNumber;
+				    console.log(money)
+				    url = '/api/integral-goods/goods-record-purchase';
+                    params = {
+                        learnerId : getUserId(),
+                        pickupWay : pickupWay,
+                        id : Id,//商品id
+                        businessId : traderId,
+                        goodsId : goodsId,//规格id
+                        exchangeQuantity : shoppingNumber,
+                        address : alladdress,
+                        districtCode: alladdressCode,
+                        telephone : Telephone,
+                        liaisonMan : Name,
+                    }
+                    console.log("积分下单提交" + JSON.stringify(params));
+                    ajax_Request(url, 'post', 'json', params, function(ret, err) {
+                         log('下单', ret);
+                        if (ret) {
+                            if (ret.code == 0 ) {
+                                // 打开下单页面
+                                if(ret.flag == true){
+                                        commonOpenWin('goods_shop_pay_frm', {
+                                        orderId: ret.orderId,
+                                        price: money,
+                                        serviceName: name,
+                                        orderTime: ret.orderTime,
+    //                                  type: cache.type,
+    //                                  testCenterId: cache.testCenterId
+                                    });
+                                }else if(ret.flag == false){
+                                    openMessage_i('温馨提示','你还有未支付的商品订单','去支付','取消','goPay("'+ret.orderId+'","'+ret.orderAmount+'","'+name+'","'+ret.orderTime+'")','',null);
+                                }
+                                api.hideProgress();
+                                api.parseTapmode();
+                            } else {
+                                api.hideProgress();
+                                alert_msg(ret.msg)
+                            }
+                        } else {
+                            api.hideProgress();
+                            alert_msg('服务器繁忙，请稍候再试！');
+                        }
+                    })
+				}
+			}
+        
+        
+         function goPay(id,money,name,time){
+            console.log(id,money,name,time)
+                 commonOpenWin('goods_shop_pay_frm', {
+                     orderId: id,
+                     price: money,
+                     serviceName: name,
+                     orderTime: time,
+        //           type: cache.type,
+        //           testCenterId: cache.testCenterId
+               });
+         }
+		//获取地址信息共通方法
+		function addres(myaddress){
+			alladdress = myaddress[0].district.provinceName+myaddress[0].district.cityName+myaddress[0].district.areaName+myaddress[0].addressDetail;
+			Telephone = myaddress[0].telephone;
+			Name = myaddress[0].name;
+			alladdressCode = myaddress[0].district.areaCd;
+		}	
+        
+        function select_express(){
+            if(isMail == "0"){
+                    alert_msg("该商品暂不支持快递邮寄");
+                    return;
+                }
+            pickupWay = 1;
+            $("#select_express").attr("class","selectType express_button");
+            $("#select_self_access").attr("class","notSelectType self_access_button");
+            $("#addressView").html("请选择邮寄地址");
+            $("#selectType").attr("onclick","select_address()");
+        }
+        
+        function select_self_access(){
+       
+            if(isMail == "1"){
+                alert_msg("该商品暂不支持门店自提");
+                return;
+            }
+            pickupWay = 0;
+            $("#select_self_access").attr("class","selectType self_access_button");
+            $("#select_express").attr("class","notSelectType express_button");
+            $("#addressView").html("请选择门店");
+            $("#selectType").attr("onclick","selTestCenter()");
+             console.log("ziqu")
+        }
+        
+        //打开通用弹出框
+    //title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+    function openMessage_i(title,content,sureButton,cancelButton,sureFunc,cancelFunc,params){
+        api.openFrame({
+            name: 'common_alert',
+            url: '../common/common_alert.html',
+            bgColor: 'rgba(0,0,0,0.4)',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: api.winHeight
+            },
+            bounces: false,
+            pageParam:{
+                title:title,
+                content:content,
+                sureButton:sureButton,
+                sureFunc:sureFunc,
+                cancelButton:cancelButton,
+                cancelFunc:cancelFunc,
+                winName:api.winName,
+                frameName:api.frameName,
+                params:params
+            },
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+    }
+	</script>
+</html>

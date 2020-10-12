@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>体检项目-视力</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/swiper/swiper.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html{
+    		background: transparent;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background: transparent;
+    	}
+    	section{
+    		width:100%;
+    		height:50%;
+    		background:#FFF;
+    	}
+    	/* footer{
+    		width:50%;
+    		height:50%;
+    		position:fixed;
+    		bottom:0;
+    		right:0;
+    		background:#FFF;
+    	} */
+		
+		.footClass{
+			width:50%;
+			height:50%;
+			position:fixed;
+			bottom:0;
+			background:#FFF;
+		}
+		.rightClass{
+			right:0;
+		}
+    	.option-item{
+    		width:100%;
+    		height:100%;
+    	}
+    	.option-item-menu{
+    		width: 90%;
+    		height:20%;
+    		margin-left:5%;
+    		margin-bottom:5%;
+    		/*background:#F6F6F6;*/
+    		background:#F4F7F7;
+    		display: flex;
+    		border-radius:5px;
+    		 color: #9D9EA7;
+		    /*color: #6F6F6F;*/
+    		border: solid 1px #F6F6F6;
+    	}
+    	.option-item-menu span{
+    		margin:auto;
+    	}
+		.active {
+		    color: #FFFFFF !important;
+		    /*border: solid 1px #90C3E7 !important;*/
+		    /*background: #DDE9F1 !important;*/
+		    background: linear-gradient(to left, #3F86FE, #64ADF6) !important;
+		}
+		.option-item-menu-next{
+		    width: 90%;
+		    height: 15%;
+		    left: 5%;
+		    bottom: 5%;
+		    /*background: linear-gradient(to left, #03B4F7 , #90DBF7);*/
+		    background: linear-gradient(to left, #3F86FE, #64ADF6) !important;
+		    color: #FFF;
+		    display: flex;
+		    border-radius: 5px;
+		    position: absolute;
+		}
+		.option-item-menu-next span{
+    		margin:auto;
+    	}
+		.option-item-menu-next:active{
+			background:#90DBF7;
+		}
+		.content-item{
+		    width: 95%;
+		    height: 80%;
+    		margin: 2.5%;
+		    display: flex;
+		}
+		.content-item img{
+			margin:auto;
+			max-height:100%;
+			max-width:100%;
+			object-fit:contian;
+		}
+		.content-title{
+		    height: 15%;
+		    width: 95%;
+		    margin-left: 2.5%;
+		    font-size:0.85rem;
+		}
+		.option-item-menus{
+			height:100%;
+		}
+		
+    </style>
+	</head>
+	<body>
+		<section>
+			<div class="swiper-container" style="height:100%;" id="swiper_question">
+				<div class="swiper-wrapper" id="question_list">
+					<!-- <div class="swiper-slide">
+		    		<div class='content-item'>
+		    				    		<img src="../../../image/demo/physicalexam/11.png" alt="" />
+		    		</div>
+		    		<div class='content-title'>
+		    			<span>问题：请根据图中图案方向选择正确选项1</span>
+		    		</div>
+		    	</div>
+		    	<div class="swiper-slide">
+		    		<div class='content-item'>
+		    				    		<img src="../../../image/demo/physicalexam/11.png" alt="" />
+		    		</div>
+		    		<div class='content-title'>
+		    			<span>问题：请根据图中图案方向选择正确选项2</span>
+		    		</div>
+		    	</div>
+		    	<div class="swiper-slide">
+		    		<div class='content-item'>
+		    				    		<img src="../../../image/demo/physicalexam/11.png" alt="" />
+		    		</div>
+		    		<div class='content-title'>
+		    			<span>问题：请根据图中图案方向选择正确选项3</span>
+		    		</div>
+		    	</div> -->
+				</div>
+			</div>
+		</section>
+		<footer class="footClass rightClass" id="footBord">
+			<div class='option-item' id='option_items_list'>
+				<!-- <div class="swiper-container" style="height:80%;" id="swiper_answer">
+				<div class="swiper-wrapper" id="">
+					<div class="swiper-slide">
+						<div class='option-item-menus'>
+							<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项A：</span><span>28</span></div>
+							<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项B：</span><span>18</span></div>
+							<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项C：</span><span>38</span></div>
+							<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项D：</span><span>48</span></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='option-item-menu-next' tapmode onclick="distory()"><span>确定无误，下一题</span></div> -->
+				<!-- <img src="{{=file_load_url + it[i].image}}" alt="" /> -->
+			</div>
+		</footer>
+		<script type="text/template" charset="utf-8" id='question_list_src'>
+			{{ for(var i=0;i<it.length;i++){ }}
+			<div class="swiper-slide swiper-no-swiping">
+	    		<div class='content-item'>
+		    		
+					<img src="{{=file_load_url + it[i].image}}"
+					     onerror="javascript:this.src='../../../icon/default/icon_default_big_pic_two.png'"
+					     data-echo="{{=file_load_url + it[i].image}}"/>
+	    		</div>
+	    		<div class='content-title'>
+	    			<span>{{=it[i].subject}}</span>
+	    		</div>
+	    	</div>
+		{{ } }}
+	</script>
+		<script type="text/template" charset="utf-8" id='options_src'>
+			<div class="swiper-container" style="height:80%;" id="swiper_answer">
+	    	<div class="swiper-wrapper" id="">
+				{{ for(var i=0;i<it.length;i++){ }}
+					<div class="swiper-slide swiper-no-swiping">
+						<div class='option-item-menus' id="answer_options{{=(i - 0 + 1)}}">
+							<!-- 题目ID -->
+							<div class='question-id aui-hide'>{{=it[i].id}}</div>
+							<!-- 正确答案 -->
+							<div class='right-answer aui-hide'>{{=it[i].answerRight}}</div>
+							{{ if(it[i].answerA != ''){ }}
+								<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项A：</span><span><font>{{=it[i].answerA}}</font></span></div>
+							{{ } }}
+							{{ if(it[i].answerB != ''){ }}
+								<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项B：</span><span><font>{{=it[i].answerB}}</font></span></div>
+							{{ } }}
+							{{ if(it[i].answerC != ''){ }}
+								<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项C：</span><span><font>{{=it[i].answerC}}</font></span></div>
+							{{ } }}
+							{{ if(it[i].answerD != ''){ }}
+								<div class='option-item-menu' tapmode onclick="selectOption(this)"><span>选项D：</span><span><font>{{=it[i].answerD}}</font></span></div>
+							{{ } }}
+						</div>
+		    		</div>
+				{{ } }}
+			</div>
+	    </div>
+		<div class='option-item-menu-next' onclick="clickNext({{=it.length}})"><span>确定</span></div>
+	</script>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/swiper/swiper.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script src="../../../script/echo.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var swiper_question;
+		var swiper_answer;
+		var cache;
+		var examResult; //用户在体检过程中产生的答案
+		var videoBlock;
+		apiready = function() {
+			api.parseTapmode();
+			cache = api.pageParam.examResult;
+			videoBlock = api.pageParam.videoBlock;
+			log('视力检测收到的数据', cache);
+			examResult = {
+				exaId: cache.exaId, //体检订单
+				licenseType: cache.licenseType, //准驾类型
+				videoNodeList: [], //视频节点
+				answerList: [], //用户答题记录
+				headerH: cache.headerH,
+				videoId: cache.exaId + '-3',
+				type: '3'
+			}
+			if (videoBlock == 0) {
+				setTimeout(function() {
+					sendEvent('exam_item_start_block', 3)
+					$("#footBord").removeClass("rightClass");
+					esc_function('physical_examination_video_win', '', 'openFaceKuangTwo()');
+				}, 400)
+				setTimeout(function(){
+					esc_function('physical_examination_video_win', '', 'rightBord()');
+				},500)
+			}else{
+				setTimeout(function() {
+					$("#footBord").removeClass("rightClass");
+					esc_function('physical_examination_video_win', '', 'openFaceKuangTwo()');
+				}, 400)
+				setTimeout(function(){
+					esc_function('physical_examination_video_win', '', 'rightBord()');
+				},500)
+			}
+			
+			// openMessage_i('视力提示','您是否佩戴了眼镜或隐形眼镜？','戴了','没戴','init(1)','init(0)',null);
+			setTimeout(function() {
+				openMessage_i_second('视力信息采集','请模仿视频中的动作，将手机向左、向右各转动一次，转动角度不小于30度。请确保视频拍摄范围内没有他人出现，否则将导致视力信息采集无效。','eyeflip','已完成','','next()','',null);
+			}, 600)
+		}
+		
+		function next(){
+		   setTimeout(function(){
+		        openMessage_i_second('您是否佩戴了眼镜或隐形眼镜？','','eye','戴了','没戴','init(1)','init(0)',null);
+		    },100)
+		}
+
+		var licenseTypeMap;
+		var right_percent = {
+			right_num: 0,
+			error_num: 0
+		}
+		var left_or_right = 1; //1左眼，2右眼
+		var ques_num = 3; //题目数量
+		var direction_flag = ''; //标记是向上检测还是向下
+		var min_vision; //驾考类型视力的最低要求
+		var isFirst = {
+			leftEye: true,
+			rightEye: true
+		}
+
+		function init(isWearGlasses) {
+			//是否佩戴眼镜/隐形眼镜   0未佩戴1佩戴
+			examResult.isWearGlasses = isWearGlasses;
+			log("是否佩戴眼镜---- ",examResult)
+			console.log("是否佩戴眼镜---- " + isWearGlasses)
+			//获取辨色力接口
+			setTimeout(function() {
+				//esc_function('physical_examination_video_win','','startUserDetect()');
+			}, 1000); //1秒后开始执行人脸识别逻辑
+			licenseTypeMap = $api.getStorage('cache_by_app').licenseTypeMap;
+			log('licenseTypeMap', licenseTypeMap)
+			log('licenseTypeMap', examResult.licenseType)
+			min_vision = parseFloat(licenseTypeMap[examResult.licenseType].min_vision);
+			//当前准驾类型下的最低视力要求，左眼，3条
+			load_question(min_vision, ques_num, left_or_right);
+			//监听眼睛捂住事件
+			toEventListener('finish_hide_eye', function(ret) {
+				data_load(ret.value, true);
+			});
+		}
+
+		/**
+		 * 加载视力题目
+		 */
+		var index = 1;
+
+		function load_question(visionValue, listSize, eyeType) {
+			defaultload("获取题目中");
+			url = 'api/item-bank/list-item-bank-for-vision-random';
+			params = {
+				listSize: listSize, //视力题数量
+				licenseType: examResult.licenseType, //驾考类型
+				eyeType: eyeType, // 1左眼2右眼
+				visionValue: visionValue // 视力值
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				api.hideProgress();
+				console.log('获取视力题' + JSON.stringify(ret));
+				if (ret && ret.code == 0) {
+					if (ret.listData.length > 0) {
+						index = 1;
+						right_percent = {
+							right_num: 0,
+							error_num: 0
+						}
+
+						if (isFirst.leftEye && isFirst.rightEye) {
+							params = {
+								send_event_name: 'finish_hide_eye', //自定义事件
+								data: ret //数据
+							}
+							openMessage_i_second('左眼视力信息采集', '', 'right', '准备完毕', '', '', '', params);
+							// openMessage_i_second('左眼视力信息采集','请捂住右眼，并与屏幕保持一个臂展距离（50厘米）。','right','确定','','','',params);
+						} else {
+							data_load(ret, false);
+						}
+						echoInit();
+					} else {
+						console.log('无题目');
+						if (isFirst.leftEye && isFirst.rightEye) {
+							//第一次加载就没数据的
+							isSure('温馨提示', '未找到视力题库，请重试', '重试', '取消', function() {
+								load_question(visionValue, listSize, eyeType);
+							}, function() {});
+						} else if (left_or_right != 2) {
+							//无数据，只测试了左耳，那继续测试右耳
+							console.log('测试终止，测试右眼');
+							left_or_right = 2;
+							min_vision = parseFloat(licenseTypeMap[examResult.licenseType].min_vision);
+							//人脸识别框切换位置
+							$("#footBord").addClass("rightClass");
+							esc_function('physical_examination_video_win', '', 'rightBordTwo()');
+							esc_function('physical_examination_video_win', '', 'closeFreamea()');
+							esc_function('physical_examination_video_win', '', 'openFaceKuang()');
+							setTimeout(function() {
+								openMessage_i_second('右眼视力信息采集', '', 'left', '准备完毕', '', 'load_question("' + min_vision + '","' + ques_num +
+									'","' + left_or_right + '")', '', null);
+							}, 100)
+
+							// openMessage_i_second('右眼视力信息采集','请捂住左眼，并与屏幕保持一个臂展距离（50厘米）。','left','确定','','load_question("'+min_vision+'","'+ques_num+'","'+left_or_right+'")','',null);
+						} else {
+							//无数据，左耳右耳都测试完成，直接进入下一项
+							console.log('测试终止');
+							// sendEvent('exam_item_result',examResult);
+							if (videoBlock == 0) {
+								sendEvent('exam_item_finish_block', examResult);
+							} else {
+								sendEvent('exam_item_finish', examResult);
+							}
+						}
+						echoInit();
+					}
+				} else {
+					alert_msg('获取视力题失败');
+				}
+				close_load();
+			});
+		}
+
+		//加载数据
+		function data_load(ret, isAllow) {
+			var question_list_src = $('#question_list_src').html();
+			$('#question_list').html(doT.template(question_list_src)(ret.listData));
+			var options_src = $('#options_src').html();
+			$('#option_items_list').html(doT.template(options_src)(ret.listData));
+			api.parseTapmode();
+			if (isAllow) {
+				loadSwiper();
+			} else {
+				swiper_answer = new Swiper("#swiper_answer", {});
+				swiper_question.slideTo(0, 500, false);
+				swiper_answer.slideTo(0, 500, false);
+			}
+		}
+
+		//初始化轮播
+		function loadSwiper() {
+			swiper_question = new Swiper("#swiper_question", {});
+			swiper_answer = new Swiper("#swiper_answer", {});
+		}
+
+		function distory() {
+			var sfdsa = $('#question_list').html();
+			$('#question_list').html("");
+			setTimeout(function() {
+				$('#question_list').html(sfdsa);
+				swiper_question.slideTo(0, 500, false);
+			}, 1000);
+		}
+
+		var answerResult;
+
+		function clickNext(questionListLength) {
+			console.log(index);
+			defaultload('获取信息中');
+			var active_answer_options = $('#answer_options' + index).find('.option-item-menu.active');
+			if (questionListLength == 0) {
+				closedefaultload()
+				sendEvent('exam_item_result', examResult);
+				return;
+			}
+			if (active_answer_options.length == 0) {
+				closedefaultload()
+				alert_msg('请选择答案');
+				return;
+			}
+			answerResult = {
+				answer: active_answer_options.parent().find('.right-answer').html(),
+				exaQuestionsId: active_answer_options.parent().find('.question-id').html(),
+				type: 2, //1辨色力 2视力 3听力
+				userAnswer: active_answer_options.find('font').html()
+			}
+			//console.log('一条用户产生的数据:'+JSON.stringify(answerResult));
+			examResult.answerList.push(answerResult);
+			//检测是否做对
+			if (answerResult.userAnswer != answerResult.answer) {
+				right_percent.error_num = ++right_percent.error_num;
+			} else {
+				right_percent.right_num = ++right_percent.right_num;
+			}
+
+			if (index == (questionListLength - 1)) {
+				$('.option-item-menu-next').find('span').html('确定');
+			} else if (index == questionListLength) {
+				getVisionQuestion(examResult, right_percent);
+
+				return;
+			}
+			swiper_question.slideTo(index, 500, false);
+			swiper_answer.slideTo(index, 500, false);
+			index++;
+			closedefaultload();
+		}
+
+		/**
+		 * 在视力检测完之后判断是否需要再次测试 
+		 */
+		function getVisionQuestion(examResult, right_percent) {
+			console.log('视力项目产生的数据:' + JSON.stringify(examResult));
+			console.log('视力项目正确率:' + JSON.stringify(right_percent));
+			if (left_or_right == 1 && isFirst.leftEye) { //如果是左眼第一次测试，标记测试方向
+				isFirst.leftEye = false;
+				if (right_percent.error_num > right_percent.right_num) {
+					//				//原本需要向下检测，但是没有意义，这里改成直接在线体检结束
+					//				openMessage_i('请注意','&emsp;&emsp;左眼视力信息采集未通过，信息采集自动终止，如有需要，请重新进行体检。','好的','','shutDownExamination()','',null);return;
+					////				alert('右眼视力检测未通过，体检自动终止，如有需要，请重新进行体检。');shutDownExamination();return;
+					//direction_flag = 'down';
+				} else {
+					direction_flag = 'up';
+				}
+			}
+
+			if (left_or_right == 2 && isFirst.rightEye) { //如果是右眼第一次测试，标记测试方向
+				isFirst.rightEye = false;
+				if (right_percent.error_num > right_percent.right_num) {
+					//				//原本需要向下检测，但是没有意义，这里改成直接在线体检结束
+					//				openMessage_i('请注意','&emsp;&emsp;右眼视力信息采集未通过，信息采集自动终止，如有需要，请重新进行体检。','好的','','shutDownExamination()','',null);return;
+					////				alert('您的右眼视力不合格，视频体检提前结束');shutDownExamination();return;
+					//direction_flag = 'down';
+				} else {
+					direction_flag = 'up';
+				}
+			}
+
+			if ((right_percent.error_num > right_percent.right_num) && (direction_flag == 'down')) { //未通过，且一开始就是向下检测则降低要求继续测试
+				console.log('不通过，继续向下检测');
+				min_vision = min_vision - 0.1;
+				load_question(min_vision, ques_num, left_or_right);
+			} else if ((right_percent.error_num < right_percent.right_num) && (direction_flag == 'up')) { //通过，且一开始就是向上检测则提高要求继续测试
+				console.log('通过，继续向上检测');
+				min_vision = min_vision + 0.1;
+				load_question(min_vision, ques_num, left_or_right);
+			} else { //向上检测，检测错误或者向下检测，检测正确
+				//只测试了左眼，那继续测试右眼					
+				closedefaultload();
+				if (left_or_right != 2) {
+					console.log('完成测试，测试右眼');
+					left_or_right = 2;
+					min_vision = parseFloat(licenseTypeMap[examResult.licenseType].min_vision);
+					// openMessage_i_second('右眼视力信息采集','请捂住左眼，并与屏幕保持一个臂展距离（50厘米）。','left','确定','','load_question("'+min_vision+'","'+ques_num+'","'+left_or_right+'")','',null);
+					$("#footBord").addClass("rightClass");
+					esc_function('physical_examination_video_win', '', 'rightBordTwo()');
+					esc_function('physical_examination_video_win', '', 'closeFreamea()');
+					esc_function('physical_examination_video_win', '', 'openFaceKuang()');
+					setTimeout(function() {
+						openMessage_i_second('右眼视力检测', '', 'left', '准备完毕', '', 'load_question("' + min_vision + '","' + ques_num +
+							'","' + left_or_right + '")', '', null);
+					}, 100)
+					load_question(min_vision, ques_num, left_or_right);
+				} else {
+					//左耳右耳都测试完成，直接进入下一项
+					console.log('完成测试');
+					// sendEvent('exam_item_result',examResult);
+					if (videoBlock == 0) {
+						sendEvent('exam_item_finish_block', examResult);
+					} else {
+						sendEvent('exam_item_finish', examResult);
+					}
+
+				}
+			}
+		}
+
+		/**
+		 * 结束在线体检 
+		 */
+		function shutDownExamination() {
+			esc_function('physical_examination_video_win', '', 'closeVideoRecode()');
+		}
+
+		//选择选项
+		function selectOption(o) {
+			$('.option-item-menu').each(function(index, e) {
+				if ($(o).is($(e))) {
+					$(e).addClass('active');
+				} else {
+					$(e).removeClass('active');
+				}
+			});
+		}
+
+		//打开通用弹出框
+		//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数
+		function openMessage_i(title, content, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+			api.openFrame({
+				name: 'common_alert',
+				url: '../../common/common_alert.html',
+				bgColor: 'rgba(0,0,0,0.4)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					title: title,
+					content: content,
+					sureButton: sureButton,
+					sureFunc: sureFunc,
+					cancelButton: cancelButton,
+					cancelFunc: cancelFunc,
+					winName: api.winName,
+					frameName: api.frameName,
+					params: params
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+
+		function openMessage_i_second(title, content, type, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+			api.openFrame({
+				name: 'common_alert_second',
+				url: '../../common/common_alert_second.html',
+				bgColor: 'rgba(0,0,0,0.4)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					title: title,
+					content: content,
+					type: type,
+					sureButton: sureButton,
+					sureFunc: sureFunc,
+					cancelButton: cancelButton,
+					cancelFunc: cancelFunc,
+					winName: api.winName,
+					frameName: api.frameName,
+					params: params
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+	</script>
+</html>

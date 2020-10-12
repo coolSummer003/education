@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>优惠券申请记录</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_list_swipe.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	body,html{
+    		background:#FFF;
+    	}
+    	.aui-list:before {
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    right: auto;
+		    bottom: auto;
+		    width: 100%;
+		    z-index: 2;
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		    pointer-events: none;
+		}
+		.room_list{
+	    	overflow: hidden;
+	    	zoom: 1;
+		}
+		.room_list_div{
+			overflow-x:hidden;
+			width:100%;
+		}
+		.list_div{
+		    min-height: 2.2rem;
+			background: #FFF;
+			transition: all 0.5s;
+			-webkit-transition: all 0.5s;
+		    position: relative;
+		}
+		.swipeleft{
+			min-height:2.2rem;
+			padding: 0 0.3rem;
+			background: #FFF;
+			transition: all 0.5s;
+			-webkit-transition: all 0.5s;
+			transform:translateX(-30%);
+			-webkit-transform:translateX(-30%);
+		    position: relative;
+		}
+		.recode-title{
+			height:1.5rem;
+			font-size:0.7rem;
+			line-height:1.5rem;
+		    padding-top: 0.3rem;
+		}
+		.recode-title img{
+		    height: 1rem;
+		    width: 1rem;
+		    margin-bottom: -0.2rem;
+		    border-radius: 100%;
+		    object-fit: cover;
+		    margin-right: 0.2rem;
+		}
+		.recode-title font{
+			color:#7D7D7D;
+			font-size: 0.6rem;
+		}
+		.recode-content{
+			width:100%;
+			overflow:hidden;
+			margin-top: 0.5rem;
+			position: relative;
+		}
+		.recode-img{
+			width:20%;
+			float:left;
+		}
+		.recode-img_div{
+			width:3.5rem;
+			height:3.5rem;
+		    margin: auto;
+		}
+		.recode-img_div img{
+			width:100%;
+			height:100%;
+			object-fit:cover;
+		}
+		.recode-txt{
+		    padding: 0 0.5rem;
+	        position: relative;
+		}
+		.txt-title{
+			font-size: 0.7rem;
+		    position: relative;
+		    overflow: hidden;
+		    margin-top: 0.1rem;
+		}
+		.txt-start{
+			font-size:0.7rem;
+			color:#7D7D7D;
+		}
+		.txt-submit-time{
+			font-size:0.7rem;
+			color:#7D7D7D;
+		}
+		.txt-price{
+			font-size: 0.6rem;
+		    text-align: right;
+	        height: 1.5rem;
+    		line-height: 1.5rem;
+		}
+		.txt-price span{
+			font-size:0.8rem;
+		    color: #FF9641;
+		}
+		.recode-status{
+	        font-size: 0.6rem;
+		    position: absolute;
+		    right: 0.5rem;
+		    background: #1E8DD8;
+		    color: #FFF;
+		    padding: 1px 0.2rem;
+		    z-index: 1;
+		}
+		.w-orange{
+			color:#FF9641;
+		}
+		.txt-title span{
+			color:#7D7D7D;
+		}
+		.recode-title span{
+			color:#4D92E3;
+		}
+		.label{
+		    font-size: 0.5rem;
+		    background: #FDF2E6;
+		    color: #EE9A70;
+		    border:solid 1px #FDF2E6;
+		    float: left;
+		    padding: 0rem 0.1rem;
+		    margin-top: 0.1rem;
+		    margin-right:0.5rem;
+		}
+		.label-status{
+		    font-size: 0.5rem;
+		    border:solid 1px #EE9A70;
+		    color: #EE9A70;
+		    float: left;
+		    padding: 0rem 0.2rem;
+		    margin-top: 0.1rem;
+		    margin-right:0.5rem;
+		}
+		.msg{
+			background: #FFFFFF;
+		    height: 20rem;
+		    text-align: center;
+		    font-size:0.7rem;
+		}
+		.msg img{
+			width:8rem;
+			margin-top: 9rem;
+		}
+		.jiazai{
+    	    font-size: 0.7rem;
+		    background: #FFFFFF;
+		    color: #666565;
+		    padding-bottom: 0.3rem;
+		    text-align: center;
+		    padding-top: 0.3rem;
+	    }
+	    .jiazai img{
+	    	width: 1.5rem;
+	    }
+	    .order-button{
+    		overflow: hidden;
+		    padding: 0.5rem 0rem;
+	    }
+	    .op-button{
+	    	color: #535860;
+		    font-size: 0.7rem;
+		    text-align: center;
+		    border-radius: 1rem;
+		    float: right;
+		    margin-left: 0.5rem;
+		    background: #F1F2F4;
+	        padding: 0.1rem 0.6rem;
+	    }
+	    .unabled{
+	    	color:#909090;
+	    }
+	    .unabled-cash{
+	    	color:#EE9A70;
+	    	background:#FDF2E6;
+	    }
+	    .coupon-div{
+	    	width: 90%;
+		    margin-left: 5%;
+		    background: #FEF6EF;
+	        margin-top: 0.8rem;
+	        overflow: hidden;
+	        border-radius: 0.5rem;
+	    }
+	    .coupon-info{
+    	    padding: 0.3rem 0.8rem;
+    		font-size: 0.6rem;
+    		float: left;
+		    width: 70%;
+		    border-right: dotted 2px #F1F1F1;
+	    }
+	    .coupon-status{
+	    	width: 30%;
+		    float: right;
+		    text-align: center;
+		    margin-top: 0.7rem;
+		    transform: rotate(45deg);
+		    color: #FFF;
+		    margin-right: -1.2rem;
+	    }
+	    .test-room{
+	    	padding-bottom: 0.2rem;
+    		border-bottom: solid 1px #F1F1F1;
+   		 	margin-bottom: 0.1rem;
+	    }
+	    .name{
+	    	color:#75706B;
+	    }
+	    .time{
+	    	color:#75706B;
+	    }
+	    .reason{
+	    	color:#75706B;
+	    }
+	    .coupon-info span{
+	    	color:#FC5000;
+	    }
+	    .bg-orange{
+	    	background: linear-gradient(to left, #FA9062 , #FC5000);
+	    }
+	    .bg-hui{
+	    	background: linear-gradient(to left, #D3D3D3 , #959595);
+	    }
+	    .bg-blue{
+	    	background: linear-gradient(to left, #90DBF7 , #03B4F7);
+	    }
+	    .bg-huier{
+	    	background: #F0F0F0;
+	    }
+	    .bg-bluer{
+	    	background: #EAF7FA;
+	    }
+	    .option-btn{
+		    text-align: center;
+		    width: 30%;
+		    float: right;
+		    position: absolute;
+		    height: 100%;
+	    	display: flex;
+		    top: 0;
+		    right: -30%;
+		    border-radius: 0.5rem;
+		}
+	    .opt-reason{
+    	    width: 50%;
+    		color: #FFF;
+    		display: flex;
+	    }
+	    .opt-reason span{
+	    	margin:auto;
+	    }
+	    .opt-reason img{
+	    	margin:auto;
+	    	width:2rem;
+	    }
+	    .del_opt{
+    	    width: 50%;
+    		color: #FFF;
+    		display: flex;
+	    }
+	    .del_opt span{
+	    	margin:auto;
+	    }
+	    .del_opt img{
+	    	margin:auto;
+	    	width:1.8rem;
+	    }
+    </style>
+</head>
+<body>
+	<div class="room_list">
+		<div class="room_list_div">
+			<!-- <div class='list_div'>
+				<div class='coupon-div bg-bluer'>
+					<div class='coupon-info'>
+						<div class='test-room'>上虞海滨驾校</div>
+						<div class='name'>申请学员：张三</div>
+						<div class='reason'>原因：未考试，未训练</div>
+						<div class='time'>提交时间：2019-6-11 14:47:16</div>
+					</div>
+					<div class='coupon-status bg-blue'>
+						<span>审核中</span>
+					</div>
+				</div>
+				<div class='option-btn'>
+					<div class='opt-reason'>
+						<img src="../../icon/mine/icon_reason.png" alt="" />
+					</div>
+					<div class='del_opt' tapmode onclick="delCoupon('sda',this)">
+						<img src="../../icon/mine/icon_delete_new.png" alt="" />
+					</div>
+				</div>
+			</div>
+			<div class='coupon-div bg-bluer'>
+				<div class='coupon-info'>
+					<div class='test-room'>上虞海滨驾校</div>
+					<div class='name'>申请学员：张三</div>
+					<div class='reason'>原因：未考试，未训练</div>
+					<div class='time'>提交时间：2019-6-11 14:47:16</div>
+				</div>
+				<div class='coupon-status bg-blue'>
+					<span>审核中</span>
+				</div>
+			</div> -->
+		</div>
+	</div>
+	<div id='load_div'>
+    </div>
+    <script type="text/template" charset="utf-8" id='load_src'>
+    	<div class="load">
+			<img src="../../icon/common/loadding.gif" alt="" /><br>
+        	<span>加载中...</span>
+		</div>
+    </script>
+    <script type="text/template" charset="utf-8" id='msg_src'>
+    	<div class="msg">
+			<img src="../../icon/common/empty.png" alt="" /><br>
+        	<span>{{=it.msg}}</span>
+		</div>
+    </script>
+    <script type="text/template" charset="utf-8" id='more_src'>
+    	<div class="jiazai">
+	    	<span>{{=it.msg}}</span>
+	    </div>
+    </script>
+	<script type="text/template" charset="utf-8" id='recode_practice_src'>
+		{{ for(var i=0;i<it.length;i++){ }}
+			<!-- 申请失败则需要左滑动 -->
+			{{ if(it[i].status == 9){ }}
+			<div class='list_div'>
+			{{ } }}
+				{{ if(it[i].status == 2){ }}
+				<div class='coupon-div'>
+				{{ }else if(it[i].status == 1||it[i].status == 4){ }}
+				<div class='coupon-div bg-bluer'>
+				{{ }else{ }}
+				<div class='coupon-div bg-huier'>
+				{{ } }}
+					<div class='coupon-info'>
+						<div class='test-room'>{{=it[i].testRoom.name}}</div>
+						<div class='name'>申请学员：{{=it[i].name}}</div>
+						<div class='reason'>原因：{{=it[i].feeReason}}</div>
+						{{ if(it[i].status == 2){ }}
+							<div class='reason'>
+								训练费优惠：<span>￥{{=cashFormatO(it[i].trainingFee)}}</span>
+							</div>
+							<div class='reason'>
+								服务费优惠：<span>￥{{=cashFormatO(it[i].serviceFee)}}</span>
+							</div>
+						{{ } }}
+						<div class='time'>提交时间：{{=it[i].insertDt}}</div>
+					</div>
+					{{ if(it[i].status == 1||it[i].status == 4){ }}
+					<div class='coupon-status bg-blue'>
+						<span>申请中</span>
+					</div>
+					{{ }else if(it[i].status == 2){ }}
+					<div class='coupon-status bg-orange'>
+						<span>可使用</span>
+					</div>
+					{{ }else if(it[i].status == 3){ }}
+					<div class='coupon-status bg-hui'>
+						<span>已使用</span>
+					</div>
+					{{ }else if(it[i].status == 9){ }}
+					<div class='coupon-status bg-hui'>
+						<span>审核拒绝</span>
+					</div>
+					{{ }else if(it[i].status == 0){ }}
+					<div class='coupon-status bg-hui'>
+						<span>已取消</span>
+					</div>
+					{{ } }}
+				</div>
+			<!-- 申请失败则需要左滑动 -->
+			{{ if(it[i].status == 9){ }}
+				<div class='option-btn'>
+					<div class='opt-reason' tapmode onclick="checkRemark('{{=it[i].remark}}')">
+						<img src="../../icon/mine/icon_reason.png" alt="" />
+					</div>
+					<div class='del_opt' tapmode onclick="delCoupon('{{=it[i].id}}',this,'{{=it[i].status}}')">
+						<img src="../../icon/mine/icon_delete_new.png" alt="" />
+					</div>
+				</div>
+			</div>
+			{{ } }}
+		{{ } }}
+	</script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var page = 1,limit = 10;
+	var load_src = $('#load_src').html();//加载src
+	var msg_src = $('#msg_src').html();//消息提示src
+	var more_src = $('#more_src').html();//更多src
+	var refresh = true;//标记是否是刷新操作、
+	var coupon_status;//选择的优惠券状态
+	apiready = function(){
+		cache = api.pageParam.data;
+		goRefrash(40,'#FFFFFF',null,null,function(){
+			page = 1;refresh = true;
+			setLoad();
+			init();
+		});
+		goLoad(function(ret,err){
+			page++;refresh = false;
+			setLoad();
+			init();
+		});
+		init();
+	};
+	function init(status){
+		if(status != null&&status != ''){
+			coupon_status = status;
+		}
+		params = {
+			learnerId:getUserId(),
+			page:page,
+			limit:limit,
+			status:coupon_status
+		}
+		if(cache.flag == 'two'){
+			params.kemu = 2;
+		}else{
+			params.kemu = 3;
+		}
+		
+		//log('传参',params);
+		url = 'api/coupons/getCouponsList';
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			//log('优惠券申请信息',ret);
+			if(ret){
+        		if(ret.code == 0&&ret.couponsList.length > 0){
+					var recode_practice_src = $('#recode_practice_src').html();
+					if(refresh||$('.room_list_div').find('.coupon-div').length == 0){
+						$('.room_list_div').html(doT.template( recode_practice_src )( ret.couponsList ));
+					}else{
+						$('.room_list_div').append(doT.template( recode_practice_src )( ret.couponsList ));
+					}
+					api.parseTapmode();
+					swiftLeft();
+        		}else{
+        			setMsg(refresh?'未发现免单记录':'暂无更多');
+        		}
+        	}else{
+        		setMsg('系统出错');
+        	}
+        	setTimeout(function(){
+		        api.refreshHeaderLoadDone();
+        	},500);
+		});
+	}
+	
+	//设置页面加载的画面
+	function setLoad(){
+		if(refresh||$('.room_list_div').find('.coupon-div').length == 0){//如果是刷新或者之前无数据的下拉刷新，全屏提示
+			$('#load_div').html('');
+			//$("#driverSchool").html(doT.template( load_src )( null ));
+		}else{
+			setTimeout(function(){
+				$('#load_div').html(doT.template( more_src )( {'msg':'加载更多中...','img':'../../icon/common/jiazai.gif'} ));
+			},500);
+		}
+	}
+	
+	//设置页面提示信息
+	function setMsg(msg){
+		if(refresh||$('.room_list_div').find('.coupon-div').length == 0){//如果是刷新或者之前无数据的上拉加载，全屏提示
+			setTimeout(function(){
+				$(".room_list_div").html(doT.template( msg_src )( {'msg':msg} ));
+			},500);
+		}else{//原先已经有数据的情况下
+			setTimeout(function(){
+			    $('#load_div').html(doT.template( more_src )( {'msg':msg,'img':''} ));
+			},500);
+		}
+	}
+	
+	/**
+	 * 查看原因 
+	 */
+	function checkRemark(msg){
+		openMessage_i('审核拒绝原因',msg,'确定','','','',null);
+	}
+	
+	//打开通用弹出框
+	//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+	function openMessage_i(title,content,sureButton,cancelButton,sureFunc,cancelFunc,params){
+		api.openFrame({
+	        name: 'common_message',
+	        url: '../common/common_message.html',
+	        bgColor: 'rgba(0,0,0,0.4)',
+	        rect: {
+	            x: 0,
+	            y: 0,
+	            w: 'auto',
+	            h: api.winHeight
+	        },
+	        bounces: false,
+	        pageParam:{
+	        	title:title,
+	        	content:content,
+	        	sureButton:sureButton,
+	        	sureFunc:sureFunc,
+	        	cancelButton:cancelButton,
+	        	cancelFunc:cancelFunc,
+	        	winName:api.winName,
+	        	frameName:api.frameName,
+	        	params:params
+	        },
+	        softInputBarEnabled:true,
+	        softInputMode:'resize'
+	    });
+	}
+	
+	/**
+	 * 删除记录 
+	 */
+	function delCoupon(id,e,status){
+		isSure('温馨提示','是否删除该优惠券','删除','取消',function(){
+			$(e).parent().parent().remove();
+			url = 'api/coupons?id='+id+'&status='+status;
+			ajax_Request(url, 'delete', 'json', null, function(ret,err){
+				log('ret',ret);
+				if(ret){
+					if(ret.code == 0){
+						alert_msg('删除成功');
+					}else{
+						alert_msg(ret.msg);
+					}
+				}else{
+					alert_msg('删除失败');
+				}
+			});
+		},function(){
+		});
+	}
+	
+	//加载左滑动
+	function swiftLeft(){
+		var expansion = null; //是否存在展开的list
+		var container = document.querySelectorAll('.room_list .room_list_div .list_div');
+		for(var i = 0; i < container.length; i++){
+		    var x, y, X, Y, swipeX, swipeY;
+		    container[i].addEventListener('touchstart', function(event) {
+		        x = event.changedTouches[0].pageX;
+		        y = event.changedTouches[0].pageY;
+		        swipeX = true;
+		        swipeY = true;
+		    });
+		    container[i].addEventListener('click', function(event) {
+		        event.preventDefault();
+                //this.className = "list_div";    //点击收起
+		    });
+		    container[i].addEventListener('touchmove', function(event){
+		        
+		        X = event.changedTouches[0].pageX;
+		        Y = event.changedTouches[0].pageY;
+		        if(expansion){  //判断是否展开，如果展开则收起
+		            expansion.className = "list_div";
+		        }
+		        // 左右滑动
+		        if(swipeX && Math.abs(X - x) - Math.abs(Y - y) > 0){
+		            // 阻止事件冒泡
+		            event.stopPropagation();
+		            if(X - x > 10){   //右滑
+		                event.preventDefault();
+		                this.className = "list_div";    //右滑收起
+		            }
+		            if(x - X > 10){   //左滑
+		                event.preventDefault();
+		                this.className = "swipeleft";   //左滑展开
+		                expansion = this;
+		            }
+		            swipeY = false;
+		        }
+		        // 上下滑动
+		        if(swipeY && Math.abs(X - x) - Math.abs(Y - y) < 0) {
+		            swipeX = false;
+		        }        
+		    });
+		}
+    }
+	
+</script>
+</html>

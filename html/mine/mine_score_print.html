@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>成绩打印申请</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/mobiscroll/normalize3_0_2_min.css" />
+	    <link rel="stylesheet" type="text/css" href="../../css/mobiscroll/mobiscroll.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/mobiscroll/mobiscroll_date.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<style type="text/css">
+			html,body{
+				
+			}
+			.title{
+				width: 30%;
+				height: 1.5rem;
+				line-height: 1.5rem;
+				text-align: justify;
+				padding: 0 0.2rem;
+			}
+			.title:after{
+				content:"";
+				display:inline-block;
+				width:100%;
+			}
+			#submitBtn{			
+				margin-right: 10%;
+			}
+			.aui-list textarea {
+			    overflow: auto;
+			    margin: 0.5rem 0;
+			    height: 5rem;
+			    line-height: 1rem;
+			    resize: none;
+			    background: #FAFAFA;
+    			padding: 0.5rem;
+			}
+			.aui-list label {
+			    line-height: 1.3rem;
+			    padding-bottom: 0.5rem;
+			    width:100%;
+			}
+			.needingAttention{
+			margin-left:22%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="aui-content aui-margin-b-10" style='overflow: hidden;background: #FFFFFF;'>
+			<ul class="aui-list aui-form-list none-bottom-style none-top-style">
+				
+				
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							申请科目：
+						</div>
+						<div class="aui-list-item-input" id="examSubjects" style="margin-top: 0.5rem">
+							<label style='width: 50%;display: inline-block;'><input class="aui-checkbox" type="radio" value='036001' name="subject" id="subjectOne">&ensp;科目一</label>							
+							
+							<label style='width: 50%;display: inline;'><input class="aui-checkbox" type="radio" value='036002' name="subject" id="subjectTwo">&ensp;科目二</label>
+							
+							<label style='width: 50%;display: inline-block;'><input class="aui-checkbox" type="radio" value='036003' name="subject" id="subjectThree">&ensp;科目三</label>
+							
+							<label style='width: 50%;display: inline;'><input class="aui-checkbox" type="radio" value='036004' name="subject" id="subjectFour">&ensp;科目四</label>
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item aui-list-item-arrow">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							选择考场：
+						</div>
+						<div class="aui-list-item-input" tapmode onclick='selTestCenter()'>
+							<input type="text" placeholder="请选择考场" value="" id="testCenterName" readonly>
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label">
+							申请时间：
+						</div>
+						<div class="aui-list-item-input">
+							<input type="text" disabled="true" id="insertDt" name="insertDt">
+						</div>
+					</div>
+				</li>
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-label" style="font-size: 15px;width: 20%;color: #FF8F2A">
+							<span>*</span>请注意：
+						</div>
+						<div class="aui-list-item-input">
+							<p style="line-height: 2.2rem;color: #FF8F2A">同一人同一天同一科目只能申请一次</p>
+						</div>
+					</div>
+				</li>
+				
+			</ul>
+			<div>
+			
+			</div>
+			<div class="aui-btn aui-btn-info aui-btn-block" style="margin-top: 1rem !important;" id="submitBtn" tapmode onclick="apply()">提交申请</div>
+		</div>
+		
+		
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/mobiscroll/mobile_select.js"></script> 
+	<script type="text/javascript" src="../../script/mobiscroll/mobiscroll_date.js"></script> 
+	<script type="text/javascript" src="../../script/mobiscroll/mobiscroll.js"></script> 
+	<script type="text/javascript" src="../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var selectTestCenterId;//考场
+		var kemu;//科目
+		apiready = function(){
+			cache = api.pageParam;
+			//log("cache+"+JSON.stringify(cache));		
+			//监听选择考场后的事件
+			toEventListener('test_choose',function(ret){
+//				log('选中的考场数据',ret.value);
+				selectTestCenterId = ret.value.id;
+//				console.log(ret.value.id+","+ret.value.e_room_name)
+				$('#testCenterName').val(ret.value.e_room_name);			
+			});
+			
+			init();
+		}
+		function init(){
+			nowDate=getNowTime();
+			console.log(nowDate)
+			$('#insertDt').val(nowDate+"(今日)");
+		}
+		$(function(){
+  			$(":radio").click(function(){
+  				kemu=$(this).val();
+   				console.log(kemu)
+  			});
+ 		});
+		
+		function apply(){
+			console.log(selectTestCenterId)
+			console.log(kemu)
+			if(kemu==undefined||kemu==""||kemu==null){
+				alert_msg("请选择科目！");
+				return false;
+			}
+			if(selectTestCenterId==undefined||selectTestCenterId==""||selectTestCenterId==null){
+				alert_msg("请选择考场！");
+				return false;
+	
+			}
+			sendMessage();
+		}
+		function sendMessage(){
+			defaultload();
+			url = '/api/TranscriptApply/addTranscriptApply';
+	
+			params={
+				kemu:kemu,
+				testCenterId:selectTestCenterId,
+				learnerId:getUserId()
+			};
+			console.log(JSON.stringify(params));
+			ajax_Request(url, 'post', 'json', params, function(ret, err) {	
+				console.log(JSON.stringify(ret))
+				closedefaultload();
+				if (ret) {
+					
+					if (ret.code == 0 ) {
+						openMessage_ii('申请成功',ret.msg+'。</br></br>详细信息请前往申请记录页面，点击打印记录查看~','好的','','applyHistory()','');
+						
+					} else{
+						alert_msg(ret.msg);
+						
+					}
+					
+				} else {
+					setMsg('服务器繁忙,请稍后再试！');
+				}
+			})
+			setTimeout(function() {
+				api.refreshHeaderLoadDone();
+			}, 500);
+		}
+		
+		
+		function getNowTime() {
+ 			 presentDate = new Date();
+ 			 nowDate = presentDate.getFullYear() + "-" + (presentDate.getMonth() + 1) + "-" + presentDate.getDate();
+  			 return nowDate;
+		}
+		
+		
+					
+		/**
+		 * 选择考场 
+		 */
+		function selTestCenter(){
+			api.openDrawerPane({
+			    type: 'right'
+			});
+		}
+		
+		//title标题 content内容 sureButton确认按钮文字 sureFunc确定方法 cancelFunc取消方法 cancelButton取消按钮文字 params额外参数，没有必须传null
+		  function openMessage_ii(title,content,sureButton,cancelButton,sureFunc,cancelFunc,params){
+		    api.openFrame({
+		          name: 'common_message',
+		          url: '../common/common_message.html',
+		          bgColor: 'rgba(0,0,0,0.4)',
+		          rect: {
+		              x: 0,
+		              y: 0,
+		              w: 'auto',
+		              h: api.winHeight
+		          },
+		          bounces: false,
+		          pageParam:{
+		            title:title,
+		            content:content,
+		            sureButton:sureButton,
+		            sureFunc:sureFunc,
+		            cancelButton:cancelButton,
+		            cancelFunc:cancelFunc,
+		            winName:api.winName,
+		            frameName:api.frameName,
+		            params:params
+		          },
+		          softInputBarEnabled:true,
+		          softInputMode:'resize'
+		      });
+		  }
+  
+		  function applyHistory(){
+		  log('kemuxxx',kemu)
+			api.openWin({
+		       name: 'mine_score_print_history_win',
+		       url: '../mine/mine_score_print_history_win.html',
+		       slidBackEnabled:'false',
+		       vScrollBarEnabled:'false',
+		       hScrollBarEnabled:'false',
+		       reload:true,
+		       pageParam: {
+		        data:{
+		        	kemu:kemu
+		        }
+		       }
+		   });
+		}
+		
+		
+		function closeWin() {
+			api.closeWin({});
+		}
+	</script>
+</html>

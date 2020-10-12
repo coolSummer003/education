@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>成绩打印申请</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	body,html{
+    		background:#FFFFFF
+    	}
+    	.printHistory{
+    		width: 100%;
+    	
+    	}
+     .practical-list{
+	        background: #FFF;
+		    width: 96%;
+		    margin-left: 4%;
+	        font-size: 0.7rem;
+	        margin-bottom: 4rem;
+	    }
+	    .practical-list li{
+	    	height:3rem;
+	    	line-height:3rem;
+	    }
+	    .practical-list-item{
+	    	height:3rem;
+	    	padding: 0rem 0.5rem;
+	    }
+	    .practical-list-item-param{
+    	    float: left;
+    		height:3rem;
+	    }
+	    .practical-list-item-param input{
+	        margin-top: 0.9rem;
+	    }
+	    .dark{
+	    	color:#A0A0A0;
+	    }
+	    .listTitle{
+	    position:fixed;
+	    top:0;
+	    width:100%;
+	    left:4%;
+	    z-index:9999;
+	    background:#FFFFFF;    
+	    }
+	    .msg-src{
+			width: 100%;
+			text-align:center;
+			padding-bottom: 3rem;
+		}
+		.msg-src img{
+			width: 4rem;
+    		margin-top: 3rem;
+		}
+		.msg-src span{
+			font-size:0.7rem;
+			color:#767676;
+		}
+		 .lump{
+		 	
+		    float: left;
+		    padding: 0rem 0.5rem;
+		    font-size: 0.8rem;
+		    color: #6F6F6F;
+		    height: 1.5rem;
+		    border-radius: 5px;
+		    border: solid 1px #F1F1F1;
+		    line-height: 1.5rem;
+	    }
+	    .lump-active {
+		    color: #72A8C9 !important;
+		    border: solid 1px #72A8C9 !important;
+		    background: #DDEBFF !important;
+		}
+	    .margin-top-0-5{
+			margin-top:0.5rem !important;
+			
+		}
+    	</style>
+</head>
+<body>
+	<div class="printHistory">
+	<div class="aui-content aui-margin-b-10" style='overflow: hidden;background: #FFFFFF;margin-left: 5%;'>
+			<ul class="aui-list aui-form-list none-bottom-style none-top-style">
+				<li class="menuLi margin-top-0-5">
+	            	<div class='lump lump-active ' id="036001" style="width: 20%;margin-right:5%"  tapmode onclick="selectKemu(this,'036001')">
+	            		<span>科目一</span>
+	            	</div>
+            	</li>
+            	<li class="menuLi margin-top-0-5">
+	            	<div class='lump ' id="036002" style="width: 20%;margin-right:5%" tapmode onclick="selectKemu(this,'036002')">
+	            		<span>科目二</span>
+	            	</div>
+            	</li>
+            	<li class="menuLi margin-top-0-5">
+	            	<div class='lump' id="036003" style="width: 20%;margin-right:5%" tapmode onclick="selectKemu(this,'036003')">
+	            		<span>科目三</span>
+	            	</div>
+            	</li>
+            	<li class="menuLi margin-top-0-5">
+	            	<div class='lump' id="036004" style="width: 20%;margin-right:5%" tapmode onclick="selectKemu(this,'036004')">
+	            		<span>科目四</span>
+	            	</div>
+            	</li>
+				
+				<!--<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						
+						<div class="aui-list-item-input" id="examSubjects" style="margin-top: 0.5rem">
+							<label style='width: 25%;display: inline-block;'><input class="aui-checkbox" type="radio" value='036001' name="subject" id="subjectOne" checked="checked">&ensp;科目一</label>							
+							
+							<label style='width: 25%;display: inline;'><input class="aui-checkbox" type="radio" value='036002' name="subject" id="subjectTwo">&ensp;科目二</label>
+							
+							<label style='width: 25%;display: inline-block;'><input class="aui-checkbox" type="radio" value='036003' name="subject" id="subjectThree">&ensp;科目三</label>
+							
+							<label style='width: 25%;display: inline;'><input class="aui-checkbox" type="radio" value='036004' name="subject" id="subjectFour">&ensp;科目四</label>
+						</div>
+					</div>
+				</li>-->
+			</ul>
+	</div>
+		   <div class='practical-list'>
+    	<ul>
+    		<li class='bottom-slide'>
+    			<div class="practical-list-item">
+    				<div class="practical-list-item-param c-btn aui-hide">
+    					
+    				</div>
+    				<div class='other-item bottom-slide w-90'>
+	    				<div class="practical-list-item-param text-c" style="width:23%;margin-left: 4%;">申请日期</div>
+	    				<div class="practical-list-item-param text-c" style="width:21%;">顺序号</div>
+	  					<div class="practical-list-item-param text-c" style="width:28.5%;">考场</div>
+	    				<div class="practical-list-item-param text-c" style="width:23.5%;">状态</div>
+    				</div>
+    			</div>
+    		</li>
+    		
+    	<!--	 <li>
+    			<div class="practical-list-item dark">
+    				<div class="practical-list-item-param c-btn">
+    				</div>
+    				<div class='other-item w-90'>
+    			    				<div class="practical-list-item-param text-c" style="width:20.5%;">2019/10/15</div>
+    			    				<div class="practical-list-item-param text-c" style="width:17%;margin-left: 4%;">100</div>
+    			    				<div class="practical-list-item-param text-c" style="width:15%;">科目二</div>
+    			    				<div class="practical-list-item-param text-c aui-ellipsis-1" style="width:25%;">绍兴海滨考场</div>
+    			    				<div class="practical-list-item-param text-c" style="width:18.5%;">申请中</div>
+    				</div>
+    			</div>
+    		</li>-->
+    		<div id='data_list'>
+    		</div>
+    	</ul>
+    </div>
+	</div>
+	<!-- 数据展示提示 -->
+		<script type="text/template" charset="utf-8" id='data_msg_src'>
+			<div class='msg-src'>
+    		<img src="../../icon/common/empty.png" alt="" /><br>
+    		<span>{{=it.msg}}</span>
+    	</div>
+  	</script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+ <!-- 成绩打印记录 -->
+    <script type="text/template" charset="utf-8" id='schedule_src'>
+    	{{ for(var i=0;i<it.length;i++){ }}
+    	<li class='checkStyle'  tapmode onclick='lookScore({{=it[i].testCenterId}})'>
+    		<div class="practical-list-item dark">
+				<div class='other-item w-90'>
+    				<div class="practical-list-item-param text-c" style="width:22.5%;text-align: left">{{=it[i].insertDate}}</div>
+    				<div class="practical-list-item-param text-c" style="width:23%;text-align: center"><span class='min-people'>{{=it[i].todayIndex}}</span></div>
+    				<div class="practical-list-item-param text-c aui-ellipsis-1" style="width:28%;text-align: left">{{=it[i].shortName}}</div>
+    				<div class="practical-list-item-param text-c" style="width:23.5%;color: #000;text-align: left;font-size: 12px">
+    					{{ if(it[i].status == 1){ }}
+    						<img src="../../icon/mine_new/application.png" style="height: 30px;width: 30px;vertical-align: middle"/>
+    						申请中
+    					{{ }else if(it[i].status == 2){ }}
+    						<img src="../../icon/mine_new/yidayin.png" style="height: 30px;width: 30px;vertical-align: middle"/>
+    						已打印
+    					{{ }else if(it[i].status == 3){ }}
+    					<img src="../../icon/mine_new/noscore.png" style="height: 30px;width: 30px;vertical-align: middle"/>
+    						暂无成绩
+    					{{ } }}
+    				</div>
+    				
+				</div>
+			</div>
+		</li>
+		{{ } }}
+    </script>
+<script type="text/javascript">
+	var kemu='036001'; 
+	var cache;
+	var data_msg_src = $('#data_msg_src').html();
+	apiready = function(){
+		cache = api.pageParam;
+		init();
+		if(cache.kemu){
+			kemu=cache.kemu;
+		}
+		selectKemu('#'+kemu,kemu);
+	}
+	function selectKemu(o,kemus){
+		$('.lump').removeClass('lump-active');
+		$(o).addClass('lump-active');
+		kemu=kemus;
+		
+		init();
+	}
+	function lookScore(id){
+	    url = '/api/TranscriptApply/findMit'
+	      params={
+	        testCenterId:id
+	      };
+	      log('params',params)
+	    ajax_Request(url, 'post', 'json', params, function(ret, err) {  
+	          log('ret',ret)
+	        if (ret) {
+	          
+	          if (ret.code == 0 ) {
+	          alert_msg('正在打印中，预计等待时间'+ret.mit+'分钟，稍后系统会通知到指定位置领取~');
+	            
+	          } else{
+	          
+	          }
+	          
+	        } else {
+	          setMsg('服务器繁忙,请稍后再试！');
+	        }
+	      })
+  }
+    function init() {
+    		
+			url = '/api/TranscriptApply/findAllTranscriptApply';
+			params={
+				learnerId:getUserId(),
+				kemu:kemu
+			};
+			console.log(JSON.stringify(params));
+			ajax_Request(url, 'post', 'json', params, function(ret, err) {	
+					console.log(JSON.stringify(ret))
+				if (ret) {
+					
+					if (ret.code == 0 ) {
+						if (ret.transcriptApplyList.length > 0) {
+							var schedule_src = $('#schedule_src').html();
+							$('#data_list').html(doT.template(schedule_src)(ret.transcriptApplyList));
+							api.parseTapmode();
+							api.hideProgress();
+						} else {
+							$('#data_list').html(doT.template(data_msg_src)({
+							
+								msg: '无成绩单申请记录'
+							}));
+							api.hideProgress();
+						}
+					} else{
+					
+					}
+					
+				} else {
+					setMsg('服务器繁忙,请稍后再试！');
+				}
+			})
+			setTimeout(function() {
+				api.refreshHeaderLoadDone();
+			}, 500);
+		}
+</script>
+</html>

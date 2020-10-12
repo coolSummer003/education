@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>集中培训记录</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui/aui_list_swipe.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+		<style>
+			body,html{
+    		background:#FFF;
+    	}
+    	.aui-list:before {
+		    height: 1px;
+		    background-color: #FFF;
+		    display: block;
+		    content: '';
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    right: auto;
+		    bottom: auto;
+		    width: 100%;
+		    z-index: 2;
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		    pointer-events: none;
+		}
+		.room_list{
+	    	overflow: hidden;
+	    	zoom: 1;
+		}
+		.room_list_div{
+			overflow-x:hidden;
+			width:100%;
+		}
+		.list_div{
+		    min-height: 2.2rem;
+    		padding: 0 0.3rem;
+			background: #FFF;
+			transition: all 0.5s;
+			-webkit-transition: all 0.5s;
+		    position: relative;
+		}
+		.list_div:after{
+			content: '';
+		    height: 1px;
+		    background: #DDDDDD;
+		    width: 100%;
+		    background-color: #dddddd;
+		    display: block;
+		    -webkit-transform: scaleY(0.5);
+		    transform: scaleY(0.5);
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		}
+		.swipeleft{
+			min-height:2.2rem;
+			padding: 0 0.3rem;
+			background: #FFF;
+			transition: all 0.5s;
+			-webkit-transition: all 0.5s;
+			transform:translateX(-50%);
+			-webkit-transform:translateX(-50%);
+		    position: relative;
+		}
+		.swipeleft:after{
+			content: '';
+		    height: 1px;
+		    background: #DDDDDD;
+		    width: 100%;
+		    background-color: #dddddd;
+		    display: block;
+		    -webkit-transform: scaleY(0.5);
+		    transform: scaleY(0.5);
+		    -webkit-transform-origin: 50% 100%;
+		    transform-origin: 50% 100%;
+		}
+		.recode-title{
+			height:1.5rem;
+			font-size:0.7rem;
+			line-height:1.5rem;
+		    padding-top: 0.3rem;
+		}
+		.recode-title img{
+		    height: 1rem;
+		    width: 1rem;
+		    margin-bottom: -0.2rem;
+		    border-radius: 100%;
+		    object-fit: cover;
+		    margin-right: 0.2rem;
+		}
+		.recode-title font{
+			color:#7D7D7D;
+			font-size: 0.6rem;
+		}
+		.recode-content{
+			width:100%;
+			overflow:hidden;
+			margin-top: 0.5rem;
+			position: relative;
+		}
+		.recode-img{
+			width:20%;
+			float:left;
+		}
+		.recode-img_div{
+			width:3.5rem;
+			height:3.5rem;
+		    margin: auto;
+		}
+		.recode-img_div img{
+			width:100%;
+			height:100%;
+			object-fit:cover;
+		}
+		.recode-txt{
+		    padding: 0 0.5rem;
+	        position: relative;
+		}
+		.txt-title{
+			font-size: 0.7rem;
+		    position: relative;
+		    overflow: hidden;
+		    margin-top: 0.1rem;
+		}
+		.txt-start{
+			font-size:0.7rem;
+			color:#7D7D7D;
+		}
+		.txt-submit-time{
+			font-size:0.7rem;
+			color:#7D7D7D;
+		}
+		.txt-price{
+			font-size: 0.6rem;
+		    text-align: right;
+	        height: 1.5rem;
+    		line-height: 1.5rem;
+		}
+		.txt-price span{
+			font-size:0.8rem;
+		    color: #FF9641;
+		}
+		.recode-status{
+	        font-size: 0.6rem;
+		    position: absolute;
+		    right: 0.5rem;
+		    background: #1E8DD8;
+		    color: #FFF;
+		    padding: 1px 0.2rem;
+		    z-index: 1;
+		}
+		.w-orange{
+			color:#FF9641;
+		}
+		.txt-title span{
+			color:#7D7D7D;
+		}
+		.recode-title span{
+			color:#4D92E3;
+		}
+		.label{
+		    font-size: 0.5rem;
+		    background: #FDF2E6;
+		    color: #EE9A70;
+		    border:solid 1px #FDF2E6;
+		    float: left;
+		    padding: 0rem 0.1rem;
+		    margin-top: 0.1rem;
+		    margin-right:0.5rem;
+		}
+		.label-status{
+		    font-size: 0.5rem;
+		    border:solid 1px #EE9A70;
+		    color: #EE9A70;
+		    float: left;
+		    padding: 0rem 0.2rem;
+		    margin-top: 0.1rem;
+		    margin-right:0.5rem;
+		}
+		.msg{
+			background: #FFFFFF;
+		    height: 20rem;
+		    text-align: center;
+		    font-size:0.7rem;
+		}
+		.msg img{
+			width:8rem;
+			margin-top: 9rem;
+		}
+		.jiazai{
+    	    font-size: 0.7rem;
+		    background: #FFFFFF;
+		    color: #666565;
+		    padding-bottom: 0.3rem;
+		    text-align: center;
+		    padding-top: 0.3rem;
+	    }
+	    .jiazai img{
+	    	width: 1.5rem;
+	    }
+	    .order-button{
+    		overflow: hidden;
+		    padding: 0.5rem 0rem;
+	    }
+	    .op-button{
+	    	color: #535860;
+		    font-size: 0.7rem;
+		    text-align: center;
+		    border-radius: 1rem;
+		    float: right;
+		    margin-left: 0.5rem;
+		    background: #F1F2F4;
+	        padding: 0.1rem 0.6rem;
+	    }
+	    .unabled{
+	    	color:#909090;
+	    }
+	    .unabled-cash{
+	    	color:#EE9A70;
+	    	background:#FDF2E6;
+	    }
+	    .order-button-detail{
+	    	color:#03A9F4;
+	    	background:#E8F7FA;
+	    }
+    </style>
+	</head>
+	<body>
+		
+		<div class="room_list">
+			<div class="room_list_div">
+				<!-- <div class="list_div">
+				<div class='recode-title'>
+					<img src="../../image/demo/school/2.jpg" alt="" />
+					<span>上虞海滨考场<font>&ensp;500米</font></span>
+				</div>
+				<div class='recode-content'>
+					<div class='recode-txt'>
+						<div class='txt-title'><span>训练时间：</span>2019-4-26</div>
+						<div class='txt-title'><span>区域：</span>A区&emsp;<span>线路：</span>线路1&emsp;<span>班次：</span>白班</div>
+						<div class='txt-price'>共3个学员&emsp;实际支付
+							<font style='color: #FF9641;'>￥</font>
+							<span>150.0</span>
+							<font style='color: #FF9641;'>（优惠300）</font>
+						</div>
+						<div class='order-button'>
+							<span class="op-button">
+					    					地图导航
+			    			</span>
+							<span class="op-button unabled">
+					    					已支付
+			    			</span>
+						</div>
+					</div>
+				</div>
+			</div> -->
+			</div>
+		</div>
+		<div id='load_div'>
+		</div>
+		<script type="text/template" charset="utf-8" id='load_src'>
+			<div class="load">
+			<img src="../../icon/common/loadding.gif" alt="" /><br>
+        	<span>加载中...</span>
+		</div>
+    </script>
+		<script type="text/template" charset="utf-8" id='msg_src'>
+			<div class="msg">
+			<img src="../../icon/common/empty.png" alt="" /><br>
+        	<span>{{=it.msg}}</span>
+		</div>
+    </script>
+		<script type="text/template" charset="utf-8" id='more_src'>
+			<div class="jiazai">
+	    	<span>{{=it.msg}}</span>
+	    </div>
+    </script>
+		<script type="text/template" charset="utf-8" id='recode_practice_src'>
+
+			{{ for(var i=0;i<it.length;i++){ }}
+			<div class="list_div">
+				<div class='recode-title'>
+					<img src="{{=file_load_url + it[i].logo}}" alt="" onerror="javascript:this.src='../../icon/default/icon_default.png'"/>
+					<span>{{=it[i].centername}}
+						<font>&ensp;
+							{{if(it[i].distance){}}
+                              <span>{{=calcuDistance(it[i].distance)}}</span>
+                            {{}else{}}
+                              <span></span>
+                            {{}}}
+	
+						</font>
+					</span> 
+				</div>
+				
+				<div class='recode-content'>
+					<div class='recode-txt'>
+						<div class='txt-title'>
+							<span>学员姓名：</span><span class="name" style="color:#000000"></span>&emsp;
+							<span>身份证号：</span><span class="idcardNo" style="color:#000000"></span>
+							
+						</div>
+						<div class='txt-title'>
+							<span>教室名称：</span>{{=it[i].name}}&emsp;
+							<span>课程名称：</span>{{=it[i].lessonName}}&emsp;
+							<span>科目：</span>科目
+							{{if(it[i].kemu==1){}}
+								一
+							{{}else{}}
+								四
+							{{}}}
+						</div>
+						<div class='txt-title'>
+						<span>培训日期：</span>{{=it[i].lessonDate}}&emsp;
+							<span>培训时间：</span>{{=sum(it[i].beginTime)}}~{{=sum(it[i].endTime)}}
+						</div>
+						<div class='txt-title'>
+						{{if(it[i].clockInTime){}}
+						<span>签到时间：</span>{{=it[i].clockInTime}}
+						{{}}}
+						</div>
+						<div class='txt-title'>
+						{{if(it[i].clockOutTime){}}
+						
+						<span>签退时间：</span>{{=it[i].clockOutTime}}
+						{{}}}
+						</div>
+						<div class='txt-price'>
+							实际支付
+							<font style='color: #FF9641;'>￥</font>
+							<span>{{=cashFormatO(it[i].lessonFee)}}</span>
+							
+						</div>
+						<div class='order-button'>
+							<span class="op-button" tapmode onclick="openMap('{{=it[i].centername}}','{{=it[i].latitude}}','{{=it[i].longitude}}')">
+		    					地图导航
+			    			</span>
+							
+		    					{{ if(it[i].status == 1){ }}
+		    					<span class="op-button order-button-detail" tapmode onclick="signIn(this,'{{=it[i].detailId}}','0','1')">
+									签到
+								</span>
+								{{ }else if(it[i].status == 2){ }}
+								<span class="op-button order-button-detail" tapmode onclick="signIn(this,'{{=it[i].detailId}}','0','2')">
+									签退
+								</span>
+								{{ }else if(it[i].status == 3){ }}
+								<span class="op-button order-button-detail">
+									已取消
+								</span>
+								{{ }else if(it[i].status == 4){ }}
+								<span class="op-button order-button-detail">
+									缺课
+								</span>
+								{{ }else if(it[i].status == 5){ }}
+								<span class="op-button order-button-detail" >
+									已签退
+								</span>
+								{{ } }}
+								
+							<!--{{ if(it[i].refundStatus == 0){ }}
+		    					<span class="op-button order-button-detail" onclick="refundApply('{{=it[i].detailId}}','{{=it[i].centername}}','{{=it[i].lessonFee}}','{{="训练日期：" + it[i].lessonDate + "/" + "课程日期：" + it[i].beginTime.substring(10,16) + "~" + it[i].endTime.substring(10,16) + "/" + "培训地点：" + it[i].name + "/" + "课程名称：" + it[i].lessonName}}','{{=it[i].logo}}','{{=it[i].lessonDate}}')">
+									申请退款
+								</span>
+								{{ }else if(it[i].refundStatus == 1){ }}
+								<span class="op-button order-button-detail">
+									退款中
+								</span>
+								<span class="op-button order-button-detail" onclick="cancelRefund('{{=it[i].detailId}}')">
+									取消退款
+								</span>
+								{{ }else if(it[i].refundStatus == 2){ }}
+								<span class="op-button order-button-detail">
+									已退款
+								</span>
+								{{ }else if(it[i].refundStatus == 9){ }}
+								<span class="op-button order-button-detail">
+									退款失败
+								</span>
+							{{ } }}-->
+						</div>
+					</div>
+				</div>
+			</div>
+		{{ } }}
+	</script>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var page = 1,
+			limit = 10;
+		var load_src = $('#load_src').html(); //加载src
+		var msg_src = $('#msg_src').html(); //消息提示src
+		var more_src = $('#more_src').html(); //更多src
+		var bMap;
+		var refresh = true; //标记是否是刷新操作
+		var params;
+		var data;
+
+		var FNImageClip;
+		var imageFilter;
+		var systemType;
+		var cache;
+		var id;//id
+		var version;//版本
+		var bMap;
+		var lon;//坐标
+		var lat;//坐标
+		var shiliPhoto;
+		var sourceEile;//相机源文件
+		var similarityDegree;//人脸识别相似度
+		var startSignPicAddress;//签到图片链接(阿里云)
+		var cache_account;
+		apiready = function(){
+			cache = api.pageParam.data;
+			shiliPhoto='../../icon/common/shiliPhoto.png'
+			defaultload('获取中');
+			imageFilter = api.require('imageFilter'); //图片压缩
+			FNImageClip = api.require('FNImageClip'); //图片裁剪
+			systemType = api.systemType;
+			bMap = api.require('bMap');
+			cache = api.pageParam;
+			log('cache', cache);
+			cache_account = $api.getStorage('cache_by_account').cache_account;
+			log('cache_account',cache_account)
+			goRefrash(40, '#FFFFFF', null, null, function() {
+				refreshList();
+			});
+			//初始化人脸识别模块
+			getBaiduFaceAccessToken();
+			goLoad(function(ret, err) {
+				log('goLoad上拉加载',page);
+				loadList();
+			});
+			init();
+			toEventListener('refund_apply',function(ret,err){
+		    		init();
+		   	});
+		}
+		//列表刷新
+		function refreshList() {
+			page = 1;
+			refresh = true;
+			setLoad();
+			log('page下拉刷新',page);
+			init();
+		}
+		
+		//列表上拉
+		function loadList() {
+			page++;
+			refresh = false;
+			setLoad();
+			log('page上拉加载',page);
+			init();
+		}
+		//获取列表
+		function init() {
+			log('pagepage',page);
+
+			mylocation(function(location_result) { //获取当前定位
+				url = 'api/courseReservation/get/learnerMessage';
+				params = {
+					learnerId: getUserId(),
+					kemu:cache.data.kemu,
+					limit: limit,
+					page: page
+				}
+				if (location_result.status) { //有定位权限
+					params.lng = location_result.lon;
+					params.lat = location_result.lat;
+				}
+				log('params上传刷新',params);
+				ajax_Request(url, 'get', 'json', params, function(ret, err) {
+					console.log("ter::"+JSON.stringify(ret));
+					if (ret) {
+						closedefaultload();
+						data = ret.learnerMessageList;
+						if (ret.code == 0 && data.length > 0) {
+							$('.aui-sum').html('实际培训时间:' + ret.trainingTimeSum + '小时');
+							var recode_practice_src = $('#recode_practice_src').html();
+
+							if (refresh || $('.room_list_div').find('.list_div').length == 0) {
+								log('ret.trainingTimeSum', ret.trainingTimeSum)
+
+								$('.room_list_div').html(doT.template(recode_practice_src)(data));
+								$('.name').html(cache_account.name);
+								
+								if(isauth()&&cache_account.idcardNo != undefined){
+									$('.idcardNo').html(cache_account.idcardNo.substring(0,4) + '***********' + cache_account.idcardNo.substring(cache_account.idcardNo.length - 4,cache_account.idcardNo.length));//身份证
+								}
+								api.parseTapmode();
+							} else {
+								$('.room_list_div').append(doT.template(recode_practice_src)(data));
+							}
+						} else {
+							setMsg(refresh ? '暂无预约数据' : '暂无更多');
+						}
+					} else {
+						setMsg('服务器繁忙，请稍后再试！');
+					}
+					setTimeout(function() {
+						api.refreshHeaderLoadDone();
+					}, 300);
+				});
+			});
+		}
+		
+		//设置页面加载的画面
+		function setLoad() {
+			if (refresh || $('.room_list_div').find('.list_div').length == 0) { //如果是刷新或者之前无数据的下拉刷新，全屏提示
+				$('#load_div').html('');
+				$(".room_list_div").html(doT.template(load_src)(null));
+
+			} else {
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': '加载更多中...',
+						'img': '../../icon/common/jiazai.gif'
+					}));
+				}, 300);
+			}
+		}
+		//设置页面提示信息
+		function setMsg(msg) {
+			if (refresh || $('.room_list_div').find('.list_div').length == 0) { //如果是刷新或者之前无数据的上拉加载，全屏提示
+				setTimeout(function() {
+					$(".room_list_div").html(doT.template(msg_src)({
+						'msg': msg
+					}));
+				}, 300);
+			} else { //原先已经有数据的情况下
+				setTimeout(function() {
+					$('#load_div').html(doT.template(more_src)({
+						'msg': msg,
+						'img': ''
+					}));
+				}, 300);
+			}
+		}
+		//打开地图
+		function openMap(name, latitude, longitude) {
+			mylocation(function(location_result) { //获取当前定位
+				if (location_result.status) { //有定位权限
+					params = {
+						to_lon: longitude,
+						to_lat: latitude,
+						to_name: name
+					}
+					api.openWin({
+						name: 'common_map_loaction_win',
+						url: '../common/common_map_loaction_win.html',
+						slidBackEnabled: 'true',
+						vScrollBarEnabled: 'false',
+						hScrollBarEnabled: 'false',
+						reload: true,
+						pageParam: {
+							data: params
+						}
+					});
+				} else {
+					alert_msg('未能获取您的定位');
+				}
+			});
+		}
+		/**
+		 * 签到
+		 */
+		//点击上传图片
+		var sourceType;
+		var pictureType;
+		var pictureStatus;
+		var title;
+		var clickId;
+		function signIn(e,id, type, status) {
+			clickId = e;
+			pictureType=type;
+			pictureStatus=status;
+			url = 'common/clock/get/clock/info';
+			ajax(url, id,type,status);
+			
+		}
+
+
+		//请求刚开始签到信息获取
+		function ajax(url, params,type,status) {
+			Request(url, 'get', 'json', params, function(ret, err) {
+				log('详情：', ret);
+				if(ret){
+					if (ret.code == 0) {
+							version = ret.courseReservation.version;//获取版本号
+							id = ret.courseReservation.id;//获取id
+							startSignPicAddress = ret.courseReservation.startSignPic;//获取签到图片地址
+							if(ret.courseReservation.isCheckLatLon){
+								mylocation(function(location_result) { //获取当前定位
+									if (location_result.status) { //有定位权限
+										lon = location_result.lon;
+										lat = location_result.lat;
+										sourceType = 'camera';
+										openMessage_i_second('示例', '请按照示例图签到签退。',shiliPhoto, '确定', '', 'getPicture()', '', '');
+										
+										//打开照相机 status=1代表签到2代表签退
+										
+									}else{
+						
+										openMessage('提示','未能获取您的定位,请打开定位权限','确定','','','',null);
+									}
+								});
+							}else{
+								sourceType = 'camera';
+								//打开照相机 status=1代表签到2代表签退
+								
+									openMessage_i_second('示例', '请按照示例图签到签退。',shiliPhoto, '确定', '', 'getPicture()', '', '');
+											
+							}
+							
+						} else {
+							alert_msg('暂无详情');
+						}
+				} else {
+					alert_msg('服务器繁忙,请稍后重试！');
+				}
+			})
+		}
+		//截取时间格式
+		function sum(str) {
+			if (typeof str != "undefined") {
+
+			} else {
+				str = '';
+			}
+
+			var f = str.substr(11, 5);
+			return f;
+		}
+
+		//提交签到材料到阿里云数据库
+		function uploadImg(index, img_path, status) {
+		log('sourceEile',sourceEile);
+			//签到时
+			if (status == '1') {
+				params = {
+					bucketName: AliOssBucket,
+					fileNum: 1,
+					fileType: 'learnerApp/signIn/' + getUserId()
+				}
+			}
+			//签退时
+			if (status == '2') {
+				params = {
+					bucketName: AliOssBucket,
+					fileNum: 1,
+					fileType: 'learnerApp/signOut/' + getUserId()
+				}
+			}
+			defaultload('上传中...');
+			//循环上传比较操蛋，因为是异步所以不能根据循环定位到哪张图片，只能通过标记去定位
+			var isloadFlag = 0; //标记位 isload代表是否上传，0代表未上传，1代表捕捉上传，2代表与阿里云建立连接，3代表上传完成
+			getUploadFilePower(params, function(ret, err) {
+				if (ret && ret.code == 0) {
+					isloadFlag = 1; //标记上传
+					//阿里云上传可能会崩，所以这里定时器：10秒后查询标记位，把isload为2的图片让用户选择上传
+					var judegeCollapse = setTimeout(function() {
+						collapse(isloadFlag, img_path, index, status);
+					}, 10000);
+					var filePath = ret.fileList[0].fileId;
+					file_upload(ret.fileList[0].signUrl, 'put', 'json', img_path, params, function(ret, err, param) {
+						if (ret) {
+							clearTimeout(judegeCollapse); //清除定时器
+							isloadFlag = 2; //标记与阿里云服务器连接
+							if (ret.progress == 100 && ret.status == 1) {
+								loaddingPic(index, img_path, filePath, status);
+							}
+						} else if (err) {
+							//ios一直会返回数据类型错误(目前找不到原因)，但是图片已上传完毕，所以也当success返回
+							if (systemType == 'ios' && err.progress == 100 && err.code == 3) {
+								clearTimeout(judegeCollapse); //清除定时器
+								isloadFlag = 2; //标记与阿里云服务器连接
+
+								loaddingPic(index, img_path, filePath, status);
+							} else if ((systemType == 'ios' && err.statusCode == 0) ||
+								(systemType == 'ios' && err.statusCode == 403)) {
+								clearTimeout(judegeCollapse); //清除定时器
+								//网络无法连接或者签名错误就重新上传
+								uploadImg(index, img_path, status);
+							}
+						}
+					});
+				} else {
+					alert_msg('获取上传文件权限失败');
+				}
+			});
+		}
+
+		//判断是否有图片上传时候与阿里云断开连接
+		function collapse(isloadFlag, img_path, index, status) {
+			api.hideProgress();
+			if (isloadFlag == 1) {
+				api.confirm({
+					title: '温馨提示',
+					msg: '上传与服务器断开连接，是否重连',
+					buttons: ['重新连接', '不上传了']
+				}, function(ret, err) {
+					var index = ret.buttonIndex;
+					if (index == 1) {
+						uploadImg(index, img_path, status);
+					}
+				});
+			}
+		}
+		
+		//拍照或打开相机 sourceType：从相册选还是拍照 faceType代表
+		function getPicture() {
+			//log('fddfdf',sourceType+','+pictureType+','+pictureStatus);
+			opWithPermission('camera',function(){
+				api.getPicture({
+					sourceType: sourceType,
+					encodingType: 'jpg',
+					mediaValue: 'pic',
+					direction:'front',
+					destinationType: 'url',
+					allowEdit: false,
+					quality: 20, //1-100图片质量
+					saveToPhotoAlbum: false
+				}, function(ret, err) {
+					//console.log('选择图片：'+JSON.stringify(ret));
+					if (ret && ret.data != '') {
+						signpicImageFilter(ret.data, function(smaller_path) {
+							if (smaller_path != '') {
+								//直接上传图片
+								
+								//uploadPicAliOss(smaller_path);
+								sourceEile=smaller_path;
+								uploadImg(pictureType, smaller_path, pictureStatus);
+	
+							} else {
+								sourceEile=ret.data;
+								alert_msg('图片压缩失败，改为原图');
+								//直接上传图片
+								//uploadPicAliOss(ret.data);
+								uploadImg(pictureType, ret.data, pictureStatus);
+							}
+	
+						});
+	
+						api.parseTapmode();
+					} else {
+						console.log('系统故障或者未选中照片');
+					};
+				});
+			})
+		}
+		//压缩图片
+		function signpicImageFilter(img_path,func){
+			var path_img = img_path.split("/");
+			var img_name = path_img[path_img.length - 1];
+			imageFilter.compress({
+			    img: img_path,
+			    quality: 0.5,
+			    scale:0.5,
+			    save:{
+			    	album: false,           //(可选项)布尔值，是否保存到系统相册，默认false
+				    imgPath:'fs://smallerPictrue',   //(可选项)保存的文件路径,字符串类型，无默认值,不传或传空则不保存，若路径不存在文件夹则创建此目录
+				    imgName:img_name         //(可选项)保存的图片名字，支持png和jpg格式，若不指定格式，则默认png，字符串类型，无默认值,不传或传空则不保存
+			    }
+			},function(ret, err){
+			    if(ret.status){
+			    	func(api.fsDir + '/smallerPictrue/' + img_name);
+			    }else{
+			        func('');
+			    }
+			});
+		}
+
+		//取消截图
+		function cancelCut() {
+			FNImageClip.close();
+			esc_function('common_prove_upload_win', '', 'hideTools()');
+		}
+
+		//保存截图
+		function getCut(index) {
+			var dest_path = 'fs://imageClip/result' + Math.floor(Math.random() * 1000000) + '.png';
+			defaultload('处理中...');
+			FNImageClip.save({
+				destPath: dest_path,
+				copyToAlbum: false,
+				quality: 1
+			}, function(ret, err) {
+				log('ret', ret);
+				if (ret) {
+					uploadImg(index, ret.destPath);
+					cancelCut();
+				} else {
+					alert_msg('截取失败，请重试');
+				}
+			});
+		}
+		var statuss;//签到1还是签退2
+		var uploadImgPaths;//当前上传的图片阿里云地址
+		var img_paths;//当前拍照的图片
+		//加载照片显示
+		function loaddingPic(index, img_path, uploadImgPath, status) {
+			log('sourceEile',sourceEile)
+			statuss = status;
+			img_paths = img_path;
+			uploadImgPaths = uploadImgPath;
+			if (status == '1') {
+				openMessage_i_second('签到','',sourceEile, '确定', '取消', 'comparePhoto()', '', '');
+			} else {
+				openMessage_i_second('签退','', sourceEile, '确定', '取消', 'comparePhoto()', '', '');
+			}
+			api.hideProgress();
+			api.parseTapmode();
+		}
+
+		//上传驾驶证信息到云端
+		var image;
+		var startSignPic;//签到的图片
+
+		function submitInfo() {
+			log('status', statuss);
+			log('uploadImgPath', uploadImgPaths);
+			log('img_paths', img_paths);
+
+
+			var signIn = uploadImgPaths;
+			if (signIn == '' || signIn == null) {
+				api.hideProgress();
+				alert_msg('图片上传失败，请重新上传');
+				return;
+			}
+
+			log('lon', lon);
+			log('lat', lat);
+		
+			//如果是签到,不需要上传图片,只要阿里云地址
+			if (statuss == 1) {
+				defaultload('正在提交签到材料');
+				params = {
+					learnerId:getUserId(),
+					startSignPic: signIn,
+					version: version,
+					id: id,
+					Lng: lon,
+					Lat: lat
+				}
+				url = 'common/clock/clock/in';
+				signRequest(params, url,statuss)
+			}
+			//如果是签退,要上传签到签退图片
+			if (statuss == 2) {
+				defaultload('正在提交签退材料');
+				//签退图片
+				picToBase64(img_paths, function(imgBase64) {
+					img_paths = imgBase64.replace('data:image/png;base64,', '');
+					//签到图片
+					picToBase64(file_load_url + startSignPicAddress, function(startSignPicAddre) {
+						startSignPic = startSignPicAddre.replace('data:image/png;base64,', '');
+						params = {
+							learnerId:getUserId(),
+							startSignPic: startSignPic,//签到图片文件
+							startSignPicAddress: startSignPicAddress,//签到图片阿里云地址
+							endSignPic: img_paths,//签退图片文件
+							endSignPicAddress: signIn,//签退图片阿里云地址
+							version: version,
+							id: id,
+							Lng: lon,
+							Lat: lat
+						}
+
+						url = 'common/clock/clock/out';
+						signRequest(params, url,statuss)
+					});
+
+				});
+			}
+		}
+
+		function signRequest(params, url,statuss) {
+			log('登记材料最后urlxx:', url);
+			log('登记材料最后传参xx:', JSON.stringify(params));
+			ajax_Request(url, 'post', 'json', params, function(ret, err) {
+				
+				log('上传证明材料信息返回：', ret);
+				if (ret) {
+				
+					if (ret.code == 0) {
+						log('上传证明材料信息返回：', ret.msg);
+						api.hideProgress();
+						openMessage('提示',ret.msg,'确定','','','',null);
+						refreshList();
+						
+					} else {
+						api.hideProgress();
+						openMessage('提示',ret.msg,'确定','','','',null);
+					}
+				} else {
+					api.hideProgress();
+					alert_msg('系统出错，请稍后再试');
+				}
+			});
+		}
+		//打开签到签退图片确认弹窗
+		function openMessage_i_second(title,content, img_path, sureButton, cancelButton, sureFunc, cancelFunc, params) {
+			api.openFrame({
+				name: 'common_alter_sign',
+				url: './common_alter_sign.html',
+				bgColor: 'rgba(0,0,0,0.4)',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.winHeight
+				},
+				bounces: false,
+				pageParam: {
+					title: title,
+					content:content,
+					img_path: img_path,
+					sureButton: sureButton,
+					sureFunc: sureFunc,
+					cancelButton: cancelButton,
+					cancelFunc: cancelFunc,
+					winName: api.winName,
+					frameName: api.frameName,
+					params: params
+				},
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}
+		//初始的时候要直接传,所以没有用通用的
+		function Request(url, method, type, params, callBack) {
+			//log('请求参数：',params);
+			var appToken = $api.getStorage('appToken');
+
+			//console.log(Base64.encode(JSON.stringify(params)));
+			api.ajax({
+				url: common_url + url + '?id=' + params,
+				method: method,
+				tag: url, //为方便，全部统一
+				timeout: 100,
+				headers: {
+					"appToken": appToken
+				},
+				dataType: type
+			}, function(ret, err) {
+				if (ret) {
+					if (ret.code != -2) {
+						//只要接口通过后台服务器验证就正常进行
+						callBack(ret, err);
+					} else {
+						//重新获取token
+						console.log('重新获取token');
+						getPhoneToken(function(ret, err) {
+							//如果这里还是调用ajax_Request方法那么有可能会陷入死循环，所以只获取一次token
+							if (ret) {
+								if (ret.code == 0) {
+									//刷新手机令牌
+									$api.setStorage('appToken', ret.appToken);
+									api.ajax({
+										url: common_url + url + '?params=' + Base64.encode(JSON.stringify(params)),
+										method: method,
+										tag: url, //为方便，全部统一
+										timeout: 100,
+										headers: {
+											"appToken": ret.appToken
+										},
+										dataType: type
+									}, function(ret, err) {
+										callBack(ret, err);
+									});
+								} else {
+									alert_msg(ret.msg);
+								}
+							} else {
+								alert_msg('获取手机令牌失败');
+							}
+						});
+					}
+				} else {
+					alert_msg('服务器繁忙，请稍后再试');
+				}
+			});
+
+		}
+		
+		/**
+	 * 申请退款 
+	 */
+	function refundApply(detailId,centername,lessonFee,info,logo,limitDate){
+		params = {
+			id:detailId,
+			name:centername,
+			paymentAmount:lessonFee,	
+			licenseType:info,
+			status:'',
+			logo:logo,
+			limitDate:limitDate,
+			type:'KemuOne',
+		}
+		console.log("======="+JSON.stringify(params))
+		//title标题 content内容 sureButton确认按钮文字 cancelButton取消按钮文字 sureFunc确定方法 cancelFunc取消方法  params额外参数，没有必须传null
+		//openMessage(title, content, sureButton, cancelButton, sureFunc, cancelFunc, params)
+		//openMessage('退款提示', '&emsp;&emsp;您退款后订单人数减少，可能导致批次变动，具体联系考场82068000', '好的', '我再想想', 'openWin(params)', '', null);
+		
+	}
+	
+	function openWin(params){
+		log('params',params)
+		api.openWin({
+		       name: 'common_order_refund_win',
+		       url: '../common/common_order_refund_win.html',
+		       slidBackEnabled:'false',
+		       vScrollBarEnabled:'false',
+		       hScrollBarEnabled:'false',
+		       reload:true,
+		       useWKWebView:false,
+		       pageParam: params
+		   });
+	}
+	
+	/**
+	 *取消退款 
+	 */
+	function cancelRefund(detailId){
+		params = {
+			detailId:detailId
+		}
+		console.log("======="+JSON.stringify(params))
+		openMessage('取消退款提示', '&emsp;你确定要取消退款吗', '是的', '我再想想', 'cancel(params)', '', null);
+	}
+	
+	function cancel(params){
+		console.log("+++++"+JSON.stringify(params));
+		url='/api/courseReservation/cancel-refund';
+		ajax_Request(url,'POST','json',params,function(ret,err){
+			console.log("orderId"+JSON.stringify(ret));
+			if(ret){
+				if(ret.code == 400221 ){
+				alert_msg(ret.msg);
+				init();
+//					setMsg('取消退款成功');
+				}else {
+					alert_msg(ret.msg);
+					init();
+				}
+			}else{
+				setMsg('系统出错');
+			}
+		});
+	}
+	/**
+     * 获取百度人脸识别access_token
+     */
+    function getBaiduFaceAccessToken(){
+    	url = third_url + "api/common/face/detect";
+    	api.ajax({
+			url : url,
+			method : 'get',
+			tag:url,//为方便，全部统一
+			timeout:30,
+			dataType : 'json'
+		}, function(ret, err) {
+			log('access_token',ret);
+			if(ret&&ret.code == 0){
+				$api.setStorage('access_token',ret.access_token);
+			}else{
+				alert_msg('初始化人脸识别模块失败');
+			}
+		});
+    }
+	/**
+	 * 对比证件照和自拍照相似度 
+	 */
+	function comparePhoto(){
+		defaultload('人脸识别中...');
+		var access_token = $api.getStorage('access_token');
+		url = 'https://aip.baidubce.com/rest/2.0/face/v3/match?access_token=' + access_token;
+		params = [
+		    {
+		        image_type: "BASE64",
+		        face_type: "LIVE"
+		    },
+		    {
+		        image_type: "BASE64",
+		        face_type: "IDCARD"
+		    }
+		]
+		picToBase64(sourceEile,function(img3Base64){
+			params[0].image = img3Base64.replace('data:image/png;base64,','');
+			log('身份证正面',cache_account.img4)
+			picToBase64(file_load_url + cache_account.img4,function(img1Base64){
+				params[1].image = img1Base64.replace('data:image/png;base64,','');
+				api.ajax({
+					url : url,
+					method : 'post',
+					tag:url,//为方便，全部统一
+					timeout:20,
+					dataType : 'json',
+					headers : {
+						"Content-Type" : "application/json"
+					},
+					data: {
+						body:params
+					}
+				}, function(ret, err) {
+					log('人脸对比',ret);
+					if(ret){
+						if(ret.error_msg == 'SUCCESS'){
+						
+							similarityDegree = parseFloat(ret.result.score).toFixed(2);
+							log('similarityDegree',similarityDegree);
+							if(similarityDegree >= 50){
+								mylocation(function(location_result) { //获取当前定位
+									if (location_result.status) { //有定位权限
+										lon = location_result.lon;
+										lat = location_result.lat;
+									}
+									submitInfo();
+								});
+							}else{
+								openMessage('提示','人脸识别失败！请重新拍照签到！','确定','','','',null);
+							}
+						}else{
+							closedefaultload();
+							//alert_msg(ret.error_msg);
+							alert_msg('自拍照未能识别人脸，请重试');
+						}
+					}else{
+						api.hideProgress();
+						alert_msg('网络状态不佳，请稍后重试~');
+					}
+				});
+			});
+		});
+	}
+	</script>
+</html>

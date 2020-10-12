@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>考试/培训</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	#menu{
+			font-size:0.8rem;
+		}
+		.aui-bar-btn-item.aui-active{
+			background:#3F86FF;
+			color:#FFFFFF;
+			/*border-bottom: solid 2px #FFCE02;*/
+		}
+		.aui-bar-btn-item{
+			padding:0!important;
+			background:#3F86FF;
+			color:#77A9FF;
+			font-size:0.7rem;
+			min-height:1.1rem!important;
+		}
+		#menuPackage{
+			position: relative;
+			background: linear-gradient(to left, #3F86FF , #3F86FF);
+		}
+		.aui-bar-nav {
+		    top: 0;
+		    line-height: 2.25rem;
+		    background: linear-gradient(to left, #3F86FF , #3F86FF);
+		    color: #FFF;
+		}
+		.aui-active{
+			font-weight: bold;
+			font-size:0.7rem;
+		}
+		.list_bar{
+			width: 10%!important;
+			/*min-width:5%;*/
+			left:2.5%!important;
+		}
+		.list_bar{
+			height:5px!important;
+			/*border:solid 1px #FFCE02;
+			border-radius: 2.0rem;*/
+		}
+		.list_bar .list_bar_inner{
+			background:#FFCE02;
+		}
+    </style>
+</head>
+<body>
+	<div id="menuPackage">
+		<!--<header class="aui-bar aui-bar-nav" id="aui-header">
+	        <div class="aui-title">学车考试</div>
+	    </header>-->
+		<div class="aui-bar aui-bar-btn aui-bar-btn-full" id="menu">
+		    <div class="aui-bar-btn-item aui-active">科一</div>
+		    <div class="aui-bar-btn-item">科二</div>
+		    <div class="aui-bar-btn-item">科三</div>
+		    <div class="aui-bar-btn-item">科四</div>
+		</div>
+		<li class="list_bar" id="slideSpan">
+	        <div class="list_bar_inner"></div>
+	    </li>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var headHieght;//顶部高度
+	var footHeight;//底部高度
+	var clearance = 25;//间隙
+	apiready = function(){
+		$api.fixStatusBar($api.byId('menuPackage'));
+		headHieght = $api.byId('menuPackage').offsetHeight;
+		footHeight = api.pageParam.footHeight;
+		openFrameGroup();
+		//切换menu初始化
+		var tabwork = new auiTab({
+	        element:document.getElementById("menu"),
+	        repeatClick:true
+	    },function(ret){
+	        if(ret){
+	        	switch (ret.index) {
+                   case 1:
+                       logAppBuryingPoint({},'科目一','学车考试');
+                       break;
+                   case 2:
+                       logAppBuryingPoint({},'科目二','学车考试');
+                       break;
+                   case 3:
+                       logAppBuryingPoint({},'科目三','学车考试');
+                       break;
+                   case 4:
+                       logAppBuryingPoint({},'科目四','学车考试');
+                       break;
+                }
+				f_slide($(ret.dom));
+	        	setViewFrame(ret.index-1);
+	        }
+	    });
+	    $('.aui-active').click();
+	};
+    
+    //滑块加载事件
+	function f_slide(e){
+		$('.aui-bar-btn-item').removeClass('aui-active');
+		$(e).addClass('aui-active');
+		$('.list_bar').css('width',($('.aui-active').width() - clearance*3)+'px');
+		$('.list_bar_inner').css('width',($('.aui-active').width() - clearance*3)+'px');
+		document.getElementById('slideSpan').style.webkitTransform = 'translateX('+($(e).position().left + clearance)+'px)';
+	}
+	
+    //设置frameGroup可见frame
+    function setViewFrame(index){
+    	api.setFrameGroupIndex({
+		    name: 'examination_group',
+		    index: index
+		});
+    }
+    
+    //加载home的group
+    function openFrameGroup(){
+    	api.openFrameGroup({
+		    name: 'examination_group',
+		    scrollEnabled:true,
+		    preload:0,
+		    rect: {
+		        x: 0,
+		        y: headHieght,
+		        w: 'auto',
+		        h: api.winHeight - headHieght - footHeight
+		    },
+		    frames: [{
+		        name: 'subject_one',//科目一
+		        url: './examination_index_subject_one.html',
+		        bgColor: '#EFEFF4',
+		        bounces: true,
+		        scrollToTop:true,
+		        overScrollMode:'scrolls'
+			},{
+		        name: 'subject_two',//科目二
+		        url: './examination_index_subject_two.html',
+		        bgColor: '#EFEFF4',
+		        bounces: true,
+		        scrollToTop:true
+			},{
+		        name: 'subject_three',//科目三
+		        url: './examination_index_subject_three.html',
+		        bgColor: '#EFEFF4',
+		        bounces: true,
+		        scrollToTop:true
+			},{
+		        name: 'subject_four',//科目四
+		        url: './examination_index_subject_four.html',
+		        bgColor: '#EFEFF4',
+		        bounces: true,
+		        scrollToTop:true
+			}]
+		}, function(ret, err) {
+		    var index = ret.index;
+		    f_slide($('.aui-bar-btn-item').eq(index));
+		});
+    }
+</script>
+</html>

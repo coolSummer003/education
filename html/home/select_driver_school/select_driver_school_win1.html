@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>教练详情</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<style>
+			html{
+    		background-color: #ffffff;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+		footer{
+		    height: 2.5rem;
+		    position: fixed;
+		    bottom: 0;
+		    width: 100%;
+		    z-index: 11;
+    		background: #fff;
+    	}
+    	footer img{
+		    height: 1rem;
+    		margin-bottom: -0.4rem;
+    	}
+    	.b_l_1{
+		    width: 24.8%;
+		    height: 2.5rem;
+		    /*margin-right: 1%;*/
+		    border-right:1px solid #f5f5f5;
+		    text-align: center;	
+		    float: left;
+	        background: #FFFFFF;
+	        color: #717372;
+    	}
+    	.b_l_1 span{
+    		font-size: 0.6rem;
+    	}
+    	.b_l_2{
+    		width: 40%;
+    		height: 2.5rem;
+    		line-height: 2.5rem;
+    		float: left;
+    		border-right:1px solid #f5f5f5;
+    		text-align: center;
+    		background: #FFFFFF;
+    		color: #717372;
+    	}
+    	.b_l_2 span{
+    		font-size: 0.8rem;
+    		color: #323C41;
+    	}
+    	.unable{
+    		width: 90%;
+    		height: 1.7rem;
+    		background: #1E8DD8;
+    		color: #FFF;
+    		font-size: 1rem;
+    		line-height: 1.7rem;
+    		text-align: center;
+			border-radius: 1.5625rem;
+			margin-left: 5%;
+			margin-top: 0.4rem;
+    	}
+    	.buy{
+		    background: #1E8DD8;
+    	}
+    	.buy:active{
+    		background:#1E8DD8;
+    	}
+    </style>
+	</head>
+	<body>
+		<div id="menuPackage">
+			<header class="aui-bar aui-bar-nav aui-border-b tab1 blue-b none-bottom-style" id="aui-header">
+				<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+					<img src="../../../icon/common/icon_header_return.png">
+				</a>
+				<div class="aui-title" id="common_title">
+					帮我选驾校
+				</div>
+				<a class="aui-pull-right aui-btn" ">
+					
+				</a>
+			</header>
+		</div>
+		
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var headerPos;
+		var footPos;
+		var contactNumber;
+		apiready = function() {
+			api.parseTapmode();
+			$api.fixStatusBar($api.byId('menuPackage'));
+			var header = $api.byId('menuPackage');
+			headerPos = $api.offset(header);
+			cache = api.pageParam;
+			init();
+		/* 	toEventListener('returnValue', function(ret) {
+				coach_cache = ret.value;
+				log('retss', ret);
+			})
+			init();
+			toEventListener('callCoach',function(ret){
+				log('retss', ret);
+				contactNumber = ret.value;
+			}) */
+		}
+
+		function init() {
+			api.openFrame({
+				name: 'select_driver_school_frm1',
+				url: './select_driver_school_frm1.html',
+				bgColor: '#efeff4',
+				rect: {
+					x: 0,
+					y: headerPos.h,
+					w: 'auto',
+					h: api.winHeight - headerPos.h
+				},
+				bounces: false,
+				pageParam: cache,
+				reload: true,
+				softInputBarEnabled: true,
+				useWKWebView: false,
+				softInputMode: 'resize'
+			});
+		}
+
+	
+		function closeWin() {
+			api.closeWin({});
+		}
+	</script>
+</html>

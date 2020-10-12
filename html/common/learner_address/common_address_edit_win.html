@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>编辑地址</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	body{
+    		
+    	}
+    	header img {
+		    width: 20px;
+		}
+    	#menu{
+			font-size:0.8rem;
+		}
+		#menuPackage{
+			position: relative;
+		}
+		.deleteAddress{
+			min-height: 2.25rem;
+			position: absolute;
+			margin: 0;
+			text-align: center;
+			white-space: nowrap;
+			right: 0rem;
+			left: 15rem;
+			width: auto;
+			font-size: 0.7rem;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			z-index: 2;
+			color: #666;
+		}
+		#delete_btn{
+			float: right;
+			height: 2rem;
+			position: relative;
+		}
+		#delete_btn img{
+			width: 0.75rem;
+			height: 0.8rem;
+			position: absolute;
+		    top: 37%;
+		    right: 0.8rem;
+		}
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header" style="border-bottom: none;">
+		<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+            <img src="../../../icon/common/icon_header_return.png">
+        </a>
+        <div class="aui-title">
+        	 编辑地址
+        </div>
+        <div class="aui-hide" id="delete_btn" onclick="delete_btn_heihei()" >
+        	<img src="../../../icon/common/icon_delete_pic.png"/></div>
+    </header>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var headerHeight;
+	var id;//地址id
+	apiready = function(){
+		cache = api.pageParam;
+		log("学员cache:",cache);
+		$api.fixStatusBar($api.dom('header'));
+		headerHeight = $api.dom('header').offsetHeight;
+		init();
+		
+		if(cache.flag == "modify"){
+			//修改地址
+//			init();
+			if(cache.isDefault != 1){
+				$("#delete_btn").removeClass('aui-hide');
+			}
+		}
+		
+	};
+	
+	function init(){
+		openFrameCommon('common_address_edit_frm',cache,headerHeight,api.winHeight - headerHeight,false);
+	}
+	
+    function closeWin(){
+    	api.closeWin({
+        });
+    }
+    
+    function delete_btn_heihei(){
+    	esc_function("common_address_edit_win","common_address_edit_frm","deleteAddress()")
+    }
+</script>
+</html>

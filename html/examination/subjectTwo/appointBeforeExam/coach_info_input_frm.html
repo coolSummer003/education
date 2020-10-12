@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>科目二输入教练信息输入框</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../css/common/common.css" />
+    <style>
+    	html{
+    		background: transparent;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background: transparent;
+    		/* background:#000; */
+    		display:flex;
+    	}
+    	.attention-div{
+    		margin: auto;
+		    position: absolute;
+		    height: 100%;
+			-webkit-transform: scale(0);
+			transform:scale(0);
+			opacity: 0;
+			width: 100%;
+		    padding: 2rem 1rem 0rem 1rem;
+	        background: #FFF;
+    	}
+    	.shadow{
+    		width:100%;
+    		height:100%;
+    		background:#000;
+    		opacity:0;
+    		position: absolute;
+    	}
+    	.trans {
+            /*transition*/
+            -webkit-transition: 0.3s ease;
+            -moz-transition: 0.3s ease;
+            -ms-transition: 0.3s ease;
+            -o-transition: 0.3s ease;
+            transition: 0.3s ease;
+        }
+        .show{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+        }
+		.sure{
+		    height: 2rem;
+		    line-height: 2rem;
+		    background: #DC251F;
+		    color: #FFF;
+		    border-radius: 0.2rem;
+		}
+		.message-txt{
+		    width: 90%;
+		    margin: auto;
+		    text-align: center;
+		    font-size: 0.7rem;
+		    -webkit-transform: scale(0);
+			transform:scale(0);
+			opacity: 0;
+			background: #FFF;
+			border-radius: 0.5rem;
+		}
+		.message-txt-title{
+			width: 100%;
+		    height: 2.5rem;
+		    line-height: 2.5rem;
+		    border-radius: 0.5rem 0.5rem 0rem 0rem;
+    		border-bottom: none;
+    		color:#4D4D4D;
+    		font-size:0.9rem;
+		}
+		.message-txt-content{
+	        width: 100%;
+		    text-align: left;
+		    color: #7D7D7D;
+		    font-size: 0.65rem;
+		    padding: 0rem 0.7rem 1rem 0.7rem;
+		}
+		.message-txt-content span{
+			margin:auto;
+			padding: 0 0.3rem;
+		    font-size: 0.8rem;
+		}
+		.message-txt-button{
+	        width: 50%;
+		    height: 2.5rem;
+		    line-height: 2.5rem;
+		    color: #75A4E9;
+	        font-size: 0.8rem;
+	        border-radius:0rem 0rem 0.5rem 0.5rem;
+            float: left;
+		}
+		.message-txt-button:active{
+			background:#F0F0F0;
+		}
+		.in{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+		}
+		.bottom-slide-red {
+		    position: relative;
+		}
+		.bottom-slide-red:after {
+		    content: '';
+		    height: 1px;
+		    background: #DDDDDD;
+		    width: 100%;
+		    display: block;
+		    -webkit-transform: scaleY(0.3);
+		    transform: scaleY(0.3);
+		    -webkit-transform-origin: 30% 100%;
+		    transform-origin: 30% 100%;
+		    bottom: 0;
+		    left: 0;
+		    position: absolute;
+		}
+		.small{
+		    width: 50%;
+		    float: left;
+		}
+		.left{
+			border-radius:0rem 0rem 0rem 0.5rem;
+		}
+		.right{
+			border-radius:0rem 0rem 0.5rem 0rem;
+		}
+		.select_practical_title{
+		    font-weight: bold;
+		    text-align: left;
+		    height: 1.7rem;
+		    line-height: 1.7rem;
+		    margin-top: 0.5rem;
+		    padding-left: 4%;
+		}
+		.select_practical_title img{
+		    width: 1rem;
+			margin-bottom: -0.2rem;
+		}
+		.nav {
+	        height: 100%;
+	        overflow-x: scroll;
+	        overflow-y: hidden;
+	        background-color: #FFFFFF;
+	        /*解决ios上滑动不流畅*/
+	        -webkit-overflow-scrolling: touch;
+	    }
+	    .con {
+	        height: 100%;
+		    display: -webkit-box;
+		    align-items: center;
+	        position: relative;
+	    }
+	    .con>li {
+	        text-align: center;
+		    font-size: 0.8rem;
+		    min-width: 3rem;
+		    list-style: none;
+		    margin-right: 0.5rem;
+	    }
+	    .container {
+            height: 2.5rem;
+		    line-height: 2.5rem;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    overflow: hidden;
+	        margin-left: 4%;
+	        padding-top: 0.5rem;
+	    }
+	    .container ::-webkit-scrollbar {
+	        display: none;
+	    }
+	    .lump{
+		    float: left;
+		    padding: 0rem 1rem;
+		    font-size: 0.8rem;
+		    color: #6F6F6F;
+		    height: 2rem;
+		    border-radius: 5px;
+		    border: solid 1px #F1F1F1;
+		    line-height: 2rem;
+	    }
+	    .lump-active {
+		    color: #72A8C9 !important;
+		    border: solid 1px #72A8C9 !important;
+		    background: #DDEBFF !important;
+		}
+		.chepai{
+			border-radius: 5px !important;
+			border: solid 1px #F1F1F1 !important;
+			margin-left: 4% !important;
+			width: 77% !important;
+			padding: 0 0.5rem !important;
+		}
+		ul,ol{
+				list-style: none;
+			}
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			#container{
+				width: 100%;
+				height: 100%;
+				padding-top: 50px;
+			}
+			#carLicenseBox{
+				width: 80%;
+				/*height: 100%;*/
+				border-radius: 10px;
+				margin: 0 auto;
+				padding-bottom: 20px;
+				overflow: hidden;
+				background-color: #ffffff;
+			}
+			#carLicenseBox .carLicenseTitle{
+				width: 100%;
+				height: 70px;
+				background-color: #fff;
+				text-align: center;
+				line-height: 70px;
+				color: black;
+				font-size: 18px;
+			}
+			#carLicenseBox .carLicenseMain{
+				width: 100%;
+				height: 160px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+			}
+			#carLicenseBox .carLicenseMain ul{
+				width: 100%;
+				height: 36px;
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: center;
+			}
+			#carLicenseBox .carLicenseMain ul li{
+				width: 34px;
+				height: 40px;
+				border: 1px solid #cccccc;
+				text-align: center;
+				line-height: 40px;
+				float: left;
+			}
+			#carLicenseBox .carLicenseMain ul li:last-of-type{
+				margin: 0;
+			}
+			#carLicenseBox .carLicenseMain ul li.active{
+				border: 2px solid #f3483e;
+			}
+			#carLicenseBox .carLicenseMain ul li.xinnengyuan{
+				background: url(img/xinnengyuan.png) no-repeat center;
+				background-size: 100% 100%;
+				border: 2px dashed #CCCCCC;
+			}
+			#carLicenseBox .submitBtn{
+				width: 80%;
+				height: 45px;
+				background-color: #f3483e;
+				border: none;
+				border-radius: 6px;
+				text-align: center;
+				line-height: 45px;
+				color: white;
+				font-size: 20px;
+				margin-left: 10%;
+			}
+			#keyboardBox{
+				width: 100%;
+				position: absolute;
+				bottom: 0px;
+				left: 0px;
+				z-index: 999;
+			}
+			#keyboardBox .provienceBox,#keyboardBox .textBox{
+				width: 100%;
+				background-color: #D0D5D9;
+				padding-top: 10px;
+				padding-bottom: 4px;
+			}
+			#keyboardBox .provienceBox ul,#keyboardBox .textBox ul{
+				width: 100%;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-around;
+				align-items: center;
+				margin-top: 10px;
+			}
+			#keyboardBox .provienceBox ul:first-of-type, #keyboardBox .textBox ul:first-of-type{
+				margin-top: 0px;
+			}
+			#keyboardBox .provienceBox ul li,#keyboardBox .textBox ul li{
+				width: 30px;
+				height: 43px;
+				border-radius: 6px;
+				text-align: center;
+				line-height: 43px;
+				float: left;
+				background-color: #ffffff;
+			}
+			#keyboardBox .textBox{
+				display: none;
+			}
+			#keyboardBox .provienceBox ul .changeContentBtn,#keyboardBox .provienceBox ul .deleteBtn,#keyboardBox .textBox ul .changeContentBtn,#keyboardBox .textBox ul .deleteBtn{
+				width: 40px;
+				height: 40px;
+				background-color: #ACB3BB;
+				text-align: center;
+				line-height: 40px;
+			}
+			#keyboardBox .provienceBox ul .deleteBtn img,#keyboardBox .textBox ul .deleteBtn img{
+				width: 23px;
+				height: 16px;
+				margin: 0px;
+				margin-top: 12px;
+			}
+
+			.img-jpg{
+				width: 80%;
+				margin: 0 auto;
+			}
+			.img-jpg img{
+				width: 100%;
+			}
+			.textBox ul li:click{
+				background: #0088CC;
+			}
+			 @keyframes scaleDraw {  /*定义关键帧、scaleDrew是需要绑定到选择器的关键帧名称*/
+			0%{
+				transform: scale(1);  /*开始为原始大小*/
+			}
+			25%{
+				transform: scale(1.3); /*放大1.1倍*/
+			}
+			50%{
+				transform: scale(1.3);
+			}
+			100%{
+				transform: scale(1);
+			}
+		}
+		.activeKey{
+			background-color: #ACB3BB !important;
+			/*background: #999 !important;*/
+			opacity: 0.8;
+			color: #fff;
+			-webkit-animation-name: scaleDraw; /*关键帧名称*/
+			-webkit-animation-timing-function: ease-in-out; /*动画的速度曲线*/
+			-webkit-animation-duration: 0.2s; /*动画所花费的时间*/
+		}
+		.close{
+			width:1.9rem;
+			height:1.5rem;
+			line-height:1.5rem;
+	
+			position: absolute;
+			border-radius:0.3rem;
+			text-align:center;
+			font-size:0.7rem;
+			right: 0.4rem;
+		}
+		.delete{
+			width:1.9rem;
+			height:1.5rem;
+			line-height:1.5rem;
+			position: absolute;
+			border-radius:0.3rem;
+			text-align:center;
+			font-size:0.7rem;
+			left: 0.4rem;
+		}
+		.b-left{
+			border-radius: 0rem 0rem 0rem 0.5rem;
+			width:70%;
+		}
+		.b-right{
+			border-radius: 0rem 0rem 0.5rem 0rem;
+			width:30%;
+		}
+    </style>
+</head>
+<body>
+	<!-- 提示说明 -->
+	<div class='message-txt trans' id="messageTxt">
+		<div class='message-txt-title'>请填写以下重要信息</div>
+		<div class='message-txt-content bottom-slide-red'>
+			<div class="select_practical_title">
+				<img src="../../../../icon/subject/icon_shifts.png" alt="" />
+				<span>选择班次</span>
+		    </div>
+		    <div class="container" style="height:3rem;line-height:3rem;">
+		        <nav class="nav" id="shifts_nav">
+		            <ul class="con">
+		            	<!-- <li class="menuLi margin-top-0-5">
+		            		            			<div class='lump lump-active' style='width: 5rem;' tapmode onclick="selectShifts(this,'1111','白班')">
+		            		            				白班
+		            		            			</div>
+		            		            		</li> -->
+		            </ul>
+		        </nav>
+	        </div>
+			<div class="select_practical_title">
+				<img src="../../../../icon/subject/icon_cars.png" alt="" />
+				<span>教练车牌号</span>
+		    </div>
+		    <div class="carLicenseMain select_practical_input">
+		        <input type="text" id="carNum" class='chepai carId'>
+		    </div>
+		    <div class="select_practical_title">
+				<img src="../../../../icon/subject/name.png" alt="" />
+				<span>教练姓名</span>
+		    </div>
+		    <div class="select_practical_input">
+		        <input type="text" id="coachName" onfocus="auiHide()" class='chepai'>
+		    </div>
+		    <div class="select_practical_title">
+				<img src="../../../../icon/subject/telphone.png" alt="" />
+				<span>教练手机号</span>
+		    </div>
+		    <div class="select_practical_input">
+		        <input type="tel" maxlength="11" id="coachPhone" onfocus="auiHide()" style='' class='chepai'>
+		    </div>
+	        <div class="select_practical_title">
+				<img src="../../../../icon/subject/icon_area.png" alt="" />
+				<span>所属驾校</span>
+		    </div>
+			<div class="select_practical_input" tapmode onclick="openSelTcmSchool()">
+				<input type="text" id="schoolName" placeholder="请选择所属驾校" onfocus="auiHide()" class='chepai' readonly>
+			</div>
+		</div>
+		<div class='message-txt-button b-left' id='sureButton'>确定</div>
+		<div class='message-txt-button b-right' id='exitButton'>退出</div>
+	</div>
+	<div id="keyboardBox" class="aui-hide">
+		<ul style="width:100%;height: 1.9rem;padding:0.5rem;background:#D0D5D9">
+			<li class="delete" tapmode onclick="auiDel()">清空</li>
+			<li class="close" tapmode onclick="auiHide()">关闭</li>
+		</ul>
+		<div class="provienceBox" id="provienceBox">
+			<ul>
+				<li tapmode onclick='provinceClick(this)'>京</li>
+				<li tapmode onclick='provinceClick(this)'>津</li>
+				<li tapmode onclick='provinceClick(this)'>渝</li>
+				<li tapmode onclick='provinceClick(this)'>沪</li>
+				<li tapmode onclick='provinceClick(this)'>冀</li>
+				<li tapmode onclick='provinceClick(this)'>晋</li>
+				<li tapmode onclick='provinceClick(this)'>辽</li>
+				<li tapmode onclick='provinceClick(this)'>吉</li>
+				<li tapmode onclick='provinceClick(this)'>黑</li>
+				<li tapmode onclick='provinceClick(this)'>苏</li>
+			</ul>
+			<ul>
+				<li tapmode onclick='provinceClick(this)' style="background: #DD524D;color: #FFFFFF;">浙</li>
+				<li tapmode onclick='provinceClick(this)'>皖</li>
+				<li tapmode onclick='provinceClick(this)'>闽</li>
+				<li tapmode onclick='provinceClick(this)'>赣</li>
+				<li tapmode onclick='provinceClick(this)'>鲁</li>
+				<li tapmode onclick='provinceClick(this)'>豫</li>
+				<li tapmode onclick='provinceClick(this)'>鄂</li>
+				<li tapmode onclick='provinceClick(this)'>湘</li>
+				<li tapmode onclick='provinceClick(this)'>粤</li>
+				<li tapmode onclick='provinceClick(this)'>琼</li>
+			</ul>
+			<ul>
+				<li tapmode onclick='provinceClick(this)'>川</li>
+				<li tapmode onclick='provinceClick(this)'>贵</li>
+				<li tapmode onclick='provinceClick(this)'>云</li>
+				<li tapmode onclick='provinceClick(this)'>陕</li>
+				<li tapmode onclick='provinceClick(this)'>甘</li>
+				<li tapmode onclick='provinceClick(this)'>青</li>
+				<li tapmode onclick='provinceClick(this)'>蒙</li>
+				<li tapmode onclick='provinceClick(this)'>桂</li>
+				<li tapmode onclick='provinceClick(this)'>宁</li>
+				<li tapmode onclick='provinceClick(this)'>新</li>
+			</ul>
+			<ul>
+				<li class="changeContentBtn other" tapmode onclick='changeInput(this)'>ABC</li>
+				<li tapmode onclick='provinceClick(this)'>藏</li>
+				<li tapmode onclick='provinceClick(this)'>使</li>
+				<li tapmode onclick='provinceClick(this)'>领</li>
+				<li tapmode onclick='provinceClick(this)'>警</li>
+				<li tapmode onclick='provinceClick(this)' style="background: #DD524D;color: #FFFFFF;">学</li>
+				<li tapmode onclick='provinceClick(this)'>港</li>
+				<li tapmode onclick='provinceClick(this)'>澳</li>
+				<li class="deleteBtn other" tapmode onclick='deleteBtnClick(this)'>删除</li>
+			</ul>
+		</div>
+		<div class="textBox" id="textBox">
+			<ul>
+				<li tapmode onclick='txtClick(this)'>1</li>
+				<li tapmode onclick='txtClick(this)'>2</li>
+				<li tapmode onclick='txtClick(this)'>3</li>
+				<li tapmode onclick='txtClick(this)'>4</li>
+				<li tapmode onclick='txtClick(this)'>5</li>
+				<li tapmode onclick='txtClick(this)'>6</li>
+				<li tapmode onclick='txtClick(this)'>7</li>
+				<li tapmode onclick='txtClick(this)'>8</li>
+				<li tapmode onclick='txtClick(this)'>9</li>
+				<li tapmode onclick='txtClick(this)'>0</li>
+			</ul>
+			<ul>
+				<li tapmode onclick='txtClick(this)'>Q</li>
+				<li tapmode onclick='txtClick(this)'>W</li>
+				<li tapmode onclick='txtClick(this)'>E</li>
+				<li tapmode onclick='txtClick(this)'>R</li>
+				<li tapmode onclick='txtClick(this)'>T</li>
+				<li tapmode onclick='txtClick(this)'>Y</li>
+				<li tapmode onclick='txtClick(this)'>U</li>
+				<li tapmode onclick='txtClick(this)'>I</li>
+				<li tapmode onclick='txtClick(this)'>O</li>
+				<li tapmode onclick='txtClick(this)'>P</li>
+			</ul>
+			<ul>
+				<li tapmode onclick='txtClick(this)'>A</li>
+				<li tapmode onclick='txtClick(this)'>S</li>
+				<li tapmode onclick='txtClick(this)'>D</li>
+				<li tapmode onclick='txtClick(this)'>F</li>
+				<li tapmode onclick='txtClick(this)'>G</li>
+				<li tapmode onclick='txtClick(this)'>H</li>
+				<li tapmode onclick='txtClick(this)'>J</li>
+				<li tapmode onclick='txtClick(this)'>K</li>
+				<li tapmode onclick='txtClick(this)'>L</li>
+			</ul>
+			<ul>
+				<li class="changeContentBtn other" tapmode onclick='changeInput(this)'>返回</li>
+				<li tapmode onclick='txtClick(this)'>Z</li>
+				<li tapmode onclick='txtClick(this)'>X</li>
+				<li tapmode onclick='txtClick(this)'>C</li>
+				<li tapmode onclick='txtClick(this)'>V</li>
+				<li tapmode onclick='txtClick(this)'>B</li>
+				<li tapmode onclick='txtClick(this)'>N</li>
+				<li tapmode onclick='txtClick(this)'>M</li>
+				<li class="deleteBtn other" tapmode onclick='deleteBtnClick(this)'>删除</li>
+			</ul>
+		</div>
+	</div>
+	<script type="text/template" charset="utf-8" id='shifts_src'>
+		{{ for(var i=0;i<it.shiftList.length;i++){ }}
+			<li class="menuLi margin-top-0-5">
+				{{ if(it.shiftsId == it.shiftList[i].code){ }}
+	            	<div class='lump lump-active' style='width: 5rem;' tapmode onclick="selectShifts(this,'{{=it.shiftList[i].code}}','{{=getLessionName(it.shiftList[i].code)}}')">
+				{{ }else{ }}
+	            	<div class='lump' style='width: 5rem;' tapmode onclick="selectShifts(this,'{{=it.shiftList[i].code}}','{{=getLessionName(it.shiftList[i].code)}}')">
+				{{ } }}
+            		{{=getLessionName(it.shiftList[i].code)}}
+            	</div>
+            </li>
+		{{ } }}
+	</script>
+</body>
+<script type="text/javascript" src="../../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var lessionMap;//字典表缓存-班次
+	var appointDate;//训练日期
+	var testCenterId;//考场id
+	var shiftsId = '';//班次id
+	var shiftsName = '';//班次名称
+	var schoolId = '';//所属驾校标识
+	var num = 7; //需要输入的车牌数
+	apiready = function(){
+		api.parseTapmode();
+		cache = api.pageParam;
+		appointDate = cache.appointDate;
+		testCenterId = cache.testCenterId;
+		shiftsId = cache.shiftsId;
+		shiftsName = cache.shiftsName;
+		schoolId = cache.schoolId;
+		$('#carNum').val(cache.carNum);
+		$('#coachName').val(cache.coachName);
+		$('#coachPhone').val(cache.coachPhone);
+		$('#schoolName').val(cache.schoolName);
+		lessionMap = $api.getStorage('cache_by_app').lessionMap;
+		log('信息',cache);
+		$('#messageTxt').addClass('in');
+		setTimeout(function(){
+			document.getElementById('sureButton').onclick = function(){
+				sure();
+			}
+			api.parseTapmode();
+		},300);
+		setTimeout(function(){
+			document.getElementById('exitButton').onclick = function(){
+				exit();
+			}
+			api.parseTapmode();
+		},300);
+		
+		//监听所属驾校选择事件
+		toEventListener('sel_tcm_school_action',function(ret,err){
+			$('#schoolName').val(ret.value.name);
+			schoolId = ret.value.id;
+		});
+		
+		init();
+		carIdInput();
+	}
+	function auiHide() {
+		$("#keyboardBox").addClass('aui-hide');
+
+	}
+	function auiDel(){
+		$('.carId').val('');
+	}
+	function carIdInput() {
+		//键盘隐藏，点击触发显示
+		$("#carNum").on("click", function() {
+			document.activeElement.blur();
+			$("#keyboardBox").removeClass('aui-hide');
+		});
+		//键盘点击动画
+		$(".textBox ul li").each(function() {
+			$(this).click(function() {
+				$(this).addClass("activeKey") //添加动画效果
+				$(this).siblings().removeClass("activeKey") //移除动画效果
+				var interval = setTimeout(function() { //定时器及时清除自身动画效果
+					$(this).removeClass("activeKey")
+					window.clearInterval(interval)
+				}.bind(this), 200);
+			})
+		});
+		api.parseTapmode();
+	}
+	
+	//省份键盘点击事件
+	function provinceClick(e){
+		$(e).addClass("activeKey") //添加动画效果
+		$(e).siblings().removeClass("activeKey") //移除动画效果
+		var interval = setTimeout(function() { //定时器及时清除自身动画效果
+			$(e).removeClass("activeKey")
+			var self = this;
+			keyboard(num, self);
+			window.clearInterval(interval)
+		}.bind(e), 200);
+	}
+	
+	//文本键盘点击事件
+	function txtClick(e){
+		$(e).addClass("activeKey") //添加动画效果
+		$(e).siblings().removeClass("activeKey") //移除动画效果
+		var interval = setTimeout(function() { //定时器及时清除自身动画效果
+			$(e).removeClass("activeKey")
+			var self = this;
+			keyboard(num, self);
+			window.clearInterval(interval)
+		}.bind(e), 200);
+	}
+	
+	//回退按钮点击事件
+	function deleteBtnClick(){
+		var leng = $('.carId').val().toString().substring(0, $("#carNum").val().length - 1);
+		$('.carId').val(leng);
+		var index = getIndex();
+		if(index=='1'){
+			$('#textBox').hide();
+			$('#provienceBox').show();
+		}
+	}
+	
+	//切换键盘
+	function changeInput(e){
+		$('li').siblings().removeClass("activeKey")
+		if ($(e).html() == 'ABC') {
+			$('#textBox').show();
+			$('#provienceBox').hide();
+		} else {
+			$('#textBox').hide();
+			$('#provienceBox').show();
+		}
+	}
+	
+	//获取当前车牌数字索引
+	function getIndex() {
+		var index = $("#carNum").val();
+		console.log('carNum'+index);
+		if(index.length == 7){
+			selCoachInfo(index,shiftsId);
+		}
+		return index.length;
+	}
+	//自定义键盘处理函数
+	function keyboard(num, self) {
+		var content = $('.carId').val() + $(self).html()
+		//console.log('index' + index);
+		$('.carId').val(content);
+		var index = getIndex();
+		if (index <= num) {
+			if (index == num) {
+				$('.carId').val(content);
+			} else {
+			}
+			$('#textBox').show();
+			$('#provienceBox').hide();
+		}
+	}
+	function init(){
+		var shifts_src = $('#shifts_src').html();
+		$('#shifts_nav').find('.con').html(doT.template(shifts_src)(cache));
+		$('#carNum').val(cache.carNum);	
+		if(shiftsId != ''){
+			setTimeout(function(){
+				//$("#shifts_nav").animate({scrollLeft: $('.lump-active').position().left - 130 + 'px'}, 500);
+			},300);
+		}
+		
+		//车牌输入绑定
+		carNumBindInput();
+	}
+	
+	/**
+	 * 车牌输入绑定
+	 */
+	function carNumBindInput(){
+		$('#carNum').bind('input propertychange', function() {
+			if($(this).val().length == 7&&shiftsId != ''){
+				console.log('根据车牌、班次查询教练信息');
+				$(this).val($(this).val().toUpperCase());
+				//校验车牌号
+				
+				selCoachInfo($(this).val(),shiftsId);
+			}
+		});
+	}
+	
+	//点击执行按钮
+	function sure(){
+		if(shiftsId == ''||shiftsId == undefined||shiftsId == null){
+			alert_msg('请选择班次');
+			return;
+		}
+		
+		var carNum = $('#carNum').val();
+		if(!isVehicleNumber(carNum)){
+			alert_msg('请输入正确的车牌号');
+			return;
+		}
+	
+		var coachName = $('#coachName').val();
+		if(coachName == ''||coachPhone == ''){
+			alert_msg('请输入教练姓名');
+			return;
+		}
+		
+		var coachPhone = $('#coachPhone').val();
+		if(!isPhoneAvailable(coachPhone)){
+			alert_msg('请输入正确的手机号');
+			return;
+		}
+		
+		var schoolName = $('#schoolName').val();
+		if(schoolName == ''){
+			alert_msg('请选择所属驾校');
+			return;
+		}
+		
+		$('#messageTxt').removeClass('in');
+        setTimeout(function(){
+        	params = {
+        		shiftsId:shiftsId,
+        		shiftsName:shiftsName,
+        		carNum:$('#carNum').val(),
+        		schoolId:schoolId,
+        		schoolName:schoolName,
+        		coachName:$('#coachName').val(),
+        		coachPhone:$('#coachPhone').val()
+        	}
+    		sendEvent('coach_info_input',params);
+			close_alert();
+        },300);
+	}
+	
+	function exit(){
+		$('#messageTxt').removeClass('in');
+		setTimeout(function(){
+			api.closeWin({
+            });
+		});
+	}
+	
+	/**
+	 * 选择班次 
+	 */
+	function selectShifts(o,code,name){
+		$('#shifts_nav').find('.lump').each(function(index,e){
+			if($(e).is($(o))){
+				$(e).addClass('lump-active');
+			}else{
+				$(e).removeClass('lump-active');
+			}
+		});
+		shiftsId = code;
+		shiftsName = name;
+		$("#shifts_nav").animate({scrollLeft: $(o).position().left - 130 + 'px'}, 500);
+		if($('#carNum').val().length == 7){
+			console.log('根据车牌、班次查询教练信息');
+			selCoachInfo($('#carNum').val(),shiftsId);
+		}
+	}
+	
+	/**
+	 * 根据车牌号+班次查询教练信息 
+	 */
+	function selCoachInfo(carNum,shiftsId){
+		console.log(carNum);
+		console.log(shiftsId);
+		params = {
+			carNum:carNum,
+			shiftsId:shiftsId,
+			appointDate:appointDate,
+			testCenterId:testCenterId
+		}
+		url = 'api/tcm/get-coachInfo';
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			log("教练信息返回",ret);
+			if(ret&&ret.code == 0){
+				$('#coachName').val(ret.coachName);
+				$('#coachPhone').val(ret.coachPhone);
+			}
+		});
+	}
+	
+	/**
+	 * 打开驾校列表
+	 */
+	function openSelTcmSchool(){
+		api.openWin({
+	       name: 'common_select_under_school_win',
+	       url: '../../../common/common_select_under_school_win.html',
+	       slidBackEnabled:'false',
+	       vScrollBarEnabled:'false',
+	       hScrollBarEnabled:'false',
+	       reload:true,
+	       useWKWebView:false,
+	       pageParam: {
+	           data:null
+	       }
+	    });
+	}
+	
+	//获取班次name
+	function getLessionName(code){
+		return lessionMap[code];
+	}
+	
+	//关闭弹窗
+	function close_alert(){
+        api.closeFrame({
+        	name: 'coach_info_input_frm'
+        });
+	}
+	
+	//显示弹窗
+	function show_alert(){
+		$('#messageTxt').addClass('in');
+		api.setFrameAttr({
+	        name: 'coach_info_input_frm',
+	        hidden:false
+        });
+	}
+</script>
+</html>

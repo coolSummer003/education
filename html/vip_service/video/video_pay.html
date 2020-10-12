@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>视频支付</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css"/>
+    <style>
+        html, body {
+            background-color: #F5F5F5;
+            padding: 0;
+            margin: 0;
+        }
+
+        #aui-header {
+            background-color: #fff;
+            color: #333;
+        }
+
+        #aui-header:after {
+            height: 0;
+        }
+
+        #aui-header img {
+            width: 1rem;
+        }
+
+        ul:before, ul:after {
+            height: 0 !important;
+        }
+
+        .aui-content {
+            background-color: #F5F5F5;
+        }
+
+        .aui-row {
+            width: 100%;
+        }
+
+        .title {
+            font-size: 0.8rem;
+            color: #27344C;
+            font-weight: bold;
+        }
+
+        .content {
+            font-size: 0.8rem;
+            color: #323E55;
+        }
+
+        .aui-list .aui-list-header {
+            padding: 0.6rem 0.4rem;
+            background-color: #fff;
+            position: relative;
+        }
+
+        .aui-list .aui-list-header:after {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 1px;
+            background-color: #ddd;
+            display: block;
+            content: '';
+            width: 100%;
+            z-index: 2;
+            -webkit-transform-origin: 50% 100%;
+            transform-origin: 50% 100%;
+            pointer-events: none;
+            transform: scaleY(0.333);
+        }
+
+        .aui-list-header > div {
+            border-left: 3px solid #4D6BFF;
+            height: 1rem;
+            line-height: 1rem;
+            padding-left: 0.75rem;
+            color: #27344C;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .aui-col-xs-2 > img {
+            display: block;
+            margin: 0.5rem auto;
+            height: 1.5rem;
+            width: 1.5rem;
+        }
+
+        .pay-btn {
+            margin: 1.5rem auto;
+            width: 90%;
+            height: 2.25rem;
+            line-height: 2.25rem;
+            background: #4D6BFF;
+            border-radius: 1.25rem;
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .payment-method-selected {
+            display: none;
+            position: absolute;
+            top: 0.75rem;
+            right: 0;
+            height: 1rem;
+            width: 1rem;
+        }
+
+        .pay_type {
+            width: 100%;
+            text-align: center;
+        }
+
+        .pay_type img {
+            width: 6rem;
+            margin-top: 0.3rem;
+        }
+
+        .pay-icon {
+            float: left;
+            width: 80%;
+            text-align: left;
+            margin-left: 0.8rem;
+        }
+
+        .check-box {
+            float: right;
+            margin-top: 0.7rem;
+        }
+
+        .aui-radio:checked, .aui-radio.aui-checked, .aui-checkbox:checked, .aui-checkbox.aui-checked {
+            background-color: #4D6BFF !important;
+            border: solid 1px #4D6BFF !important;
+            text-align: center;
+            background-clip: padding-box;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- 头部 -->
+<header class="aui-bar aui-bar-nav aui-border-b" id="aui-header">
+    <div id="header_top" style="height: 2.25rem;">
+        <a class="aui-pull-left aui-btn" tapmode onclick="closeWin()">
+            <img src="../../../icon/common/icon_header_return.png" alt="">
+        </a>
+        <div class="aui-title">
+            支付
+        </div>
+    </div>
+</header>
+
+
+<div class="aui-content aui-padded-b-10">
+    <ul class="aui-list aui-list-in">
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-row">
+                    <div class="aui-col-xs-3 title">
+                        项目
+                    </div>
+                    <div class="aui-col-xs-9 content" id="package_name">
+
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-row">
+                    <div class="aui-col-xs-3 title">
+                        时间
+                    </div>
+                    <div class="aui-col-xs-9 content" id="package_time">
+
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-row">
+                    <div class="aui-col-xs-3 title">
+                        金额
+                    </div>
+                    <div class="aui-col-xs-9 content" id="package_price" style="color: #FF685B; font-size: 0.9rem;">
+
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="aui-content aui-margin-b-15">
+    <ul class="aui-list aui-list-in">
+        <li class="aui-list-header">
+            <div>请选择支付方式</div>
+        </li>
+        <li class="aui-list-item none-bottom-style" style='min-height:2.5rem;'>
+            <div class="aui-list-item-input pay_method bottom-slide">
+                <div class="pay_type zhifubao">
+                    <div class='pay-icon' tapmode onclick="selPayType(this)">
+                        <img src="../../../icon/payfor/pay_zhifubao.png" alt=""/>
+                    </div>
+                    <div class='check-box'>
+                        <input class="aui-radio" type="radio" name="pay_method" checked value="1">
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item none-bottom-style" style='min-height:2.5rem;'>
+            <div class="aui-list-item-input pay_method bottom-slide">
+                <div class="pay_type zhifubao">
+                    <div class='pay-icon' tapmode onclick="selPayType(this)">
+                        <img src="../../../icon/payfor/pay_weixin.png" alt=""/>
+                    </div>
+                    <div class='check-box'>
+                        <input class="aui-radio" type="radio" name="pay_method" checked value="2">
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<footer class="pay-btn" tapmode onclick="toPay()">
+    确认支付
+</footer>
+
+
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+    var cache;
+    var paid = false;
+    var aliPayPlus; // 支付宝
+    var wxPayPlus; // 微信
+    apiready = function () {
+        api.parseTapmode();
+        $api.fixStatusBar($api.byId('aui-header'));
+        aliPayPlus = api.require('aliPayPlus');
+        wxPayPlus = api.require('wxPayPlus');
+        cache = api.pageParam.data;
+        log('cache', cache);
+        $('#package_name').html(cache.serviceName);
+        $('#package_time').html(cache.orderTime);
+        $('#package_price').html(Number(cache.price).toFixed(2) + '元');
+        $('.payment-method-selected').eq(0).show();
+    };
+
+
+    /**
+     * 选择支付方式
+     */
+    function selPayType(e) {
+        $(e).parent().find("input[type='radio']").click();
+    }
+
+    // 确认付款
+    function toPay() {
+        if (!paid) {
+            defaultload('支付中');
+            var channel = $("input:radio[name='pay_method']:checked").val();
+            url = '/api/VideoVipOrder/arousePay';
+            params = {
+                orderId: cache.orderId,
+                learnerId: getUserId(),
+                channel: channel,
+                systemType: api.systemType,
+                learnerPhone: $api.getStorage('cache_by_account').cache_account.account
+            };
+            log('vip视频支付入参', params);
+            ajax_Request(url, 'post', 'json', params, function (ret, err) {
+                log('vip视频支付出参', ret);
+                if (ret) {
+                    if (ret.code == 0) {
+                        /*原来的支付方式放弃，2019-9-19 16:21:28 炜哥*/
+                        if (channel == 1) {
+                            //支付宝
+                            AlipPay(ret.aliPayReturn, function () {
+                                success_pay();
+                            }, function (msg) {
+                                fail_pay(msg);
+                            });
+                        } else if (channel == 2) {
+                            //微信支付
+                            WechatPay(ret.wechatpayReturn, function () {
+                                success_pay();
+                            }, function (msg) {
+                                fail_pay(msg);
+                            });
+                        } else {
+                            //银联支付跳转
+                            arousePay('支付页面', ret.arousePayUrl, ret.payOrderNo);
+                        }
+                    } else {
+                        fail_pay(ret.msg);
+                    }
+                } else {
+                    fail_pay('服务器繁忙，请稍后再试');
+                }
+            });
+        } else {
+            fail_pay('订单已支付');
+        }
+    }
+
+    /**
+     * 银联支付跳转
+     */
+    function arousePay(name, path, payOrderNo) {
+        var channel = $("input:radio[name='pay_method']:checked").val();
+        params = {
+            name: name,
+            url: path,
+            flag: 'vip-video', //vip课程 flag
+            orderId: cache.orderId,
+            payOrderNo: payOrderNo,
+            winName: api.winName,
+            frmName: api.frameName,
+            channel: channel
+        };
+        log('银联唤起支付', params);
+        api.openWin({
+            name: 'common_href_win',
+            url: '../../common/common_href_win.html',
+            slidBackEnabled: 'false',
+            vScrollBarEnabled: 'false',
+            hScrollBarEnabled: 'false',
+            reload: true,
+            useWKWebView: false,
+            pageParam: params
+        });
+    }
+
+    //支付成功
+    function success_pay() {
+        paid = true; // 支付成功后就不允许再次点击支付
+        sendEvent('pay_success');
+        var videoPlayPageShow = $api.getStorage('vip_video_play_open');
+        if (videoPlayPageShow && videoPlayPageShow !== 'undefined' && JSON.parse(videoPlayPageShow)) {
+            setTimeout(function() {
+                esc_function('video_play_win', '', 'closeWin()');
+                openPlay();
+            }, 800);
+        } else {
+            openPlay();
+        }
+
+    }
+    // 打开播放
+    function openPlay() {
+        setTimeout(function () {
+            commonOpenWin('video_play_win', {
+                type: cache.type,
+                testCenterId: cache.testCenterId,
+                tryToSeeFlag: false,
+                price: cache.price
+            });
+            setTimeout(function () {
+                closedefaultload();
+                closeWin();
+            }, 800);
+        }, 600);
+    }
+
+    //失败处理
+    function fail_pay(msg) {
+        alert_msg(msg);
+        closedefaultload();
+    }
+
+    function closeWin() {
+        api.closeWin();
+    }
+</script>
+</html>

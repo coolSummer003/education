@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>驾校服务/辅导员/场地</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	header img {
+		    width: 20px;
+		}
+    	#menu{
+			font-size:0.8rem;
+		}
+		#menuPackage{
+			position: relative;
+		}
+		.nav {
+	        height: 100%;
+	        overflow-x: scroll;
+	        overflow-y: hidden;
+	        background-color: #FFFFFF;
+	        /*解决ios上滑动不流畅*/
+	        -webkit-overflow-scrolling: touch;
+	    }
+	    .con {
+	        height: 100%;
+		    display: -webkit-box;
+		    align-items: center;
+	        position: relative;
+	    }
+	    .con>li {
+	        text-align: center;
+		    font-size: 0.8rem;
+		    min-width: 33.33333333%;
+		    list-style: none;
+	    }
+	    .container {
+            height: 2.5rem;
+		    line-height: 2.5rem;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    overflow: hidden;
+	    }
+	    .container ::-webkit-scrollbar {
+	    }
+	    .active{
+	    	color: #DC251F;
+    		/* border-bottom: solid 2px; */
+	    }
+    </style>
+</head>
+<body>
+	<div id="menuPackage">
+		<header class="aui-bar aui-bar-nav" id="aui-header">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+	            <img src="../../icon/common/icon_header_return.png">
+	        </a>
+	        <div class="aui-title" id="title">
+	           	场地列表
+	        </div>
+	    </header>
+	    <!--<div class="aui-bar aui-bar-btn aui-bar-btn-full" id="menu">-->
+		    <!--<div class="aui-bar-btn-item">服务</div>
+		    <div class="aui-bar-btn-item">班主任</div>-->
+		    <!--<div class="aui-bar-btn-item">场地</div>
+		</div>-->
+    	<li class="list_bar" id="slideSpan">
+            <div class="list_bar_inner"></div>
+        </li>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var clearance = 30;//间隙
+	var cache;
+	var headerPos;
+	apiready = function(){
+		cache = api.pageParam.data;
+		$api.fixStatusBar($api.byId('menuPackage'));
+//		$('#title').html(cache.d_school_name);
+		headerPos = $api.offset($api.byId('menuPackage'));
+		//切换menu初始化
+//		var tabwork = new auiTab({
+//	        element:document.getElementById("menu"),
+//	        repeatClick:true
+//	    },function(ret){
+//	        if(ret){
+//				f_slide($(ret.dom));
+//	        	setViewFrame(ret.index - 1);
+//	        }
+//	    });
+//		openFrameGroup();
+		
+		init();
+	};
+	
+    //滑块加载事件
+	function f_slide(e){
+		$('.aui-bar-btn-item').removeClass('aui-active');
+		$(e).addClass('aui-active');
+		$('.list_bar').css('width',($('.aui-active').width() - clearance*2)+'px');
+		$('.list_bar_inner').css('width',($('.aui-active').width() - clearance*2)+'px');
+		document.getElementById('slideSpan').style.webkitTransform = 'translateX('+($(e).position().left + clearance)+'px)';
+	}
+	
+    //设置frameGroup可见frame
+    function setViewFrame(index){
+    	api.setFrameGroupIndex({
+		    name: 'simulation_operation_group',
+		    index: index
+		});
+    }
+    
+    function init(){
+		api.openFrame({
+            name: 'driver_school_serivce_new_frm',
+            url: './driver_school_serivce_new_frm.html',
+            bgColor:'#efeff4',
+            rect: {
+                x: 0,
+                y: headerPos.h,
+                w: 'auto',
+                h: api.winHeight - headerPos.h
+            },
+            bounces: true,
+            pageParam:{
+            	d_school_name:cache.d_school_name,
+	        	placeList:cache.placeList,
+	        	index:2
+            },
+            reload:true,
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+	}
+	
+    
+    
+    function closeWin(){
+    	api.closeWin({
+        });
+    }
+</script>
+</html>

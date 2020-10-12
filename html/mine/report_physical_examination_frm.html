@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>体检报告</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	html{
+    		background: transparent;
+    		height:100%;
+    	}
+    	body{
+    		width: 100%;
+    		height:100%;
+    		background: transparent;
+    		display:flex;
+    	}
+    	.report-div{
+    		margin: auto;
+		    position: absolute;
+		    height: 100%;
+			-webkit-transform: scale(0);
+			transform:scale(0);
+			opacity: 0;
+			width: 100%;
+		    padding: 2rem 0.5rem 0rem 0.5rem;
+	        background: #FFF;
+    	}
+    	.shadow{
+    		width:100%;
+    		height:100%;
+    		background:#000;
+    		opacity:0;
+    		position: absolute;
+    	}
+    	.trans {
+            /*transition*/
+            -webkit-transition: 0.3s ease;
+            -moz-transition: 0.3s ease;
+            -ms-transition: 0.3s ease;
+            -o-transition: 0.3s ease;
+            transition: 0.3s ease;
+        }
+        .show{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+        }
+        .in{
+			-webkit-transform: scale(1);
+			transform:scale(1);
+			opacity: 1;
+		}
+		.report-txt{
+			position: relative;
+		    height: 92%;
+	        overflow: auto;
+	        font-size:0.7rem;
+	         -webkit-overflow-scrolling: touch;
+		}
+		.report-title{
+			font-weight: bold;
+		    text-align: center;
+		    height: 6%;
+		    line-height: 1.5rem;
+		    position:relative;
+		}
+		.report-title img{
+			width:1.2rem;
+			position:absolute;
+			right:0;
+			top:0.4rem;
+		}
+		.sure{
+		    height: 2rem;
+		    line-height: 2rem;
+		    background: #DC251F;
+		    color: #FFF;
+		    border-radius: 0.2rem;
+		}
+		.icon{
+			width:0.9rem;
+		}
+		.warn-num{
+		    position: relative;
+		    top: 0;
+		    right: 0.5rem;
+		    width: 1.2rem;
+		    height: 1.2rem;
+		    line-height: 1.2rem;
+		    background: #FF5404;
+		    color: #FFF;
+		    text-align: center;
+		    border-radius: 100%;
+		}
+		.icon_big{
+			width:1.2rem;
+		}
+		.aui-list {
+		    padding: 0;
+		    margin: 0;
+		    position: relative;
+		    font-size: 0.7rem;
+		}
+		.loadding{
+			height:100%;
+			width:100%;
+			display:flex;
+		}
+		.loadding img{
+			width:8rem;
+			margin:auto;
+		}
+		.msg-txt{
+			height:100%;
+			width:100%;
+			display:flex;
+		}
+		.msg-txt div{
+			margin:auto;
+			text-align: center;
+		}
+		.msg-txt img{
+			width:5rem;
+		}
+		footer{
+		    position: absolute;
+		    right: 0.5rem;
+		    top: 0.3rem;
+		    text-align: center;
+		    z-index: 999;
+		    font-size: 0.9rem;
+		}
+		.share-result img{
+			width:5rem;
+		}
+		.share-result{
+			border: solid 1px #F9DDD1;
+    		padding: 2px;
+    		border-radius:3px;
+    		background: #FFF;
+		}
+		.wechat-share img{
+			width:1rem;
+			margin-bottom: -0.3rem;
+		}
+		.wechat-share{
+			font-size:0.6rem;
+		}
+		.wechat-share{
+			width: 100%;
+		    height: 1.5rem;
+		    line-height: 1.5rem;
+		    background: linear-gradient(to left, #03B4F7 , #90DBF7);
+		    color:#FFF;
+		    border-radius:3px;
+	        margin-top: 0.3rem;
+		}
+    </style>
+</head>
+<body>
+	<div class='shadow'></div>
+	<div class='report-div trans in'>
+		<div class='report-title'>
+			<span>体检报告</span>
+			<img src="../../icon/common/icon_close.png" alt="" tapmode onclick='closereport()'/>
+		</div>
+		<div class='report-txt'>
+			<!-- <footer>
+					    	<div class='share-result'>
+					    		<img src="https://file.mohan-tech.com/fileCenter/api/file/getFileAuth?bucketName=jiakaozhijia&amp;fileName=learnerApp/examination/2A53F1D317364A5E251FDB0C23CEE0AA" alt="" />
+					    	</div>
+					    	<div class='wechat-share' tapmode onclick="shareHospitalExamResult('{{=it.learner.name}}','{{=it.hospitalExamResult[0].reportImageSign}}')">
+					    		<img src="../../icon/common/icon_wechat.png" alt="" />
+					    		<span>分享报告单</span>
+					    	</div>
+					    </footer> -->
+		    <div class='loadding'>
+				<img src="../../icon/common/icon_common_load.gif" alt="" />
+			</div>
+		</div>
+		<script type="text/template" charset="utf-8" id='report_txt_src'>
+			<ul class="aui-list aui-form-list none-bottom-style">
+				<li class="aui-list-item none-bottom-style none-top-style" style="background: #D0E4EB;">
+					<div class="aui-list-item-label-icon">
+		                <img src="../../icon/report/icon_exam_person.png" alt="" class="icon_big" />
+		            </div>
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label" style="font-weight: bold;">
+	                		基本信息
+		                </div>
+		            </div>
+		        </li>
+				<li class="aui-list-item">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-input">
+	                		真实姓名：{{=it.learner.name}}
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-input">
+	                		性&emsp;&emsp;别：{{=it.learner.sex.name}}
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-input">
+	                		国&emsp;&emsp;籍：{{=it.learner.nationality.name}}
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-input">
+	                		准驾车型：{{=it.licenseType.name}}
+		                </div>
+		            </div>
+		        </li>
+	        </ul>
+	        <ul class="aui-list aui-form-list none-bottom-style">
+				<li class="aui-list-item none-bottom-style none-top-style" style="background: #FBF1B4;">
+					<div class="aui-list-item-label-icon">
+		                <img src="../../icon/report/icon_exam_height.png" alt="" class="icon_big" />
+		            </div>
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label" style="font-weight: bold;">
+	                		身高体重
+		                </div>
+		            </div>
+		        </li>
+				<li class="aui-list-item">
+					<div class="aui-list-item-label-icon">
+		                <img src="../../icon/payfor/icon_success.png" alt="" class="icon" />
+		            </div>
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-input">
+	                		身&emsp;&emsp;高：{{=it.height}} cm
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item">
+					<div class="aui-list-item-label-icon">
+		                <img src="../../icon/payfor/icon_success.png" alt="" class="icon" />
+		            </div>
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-input">
+	                		体&emsp;&emsp;重：{{=it.weight}} kg
+		                </div>
+		            </div>
+		        </li>
+		    </ul>
+		    <ul class="aui-list aui-form-list none-bottom-style">
+				<li class="aui-list-item none-bottom-style none-top-style" style="background: #F9DDD1;">
+					<div class="aui-list-item-label-icon">
+		                <img src="../../icon/report/icon_exam_eye.png" alt="" class="icon_big" />
+		            </div>
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label" style="font-weight: bold;">
+	                		视力
+		                </div>
+		            </div>
+		        </li>
+				<li class="aui-list-item">
+					<div class="aui-list-item-label-icon">
+		                <img src="../../icon/payfor/icon_success.png" alt="" class="icon" />
+		            </div>
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-input">
+	                		左&emsp;&emsp;眼：{{=it.hospitalExamResult[0].leftEye}}
+	                		{{ if(it.hospitalExamResult[0].leftEyeJiaozheng.isQualified){ }}
+	                			（矫正）
+	                		{{ } }}
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item">
+					<div class="aui-list-item-label-icon">
+		                <img src="../../icon/payfor/icon_success.png" alt="" class="icon" />
+		            </div>
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-input">
+	                		右&emsp;&emsp;眼：{{=it.hospitalExamResult[0].rightEye}}
+	                		{{ if(it.hospitalExamResult[0].rightEyeJiaozheng.isQualified){ }}
+	                			（矫正）
+	                		{{ } }}
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item">
+					<div class="aui-list-item-label-icon">
+						{{ if(it.hospitalExamResult[0].danyanzhangai.isQualified){ }}
+			                <img src="../../icon/payfor/icon_success.png" alt="" class="icon" />
+						{{ }else{ }}
+			                <img src="../../icon/payfor/icon_tan.png" alt="" class="icon" />
+						{{ } }}
+		            </div>
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-input">
+	                		单眼视力障碍：{{=it.hospitalExamResult[0].danyanzhangai.name}}
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item">
+					<div class="aui-list-item-label-icon">
+		                <img src="../../icon/payfor/icon_success.png" alt="" class="icon" />
+		            </div>
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-input">
+	                		优眼水平视野：
+		                </div>
+		            </div>
+		        </li>
+		    </ul>
+		    <ul class="aui-list aui-form-list none-bottom-style">
+				<li class="aui-list-item none-bottom-style none-top-style" style="background: #F9DDD1;">
+					<div class="aui-list-item-label-icon">
+		                <img src="../../icon/report/icon_exam_ear.png" alt="" class="icon_big" />
+		            </div>
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label" style="font-weight: bold;">
+	                		听力
+		                </div>
+		                <!-- <div class="aui-list-item-right">
+		                    <div class="warn-num">2</div>
+		                </div> -->
+		            </div>
+		        </li>
+				<li class="aui-list-item">
+		            <div class="aui-list-item-inner">
+						<div class="aui-list-item-label-icon">
+				            {{ if(it.hospitalExamResult[0].leftEar.isQualified){ }}
+				                <img src="../../icon/payfor/icon_success.png" alt="" class="icon" />
+							{{ }else{ }}
+				                <img src="../../icon/payfor/icon_tan.png" alt="" class="icon" />
+							{{ } }}
+			            </div>
+		                <div class="aui-list-item-input">
+	                		左&ensp;&ensp;耳：{{=it.hospitalExamResult[0].leftEar.name}}
+		                </div>
+		            </div>
+		            <div class="aui-list-item-inner">
+						<div class="aui-list-item-label-icon">
+			                {{ if(it.hospitalExamResult[0].rightEar.isQualified){ }}
+				                <img src="../../icon/payfor/icon_success.png" alt="" class="icon" />
+							{{ }else{ }}
+				                <img src="../../icon/payfor/icon_tan.png" alt="" class="icon" />
+							{{ } }}
+			            </div>
+		                <div class="aui-list-item-input">
+	                		右&ensp;&ensp;耳：{{=it.hospitalExamResult[0].rightEar.name}}
+		                </div>
+		            </div>
+		        </li>
+		    </ul>
+		    <ul class="aui-list aui-form-list none-bottom-style">
+				<li class="aui-list-item none-bottom-style none-top-style" style="background: #F9DDD1;">
+					<div class="aui-list-item-label-icon">
+		                <img src="../../icon/report/icon_exam_head.png" alt="" class="icon_big" />
+		            </div>
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-input" style="font-weight: bold;">
+	                		躯干和颈部
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item">
+					<div class="aui-list-item-label-icon">
+		                {{ if(it.hospitalExamResult[0].yudongzhangai.isQualified){ }}
+			                <img src="../../icon/payfor/icon_success.png" alt="" class="icon" />
+						{{ }else{ }}
+			                <img src="../../icon/payfor/icon_tan.png" alt="" class="icon" />
+						{{ } }}
+		            </div>
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-input">
+	                		是否运功功能障碍：{{=it.hospitalExamResult[0].yudongzhangai.name}}
+		                </div>
+		            </div>
+		        </li>
+		    </ul>
+		    <ul class="aui-list aui-form-list none-bottom-style">
+				<li class="aui-list-item none-bottom-style none-top-style" style="background: #F9DDD1;">
+					<div class="aui-list-item-label-icon">
+		                <img src="../../icon/report/icon_exam_arm.png" alt="" class="icon_big" />
+		            </div>
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label" style="font-weight: bold;">
+	                		四肢
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item">
+		            <div class="aui-list-item-inner">
+						<div class="aui-list-item-label-icon">
+			                {{ if(it.hospitalExamResult[0].leftUpper.isQualified){ }}
+				                <img src="../../icon/payfor/icon_success.png" alt="" class="icon" />
+							{{ }else{ }}
+				                <img src="../../icon/payfor/icon_tan.png" alt="" class="icon" />
+							{{ } }}
+			            </div>
+		                <div class="aui-list-item-input">
+	                		左上肢：{{=it.hospitalExamResult[0].leftUpper.name}}
+		                </div>
+		            </div>
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label-icon">
+			                {{ if(it.hospitalExamResult[0].rightUpper.isQualified){ }}
+				                <img src="../../icon/payfor/icon_success.png" alt="" class="icon" />
+							{{ }else{ }}
+				                <img src="../../icon/payfor/icon_tan.png" alt="" class="icon" />
+							{{ } }}
+			            </div>
+		                <div class="aui-list-item-input">
+                    		右上肢：{{=it.hospitalExamResult[0].rightUpper.name}}
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item">
+		            <div class="aui-list-item-inner">
+						<div class="aui-list-item-label-icon">
+			                {{ if(it.hospitalExamResult[0].leftLower.isQualified){ }}
+				                <img src="../../icon/payfor/icon_success.png" alt="" class="icon" />
+							{{ }else{ }}
+				                <img src="../../icon/payfor/icon_tan.png" alt="" class="icon" />
+							{{ } }}
+			            </div>
+		                <div class="aui-list-item-input">
+	                		左下肢：{{=it.hospitalExamResult[0].leftLower.name}}
+		                </div>
+		            </div>
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label-icon">
+			                {{ if(it.hospitalExamResult[0].rightLower.isQualified){ }}
+				                <img src="../../icon/payfor/icon_success.png" alt="" class="icon" />
+							{{ }else{ }}
+				                <img src="../../icon/payfor/icon_tan.png" alt="" class="icon" />
+							{{ } }}
+			            </div>
+		                <div class="aui-list-item-input">
+                    		右下肢：{{=it.hospitalExamResult[0].rightLower.name}}
+		                </div>
+		            </div>
+		        </li>
+		    </ul>
+		    <ul class="aui-list aui-form-list none-bottom-style">
+		    	<li class="aui-list-item none-bottom-style none-top-style" style="background: #F9DDD1;">
+					<div class="aui-list-item-label-icon">
+		                <img src="../../icon/report/icon_exam_explain.png" alt="" class="icon_big" />
+		            </div>
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label" style="font-weight: bold;">
+	                		医生备注
+		                </div>
+		            </div>
+		        </li>
+		        <li class="aui-list-item">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-input">
+	                		<textarea cols="30" rows="10" style="color:#DC251F;font-size: 0.7rem;" readonly>
+	                			{{ if(it.hospitalExamResult[0].description !=undefined){ }}
+									{{=it.hospitalExamResult[0].description}}
+								{{ }else{ }}
+									无备注
+								{{ } }}
+	                		</textarea>
+		                </div>
+		            </div>
+		        </li>
+		    </ul>
+		    <footer class='aui-hide'>
+		    	<div class='share-result'>
+		    		<img src="{{=file_load_url + it.hospitalExamResult[0].reportImageSign}}" alt="" tapmode onclick='openPic("{{=file_load_url + it.hospitalExamResult[0].reportImageSign}}")'/>
+		    	</div>
+		    	<div class='wechat-share' tapmode onclick="shareHospitalExamResult('{{=it.learner.name}}','{{=it.hospitalExamResult[0].reportImageSign}}')">
+		    		<img src="../../icon/common/icon_wechat.png" alt="" />
+		    		<span>分享报告单</span>
+		    	</div>
+		    </footer>
+		</script>
+		<script type="text/template" charset="utf-8" id='msg_src'>
+			<div class="msg-txt">
+				<div>
+					<img src="../../icon/common/empty.png" alt="" /><br>
+					<span>{{=it.msg}}</span>
+				</div>
+			</div>
+		</script>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var path;
+	var msg_src = $('#msg_src').html();
+	var cache;
+	var wxPlus;
+	apiready = function(){
+		api.parseTapmode();
+		$('.report-div').addClass('in');
+		wxPlus = api.require('wxPlus');
+		cache = api.pageParam;
+		init();
+	}
+	
+	//初始化
+	function init(){
+		url = 'api/examination/result';
+		params = {
+			examResultId:cache.examResultId
+		}
+		ajax_Request(url, "get", "json", params, function(ret,err){
+			log('体检报告信息',ret);
+			if(ret){
+				if(ret.code == 0){
+					var report_txt_src = $("#report_txt_src").html();
+					/*console.log(ret.hospitalExamination.hospitalExamResult);
+					console.log(ret.hospitalExamination.hospitalExamResult.danyanzhangai);
+					console.log(ret.hospitalExamination.hospitalExamResult.leftEar);
+					console.log(ret.hospitalExamination.hospitalExamResult.leftEyeJiaozheng);
+					console.log(ret.hospitalExamination.hospitalExamResult.leftLower);
+					console.log(ret.hospitalExamination.hospitalExamResult.leftUpper);
+					console.log(ret.hospitalExamination.hospitalExamResult.rightEar);
+					console.log(ret.hospitalExamination.hospitalExamResult.rightEyeJiaozheng);
+					console.log(ret.hospitalExamination.hospitalExamResult.rightLower);
+					console.log(ret.hospitalExamination.hospitalExamResult.rightUpper);
+					console.log(ret.hospitalExamination.hospitalExamResult.yudongzhangai);*/
+					if(ret.hospitalExamination.hospitalExamResult.length > 0){
+						$('.report-txt').html(doT.template(report_txt_src)(ret.hospitalExamination));
+						setTimeout(function(){
+							$('footer').removeClass('aui-hide');
+						},1000);
+					}else{
+						$('.report-txt').html(doT.template(msg_src)({msg:'无数据'}));
+					}
+					api.parseTapmode();
+				}else{
+					$('.report-txt').html(doT.template(msg_src)({msg:ret.msg}));
+				}
+			}else{
+				$('.report-txt').html(doT.template(msg_src)({msg:'服务器故障'}));
+			}
+		});
+	}
+	
+	//关闭
+	function closereport(){
+		$('.report-div').removeClass('in');
+        setTimeout(function(){
+			api.closeFrame({
+				name:'report_physical_examination_frm'
+	        });
+        },300);
+	}
+	
+	/**
+	 * 分享体检订单给微信好友
+	 */
+	function shareHospitalExamResult(name,reportImageSign){
+		console.log(file_load_url + reportImageSign);
+		wxPlus.shareWebpage({
+			apiKey: 'wx7791feb5b9c0b84e',
+			scene: 'session',
+			title: name + '的体检报告单',
+			description: '轻松实现在线体检，无需跑医院啦',
+			thumb: 'widget://icon/app/app_logo.png',
+			contentUrl: "https://www.mohan-tech.com/share/html/hospital/exam_result.html?name=" + name +"&result_url=" + reportImageSign
+			// 'http://baidu.com'
+		}, function(ret, err) {
+			if (ret.status) {
+				alert_msg('分享成功');
+			} else {
+				var code = err.code == 2?'用户取消':err.code == 3?'发送失败':err.code == 4?'授权拒绝':'分享失败';
+				alert(code);
+			}
+		});
+	}
+</script>
+</html>

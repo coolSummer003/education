@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>集中培训预约</title>
+		<link rel="stylesheet" type="text/css" href="../../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../../css/common/common.css" />
+		<style>
+
+		.aui-bar-nav,.aui-bar-tab{
+    	    background-color: #ffffff;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+		#common_title{
+    		font-weight:normal;
+    		color:#2E2E2E;
+    	}
+    
+    	.aui-bar-nav {
+		    top: 0;
+		    line-height: 2.25rem;
+		    background-color: #FFF;
+		    color: #000;
+		    border-bottom: solid 1px #FFFFFF;
+		}
+	
+	
+	
+		
+	
+    </style>
+	</head>
+	<body>
+		<header class="aui-bar aui-bar-nav aui-border-b tab1" id="aui-header">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+				<img src="../../../../icon/common/icon_header_return.png">
+			</a>
+			<div class="aui-title" id="common_title">
+				集中培训预约
+			</div>
+			<a class="aui-pull-right aui-btn jiaxiao" tapmode onclick="openChangeDrivingSchool()">
+          				 修改驾校
+        	</a>
+		</header>
+	</body>
+	<script type="text/javascript" src="../../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var headerPos;
+		var frmName;
+		var articleId;
+		var systemType;
+		var cache;
+		apiready = function() {
+			api.parseTapmode();
+			var header = $api.byId('aui-header');
+			var origal_h = $api.offset(header).h;
+			$api.fixStatusBar(header);
+			cache = api.pageParam.data;
+			systemType = api.systemType;
+			headerPos = $api.offset(header);
+			
+			openFrame(headerPos.h - 3, api.winHeight - headerPos.h, 'none');
+			log('cache::::::', cache);
+				api.execScript({
+			        name: 'examination_course_interface_check_win',
+			        script: 'closeWin()'
+			    });
+			getLearnerStunum();
+			}
+		//是否显示修改驾校按钮
+		function getLearnerStunum(){
+			url = 'api/learner-register-info/check-learner-stunum-info';
+			params = {
+				learnerId:getUserId()
+			}
+			defaultload('获取有效信息中...')
+			ajax_Request(url, "get", "json", params, function(ret,err){
+				log('获取信息',ret);
+				closedefaultload();
+				if(ret){
+					if(ret.code == 0){
+						$('.jiaxiao').addClass('aui-hide');				
+					}else{
+					
+					}
+				}else{
+					alert_msg('服务器繁忙，请稍后重试~');
+				}
+			});
+		}
+		function openFrame(y, h, animate) {
+			api.openFrame({
+				name: 'examination_course_reservation_list',
+				url: './examination_course_reservation_list.html',
+				bgColor: '#efeff4',
+				rect: {
+					x: 0,
+					y: headerPos.h-3,
+					w: 'auto',
+					h: api.winHeight - headerPos.h
+				},
+				bounces: true,
+				pageParam: {
+
+				},
+				reload: true,
+				softInputBarEnabled: true,
+				softInputMode: 'resize'
+			});
+		}	
+
+		function openWindow() {
+			params = {
+				type: 'record_scene_subject_one'
+			}
+			api.openWin({
+				name: 'mine_common_win',
+				url: '../../../mine/mine_common_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: {
+					data: params
+				}
+			});
+		}
+		
+		function openChangeDrivingSchool(){
+			api.openWin({
+		       name: 'examination_course_interface_check_win',
+		       url: '../../subjectOne/examination_course_reservation/examination_course_interface_check_win.html',
+		       slidBackEnabled:'false',
+		       vScrollBarEnabled:'false',
+		       hScrollBarEnabled:'false',
+		       reload:true,
+		       useWKWebView:false,
+		       pageParam: {
+		       	flag:'changeExamination',
+		       }
+			});
+
+		}
+
+		function closeWin() {
+
+			api.closeWin({
+		
+			});
+
+		}
+	</script>
+</html>

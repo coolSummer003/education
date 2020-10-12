@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>选择所属驾校</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	body{
+    		
+    	}
+    	.aui-list .aui-list-item {
+		    list-style: none;
+		    margin: 0;
+		    padding: 0;
+		    padding-left: 0.75rem;
+		    color: #03B4F7;
+		    background-color: #ffffff;
+		    position: relative;
+		    min-height: 2.7rem;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-pack: justify;
+		    -webkit-justify-content: space-between;
+		    justify-content: space-between;
+		}
+		.aui-list .aui-list-item-label, .aui-list .aui-list-item-label-icon {
+		    color: #03B4F7;
+		    width: 35%;
+		    min-width: 1.5rem;
+		    margin: 0;
+		    padding: 0;
+		    padding-right: 0.25rem;
+		    line-height: 2.2rem;
+		    position: relative;
+		    overflow: hidden;
+		    white-space: nowrap;
+		    max-width: 100%;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-align-items: center;
+		    align-items: center;
+		}
+		.empty{
+			height: 20rem;
+    		display: flex;
+		    background: #FFF;
+		}
+		.empty span{
+			margin: auto;
+		    font-size: 1rem;
+		    font-weight: bold;
+		    color: #B2B2B2;
+		}
+		.aui-list.aui-form-list .aui-list-item:active {
+		    background-color: #F2F2F2;
+		}
+    </style>
+</head>
+<body>
+	<div class="aui-content aui-margin-b-15">
+    	<ul class="aui-list aui-form-list none-top-style none-bottom-style" id="tcm_driver_school_list">
+    		<!-- <li class="aui-list-item">
+    			            <div class="aui-list-item-inner">
+    			                <div class="aui-list-item-label">
+    		                		1、
+    			                </div>
+    			                <div class="aui-list-item-input">
+    			                    <span>琮琤驾校</span>
+    			                </div>
+    			            </div>
+    			        </li>
+    		<li class="aui-list-item">
+    			            <div class="aui-list-item-inner">
+    			                <div class="aui-list-item-label">
+    		                		2、
+    			                </div>
+    			                <div class="aui-list-item-input">
+    			                    <span>琮琤驾校</span>
+    			                </div>
+    			            </div>
+    			        </li>
+    		<li class="aui-list-item">
+    			            <div class="aui-list-item-inner">
+    			                <div class="aui-list-item-label">
+    		                		3、
+    			                </div>
+    			                <div class="aui-list-item-input">
+    			                   <span>琮琤驾校</span>
+    			                </div>
+    			            </div>
+    			        </li> -->
+    	</ul>
+    </div>
+	<script type="text/template" charset="utf-8" id="empty_src">
+		<div class='empty'>
+			<span>无驾校信息</span>
+		</div>
+	</script>
+	<script type="text/template" charset="utf-8" id="template_driverschool_src">
+		{{ for(var i =0;i<it.length;i++){ }}
+			<li class="aui-list-item" tapmode onclick="selThisSchool('{{=it[i].id}}','{{=it[i].name}}','{{=it[i].mode}}','{{=it[i].commonSchoolId}}')">
+	            <div class="aui-list-item-inner">
+	                <div class="aui-list-item-label">
+	            		{{=(i+1)}}、
+	                </div>
+	                <div class="aui-list-item-input">
+	                   <span>{{=it[i].name}}</span>
+	                </div>
+	            </div>
+	        </li>
+		{{ } }}
+	</script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+		
+	};
+	
+	function getTcmDriverSchoolList(dirId){
+		url = 'api/tcm/driving/school/list';
+		params = {
+			districtCd:dirId
+		}
+		defaultload('获取驾校列表中');
+		ajax_Request(url, 'get', 'json', params, function(ret,err){
+			api.hideProgress();
+			log('驾校列表',ret);
+			if(ret){
+				if(ret.code == 0){
+					if(ret.drivingSchoolList.length > 0){
+						var template_driverschool_src = $('#template_driverschool_src').html();
+						var yizheng_map = {
+							districtCd:'340000000',
+							id:'107',
+							name:'一证通考'
+						}
+						ret.drivingSchoolList.unshift(yizheng_map);
+						$('#tcm_driver_school_list').html(doT.template(template_driverschool_src)(ret.drivingSchoolList));
+						api.parseTapmode();
+					}else{
+						var empty_src = $('#empty_src').html();
+						$('#tcm_driver_school_list').html(doT.template(empty_src)({}));
+					}
+				}else{
+					alert_msg(ret.msg);
+				}
+			}else{
+				alert_msg('系统出错');
+			}
+		});
+	}
+	/**
+	 * 选择驾校 
+	 */
+	function selThisSchool(id,name,mode,commonSchoolId){
+		params = {
+			id:id,
+			name:name,
+			mode:mode,//0：维尔；1:一诺
+			commonSchoolId:commonSchoolId//培训机构 编号
+		}
+		sendEvent('sel_tcm_school_action',params);
+		api.closeWin({
+        });
+	}
+</script>
+</html>

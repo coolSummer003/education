@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>考试名单</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html{
+    		background-color: #ffffff;
+    	}
+    	#section6{
+		    background: linear-gradient(to left, #03B4F7 , #90DBF7) !important;
+    	}
+    	.aui-bar-nav,.aui-bar-tab{
+    	    color: #ffffff !important;
+		    background: linear-gradient(to left, #03B4F7 , #90DBF7) !important;
+    	}
+    	.aui-bar-nav{
+    		color:#2c2c2c;
+    	}
+	   	a.aui-pull-left, a.aui-pull-right {
+		    color: #35A7FF;
+		}
+		header img {
+		    width: 20px;
+		}
+    	.order li{
+            float: left;
+		    font-size: 0.7rem;
+		    margin-left: 2.2rem;
+	    }
+	    .order{
+		    height: 2rem;
+		    line-height: 2rem;
+		    position: relative;
+	        background: #FFFFFF;
+		}
+	    .order img{
+		    width: 0.4rem;
+   			margin-bottom: 1px;
+   			-webkit-transition: 0.3s ease;
+		}
+    </style>
+</head>
+<body>
+    <section id="section6">
+		<header class="aui-bar aui-bar-nav aui-border-b tab1 none-bottom-style" id="aui-header">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin()">
+	            <img src="../../../icon/common/icon_header_return_white.png">
+	        </a>
+	        <div class="aui-title" id="appoint_before_exam_title">
+	        	考试名单
+	        </div>
+	        <a class="aui-pull-right aui-btn">
+	           	
+	        </a>
+	    </header>
+	</section>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache;
+	var section6Pos;
+	apiready = function(){
+		api.parseTapmode();
+		var section6 = $api.byId('section6');
+		$api.fixStatusBar(section6);
+		section6Pos = $api.offset(section6);
+		cache = api.pageParam;
+		changeMenuTitle(cache.testDate+ (cache.kemu == '036002'?'科目二':'科目三') + '名单');
+		init();
+	}
+	
+	var oper_status = 0;//0代表初始1代表进入支付页面2代表支付完成
+	function init(){
+		api.openFrame({
+            name: 'examination_list_frm',
+            url: './examination_list_frm.html',
+            bgColor:'#efeff4',
+            rect: {
+                x: 0,
+                y: section6Pos.h,
+                w: 'auto',
+                h: api.winHeight - section6Pos.h
+            },
+            bounces: false,
+            pageParam:cache,
+            reload:true,
+            softInputBarEnabled:true,
+            softInputMode:'resize'
+        });
+	}
+	
+	function closeWin(){
+		api.closeWin({
+        });
+	}
+	
+	//修改头部名
+	function changeMenuTitle(name){
+		$('#appoint_before_exam_title').html(name);
+	}
+</script>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>驾考技巧头部menu</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
+    <style>
+    	header img {
+		    width: 20px;
+		}
+    	#menu{
+			font-size:0.8rem;
+		}
+		#menuPackage{
+			position: relative;
+		}
+		.nav {
+	        height: 100%;
+	        overflow-x: scroll;
+	        overflow-y: hidden;
+	        background-color: #FFFFFF;
+	        /*解决ios上滑动不流畅*/
+	        -webkit-overflow-scrolling: touch;
+	    }
+	    .con {
+	        height: 100%;
+		    display: -webkit-box;
+		    align-items: center;
+	        position: relative;
+	    }
+	    .con>li {
+	        text-align: center;
+		    font-size: 0.8rem;
+		    min-width: 3rem;
+		    list-style: none;
+		    margin: 0rem 0.5rem;
+	    }
+	    .container {
+            height: 2.5rem;
+		    line-height: 2.5rem;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    overflow: hidden;
+	    }
+	    .container ::-webkit-scrollbar {
+	    }
+	    .active{
+	    	color: #03B4F7;
+    		/* border-bottom: solid 2px; */
+	    }
+    </style>
+</head>
+<body>
+	<div id="menuPackage">
+		<header class="aui-bar aui-bar-nav" id="aui-header">
+			<a class="aui-pull-left aui-btn" tapmode onclick="closeWin();">
+	            <img src="../../icon/common/icon_header_return.png">
+	        </a>
+	        <div class="aui-title">驾考技巧</div>
+	    </header>
+		<div class="container">
+	        <nav class="nav">
+	            <ul class="con" id="menu">
+	            </ul>
+	        </nav>
+	        <script type="text/template" charset="utf-8" id='menu_list_src'>
+		        {{ for(var i=0;i<it.length;i++){ }}
+	                <li class="menuLi" tapmode onclick="slideOnclick({{=i}})">
+	                	{{=it[i].name}}
+	                </li>
+	        	{{ } }}
+	        	<li class="list_bar" id="slideSpan">
+	                <div class="list_bar_inner"></div>
+	            </li>
+            </script>
+        </div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../script/common/common.js"></script>
+<script type="text/javascript">
+	var clearance = 5;//间隙
+	var menuCache;
+	var headerPos;
+	var cache;
+	var frameGroupObject;
+	apiready = function(){
+		cache = api.pageParam;
+		log("cache:",cache);
+		menuCache = cache.data;
+		$api.fixStatusBar($api.byId('menuPackage'));
+		headerPos = $api.offset($api.byId('menuPackage'));
+		init();
+	};
+	
+	var frameGroupList = [];
+	function init(){
+		var menu_list_src = $('#menu_list_src').html();
+		$(".con").html(doT.template( menu_list_src )( menuCache ));
+		$('.container').slideDown(300);
+		for(var i=0;i<menuCache.length;i++){
+			frameGroupObject = {
+				name: 'subject_skill_frm'+ i,
+				url: './subject_skill_frm.html',
+				bgColor: '#EFEFF4',
+				bounces: true,
+				scrollToTop:true,
+				pageParam:{
+// 					data:{
+// 						id:menuCache[i].id,
+// 						flag:"jiaokaojiqiao"
+// 					}
+					flag:'drivingSkill',
+					kemu:menuCache[i].kemu,
+					categoryA:menuCache[i].fatherCode,
+					categoryB:menuCache[i].code
+				}
+			};
+			frameGroupList.push(frameGroupObject);
+		}
+
+		openFrameGroup(frameGroupList);
+	}
+    
+    //二级菜单点击事件
+	function slideOnclick(index){
+		setViewFrame(index);
+		//f_slide($('.menuLi').eq(index));
+	}
+	
+    //滑块加载事件
+	function f_slide(e){
+		$('li').removeClass('active');
+		$(e).addClass('active');
+		$('.list_bar').css('width',($('.active').width() - clearance*2)+'px');
+		$('.list_bar_inner').css('width',($('.active').width() - clearance*2)+'px');
+		document.getElementById('slideSpan').style.webkitTransform = 'translateX('+($(e).position().left + clearance)+'px)';
+		$(".nav").animate({scrollLeft: $(e).position().left-130+'px'}, 500);
+	}
+	
+    //设置frameGroup可见frame
+    function setViewFrame(index){
+    	api.setFrameGroupIndex({
+		    name: 'menu_list_group',
+		    index: index
+		});
+    }
+    
+    //加载驾考技巧的menu
+    function openFrameGroup(frameGroupList){
+    	var menuHeight = $api.byId('menuPackage').offsetHeight;
+    	api.openFrameGroup({
+		    name: 'menu_list_group',
+		    scrollEnabled:true,
+		    preload:2,
+		    index:cache.index,
+		    rect: {
+		        x: 0,
+		        y: headerPos.h,
+		        w: 'auto',
+		        h: api.winHeight - headerPos.h
+		    },
+		    frames: frameGroupList
+		}, function(ret, err) {
+		    var index = ret.index;
+		    f_slide($('.menuLi').eq(index));
+		});
+    }
+    
+    function closeWin(){
+    	api.closeWin({
+        });
+    }
+</script>
+</html>

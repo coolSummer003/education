@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>消息详情</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/comment.css" />
+		<style>
+			html,body{
+			background:#FFF;
+			height:100%;
+			padding:0rem;			
+    	}
+    	
+    	.content img{
+    		width:100%;
+    		margin:0.5rem 0rem;
+    	}
+		.mian-content{
+			position: absolute;
+		    top: 0;
+		    right: 0rem;
+		    left: 0rem;
+		    bottom:0rem;
+		    overflow-y: auto;
+			overflow-x: hidden;
+		    overflow-y: scroll;
+		    -webkit-overflow-scrolling: touch;
+		}
+
+		.msg{
+			background: #FFFFFF;
+			height: 20rem;
+			text-align: center;
+			font-size:0.7rem;
+		}
+		.msg img{
+			width:8rem;
+			margin-top: 9rem;
+		}
+		.jiazai {
+			font-size: 0.7rem;
+			background: #FFFFFF;
+			color: #666565;
+			padding-bottom: 0.3rem;
+			text-align: center;
+			padding-top: 0.3rem;
+		}
+
+		.jiazai img {
+			width: 1.5rem;
+		}
+		.content span{
+			text-align: justify;
+		}
+		.community-content{
+    		float: right;
+			font-size: 0.6rem;
+			color:#939393;
+			}
+		.aui-list-item-media{
+			width:4rem;
+			height:3.5rem;
+			display:inline;
+			float:left;
+			padding-right:0.75rem;
+		}
+		.aui-list .aui-list-item:after{
+			height:0!important;
+		}
+		.aui-list:after{
+			height:0!important;
+		}
+		.aui-list:before{
+			height:0!important;
+		}
+		.aui-list-item-media img{
+			width:100%;
+			height:100%;			
+		}
+		.aui-card-list-from{
+			font-size: 0.6rem;
+			color: #757575;
+		}
+		.order_txt{
+			padding-left:0.2rem;
+			background: #F9F9F9;
+		
+		}
+		.text-title{
+			padding:0.2rem
+		}
+		.aui-list-item-title{
+		font-size:0.9rem;
+		font-weight:600;
+		line-height:1.3rem;
+		}
+		.list{
+		padding:0.3rem;
+		}
+		.aui-margin-l-5{
+		border-right:1px solid #F5F5F5;
+		}
+		.aui-list-item-inner{
+		
+		
+		}
+		.list-font{
+			font-size:0.6rem;
+			color:#64769A;
+		}
+		
+		.e-button,.w-button{
+			display: inline-block;
+			width:5rem;
+			height:1.5rem;
+			line-height:1.5rem;
+			text-align:center;
+			color:#FFFFFF;
+			background:linear-gradient(to left, #03B4F7 , #90DBF7);
+			margin-top:0.3rem;
+			border-radius:2px;
+		}
+		.w-button{
+			margin-left: 1rem;
+		}
+		.e-button:active,.w-button:active{
+			background:#90DBF7;
+		}
+		.form-content{
+			background:#FFFFFF!important;
+		}
+		.aui-list-item-label{
+			color:#27344C!important;
+			text-align:left;
+			/*font-weight:500!important;*/
+		}
+		input[type="text"]{
+			color:#27344C!important;
+		}
+		.aui-btn-info{
+			background:linear-gradient(to left, #3F86FE , #64ADF6)!important	    	
+	    }
+	    .aui-list-item{
+	    	padding-left:0!important;
+	    	padding-right:0!important;
+	    }
+    </style>
+	</head>
+	<body>
+		<div class='mian-content' tapmode>
+			<div id='content' tapmode></div>
+		</div>
+		<div id='load_div' style="margin-right: 0.5rem;margin-left:0.5rem;">
+
+		</div>
+		<script type="text/template" charset="UTF-8" id="information">
+			<li class="aui-list-item list" style="">
+	            <div class="aui-media-list-item-inner" style="width: 100%;" >
+	                <div  class="aui-card-list" style="width: 100%;">
+	                    <div class="aui-card-list-header">{{=it.title}}</div>
+	                    <div style="background:#f2f2f2;width: 100%;height: 0.3rem;"></div>
+	                    <div class="aui-card-list-content-padded" style="line-height:1.2rem;color:#757575;width: 100%;">{{=it.message}}</div>
+					</div>
+				</div>
+	            <div class="aui-info" style="width: 100%;">
+	                <div class="aui-info-item">
+	                    <span class="aui-margin-l-15">发送人：<font style="color:#64769A;font-weight:bold;">{{=it.fromType=='2'?it.from:'系统'}}</font>&emsp;</span>
+	                     &emsp;{{=it.insertDt}}
+                    </div>
+	            </div>
+	        </li>
+        	<!-- <ul class="aui-list aui-list-in">
+        		<li class="aui-list-item">
+		            <div class="aui-list-item-label-icon aui-padded-l-15 ">
+		                <i class="aui-iconfont aui-icon-info"></i>
+		            </div>
+		            <div class="aui-list-item-inner" style="font-size:0.65rem;">
+		            	接收人：我
+		            </div>
+        		</li>
+         		<li class="aui-list-item">
+           			<div class="aui-list-item-label-icon">
+                		<i class="aui-iconfont"></i>
+            		</div>
+            		<div class="aui-list-item-inner list-font">
+           			消息来自：{{=it.fromType=='2'?'人工':'系统'}}
+            		</div>
+        		</li>
+            </ul> -->
+		</script>
+		<script type="text/template" charset="utf-8" id='msg_src'>
+			<div class="msg">
+				<img src="../../../icon/common/empty.png" alt="" /><br>
+				<span>{{=it.msg}}</span>
+			</div>
+		</script>
+		<script type="text/template" charset="utf-8" id='more_src'>
+			<!--上拉加载-->
+			<div class="jiazai">
+				<span>{{=it.msg}}</span>
+			</div>
+		</script>
+	</body>
+	<script type="text/javascript" src="../../../script/api.js"></script>
+	<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+	<script type="text/javascript" src="../../../script/doT_min.js"></script>
+	<script type="text/javascript" src="../../../script/common/common.js"></script>
+	<script type="text/javascript">
+		var cache;
+		var systemType
+		var learnerId;
+		var msg_src = $('#msg_src').html(); //消息提示src
+		var more_src = $('#more_src').html(); //更多src
+		var driverSchoolData;
+		apiready = function() {
+			api.parseTapmode();
+			if (islogin()) {
+				//登录-获取id
+				learnerId = getUserId();
+			} else {
+				//未登录-id为空
+				learnerId = ''
+			}
+			//判断机型  ios / android
+			systemType = api.systemType;
+			// console.log(JSON.stringify(cache));
+			cache = api.pageParam;
+			log('cache', cache);
+			init();
+			getSchoolDate();
+			//监听提交报名
+			toEventListener('click_regist', function(ret, err) {
+				console.log(JSON.stringify(ret))
+				driver_sign_up(ret.value);
+			});
+		}
+		//请求获取详情
+		function init() {
+			var information = $('#information').html();
+			$("#content").append(doT.template(information)(cache.data));
+		}
+		/**
+		 * 地图跳转 
+		 */
+		function openMap(name, latitude, longitude) {
+			params = {
+				to_lon: longitude,
+				to_lat: latitude,
+				to_name: name
+			}
+			log('params', params);
+			api.openWin({
+				name: 'common_map_loaction_win',
+				url: '../../common/common_map_loaction_win.html',
+				slidBackEnabled: 'true',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				pageParam: {
+					data: params
+				}
+			});
+		}
+
+		/**
+		 * 查看考前训练预约详情 
+		 */
+		function openAppointDetail(flag, id) {
+			params = {
+				orderId: id,
+				flag: flag == 2 ? 'two' : 'three',
+				vipGrade: 0,
+				type: 'appointment-before-exam-order'
+			}
+			log('传参', params);
+			api.openWin({
+				name: 'record_order_detail_win',
+				url: '../../mine/record_order_detail_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: {
+					data: params
+				}
+			});
+		}
+		//下一步
+		function submitBt() {
+			//判断是否有购买过订单
+			params = {
+				learnerId: getUserId()
+			}
+			url = '/api/porpose/third/findLearnerRegis';
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				if (ret) {
+					log('报名订单判断：', ret);
+					if (ret.code == 0) {
+						driver_sign_up_hetong("1");
+					} else {
+						alert_msg("您已报名过此驾校学车套餐");
+					}
+				} else {
+					alert_msg('服务器繁忙，请稍后重试');
+				}
+			});
+		}
+		//打开驾校报名
+		function driver_sign_up(plan_info) {
+			var params = {
+				id: driverSchoolData.id, //驾校id
+				d_school_name: driverSchoolData.name, //驾校name
+				district: driverSchoolData.district,
+				licenseTypeList: driverSchoolData.licenseTypeList, //报考车型
+				plan_info: plan_info, //套餐信息
+				business_type: $('#busubessType').attr("busine"), //教练推荐车型code
+				business_type_name: $('#busubessType').val(), //教练推荐车型name
+				coachId: $('#coachName').attr("coachId"), //教练id
+				coachName: $('#coachName').val(), //教练name
+			}
+			//log('驾校数据：',params);
+			commonOpenWin('../driver_school_pre_sign_up_win', params);
+		}
+		//得到驾校信息
+		function getSchoolDate() {
+			var id = $('#schoolName').attr("schoolId");
+			if(!id){
+				return;
+			}
+			//驾校详情传参
+			params = {
+				drivingSchool: {
+					id: id
+				}
+			}
+			url = 'api/driving';
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				if (ret) {
+					log('驾校详情数据：', ret);
+					driverSchoolData = ret.drivingSchoolDetail;
+					if (ret.code == 0) {
+
+					} else {
+						setError(ret.msg);
+					}
+				} else {
+					setError('服务器繁忙，请稍后重试');
+				}
+			});
+		}
+
+		/**
+		 * 判断是否签了合同 
+		 */
+		function judgeHasContract() {
+			defaultload('获取合同相关信息中');
+			var id = $('#schoolName').attr("schoolId")
+			url = 'api/sign-contract/get-online-signing-info';
+			params = {
+				contract: {
+					learner: {
+						id: getUserId()
+					},
+					organizationId: id,
+					type: '042001'
+				}
+			}
+
+			var learn_plan = {
+				licenseType: $('#carType').attr("carType"),
+				id: $('#meal').attr("mealId"),
+				learnerId: getUserId()
+			}
+			log('合同传参', params);
+
+			ajax_Request(url, "get", "json", params, function(ret, err) {
+				api.hideProgress();
+				log('获得的合约信息', ret);
+				if (ret && ret.code == 0) {
+					if (ret.contractList.length > 0) { //存在合约信息就不需要在线签约，直接进入下一步
+						checkInfo()
+						//esc_function('driver_school_detail_win','driver_school_detail_frm','driver_sign_up()');
+					} else {
+						params = {
+							schoolId: id,
+							flag: 2
+						}
+						//定义完成驾校签约后的监听事件
+						toEventListener('finishContractNext', function(ret, err) {
+							setTimeout(function() {
+								api.hideProgress();
+								checkInfo()
+								//esc_function('driver_school_detail_win','driver_school_detail_frm','driver_sign_up()');
+							}, 1500);
+						});
+						openSignContract(params); //打开在线签约共通
+					}
+				} else {
+					alert_msg('获取合约失败');
+				}
+			});
+		}
+
+		/**
+		 * 打开签约页面共通
+		 */
+		function openSignContract(params) {
+			api.openWin({
+				name: 'common_sign_online_win',
+				url: '../../common/common_sign_online_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				pageParam: params
+			});
+		}
+
+		function driver_sign_up_hetong() {
+			var sign_up_action = 'driver_sign_up';
+			params = {
+				event_action: sign_up_action
+			}
+			flag = "已选套餐";
+			if (islogin()) { //已登录
+				if (isauth()) { //已认证
+					console.log("已认证")
+					if (flag != '') {
+						//因为登录关闭动画需要延迟
+						setTimeout(function() {
+							judgeHasContract();
+							//commonOpenWin('driver_school_pre_sign_up_win',cache);
+						}, 350);
+					} else {
+						judgeHasContract();
+						//commonOpenWin('driver_school_pre_sign_up_win',cache);
+					}
+				} else {
+					if (flag != '') {
+						setTimeout(function() {
+							openAuthHtml(params);
+						}, 350);
+					} else {
+						openAuthHtml(params);
+					}
+				}
+			} else {
+				openLoginHtml(params);
+			}
+		}
+		/**
+		 * 对选择的套餐和驾考类型进行校验，购买过的套餐且未退款的无法再次购买
+		 */
+
+		function checkInfo() {
+			defaultload('校验中...');
+			url = 'api/study-plan/check-buy-power';
+			params = {
+				licenseType: $('#carType').attr("carType"),
+				id: $('#meal').attr("mealId"),
+				learnerId: getUserId()
+			}
+			ajax_Request(url, 'get', 'json', params, function(ret, err) {
+				log('获取权限', ret);
+				api.hideProgress();
+				if (ret) {
+					if (ret.code == 0) {
+						if (ret.learnerBuyPlanList.length > 0) {
+							alert_msg('您已购买过该套餐');
+						} else {
+							//执行报名操作
+							driver_sign_up(params);
+						}
+					} else {
+						alert_msg(ret.msg);
+					}
+				} else {
+					alert_msg('服务器繁忙，请稍后再试');
+				}
+			});
+		}
+
+		/**
+		 * 去认证
+		 */
+		function openAuthHtml(data) {
+			api.openWin({
+				name: 'mine_account_auth_win',
+				url: '../../mine/mine_account_auth_win.html',
+				slidBackEnabled: 'true',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				pageParam: data
+			});
+		}
+
+
+		/**
+		 * 对教练的评价
+		 */
+		function evaluateCoach(orderId, id, businessType, classificationCode) {
+			params = {
+				coachId: id,
+				orderId: orderId,
+				businessType: businessType,
+				classificationCode: classificationCode
+			}
+			log('', params)
+			api.openWin({
+				name: 'evaluate_detail_win',
+				url: '../../mine/evaluate/evaluate_detail_win.html',
+				slidBackEnabled: 'false',
+				vScrollBarEnabled: 'false',
+				hScrollBarEnabled: 'false',
+				reload: true,
+				useWKWebView: false,
+				pageParam: {
+					data: params
+				}
+			});
+		}
+	</script>
+</html>

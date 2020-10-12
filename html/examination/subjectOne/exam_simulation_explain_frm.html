@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>模拟考试说明</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui/aui_2_0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/common/common.css" />
+    <style>
+    	html,body{
+    		background-color: #ffffff;
+    	}
+    	.explain-head{
+    		width: 100%;
+		    height: 8rem;
+		    padding-top: 2rem;
+		    text-align: center;
+    	}
+    	.explain-head img{
+    		width: 3rem;
+		    height: 3rem;
+		    border-radius: 100%;
+		    object-fit: cover;
+    	}
+    	.explain-head span{
+    	}
+    	.explain-content{
+    		font-size:0.7rem;
+		    width: 70%;
+    		margin: 0 auto;
+    	}
+    	.explain-content li{
+    		width: 100%;
+		    height: 2rem;
+		    line-height: 2rem;
+    	}
+    	.explain-content-left{
+    		width: 45%;
+		    float: left;
+		    text-align: left;
+		    color:#B9B9B9;
+    	}
+    	.explain-content-right{
+		    width: 55%;
+    		float: right;
+    		height: 2rem;
+    	}
+    	.remind{
+		    color:#B9B9B9;
+		    text-align: left;
+    		font-size: 0.6rem;
+    	}
+    	.explain-button{
+    		margin-top:1rem;
+    	}
+    	.button-item{
+		    width: 70%;
+		    margin: 0 auto;
+		    height: 2rem;
+		    line-height: 2rem;
+		    text-align: center;
+		    border-radius: 3px;
+		    margin-bottom: 0.6rem;
+    	}
+    	.w_red{
+    		border:solid 1px #F58B81 !important;
+    		background:#FDE8E6 !important;
+    		color: #F58B81 !important;
+    	}
+    	.w_yellow{
+    		border:solid 1px #F8C065 !important;
+    		background:#FEF2E0 !important;
+    		color: #F8C065 !important;
+    	}
+    	.attention{
+		    font-size: 0.6rem;
+		    min-height:1rem !important;
+		    height: 1rem !important;
+		    display: inline !important;
+		}
+		.attention img{
+			width:0.6rem;
+			margin-bottom: -0.1rem;
+		}
+    </style>
+</head>
+<body>
+	<div class='explain-head'>
+		<img src="../../../icon/mine/icon_mine_head_hui.png" alt="" class='cache' onerror="javascript:this.src='../../../icon/mine/icon_mine_head.png'"/><br>
+		<span>获取中...</span>
+	</div>
+	<ul class='explain-content'>
+		<li>
+			<div class='explain-content-left'>考试类型</div>
+			<div class='explain-content-right' id="licenseType"></div>
+		</li>
+		<li>
+			<div class='explain-content-left'>考试时间</div>
+			<div class='explain-content-right' id='limitTime'>45分钟</div>
+		</li>
+		<li>
+			<div class='explain-content-left'>合格标准</div>
+			<div class='explain-content-right'>90分</div>
+		</li>
+		<li>
+			<div class='explain-content-left'>出题规则</div>
+			<div class='explain-content-right'>根据交管局出题规则</div>
+		</li>
+		<li>
+			<div class='remind'>温馨提示：模拟考试下不能修改答案</div>
+		</li>
+	</ul>
+	<div class='explain-button'>
+		<div class='button-item w_red' tapmode onclick="openExam('real')">全真模拟</div>
+		<div class='button-item w_yellow' tapmode onclick="openExam('unfinish')">优先考未做题</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery_3_2_1_min.js"></script>
+<script type="text/javascript" src="../../../script/doT_min.js"></script>
+<script type="text/javascript" src="../../../script/common/common.js"></script>
+<script type="text/javascript">
+	var cache_account;//账户信息
+	apiready = function(){
+		api.parseTapmode();
+		init();
+	}
+	function init(){
+		//获取当前题库选择的题库类型
+		var bankType = getBankType('036001');
+		if(bankType == '022004'){
+			//如果是摩托车的话，科目一模拟考试只有30分钟
+			$('#limitTime').html('30分钟');
+		}
+	
+		var questionBankTypeMap = $api.getStorage('cache_by_app').questionBankTypeMap;
+		if(islogin()){
+			cache_account = $api.getStorage('cache_by_account').cache_account;
+			getHeadImg(cache_account,function(smallerPath){
+				$('.explain-head').find('img').attr('src',smallerPath);
+			})
+			$('.explain-head').find('span').html(cache_account.account);
+		}else{
+			$('.explain-head').find('span').html('游客');
+		}
+		//获取题库的驾考类型H
+		$('#licenseType').html(questionBankTypeMap[getBankType('036001')]);
+	}
+	//打开模拟考试页面
+	function openExam(flag){
+		param = {
+			exam_type:'normal',//普通考题
+			type:flag,//模拟考试类型：是否优先做未做
+			item_bank:$('#licenseType').val()
+		}
+		commonOpenWin('exam_simulation_win',param);
+	}
+</script>
+</html>
